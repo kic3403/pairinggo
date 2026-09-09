@@ -4,3 +4,4 @@ export * from "./hangul";
 export * from "./regions";
 export * from "./rating";
 export * from "./similarity";
+export * from "./search";
