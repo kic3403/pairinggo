@@ -1,0 +1,27 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# build
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# ait / toss
+.ait/
+*.ait-bundle
+
+# misc
+.DS_Store
+Thumbs.db
+*.log
+coverage/
+reports/*.md
+!reports/.gitkeep

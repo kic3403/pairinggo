@@ -1,0 +1,8 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  protobufjs: false
+minimumReleaseAgeExclude:
+  - '@apps-in-toss/cli@3.4.0'
+  - '@apps-in-toss/web-framework@3.4.0'

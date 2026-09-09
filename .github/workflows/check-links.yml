@@ -1,0 +1,39 @@
+name: 링크 상태 점검 (주간)
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"      # 매주 월요일 09:00 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 링크 점검
+        id: check
+        run: node scripts/check-links.mjs --concurrency 3 --timeout 20000
+      - name: 결과 커밋 (link-status.json · reports/)
+        run: |
+          git config user.name "pairinggo-bot"
+          git config user.email "bot@pairinggo.local"
+          git add src/data/link-status.json reports/
+          git diff --cached --quiet || git commit -m "chore(links): 주간 링크 점검 $(date -u +%F)"
+          git push
+      - name: 문제 링크가 있으면 이슈 생성
+        if: steps.check.outputs.problems != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('reports/latest.md', 'utf8');
+            await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo,
+              title: `링크 점검: 문제 ${'${{ steps.check.outputs.problems }}'}건 (${new Date().toISOString().slice(0,10)})`,
+              body, labels: ['link-check'] });
