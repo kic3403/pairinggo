@@ -108,6 +108,31 @@ export function search(q: string, opts: SearchOptions = {}): SearchResult {
       if (doc.type === "drink" && v.length >= 2 && doc.fields.region.includes(v)) put(doc, 34, "field", "region");
     }
   }
+  // 여러 단어("복순도가 막걸리", "울주 탁주"): 단어별로 각각 어느 필드에든 맞으면 AND 매칭 (최소 점수 × 0.9)
+  const tokens = raw.split(/\s+/).map(normalize).filter((t) => t.length >= 1);
+  if (tokens.length >= 2) {
+    for (const doc of DOCS) {
+      if (types && !types.includes(doc.type)) continue;
+      if (doc.type === "browse") continue;
+      let minScore = Infinity;
+      for (const t of tokens) {
+        const tj = toJamo(t);
+        const tc = categoryOf(t);
+        let s = 0;
+        const ns = nameScore(t, tj, isChoseongOnly(t), doc, [...t].filter((c) => /[가-힣]/.test(c)).length);
+        if (ns) s = Math.max(s, ns.score);
+        for (const a of doc.aliases) { const as = nameScore(t, tj, false, { norm: a.norm, jamo: a.jamo }, 0); if (as) s = Math.max(s, as.score * 0.9); }
+        if (tc && doc.fields.category === normalize(tc)) s = Math.max(s, 70);
+        if (doc.fields.category === t) s = Math.max(s, 70);
+        if (doc.fields.tags.includes(t)) s = Math.max(s, 60);
+        if (t.length >= 2 && doc.fields.region.includes(t)) s = Math.max(s, 60);
+        if (t.length >= 2 && doc.fields.brewery.includes(t)) s = Math.max(s, 65);
+        if (s < minScore) minScore = s;
+        if (!s) break;
+      }
+      if (minScore > 0 && minScore !== Infinity) put(doc, minScore * 0.9, "contains", "name");
+    }
+  }
   // 종류 동의어는 둘러보기 항목을 최상단으로
   if (cat) {
     const browse = DOCS.find((d) => d.type === "browse" && d.kind === "category" && d.key === cat);

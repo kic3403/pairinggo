@@ -25,3 +25,6 @@ Thumbs.db
 coverage/
 reports/*.md
 !reports/.gitkeep
+
+# apps-in-toss build artifact
+*.ait

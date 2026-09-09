@@ -77,6 +77,13 @@ describe("이름 검색", () => {
     const r = search("탄산");
     expect(r.drinks.length).toBeGreaterThan(0);
   });
+  it("여러 단어 AND 매칭", () => {
+    expect(top("복순도가 막걸리")?.id).toBe("d01");
+    expect(top("울주 탁주")?.id).toBe("d01");
+    const r = search("제주 증류주");
+    expect(r.drinks.length).toBeGreaterThan(0);
+    expect(r.drinks.every((h) => D[h.doc.id].region.includes("제주") && D[h.doc.id].category === "증류주")).toBe(true);
+  });
   it("접미어 붙은 검색어", () => {
     expect(top("복순도가 술")?.id).toBe("d01");
     expect(top("육회 안주")?.id).toBe("f01");

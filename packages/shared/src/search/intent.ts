@@ -156,6 +156,11 @@ export function parseIntent(q: string): Intent | null {
   if (/선물|기념|명절|추석|설날|답례/.test(raw)) { intent.gift = true; explain.push("선물용"); recognized++; }
 
   if (!recognized) return null;
+  // 종류("막걸리")나 지역("울주") 단어 하나뿐이면 상황이 아니라 이름 검색(둘러보기)이 맞다
+  const onlyCategoryOrRegion = !hasConnector && !intent.drink.profile.length && !intent.food.profile.length && !intent.drink.abv
+    && !intent.food.category && !intent.drink.award && !intent.gift && !intent.drink.ids.length && !intent.food.ids.length
+    && !/추천|어울|뭐|찾/.test(raw) && ((intent.drink.category ? 1 : 0) + (intent.drink.region ? 1 : 0)) === recognized;
+  if (onlyCategoryOrRegion) return null;
   intent.residual = names.consumed.replace(/\|/g, " ").trim();
   return intent;
 }

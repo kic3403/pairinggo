@@ -14,5 +14,7 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: false,
     target: "es2020",
+    // 데이터(pairings.json 0.5MB)를 번들에 내장하므로 단일 청크가 크다. Phase 2에서 Supabase로 옮기면 사라진다.
+    chunkSizeWarningLimit: 1200,
   },
 });

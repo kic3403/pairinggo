@@ -59,6 +59,12 @@ describe("상황 검색 파서", () => {
     expect(parseIntent("육회")).toBeNull();
     expect(parseIntent("없는말")).toBeNull();
   });
+  it("종류·지역 단어 하나는 상황 검색이 아니다 (둘러보기로)", () => {
+    expect(parseIntent("막걸리")).toBeNull();
+    expect(parseIntent("울주")).toBeNull();
+    expect(parseIntent("제주 술 추천")).not.toBeNull();
+    expect(parseIntent("탄산")).not.toBeNull();
+  });
 });
 
 describe("상황 검색 실행", () => {

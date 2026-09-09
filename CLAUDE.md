@@ -2,7 +2,7 @@
 
 술↔음식 양방향 페어링 추천 → (Stage 2) 전통주 앱 내 구매 → (Stage 3) 식당 자체 예약. 토스 앱인토스 미니앱이 주력.
 기획·설계 문서는 docs/ (00~07). 작업 전 해당 Phase를 읽는다: docs/05_개발로드맵_Phase별.md
-현재 Phase: **1** (미니앱 이식 + 검색·추천·홈·상세 개선, 서버·로그인·결제 없음)
+현재 Phase: **1 완료 (2026-09-09, docs/08 결과보고)** → 다음 **Phase 2** (Supabase 스키마·시드·공개 API). 서버·로그인·결제 아직 없음
 
 ## 구조 (pnpm workspaces)
 - apps/miniapp      Vite + React 18 + TS + Tailwind v4 + react-router. @apps-in-toss/web-framework. **정적 번들만(SSR·서버 코드 금지)**. `pnpm --filter miniapp dev|build`
