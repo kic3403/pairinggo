@@ -5,3 +5,5 @@ export * from "./regions";
 export * from "./rating";
 export * from "./similarity";
 export * from "./search";
+export * from "./pairing/score";
+export * from "./browse";
