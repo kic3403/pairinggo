@@ -59,6 +59,7 @@ Stage 4  확장           지속   Phase 9    → 스마트오더·AI 폴백·�
 - 04 문서 4-1·4-2 테이블 마이그레이션, pg_trgm, RLS.
 - `import-pairings.ts` 실행 → 108/110/851 검증, 술당 ≥5.
 - `/api/v1` catalog·popular·today·search 구현, zod, CDN 캐시. `search_logs` 적재, `popular_terms` 크론.
+- **상태**: 2026-09-10 완료 — docs/09_Phase2_결과보고.md (Supabase 키 연결은 사용자 작업)
 - **검증**: API 응답 p95 < 300ms, 초성 검색("ㅂㅅㄷㄱ"→복순도가), 별칭("밤막걸리"), 인기 검색어 집계 동작.
 
 ### Phase 3 · 핵심 화면 + 토스 로그인 + 식당 찾기 + 검수 제출 (1.5~2주)

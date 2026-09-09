@@ -7,3 +7,5 @@ export * from "./similarity";
 export * from "./search";
 export * from "./pairing/score";
 export * from "./browse";
+export * from "./schemas";
+export * from "./rows";

@@ -4,13 +4,19 @@
   "version": "0.1.0",
   "description": "페어링GO — 전통주 페어링 추천 미니앱 (토스 앱인토스)",
   "packageManager": "pnpm@12.3.4",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "pnpm --filter miniapp dev",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
-    "check-links": "node scripts/check-links.mjs"
+    "check-links": "node scripts/check-links.mjs",
+    "dev:web": "pnpm --filter web dev",
+    "db:migrate": "pnpm --filter @pairinggo/db migrate",
+    "db:seed": "pnpm --filter @pairinggo/db seed",
+    "db:export": "pnpm --filter @pairinggo/db export"
   }
 }

@@ -1,8 +1,8 @@
 /**
  * 검색 인덱스 문서 — 술 108 · 음식 110 · 둘러보기(종류·지역·양조장).
- * 모듈 로드 시 한 번 만든다 (218+α 건, 수 ms).
+ * 모듈 로드 시 한 번 만들고, applyDataset()으로 카탈로그가 바뀌면 다시 만든다 (218+α 건, 수 ms).
  */
-import { BREWERIES, CATEGORIES, DATA } from "../data";
+import { BREWERIES, CATEGORIES, DATA, onDatasetChange } from "../data";
 import { choseong, toJamo } from "../hangul";
 import { REGIONS } from "../regions";
 import { normalize } from "./normalize";
@@ -39,7 +39,7 @@ function mk(type: DocType, id: string, name: string, meta: string, extra: Partia
   };
 }
 
-export const DOCS: Doc[] = (() => {
+function build(): Doc[] {
   const out: Doc[] = [];
   for (const d of DATA.drinks) {
     const aliases = [d.alias, ...(d.brewery ? [d.brewery] : [])].filter((a) => a && normalize(a) !== normalize(d.name)).map((a) => ({ norm: normalize(a), jamo: toJamo(normalize(a)) }));
@@ -71,7 +71,15 @@ export const DOCS: Doc[] = (() => {
   // 둘러보기: 양조장
   for (const b of BREWERIES) out.push(mk("browse", `brewery:${b.name}`, b.name, `양조장 · ${b.region} · ${b.count}종`, { kind: "brewery", key: b.name, trend: Math.min(1, b.count / 4) }));
   return out;
-})();
+}
 
-export const DRINK_DOCS = DOCS.filter((d) => d.type === "drink");
-export const FOOD_DOCS = DOCS.filter((d) => d.type === "food");
+export let DOCS: Doc[] = build();
+export let DRINK_DOCS: Doc[] = DOCS.filter((d) => d.type === "drink");
+export let FOOD_DOCS: Doc[] = DOCS.filter((d) => d.type === "food");
+
+export function rebuildDocs() {
+  DOCS = build();
+  DRINK_DOCS = DOCS.filter((d) => d.type === "drink");
+  FOOD_DOCS = DOCS.filter((d) => d.type === "food");
+}
+onDatasetChange(rebuildDocs);

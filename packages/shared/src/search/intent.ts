@@ -53,12 +53,18 @@ const FOOD_WORD = /(안주|음식|요리|먹을|먹지|메뉴|반찬)/;
 const CONNECTOR = /(에|랑|이랑|와|과|하고|에는|에게|엔)\s*(어울리|맞는|좋은|잘\s?맞|찰떡|궁합|곁들|같이|함께|페어링)/;
 
 /* ---------- 지역 토큰 (데이터 region 첫 두 토큰 + 관심지역 라벨) ---------- */
-const REGION_TOKENS: string[] = (() => {
+let regionTokensFor: typeof DATA | null = null;
+let regionTokensCache: string[] = [];
+/** 카탈로그가 바뀌면 다시 계산 (applyDataset 대응) */
+function regionTokens(): string[] {
+  if (regionTokensFor === DATA) return regionTokensCache;
   const s = new Set<string>();
   for (const r of REGIONS) if (r.id !== "all") r.label.split("/").forEach((l) => { const t = l.trim(); if (t.length >= 2 && t !== "전체") s.add(t); });
   for (const d of DATA.drinks) (d.region || "").split(" ").slice(0, 2).forEach((t) => { if (t.length >= 2) s.add(t); });
-  return [...s].sort((a, b) => b.length - a.length);
-})();
+  regionTokensCache = [...s].sort((a, b) => b.length - a.length);
+  regionTokensFor = DATA;
+  return regionTokensCache;
+}
 
 /* ---------- 이름 추출: 검색어 안의 술/음식 이름 (긴 것 우선, 겹치지 않게) ---------- */
 function extractNames(norm: string): { drinks: string[]; foods: string[]; consumed: string } {
@@ -151,7 +157,7 @@ export function parseIntent(q: string): Intent | null {
     // "회에 좋은 술" 처럼 연결어가 없어도 음식 분류 단어가 있으면 주어로 본다 (예: "회 술 추천")
     for (const [re, c] of FOOD_CATEGORY_WORDS) { if (re.test(raw) && !names.foods.length && FOOD_WORD.test(raw) === false && c !== "면") { intent.food.category = c; explain.push(`${c} 종류`); recognized++; break; } }
   }
-  for (const t of REGION_TOKENS) { if (norm.includes(normalize(t)) && !names.drinks.some((id) => normalize(D[id].name).includes(normalize(t)))) { intent.drink.region = t; explain.push(`${t} 술`); recognized++; break; } }
+  for (const t of regionTokens()) { if (norm.includes(normalize(t)) && !names.drinks.some((id) => normalize(D[id].name).includes(normalize(t)))) { intent.drink.region = t; explain.push(`${t} 술`); recognized++; break; } }
   if (/대통령상|수상작|수상|품평회|금상|대상/.test(raw)) { intent.drink.award = true; explain.push("수상작"); recognized++; }
   if (/선물|기념|명절|추석|설날|답례/.test(raw)) { intent.gift = true; explain.push("선물용"); recognized++; }
 

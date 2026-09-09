@@ -2,18 +2,23 @@ import { Link } from "react-router";
 import { DATA } from "@pairinggo/shared";
 import { recentStore, savedStore, useRegion, regionStore, toast } from "@/lib/prefs";
 import { drainEvents } from "@/lib/analytics";
+import { clearCatalogCache, useCatalog } from "@/lib/catalog";
+import { apiEnabled } from "@/lib/api";
 
 /** 마이 (Phase 1) — 관심지역·저장 요약·데이터 초기화·안내. Phase 3에서 토스 로그인·성인인증 상태·주문/예약 내역이 붙는다 */
 export default function My() {
   const { label } = useRegion();
   const saved = savedStore.use();
   const recent = recentStore.use();
+  const catalog = useCatalog();
   const reset = () => {
     if (!confirm("이 기기에 저장된 관심지역·저장·최근 검색을 모두 지울까요?")) return;
     regionStore.write({ id: "all", gps: false, lat: null, lng: null, est: null });
-    savedStore.write([]); recentStore.write([]); drainEvents();
+    savedStore.write([]); recentStore.write([]); drainEvents(); clearCatalogCache();
     toast("초기화했어요");
   };
+  const catalogLabel = catalog.source === "server" ? `서버 · ${catalog.version.slice(0, 10)}` : "앱 내장";
+  const catalogState = !apiEnabled() ? "" : catalog.status === "checking" ? " · 확인 중" : catalog.status === "updated" ? " · 방금 갱신" : catalog.status === "offline" ? " · 서버 연결 안 됨" : "";
   return (
     <main className="px-5 pt-7">
       <h1 className="font-bold text-[24px] tracking-tight">마이</h1>
@@ -36,6 +41,7 @@ export default function My() {
 
       <div className="card mt-4 divide-y divide-line">
         <Row label="데이터" value={`전통주 ${DATA.drinks.length} · 음식 ${DATA.foods.length} · 페어링 ${DATA.pairings.length}`} />
+        <Row label="카탈로그" value={catalogLabel + catalogState} />
         <Row label="추천 근거" value="양조장 공식 · 소믈리에·명인 · 전문 매체 · 맛 프로필" />
         <Row label="대중 언급량" value={DATA.trend_meta?.period || "네이버 블로그 실측"} />
       </div>

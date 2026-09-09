@@ -1,10 +1,11 @@
 import { Link, useSearchParams } from "react-router";
-import { DATA, D, F, POPULAR, POPULAR_FOODS, PRESIDENT, TREND_NOTE, CATEGORIES, todayPairing } from "@pairinggo/shared";
+import { DATA, D, F, PRESIDENT, TREND_NOTE, CATEGORIES, todayPairing } from "@pairinggo/shared";
 import SearchBox from "@/components/SearchBox";
 import RegionPicker from "@/components/RegionPicker";
 import RegionDrinks from "@/components/RegionDrinks";
 import Section from "@/components/Section";
 import { recentStore } from "@/lib/prefs";
+import { usePopular } from "@/lib/popular";
 
 const EXAMPLES = ["매운 안주에 어울리는 술", "도수 낮은 달달한 막걸리", "회에 어울리는 드라이한 술", "선물용 증류주"];
 const CAT_DESC: Record<string, string> = { 탁주: "막걸리", 약주: "맑은 술", 청주: "쌀술", 증류주: "소주·화요", 과실주: "와인·복분자", 리큐르: "담금", 브랜디: "증류 과실", 허니와인: "벌꿀술" };
@@ -14,6 +15,7 @@ export default function Home() {
   const [sp] = useSearchParams();
   const today = todayPairing();
   const recent = recentStore.use();
+  const popular = usePopular();
 
   return (
     <main className="px-5 pt-6">
@@ -65,16 +67,16 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section label="인기 검색어 · 최근 1개월">
+      <Section label={popular.source === "logs" ? "인기 검색어 · 실제 검색 기준" : "인기 검색어 · 최근 1개월"}>
         <div className="text-[11.5px] font-bold text-ink2 mt-3">술</div>
         <div className="flex flex-wrap gap-2 mt-1.5">
-          {POPULAR.map((d, i) => <Link key={d.id} to={`/drink/${d.id}`} className="chip"><b className="text-drink text-[11.5px]">{i + 1}</b>{d.alias}</Link>)}
+          {popular.drinks.map((d, i) => <Link key={d.id} to={`/drink/${d.id}`} className="chip"><b className="text-drink text-[11.5px]">{i + 1}</b>{d.name}</Link>)}
         </div>
         <div className="text-[11.5px] font-bold text-ink2 mt-3">음식</div>
         <div className="flex flex-wrap gap-2 mt-1.5">
-          {POPULAR_FOODS.map((f, i) => <Link key={f.id} to={`/food/${f.id}`} className="chip"><b className="text-food text-[11.5px]">{i + 1}</b>{f.name}</Link>)}
+          {popular.foods.map((f, i) => <Link key={f.id} to={`/food/${f.id}`} className="chip"><b className="text-food text-[11.5px]">{i + 1}</b>{f.name}</Link>)}
         </div>
-        <p className="text-[10.5px] text-muted mt-2.5 leading-relaxed">{TREND_NOTE}</p>
+        <p className="text-[10.5px] text-muted mt-2.5 leading-relaxed">{popular.source === "logs" ? "페어링GO 사용자들이 최근 30일 동안 실제로 검색한 순서예요." : TREND_NOTE}</p>
       </Section>
 
       {recent.length > 0 && (

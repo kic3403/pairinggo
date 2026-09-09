@@ -1,0 +1,24 @@
+{
+  "name": "@pairinggo/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "페어링GO Supabase(Postgres) 마이그레이션·시드 — Supabase CLI·Docker 없이 postgres 드라이버로 실행",
+  "scripts": {
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts",
+    "status": "tsx src/migrate.ts --status",
+    "export": "tsx src/export.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pairinggo/shared": "workspace:*",
+    "dotenv": "^17.4.2",
+    "postgres": "^3.4.9"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.0"
+  }
+}
