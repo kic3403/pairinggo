@@ -1,11 +1,11 @@
 # 페어링GO
 
 술↔음식 양방향 페어링 추천 → (Stage 2) 전통주 앱 내 구매 → (Stage 3) 식당 자체 예약. 토스 앱인토스 미니앱이 주력.
-기획·설계 문서는 docs/ (00~07). 작업 전 해당 Phase를 읽는다: docs/05_개발로드맵_Phase별.md
+기획·설계 문서는 docs/ (00~08). 작업 전 해당 Phase를 읽는다: docs/05_개발로드맵_Phase별.md
 현재 Phase: **1 완료 (2026-09-09, docs/08 결과보고)** → 다음 **Phase 2** (Supabase 스키마·시드·공개 API). 서버·로그인·결제 아직 없음
 
 ## 구조 (pnpm workspaces)
-- apps/miniapp      Vite + React 18 + TS + Tailwind v4 + react-router. @apps-in-toss/web-framework. **정적 번들만(SSR·서버 코드 금지)**. `pnpm --filter miniapp dev|build`
+- apps/miniapp      Vite + React 19 + TS + Tailwind v4 + react-router 7. @apps-in-toss/web-framework 3.x (apps-in-toss.config.ts, 테스트는 AIT Devtools 브라우저). **정적 번들만(SSR·서버 코드 금지)**. `pnpm --filter miniapp dev|build`
 - packages/shared   @pairinggo/shared — 데이터(data/pairings.json)·타입·검색 엔진(search/)·페어링 점수(pairing/)·유사도·지역·별점. Vitest
 - scripts/          check-links.mjs (주간 구매 링크 점검 → packages/shared/data/link-status.json)
 - (Phase 2+) apps/web Next.js API·파트너 어드민, packages/db Supabase
