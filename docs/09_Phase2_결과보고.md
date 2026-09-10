@@ -53,8 +53,17 @@
 | 미니앱 ↔ API | 마이 화면 "카탈로그 서버 · static-4f3 · 방금 갱신" (핫스왑 경로 동작), 이벤트 POST 202, 서버 꺼도 내장 데이터로 정상 |
 | 발견·수정 | 화면 로그의 `name` 필드가 개인정보 금지 목록에 걸려 400 반복 → 필드명 `path`로, 4xx 거부 배치는 큐에서 제거(재시도 폭주 방지) |
 
-### 아직 못 한 검증 (Supabase 프로젝트 필요)
-`db migrate`·`db seed` 실제 실행, `/catalog` `x-pairinggo-source: db`, `events`·`search_logs` 적재, 크론으로 `popular_terms` 채워지는지, RLS 동작.
+### DB 모드 검증 (2026-09-10, Supabase 연결 후)
+
+| 항목 | 결과 |
+|---|---|
+| `pnpm db:migrate` | 0001~0004 적용 (0004: Supabase safeupdate — WHERE 없는 DELETE 금지 — 대응) |
+| `pnpm db:seed` | drinks 108 · foods 110 · pairings 851 · evidence 281 · 스냅샷 1 · version `2026-09-10T02:29:05Z` |
+| `/api/v1/catalog/version` | `source: db`, ETag = DB 버전 |
+| `POST /events` | `stored: true`, `search_logs` 자동 적재 |
+| `/api/cron/popular` | `popularTerms`·`pairingFeedback` 집계 성공 → `/popular` `source: logs` |
+| RLS | 12개 테이블 전부 켜짐 (`pnpm db:status`) |
+| 겪은 문제 | `SUPABASE_URL`을 대시보드 주소로 잘못 넣음 → service_role JWT의 `ref`로 복원. `DATABASE_URL`은 Session pooler 사용 |
 
 ## 4. 사용자가 할 일 — Supabase 연결 (10분)
 
