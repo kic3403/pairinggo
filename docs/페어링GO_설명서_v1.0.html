@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>페어링GO 설명서 v1.0</title>
+<style>
+  @page { size: A4; margin: 16mm 16mm 18mm 16mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; color: #1F1E1C; font-size: 10.5pt; line-height: 1.6; }
+  .navy { color: #22406B; } .verm { color: #E4572E; }
+  .mark { display: flex; margin-bottom: 14px; }
+  .mark i { display: block; width: 26px; height: 26px; border-radius: 50%; }
+  .mark i:first-child { background: #22406B; } .mark i:last-child { background: #E4572E; margin-left: -8px; opacity: .92; }
+  .eyebrow { font-size: 8pt; letter-spacing: .18em; color: #8C8C88; font-weight: 600; margin: 0 0 4px; }
+  h1 { font-size: 26pt; margin: 0 0 10px; letter-spacing: -.01em; }
+  h2 { font-size: 15pt; margin: 0 0 8px; break-after: avoid; }
+  h3 { break-after: avoid; }
+  .eyebrow { break-after: avoid; }
+  table, .steps, .arch, .note, pre { break-inside: avoid; }
+  tr { break-inside: avoid; }
+  h3 { font-size: 11.5pt; margin: 14px 0 4px; }
+  p { margin: 0 0 8px; }
+  .lede { font-size: 11.5pt; }
+  .meta { color: #8C8C88; font-size: 9pt; }
+  section { margin-top: 22px; padding-top: 16px; border-top: 1px solid #1F1E1C; break-inside: auto; }
+  section.break { break-before: page; border-top: 0; padding-top: 0; margin-top: 0; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #E6E4DF; border-bottom: 1px solid #E6E4DF; margin-top: 16px; }
+  .stats div { padding: 10px 8px 10px 0; border-bottom: 1px solid #E6E4DF; }
+  .stats div:nth-child(n+5) { border-bottom: 0; }
+  .stats b { display: block; font-size: 17pt; font-weight: 700; }
+  .stats span { font-size: 8.5pt; color: #8C8C88; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  th { text-align: left; font-size: 8pt; letter-spacing: .1em; color: #8C8C88; font-weight: 600; padding: 0 8px 6px 0; border-bottom: 1px solid #C9CBD2; }
+  td { padding: 6px 8px 6px 0; border-bottom: 1px solid #E6E4DF; vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 8px; }
+  .steps div { padding: 8px 12px 8px 0; border-left: 1px solid #E6E4DF; padding-left: 12px; }
+  .steps div:first-child { border-left: 0; padding-left: 0; }
+  .steps small { display: block; font-size: 8pt; color: #8C8C88; letter-spacing: .1em; }
+  .steps b { display: block; font-size: 11pt; margin: 2px 0; }
+  .steps p { font-size: 9pt; margin: 0; }
+  .chips { margin: 6px 0 4px; }
+  .chip { display: inline-block; font-size: 8.5pt; border: 1px solid #C9CBD2; border-radius: 999px; padding: 1px 8px; margin: 0 4px 4px 0; color: #4B4B4B; }
+  .note { border-left: 2px solid #22406B; padding: 4px 0 4px 12px; margin: 10px 0 0; font-size: 9.5pt; }
+  .note.v { border-color: #E4572E; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .tag { display: inline-block; font-size: 8pt; padding: 1px 6px; border-radius: 3px; background: #E6ECF5; color: #22406B; font-weight: 600; vertical-align: middle; }
+  .tag.v { background: #FBE9E2; color: #B33E1C; }
+  pre { font-family: "Consolas", "D2Coding", monospace; font-size: 7.6pt; line-height: 1.45; background: #F7F6F3; border: 1px solid #E6E4DF; padding: 10px 12px; margin: 8px 0; white-space: pre; overflow: hidden; }
+  .footer { margin-top: 28px; padding-top: 10px; border-top: 1px solid #E6E4DF; font-size: 8pt; color: #8C8C88; display: flex; justify-content: space-between; }
+  ul { margin: 4px 0 8px; padding-left: 18px; } li { margin-bottom: 3px; }
+  .kv td:first-child { width: 120px; color: #4B4B4B; }
+  .arch { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; font-size: 9pt; }
+  .box { border: 1px solid #C9CBD2; padding: 8px 10px; }
+  .box b { display: block; font-size: 10pt; margin-bottom: 2px; }
+  .box.full { grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+
+<div class="mark"><i></i><i></i></div>
+<p class="eyebrow">SERVICE GUIDE · V1.0</p>
+<h1>페어링<span class="verm">GO</span> 설명서</h1>
+<p class="lede">술을 검색하면 어울리는 음식을, 음식을 검색하면 어울리는 전통주를 <b>근거와 함께</b> 알려주고, 그 술을 살 수 있는 곳과 그 음식을 파는 내 주변 식당까지 이어주는 전통주 페어링 앱입니다. v1.0은 토스 앱인토스 미니앱으로 다시 만들고, 검색·추천을 끌어올리고, 서버와 데이터 축적 구조를 갖춘 버전입니다.</p>
+<p class="meta">기준일 2026년 9월 10일 · 토스 앱인토스 미니앱(SDK 3.x, 정적 번들) + 서버(Next.js API · Supabase) · 앱인토스 콘솔 등록·검수 제출 준비 단계</p>
+
+<div class="stats">
+  <div><b>108</b><span>전통주</span></div>
+  <div><b>110</b><span>음식·안주</span></div>
+  <div><b>851</b><span>근거·점수 있는 페어링</span></div>
+  <div><b>281</b><span>출처 인용 근거</span></div>
+  <div><b>72</b><span>자동 테스트 (검색·점수·데이터)</span></div>
+  <div><b>7 + 1</b><span>공개 API · 집계 크론</span></div>
+  <div><b>12</b><span>DB 테이블 (전부 RLS)</span></div>
+  <div><b>17/17</b><span>검색 케이스 검증</span></div>
+</div>
+
+<section>
+  <p class="eyebrow">WHY</p>
+  <h2>이런 질문에 답하려고 만들었습니다</h2>
+  <p>주류 앱(데일리샷 등)은 술 정보를, 식당 앱(캐치테이블 등)은 식당 발견과 예약을 다룹니다. 그런데 정작 술자리에서 가장 자주 나오는 질문 — <b>"이 술엔 뭘 먹지?", "이 음식엔 뭘 마시지?"</b> — 에는 어느 쪽도 답하지 않습니다. 페어링GO는 그 빈틈을 채우고, 답을 얻은 다음의 행동(술 사기, 식당 가기)까지 끊기지 않게 연결합니다.</p>
+  <p>첫 술 종류로 <b>전통주</b>를 고른 이유는 세 가지입니다. 페어링 정보가 가장 부족한 분야이고, 온라인 직배송이 법적으로 허용된 유일한 주류라 구매 연결이 자연스러우며, 품평회·양조장·명인이라는 이야깃거리가 풍부합니다. 최종 목표는 이 앱 안에서 <b>전통주를 사고(데일리샷처럼) 식당을 예약하는(캐치테이블처럼)</b> 것입니다.</p>
+</section>
+
+<section>
+  <p class="eyebrow">HOW IT WORKS</p>
+  <h2>기본 사용 흐름</h2>
+  <div class="steps">
+    <div><small>01</small><b>검색</b><p>술이든 음식이든 한 검색창에. 초성·오타·별칭·여러 단어, 그리고 "매운 안주에 어울리는 술" 같은 문장도 됩니다.</p></div>
+    <div><small>02</small><b>추천</b><p>어울리는 상대를 종합·전문가·대중 3가지 순위로. 카드마다 근거 출처와 인용문, 점수 산출 근거가 붙습니다.</p></div>
+    <div><small>03</small><b>상세</b><p>술 정보·수상 이력·맛 프로필 레이더·온라인/오프라인 구매처. 음식은 맛 태그와 어울리는 술.</p></div>
+    <div><small>04</small><b>행동</b><p>양조장 공식몰로 이동하거나 내 주변 식당을 찾습니다. (앱 내 구매·예약은 다음 단계)</p></div>
+  </div>
+</section>
+
+<section class="break">
+  <p class="eyebrow">WHAT'S NEW IN V1.0</p>
+  <h2>v0.9에서 달라진 것</h2>
+  <table>
+    <tr><th>영역</th><th>v0.9 (2026-09-01)</th><th>v1.0 (2026-09-10)</th></tr>
+    <tr><td>플랫폼</td><td>Next.js 웹앱 (서버 렌더링)</td><td>토스 앱인토스 미니앱 — Vite + React 정적 번들. 앱인토스는 SSR을 받지 않아 구조를 분리했습니다</td></tr>
+    <tr><td>검색</td><td>이름·별칭 부분일치, 초성</td><td>띄어쓰기·오타·조합 중 입력·종류 동의어(막걸리=탁주)·양조장·지역·여러 단어 AND · <b>상황 검색</b>(문장 해석) · 결과 없음 제안</td></tr>
+    <tr><td>추천 순위</td><td>전문가 / 대중 2탭</td><td><b>종합 탭</b>(전문가 60% + 대중 25% + 맛 프로필 15% + 출처 가산, 편중 보정) 기본 + 기존 2탭. 카드에 산출 근거 표시</td></tr>
+    <tr><td>홈</td><td>검색·인기·오늘의 페어링·대통령상</td><td>상황 검색 예시 칩 → <b>종류별 탐색 8종</b> → 지역 술 → 오늘의 페어링 → 대통령상 → 인기(실검색 기준) → 최근</td></tr>
+    <tr><td>둘러보기</td><td>—</td><td>종류·지역·양조장·음식 분류 목록. 정렬 5종, 도수 구간·맛 태그 필터</td></tr>
+    <tr><td>술 상세</td><td>●○ 척도, 구매 링크</td><td><b>5축 레이더</b>, 맛 프로필 거리를 반영한 유사 술, 직판 확인 카드(주소·길찾기·전화), 온라인 판매 불가 7종 배지</td></tr>
+    <tr><td>데이터</td><td>번들 내장 JSON</td><td>Supabase에 원장 저장 → 앱이 시작할 때 최신 카탈로그를 받아 <b>재검수 없이 갱신</b>(내장 JSON은 오프라인 폴백)</td></tr>
+    <tr><td>로그</td><td>기기에만</td><td>검색·카드 탭·저장·구매 클릭이 서버로 → 인기 검색어·페어링 피드백 집계(크론). 개인정보 없음</td></tr>
+    <tr><td>축적 구조</td><td>—</td><td>출처 마스터·후보 큐·근거 보강·피드백·스냅샷 테이블 — 페어링을 "근거가 붙은 주장"으로 쌓는 파이프라인</td></tr>
+  </table>
+</section>
+
+<section class="break">
+  <p class="eyebrow">SEARCH</p>
+  <h2>검색은 이렇게 동작합니다</h2>
+  <p>이름 검색은 <b>정확 &gt; 접두 &gt; 부분 &gt; 자모 접두(조합 중) &gt; 초성 &gt; 오타(자모 편집거리)</b> 순으로 점수를 매기고, 트렌드·수상을 가산합니다. 문장은 규칙 파서가 "주어(조건)"와 "대상(술/음식)"으로 나눠, 조건에 맞는 주어들의 페어링을 모아 순위를 냅니다. 해석이 안 되면 이름 검색으로 돌아갑니다.</p>
+  <table>
+    <tr><th>검색어</th><th>처리</th><th>상위 결과</th></tr>
+    <tr><td>복순도가 막걸리</td><td>여러 단어 AND (별칭 + 종류)</td><td>복순도가 손막걸리</td></tr>
+    <tr><td>복손도가</td><td>오타 허용</td><td>복순도가 손막걸리 · 복순도가(양조장)</td></tr>
+    <tr><td>복순ㄷ</td><td>조합 중 입력</td><td>복순도가 손막걸리</td></tr>
+    <tr><td>ㅂㅅㄷㄱ</td><td>초성</td><td>복순도가 손막걸리 · 백걸리 · 백술도가</td></tr>
+    <tr><td>막걸리</td><td>종류 동의어 → 둘러보기</td><td>탁주(34종) · 딸기막걸리 · 금정산성막걸리 …</td></tr>
+    <tr><td>제주 증류주</td><td>지역 + 종류 AND</td><td>고소리술</td></tr>
+    <tr><td>매운 안주에 어울리는 술</td><td>상황: 매운 음식 24종 → 술</td><td>팔팔막걸리 · 복순도가 · 지평생막걸리</td></tr>
+    <tr><td>도수 낮은 달달한 막걸리</td><td>상황: 단맛≥4 · 도수≤8 · 탁주</td><td>딸기막걸리 · 술샘 이화주 · 공주 밤막걸리</td></tr>
+    <tr><td>선물용 증류주</td><td>상황: 증류주 · 수상작 우선</td><td>추사50 · 가무치소주 25도 · 이도42</td></tr>
+    <tr><td>회에 어울리는 드라이한 술</td><td>상황: 회 분류 7종 → 단맛≤2 술</td><td>문배주 · 금정산성막걸리 · 세종대왕어주</td></tr>
+    <tr><td>복순도가에 어울리는 안주</td><td>상황: 특정 술 → 음식</td><td>막국수 · 팝콘 · 떡볶이</td></tr>
+    <tr><td>없는이름xyz</td><td>결과 없음</td><td>비슷한 이름 제안 · 종류 칩 · 인기 검색어</td></tr>
+  </table>
+  <p class="note">인식하는 상황 단서 — 맛(매운·기름진·담백·달달·드라이·상큼·탄산·묵직·가벼운·향긋 …), 도수(낮은/높은/N도 이하·이상), 종류 동의어, 음식 분류(회·구이·전·해산물·치킨·분식·디저트·양식·중식·일식·튀김·면), 지역, 수상(대통령상·수상작), 선물. 그 밖의 문장은 다음 단계(AI 폴백)에서 다룹니다.</p>
+</section>
+
+<section>
+  <p class="eyebrow">EVIDENCE</p>
+  <h2>추천에는 근거가 있습니다</h2>
+  <p>페어링 851건 전부에 출처 등급이 붙어 있고, 281건은 출처 링크와 인용문을 함께 보여줍니다. 종합 탭은 이 근거를 아래 공식으로 하나의 점수(0~100)로 합칩니다.</p>
+  <table>
+    <tr><th>구성</th><th>비중</th><th>설명</th></tr>
+    <tr><td>전문가 점수</td><td>60%</td><td>출처 등급별 점수대(양조장 공식 95~97 · 소믈리에·명인 92~94 · 전문 매체 88~91 · 맛 프로필 84~87)를 0~100으로 정규화</td></tr>
+    <tr><td>대중 언급량</td><td>25%</td><td>네이버 블로그 실측 언급 건수(로그 스케일, 같은 술/음식 안에서 정규화)</td></tr>
+    <tr><td>맛 프로필</td><td>15%</td><td>술 5축(단맛·산미·바디·탄산·향)과 음식 6축(기름기·매운맛·감칠맛·짠맛·단맛·무게)을 규칙으로 대조한 0~100</td></tr>
+    <tr><td>출처 가산</td><td>+4 / +3 / +1.5</td><td>양조장 공식 / 소믈리에·명인 / 전문 매체</td></tr>
+    <tr><td>편중 보정</td><td>−5</td><td>상위 5에 같은 음식 분류(또는 술 종류)가 3개 이상이면 3번째부터 감점 — 다양성 확보</td></tr>
+  </table>
+</section>
+
+<section class="break">
+  <p class="eyebrow">SCREENS</p>
+  <h2>화면별 기능</h2>
+  <h3>홈 <span class="tag">시작 화면</span></h3>
+  <p>큰 검색창과 상황 검색 예시 칩("매운 안주에 어울리는 술" 등). 아래로 종류별 탐색(탁주 34 · 증류주 27 · 약주 20 · 과실주 15 · 허니와인 5 · 리큐르 4 · 청주 2 · 브랜디 1), 관심지역의 우리술, 날마다 바뀌는 오늘의 페어링, 우리술품평회 대통령상, 인기 검색어(실제 검색 집계가 있으면 그 순서, 없으면 트렌드), 최근 검색.</p>
+  <div class="chips"><span class="chip">검색창</span><span class="chip">상황 예시 칩</span><span class="chip">종류별 8칩</span><span class="chip">지역 술</span><span class="chip">오늘의 페어링</span><span class="chip">대통령상</span><span class="chip">인기 검색어</span><span class="chip">최근 검색</span></div>
+
+  <h3>검색 <span class="tag">자동완성 · 상황 검색</span></h3>
+  <p>입력과 동시에 술·음식·둘러보기(종류/지역/양조장) 후보가 뜨고, 문장으로 해석되면 "상황 검색" 카드가 먼저 제안됩니다. Enter는 1순위로 이동. 결과 화면은 상황 검색이면 조건 칩 + 근거 있는 순위, 이름이면 술/음식/둘러보기 그룹, 둘 다 없으면 비슷한 이름·종류·인기 검색어를 제안합니다.</p>
+
+  <h3>추천 결과 <span class="tag v">핵심 화면</span></h3>
+  <p><b>종합</b>(기본) · <b>전문가 추천</b> · <b>대중 추천</b> 3탭. 카드마다 순위, 점수, 추천 이유, 근거 출처(링크·인용문·추천자), 맛 프로필 점수와 근거, 종합 탭에서는 "전문가 85 · 언급 70 · 프로필 49 · 출처 +4" 식의 산출 근거. 음식 카드엔 <b>내 주변 식당</b>, 술 카드엔 <b>구매·판매점</b> 바로가기.</p>
+
+  <h3>술 상세</h3>
+  <p>종류·도수·지역·양조장, 설명, 수상 배지, 맛 태그, <b>5축 레이더</b>. 온라인 구매는 양조장 공식몰·전통주 전문몰의 실제 상품 페이지로 이동(108종 중 96종), 링크가 죽으면 네이버쇼핑으로 폴백. 온라인 판매가 법적으로 안 되는 술(화요·일품진로·백세주 등 7종)은 그 사실을 알리고 오프라인만 안내. 오프라인은 직판이 확인된 양조장(76곳)의 주소·전화·길찾기. 아래에 어울리는 음식 순위와 비슷한 술 3종.</p>
+
+  <h3>음식 상세 · 내 주변 식당</h3>
+  <p>맛 태그·프로필, 어울리는 술 순위, 비슷한 음식. 내 주변 식당은 지금 관심지역(전국·수도권 세부 20곳·광역시·도) 또는 현재 위치 기준으로 네이버지도 검색에 연결합니다. 앱 안의 별점순 식당 목록과 지도는 다음 단계(카카오 로컬 API)입니다.</p>
+
+  <h3>둘러보기 · 저장 · 연관 추천 · 마이</h3>
+  <p>둘러보기는 종류·지역·양조장·음식 분류별 목록에 인기·수상·도수·이름 정렬과 도수 구간·맛 태그 필터. 저장은 페어링 조합·술·음식·식당을 이 기기에 모아두고, 연관 추천은 최근 검색을 바탕으로 비슷한 술·맛집·베스트 술을 이어줍니다. 마이에서는 관심지역·저장·카탈로그 버전(서버/내장)을 보고 기기 데이터를 초기화할 수 있습니다. 로그인은 아직 없습니다.</p>
+</section>
+
+<section class="break">
+  <p class="eyebrow">ARCHITECTURE</p>
+  <h2>두 개의 앱, 하나의 데이터</h2>
+  <div class="arch">
+    <div class="box"><b>apps/miniapp — 토스 앱 안</b>Vite + React 19 · 앱인토스 SDK 3.x · 정적 번들(pairinggo.ait). 검색·추천은 기기에서 즉시 계산. 시작 시 서버 카탈로그 버전을 비교해 다르면 내려받아 교체하고 로컬에 캐시. 서버가 없어도 내장 데이터로 동작.</div>
+    <div class="box"><b>apps/web — 서버 (Next.js, Vercel)</b>공개 API 7개 + 집계 크론. Supabase에서 카탈로그를 조립해 5분 캐시, ETag로 304 응답. 검색 로그·퍼널 이벤트 수집. Supabase 키가 없으면 내장 데이터로 응답(정적 폴백).</div>
+    <div class="box"><b>packages/shared — 공용 로직</b>데이터 타입, 검색 엔진(정규화·자모·오타·동의어·상황 파서), 종합 점수, 유사도, 지역 정의, zod 스키마. 미니앱과 서버가 같은 코드를 쓴다. 자동 테스트 72개.</div>
+    <div class="box"><b>packages/db — Supabase</b>마이그레이션 4개(카탈로그 · 로그 · 축적 구조 · 안전장치 대응), 시드(108/110/851 검증), 상태 확인, DB→JSON 역내보내기. CLI·Docker 없이 실행.</div>
+  </div>
+  <table>
+    <tr><th>API</th><th>동작</th></tr>
+    <tr><td>GET /api/v1/catalog</td><td>전체 카탈로그 + 버전 (ETag, CDN 5분 캐시, 304)</td></tr>
+    <tr><td>GET /api/v1/catalog/version</td><td>버전·개수·출처 — 앱이 시작 시 가볍게 비교</td></tr>
+    <tr><td>GET /api/v1/drinks/:id · /foods/:id</td><td>상세 + 페어링 (공유·딥링크용)</td></tr>
+    <tr><td>GET /api/v1/search?q=</td><td>서버에서 같은 검색 엔진 실행 + 검색 로그 적재</td></tr>
+    <tr><td>GET /api/v1/popular</td><td>실제 검색 집계 상위 10/10, 없으면 트렌드</td></tr>
+    <tr><td>POST /api/v1/events</td><td>퍼널 이벤트 배치 (개인정보 필드 거부, 32KB 제한)</td></tr>
+    <tr><td>GET /api/cron/popular</td><td>매일 03:00 KST — 인기 검색어·페어링 피드백 집계</td></tr>
+  </table>
+  <p class="note">앱인토스 제약을 그대로 반영한 설계입니다 — 미니앱에 서버 코드·SSR 없음, 로그인은 토스 로그인만(다음 단계), 실물 결제는 토스페이만(구매 단계), 외부 링크는 "추천 후 구매 플랫폼 이동" 예외 문구("양조장 공식몰로 이동")로만.</p>
+</section>
+
+<section class="break">
+  <p class="eyebrow">DATA</p>
+  <h2>데이터는 이렇게 쌓고 저장합니다</h2>
+  <p>원칙은 하나입니다. <b>페어링은 '관계'가 아니라 '근거가 붙은 주장'으로 저장한다.</b> 쓰기는 Postgres(원장), 읽기는 버전이 붙은 스냅샷 JSON(API·앱 캐시), git의 pairings.json은 백업·시드입니다.</p>
+  <pre>후보 수집 ─▶ pairing_candidates  원문·출처·매칭 ID·상태(draft/needs_entity/rejected/promoted)
+   │ origin: 양조장 공식 · 소믈리에 · 매체 · 블로그 · 검색 로그(없던 검색어) · 맛 프로필 규칙 · AI 초안 · 사용자
+   ▼
+정규화·검수 ─▶ pairings (curated) + pairing_evidence (근거 여러 개: 출처·URL·인용·캡처·스냅샷)
+   │            sources (출처 마스터: 매체·양조장·인물, 기본 등급·신뢰도)
+   ▼
+배포 ─▶ catalog_meta.version + catalog_snapshots (버전별 JSON, 롤백) ─▶ 앱 핫스왑
+   ▲
+암묵 신호 ─▶ events ─▶ pairing_feedback (카드 탭·저장·구매 클릭 집계 → 순위 보정)
+검색 로그 ─▶ search_logs ─▶ popular_terms (인기 검색어 · 없는 검색어 = 확장 우선순위)</pre>
+  <table>
+    <tr><th>항목</th><th>규모</th><th>출처 · 방법</th></tr>
+    <tr><td>전통주</td><td>108종</td><td>대표 전통주 60종 + 우리술품평회 수상작 47종 + 감싸주는 날. 온라인 판매 불가 7종 표시</td></tr>
+    <tr><td>음식</td><td>110종</td><td>한식·구이·전·회·해산물·분식·디저트·양식·중식·일식 등, 맛 프로필 6축</td></tr>
+    <tr><td>페어링</td><td>851건</td><td>술당 5개 이상. 출처 등급 4단계 + 맛 프로필 점수 + 추천 이유. 아귀찜 1종만 페어링 없음(보강 대상)</td></tr>
+    <tr><td>근거</td><td>281건</td><td>양조장 공식·소믈리에·명인·전문 매체의 출처 링크·인용문·추천자</td></tr>
+    <tr><td>대중 언급량</td><td>전 조합</td><td>네이버 블로그 검색 API 실측 (2026-08)</td></tr>
+    <tr><td>구매처</td><td>온라인 96 · 오프라인 88 양조장</td><td>공식몰·스마트스토어·전문몰 상품 페이지, 직판 확인 76 / 없음 7 / 미확인 25. 주간 링크 점검</td></tr>
+  </table>
+</section>
+
+<section class="break">
+  <p class="eyebrow">ROADMAP</p>
+  <h2>지금 어디까지 왔고, 다음은</h2>
+  <table>
+    <tr><th>단계</th><th>내용</th><th>상태</th></tr>
+    <tr><td>Phase 1</td><td>앱인토스 미니앱 이식 + 검색·추천·홈·상세 개선</td><td><span class="tag">완료 · 9/9</span></td></tr>
+    <tr><td>Phase 2</td><td>Supabase 스키마·시드, 공개 API, 카탈로그 핫스왑, 데이터 축적 구조</td><td><span class="tag">완료 · 9/10</span></td></tr>
+    <tr><td>준비</td><td>앱인토스 콘솔 앱 등록 · 카카오 디벨로퍼스 키 · 사업자등록 · 정산대행·토스페이 청약</td><td><span class="tag v">진행 중</span></td></tr>
+    <tr><td>Phase 3</td><td>토스 로그인 · 카카오 로컬 식당 목록·지도 · 위치 SDK · 앱인토스 검수 제출</td><td>다음</td></tr>
+    <tr><td>Phase 4~6 (Stage 2)</td><td>양조장 입점 어드민 · 상품·재고 · 성인인증 · 토스페이 결제 · 주문·정산·CS — <b>전통주 앱 내 구매</b></td><td>약 5주</td></tr>
+    <tr><td>Phase 7~8 (Stage 3)</td><td>식당 어드민 · 슬롯·정원 · 요청→승인 → 즉시확정·예약금·노쇼 — <b>자체 예약</b></td><td>약 6주</td></tr>
+    <tr><td>Phase 9 (Stage 4)</td><td>AI 폴백 검색 · 바틀샵 스마트오더(픽업) · 리뷰·페어링 기록 · 광고 · 와인·위스키 확장</td><td>지속</td></tr>
+  </table>
+  <p class="note v"><b>법적 구조.</b> 전통주 구매는 양조장이 판매자(지방국세청 통신판매 승인), 페어링GO는 통신판매중개자 겸 주류 통신판매 수단제공자로 주류를 직접 사고팔거나 대금을 자기 계좌로 받지 않습니다. 결제는 토스페이 + 정산대행, 성인인증은 토스 인증(CI). 스마트오더는 매장 대면 인도만.</p>
+</section>
+
+<section>
+  <p class="eyebrow">NOTICE</p>
+  <h2>유의사항</h2>
+  <p class="note">주류는 만 19세 이상만 구매할 수 있습니다. 페어링GO v1.0은 판매자가 아니며 외부 판매처로의 링크만 안내합니다. 구매·배송·환불은 각 판매처 정책을 따릅니다. 식당 정보·지도는 네이버 제공 정보이며 실제 영업 여부와 재고는 방문 전 확인을 권합니다. 추천 근거로 인용한 문구의 저작권은 각 출처에 있으며, 앱은 출처와 링크를 함께 표기합니다. 대중 언급량은 인기의 참고 지표일 뿐 품질 보증이 아닙니다. 검색·이용 기록은 개인정보 없이 익명 집계에만 쓰입니다. 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다. 임신 중 음주는 기형아 출생 위험을 높입니다.</p>
+</section>
+
+<div class="footer"><span>페어링GO 설명서 v1.0 · 2026-09-10</span><span>저장소 D:\6. 페어링 앱 제작\pairinggo · 문서 docs/00~09</span></div>
+</body>
+</html>
