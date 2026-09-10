@@ -27,7 +27,7 @@ async function fromDb(): Promise<Catalog | null> {
     sb.from("catalog_meta").select("key,value").in("key", ["version"]),
     sb.from("drinks").select("*").order("id"),
     sb.from("foods").select("*").order("id"),
-    sb.from("pairings").select("*").neq("status", "hidden").order("id"),
+    sb.from("pairings").select("*").in("status", ["curated", "ai"]).order("id"),   // pending(검수 중)·hidden 제외
     sb.from("pairing_evidence").select("pairing_id,source,url,quote,who,tier").order("id"),
   ]);
   for (const r of [meta, drinks, foods, pairings, evidence]) if (r.error) throw new Error(r.error.message);

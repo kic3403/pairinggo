@@ -9,12 +9,17 @@
     "seed": "tsx src/seed.ts",
     "status": "tsx src/status.ts",
     "export": "tsx src/export.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "template": "tsx src/template.ts",
+    "collect": "tsx src/collect.ts",
+    "import-sheet": "tsx src/import.ts",
+    "pilot": "tsx src/pilot.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
     "dotenv": "^17.4.2",
-    "postgres": "^3.4.9"
+    "postgres": "^3.4.9",
+    "exceljs": "^4.4.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

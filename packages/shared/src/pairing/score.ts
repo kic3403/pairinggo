@@ -19,7 +19,7 @@ export type Scored<T extends Pairing = Pairing> = {
 };
 
 const ES_MIN = 84, ES_MAX = 97;
-const TIER_BONUS: Record<SrcTier, number> = { official: 4, sommelier: 3, media: 1.5, profile: 0, ai: 0 };
+const TIER_BONUS: Record<SrcTier, number> = { official: 4, sommelier: 3, media: 1.5, blog: 0.5, profile: 0, ai: 0 };
 const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
 
 export const WEIGHTS = { es: 0.6, blog: 0.25, pf: 0.15 } as const;

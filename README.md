@@ -23,6 +23,10 @@ pnpm build               # 전체 빌드 (miniapp → apps/miniapp/pairinggo.ait
 
 자세한 절차: [docs/09](docs/09_Phase2_결과보고.md) 4장.
 
+## 데이터 운영
+
+`pnpm db:import 파일.xlsx`(엑셀 후보) · `pnpm db:collect --top 10`(네이버·유튜브 수집, 키 필요) · 검수/발행은 `http://localhost:3000/admin` (`ADMIN_PASSWORD`). 규칙과 절차: [docs/11](docs/11_데이터수집_운영가이드.md)
+
 ## 구조
 
 | 경로 | 내용 |
@@ -30,8 +34,8 @@ pnpm build               # 전체 빌드 (miniapp → apps/miniapp/pairinggo.ait
 | `apps/miniapp` | Vite + React 미니앱 (정적 번들, 앱인토스 SDK 3.x) |
 | `apps/web` | Next.js 공개 API · 크론 · 랜딩 (Vercel) |
 | `packages/shared` | 데이터·검색 엔진·상황 검색·페어링 점수·유사도·zod 스키마 (Vitest) |
-| `packages/db` | Supabase 마이그레이션·시드·export |
-| `docs/` | 기획·설계·로드맵·결과보고 (00~09) |
+| `packages/db` | Supabase 마이그레이션·시드·export · 엑셀 가져오기·자동 수집 (docs/11) |
+| `docs/` | 기획·설계·로드맵·결과보고·운영 가이드 (00~11) |
 | `scripts/check-links.mjs` | 주간 구매 링크 점검 |
 
 계획과 규칙: [CLAUDE.md](CLAUDE.md), [docs/05 로드맵](docs/05_개발로드맵_Phase별.md)

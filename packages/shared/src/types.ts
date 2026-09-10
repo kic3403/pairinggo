@@ -28,8 +28,8 @@ export type Food = {
   trend?: Trend; alias?: string[]; profile?: FoodProfile; new?: boolean;
 };
 
-/** 출처 등급: 양조장 공식 > 소믈리에·명인 > 전문 매체 > 맛 프로필 (> ai: Phase 9) */
-export type SrcTier = "official" | "sommelier" | "media" | "profile" | "ai";
+/** 출처 등급: 양조장 공식 > 소믈리에·명인 > 전문 매체 > 블로그·카페 후기 > 맛 프로필 (> ai: Phase 9) */
+export type SrcTier = "official" | "sommelier" | "media" | "blog" | "profile" | "ai";
 export type Evidence = { source?: string | null; url?: string | null; quote?: string | null; who?: string | null };
 
 export type Pairing = {

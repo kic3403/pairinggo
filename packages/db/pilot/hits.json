@@ -1,0 +1,59 @@
+{
+  "note": "2026-09-10 파일럿 — 네이버 블로그·뉴스, 유튜브 검색 결과 (키 없이 MCP 도구로 수집). 검색어: {술} 안주",
+  "drinks": {
+    "d38": {
+      "query": "금정산성막걸리 안주",
+      "hits": [
+        { "kind": "blog", "title": "2013년 상반기 막걸리 정산", "desc": "4월 22일 / 우리쌀 참살이 생 막걸리 / 강환구 주가 / 참살이 L&F / 라면을 안주 삼아 먹어봄 8. 4월 28일... 6월 15일 / 금정산성 막걸리 / 금정산성토산주 / 처음 택배로 주문한 막걸리", "url": "https://koko8829.tistory.com/1409", "author": "열이아빠의 어쨌거나 저쨌거나" },
+        { "kind": "blog", "title": "여행이좋다 :: 금정산성 막걸리... 부산 먹거리 민속주 전통주 산성", "desc": "막걸리 안주론 최고... 금정산성 막걸리... 어찌보면 특별한 먹거리는 아닙니다만, 한번 정도는 먹어볼만한 술이라 생각합니다.", "url": "https://noproblemyourlife.tistory.com/1597", "author": "여행이좋다" },
+        { "kind": "blog", "title": "연산동 술집 / 골목안식당 2021년 11월", "desc": "올해도 여전한 가성비 넘치는 안주 기본 땅콩과 오이 당근만으로도 술이 쭉쭉... 금정산성막걸리 4천원 이게 그냥 이렇게 좋은 술집을 이제야 발견하다니... 닭백숙을 주문하고 기다리는", "url": "https://humham.tistory.com/929", "author": "40대 아저씨" },
+        { "kind": "blog", "title": "금정산성 북문국수, 따끈한 손두부에 산성막걸리 한잔", "desc": "손두부와 비빔국수를 안주로 반주삼아 가볍게 막걸리 한 병. 유통되는 금정산성 막걸리는 두 가지인데 시중에는 6도짜리 산성막걸리가 일반적이다.", "url": "https://june1012.tistory.com/271", "author": "맛있는부산" },
+        { "kind": "blog", "title": "[막걸리후기]금정산성막걸리, 민속주 1호의 시큼한 위엄", "desc": "1) 제품명 : 금정산성막걸리 2) 구매처(구매시기) : 창원 주점(2017.08) 3) 가격 : 4000원 안주도 나오기 전에 벌컥 들키켰습니다. 나름 적잖은 막걸리를 마셔봤지만 첫 느낌은 '아! 쉽지 않다", "url": "https://drinkingstory.tistory.com/126", "author": "술마시는 이야기" },
+        { "kind": "blog", "title": "[부산여행/금정구]금정산성막걸리축제장엔 막걸리만 있는게 아니었다", "desc": "둔 막걸리를 건져 올려 안주라곤 고추,상추 한소쿠리 뜯어 막걸리 한잔에 목을 축이면 금정산이 눈", "url": "https://www.walkview.co.kr/1337", "author": "워크뷰의 맛있는 도보여행" },
+        { "kind": "blog", "title": "막걸리학교, 사당역, 송명섭, 금정산성, 김포금쌀 선호, 파전", "desc": "분위기 자체가 일반 선술집 막걸리가 아니라 젊은 취향에 맞는 퓨젼 막걸리 분위기다. 안주로 파전을 시켰다. 사이드 반찬을 별거 없지만 메인 안주가 맛도 있고, 양도 많았다", "url": "https://flightsim.tistory.com/267", "author": "Life goes on" },
+        { "kind": "blog", "title": "델포니의 이것저것정보", "desc": "대부분 막걸리와 잘 어울리는 안주류라고 보시면 좋을듯 합니다. 그래서인지 막걸리 종류도 꽤... 팔도막걸리(느린마을, 호랑이, 옛고, 송명섭, 금정산성, 배다리 등)도 맛볼 수 있어", "url": "https://waegwanlife.tistory.com/2813", "author": "델포니의 이것저것정보" },
+        { "kind": "blog", "title": "[서울/서초] 락희옥 서초교대역점 - 교대역 한식 요리주점", "desc": "22,000원 금정산성막걸리 : 750mL 8,000원 이 외에도 다양한 단품 식사 메뉴와 안주, 점심 정식 메뉴가 있습니다.", "url": "https://worldtravellerjp.tistory.com/506", "author": "세실리아의 여행라이프" },
+        { "kind": "blog", "title": "새해 첫 산행 및 산악회 시산제-금정산", "desc": "금정산성마을로 옮겨, 음식점에서 준비한 금정산성막걸리와 함께 집행부에서 특별히 준비한 와인을 오리고기를 안주로", "url": "https://travelyoungdo.tistory.com/247", "author": "여행 스케치" },
+        { "kind": "blog", "title": "동래 술집 한술당 - 바지락 술찜과 금정산성 막걸리", "desc": "어쩔 수 없이 금정산성 막걸리 주문. 부드러우면서도 짭쪼롬한게 술안주로 제격이다. 그러나 너무 느긋하게 먹으면 쫀드기가 굳어서 딱딱해지니", "url": "https://jboo.tistory.com/421", "author": ":D" },
+        { "kind": "blog", "title": "금정산 고당봉 산행", "desc": "미리 준비된 음식점에서는 오리구이와 오리백숙을 안주로 이곳의 토속주 금정산성막걸리를 곁들이며", "url": "https://travelyoungdo.tistory.com/284", "author": "여행 스케치" },
+        { "kind": "blog", "title": "토요일은 밥이 좋아 사당 모둠 전 토밥즈 위치", "desc": "금정산성 막걸리는 신맛이 강한 이색전인 막걸리 대학 다닐 때 이후로 10년만에 와본 전주전집. 여전히 맛있고", "url": "https://pyungtalife.tistory.com/2277", "author": "평타인생" },
+        { "kind": "blog", "title": "산악회 시산제를 겸한 금정산 산행", "desc": "흐르는 땀을 식히면서 어묵을 안주로 금정산성 막걸리를 한잔씩 나누어 마시면서 잠시 쉬어가는 시간", "url": "https://travelyoungdo.tistory.com/568", "author": "여행 스케치" },
+        { "kind": "blog", "title": "깊어가는 가을, 금정산의 매력", "desc": "문화재로까지 지정된 금정산성 막걸리에 도토리묵과 부추전을... 가격은 막걸리가 3천원이었고, 안주는 각각 8천원 정도", "url": "https://eyehole.tistory.com/118", "author": "아이홀의 요모조모" },
+        { "kind": "blog", "title": "부산의 갈맷길을 걷다", "desc": "1호인 금정산성 막걸리와 함께 파전과 도토리 묵을 안주로 시원하게 목을 추기는 시간", "url": "https://travelyoungdo.tistory.com/171", "author": "여행 스케치" },
+        { "kind": "blog", "title": "금정산 산행-산악회 창립 기념", "desc": "집행부에서 미리 준비한 오리탕과 오리구이를 안주로 소주와 맥주 그리고 이곳 금정산성의 토속주 금정산성 막걸리를 곁들이면서", "url": "https://travelyoungdo.tistory.com/470", "author": "여행 스케치" },
+        { "kind": "blog", "title": "술 맛 나는 수영 만복국수", "desc": "시원한 막걸리 한잔을 했습니다 금정산성막걸리.. 정말 걸죽하죠? 맛있는 안주와 술이 땡기신다면! 수영 만복국수 꼭 한번", "url": "https://ideaky.tistory.com/33", "author": "Challenge_" },
+        { "kind": "blog", "title": "금정산(범어사108-16) :: 다산책방", "desc": "아직도 따끈따끈한 파전을 안주로 금정산성 막걸리를 마셨다. 파전이 큼지막해서 배가 불렀다.", "url": "https://fortea.tistory.com/7770007", "author": "다산책방" },
+        { "kind": "news", "title": "[박상현의 끼니] 금정산성막걸리와 겨울 안주", "desc": "이맘때 금정산성막걸리 최고의 안주로 내가 꼽는 네 가지는 새우 육젓 어리굴젓 대구알젓 가자미식해다. 이 넷은 모두 젓갈류로 매우 짜다. 그래서 막걸리에 제격이다.", "url": "http://www.kookje.co.kr/news2011/asp/newsbody.asp?code=1700&key=20250217.22021004470", "author": "국제신문" },
+        { "kind": "news", "title": "[위클리포유 커버 스토리] 술, 테마가 되다(3) 부산을 담은 '금정산성막걸리'", "desc": "수제 방식으로 하면 누룩을 대량생산하기는 힘들지만, 질 좋은 막걸리를 얻을 수 있다고 설명했다. 금정산성막걸리와 잘 맞는 안주로는 '파전'을 추천했다.", "url": "https://www.yeongnam.com/web/view.php?key=20230324010003207", "author": "영남일보" },
+        { "kind": "news", "title": "[조승연 PD의 맛썰] 시큼한 개성, 금정산성 막걸리", "desc": "기름진 안주는 당연히 좋고, 수육 같은 담백한 고기 안주를 권한다. 담백한 속에", "url": "https://www.ziksir.com/news/articleView.html?idxno=100784", "author": "직썰" },
+        { "kind": "news", "title": "\"한국막걸리 95%가 일본식…금정산성막걸리는 500년 전통 그대로\"", "desc": "술을 만들고 난 뒤 딱 3일 된 금정산성막걸리를 드셔보세요. 마지막으로 안주는 부산 회무침을 추천합니다. 월간산 7월호 기사입니다.", "url": "http://san.chosun.com/news/articleView.html?idxno=24878", "author": "월간산" },
+        { "kind": "news", "title": "맛과 멋이 곁들여져 취한다, 취해! 금정막걸리", "desc": "사실 금정산성 막걸리는 별다른 안주 없이 술 자체만으로도 충분히 맛과 멋을 즐길 수 있다.", "url": "http://www.travelitoday.com/read/contentsView/654/25", "author": "트래블아이투데이" },
+        { "kind": "news", "title": "맛잘알 추천! 명절 음식과 잘 어울리는 지역 특산 막걸리 10", "desc": "부산 — 금정산성 막걸리 부산 토박이들이 먼저 찾는 '산성 막걸리'로, 현지에서 바로 마실 때 청량감이... 안주를 먹지 않아도 든든해 가벼운 안주와 먹는 것을 추천한다.", "url": "https://www.gqkorea.co.kr/2025/10/06/", "author": "GQ Korea" },
+        { "kind": "news", "title": "금정산성 역사와 함께한 '박정희 술'…대한민국 대표 막걸리로 [술도락]", "desc": "막걸리 하면 떠오르는 가장 기본적인 맛. 전통의 강자답게 파전·도토리묵 안주가 생각난다.", "url": "https://www.busan.com/view/busan/view.php?code=2023050917402381395", "author": "부산일보" },
+        { "kind": "youtube", "title": "금정산성 막걸리. 식초야? 막걸리야! 500년 전통방식을 이어온 대한민국 민속주1호 | 슈바이학센을 빙자한 돼지족발.", "desc": "막걸리 #금정산성 #막믈례 금정산성 막걸리 막걸리 명인, 유청길님이 만드는 대한민국 민속주 1호.", "url": "https://www.youtube.com/watch?v=xtmBQ7Llb74", "author": "탁하면 막믈례" }
+      ]
+    },
+    "d01": {
+      "query": "복순도가 안주",
+      "hits": [
+        { "kind": "blog", "title": "강남맛집 / 부엉이산장 / 퓨전한식&전통주 주점", "desc": "강남역 안주맛집, 부엉이산장. 경우 복순도가(35.0)부터 장수막걸리(5.0)까지 있다", "url": "https://hellosol.tistory.com/88", "author": "Hello_Sol" },
+        { "kind": "blog", "title": "복순도가 손막걸리", "desc": "한번 먹어 보라며 복순도가 손막걸리를... 아주 독특한 맛이었고 기름기가 많아 조금 느끼할 수 있는 방어회보다는 맵고 톡쏘는 홍어무침 같은 안주와 더 잘", "url": "https://chenjy.tistory.com/3156", "author": "초하류의 SonEAGari" },
+        { "kind": "blog", "title": "여행이좋다 :: 복순도가 손막걸리... 울산 전통주 막걸리", "desc": "막걸리에는 역시나 전과 두부김치가 좋은 안주여서 안주도 그렇게 준비를 했구요.", "url": "https://noproblemyourlife.tistory.com/1384", "author": "여행이좋다" },
+        { "kind": "blog", "title": "복순도가", "desc": "복순도가 감자전 안주와 사진한컷 후 뚜껑을 여는데 와~~~ 탄산이 지대로다.", "url": "https://jessica-life.tistory.com/690", "author": "내 나이 마흔" },
+        { "kind": "blog", "title": "수제 복순도가 막걸리, 탁주", "desc": "이 막걸리의 경우는 추천 안주로 치킨, 굴, 김치전, 짜장면, 그 중 짜장면을 베스트로 추천하여 마침", "url": "https://openloopgain.tistory.com/58", "author": "개루프이득의 블로그" },
+        { "kind": "blog", "title": "CU 머릿고기와 복순도가 막걸리 꿀조합 추천~", "desc": "탄산이 끝내주는 복순도가 막걸리~ 오늘 밤 복순도가 막걸리가 땡겨 안주로 찾은 CU 머리고기~", "url": "https://worldrview.tistory.com/214", "author": "세상이리뷰다" },
+        { "kind": "blog", "title": "설리아닷컴 시즌2 :: 8시에 만나 김일중, 망원동 막걸리, 떡갈비, 깻잎", "desc": "막걸리 : 복순도가 - 샴페인 막걸리, 막걸리계의 샴페인 안주에 어울리는 막걸리 추천, 막걸리 페어링 서비스 떡갈비 토치", "url": "https://sulia.tistory.com/15834", "author": "설리아닷컴 시즌2" },
+        { "kind": "blog", "title": "[연수 '술토리'] 색다르고 맛있는 퓨전 안주와 전통주를 먹을 수 있는", "desc": "복순도가 막걸리를 한 입 먹어보고 딸기 요거트 맛이 난다고 생각했는데, 베리류의 요거트를 연상시키는 청량감 있는 막걸리", "url": "https://kkae-danee.tistory.com/274", "author": "깨단" },
+        { "kind": "blog", "title": "[전통주 추천 / 막걸리] 복순도가 손막걸리 - 정말 상큼한 막걸리", "desc": "복순도가 손막걸리 -. 용량 : 935ml -. 도수 : 6.5% 그런 안주들이 더 잘 어울릴 것 같다는 생각이 들었습니다.", "url": "https://mingki-thinkbox.tistory.com/28", "author": "지극히 개인적인. 모든것들의 리뷰" },
+        { "kind": "blog", "title": "판교민속주점 안주일체 판교점 회식장소로 좋다", "desc": "한잔하기 복순도가 좋아함 감자전 2만원 엄청 도톰한 타입은 아닌데 바삭한 편이라 내 취향", "url": "https://blog.naver.com/velvtwhip/224001852159", "author": "AA Batteries" },
+        { "kind": "blog", "title": "2025년 01월 일상 먹부림 정리", "desc": "막걸리에 맛난 안주는 우리 부부가 참 좋아하는 야식이다. 거기에 복순도가 막걸리까지 곁들여서 먹었다. 아내가 LA갈비를 구워줘서 맛난", "url": "https://choeseunggu.tistory.com/1082", "author": "딸만 셋 104호" },
+        { "kind": "blog", "title": "막걸리 대전(Feat.어떤 막걸리 추천해야되나)", "desc": "바디감이 있어 안주 없이 마셔도 은근 배가 부르다. 견과류, 치즈를 함께한 샤퀴테리 플레이트를 추천한다. 3위 복순도가 곡물과 누룩, 요거트, 과일 발효 향과 함께", "url": "https://engineernest.tistory.com/223", "author": "Engineering's Nest" },
+        { "kind": "blog", "title": "한식주점 라스트춘선 메뉴 추천 맛집", "desc": "(주문메뉴/안주) 항정삼합, 닭다리살 대파, 광장시장 녹두전, 짜계치와 파김치, 김치볶음밥 마셔본 술은 붉은원숭이, 복순도가 입니다.", "url": "https://j3r3g321-22.tistory.com/131", "author": "언제나 노랑" },
+        { "kind": "blog", "title": "[수영 술집] 막걸리바 술곳간", "desc": "두 번째 안주, 부추전. 부추만 있는 것이 아니라 다진 해산물과 새우도 함께 들어있다. 첫 번째 술, 복순도가.", "url": "https://nadragon.tistory.com/184", "author": "너영나영" },
+        { "kind": "news", "title": "노브랜드, 복순도가 손잡고 막걸리·안주 7종 내놨다", "desc": "이마트 노브랜드가 수제 막걸리 브랜드 복순도가와 손잡고 전용 막걸리와 곁들임 음식 6종을 선보인다. 전통 식재료인 들기름과 쌀, 김치 등에 매운맛과 훈연향, 치즈 등을 조합해", "url": "https://www.thepowernews.co.kr/view.php?ud=202607301258569058de3f0aa1be_7", "author": "더파워뉴스" },
+        { "kind": "news", "title": "이마트 노브랜드, 복순도가와 협업…막걸리·페어링 푸드 6종 출시", "desc": "들기름의 고소한 향을 담아 익숙하면서도 새로운 맛이 일품인 '들기름팝콘'과 은은한", "url": "https://www.ziksir.com/news/articleView.html?idxno=141722", "author": "직썰" },
+        { "kind": "youtube", "title": "복순도가 폭발~ #shorts #복순도가, #느린마을막걸리, #막걸리 , #담은 막걸리, #막걸리안주", "desc": "손막걸리 복순도가는 오픈하면 자동으로 섞인다고 했는데 폭발 했어요", "url": "https://www.youtube.com/watch?v=cLd7Z8D-A4c", "author": "누리로그" }
+      ]
+    }
+  }
+}
