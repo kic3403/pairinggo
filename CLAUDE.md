@@ -1,8 +1,8 @@
 # 페어링GO
 
 술↔음식 양방향 페어링 추천 → (Stage 2) 전통주 앱 내 구매 → (Stage 3) 식당 자체 예약. 토스 앱인토스 미니앱이 주력.
-기획·설계 문서는 docs/ (00~09). 작업 전 해당 Phase를 읽는다: docs/05_개발로드맵_Phase별.md
-현재 Phase: **2 완료 (2026-09-10, docs/09 결과보고)** → 다음 **Phase 3** (토스 로그인·카카오 식당·위치 SDK·검수 제출). 로그인·결제 아직 없음. Supabase 키는 사용자가 넣기 전까지 정적 폴백
+기획·설계 문서는 docs/ (00~10). 작업 전 해당 Phase를 읽는다: docs/05_개발로드맵_Phase별.md
+현재 Phase: **3-A 완료 (2026-09-10, docs/10)** — 카카오 식당·판매점·지도·위치. 다음 **3-B** (토스 로그인·저장 이관·검수 제출, 앱인토스 콘솔 등록 필요). 로그인·결제 아직 없음
 
 ## 구조 (pnpm workspaces)
 - apps/miniapp      Vite + React 19 + TS + Tailwind v4 + react-router 7. @apps-in-toss/web-framework 3.x (apps-in-toss.config.ts, 테스트는 AIT Devtools 브라우저). **정적 번들만(SSR·서버 코드 금지)**. `pnpm --filter miniapp dev|build`
@@ -13,8 +13,8 @@
 
 ## 절대 규칙
 - 앱인토스 제약: 미니앱에 서버 코드·SSR 금지. 로그인은 토스 로그인만(Phase 3). 실물 결제는 토스페이만(Phase 5). 외부 결제창·외부 의존 링크 금지 — 예외는 법적 고지·제휴기관 공식 페이지·"제품 추천 후 구매 플랫폼 이동"(구매 버튼 문구: "양조장 공식몰로 이동").
-- 외부 링크는 `apps/miniapp/src/lib/openExternal.ts`로만 연다(`<a target=_blank>` 직접 사용 금지).
-- 비밀키는 apps/web/.env.local(SUPABASE_SERVICE_ROLE_KEY·CRON_SECRET)과 packages/db/.env(DATABASE_URL)에만. 미니앱 번들엔 VITE_API_BASE_URL(·Phase 3 KAKAO_JS_KEY)만. 채팅·커밋에 키 금지.
+- 외부 링크는 `apps/miniapp/src/lib/openExternal.ts`로만 연다(`<a target=_blank>` 직접 사용 금지). 위치는 `lib/location.ts`(토스 SDK/브라우저)로만, 카카오 로컬 호출은 서버 라우트 `/api/v1/places/*`로만(클라이언트에서 dapi 직접 호출 금지, 쿼터·키 보호).
+- 비밀키는 apps/web/.env.local(SUPABASE_SERVICE_ROLE_KEY·CRON_SECRET)과 packages/db/.env(DATABASE_URL)에만. 미니앱 번들엔 VITE_API_BASE_URL·VITE_KAKAO_JS_KEY(도메인 제한 공개 키)만. KAKAO_REST_KEY는 apps/web 서버 전용. 채팅·커밋에 키 금지.
 - 카탈로그 파생값(D·F·byDrink·DOCS 등)은 `export let` 라이브 바인딩 — 모듈 로드 시 복사하지 말고 사용 시점에 읽는다(applyDataset 핫스왑 대응).
 - 온라인 판매 불가 주류(`NON_TRAD`, online_sellable=false)는 구매 링크 대신 "온라인 직배송 불가" 안내.
 - 주류 경고문구·만 19세 안내는 전 페이지 공통 푸터. AI 생성 페어링은 `source: ai` 배지(Phase 9).

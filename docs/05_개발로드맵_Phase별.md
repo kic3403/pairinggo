@@ -63,6 +63,7 @@ Stage 4  확장           지속   Phase 9    → 스마트오더·AI 폴백·�
 - **검증**: API 응답 p95 < 300ms, 초성 검색("ㅂㅅㄷㄱ"→복순도가), 별칭("밤막걸리"), 인기 검색어 집계 동작.
 
 ### Phase 3 · 핵심 화면 + 토스 로그인 + 식당 찾기 + 검수 제출 (1.5~2주)
+- **상태**: 3-A(카카오 식당·판매점·지도·위치) 2026-09-10 완료 — docs/10. 3-B(토스 로그인·저장 이관·검수 제출)는 앱인토스 콘솔 등록 후
 - S01~S09 구현 (기존 컴포넌트 이식: SearchBox, PairingList, RestaurantFinder, RegionPicker, SaveButton…).
 - 토스 로그인(`appLogin` → `/auth/toss/exchange`), 저장·최근 검색·관심 지역을 서버로 이관(로그인 전엔 로컬 유지).
 - 카카오 로컬 프록시 `/places/restaurants`, 카카오맵 JS, `Device.getLocation` 권한 플로우, 별점은 자체 리뷰 전까지 "거리순·언급량" 기본.

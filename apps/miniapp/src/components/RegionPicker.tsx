@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RBY, TOP_REGIONS, subRegions, fullLabel, estimateRegion } from "@pairinggo/shared";
-import { setGps, setRegion, toast, useRegion } from "@/lib/prefs";
+import { setRegion, toast, useRegion } from "@/lib/prefs";
+import { getCurrentPosition } from "@/lib/location";
 
 /** 홈 상단: 관심지역 버튼 + '현재 위치' 버튼 + 선택 시트 (Phase 3: navigator.geolocation → 앱인토스 Device.getLocation) */
 export default function RegionPicker() {
@@ -13,18 +14,14 @@ export default function RegionPicker() {
   const sel = (id: string) => !st.gps && st.id === id;
   const pick = (id: string) => { setRegion(id); setOpen(false); toast(id === "all" ? "관심지역: 전국" : `관심지역: ${fullLabel(RBY[id])}`); };
 
-  const useGps = () => {
-    if (!navigator.geolocation) { toast("이 기기에서는 위치를 사용할 수 없어요"); return; }
+  const useGps = async () => {
     setBusy(true);
-    navigator.geolocation.getCurrentPosition(
-      (p) => {
-        setGps(p.coords.latitude, p.coords.longitude); setBusy(false); setOpen(false);
-        const est = estimateRegion(p.coords.latitude, p.coords.longitude);
-        toast(est ? `현재 위치 기준 · ${RBY[est].label}으로 추정` : "현재 위치 기준으로 검색합니다");
-      },
-      () => { setBusy(false); toast("위치 권한이 없어요. 관심지역을 직접 골라 주세요"); },
-      { timeout: 8000, maximumAge: 600000 },
-    );
+    const c = await getCurrentPosition();
+    setBusy(false);
+    if (!c) { toast("위치 권한이 없어요. 관심지역을 직접 골라 주세요"); return; }
+    setOpen(false);
+    const est = estimateRegion(c.lat, c.lng);
+    toast(est ? `현재 위치 기준 · ${RBY[est].label}으로 추정` : "현재 위치 기준으로 검색합니다");
   };
 
   return (

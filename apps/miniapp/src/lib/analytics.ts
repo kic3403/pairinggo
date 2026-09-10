@@ -8,7 +8,7 @@ import { apiEnabled, fetchJson } from "./api";
 
 export type EventName =
   | "search" | "search_intent" | "search_empty" | "card_tap" | "buy_link_click" | "restaurant_link_click"
-  | "external_link" | "save" | "screen" | "browse";
+  | "external_link" | "save" | "screen" | "browse" | "restaurant_list";
 
 type Props = Record<string, string | number | boolean | null | undefined>;
 type StoredEvent = { n: EventName; p: Props; t: number };

@@ -12,7 +12,7 @@ pnpm dev:web             # apps/web 공개 API (:3000) — Supabase 키 없으�
 pnpm build               # 전체 빌드 (miniapp → apps/miniapp/pairinggo.ait, web → .next)
 ```
 
-미니앱이 서버를 쓰게 하려면 `apps/miniapp/.env.local`에 `VITE_API_BASE_URL=http://localhost:3000`.
+미니앱이 서버를 쓰게 하려면 `apps/miniapp/.env.local`에 `VITE_API_BASE_URL=http://localhost:3000`, 지도는 `VITE_KAKAO_JS_KEY`. 서버 식당 검색은 `apps/web/.env.local`의 `KAKAO_REST_KEY` (카카오 디벨로퍼스 → 앱 → 플랫폼 키, 카카오맵 사용 설정 ON).
 
 ## Supabase 연결 (선택 — 없어도 동작)
 

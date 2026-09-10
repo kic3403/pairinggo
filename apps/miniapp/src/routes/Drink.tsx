@@ -4,7 +4,7 @@ import PairingList, { type Row } from "@/components/PairingList";
 import SearchBox from "@/components/SearchBox";
 import SaveButton from "@/components/SaveButton";
 import RecentTracker from "@/components/RecentTracker";
-import NearbyLink, { RegionNote } from "@/components/NearbyLink";
+import { RegionNote } from "@/components/NearbyLink";
 import ProfileRadar from "@/components/ProfileRadar";
 import ExtLink from "@/components/ExtLink";
 import { BackHeader } from "@/components/Section";
@@ -20,7 +20,6 @@ export default function Drink() {
   }));
   const o = d.offline || { visit: null, place: null, address: null, phone: null, note: null };
   const sellable = onlineSellable(d);
-  const nearbyQ = sellable ? "전통주 판매점" : "주류판매점";
   const breweryQ = o.place || o.address || `${d.brewery} ${d.region || ""}`;
   const bl = buyLink(d);
   const sim = similarDrinks(d, 3);
@@ -84,11 +83,11 @@ export default function Drink() {
         )}
         <div className="flex gap-2 mt-2.5">
           {o.visit !== true && o.visit !== false && <ExtLink className="btn btn-navy flex-1" href={naverMapUrl(breweryQ)} kind="map" meta={{ drink: d.id }}>양조장 위치</ExtLink>}
-          <NearbyLink className="btn btn-ghost flex-1" name={nearbyQ} />
+          <Link to={`/restaurants?kind=bottleshop&trad=${sellable ? 1 : 0}`} className="btn btn-ghost flex-1">{sellable ? "주변 전통주 판매점" : "주변 주류판매점"} →</Link>
         </div>
         <p className="text-[10.5px] text-muted mt-2 leading-relaxed">
           {o.visit === true ? "재고·운영시간은 방문 전 확인을 권해요." : o.visit === false ? `양조장 현장 판매는 없어요. 가까운 ${sellable ? "전통주 전문점" : "마트·편의점"}을 이용해 주세요.` : (o.note || "현장 판매 여부는 확인되지 않았어요. 방문 구매는 전화로 먼저 확인해 주세요.")}
-          {" "}판매점 검색: <RegionNote />
+          {" "}판매점: <RegionNote />
         </p>
       </section>
 

@@ -4,6 +4,7 @@ import { recentStore, savedStore, useRegion, regionStore, toast } from "@/lib/pr
 import { drainEvents } from "@/lib/analytics";
 import { clearCatalogCache, useCatalog } from "@/lib/catalog";
 import { apiEnabled } from "@/lib/api";
+import { locationStatus } from "@/lib/location";
 
 /** 마이 (Phase 1) — 관심지역·저장 요약·데이터 초기화·안내. Phase 3에서 토스 로그인·성인인증 상태·주문/예약 내역이 붙는다 */
 export default function My() {
@@ -42,6 +43,7 @@ export default function My() {
       <div className="card mt-4 divide-y divide-line">
         <Row label="데이터" value={`전통주 ${DATA.drinks.length} · 음식 ${DATA.foods.length} · 페어링 ${DATA.pairings.length}`} />
         <Row label="카탈로그" value={catalogLabel + catalogState} />
+        <Row label="위치 권한" value={{ unknown: "아직 요청 안 함", granted: "허용됨", denied: "거부됨 · 관심지역으로 검색", unavailable: "이 기기에서 사용 불가" }[locationStatus()]} />
         <Row label="추천 근거" value="양조장 공식 · 소믈리에·명인 · 전문 매체 · 맛 프로필" />
         <Row label="대중 언급량" value={DATA.trend_meta?.period || "네이버 블로그 실측"} />
       </div>

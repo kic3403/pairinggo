@@ -11,6 +11,7 @@ export default defineConfig({
     primaryColor: "#22406B",
   },
   webView: {},
-  permissions: [],
+  // 내 주변 식당·판매점: 현재 위치 (Device.getLocation)
+  permissions: [{ name: "geolocation", access: "access" }],
   webBundleDir: "dist",
 });
