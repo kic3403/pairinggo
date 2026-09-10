@@ -17,6 +17,7 @@
     "dev:web": "pnpm --filter web dev",
     "db:migrate": "pnpm --filter @pairinggo/db migrate",
     "db:seed": "pnpm --filter @pairinggo/db seed",
-    "db:export": "pnpm --filter @pairinggo/db export"
+    "db:export": "pnpm --filter @pairinggo/db export",
+    "db:status": "pnpm --filter @pairinggo/db status"
   }
 }

@@ -48,7 +48,8 @@ try {
     await tx`insert into catalog_snapshots (version, counts, data, note) values (${version}, ${tx.json(counts)}, ${tx.json(JSON.parse(JSON.stringify(DATA)))}, 'seed from pairings.json') on conflict (version) do nothing`;
   });
 
-  const [c] = await sql<{ d: number; f: number; p: number; e: number }[]>`select (select count(*) from drinks) d, (select count(*) from foods) f, (select count(*) from pairings) p, (select count(*) from pairing_evidence) e`;
+  // count(*)는 bigint → 문자열로 오므로 int로 캐스팅
+  const [c] = await sql<{ d: number; f: number; p: number; e: number }[]>`select (select count(*)::int from drinks) d, (select count(*)::int from foods) f, (select count(*)::int from pairings) p, (select count(*)::int from pairing_evidence) e`;
   const under5 = await sql<{ id: string; n: number }[]>`select d.id, count(p.id)::int n from drinks d left join pairings p on p.drink_id = d.id group by d.id having count(p.id) < 5`;
   console.log(`시드 완료 — drinks ${c.d} · foods ${c.f} · pairings ${c.p} · evidence ${c.e} · version ${version}`);
   console.log(`검증: 기대 108/110/851 → ${c.d === 108 && c.f === 110 && c.p === 851 ? "OK" : "불일치!"} · 페어링 5개 미만 술: ${under5.length ? under5.map((r) => r.id).join(",") : "없음"}`);

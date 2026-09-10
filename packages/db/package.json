@@ -7,7 +7,7 @@
   "scripts": {
     "migrate": "tsx src/migrate.ts",
     "seed": "tsx src/seed.ts",
-    "status": "tsx src/migrate.ts --status",
+    "status": "tsx src/status.ts",
     "export": "tsx src/export.ts",
     "typecheck": "tsc --noEmit"
   },
