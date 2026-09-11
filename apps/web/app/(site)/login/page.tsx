@@ -4,6 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { PROVIDER_LABEL, enabledProviders, signIn } from "@/auth";
+import PasswordField from "../_components/PasswordField";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "로그인 | 페어링GO", robots: { index: false } };
@@ -45,7 +46,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <form action={emailLogin} style={{ marginTop: 18 }}>
         <input type="hidden" name="next" value={next} />
         <label className="field"><span>이메일</span><input name="email" type="email" autoComplete="email" required placeholder="name@example.com" /></label>
-        <label className="field"><span>비밀번호</span><input name="password" type="password" autoComplete="current-password" required minLength={8} /></label>
+        <PasswordField name="password" label="비밀번호" autoComplete="current-password" minLength={8} />
         <button type="submit" className="btn p" style={{ width: "100%" }}>로그인</button>
       </form>
 

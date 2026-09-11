@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { PROVIDER_LABEL, enabledProviders, signIn } from "@/auth";
 import { signUpWithEmail } from "@/lib/account";
+import PasswordField from "../_components/PasswordField";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "회원가입 | 페어링GO", robots: { index: false } };
@@ -20,8 +21,12 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
     "use server";
     const email = String(formData.get("email") ?? "").trim();
     const password = String(formData.get("password") ?? "");
+    const confirm = String(formData.get("password2") ?? "");
     const name = String(formData.get("name") ?? "").trim();
     const to = safeNext(String(formData.get("next") ?? ""));
+
+    // 브라우저 검사와 별개로 서버에서도 한 번 더 — 자바스크립트가 꺼진 경우
+    if (password !== confirm) redirect(`/signup?error=${encodeURIComponent("비밀번호가 서로 다릅니다. 다시 입력해 주세요.")}&next=${encodeURIComponent(to)}`);
 
     const r = await signUpWithEmail(email, password, name);
     if (!r.ok) redirect(`/signup?error=${encodeURIComponent(r.error)}&next=${encodeURIComponent(to)}`);
@@ -44,7 +49,8 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
       <form action={create} style={{ marginTop: 18 }}>
         <input type="hidden" name="next" value={next} />
         <label className="field"><span>이메일</span><input name="email" type="email" autoComplete="email" required placeholder="name@example.com" /></label>
-        <label className="field"><span>비밀번호 <span className="muted" style={{ fontWeight: 400 }}>8자 이상</span></span><input name="password" type="password" autoComplete="new-password" required minLength={8} /></label>
+        <PasswordField name="password" label="비밀번호" hint="8자 이상" autoComplete="new-password" minLength={8} />
+        <PasswordField name="password2" label="비밀번호 확인" autoComplete="new-password" minLength={8} confirmOf="password" />
         <label className="field"><span>닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택</span></span><input name="name" type="text" maxLength={20} placeholder="비우면 이메일 앞부분을 씁니다" /></label>
         <button type="submit" className="btn p" style={{ width: "100%" }}>가입하고 시작하기</button>
       </form>
