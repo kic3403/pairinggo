@@ -42,7 +42,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const res = { ...resRaw, drinks: resRaw.drinks.filter((h) => drinkInRegion(D[h.doc.id] || {}, region)).slice(0, 12) };
   const hitCount = res.drinks.length + res.foods.length + res.browse.length;
   const empty = !!q && !intent && hitCount === 0;
-  const regional = !q && region ? drinksInRegion(region.pre, 24, region.fb) : null;
+  const regional = !q && region ? drinksInRegion(region.pre, 200, region.fb) : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
 
   return (
     <div className="wrap">
