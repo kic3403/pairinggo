@@ -59,6 +59,10 @@ export const REGIONS: Region[] = [
 
 export const RBY: Record<string, Region> = Object.fromEntries(REGIONS.map((r) => [r.id, r]));
 export const TOP_REGIONS = REGIONS.filter((r) => !r.parent);
+/** 지역 id → Region. "all"·모르는 id는 null(= 전국) */
+export const regionById = (id?: string | null): Region | null => (id && id !== "all" && RBY[id]) || null;
+/** 술이 이 지역 것인지 — 데이터 region 필드가 접두어(서울/경기/…)로 시작하면. 세부 지역에 술이 없을 때의 대체(fb)는 drinksInRegion이 처리 */
+export const drinkInRegion = (d: { region?: string | null }, r: Region | null) => !r || r.pre.length === 0 || r.pre.some((p) => (d.region || "").startsWith(p));
 export const subRegions = (id: string) => REGIONS.filter((r) => r.parent === id);
 export const fullLabel = (r: Region) => (r.parent ? `${RBY[r.parent].label} · ${r.label}` : r.full || r.label);
 

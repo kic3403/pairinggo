@@ -4,36 +4,71 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CATEGORIES, POPULAR, POPULAR_FOODS, buyLink, intentSearch, onlineSellable, search, shortAward, toSlug } from "@pairinggo/shared";
+import { CATEGORIES, D, POPULAR, POPULAR_FOODS, TOP_REGIONS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, regionById, search, shortAward, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import Heart from "../_components/Heart";
 import SearchBox from "../_components/SearchBox";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ searchParams }: { searchParams: Promise<{ q?: string }> }): Promise<Metadata> {
-  const q = ((await searchParams).q || "").trim();
-  return { title: q ? `‘${q}’ 검색 | 페어링GO` : "검색 | 페어링GO", robots: { index: false } };
+type SP = { q?: string; region?: string };
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SP> }): Promise<Metadata> {
+  const sp = await searchParams;
+  const q = (sp.q || "").trim();
+  const r = regionById(sp.region);
+  const where = r ? ` · ${r.label}` : "";
+  return { title: q ? `‘${q}’ 검색${where} | 페어링GO` : `검색${where} | 페어링GO`, robots: { index: false } };
 }
+/** 지역을 바꿔도 검색어는 유지 */
+const withRegion = (q: string, id: string) => `/search?${new URLSearchParams({ ...(q ? { q } : {}), ...(id !== "all" ? { region: id } : {}) }).toString()}`;
 
 const drinkHref = (name: string) => `/drinks/${toSlug(name)}`;
 const foodHref = (name: string) => `/foods/${toSlug(name)}`;
 const browseHref = (kind: string | undefined, key: string | undefined) =>
   kind === "category" ? `/drinks?category=${encodeURIComponent(key || "")}` : kind === "region" ? `/drinks?region=${encodeURIComponent(key || "")}` : `/drinks?brewery=${encodeURIComponent(key || "")}`;
 
-export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
-  const q = ((await searchParams).q || "").trim().slice(0, 80);
+export default async function SearchPage({ searchParams }: { searchParams: Promise<SP> }) {
+  const sp = await searchParams;
+  const q = (sp.q || "").trim().slice(0, 80);
+  const region = regionById(sp.region);
+  const rid = region?.id ?? "all";
   await getCatalog();
-  const intent = q ? intentSearch(q, 12) : null;
-  const res = search(q, { limit: 12 });
-  const empty = !!q && !intent && res.hits.length === 0;
+  // 지역을 골랐으면 술 결과만 그 지역으로 거른다(음식은 지역이 없다). 거른 뒤 12개가 남도록 넉넉히 뽑는다
+  const intentRaw = q ? intentSearch(q, region ? 80 : 12) : null;
+  const intent = intentRaw && { ...intentRaw, drinks: intentRaw.drinks.filter((r) => drinkInRegion(r.drink, region)).slice(0, 12) };
+  const resRaw = search(q, { limit: region ? 40 : 12 });
+  const res = { ...resRaw, drinks: resRaw.drinks.filter((h) => drinkInRegion(D[h.doc.id] || {}, region)).slice(0, 12) };
+  const hitCount = res.drinks.length + res.foods.length + res.browse.length;
+  const empty = !!q && !intent && hitCount === 0;
+  const regional = !q && region ? drinksInRegion(region.pre, 24, region.fb) : null;
 
   return (
     <div className="wrap">
-      <h1>검색</h1>
-      <SearchBox initial={q} autoFocus={!q} />
+      <h1>검색{region && <span className="muted"> · {region.label}</span>}</h1>
+      <SearchBox initial={q} region={rid} autoFocus={!q} />
+      <ul className="tabs region-tabs" aria-label="지역">
+        {TOP_REGIONS.map((r) => <li key={r.id}><Link href={withRegion(q, r.id)} className={r.id === rid ? "on" : undefined}>{r.label}</Link></li>)}
+      </ul>
 
-      {!q && (
+      {regional && (
+        <section>
+          <h2>{region!.label} 전통주 <span className="muted small">{regional.list.length}종{regional.label ? ` · ${regional.label} 기준` : ""}</span></h2>
+          {regional.list.length === 0 && <p className="muted">이 지역에 등록된 전통주가 아직 없습니다.</p>}
+          <ul className="rows">
+            {regional.list.map((d) => (
+              <li key={d.id} className="row">
+                <span className="badge">술</span>
+                <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.category, d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
+                <Heart kind="drink" id={d.id} name={d.name} />
+              </li>
+            ))}
+          </ul>
+          <p className="small"><Link href={`/drinks?region=${region!.id}`}>{region!.label} 전통주 전체 보기 →</Link></p>
+        </section>
+      )}
+
+      {!q && !regional && (
         <>
           <h2>종류로 찾기</h2>
           <ul className="tabs">{CATEGORIES.map((c) => <li key={c.key}><Link href={`/drinks?category=${encodeURIComponent(c.key)}`}>{c.key}<span className="cnt">{c.count}</span></Link></li>)}</ul>
@@ -91,14 +126,14 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             ))}
           </ol>
           {((intent.intent.target === "drink" && !intent.drinks.length) || (intent.intent.target === "food" && !intent.foods.length)) && (
-            <p className="muted">조건을 모두 만족하는 {intent.intent.target === "drink" ? "술" : "음식"}이 아직 없습니다. 조건을 하나 줄여 보세요.</p>
+            <p className="muted">조건을 모두 만족하는 {intent.intent.target === "drink" ? "술" : "음식"}이 {region ? `${region.label}에는 ` : ""}아직 없습니다. {region ? <Link href={withRegion(q, "all")}>전국으로 보기</Link> : "조건을 하나 줄여 보세요."}</p>
           )}
         </section>
       )}
 
-      {q && res.hits.length > 0 && (
+      {q && hitCount > 0 && (
         <section>
-          <h2>{intent ? "이름으로 찾은 결과" : `‘${q}’ 검색 결과`} <span className="muted small">{res.hits.length}</span></h2>
+          <h2>{intent ? "이름으로 찾은 결과" : `‘${q}’ 검색 결과`} <span className="muted small">{hitCount}{region ? ` · ${region.label}` : ""}</span></h2>
           <ul className="rows">
             {res.drinks.map((h) => {
               const d = h.doc;
@@ -134,8 +169,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
       {empty && (
         <section>
-          <h2>‘{q}’ — 아직 데이터에 없습니다</h2>
-          <p className="muted">비슷한 이름이나 상황으로 다시 찾아보세요.</p>
+          <h2>‘{q}’ — {region ? `${region.label}에는 없습니다` : "아직 데이터에 없습니다"}</h2>
+          <p className="muted">{region ? <><Link href={withRegion(q, "all")}>전국으로 보기</Link> 또는 </> : ""}비슷한 이름이나 상황으로 다시 찾아보세요.</p>
           {res.suggestions.length > 0 && (
             <>
               <p className="small muted" style={{ marginTop: 16 }}>혹시 이걸 찾으셨나요</p>
