@@ -2,13 +2,14 @@
  * 퍼널 이벤트 — 앱인토스 Analytics SDK + 로컬 큐(500건) → 서버 배치 전송(POST /api/v1/events).
  * 전송 시점: 30초마다 · 화면이 숨겨질 때 · 큐 50건. 실패하면 큐를 유지한다. 개인정보는 넣지 않는다.
  * 이벤트: search · search_intent · search_empty · card_tap · buy_link_click · restaurant_link_click · external_link · save · browse · screen
+ * 링크 이벤트는 **실제로 열렸을 때만** 남긴다. 열지 못한 경우는 link_open_failed (openExternal.ts 참고).
  */
 import { Analytics } from "@apps-in-toss/web-framework";
 import { apiEnabled, fetchJson } from "./api";
 
 export type EventName =
   | "search" | "search_intent" | "search_empty" | "card_tap" | "buy_link_click" | "restaurant_link_click"
-  | "external_link" | "save" | "screen" | "browse" | "restaurant_list";
+  | "external_link" | "link_open_failed" | "save" | "screen" | "browse" | "restaurant_list";
 
 type Props = Record<string, string | number | boolean | null | undefined>;
 type StoredEvent = { n: EventName; p: Props; t: number };
