@@ -80,6 +80,24 @@ git push -u origin main
 - 카카오 로컬은 일일 쿼터가 있다. 판매점·맛집 검색은 버튼을 눌렀을 때만 부르도록 되어 있다.
 - 배포 주소가 바뀌거나 커스텀 도메인을 붙이면 `SITE_URL`과 OAuth 콜백 URL을 함께 바꾼다.
 
-## 6. 그 다음
+## 6. 배포 결과 (2026-09-12)
 
-배포가 되면 Claude가 위 3번 항목을 실제 주소로 확인하고, 미니앱의 `VITE_API_BASE_URL`을 배포 주소로 바꿔 앱도 같은 서버를 보게 한다.
+**https://pairinggo.vercel.app** — GitHub 연결, Root Directory `apps/web`, 환경변수 7개.
+
+3번 확인 항목 [실측]
+
+| 항목 | 결과 |
+|---|---|
+| `/` `/drinks` `/foods` `/search` `/drinks/…` `/foods/…` `/login` `/signup` `/sitemap.xml` `/robots.txt` | 전부 200 (0.4~1.0s) |
+| `/my` `/admin` 비로그인 | 307 → 로그인 |
+| `/api/v1/catalog/version` | `x-pairinggo-source: db` · 술 108·음식 110·페어링 852 |
+| 사이트맵·canonical | `https://pairinggo.vercel.app/…` 절대주소 (SITE_URL 없이 Vercel 변수로 해결) |
+| 술 상세 서버 렌더 | 카드 28·구매 버튼 2·파는 곳 섹션 |
+| 맛집 검색 API | 홍대 육회 → 실제 결과 (KAKAO_REST_KEY 정상) |
+| 어드민 로그인 | 새 비밀번호로 성공, `/admin` 200 |
+| 회원가입 | 테스트 계정 생성 확인 후 삭제 |
+| 실제 크롬 렌더 | 스타일·검색창·구매·현장 판매 박스 정상 |
+
+**미리보기 창 주의** — 클로드 앱 안의 미리보기 창은 `/_next/static/*` 자산을 `ERR_BLOCKED_BY_CLIENT`로 막아 배포 사이트가 **스타일 없이** 보인다. 서버는 자산을 200으로 정상 서빙한다(curl 확인). 배포 사이트 확인은 일반 브라우저로.
+
+미니앱 `VITE_API_BASE_URL`을 배포 주소로 바꿨다(로컬 .env.local). 이후 커밋은 `git push`만 하면 자동 배포된다.
