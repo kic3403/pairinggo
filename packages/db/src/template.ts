@@ -8,6 +8,8 @@ import { mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { DATA } from "@pairinggo/shared";
+import { SIDO_ORDER, SIDO_LABEL, sidoOfCatalogRegion, type Sido } from "./sido";
+import { productsOfBrewery, norm } from "./research";
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), "..", "templates");
 mkdirSync(dir, { recursive: true });
@@ -48,11 +50,43 @@ ws.getRow(3).font = { italic: true, color: { argb: "FF8C8C88" } };
 ws.getRow(4).font = { italic: true, color: { argb: "FF8C8C88" } };
 
 /* ---------- 술·음식 목록 ---------- */
-const wd = wb.addWorksheet("술 목록");
-wd.columns = [{ header: "이름", key: "name", width: 26 }, { header: "별칭", key: "alias", width: 16 }, { header: "종류", key: "category", width: 10 }, { header: "도수", key: "abv", width: 8 }, { header: "지역", key: "region", width: 14 }, { header: "양조장", key: "brewery", width: 18 }, { header: "현재 페어링 수", key: "n", width: 12 }];
+// 술 목록은 시도별로 묶어서 (서울 → 경기 → 인천 → 충남 → 세종 → 충북 → 대전 → 강원 → 전북 → 전남·광주 → 경북 → 대구 → 경남 → 울산 → 부산 → 제주)
+// 앱에 등록된 108종 + 같은 양조장의 다른 제품(더술닷컴 등록 기준, 양조장당 최대 3종) + 추가 양조장(세종 사일로·백경증류소)
+const EXTRA_PER_BREWERY = 3;
+const EXTRA_BREWERIES = ["사일로 브루어리", "백경증류소"];
+const wd = wb.addWorksheet("술 목록", { views: [{ state: "frozen", ySplit: 1 }] });
+wd.columns = [{ header: "시도", key: "sido", width: 12 }, { header: "시군구", key: "sigungu", width: 10 }, { header: "이름", key: "name", width: 26 }, { header: "별칭", key: "alias", width: 16 }, { header: "종류", key: "category", width: 12 }, { header: "도수", key: "abv", width: 8 }, { header: "양조장", key: "brewery", width: 18 }, { header: "앱 등록", key: "inApp", width: 8 }, { header: "현재 페어링 수", key: "n", width: 12 }, { header: "출처", key: "source", width: 18 }];
 wd.getRow(1).font = { bold: true };
+wd.autoFilter = "A1:J1";
 const cnt = new Map<string, number>(); for (const p of DATA.pairings) cnt.set(p.d, (cnt.get(p.d) || 0) + 1);
-for (const d of DATA.drinks) wd.addRow({ name: d.name, alias: d.alias, category: d.category, abv: d.abv, region: d.region, brewery: d.brewery, n: cnt.get(d.id) || 0 });
+const sidoIdx = (s: string) => { const i = SIDO_ORDER.indexOf(s as (typeof SIDO_ORDER)[number]); return i < 0 ? 99 : i; };
+type ListRow = { sido: Sido; sigungu: string; name: string; alias: string; category: string; abv: number | null; brewery: string; inApp: boolean; n: number; source: string };
+const list: ListRow[] = DATA.drinks.map((d) => ({ sido: sidoOfCatalogRegion(d.region || ""), sigungu: (d.region || "").split(/\s+/).slice(1).join(" "), name: d.name, alias: d.alias, category: d.category, abv: d.abv ?? null, brewery: d.brewery || "", inApp: true, n: cnt.get(d.id) || 0, source: "앱 카탈로그" }));
+const catalogKeys = [...new Set(list.flatMap((r) => [norm(r.name), norm(r.alias)]).filter((k) => k.length >= 4))];
+const known = new Set(list.map((r) => norm(r.name)));
+const addFromBrewery = (brewery: string, sidoHint: Sido, limit: number) => {
+  let added = 0;
+  for (const p of productsOfBrewery(brewery)) {
+    const k = norm(p.name);
+    // 이미 앱에 있는 술(용량·도수 표기만 다른 것, 예: "나루 생 막걸리 6도" → 나루 생막걸리 6도)은 제외 — 비교는 앱 카탈로그 이름·별칭에만.
+    // 이름 뒤에 "붉은말 에디션"처럼 별도 제품명이 붙으면 다른 제품으로 보고 남긴다
+    const isVariant = (x: string) => (k.includes(x) && /^[0-9.도%ml리터생]*$/.test(k.replace(x, ""))) || (x.includes(k) && k.length >= 4);
+    if (!k || known.has(k) || catalogKeys.some(isVariant)) continue;
+    if (added >= limit && !p.id.startsWith("MANUAL")) continue;
+    known.add(k); added++;
+    list.push({ sido: p.sido === "미상" ? sidoHint : p.sido, sigungu: p.sigungu, name: p.name, alias: "", category: p.kind, abv: p.abv, brewery: p.brewery, inApp: false, n: 0, source: p.source });
+  }
+};
+for (const d of DATA.drinks) if (d.brewery) addFromBrewery(d.brewery, sidoOfCatalogRegion(d.region || ""), EXTRA_PER_BREWERY);
+for (const b of EXTRA_BREWERIES) addFromBrewery(b, "세종", EXTRA_PER_BREWERY);
+list.sort((a, b) => sidoIdx(a.sido) - sidoIdx(b.sido) || a.sigungu.localeCompare(b.sigungu, "ko") || a.brewery.localeCompare(b.brewery, "ko") || Number(b.inApp) - Number(a.inApp) || a.name.localeCompare(b.name, "ko"));
+let prevSido = "";
+for (const r of list) {
+  const row = wd.addRow({ ...r, sido: SIDO_LABEL[r.sido], inApp: r.inApp ? "○" : "×" });
+  if (!r.inApp) { row.font = { color: { argb: "FF6B6B66" } }; row.getCell("inApp").font = { color: { argb: "FFB0561E" }, bold: true }; }
+  if (r.sido !== prevSido) { row.getCell("sido").font = { bold: true, color: r.inApp ? undefined : { argb: "FF6B6B66" } }; row.border = { top: { style: "thin", color: { argb: "FF22406B" } } }; prevSido = r.sido; }
+}
+const inAppCount = list.filter((r) => r.inApp).length;
 const wf = wb.addWorksheet("음식 목록");
 wf.columns = [{ header: "이름", key: "name", width: 20 }, { header: "분류", key: "category", width: 10 }, { header: "맛 태그", key: "tags", width: 24 }, { header: "별칭", key: "alias", width: 16 }, { header: "현재 페어링 수", key: "n", width: 12 }];
 wf.getRow(1).font = { bold: true };
@@ -66,6 +100,7 @@ wg.columns = [{ width: 100 }];
   "페어링GO 후보 입력 양식 — 한 줄 = 술 하나 × 음식 하나 × 근거 하나",
   "",
   "1. 술이름·음식이름은 '술 목록'·'음식 목록' 시트의 이름을 그대로 쓰면 자동 매칭됩니다. 별칭(복순도가)도 됩니다. 목록에 없는 이름은 그대로 적어 두면 '확인 필요'로 들어가 검수 화면에서 지정합니다.",
+  "   '술 목록'의 '앱 등록' ×(회색 줄)는 같은 양조장의 다른 제품(더술닷컴 등록 기준, 양조장당 최대 3종)으로 아직 앱에 없는 술입니다. 그 이름으로 후보를 적으면 '확인 필요'로 들어오고, 승인 전에 술을 카탈로그에 추가해야 합니다(추가 요청은 운영자에게).",
   "2. 출처등급: official(양조장·제조사가 직접) / sommelier(실명 소믈리에·명인·양조장 대표 발언) / media(전문 매체·기사) / blog(블로그·카페 후기) / user(지인·본인 시음)",
   "3. 점수대: official 95~97 · sommelier 92~94 · media 88~91 · blog·user 84~87. 비우면 등급 기본값이 들어갑니다.",
   "4. 인용문은 원문 그대로 120자 이내로 짧게, 출처URL은 반드시. 통째로 옮겨 적지 마세요(저작권). 검수 시 출처와 링크가 함께 표시됩니다.",
@@ -76,4 +111,4 @@ wg.columns = [{ width: 100 }];
 wg.getRow(1).font = { bold: true, size: 13 };
 
 await wb.xlsx.writeFile(out);
-console.log(`템플릿 생성 → ${out} · 술 ${DATA.drinks.length} · 음식 ${DATA.foods.length}`);
+console.log(`템플릿 생성 → ${out} · 술 목록 ${list.length}행(앱 등록 ${inAppCount} + 양조장 추가 제품 ${list.length - inAppCount}) · 음식 ${DATA.foods.length}`);

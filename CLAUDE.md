@@ -3,6 +3,7 @@
 술↔음식 양방향 페어링 추천 → (Stage 2) 전통주 앱 내 구매 → (Stage 3) 식당 자체 예약. 토스 앱인토스 미니앱이 주력.
 기획·설계 문서는 docs/ (00~11). 데이터 운영은 docs/11. 작업 전 해당 Phase를 읽는다: docs/05_개발로드맵_Phase별.md
 현재 Phase: **2.5 완료 (2026-09-10, docs/11)** — 데이터 수집 도구(엑셀 가져오기·자동 수집·검수/발행 어드민). 3-A 완료(docs/10). 다음 **3-B** (토스 로그인·검수 제출, 앱인토스 콘솔 등록 필요)
+- 전통주 지역별 목록(2026-09-11, docs/11 §5-1): `packages/db/research/`(더술닷컴 1,300종·찾아가는 양조장 64·네이버 백과) → `pnpm --filter @pairinggo/db regional` → `templates/전통주_지역별_목록.xlsx`. 시도 순서·정규화는 `packages/db/src/sido.ts` (광주는 전남에 묶음, 2026-07 통합). aT 문구는 공공누리 4유형 — 앱 화면에 원문 그대로 싣지 않는다.
 
 ## 구조 (pnpm workspaces)
 - apps/miniapp      Vite + React 19 + TS + Tailwind v4 + react-router 7. @apps-in-toss/web-framework 3.x (apps-in-toss.config.ts, 테스트는 AIT Devtools 브라우저). **정적 번들만(SSR·서버 코드 금지)**. `pnpm --filter miniapp dev|build`

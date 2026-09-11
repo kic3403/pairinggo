@@ -28,3 +28,7 @@ reports/*.md
 
 # apps-in-toss build artifact
 *.ait
+
+# packages/db 실행 산출물 (수집·가져오기 보고서)
+packages/db/collect-report*.md
+packages/db/import-report.md

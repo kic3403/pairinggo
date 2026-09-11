@@ -13,7 +13,8 @@
     "template": "tsx src/template.ts",
     "collect": "tsx src/collect.ts",
     "import-sheet": "tsx src/import.ts",
-    "pilot": "tsx src/pilot.ts"
+    "pilot": "tsx src/pilot.ts",
+    "regional": "tsx src/regional-list.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

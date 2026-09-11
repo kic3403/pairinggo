@@ -2,7 +2,8 @@
  * 자동 수집 — 네이버 검색 API(블로그·카페·뉴스) + 유튜브 Data API 로 "{술} 안주/페어링/어울리는" 을 검색해
  * 제목·요약에서 카탈로그 음식 이름을 찾아 pairing_candidates(origin: crawl)에 넣는다. AI 없이 규칙 기반.
  *   pnpm db:collect [--drink d01,d02 | --top 10 | --all] [--naver-blog --naver-cafe --naver-news --youtube] [--dry]
- * 키: NAVER_CLIENT_ID / NAVER_CLIENT_SECRET / YOUTUBE_API_KEY (packages/db/.env). 없으면 해당 소스는 건너뛴다.
+ * 키: NCP_API_KEY_ID / NCP_API_KEY (네이버 API HUB) · YOUTUBE_API_KEY (packages/db/.env). 없으면 해당 소스는 건너뛴다.
+ *     (구 개발자센터 키 NAVER_CLIENT_ID / NAVER_CLIENT_SECRET 도 2027-06-30까지는 동작)
  */
 import "dotenv/config";
 import { writeFileSync } from "node:fs";
@@ -22,13 +23,21 @@ const useKinds: Kind[] = kinds.length ? kinds : ["blog", "cafe", "news", "youtub
 const drinks = opt("drink") ? DATA.drinks.filter((d) => opt("drink")!.split(",").includes(d.id))
   : flag("all") ? DATA.drinks : POPULAR.slice(0, parseInt(opt("top") || "10"));
 
+// 네이버 검색: 2026-07부터 개발자센터(openapi.naver.com) 신규 신청 중단 → 네이버클라우드 NAVER API HUB(naverapihub.apigw.ntruss.com).
+// 새 키는 NCP_API_KEY_ID / NCP_API_KEY (콘솔 Application 인증 정보). 예전 개발자센터 키(NAVER_CLIENT_ID/SECRET)는 2027-06-30까지만 동작.
+const HUB_ID = process.env.NCP_API_KEY_ID, HUB_KEY = process.env.NCP_API_KEY;
 const NID = process.env.NAVER_CLIENT_ID, NSEC = process.env.NAVER_CLIENT_SECRET, YT = process.env.YOUTUBE_API_KEY;
-if (!NID && !YT) { console.error("[collect] NAVER_CLIENT_ID/SECRET 또는 YOUTUBE_API_KEY 가 필요합니다 (packages/db/.env). docs/11 참고."); process.exit(2); }
+const hasNaver = !!((HUB_ID && HUB_KEY) || (NID && NSEC));
+if (!hasNaver && !YT) { console.error("[collect] NCP_API_KEY_ID/NCP_API_KEY(네이버 API HUB) 또는 YOUTUBE_API_KEY 가 필요합니다 (packages/db/.env). docs/11 참고."); process.exit(2); }
+if (hasNaver) console.log(`[collect] 네이버 검색: ${HUB_ID && HUB_KEY ? "NAVER API HUB" : "개발자센터(구 방식, 2027-06까지)"}`);
 
 async function naver(kind: "blog" | "cafearticle" | "news", query: string, display = 50): Promise<Hit[]> {
-  if (!NID || !NSEC) return [];
-  const res = await fetch(`https://openapi.naver.com/v1/search/${kind}.json?query=${encodeURIComponent(query)}&display=${display}&sort=sim`, { headers: { "X-Naver-Client-Id": NID, "X-Naver-Client-Secret": NSEC } });
-  if (!res.ok) { console.warn(`[naver ${kind}] ${res.status} ${query}`); return []; }
+  if (!hasNaver) return [];
+  const q = `query=${encodeURIComponent(query)}&display=${display}&sort=sim`;
+  const res = HUB_ID && HUB_KEY
+    ? await fetch(`https://naverapihub.apigw.ntruss.com/search/v1/${kind}?${q}`, { headers: { "X-NCP-APIGW-API-KEY-ID": HUB_ID, "X-NCP-APIGW-API-KEY": HUB_KEY } })
+    : await fetch(`https://openapi.naver.com/v1/search/${kind}.json?${q}`, { headers: { "X-Naver-Client-Id": NID!, "X-Naver-Client-Secret": NSEC! } });
+  if (!res.ok) { console.warn(`[naver ${kind}] ${res.status} ${query}${res.status === 429 ? " (일 허용량 초과)" : res.status === 401 || res.status === 403 ? " (키·헤더 확인)" : ""}`); return []; }
   const j = (await res.json()) as { items: { title: string; description: string; link: string; postdate?: string; pubDate?: string; bloggername?: string; cafename?: string }[] };
   return j.items.map((it) => ({ kind: kind === "cafearticle" ? "cafe" : kind, title: stripHtml(it.title), desc: stripHtml(it.description), url: it.link, date: it.postdate || it.pubDate, author: it.bloggername || it.cafename }));
 }
