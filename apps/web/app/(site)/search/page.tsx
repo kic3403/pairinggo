@@ -48,7 +48,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <div className="wrap">
       <h1>검색{region && <span className="muted"> · {regionLabel(region)}</span>}</h1>
       <SearchBox initial={q} region={rid} autoFocus={!q} />
-      <RegionTabs current={rid} href={(id) => withRegion(q, id)} />
+      <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} />
 
       {regional && (
         <section>

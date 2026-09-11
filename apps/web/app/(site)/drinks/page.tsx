@@ -30,8 +30,16 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
 
   let list = c.dataset.drinks;
   if (filt.category) list = list.filter((d) => d.category === filt.category);
-  if (regionObj) list = list.filter((d) => drinkInRegion(d, regionObj));
-  else if (filt.region) list = list.filter((d) => (d.region || "").includes(filt.region!));
+  let fallbackNote: string | null = null;
+  if (regionObj) {
+    let inRegion = list.filter((d) => drinkInRegion(d, regionObj));
+    // 강남처럼 동 단위 지역에 등록된 양조장이 없으면 상위(서울) 기준으로 보여 주고 그 사실을 적는다
+    if (!inRegion.length && regionObj.fb?.length) {
+      inRegion = list.filter((d) => regionObj.fb!.some((p) => (d.region || "").startsWith(p)));
+      if (inRegion.length) fallbackNote = `${regionLabel(regionObj)}에 등록된 양조장이 아직 없어 ${regionObj.fb[0]} 전체 기준으로 보여 드립니다.`;
+    }
+    list = inRegion;
+  } else if (filt.region) list = list.filter((d) => (d.region || "").includes(filt.region!));
   if (filt.brewery) list = list.filter((d) => (d.brewery || "").includes(filt.brewery!));
 
   const groups = new Map<string, typeof list>();
@@ -43,7 +51,8 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
       <p className="crumb"><Link href="/">홈</Link>{active && <> · <Link href="/drinks">전통주</Link></>}</p>
       <h1>{active ? `${active} 전통주 ${list.length}종` : `전통주 ${c.counts.drinks}종`}</h1>
       <p className="lead">{active ? "조건을 지우려면 전통주 전체로 돌아가세요." : "종류별로 모았습니다. 술을 고르면 어울리는 안주와 그 근거, 구매처를 볼 수 있습니다."}</p>
-      <RegionTabs current={regionObj?.id} href={(id) => { const qs = new URLSearchParams({ ...(filt.category ? { category: filt.category } : {}), ...(id !== "all" ? { region: id } : {}) }).toString(); return `/drinks${qs ? `?${qs}` : ""}`; }} />
+      <RegionTabs current={regionObj?.id} base="/drinks" keep={filt.category ? { category: filt.category } : {}} />
+      {fallbackNote && <p className="small muted">{fallbackNote}</p>}
       {active && <div className="btns"><Link className="btn" href="/drinks">전체 보기</Link></div>}
 
       {!list.length && <p className="muted">해당하는 전통주가 없습니다.</p>}

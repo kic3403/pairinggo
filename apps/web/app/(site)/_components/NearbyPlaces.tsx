@@ -6,17 +6,20 @@
  */
 import { useState } from "react";
 import Heart from "./Heart";
+import { useRegion } from "./RegionProvider";
 
 type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null };
 type Res = { places: Place[]; source: string; error?: string };
 type Props = { mode: "restaurants"; food: string } | { mode: "bottleshops"; drinkName: string; trad: boolean };
 
-const REGIONS: { id: string; label: string }[] = [
+/** 관심지역이 없을 때 바로 고를 수 있는 곳 — id는 packages/shared/src/regions.ts와 같아야 한다 */
+const QUICK: { id: string; label: string }[] = [
   { id: "hongdae", label: "홍대" }, { id: "gangnam", label: "강남" }, { id: "jongno", label: "종로" },
-  { id: "seongsu", label: "성수" }, { id: "yeonnam", label: "연남" }, { id: "itaewon", label: "이태원" },
+  { id: "seongsu", label: "성수" }, { id: "yongsan", label: "이태원" }, { id: "busan", label: "부산" },
 ];
 
 export default function NearbyPlaces(props: Props) {
+  const rg = useRegion();
   const [state, setState] = useState<"idle" | "loading" | "done" | "denied">("idle");
   const [res, setRes] = useState<Res | null>(null);
   const [where, setWhere] = useState<string>("");
@@ -56,9 +59,13 @@ export default function NearbyPlaces(props: Props) {
 
   const RegionButtons = () => (
     <ul className="tabs" style={{ marginTop: 10 }}>
-      {REGIONS.map((r) => (
+      {rg.region && (
+        <li><button className="btn p" style={{ minHeight: 40, padding: "0 15px" }} onClick={() => void (rg.gps ? load({ lat: rg.gps.lat, lng: rg.gps.lng }, rg.label) : load({ region: rg.id }, rg.label))}>관심지역 {rg.label}</button></li>
+      )}
+      {QUICK.filter((r) => r.id !== rg.id).map((r) => (
         <li key={r.id}><button className="btn" style={{ minHeight: 40, padding: "0 15px" }} onClick={() => void load({ region: r.id }, r.label)}>{r.label}</button></li>
       ))}
+      <li><button className="btn" style={{ minHeight: 40, padding: "0 15px" }} onClick={rg.open}>다른 지역 ▾</button></li>
     </ul>
   );
 

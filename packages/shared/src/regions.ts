@@ -67,6 +67,19 @@ export const REGION_TREE: Record<string, { id: string; label: string }[]> = {
 export const regionLabel = (r: Region) => Object.values(REGION_TREE).flat().find((s) => s.id === r.id)?.label ?? r.label;
 /** 칩·선택 상자에서 쓰는 상위 id — 세부 지역이면 그 부모 */
 export const topOf = (r: Region | null) => (r ? (r.parent ?? r.id) : "all");
+/**
+ * 수도권 안의 2단계(서울·인천·경기도) — 세부 지역(강남, 경기북부…)은 접두어로 판별한다.
+ * 데이터 구조는 평평(모두 parent=cap)하지만 화면은 수도권 › 서울 › 강남 세 단계로 보여 준다.
+ */
+export function level2Of(r: Region | null): Region | null {
+  if (!r || r.parent !== "cap") return null;
+  if (REGION_TREE.cap.some((s) => s.id === r.id)) return r;
+  const head = (r.pre[0] || "").split(" ")[0];
+  const l2 = REGION_TREE.cap.find((s) => RBY[s.id].pre[0] === head);
+  return l2 ? RBY[l2.id] : null;
+}
+/** 2단계 지역의 세부(3단계) 목록 — 서울 › 강남·서초·…, 경기도 › 경기북부·수원·… 인천은 없음 */
+export const childrenOf = (l2: Region | null): Region[] => (l2 ? subRegions("cap").filter((r) => r.id !== l2.id && r.fb?.[0] === l2.pre[0]) : []);
 /** 지역 id → Region. "all"·모르는 id는 null(= 전국) */
 export const regionById = (id?: string | null): Region | null => (id && id !== "all" && RBY[id]) || null;
 /** 술이 이 지역 것인지 — 데이터 region 필드가 접두어(서울/경기/…)로 시작하면. 세부 지역에 술이 없을 때의 대체(fb)는 drinksInRegion이 처리 */

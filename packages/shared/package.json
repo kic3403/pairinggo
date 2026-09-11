@@ -8,6 +8,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./regions": "./src/regions.ts",
     "./data/*": "./data/*"
   },
   "scripts": {

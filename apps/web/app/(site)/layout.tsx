@@ -4,7 +4,11 @@
  */
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Suspense } from "react";
 import AuthNav from "./_components/AuthNav";
+import RegionBar from "./_components/RegionBar";
+import RegionProvider from "./_components/RegionProvider";
+import RegionSheet from "./_components/RegionSheet";
 import SavedProvider from "./_components/SavedProvider";
 import SearchBox from "./_components/SearchBox";
 import "./site.css";
@@ -12,6 +16,7 @@ import "./site.css";
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <SavedProvider>
+    <RegionProvider>
       <header className="site-head">
         <div className="wrap">
           <Link href="/" className="brand" aria-label="페어링GO 홈">
@@ -27,6 +32,9 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </nav>
         </div>
       </header>
+      {/* useSearchParams를 쓰는 클라이언트 컴포넌트는 정적 생성 시 Suspense 경계가 필요하다 */}
+      <Suspense fallback={<div className="region-bar" aria-hidden />}><RegionBar /></Suspense>
+      <Suspense fallback={null}><RegionSheet /></Suspense>
 
       <main>{children}</main>
 
@@ -43,6 +51,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </p>
         </div>
       </footer>
+    </RegionProvider>
     </SavedProvider>
   );
 }
