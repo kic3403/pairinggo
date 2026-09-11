@@ -1,4 +1,5 @@
 :root { --ink: #1F1E1C; --ink2: #4B4B4B; --muted: #8C8C88; --line: #E6E4DF; --bg: #F7F6F3; --surface: #fff; --drink: #22406B; --drink-soft: #E6ECF5; --food: #E4572E; --food-ink: #B33E1C; --food-soft: #FBE9E2; --ok: #2E7D5B; --warn: #B7791F; }
+body { background: var(--bg); color: var(--ink); }   /* 어드민은 라이트 고정 */
 .adm { max-width: 720px; margin: 0 auto; padding: 16px 16px 80px; font-size: 14px; line-height: 1.55; }
 .adm a { color: var(--drink); }
 .adm-nav { display: flex; gap: 14px; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 16px; font-size: 13px; }

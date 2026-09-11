@@ -10,3 +10,4 @@ export * from "./browse";
 export * from "./schemas";
 export * from "./rows";
 export * from "./places";
+export * from "./slug";
