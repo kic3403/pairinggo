@@ -2,7 +2,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Heart from "./_components/Heart";
+import HeroMarquee from "./_components/HeroMarquee";
 import SearchBox from "./_components/SearchBox";
+import { topDrinks } from "@/lib/popular";
 import { buyLink, onlineSellable, POPULAR, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const c = await getCatalog();
+  const top = await topDrinks(10);
   const drinks = (POPULAR.length ? POPULAR : c.dataset.drinks).slice(0, 8);
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
 
@@ -29,6 +32,7 @@ export default async function Home() {
           <li><b>{c.counts.foods}</b><span>음식·안주</span></li>
           <li><b>{c.counts.pairings.toLocaleString("ko-KR")}</b><span>페어링</span></li>
         </ul>
+        <HeroMarquee drinks={top.list} basis={top.basis} />
         <div style={{ marginTop: 18 }}><SearchBox /></div>
         <div className="btns">
           <Link className="btn p" href="/drinks">전통주 둘러보기</Link>

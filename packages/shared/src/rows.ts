@@ -16,6 +16,7 @@ export function drinkFromRow(r: Row): Drink {
     trend: r.trend || undefined, profile: r.profile || undefined,
     buy: { url: r.buy_url ?? null, store: r.buy_store ?? null },
     offline: r.offline || undefined,
+    image: r.image_url ? { url: r.image_url, credit: r.image_credit ?? null } : null,
   };
 }
 export function foodFromRow(r: Row): Food {

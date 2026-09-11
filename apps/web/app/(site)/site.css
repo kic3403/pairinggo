@@ -197,6 +197,29 @@ p { margin: 0 0 12px; }
 .site-foot nav { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; font-weight: 600; }
 .site-foot nav a { text-decoration: none; color: var(--ink2); }
 
+/* 홈 배너 — 오른쪽에서 왼쪽으로 흐르는 전통주 */
+.marquee { margin: 22px 0 6px; }
+.mq-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-bottom: 10px; font-size: 15px; }
+.mq-head b { white-space: nowrap; }
+.mq-viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.mq-track { display: flex; gap: 12px; width: max-content; animation: mq-scroll 38s linear infinite; }
+.mq-track > span { display: contents; }
+.mq-viewport:hover .mq-track, .mq-track:focus-within { animation-play-state: paused; }
+@keyframes mq-scroll { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 6px)); } }
+@media (prefers-reduced-motion: reduce) { .mq-track { animation: none; flex-wrap: wrap; width: auto; } .mq-track > span { display: none; } .mq-viewport { mask-image: none; -webkit-mask-image: none; } }
+.mq-tile { position: relative; flex: none; width: 136px; height: 196px; border-radius: 14px; padding: 12px 10px 10px; text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 2px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+.mq-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mq-tile img + .rank, .mq-tile img ~ .nm, .mq-tile img ~ .ct { position: relative; z-index: 1; text-shadow: 0 1px 2px rgba(0,0,0,.6); color: #fff; }
+.mq-tile .bottle { margin-bottom: auto; margin-top: 6px; fill: var(--tone); opacity: .9; }
+.mq-tile .bottle .label { fill: rgba(255,255,255,.55); }
+.mq-tile .rank { position: absolute; top: 8px; left: 9px; font-size: 11.5px; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: var(--ink); color: var(--bg); }
+.mq-tile .nm { font-weight: 800; font-size: 13.5px; line-height: 1.25; text-align: center; letter-spacing: -0.01em; text-wrap: balance; word-break: keep-all; overflow-wrap: anywhere; max-width: 100%; }
+.mq-tile .ct { font-size: 11px; color: var(--muted); }
+.mq-tile:hover { border-color: var(--tone); }
+.tone-tak { --tone: #8FA6CC; } .tone-yak { --tone: #C9A227; } .tone-so { --tone: #6E7F99; } .tone-li { --tone: #E4572E; } .tone-fr { --tone: #B54A6B; } .tone-etc { --tone: #8C8C88; }
+@media (max-width: 640px) { .mq-tile { width: 118px; height: 172px; } .mq-track { animation-duration: 30s; } }
+
 /* 히어로 (랜딩) */
 .hero { padding: 10px 0 6px; }
 .hero h1 { font-size: 30px; }

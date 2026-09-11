@@ -21,6 +21,8 @@ export type Drink = {
   trend?: Trend; profile?: DrinkProfile;
   buy: { url: string | null; store: string | null };
   offline?: { visit: boolean | null; place: string | null; address: string | null; phone: string | null; note: string | null };
+  /** 제품 사진 — 사용 허락을 받은 것만 (양조장 제공·직접 촬영). 없으면 화면은 카테고리 색 타일로 대체 */
+  image?: { url: string; credit?: string | null } | null;
 };
 
 export type Food = {
