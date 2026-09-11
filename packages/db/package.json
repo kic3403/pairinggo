@@ -15,7 +15,8 @@
     "import-sheet": "tsx src/import.ts",
     "pilot": "tsx src/pilot.ts",
     "regional": "tsx src/regional-list.ts",
-    "rollback": "tsx src/rollback.ts"
+    "rollback": "tsx src/rollback.ts",
+    "mentions:insta": "tsx src/mentions-insta.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

@@ -6,6 +6,7 @@
 현재: **공개 웹 배포됨 — https://pairinggo.vercel.app** (docs/14, Vercel·GitHub 연결, `git push`로 자동 배포) · 검색·구매·주변 판매점·회원(이메일+소셜)·하트·마이페이지 완료(docs/13) · 데이터 수집 도구 완료(docs/11) · 카카오 식당·위치 완료(docs/10).
 - 배포 사이트를 확인할 때 클로드 앱의 미리보기 창은 `/_next/static` 자산을 막아 스타일 없이 보인다 — 실제 브라우저(Claude in Chrome 또는 사용자 크롬)로 본다.
 다음: 유입 만들기 + 사업자·통신판매업 신고 병행 → PWA → 구매 기능(+푸시) → 스토어 출시.
+- "많이 찾는 전통주" 순위 = 인스타·유튜브·네이버 블로그·구글 블로그 최근 30일 언급량 채널별 정규화 평균, 매일 00:00 KST 크론 `/api/cron/mentions` → `drinks.trend`(docs/11 §5-2, 점수 로직 `packages/shared/src/trend.ts`). 인스타는 수동 CSV(`mentions:insta`).
 - 전통주 지역별 목록(2026-09-11, docs/11 §5-1): `packages/db/research/`(더술닷컴 1,300종·찾아가는 양조장 64·네이버 백과) → `pnpm --filter @pairinggo/db regional` → `templates/전통주_지역별_목록.xlsx`. 시도 순서·정규화는 `packages/db/src/sido.ts` (광주는 전남에 묶음, 2026-07 통합). aT 문구는 공공누리 4유형 — 앱 화면에 원문 그대로 싣지 않는다.
 
 ## 구조 (pnpm workspaces)

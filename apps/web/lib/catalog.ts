@@ -47,7 +47,7 @@ async function fromDb(): Promise<Catalog | null> {
   const sb = db();
   if (!sb) return null;
   const [meta, drinks, foods, pairings, evidence] = await Promise.all([
-    sb.from("catalog_meta").select("key,value").in("key", ["version"]),
+    sb.from("catalog_meta").select("key,value").in("key", ["version", "trend_meta"]),
     selectAll<Row>("drinks", (f, t) => sb.from("drinks").select("*").order("id").range(f, t)),
     selectAll<Row>("foods", (f, t) => sb.from("foods").select("*").order("id").range(f, t)),
     // pending(검수 중)·hidden 제외
@@ -60,7 +60,9 @@ async function fromDb(): Promise<Catalog | null> {
   const evByPairing = new Map<number, unknown[]>();
   for (const e of evidence) { const arr = evByPairing.get(e.pairing_id) || []; arr.push(e); evByPairing.set(e.pairing_id, arr); }
   const rows = pairings.map((p) => ({ ...p, evidence: evByPairing.get(p.id as number) || [] }));
-  const dataset = loadDatasetFromRows({ drinks, foods, pairings: rows, trend_meta: BUNDLED.trend_meta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
+  // 트렌드 설명(기간·채널)은 일일 크론(/api/cron/mentions)이 catalog_meta.trend_meta에 쓴다. 없으면 번들 값
+  const trendMeta = (meta.data?.find((m) => m.key === "trend_meta")?.value as Dataset["trend_meta"] | undefined) ?? BUNDLED.trend_meta;
+  const dataset = loadDatasetFromRows({ drinks, foods, pairings: rows, trend_meta: trendMeta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
   const version = String(meta.data?.find((m) => m.key === "version")?.value ?? "db");
   return { version, source: "db", dataset, counts: counts(dataset) };
 }

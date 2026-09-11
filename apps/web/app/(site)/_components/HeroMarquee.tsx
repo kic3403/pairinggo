@@ -25,10 +25,9 @@ function Tile({ d, rank }: { d: Drink; rank: number }) {
   );
 }
 
-export default function HeroMarquee({ drinks, basis }: { drinks: Drink[]; basis: "site" | "trend" | "mixed" }) {
+export default function HeroMarquee({ drinks, note }: { drinks: Drink[]; note: string }) {
   if (!drinks.length) return null;
   const items = drinks.slice(0, 10);
-  const note = basis === "site" ? "이 사이트 검색량 기준" : basis === "mixed" ? "사이트 검색량 + 외부 검색 트렌드" : "최근 한 달 검색 트렌드(네이버·인스타·유튜브) 기준";
   return (
     <section className="marquee" aria-label="요즘 많이 찾는 전통주">
       <div className="mq-head"><b>요즘 많이 찾는 전통주 10</b><span className="muted small">{note}</span></div>

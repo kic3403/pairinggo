@@ -4,6 +4,7 @@
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "buildCommand": "cd ../.. && pnpm --filter web build",
   "crons": [
-    { "path": "/api/cron/popular", "schedule": "0 18 * * *" }
+    { "path": "/api/cron/popular", "schedule": "0 18 * * *" },
+    { "path": "/api/cron/mentions", "schedule": "0 15 * * *" }
   ]
 }
