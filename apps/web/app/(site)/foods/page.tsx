@@ -1,6 +1,7 @@
 /** 음식 목록 — 색인용 허브 페이지. 분류별로 묶어 내부 링크를 만든다. */
 import type { Metadata } from "next";
 import Link from "next/link";
+import Heart from "../_components/Heart";
 import { byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
@@ -38,6 +39,7 @@ export default async function FoodIndex() {
                   <span className="n">{f.name}</span>
                   <span className="s">{[f.tags?.slice(0, 2).join(" · "), `페어링 ${(byFood[f.id] || []).length}`].filter(Boolean).join(" · ")}</span>
                 </Link>
+                <Heart kind="food" id={f.id} name={f.name} />
               </li>
             ))}
           </ul>

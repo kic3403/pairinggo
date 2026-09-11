@@ -19,7 +19,10 @@
 ## 절대 규칙
 - 앱인토스 제약: 미니앱에 서버 코드·SSR 금지. 로그인은 토스 로그인만(Phase 3). 실물 결제는 토스페이만(Phase 5). 외부 결제창·외부 의존 링크 금지 — 예외는 법적 고지·제휴기관 공식 페이지·"제품 추천 후 구매 플랫폼 이동"(구매 버튼 문구: "양조장 공식몰로 이동").
 - 외부 링크는 `apps/miniapp/src/lib/openExternal.ts`로만 연다(`<a target=_blank>` 직접 사용 금지). 위치는 `lib/location.ts`(토스 SDK/브라우저)로만, 카카오 로컬 호출은 서버 라우트 `/api/v1/places/*`로만(클라이언트에서 dapi 직접 호출 금지, 쿼터·키 보호).
-- 간편로그인은 **Auth.js v5**(카카오·네이버·구글). Supabase Auth는 네이버 미지원이라 안 쓴다. 세션은 JWT, 우리 `users.id`를 토큰에 담는다. 헤더 로그인 상태는 **클라이언트에서** 세션을 가져온다 — 서버에서 `auth()`를 부르면 공개 페이지 정적 생성이 깨진다. 로그인 공개 전 개인정보처리방침·동의 필요.
+- 로그인은 **Auth.js v5** — 이메일(scrypt 해시, `lib/password.ts`) + 카카오·네이버·구글. Supabase Auth는 네이버 미지원이라 안 쓴다. 세션은 JWT, 우리 `users.id`를 토큰에 담는다.
+- 세션·저장 상태는 **`SavedProvider` 한곳에서** 관리하고 경로가 바뀌면 다시 확인한다. 앱 라우터는 레이아웃을 리마운트하지 않아 로그인 직후 헤더가 안 바뀐다. 서버 컴포넌트에서 `auth()`를 부르면 공개 페이지 정적 생성이 깨지므로 공개 페이지에서는 쓰지 않는다.
+- 저장(찜)은 전통주·음식·**음식점**. 음식점은 카탈로그에 없으므로 `saved_items.meta`(jsonb)에 이름·주소·링크를 함께 담는다. 카카오 로컬은 **사용자가 누를 때만** 부른다(유료 쿼터).
+- 로그인 공개 전 개인정보처리방침·수집 동의 필요. 주문을 받으면 양조장에 주문자 정보를 넘기므로 제3자 제공 동의도 별도.
 - 비밀키는 apps/web/.env.local(SUPABASE_SERVICE_ROLE_KEY·CRON_SECRET·AUTH_*)과 packages/db/.env(DATABASE_URL)에만. 미니앱 번들엔 VITE_API_BASE_URL·VITE_KAKAO_JS_KEY(도메인 제한 공개 키)만. KAKAO_REST_KEY는 apps/web 서버 전용. 채팅·커밋에 키 금지.
 - 카탈로그 파생값(D·F·byDrink·DOCS 등)은 `export let` 라이브 바인딩 — 모듈 로드 시 복사하지 말고 사용 시점에 읽는다(applyDataset 핫스왑 대응).
 - 온라인 판매 불가 주류(`NON_TRAD`, online_sellable=false)는 구매 링크 대신 "온라인 직배송 불가" 안내.

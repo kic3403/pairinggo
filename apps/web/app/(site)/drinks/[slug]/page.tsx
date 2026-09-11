@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import { F, byDrink, buyLink, findBySlug, onlineSellable, scorePairings, toSlug, fmt } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, foodHref, type CardItem } from "../../_components/PairingCards";
-import SaveButton from "../../_components/SaveButton";
+import Heart from "../../_components/Heart";
 
 export const revalidate = 600;
 
@@ -67,7 +67,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         {sellable
           ? <a className="btn p" href={bl.url} target="_blank" rel="noopener nofollow">{bl.store}에서 보기 ↗</a>
           : <span className="btn" aria-disabled>온라인 직배송 불가 (전통주 외 주류)</span>}
-        <SaveButton kind="drink" id={drink.id} name={drink.name} />
+        <Heart kind="drink" id={drink.id} name={drink.name} variant="button" />
       </div>
 
       <div className="cols" style={{ marginTop: 8 }}>

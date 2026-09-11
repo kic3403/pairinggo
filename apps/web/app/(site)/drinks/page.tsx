@@ -1,6 +1,7 @@
 /** 전통주 목록 — 색인용 허브 페이지. 종류·지역별로 묶어 내부 링크를 만든다. */
 import type { Metadata } from "next";
 import Link from "next/link";
+import Heart from "../_components/Heart";
 import { byDrink, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
@@ -38,6 +39,7 @@ export default async function DrinkIndex() {
                   <span className="n">{d.name}</span>
                   <span className="s">{[d.abv != null ? `${d.abv}%` : null, d.region, `페어링 ${(byDrink[d.id] || []).length}`].filter(Boolean).join(" · ")}</span>
                 </Link>
+                <Heart kind="drink" id={d.id} name={d.name} />
               </li>
             ))}
           </ul>

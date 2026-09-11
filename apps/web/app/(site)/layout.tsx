@@ -5,11 +5,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import AuthNav from "./_components/AuthNav";
+import SavedProvider from "./_components/SavedProvider";
 import "./site.css";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <>
+    <SavedProvider>
       <header className="site-head">
         <div className="wrap">
           <Link href="/" className="brand" aria-label="페어링GO 홈">
@@ -39,6 +40,6 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </p>
         </div>
       </footer>
-    </>
+    </SavedProvider>
   );
 }

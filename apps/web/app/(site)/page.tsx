@@ -1,6 +1,7 @@
 /** 랜딩 — 검색 유입이 도착했을 때 서비스가 뭔지 3초 안에 알리고 술·음식 목록으로 보낸다. */
 import type { Metadata } from "next";
 import Link from "next/link";
+import Heart from "./_components/Heart";
 import { POPULAR, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
@@ -42,6 +43,7 @@ export default async function Home() {
                 <span className="n">{d.name}</span>
                 <span className="s">{[d.category, d.region, `어울리는 음식 ${(byDrink[d.id] || []).length}`].filter(Boolean).join(" · ")}</span>
               </Link>
+              <Heart kind="drink" id={d.id} name={d.name} />
             </li>
           ))}
         </ul>
@@ -56,6 +58,7 @@ export default async function Home() {
                 <span className="n">{f.name}</span>
                 <span className="s">{[f.category, `어울리는 술 ${(byFood[f.id] || []).length}`].filter(Boolean).join(" · ")}</span>
               </Link>
+              <Heart kind="food" id={f.id} name={f.name} />
             </li>
           ))}
         </ul>

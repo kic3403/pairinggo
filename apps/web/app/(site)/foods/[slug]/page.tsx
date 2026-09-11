@@ -7,7 +7,8 @@ import { notFound } from "next/navigation";
 import { D, byFood, findBySlug, naverMapUrl, scorePairings, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, drinkHref, type CardItem } from "../../_components/PairingCards";
-import SaveButton from "../../_components/SaveButton";
+import Heart from "../../_components/Heart";
+import NearbyPlaces from "../../_components/NearbyPlaces";
 
 export const revalidate = 600;
 
@@ -56,7 +57,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
 
       <div className="btns">
         <a className="btn f" href={naverMapUrl(`${food.name} 맛집`)} target="_blank" rel="noopener nofollow">{food.name} 맛집 찾기 ↗</a>
-        <SaveButton kind="food" id={food.id} name={food.name} />
+        <Heart kind="food" id={food.id} name={food.name} variant="button" />
       </div>
 
       <div className="cols" style={{ marginTop: 8 }}>
@@ -66,6 +67,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
             종합 점수는 전문가 평가(60%)·대중 언급량(25%)·맛 프로필(15%)에 출처 등급을 더해 계산합니다.
           </p>
           <PairingCards items={items} />
+          <NearbyPlaces food={food.name} />
         </div>
 
         <aside>

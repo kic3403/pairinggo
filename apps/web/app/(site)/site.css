@@ -105,10 +105,46 @@ p { margin: 0 0 12px; }
 .grid { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; grid-template-columns: 1fr; }
 @media (min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-.grid a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; text-decoration: none; }
+.grid li { position: relative; }
+.grid a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 46px 13px 14px; text-decoration: none; }
 .grid a:hover { border-color: var(--navy); }
 .grid .n { font-weight: 700; font-size: 15.5px; }
 .grid .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.grid .heart { position: absolute; top: 6px; right: 6px; }
+
+/* 하트(찜) — 캐치테이블·데일리샷처럼 카드 오른쪽 위에 */
+.heart { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+  border: 0; background: none; cursor: pointer; font-size: 19px; line-height: 1; color: var(--muted); border-radius: 999px; }
+.heart:hover { color: var(--food); background: var(--food-soft); }
+.heart.on { color: var(--food); }
+.heart:disabled { opacity: 0.45; cursor: default; }
+.heart-btn.on { border-color: var(--food); color: var(--food-ink); background: var(--food-soft); }
+
+/* 마이페이지 탭 */
+.tabs { display: flex; gap: 6px; margin: 18px 0 16px; padding: 0; list-style: none; flex-wrap: wrap; }
+.tabs a { display: inline-block; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); text-decoration: none; font-size: 14px; font-weight: 600; color: var(--ink2); min-height: 40px; line-height: 22px; }
+.tabs a.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+.tabs .cnt { font-variant-numeric: tabular-nums; opacity: 0.75; margin-left: 5px; }
+
+/* 폼 */
+.field { display: block; margin: 0 0 12px; }
+.field span { display: block; font-size: 13px; font-weight: 600; color: var(--ink2); margin-bottom: 5px; }
+.field input { width: 100%; min-height: 46px; padding: 0 13px; border: 1.5px solid var(--line); border-radius: 11px;
+  background: var(--surface); color: var(--ink); font-size: 15.5px; font-family: inherit; }
+.field input:focus { outline: 2px solid var(--navy); outline-offset: 1px; border-color: var(--navy); }
+.form-error { background: var(--food-soft); color: var(--food-ink); border-radius: 10px; padding: 10px 12px; font-size: 14px; margin: 0 0 14px; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 22px 0 16px; color: var(--muted); font-size: 13px; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* 음식점 카드 */
+.places { display: grid; gap: 10px; padding: 0; margin: 14px 0 0; list-style: none; }
+@media (min-width: 640px) { .places { grid-template-columns: 1fr 1fr; } }
+.place { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 46px 13px 14px; }
+.place .n { font-weight: 700; font-size: 15.5px; }
+.place .s { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+.place .lk { font-size: 13px; margin-top: 7px; display: inline-block; color: var(--navy); }
+.place .heart { position: absolute; top: 6px; right: 6px; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .section-head a { font-size: 13.5px; color: var(--navy); text-decoration: none; font-weight: 600; }
 
