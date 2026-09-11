@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import AuthNav from "./_components/AuthNav";
 import SavedProvider from "./_components/SavedProvider";
+import SearchBox from "./_components/SearchBox";
 import "./site.css";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
@@ -17,7 +18,9 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <span className="dots" aria-hidden><i /><i /></span>
             <span>페어링<span style={{ color: "var(--food)" }}>GO</span></span>
           </Link>
+          <SearchBox compact />
           <nav className="site-nav" aria-label="주요 메뉴">
+            <Link href="/search" className="search-link">검색</Link>
             <Link href="/drinks">전통주</Link>
             <Link href="/foods">음식·안주</Link>
             <AuthNav />

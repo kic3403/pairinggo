@@ -5,10 +5,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { F, byDrink, buyLink, findBySlug, onlineSellable, scorePairings, toSlug, fmt } from "@pairinggo/shared";
+import { F, LINK_STATUS, byDrink, buyLink, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, foodHref, type CardItem } from "../../_components/PairingCards";
 import Heart from "../../_components/Heart";
+import NearbyPlaces from "../../_components/NearbyPlaces";
 
 export const revalidate = 600;
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!drink) return { title: "찾을 수 없는 전통주 | 페어링GO" };
   const n = (byDrink[drink.id] || []).length;
   const title = `${drink.name}에 어울리는 안주 ${n}가지 | 페어링GO`;
-  const description = `${drink.name}(${[drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean).join(" · ")})와 어울리는 음식을 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다.`;
+  const description = `${josa(drink.name, "과/와")} 어울리는 음식을 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다. ${[drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean).join(" · ")}.`;
   const url = `/drinks/${toSlug(drink.name)}`;
   return {
     title, description,
@@ -45,6 +46,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
   const bl = buyLink(drink);
   const sellable = onlineSellable(drink);
+  const offline = drink.offline;
   const sameBrewery = c.dataset.drinks.filter((d) => d.id !== drink.id && d.brewery && d.brewery === drink.brewery).slice(0, 5);
   const sameRegion = c.dataset.drinks.filter((d) => d.id !== drink.id && d.region && drink.region && d.region.split(" ")[0] === drink.region.split(" ")[0]).slice(0, 6);
 
@@ -63,20 +65,47 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <ul className="tags">{drink.awards.map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
       )}
 
-      <div className="btns">
-        {sellable
-          ? <a className="btn p" href={bl.url} target="_blank" rel="noopener nofollow">{bl.store}에서 보기 ↗</a>
-          : <span className="btn" aria-disabled>온라인 직배송 불가 (전통주 외 주류)</span>}
-        <Heart kind="drink" id={drink.id} name={drink.name} variant="button" />
-      </div>
+      {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
+      <section className="buy">
+        <h3>온라인 구매</h3>
+        <div className="btns" style={{ marginTop: 6 }}>
+          {sellable && !bl.fallback && (
+            <>
+              <a className="btn p" href={bl.url} target="_blank" rel="noopener nofollow">{bl.store}로 이동 ↗</a>
+              <a className="btn" href={naverShopUrl(drink.name)} target="_blank" rel="noopener nofollow">네이버쇼핑에서 찾기 ↗</a>
+            </>
+          )}
+          {sellable && bl.fallback && <a className="btn p" href={bl.url} target="_blank" rel="noopener nofollow">네이버쇼핑에서 찾기 ↗</a>}
+          {!sellable && <a className="btn" href={naverShopUrl(drink.name)} target="_blank" rel="noopener nofollow">네이버쇼핑에서 정보 보기 ↗</a>}
+          <Heart kind="drink" id={drink.id} name={drink.name} variant="button" />
+        </div>
+        <p className="small muted" style={{ marginTop: 8 }}>
+          {!sellable && "이 술은 전통주로 분류되지 않아 온라인 직배송이 법적으로 제한됩니다. 아래에서 가까운 판매점을 찾아 주세요. "}
+          {sellable && bl.fallback && `공식 판매 링크가 최근 점검(${LINK_STATUS.checkedAt?.slice(0, 10) || "점검"})에서 응답하지 않아 네이버쇼핑으로 안내합니다. `}
+          {sellable && bl.soldout && "최근 점검에서 품절 문구가 감지됐습니다. 재입고는 판매처에서 확인해 주세요. "}
+          {sellable && "주류는 만 19세 이상만 구매할 수 있습니다."}
+        </p>
+        {offline && (offline.visit === true || offline.address) && (
+          <div className="box" style={{ marginTop: 12 }}>
+            <h3>{offline.place || drink.brewery} {offline.visit === true && <span className="badge o">현장 판매 확인</span>}</h3>
+            {offline.address && <p className="small" style={{ margin: "0 0 4px" }}>{offline.address}</p>}
+            {offline.note && <p className="small muted" style={{ margin: 0 }}>{offline.note}</p>}
+            <div className="btns" style={{ marginTop: 10 }}>
+              <a className="btn" href={naverMapUrl(offline.address || `${drink.brewery} ${drink.region || ""}`)} target="_blank" rel="noopener nofollow">길찾기 ↗</a>
+              {offline.phone && <a className="btn" href={`tel:${offline.phone.replace(/[^0-9+]/g, "")}`}>전화 {offline.phone}</a>}
+            </div>
+          </div>
+        )}
+      </section>
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>
-          <h2>{drink.name}과 어울리는 음식 {items.length}가지</h2>
+          <h2>{josa(drink.name, "과/와")} 어울리는 음식 {items.length}가지</h2>
           <p className="small muted" style={{ marginTop: -6 }}>
             종합 점수는 전문가 평가(60%)·대중 언급량(25%)·맛 프로필(15%)에 출처 등급을 더해 계산합니다.
           </p>
           <PairingCards items={items} />
+          <NearbyPlaces mode="bottleshops" drinkName={drink.name} trad={sellable} />
         </div>
 
         <aside>

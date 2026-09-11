@@ -34,9 +34,13 @@ img { max-width: 100%; height: auto; }
 .site-nav a { text-decoration: none; color: var(--ink2); padding: 6px 2px; }
 .site-nav a:hover { color: var(--ink); }
 .site-nav form { display: inline; }
+.site-nav a, .brand { white-space: nowrap; }
+.site-head .wrap { flex-wrap: nowrap; }
 .linklike { background: none; border: 0; padding: 6px 2px; font: inherit; color: var(--muted); cursor: pointer; }
 .linklike:hover { color: var(--ink); }
-@media (max-width: 420px) { .site-nav { gap: 11px; font-size: 13.5px; } }
+/* 좁은 화면: 검색창은 링크로, 닉네임은 숨김, 간격 축소 — 한 줄을 지킨다 */
+@media (max-width: 640px) { .site-nav { gap: 12px; font-size: 14px; } .site-nav .nick { display: none; } }
+@media (max-width: 400px) { .site-nav { gap: 9px; font-size: 13px; } .brand { font-size: 16.5px; } }
 
 /* 본문 공통 */
 main { padding: 26px 0 56px; }
@@ -111,6 +115,44 @@ p { margin: 0 0 12px; }
 .grid .n { font-weight: 700; font-size: 15.5px; }
 .grid .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 .grid .heart { position: absolute; top: 6px; right: 6px; }
+
+.grid .acts { position: absolute; right: 12px; bottom: 11px; font-size: 12.5px; font-weight: 700; }
+.grid .acts a { display: inline; background: none; border: 0; padding: 0; color: var(--navy); }
+
+/* 검색창 */
+.sbox { display: flex; gap: 6px; width: 100%; }
+.sbox input { flex: 1; min-width: 0; min-height: 46px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 12px;
+  background: var(--surface); color: var(--ink); font-size: 15.5px; font-family: inherit; }
+.sbox input:focus { outline: 2px solid var(--navy); outline-offset: 1px; border-color: var(--navy); }
+.sbox button { min-height: 46px; padding: 0 16px; border: 0; border-radius: 12px; background: var(--navy); color: #fff; font-weight: 700; font-size: 14.5px; cursor: pointer; }
+.sbox.compact { flex: 1; max-width: 360px; margin-left: 8px; }
+.sbox.compact input, .sbox.compact button { min-height: 38px; font-size: 14px; }
+.sbox.compact input { padding: 0 12px; border-radius: 10px; }
+.sbox.compact button { padding: 0 12px; border-radius: 10px; }
+@media (max-width: 640px) { .sbox.compact { display: none; } .site-nav .search-link { display: inline; } }
+.search-link { display: none; }
+
+/* 검색 결과: 순위 카드 · 이름 매칭 행 */
+.rank { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; counter-reset: none; }
+.rank .card .top { align-items: center; }
+.rank .no { display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 8px;
+  background: var(--navy-soft); color: var(--navy-ink); font-weight: 800; font-size: 13px; margin-right: 10px; flex: none; }
+.rank .name { flex: 1; min-width: 0; }
+.acts { display: flex; gap: 14px; align-items: center; margin-top: 10px; font-size: 13.5px; font-weight: 700; }
+.acts a { color: var(--navy); text-decoration: none; }
+.acts a:hover { text-decoration: underline; }
+.rows { padding: 0; margin: 0; list-style: none; }
+.row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .grow { flex: 1; min-width: 0; text-decoration: none; display: flex; flex-direction: column; }
+.row .grow b { font-size: 15.5px; }
+.badge.f { background: var(--food-soft); color: var(--food-ink); }
+.badge.n { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+
+/* 구매 섹션 */
+.buy { margin-top: 18px; padding: 16px; border-radius: var(--radius); background: var(--navy-soft); }
+.buy h3 { font-size: 12.5px; letter-spacing: 0.04em; margin: 0; color: var(--navy-ink); }
+.buy .box h3 { font-size: 15px; letter-spacing: 0; color: var(--ink); }
 
 /* 하트(찜) — 캐치테이블·데일리샷처럼 카드 오른쪽 위에 */
 .heart { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;

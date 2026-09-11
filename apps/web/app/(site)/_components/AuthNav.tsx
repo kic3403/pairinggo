@@ -13,5 +13,5 @@ export default function AuthNav() {
   if (!ready) return <span style={{ width: 52 }} aria-hidden />;
   if (!loggedIn) return <Link href="/login">로그인</Link>;
 
-  return <Link href="/my">마이{user?.name ? ` · ${user.name}` : ""}</Link>;
+  return <Link href="/my">마이{user?.name && <span className="nick"> · {user.name}</span>}</Link>;
 }

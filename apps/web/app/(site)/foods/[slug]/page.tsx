@@ -67,7 +67,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
             종합 점수는 전문가 평가(60%)·대중 언급량(25%)·맛 프로필(15%)에 출처 등급을 더해 계산합니다.
           </p>
           <PairingCards items={items} />
-          <NearbyPlaces food={food.name} />
+          <NearbyPlaces mode="restaurants" food={food.name} />
         </div>
 
         <aside>

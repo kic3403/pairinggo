@@ -43,3 +43,15 @@ export function toJamo(str: string): string {
 
 /** 입력이 초성만으로 이뤄졌는지 ("ㅂㅅㄷㄱ") */
 export const isChoseongOnly = (s: string) => s.length > 0 && [...s].every(isChoseong);
+
+/** 마지막 글자에 받침이 있는가 (한글이 아니면 false) */
+export function hasBatchim(word: string): boolean {
+  const ch = word.trim().replace(/[)\]"'”’]+$/, "").slice(-1);
+  const code = ch.charCodeAt(0);
+  return isSyllable(code) && (code - 0xac00) % 28 !== 0;
+}
+/** 조사 붙이기 — josa("막걸리", "과/와") → "막걸리와", josa("소주", "은/는") → "소주는". 숫자·영문으로 끝나면 앞 것을 쓴다 */
+export function josa(word: string, pair: "과/와" | "은/는" | "이/가" | "을/를" | "으로/로"): string {
+  const [withB, noB] = pair.split("/");
+  return word + (hasBatchim(word) ? withB : noB);
+}

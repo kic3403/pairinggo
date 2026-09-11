@@ -2,7 +2,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Heart from "./_components/Heart";
-import { POPULAR, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
+import SearchBox from "./_components/SearchBox";
+import { buyLink, onlineSellable, POPULAR, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
 export const revalidate = 600;
@@ -28,6 +29,7 @@ export default async function Home() {
           <li><b>{c.counts.foods}</b><span>음식·안주</span></li>
           <li><b>{c.counts.pairings.toLocaleString("ko-KR")}</b><span>페어링</span></li>
         </ul>
+        <div style={{ marginTop: 18 }}><SearchBox /></div>
         <div className="btns">
           <Link className="btn p" href="/drinks">전통주 둘러보기</Link>
           <Link className="btn f" href="/foods">음식으로 찾기</Link>
@@ -43,6 +45,7 @@ export default async function Home() {
                 <span className="n">{d.name}</span>
                 <span className="s">{[d.category, d.region, `어울리는 음식 ${(byDrink[d.id] || []).length}`].filter(Boolean).join(" · ")}</span>
               </Link>
+              <span className="acts">{onlineSellable(d) ? <a href={buyLink(d).url} target="_blank" rel="noopener nofollow">구매 ↗</a> : <Link href={`/drinks/${toSlug(d.name)}#places`}>판매점</Link>}</span>
               <Heart kind="drink" id={d.id} name={d.name} />
             </li>
           ))}
