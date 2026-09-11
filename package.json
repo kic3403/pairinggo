@@ -19,6 +19,7 @@
     "db:seed": "pnpm --filter @pairinggo/db seed",
     "db:export": "pnpm --filter @pairinggo/db export",
     "db:status": "pnpm --filter @pairinggo/db status",
+    "db:rollback": "pnpm --filter @pairinggo/db rollback",
     "db:template": "pnpm --filter @pairinggo/db template",
     "db:import": "pnpm --filter @pairinggo/db import-sheet",
     "db:collect": "pnpm --filter @pairinggo/db collect"

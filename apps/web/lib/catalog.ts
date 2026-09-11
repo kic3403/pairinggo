@@ -20,22 +20,47 @@ const STATIC_VERSION = (() => {
 })();
 const staticCatalog = (): Catalog => ({ version: STATIC_VERSION, source: "static", dataset: BUNDLED, counts: counts(BUNDLED) });
 
+/**
+ * PostgREST(Supabase)는 한 번의 select로 최대 PAGE행만 돌려주고, 초과분은 **오류가 아니라 HTTP 206**으로 조용히 자른다.
+ * (실측 2026-09-11: pairing_candidates 11,730행 요청 → 1,000행 + 206) 그래서 끝까지 페이지로 받아온다.
+ */
+const PAGE = 1000;
+const MAX_ROWS = 100_000; // 폭주 방지 상한 — 여기에 걸리면 데이터가 잘린 것이므로 크게 경고한다
+type Page<T> = { data: T[] | null; error: { message: string } | null };
+
+async function selectAll<T>(label: string, page: (from: number, to: number) => PromiseLike<Page<T>>): Promise<T[]> {
+  const out: T[] = [];
+  for (;;) {
+    const { data, error } = await page(out.length, out.length + PAGE - 1);
+    if (error) throw new Error(`${label}: ${error.message}`);
+    const rows = data ?? [];
+    out.push(...rows);
+    if (rows.length < PAGE) return out;                  // 마지막 페이지
+    if (out.length >= MAX_ROWS) { console.error(`[catalog] ${label} ${MAX_ROWS}행 상한 도달 — 데이터가 잘렸습니다`); return out; }
+  }
+}
+
+type Row = Record<string, unknown>;
+type EvidenceRow = { pairing_id: number } & Row;
+
 async function fromDb(): Promise<Catalog | null> {
   const sb = db();
   if (!sb) return null;
   const [meta, drinks, foods, pairings, evidence] = await Promise.all([
     sb.from("catalog_meta").select("key,value").in("key", ["version"]),
-    sb.from("drinks").select("*").order("id"),
-    sb.from("foods").select("*").order("id"),
-    sb.from("pairings").select("*").in("status", ["curated", "ai"]).order("id"),   // pending(검수 중)·hidden 제외
-    sb.from("pairing_evidence").select("pairing_id,source,url,quote,who,tier").order("id"),
+    selectAll<Row>("drinks", (f, t) => sb.from("drinks").select("*").order("id").range(f, t)),
+    selectAll<Row>("foods", (f, t) => sb.from("foods").select("*").order("id").range(f, t)),
+    // pending(검수 중)·hidden 제외
+    selectAll<Row>("pairings", (f, t) => sb.from("pairings").select("*").in("status", ["curated", "ai"]).order("id").range(f, t)),
+    // TODO: 페어링당 첫 근거만 쓰는데 전체를 받아온다 — 뷰(distinct on pairing_id)를 만들면 전송량이 줄어든다
+    selectAll<EvidenceRow>("pairing_evidence", (f, t) => sb.from("pairing_evidence").select("pairing_id,source,url,quote,who,tier").order("id").range(f, t)),
   ]);
-  for (const r of [meta, drinks, foods, pairings, evidence]) if (r.error) throw new Error(r.error.message);
-  if (!drinks.data?.length || !foods.data?.length || !pairings.data?.length) return null;
+  if (meta.error) throw new Error(meta.error.message);
+  if (!drinks.length || !foods.length || !pairings.length) return null;
   const evByPairing = new Map<number, unknown[]>();
-  for (const e of evidence.data || []) { const arr = evByPairing.get(e.pairing_id) || []; arr.push(e); evByPairing.set(e.pairing_id, arr); }
-  const rows = pairings.data.map((p) => ({ ...p, evidence: evByPairing.get(p.id) || [] }));
-  const dataset = loadDatasetFromRows({ drinks: drinks.data, foods: foods.data, pairings: rows, trend_meta: BUNDLED.trend_meta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
+  for (const e of evidence) { const arr = evByPairing.get(e.pairing_id) || []; arr.push(e); evByPairing.set(e.pairing_id, arr); }
+  const rows = pairings.map((p) => ({ ...p, evidence: evByPairing.get(p.id as number) || [] }));
+  const dataset = loadDatasetFromRows({ drinks, foods, pairings: rows, trend_meta: BUNDLED.trend_meta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
   const version = String(meta.data?.find((m) => m.key === "version")?.value ?? "db");
   return { version, source: "db", dataset, counts: counts(dataset) };
 }

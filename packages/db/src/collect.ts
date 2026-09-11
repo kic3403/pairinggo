@@ -31,20 +31,29 @@ const hasNaver = !!((HUB_ID && HUB_KEY) || (NID && NSEC));
 if (!hasNaver && !YT) { console.error("[collect] NCP_API_KEY_ID/NCP_API_KEY(네이버 API HUB) 또는 YOUTUBE_API_KEY 가 필요합니다 (packages/db/.env). docs/11 참고."); process.exit(2); }
 if (hasNaver) console.log(`[collect] 네이버 검색: ${HUB_ID && HUB_KEY ? "NAVER API HUB" : "개발자센터(구 방식, 2027-06까지)"}`);
 
+// 네트워크 오류(ECONNRESET 등)는 최대 3회 재시도 — 한 번의 끊김으로 전체 수집이 죽지 않게
+async function fetchRetry(url: string, init?: RequestInit, tries = 3): Promise<Response | null> {
+  for (let i = 0; i < tries; i++) {
+    try { return await fetch(url, init); } catch (e) { console.warn(`[fetch] ${(e as Error).message} (${i + 1}/${tries}) ${url.slice(0, 60)}…`); await new Promise((r) => setTimeout(r, 1500 * (i + 1))); }
+  }
+  return null;
+}
 async function naver(kind: "blog" | "cafearticle" | "news", query: string, display = 50): Promise<Hit[]> {
   if (!hasNaver) return [];
   const q = `query=${encodeURIComponent(query)}&display=${display}&sort=sim`;
   const res = HUB_ID && HUB_KEY
-    ? await fetch(`https://naverapihub.apigw.ntruss.com/search/v1/${kind}?${q}`, { headers: { "X-NCP-APIGW-API-KEY-ID": HUB_ID, "X-NCP-APIGW-API-KEY": HUB_KEY } })
-    : await fetch(`https://openapi.naver.com/v1/search/${kind}.json?${q}`, { headers: { "X-Naver-Client-Id": NID!, "X-Naver-Client-Secret": NSEC! } });
+    ? await fetchRetry(`https://naverapihub.apigw.ntruss.com/search/v1/${kind}?${q}`, { headers: { "X-NCP-APIGW-API-KEY-ID": HUB_ID, "X-NCP-APIGW-API-KEY": HUB_KEY } })
+    : await fetchRetry(`https://openapi.naver.com/v1/search/${kind}.json?${q}`, { headers: { "X-Naver-Client-Id": NID!, "X-Naver-Client-Secret": NSEC! } });
+  if (!res) return [];
   if (!res.ok) { console.warn(`[naver ${kind}] ${res.status} ${query}${res.status === 429 ? " (일 허용량 초과)" : res.status === 401 || res.status === 403 ? " (키·헤더 확인)" : ""}`); return []; }
   const j = (await res.json()) as { items: { title: string; description: string; link: string; postdate?: string; pubDate?: string; bloggername?: string; cafename?: string }[] };
   return j.items.map((it) => ({ kind: kind === "cafearticle" ? "cafe" : kind, title: stripHtml(it.title), desc: stripHtml(it.description), url: it.link, date: it.postdate || it.pubDate, author: it.bloggername || it.cafename }));
 }
 async function youtube(query: string, max = 10): Promise<Hit[]> {
   if (!YT) return [];
-  const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=${max}&q=${encodeURIComponent(query)}&relevanceLanguage=ko&key=${YT}`);
-  if (!res.ok) { console.warn(`[youtube] ${res.status} ${query}`); return []; }
+  const res = await fetchRetry(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=${max}&q=${encodeURIComponent(query)}&relevanceLanguage=ko&key=${YT}`);
+  if (!res) return [];
+  if (!res.ok) { console.warn(`[youtube] ${res.status} ${query}${res.status === 403 ? " (일 할당량 초과 가능)" : ""}`); return []; }
   const j = (await res.json()) as { items: { id: { videoId: string }; snippet: { title: string; description: string; channelTitle: string; publishedAt: string } }[] };
   return j.items.map((it) => ({ kind: "youtube" as Kind, title: it.snippet.title, desc: it.snippet.description, url: `https://www.youtube.com/watch?v=${it.id.videoId}`, date: it.snippet.publishedAt, author: it.snippet.channelTitle }));
 }

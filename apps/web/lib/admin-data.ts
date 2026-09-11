@@ -101,19 +101,34 @@ export async function assignEntity(candidateId: number, drinkId: string | null, 
   return data;
 }
 
-/** 발행: catalog_meta.version 갱신 + 스냅샷 저장 → 앱이 다음 시작 때 받는다 */
+/**
+ * 발행: 스냅샷 저장 → counts → catalog_meta.version 갱신 → 앱이 다음 시작 때 받는다.
+ * 순서가 중요하다. version을 먼저 올리면 스냅샷 저장이 실패했을 때 "무엇을 발행했는지" 기록 없이
+ * 새 버전만 전 사용자에게 나가 되돌릴 근거가 사라진다. 그래서 되돌릴 수 있는 것부터 쓴다.
+ */
 export async function publish(note: string) {
   const sb = need();
   invalidateCatalog();
   const c = await getCatalog();
-  if (c.source !== "db") throw new Error("DB 카탈로그가 아니어서 발행할 수 없어요");
+  if (c.source !== "db") throw new Error("DB 카탈로그가 아니어서 발행할 수 없어요 (정적 폴백 상태)");
   const version = new Date().toISOString();
   const counts = c.counts;
-  const r1 = await sb.from("catalog_meta").upsert({ key: "version", value: version, updated_at: version });
-  if (r1.error) throw new Error(r1.error.message);
-  await sb.from("catalog_meta").upsert({ key: "counts", value: counts, updated_at: version });
-  const r2 = await sb.from("catalog_snapshots").insert({ version, counts, data: c.dataset, note });
-  if (r2.error) throw new Error(r2.error.message);
+  const snap = await sb.from("catalog_snapshots").insert({ version, counts, data: c.dataset, note });
+  if (snap.error) throw new Error(`스냅샷 저장 실패 — 발행하지 않았습니다: ${snap.error.message}`);
+  const cnt = await sb.from("catalog_meta").upsert({ key: "counts", value: counts, updated_at: version });
+  if (cnt.error) throw new Error(`counts 저장 실패 — 발행하지 않았습니다: ${cnt.error.message}`);
+  const ver = await sb.from("catalog_meta").upsert({ key: "version", value: version, updated_at: version });
+  if (ver.error) throw new Error(`버전 갱신 실패 — 스냅샷 ${version}은 저장됐지만 발행되지 않았습니다: ${ver.error.message}`);
   invalidateCatalog();
   return { version, counts };
+}
+
+export type SnapshotRow = { version: string; counts: { drinks: number; foods: number; pairings: number }; note: string | null; created_at: string };
+
+/** 발행 이력 — 되돌릴 대상을 고르기 위한 목록. data(수 MB)는 제외하고 메타만 */
+export async function listSnapshots(limit = 10): Promise<SnapshotRow[]> {
+  const sb = need();
+  const { data, error } = await sb.from("catalog_snapshots").select("version,counts,note,created_at").order("created_at", { ascending: false }).limit(limit);
+  if (error) throw new Error(error.message);
+  return (data || []) as SnapshotRow[];
 }

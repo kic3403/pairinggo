@@ -14,7 +14,8 @@
     "collect": "tsx src/collect.ts",
     "import-sheet": "tsx src/import.ts",
     "pilot": "tsx src/pilot.ts",
-    "regional": "tsx src/regional-list.ts"
+    "regional": "tsx src/regional-list.ts",
+    "rollback": "tsx src/rollback.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
