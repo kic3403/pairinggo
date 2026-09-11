@@ -4,6 +4,7 @@
  */
 import Link from "next/link";
 import type { ReactNode } from "react";
+import AuthNav from "./_components/AuthNav";
 import "./site.css";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
@@ -18,6 +19,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           <nav className="site-nav" aria-label="주요 메뉴">
             <Link href="/drinks">전통주</Link>
             <Link href="/foods">음식·안주</Link>
+            <AuthNav />
           </nav>
         </div>
       </header>

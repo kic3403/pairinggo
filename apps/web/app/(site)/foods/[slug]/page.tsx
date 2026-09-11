@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { D, byFood, findBySlug, naverMapUrl, scorePairings, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, drinkHref, type CardItem } from "../../_components/PairingCards";
+import SaveButton from "../../_components/SaveButton";
 
 export const revalidate = 600;
 
@@ -55,6 +56,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
 
       <div className="btns">
         <a className="btn f" href={naverMapUrl(`${food.name} 맛집`)} target="_blank" rel="noopener nofollow">{food.name} 맛집 찾기 ↗</a>
+        <SaveButton kind="food" id={food.id} name={food.name} />
       </div>
 
       <div className="cols" style={{ marginTop: 8 }}>
