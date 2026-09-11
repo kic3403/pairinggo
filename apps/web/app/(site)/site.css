@@ -172,6 +172,11 @@ p { margin: 0 0 12px; }
   background: var(--surface); text-decoration: none; font-size: 14px; font-weight: 600; color: var(--ink2); min-height: 40px; line-height: 22px; }
 .tabs a.on { background: var(--navy); border-color: var(--navy); color: #fff; }
 .tabs .cnt { font-variant-numeric: tabular-nums; opacity: 0.75; margin-left: 5px; }
+/* 지역 칩 2단 — 2단(서울·인천·경기도)은 1단에 바짝 붙이고 작게, 왼쪽 선으로 "하위"임을 보인다 */
+.region-nav .region-tabs { margin-bottom: 8px; }
+.region-nav .region-tabs.sub { margin-top: 0; padding-left: 12px; border-left: 3px solid var(--line); }
+.region-nav .region-tabs.sub a { padding: 6px 13px; font-size: 13px; }
+.region-nav { margin-bottom: 14px; }
 
 /* 폼 */
 .field { display: block; margin: 0 0 12px; }

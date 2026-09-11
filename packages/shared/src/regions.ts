@@ -59,6 +59,14 @@ export const REGIONS: Region[] = [
 
 export const RBY: Record<string, Region> = Object.fromEntries(REGIONS.map((r) => [r.id, r]));
 export const TOP_REGIONS = REGIONS.filter((r) => !r.parent);
+/** 상위 지역의 하위 트리(칩 2단) — 수도권은 서울·인천·경기도 셋. 다른 상위 지역은 하위 없음 */
+export const REGION_TREE: Record<string, { id: string; label: string }[]> = {
+  cap: [{ id: "seoul", label: "서울" }, { id: "incheon", label: "인천" }, { id: "gg", label: "경기도" }],
+};
+/** 화면 이름 — 트리에 짧은 이름이 있으면 그것(서울·인천·경기도), 없으면 label */
+export const regionLabel = (r: Region) => Object.values(REGION_TREE).flat().find((s) => s.id === r.id)?.label ?? r.label;
+/** 칩·선택 상자에서 쓰는 상위 id — 세부 지역이면 그 부모 */
+export const topOf = (r: Region | null) => (r ? (r.parent ?? r.id) : "all");
 /** 지역 id → Region. "all"·모르는 id는 null(= 전국) */
 export const regionById = (id?: string | null): Region | null => (id && id !== "all" && RBY[id]) || null;
 /** 술이 이 지역 것인지 — 데이터 region 필드가 접두어(서울/경기/…)로 시작하면. 세부 지역에 술이 없을 때의 대체(fb)는 drinksInRegion이 처리 */

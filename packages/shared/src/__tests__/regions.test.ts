@@ -1,5 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { drinkInRegion, regionById, TOP_REGIONS } from "../regions";
+import { drinkInRegion, regionById, REGION_TREE, TOP_REGIONS, topOf } from "../regions";
+
+describe("지역 트리", () => {
+  it("수도권 하위는 서울·인천·경기도 셋이고 모두 실제 지역이다", () => {
+    expect(REGION_TREE.cap.map((s) => s.label)).toEqual(["서울", "인천", "경기도"]);
+    for (const s of REGION_TREE.cap) expect(regionById(s.id)?.parent).toBe("cap");
+    expect(drinkInRegion({ region: "경기 양평" }, regionById("gg"))).toBe(true);
+    expect(drinkInRegion({ region: "서울 강남" }, regionById("gg"))).toBe(false);
+    expect(drinkInRegion({ region: "인천 강화" }, regionById("incheon"))).toBe(true);
+  });
+  it("topOf — 세부 지역이면 부모, 상위면 자기 자신, 전국은 all", () => {
+    expect(topOf(regionById("seoul"))).toBe("cap");
+    expect(topOf(regionById("busan"))).toBe("busan");
+    expect(topOf(null)).toBe("all");
+  });
+});
 
 describe("지역 필터", () => {
   it("regionById — all·모르는 id는 전국(null)", () => {

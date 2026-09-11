@@ -1,9 +1,10 @@
 /** 전통주 목록 — 색인용 허브. 종류·지역·양조장으로 거를 수 있고(검색 결과의 '둘러보기'가 여기로 온다), 카드마다 구매·하트. */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { TOP_REGIONS, buyLink, byDrink, drinkInRegion, onlineSellable, regionById, toSlug } from "@pairinggo/shared";
+import { buyLink, byDrink, drinkInRegion, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import Heart from "../_components/Heart";
+import RegionTabs from "../_components/RegionTabs";
 
 export const revalidate = 600;
 type Q = { category?: string; region?: string; brewery?: string };
@@ -11,7 +12,8 @@ type Q = { category?: string; region?: string; brewery?: string };
 export async function generateMetadata({ searchParams }: { searchParams: Promise<Q> }): Promise<Metadata> {
   const c = await getCatalog();
   const sp = await searchParams;
-  const f = [regionById(sp.region)?.label ?? sp.region, sp.category, sp.brewery].filter(Boolean).join(" ") || undefined;
+  const ro = regionById(sp.region);
+  const f = [ro ? regionLabel(ro) : sp.region, sp.category, sp.brewery].filter(Boolean).join(" ") || undefined;
   const title = f ? `${f} 전통주 — 안주 추천 | 페어링GO` : `전통주 ${c.counts.drinks}종 — 막걸리·약주·증류주 안주 추천 | 페어링GO`;
   const description = `막걸리, 약주, 증류주, 과실주까지 전통주 ${c.counts.drinks}종과 어울리는 안주를 근거와 함께 정리했습니다.`;
   return { title, description, alternates: { canonical: "/drinks" }, openGraph: { title, description, url: "/drinks", siteName: "페어링GO" }, robots: f ? { index: false } : undefined };
@@ -23,8 +25,8 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
   const filt = { category: sp.category?.trim(), region: sp.region?.trim(), brewery: sp.brewery?.trim() };
   // 지역은 두 가지 형태 — 지역 id(busan, cap…: 검색 옵션·칩)와 데이터 문자열(부산 금정: 검색 결과 '둘러보기')
   const regionObj = regionById(filt.region);
-  const regionLabel = regionObj?.label ?? filt.region;
-  const active = [regionLabel, filt.category, filt.brewery].filter(Boolean).join(" ") || undefined;   // 예: "강원 탁주"
+  const rLabel = regionObj ? regionLabel(regionObj) : filt.region;
+  const active = [rLabel, filt.category, filt.brewery].filter(Boolean).join(" ") || undefined;   // 예: "강원 탁주"
 
   let list = c.dataset.drinks;
   if (filt.category) list = list.filter((d) => d.category === filt.category);
@@ -41,13 +43,7 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
       <p className="crumb"><Link href="/">홈</Link>{active && <> · <Link href="/drinks">전통주</Link></>}</p>
       <h1>{active ? `${active} 전통주 ${list.length}종` : `전통주 ${c.counts.drinks}종`}</h1>
       <p className="lead">{active ? "조건을 지우려면 전통주 전체로 돌아가세요." : "종류별로 모았습니다. 술을 고르면 어울리는 안주와 그 근거, 구매처를 볼 수 있습니다."}</p>
-      <ul className="tabs region-tabs" aria-label="지역">
-        {TOP_REGIONS.map((r) => {
-          const on = r.id === "all" ? !filt.region : regionObj?.id === r.id;
-          const qs = new URLSearchParams({ ...(filt.category ? { category: filt.category } : {}), ...(r.id !== "all" ? { region: r.id } : {}) }).toString();
-          return <li key={r.id}><Link href={`/drinks${qs ? `?${qs}` : ""}`} className={on ? "on" : undefined}>{r.label}</Link></li>;
-        })}
-      </ul>
+      <RegionTabs current={regionObj?.id} href={(id) => { const qs = new URLSearchParams({ ...(filt.category ? { category: filt.category } : {}), ...(id !== "all" ? { region: id } : {}) }).toString(); return `/drinks${qs ? `?${qs}` : ""}`; }} />
       {active && <div className="btns"><Link className="btn" href="/drinks">전체 보기</Link></div>}
 
       {!list.length && <p className="muted">해당하는 전통주가 없습니다.</p>}
