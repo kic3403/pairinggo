@@ -20,7 +20,7 @@
 
 ## 절대 규칙
 - 앱인토스 제약: 미니앱에 서버 코드·SSR 금지. 로그인은 토스 로그인만(Phase 3). 실물 결제는 토스페이만(Phase 5). 외부 결제창·외부 의존 링크 금지 — 예외는 법적 고지·제휴기관 공식 페이지·"제품 추천 후 구매 플랫폼 이동"(구매 버튼 문구: "양조장 공식몰로 이동").
-- 외부 링크는 `apps/miniapp/src/lib/openExternal.ts`로만 연다(`<a target=_blank>` 직접 사용 금지). 위치는 `lib/location.ts`(토스 SDK/브라우저)로만, 카카오 로컬 호출은 서버 라우트 `/api/v1/places/*`로만(클라이언트에서 dapi 직접 호출 금지, 쿼터·키 보호).
+- 외부 링크는 미니앱은 `apps/miniapp/src/lib/openExternal.ts`, 공개 웹은 `apps/web/app/(site)/_components/ExtLink.tsx`로만 연다(`<a target=_blank>` 직접 사용 금지 — 퍼널 이벤트가 빠진다). 웹 이벤트는 `apps/web/lib/track.ts`. 위치는 `lib/location.ts`(토스 SDK/브라우저)로만, 카카오 로컬 호출은 서버 라우트 `/api/v1/places/*`로만(클라이언트에서 dapi 직접 호출 금지, 쿼터·키 보호).
 - **첫 화면은 무조건 로그아웃 상태**(사용자 결정) — 탭 첫 로드에 `SavedProvider`가 `/api/auth/reset`으로 세션을 지운다. 자동 로그인 유지 기능을 넣지 않는다.
 - 로그인은 **Auth.js v5** — 이메일(scrypt 해시, `lib/password.ts`) + 카카오·네이버·구글. Supabase Auth는 네이버 미지원이라 안 쓴다. 세션은 JWT, 우리 `users.id`를 토큰에 담는다.
 - 세션·저장 상태는 **`SavedProvider` 한곳에서** 관리하고 경로가 바뀌면 다시 확인한다. 앱 라우터는 레이아웃을 리마운트하지 않아 로그인 직후 헤더가 안 바뀐다. 서버 컴포넌트에서 `auth()`를 부르면 공개 페이지 정적 생성이 깨지므로 공개 페이지에서는 쓰지 않는다.

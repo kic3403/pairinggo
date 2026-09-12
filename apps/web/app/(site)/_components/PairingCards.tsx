@@ -1,5 +1,6 @@
 /** 페어링 카드 목록 — 술 상세(어울리는 음식)와 음식 상세(어울리는 전통주)가 함께 쓴다. */
 import Link from "next/link";
+import ExtLink from "./ExtLink";
 import { SRC_LABEL, toSlug, type Pairing, type SrcTier } from "@pairinggo/shared";
 
 export type CardItem = {
@@ -35,7 +36,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
             <span className={`badge${p.src === "official" || p.src === "sommelier" ? " o" : ""}`}>{SRC_LABEL[p.src ?? "profile"]}</span>
             {hasEvidence(p.src, p.ev)
               ? (p.ev?.url
-                ? <a href={p.ev.url} target="_blank" rel="noopener nofollow">{p.ev.source || "출처 보기"} ↗</a>
+                ? <ExtLink href={p.ev.url} event="external_link" props={{ d: p.d, f: p.f, kind: "evidence" }}>{p.ev.source || "출처 보기"} ↗</ExtLink>
                 : <span>{p.ev?.source || "전문가 추천"}</span>)
               : <span>맛 프로필로 계산한 추정</span>}
           </div>

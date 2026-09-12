@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import AuthNav from "./_components/AuthNav";
+import PageView from "./_components/PageView";
 import RegionBar from "./_components/RegionBar";
 import RegionProvider from "./_components/RegionProvider";
 import RegionSheet from "./_components/RegionSheet";
@@ -35,6 +36,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       {/* useSearchParams를 쓰는 클라이언트 컴포넌트는 정적 생성 시 Suspense 경계가 필요하다 */}
       <Suspense fallback={<div className="region-bar" aria-hidden />}><RegionBar /></Suspense>
       <Suspense fallback={null}><RegionSheet /></Suspense>
+      <PageView />
 
       <main>{children}</main>
 

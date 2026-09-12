@@ -8,6 +8,7 @@
  *     그대로 남아 예전 상태를 보여 주므로, 경로가 바뀌면 세션을 다시 확인한다.
  */
 import { usePathname } from "next/navigation";
+import { track } from "@/lib/track";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type SavedKind = "drink" | "food" | "place";
@@ -65,6 +66,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
       if (!r.ok) throw new Error();
       const { saved } = await r.json();
       setKeys((prev) => { const n = new Set(prev); if (saved) n.add(kk); else n.delete(kk); return n; });
+      if (saved) track("save", { ...(k === "drink" ? { d: id } : k === "food" ? { f: id } : { place: id }), kind: k, food: meta?.food ?? null });
     } catch {
       setKeys((prev) => { const n = new Set(prev); if (was) n.add(kk); else n.delete(kk); return n; });
     }

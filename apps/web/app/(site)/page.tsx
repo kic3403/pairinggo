@@ -1,6 +1,7 @@
 /** 랜딩 — 검색 유입이 도착했을 때 서비스가 뭔지 3초 안에 알리고 술·음식 목록으로 보낸다. */
 import type { Metadata } from "next";
 import Link from "next/link";
+import ExtLink from "./_components/ExtLink";
 import Heart from "./_components/Heart";
 import HeroMarquee from "./_components/HeroMarquee";
 import { topDrinks } from "@/lib/popular";
@@ -47,7 +48,7 @@ export default async function Home() {
                 <span className="n">{d.name}</span>
                 <span className="s">{[d.category, d.region, `어울리는 음식 ${(byDrink[d.id] || []).length}`].filter(Boolean).join(" · ")}</span>
               </Link>
-              <span className="acts">{onlineSellable(d) ? <a href={buyLink(d).url} target="_blank" rel="noopener nofollow">구매 ↗</a> : <Link href={`/drinks/${toSlug(d.name)}#places`}>판매점</Link>}</span>
+              <span className="acts">{onlineSellable(d) ? <ExtLink href={buyLink(d).url} event="buy_link_click" props={{ d: d.id, store: buyLink(d).store, from: "home" }}>구매 ↗</ExtLink> : <Link href={`/drinks/${toSlug(d.name)}#places`}>판매점</Link>}</span>
               <Heart kind="drink" id={d.id} name={d.name} />
             </li>
           ))}

@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { F, LINK_STATUS, byDrink, buyLink, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, foodHref, type CardItem } from "../../_components/PairingCards";
+import ExtLink from "../../_components/ExtLink";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 
@@ -71,12 +72,12 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <div className="btns" style={{ marginTop: 6 }}>
           {sellable && !bl.fallback && (
             <>
-              <a className="btn p" href={bl.url} target="_blank" rel="noopener nofollow">{bl.store}로 이동 ↗</a>
-              <a className="btn" href={naverShopUrl(drink.name)} target="_blank" rel="noopener nofollow">네이버쇼핑에서 찾기 ↗</a>
+              <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink" }}>{bl.store}로 이동 ↗</ExtLink>
+              <ExtLink className="btn" href={naverShopUrl(drink.name)} event="external_link" props={{ d: drink.id, kind: "naver_shop" }}>네이버쇼핑에서 찾기 ↗</ExtLink>
             </>
           )}
-          {sellable && bl.fallback && <a className="btn p" href={bl.url} target="_blank" rel="noopener nofollow">네이버쇼핑에서 찾기 ↗</a>}
-          {!sellable && <a className="btn" href={naverShopUrl(drink.name)} target="_blank" rel="noopener nofollow">네이버쇼핑에서 정보 보기 ↗</a>}
+          {sellable && bl.fallback && <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_fallback" }}>네이버쇼핑에서 찾기 ↗</ExtLink>}
+          {!sellable && <ExtLink className="btn" href={naverShopUrl(drink.name)} event="external_link" props={{ d: drink.id, kind: "naver_shop_info" }}>네이버쇼핑에서 정보 보기 ↗</ExtLink>}
           <Heart kind="drink" id={drink.id} name={drink.name} variant="button" />
         </div>
         <p className="small muted" style={{ marginTop: 8 }}>
@@ -91,7 +92,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             {offline.address && <p className="small" style={{ margin: "0 0 4px" }}>{offline.address}</p>}
             {offline.note && <p className="small muted" style={{ margin: 0 }}>{offline.note}</p>}
             <div className="btns" style={{ marginTop: 10 }}>
-              <a className="btn" href={naverMapUrl(offline.address || `${drink.brewery} ${drink.region || ""}`)} target="_blank" rel="noopener nofollow">길찾기 ↗</a>
+              <ExtLink className="btn" href={naverMapUrl(offline.address || `${drink.brewery} ${drink.region || ""}`)} event="external_link" props={{ d: drink.id, kind: "brewery_map" }}>길찾기 ↗</ExtLink>
               {offline.phone && <a className="btn" href={`tel:${offline.phone.replace(/[^0-9+]/g, "")}`}>전화 {offline.phone}</a>}
             </div>
           </div>
@@ -105,7 +106,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             종합 점수는 전문가 평가(60%)·대중 언급량(25%)·맛 프로필(15%)에 출처 등급을 더해 계산합니다.
           </p>
           <PairingCards items={items} />
-          <NearbyPlaces mode="bottleshops" drinkName={drink.name} trad={sellable} />
+          <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />
         </div>
 
         <aside>

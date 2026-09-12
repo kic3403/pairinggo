@@ -6,11 +6,12 @@
  */
 import { useState } from "react";
 import Heart from "./Heart";
+import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
 
 type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null };
 type Res = { places: Place[]; source: string; error?: string };
-type Props = { mode: "restaurants"; food: string } | { mode: "bottleshops"; drinkName: string; trad: boolean };
+type Props = { mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean };
 
 /** 관심지역이 없을 때 바로 고를 수 있는 곳 — id는 packages/shared/src/regions.ts와 같아야 한다 */
 const QUICK: { id: string; label: string }[] = [
@@ -34,6 +35,8 @@ export default function NearbyPlaces(props: Props) {
       ? "전통주 판매점과 보틀샵을 찾습니다. 재고는 매장마다 다르니 전화로 확인하는 게 좋습니다."
       : "이 술은 전통주가 아니라 온라인 직배송이 안 됩니다. 주류판매점·마트·편의점을 찾습니다.";
   const savedAs = props.mode === "restaurants" ? props.food : props.drinkName;
+  /** 이벤트 집계 키 — 음식 상세면 f, 술 상세면 d (refresh_pairing_feedback이 d/f 로 묶는다) */
+  const key: Record<string, string> = props.mode === "restaurants" ? { f: props.foodId } : { d: props.drinkId };
 
   const load = async (q: { lat?: number; lng?: number; region?: string }, label: string) => {
     setState("loading"); setWhere(label);
@@ -43,11 +46,14 @@ export default function NearbyPlaces(props: Props) {
     let url: string;
     if (props.mode === "restaurants") { p.set("food", props.food); url = `/api/v1/places/restaurants?${p}`; }
     else { p.set("kind", props.trad ? "trad" : "all"); url = `/api/v1/places/bottleshops?${p}`; }
+    let out: Res;
     try {
       const r = await fetch(url);
-      setRes(r.ok ? await r.json() : { places: [], source: "none", error: "검색 실패" });
-    } catch { setRes({ places: [], source: "none", error: "검색 실패" }); }
+      out = r.ok ? await r.json() : { places: [], source: "none", error: "검색 실패" };
+    } catch { out = { places: [], source: "none", error: "검색 실패" }; }
+    setRes(out);
     setState("done");
+    track("restaurant_list", { food: savedAs, mode: props.mode, n: out.places.length, source: out.source, basis: q.lat != null ? "gps" : q.region ?? "none" });
   };
 
   const useMyLocation = () => {
@@ -93,8 +99,8 @@ export default function NearbyPlaces(props: Props) {
                 <li key={p.id} className="place">
                   <div className="n">{p.name}</div>
                   <div className="s">{[p.category, p.distanceKm != null ? `${p.distanceKm.toFixed(1)}km` : null, p.roadAddress || p.address].filter(Boolean).join(" · ")}</div>
-                  {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow">카카오맵 ↗</a>}
-                  {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }}>전화</a>}
+                  {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}
+                  {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "tel" })}>전화</a>}
                   <Heart kind="place" id={p.id} name={p.name}
                     meta={{ name: p.name, address: p.roadAddress || p.address, phone: p.phone ?? undefined, url: p.placeUrl ?? undefined, category: p.category, food: savedAs }} />
                 </li>

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { buyLink, byDrink, drinkInRegion, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
 import RegionTabs from "../_components/RegionTabs";
 
@@ -71,7 +72,7 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
                   </Link>
                   <span className="acts">
                     {onlineSellable(d)
-                      ? <a href={bl.url} target="_blank" rel="noopener nofollow">구매 ↗</a>
+                      ? <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, store: bl.store, from: "drinks_list" }}>구매 ↗</ExtLink>
                       : <Link href={`/drinks/${toSlug(d.name)}#places`}>판매점</Link>}
                   </span>
                   <Heart kind="drink" id={d.id} name={d.name} />

@@ -6,7 +6,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES, D, POPULAR, POPULAR_FOODS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, parseRegionQuery, regionById, regionLabel, search, shortAward, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
+import SearchLog from "../_components/SearchLog";
 import RegionTabs from "../_components/RegionTabs";
 import SearchBox from "../_components/SearchBox";
 
@@ -44,12 +46,17 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const res = { ...resRaw, drinks: resRaw.drinks.filter((h) => drinkInRegion(D[h.doc.id] || {}, region)).slice(0, 12) };
   const hitCount = res.drinks.length + res.foods.length + res.browse.length;
   const empty = !!q && !intent && !rq && hitCount === 0;
-  const regional = !q && region ? drinksInRegion(region.pre, 200, region.fb) : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
+  const regional = !q && region ? drinksInRegion(region.pre, 200, region.fb) : null;
+  // 검색 로그(클라이언트 이벤트 → search_logs). pick = "drink:d01" 형식, 지역 검색은 "browse:부산"(events API가 ":"로 나누므로 두 조각만)
+  const top = res.drinks[0] ?? res.foods[0] ?? res.browse[0];
+  const logKind = intent ? "search_intent" : rq || hitCount ? "search" : "search_empty";
+  const pick = intent ? null : rq ? `browse:${rq.label}` : top ? `${top.doc.type}:${top.doc.id}` : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
 
   return (
     <div className="wrap">
       <h1>검색{region && <span className="muted"> · {regionLabel(region)}</span>}</h1>
       <SearchBox initial={q} region={rid} autoFocus={!q} />
+      {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} />}
       <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} />
 
       {regional && (
@@ -98,7 +105,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                 <li key={d.id} className="row">
                   <span className="badge">{d.category}</span>
                   <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
-                  {onlineSellable(d) && <a href={bl.url} target="_blank" rel="noopener nofollow" className="small">구매 ↗</a>}
+                  {onlineSellable(d) && <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, store: bl.store, from: "search_region" }} className="small">구매 ↗</ExtLink>}
                   <Heart kind="drink" id={d.id} name={d.name} />
                 </li>
               );
@@ -128,7 +135,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                   <p className="why">{r.via ? r.via.reason : r.drink.desc}</p>
                   <div className="acts">
                     <Heart kind="drink" id={r.drink.id} name={r.drink.name} />
-                    {onlineSellable(r.drink) && <a href={bl.url} target="_blank" rel="noopener nofollow">구매 ↗</a>}
+                    {onlineSellable(r.drink) && <ExtLink href={bl.url} event="buy_link_click" props={{ d: r.drink.id, f: r.via?.f ?? null, store: bl.store, from: "search_intent" }}>구매 ↗</ExtLink>}
                     <Link href={drinkHref(r.drink.name)}>자세히 →</Link>
                   </div>
                 </li>
