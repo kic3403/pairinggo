@@ -35,6 +35,12 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let alive = true;
     (async () => {
+      // 첫 화면은 무조건 로그아웃 상태(사용자 결정) — 이 탭에서 처음 여는 것이면 남아 있던 세션을 지운다.
+      // 표시는 탭 단위(sessionStorage)라 로그인 뒤 같은 탭에서 옮겨 다니는 동안은 유지되고, 새 탭·새로 연 브라우저는 다시 로그아웃부터.
+      let fresh = false;
+      try { fresh = !window.sessionStorage.getItem("pg_tab"); if (fresh) window.sessionStorage.setItem("pg_tab", "1"); } catch { /* 사설 모드 등 — 그냥 진행 */ }
+      if (fresh) await fetch("/api/auth/reset", { method: "POST" }).catch(() => null);
+      if (!alive) return;
       const s = await fetch("/api/auth/session").then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (!alive) return;
       if (!s?.user) { setUser(null); setKeys(new Set()); setReady(true); return; }

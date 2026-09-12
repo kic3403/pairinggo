@@ -67,7 +67,8 @@ if (has(process.env.AUTH_GOOGLE_ID, process.env.AUTH_GOOGLE_SECRET)) providers.p
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers,
   trustHost: true,
-  session: { strategy: "jwt", maxAge: 60 * 60 * 24 * 30 },
+  // 첫 화면은 항상 로그아웃(SavedProvider가 탭 첫 로드에 /api/auth/reset) — 쿠키 자체도 하루만 산다
+  session: { strategy: "jwt", maxAge: 60 * 60 * 24 },
   pages: { signIn: "/login", error: "/login" },
   callbacks: {
     async jwt({ token, account, profile, user }) {
