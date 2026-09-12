@@ -324,3 +324,5 @@ p { margin: 0 0 12px; }
 .rows .award.prize.p2 { background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
 .rank .card .name a { text-decoration: none; }
 .rank .card .name a:hover { text-decoration: underline; }
+
+.rows .row a.small + a.small { margin-left: 10px; }

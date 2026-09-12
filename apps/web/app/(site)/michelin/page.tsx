@@ -1,10 +1,11 @@
 /**
- * 미쉐린 가이드 선정 식당 — 최근 3개 연도. 공개된 선정 사실(이름·등급·요리·가격대)과 공식 페이지 링크만 보여 준다.
+ * 미쉐린 가이드 선정 식당 — 최근 3개 연도. 공개된 선정 사실(이름·등급·요리 종류)과 공식 페이지 링크만 보여 준다.
  * 로고·가이드 문장·사진은 쓰지 않는다(상표·저작권). 명단 갱신은 docs/17.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
 import ExtLink from "../_components/ExtLink";
+import { naverMapUrl } from "@pairinggo/shared";
 import { loadAwardYears, type AwardRow } from "@/lib/awards";
 
 export const revalidate = 3600;
@@ -25,7 +26,7 @@ export default async function MichelinPage() {
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link></p>
       <h1>미쉐린 가이드 선정 식당 <span className="muted">· 최근 3년</span></h1>
-      <p className="lead">서울·부산 스타와 빕구르망 식당을 연도별로 모았습니다. 이름을 누르면 미쉐린 가이드 공식 페이지로 갑니다. 음식 상세의 주변 식당 검색에서도 같은 식당에 배지가 붙습니다.</p>
+      <p className="lead">서울·부산 스타와 빕구르망 식당을 연도별로 모았습니다. 네이버 지도로 위치를 보거나 미쉐린 가이드 공식 페이지로 갈 수 있습니다. 음식 상세의 주변 식당 검색에서도 같은 식당에 배지가 붙습니다.</p>
       {!years.length && <p className="muted">명단이 아직 없습니다.</p>}
 
       <ul className="tabs" style={{ marginTop: 14 }}>
@@ -56,8 +57,9 @@ export default async function MichelinPage() {
                             <span className={`award ${r.kind}`}>{k.startsWith("star") ? "★".repeat(r.level) : KIND_LABEL[r.kind]}</span>
                             <span className="grow">
                               <b>{r.name}</b>
-                              <span className="small muted">{[r.cuisine, r.price].filter(Boolean).join(" · ") || "—"}</span>
+                              <span className="small muted">{r.cuisine || "—"}</span>
                             </span>
+                            <ExtLink href={naverMapUrl(`${r.name} ${r.city}`)} event="external_link" props={{ kind: "naver_map", place: r.name, year: r.year }} className="small">네이버 지도 ↗</ExtLink>
                             {r.url
                               ? <ExtLink href={r.url} event="external_link" props={{ kind: "michelin_guide", place: r.name, year: r.year }} className="small">가이드에서 보기 ↗</ExtLink>
                               : <ExtLink href={`https://guide.michelin.com/kr/ko/search?q=${encodeURIComponent(r.name)}`} event="external_link" props={{ kind: "michelin_search", place: r.name, year: r.year }} className="small">가이드 검색 ↗</ExtLink>}
