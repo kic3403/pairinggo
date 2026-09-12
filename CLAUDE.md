@@ -27,7 +27,8 @@
 - 로그인은 **Auth.js v5** — 이메일(scrypt 해시, `lib/password.ts`) + 카카오·네이버·구글. Supabase Auth는 네이버 미지원이라 안 쓴다. 세션은 JWT, 우리 `users.id`를 토큰에 담는다.
 - 세션·저장 상태는 **`SavedProvider` 한곳에서** 관리하고 경로가 바뀌면 다시 확인한다. 앱 라우터는 레이아웃을 리마운트하지 않아 로그인 직후 헤더가 안 바뀐다. 서버 컴포넌트에서 `auth()`를 부르면 공개 페이지 정적 생성이 깨지므로 공개 페이지에서는 쓰지 않는다.
 - 저장(찜)은 전통주·음식·**음식점**. 음식점은 카탈로그에 없으므로 `saved_items.meta`(jsonb)에 이름·주소·링크를 함께 담는다. 카카오 로컬은 **사용자가 누를 때만** 부른다(유료 쿼터).
-- 로그인 공개 전 개인정보처리방침·수집 동의 필요. 주문을 받으면 양조장에 주문자 정보를 넘기므로 제3자 제공 동의도 별도.
+- 회원 프로필: 가입 때 성별·생년월일(만 19세 이상)·시도 필수(`packages/shared/src/profile.ts`), 소셜 회원은 `/profile`. 로그인 회원의 events·search_logs에 `user_id`가 붙는다.
+- 로그인 공개 전 개인정보처리방침·수집 동의 필요(성별·생년월일·지역·행동 로그 연결 포함). 주문을 받으면 양조장에 주문자 정보를 넘기므로 제3자 제공 동의도 별도.
 - 비밀키는 apps/web/.env.local(SUPABASE_SERVICE_ROLE_KEY·CRON_SECRET·AUTH_*)과 packages/db/.env(DATABASE_URL)에만. 미니앱 번들엔 VITE_API_BASE_URL·VITE_KAKAO_JS_KEY(도메인 제한 공개 키)만. KAKAO_REST_KEY는 apps/web 서버 전용. 채팅·커밋에 키 금지.
 - 카탈로그 파생값(D·F·byDrink·DOCS 등)은 `export let` 라이브 바인딩 — 모듈 로드 시 복사하지 말고 사용 시점에 읽는다(applyDataset 핫스왑 대응).
 - 온라인 판매 불가 주류(`NON_TRAD`, online_sellable=false)는 구매 링크 대신 "온라인 직배송 불가" 안내.

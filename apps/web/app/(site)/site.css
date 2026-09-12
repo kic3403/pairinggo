@@ -326,3 +326,16 @@ p { margin: 0 0 12px; }
 .rank .card .name a:hover { text-decoration: underline; }
 
 .rows .row a.small + a.small { margin-left: 10px; }
+
+/* 성별 선택(세그먼트) · 폼 성공 안내 */
+.field.seg { border: 0; padding: 0; margin: 0 0 12px; }
+.field.seg legend { display: block; font-size: 13px; font-weight: 600; color: var(--ink2); margin-bottom: 5px; padding: 0; }
+.seg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg-opt { position: relative; display: block; }
+.seg-opt input { position: absolute; opacity: 0; inset: 0; }
+.seg-opt span { display: flex; align-items: center; justify-content: center; min-height: 46px; border: 1.5px solid var(--line); border-radius: 11px; background: var(--surface); font-weight: 700; font-size: 15px; }
+.seg-opt input:checked + span { border-color: var(--navy); background: var(--navy-soft); color: var(--navy-ink); }
+.seg-opt input:focus-visible + span { outline: 2px solid var(--navy); outline-offset: 1px; }
+.field select { width: 100%; min-height: 46px; padding: 0 13px; border: 1.5px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--ink); font-size: 15.5px; font-family: inherit; }
+.field select:focus { outline: 2px solid var(--navy); outline-offset: 1px; border-color: var(--navy); }
+.form-ok { background: #E9F3EA; color: #2F6B3A; border-radius: 10px; padding: 10px 12px; font-size: 14px; margin: 0 0 14px; }

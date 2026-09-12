@@ -6,6 +6,8 @@ import { D, F, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { auth, signOut } from "@/auth";
 import { getCatalog } from "@/lib/catalog";
 import { KIND_LABEL, SAVED_KINDS, listSaved, type SavedKind } from "@/lib/saved";
+import { getProfile } from "@/lib/account";
+import { ageBand } from "@pairinggo/shared";
 import Heart from "../_components/Heart";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +22,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
   const tab = (SAVED_KINDS as string[]).includes(sp.tab || "") ? (sp.tab as SavedKind) : "drink";
 
   await getCatalog();
-  const rows = await listSaved(uid);
+  const [rows, profile] = await Promise.all([listSaved(uid), getProfile(uid)]);
   const count = (k: SavedKind) => rows.filter((r) => r.kind === k).length;
   const current = rows.filter((r) => r.kind === tab);
 
@@ -31,7 +33,12 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
         <span><b>{session.user?.name || "회원"}</b>님</span>
         <span className="muted"> · </span>
         <span>{session.user?.email || "간편로그인"}</span>
+        {profile?.complete && <><span className="muted"> · </span><span>{profile.gender === "m" ? "남" : "여"} · {ageBand(profile.birthDate!)} · {profile.sido}</span></>}
+        <span className="muted"> · </span><Link href="/profile">{profile?.complete ? "프로필 수정" : "프로필 채우기"}</Link>
       </div>
+      {profile && !profile.complete && (
+        <p className="form-error" style={{ marginTop: 10 }}>성별·생년월일·사는 곳이 아직 없습니다. <Link href="/profile">프로필 채우기 →</Link></p>
+      )}
 
       <ul className="tabs">
         {SAVED_KINDS.map((k) => (
