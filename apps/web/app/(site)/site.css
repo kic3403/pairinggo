@@ -339,3 +339,8 @@ p { margin: 0 0 12px; }
 .field select { width: 100%; min-height: 46px; padding: 0 13px; border: 1.5px solid var(--line); border-radius: 11px; background: var(--surface); color: var(--ink); font-size: 15.5px; font-family: inherit; }
 .field select:focus { outline: 2px solid var(--navy); outline-offset: 1px; border-color: var(--navy); }
 .form-ok { background: #E9F3EA; color: #2F6B3A; border-radius: 10px; padding: 10px 12px; font-size: 14px; margin: 0 0 14px; }
+
+/* 연도 탭(미쉐린·우리술품평회) — 고른 연도만 보인다 */
+.year-tabs { gap: 8px; margin-bottom: 6px; }
+.year-tabs a { padding: 9px 18px; font-size: 15px; font-weight: 700; }
+.year-tabs a .cnt { font-weight: 600; }

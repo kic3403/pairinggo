@@ -9,7 +9,7 @@ import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
 
-export const revalidate = 600;
+export const dynamic = "force-dynamic";   // ?year= 탭
 export const metadata: Metadata = {
   title: "우리술품평회 수상 전통주 — 최근 3년 대통령상·대상·최우수상 | 페어링GO",
   description: "농림축산식품부 우리술품평회에서 상을 받은 전통주를 연도·부문별로 정리하고 양조장과 구매처를 연결합니다.",
@@ -27,23 +27,28 @@ const parse = (d: Drink, a: string): Row | null => {
   return { drink: d, year: Number(m[1]), category, prize, raw: a };
 };
 
-export default async function AwardsPage() {
+export default async function AwardsPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
   const c = await getCatalog();
   const rows: Row[] = [];
   for (const d of c.dataset.drinks) for (const a of d.awards || []) { const r = parse(d, a); if (r) rows.push(r); }
   const years = [...new Set(rows.map((r) => r.year))].sort((a, b) => b - a).slice(0, 3);
   const inYears = rows.filter((r) => years.includes(r.year));
+  // 연도 탭 — 고른 연도만 보여 준다. 없거나 범위 밖이면 최신 연도
+  const want = Number((await searchParams).year);
+  const selected = years.includes(want) ? want : years[0];
 
   return (
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link></p>
-      <h1>우리술품평회 수상 전통주 <span className="muted">· 최근 3년</span></h1>
+      <h1>우리술품평회 수상 전통주 <span className="muted">· {selected}년</span></h1>
       <p className="lead">농림축산식품부가 해마다 여는 우리술품평회에서 상을 받은 술입니다. 대통령상은 그해 최고의 술 한 병에만 주어집니다. 술을 누르면 어울리는 안주와 근거, 구매처를 볼 수 있습니다.</p>
-      <ul className="tabs" style={{ marginTop: 14 }}>
-        {years.map((y) => <li key={y}><a href={`#y${y}`}>{y}<span className="cnt">{inYears.filter((r) => r.year === y).length}</span></a></li>)}
+      <ul className="tabs year-tabs" style={{ marginTop: 14 }} aria-label="연도">
+        {years.map((y) => (
+          <li key={y}><Link href={`/awards?year=${y}`} scroll={false} className={y === selected ? "on" : undefined} aria-current={y === selected ? "page" : undefined}>{y}년<span className="cnt">{inYears.filter((r) => r.year === y).length}</span></Link></li>
+        ))}
       </ul>
 
-      {years.map((y) => {
+      {years.filter((y) => y === selected).map((y) => {
         const list = inYears.filter((r) => r.year === y).sort((a, b) => (PRIZE_RANK[a.prize] ?? 9) - (PRIZE_RANK[b.prize] ?? 9) || a.category.localeCompare(b.category, "ko"));
         return (
           <section key={y} id={`y${y}`}>

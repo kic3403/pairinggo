@@ -8,7 +8,7 @@ import ExtLink from "../_components/ExtLink";
 import { naverMapUrl } from "@pairinggo/shared";
 import { loadAwardYears, type AwardRow } from "@/lib/awards";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";   // ?year= 탭 (명단 자체는 lib/awards 메모리 캐시 1시간)
 export const metadata: Metadata = {
   title: "미쉐린 가이드 서울·부산 선정 식당 — 최근 3년 | 페어링GO",
   description: "미쉐린 가이드 서울 & 부산의 스타·빕구르망 식당을 연도별로 정리했습니다. 공식 페이지로 바로 연결됩니다.",
@@ -20,20 +20,25 @@ const groupKey = (r: AwardRow) => (r.kind === "star" ? `star${r.level}` : r.kind
 const ORDER = ["star3", "star2", "star1", "bib", "green", "selected"];
 const groupLabel = (k: string) => (k.startsWith("star") ? `${"★".repeat(Number(k.slice(4)))} ${k.slice(4)}스타` : KIND_LABEL[k] ?? k);
 
-export default async function MichelinPage() {
+export default async function MichelinPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
   const years = await loadAwardYears(3);
+  // 연도 탭 — 고른 연도만 보여 준다. 없거나 범위 밖이면 최신 연도
+  const want = Number((await searchParams).year);
+  const selected = years.some((y) => y.year === want) ? want : years[0]?.year;
   return (
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link></p>
-      <h1>미쉐린 가이드 선정 식당 <span className="muted">· 최근 3년</span></h1>
+      <h1>미쉐린 가이드 선정 식당{selected && <span className="muted"> · {selected}</span>}</h1>
       <p className="lead">서울·부산 스타와 빕구르망 식당을 연도별로 모았습니다. 네이버 지도로 위치를 보거나 미쉐린 가이드 공식 페이지로 갈 수 있습니다. 음식 상세의 주변 식당 검색에서도 같은 식당에 배지가 붙습니다.</p>
       {!years.length && <p className="muted">명단이 아직 없습니다.</p>}
 
-      <ul className="tabs" style={{ marginTop: 14 }}>
-        {years.map((y) => <li key={y.year}><a href={`#y${y.year}`}>{y.year}<span className="cnt">{y.rows.length}</span></a></li>)}
+      <ul className="tabs year-tabs" style={{ marginTop: 14 }} aria-label="연도">
+        {years.map((y) => (
+          <li key={y.year}><Link href={`/michelin?year=${y.year}`} scroll={false} className={y.year === selected ? "on" : undefined} aria-current={y.year === selected ? "page" : undefined}>{y.year}<span className="cnt">{y.rows.length}</span></Link></li>
+        ))}
       </ul>
 
-      {years.map((y) => {
+      {years.filter((y) => y.year === selected).map((y) => {
         const cities = ["서울", "부산"];
         return (
           <section key={y.year} id={`y${y.year}`}>
