@@ -1,16 +1,11 @@
-/* 공개 웹(검색 유입용) 반응형 스타일. 미니앱과 같은 팔레트를 쓰되 데스크톱까지 대응한다. */
+/* 공개 웹(검색 유입용) 반응형 스타일. 미니앱과 같은 팔레트를 쓰되 데스크톱까지 대응한다.
+   2026-09-12: 바탕은 흰색으로 고정(라이트 전용). 기기가 다크 모드여도 흰 바탕으로 보인다 — 사용자 결정. --bg2는 살짝 눌린 판(인용·지역 열). */
 :root {
   --navy: #22406B; --navy-ink: #1B3355; --navy-soft: #EDF1F7;
   --food: #E4572E; --food-ink: #B8431F; --food-soft: #FDF0EB;
-  --bg: #F7F6F3; --surface: #FFFFFF; --ink: #1F1E1C; --ink2: #4A4945; --muted: #8C8C88; --line: #E5E3DE;
+  --bg: #FFFFFF; --bg2: #F5F4F1; --surface: #FFFFFF; --ink: #1F1E1C; --ink2: #4A4945; --muted: #8C8C88; --line: #E5E3DE;
   --radius: 14px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --navy: #8FA6CC; --navy-ink: #A9BCDB; --navy-soft: #1C2432;
-    --food: #FF7A52; --food-ink: #FF9575; --food-soft: #2A1D18;
-    --bg: #121211; --surface: #1A1A18; --ink: #ECEAE5; --ink2: #C4C1BA; --muted: #8E8C86; --line: #2C2C29;
-  }
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -82,11 +77,10 @@ p { margin: 0 0 12px; }
 .card .why { margin: 8px 0 0; font-size: 14.5px; color: var(--ink2); }
 .card .src { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); }
 .card .src a { color: var(--navy); }
-.quote { margin: 8px 0 0; padding: 9px 11px; background: var(--bg); border-left: 3px solid var(--line); border-radius: 0 8px 8px 0;
+.quote { margin: 8px 0 0; padding: 9px 11px; background: var(--bg2); border-left: 3px solid var(--line); border-radius: 0 8px 8px 0;
   font-size: 13px; color: var(--ink2); }
 .badge { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: var(--navy-soft); color: var(--navy-ink); margin-right: 6px; }
 .badge.o { background: #E9F3EA; color: #2F6B3A; }
-@media (prefers-color-scheme: dark) { .badge.o { background: #16261A; color: #86C393; } }
 
 /* 사이드 박스 */
 .box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
@@ -110,7 +104,7 @@ p { margin: 0 0 12px; }
 @media (min-width: 560px) { .grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 .grid li { position: relative; }
-.grid a { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 46px 13px 14px; text-decoration: none; }
+.grid a { display: block; background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 13px 46px 13px 14px; text-decoration: none; }
 .grid a:hover { border-color: var(--navy); }
 .grid .n { font-weight: 700; font-size: 15.5px; }
 .grid .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
@@ -250,7 +244,7 @@ p { margin: 0 0 12px; }
 .stat span { color: var(--muted); font-size: 13px; }
 
 /* ---------- 관심지역 (헤더 아래 줄 + 설정 화면) ---------- */
-.region-bar { border-bottom: 1px solid var(--line); background: var(--bg); }
+.region-bar { border-bottom: 1px solid var(--line); background: var(--bg2); }
 .region-bar .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 42px; gap: 12px; }
 .rb-region { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; color: var(--ink); font: inherit; font-size: 16px; padding: 6px 4px 6px 0; cursor: pointer; }
 .rb-region b { font-weight: 800; }
@@ -280,7 +274,7 @@ p { margin: 0 0 12px; }
 .rs-recent button { white-space: nowrap; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
 .rs-recent button.on { border-color: var(--navy); color: var(--navy); font-weight: 700; }
 .rs-cols { display: grid; grid-template-columns: 128px 1fr; margin-top: 16px; border-top: 1px solid var(--line); min-height: 320px; }
-.rs-left { margin: 0; padding: 0; list-style: none; background: var(--bg); }
+.rs-left { margin: 0; padding: 0; list-style: none; background: var(--bg2); }
 .rs-left button { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; padding: 15px 16px; border: 0; background: none; color: var(--ink2); font: inherit; font-size: 16px; cursor: pointer; }
 .rs-left button.on { background: var(--surface); color: var(--ink); font-weight: 800; }
 .rs-left .n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--food); color: #fff; font-size: 11.5px; font-weight: 800; }

@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CATEGORIES, D, POPULAR, POPULAR_FOODS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, regionById, regionLabel, search, shortAward, toSlug } from "@pairinggo/shared";
+import { CATEGORIES, D, POPULAR, POPULAR_FOODS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, parseRegionQuery, regionById, regionLabel, search, shortAward, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import Heart from "../_components/Heart";
 import RegionTabs from "../_components/RegionTabs";
@@ -34,14 +34,16 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const q = (sp.q || "").trim().slice(0, 80);
   const region = regionById(sp.region);
   const rid = region?.id ?? "all";
-  await getCatalog();
+  const c = await getCatalog();
+  // "부산 전통주", "경기 막걸리", "양평 양조장" — 그 지역 술을 전부 낸다(관심지역 필터와 무관)
+  const rq = q ? parseRegionQuery(q, c.dataset.drinks) : null;
   // 지역을 골랐으면 술 결과만 그 지역으로 거른다(음식은 지역이 없다). 거른 뒤 12개가 남도록 넉넉히 뽑는다
   const intentRaw = q ? intentSearch(q, region ? 80 : 12) : null;
   const intent = intentRaw && { ...intentRaw, drinks: intentRaw.drinks.filter((r) => drinkInRegion(r.drink, region)).slice(0, 12) };
   const resRaw = search(q, { limit: region ? 40 : 12 });
   const res = { ...resRaw, drinks: resRaw.drinks.filter((h) => drinkInRegion(D[h.doc.id] || {}, region)).slice(0, 12) };
   const hitCount = res.drinks.length + res.foods.length + res.browse.length;
-  const empty = !!q && !intent && hitCount === 0;
+  const empty = !!q && !intent && !rq && hitCount === 0;
   const regional = !q && region ? drinksInRegion(region.pre, 200, region.fb) : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
 
   return (
@@ -78,6 +80,31 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           </ul>
           <p className="small muted" style={{ marginTop: 18 }}>이름뿐 아니라 상황도 됩니다. 예: “매운 안주랑 마실 막걸리”, “회에 어울리는 술”, “도수 낮은 전통주”.</p>
         </>
+      )}
+
+      {rq && (
+        <section>
+          <h2>{rq.label} {rq.categoryLabel ?? "전통주"} <span className="muted small">{rq.drinks.length}종 · 양조장 {rq.breweries.length}곳</span></h2>
+          {rq.drinks.length === 0 && <p className="muted">{rq.label}에 등록된 {rq.categoryLabel ?? "전통주"}가 아직 없습니다.</p>}
+          {rq.breweries.length > 1 && (
+            <ul className="tabs" style={{ marginTop: 0 }}>
+              {rq.breweries.map((b) => <li key={b.name}><Link href={`/drinks?brewery=${encodeURIComponent(b.name)}`}>{b.name}<span className="cnt">{b.count}</span></Link></li>)}
+            </ul>
+          )}
+          <ul className="rows">
+            {rq.drinks.map((d) => {
+              const bl = buyLink(d);
+              return (
+                <li key={d.id} className="row">
+                  <span className="badge">{d.category}</span>
+                  <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
+                  {onlineSellable(d) && <a href={bl.url} target="_blank" rel="noopener nofollow" className="small">구매 ↗</a>}
+                  <Heart kind="drink" id={d.id} name={d.name} />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       )}
 
       {intent && (

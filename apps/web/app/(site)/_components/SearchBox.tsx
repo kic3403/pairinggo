@@ -5,17 +5,18 @@
  * URL에 지역이 있으면 그것, 없으면 관심지역(RegionProvider).
  */
 import { REGION_TREE, regionById, regionLabel, TOP_REGIONS } from "@pairinggo/shared/regions";
-import { useRegion } from "./RegionProvider";
+import { useHydrated, useRegion } from "./RegionProvider";
 
 export default function SearchBox({ initial = "", region = "", autoFocus = false, compact = false }: { initial?: string; region?: string; autoFocus?: boolean; compact?: boolean }) {
   const rg = useRegion();
-  const rid = region && region !== "all" ? region : rg.id;
+  const hydrated = useHydrated();   // 하이드레이션 중에는 서버와 같은 값(전국)
+  const rid = region && region !== "all" ? region : hydrated ? rg.id : "all";
   const cur = regionById(rid);
   const known = TOP_REGIONS.some((r) => r.id === rid) || REGION_TREE.cap.some((s) => s.id === rid);
   return (
     <form action="/search" method="get" role="search" className={`sbox${compact ? " compact" : ""}`}>
       {compact
-        ? rid !== "all" && <input type="hidden" name="region" value={rid} />
+        ? <input type="hidden" name="region" value={rid === "all" ? "" : rid} />
         : (
           <select name="region" value={rid} onChange={(e) => rg.setRegion(e.target.value)} aria-label="지역" className="region">
             {TOP_REGIONS.map((r) => {

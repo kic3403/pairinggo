@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Heart from "./_components/Heart";
 import HeroMarquee from "./_components/HeroMarquee";
-import SearchBox from "./_components/SearchBox";
 import { topDrinks } from "@/lib/popular";
 import { buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
@@ -33,8 +32,7 @@ export default async function Home() {
           <li><b>{c.counts.pairings.toLocaleString("ko-KR")}</b><span>페어링</span></li>
         </ul>
         <HeroMarquee drinks={top.list} note={top.note} />
-        <div style={{ marginTop: 18 }}><SearchBox /></div>
-        <div className="btns">
+        <div className="btns" style={{ marginTop: 18 }}>
           <Link className="btn p" href="/drinks">전통주 둘러보기</Link>
           <Link className="btn f" href="/foods">음식으로 찾기</Link>
         </div>

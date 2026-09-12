@@ -6,7 +6,7 @@
  */
 import { useState } from "react";
 import Heart from "./Heart";
-import { useRegion } from "./RegionProvider";
+import { useHydrated, useRegion } from "./RegionProvider";
 
 type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null };
 type Res = { places: Place[]; source: string; error?: string };
@@ -19,7 +19,10 @@ const QUICK: { id: string; label: string }[] = [
 ];
 
 export default function NearbyPlaces(props: Props) {
-  const rg = useRegion();
+  const rg0 = useRegion();
+  const hydrated = useHydrated();
+  // 하이드레이션 중에는 서버와 같은 화면(전국) — 관심지역 버튼은 그 뒤에 나타난다
+  const rg = hydrated ? rg0 : { ...rg0, id: "all", region: null, label: "전국", gps: null };
   const [state, setState] = useState<"idle" | "loading" | "done" | "denied">("idle");
   const [res, setRes] = useState<Res | null>(null);
   const [where, setWhere] = useState<string>("");
