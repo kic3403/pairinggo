@@ -4,6 +4,8 @@ import Link from "next/link";
 import ExtLink from "./_components/ExtLink";
 import Heart from "./_components/Heart";
 import HeroMarquee from "./_components/HeroMarquee";
+import QuickMenu from "./_components/QuickMenu";
+import { loadAwards } from "@/lib/awards";
 import { topDrinks } from "@/lib/popular";
 import { buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
@@ -19,6 +21,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const c = await getCatalog();
   const top = topDrinks(c.dataset, 10);
+  const awards = await loadAwards();
   const drinks = (top.list.length ? top.list : c.dataset.drinks).slice(0, 8);
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
 
@@ -33,6 +36,7 @@ export default async function Home() {
           <li><b>{c.counts.pairings.toLocaleString("ko-KR")}</b><span>페어링</span></li>
         </ul>
         <HeroMarquee drinks={top.list} note={top.note} />
+        <QuickMenu michelinYear={awards.year} />
         <div className="btns" style={{ marginTop: 18 }}>
           <Link className="btn p" href="/drinks">전통주 둘러보기</Link>
           <Link className="btn f" href="/foods">음식으로 찾기</Link>

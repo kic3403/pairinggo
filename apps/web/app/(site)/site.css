@@ -298,3 +298,29 @@ p { margin: 0 0 12px; }
 .place .award.bib { background: #FDECEC; color: #A93226; border: 1px solid #F5C2C2; }
 .place .award.green, .place .award.selected { background: #E9F3EA; color: #2F6B3A; border: 1px solid #BFE0C4; }
 .place .lk.br { color: #2F6FD6; }
+
+/* 홈 아이콘 메뉴(캐치테이블식) */
+.quick { margin: 22px 0 4px; }
+.quick ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 6px; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 560px) { .quick ul { grid-template-columns: repeat(8, 1fr); } }
+.quick a { display: flex; flex-direction: column; align-items: center; gap: 7px; text-decoration: none; color: var(--ink); font-size: 12.5px; font-weight: 600; }
+.quick .ic { position: relative; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; background: var(--bg2); font-size: 26px; line-height: 1; color: var(--tone); }
+.quick .ic em { position: absolute; top: -4px; right: -4px; font-style: normal; font-size: 10px; font-weight: 800; color: #fff; background: var(--food); border-radius: 999px; padding: 2px 5px; }
+.quick a:hover .ic { background: color-mix(in srgb, var(--tone) 12%, var(--bg2)); }
+.quick .lb { text-align: center; line-height: 1.2; }
+
+/* 미쉐린 목록 · 품평회 목록 */
+.mich-city { margin-top: 16px; }
+.mich-city h3 { font-size: 17px; margin: 10px 0 6px; }
+.mich-group { margin-top: 10px; }
+.mich-head { font-weight: 800; font-size: 14px; margin: 6px 0 4px; }
+.mich-head.star { color: #8A5A00; } .mich-head.bib { color: #A93226; } .mich-head.green, .mich-head.selected { color: #2F6B3A; }
+.rows .award { display: inline-flex; align-items: center; margin-right: 8px; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.rows .award.star { background: #FFF3D6; color: #8A5A00; border: 1px solid #F0D48A; letter-spacing: -1px; }
+.rows .award.bib { background: #FDECEC; color: #A93226; border: 1px solid #F5C2C2; }
+.rows .award.green, .rows .award.selected { background: #E9F3EA; color: #2F6B3A; border: 1px solid #BFE0C4; }
+.rows .award.prize.p0 { background: #FFF3D6; color: #8A5A00; border: 1px solid #F0D48A; }
+.rows .award.prize.p1 { background: var(--navy-soft); color: var(--navy-ink); border: 1px solid #C9D4E5; }
+.rows .award.prize.p2 { background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
+.rank .card .name a { text-decoration: none; }
+.rank .card .name a:hover { text-decoration: underline; }

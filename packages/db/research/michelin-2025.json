@@ -1,0 +1,290 @@
+{
+  "guide": "michelin",
+  "edition": "미쉐린 가이드 서울 & 부산 2025",
+  "year": 2025,
+  "published": "2025-02-20",
+  "source": "미쉐린 가이드 서울 & 부산 2025 발표 보도(heypop.kr/n/119572, harpersbazaar.co.kr/article/1878088)",
+  "coverage": "스타 레스토랑 40곳만(빕 구르망 미포함, 좌표 없음)",
+  "items": [
+    {
+      "name": "소수헌",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "스시"
+    },
+    {
+      "name": "에스콘디도",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "멕시칸"
+    },
+    {
+      "name": "뛰뚜아멍",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "프렌치"
+    },
+    {
+      "name": "기가스",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "지중해식"
+    },
+    {
+      "name": "레귬",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "비건"
+    },
+    {
+      "name": "유 유안",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "중식"
+    },
+    {
+      "name": "이스트",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "강민철 레스토랑",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "프렌치 컨템퍼러리"
+    },
+    {
+      "name": "고료리 켄",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "라망 시크레",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "라미띠에",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "프렌치"
+    },
+    {
+      "name": "무니",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "일식"
+    },
+    {
+      "name": "무오키",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "비채나",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "한식"
+    },
+    {
+      "name": "빈호",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "세븐스도어",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "코리안 컨템퍼러리"
+    },
+    {
+      "name": "소설한남",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "한식"
+    },
+    {
+      "name": "소울",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "솔밤",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "스시 마츠모토",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "스시"
+    },
+    {
+      "name": "온지음",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "한식"
+    },
+    {
+      "name": "윤서울",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "한식"
+    },
+    {
+      "name": "이타닉 가든",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "코리안 컨템퍼러리"
+    },
+    {
+      "name": "익스퀴진",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "제로 컴플렉스",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "이노베이티브"
+    },
+    {
+      "name": "하네",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": null
+    },
+    {
+      "name": "호빈",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": null
+    },
+    {
+      "name": "에빗",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "이노베이티브"
+    },
+    {
+      "name": "권숙수",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "한식"
+    },
+    {
+      "name": "라연",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "한식"
+    },
+    {
+      "name": "레스토랑 알렌",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "미토우",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "일식"
+    },
+    {
+      "name": "스와니예",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "알라 프리마",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "이노베이티브"
+    },
+    {
+      "name": "정식당",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "코지마",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": null
+    },
+    {
+      "name": "밍글스",
+      "city": "서울",
+      "kind": "star",
+      "level": 3,
+      "cuisine": "한식"
+    },
+    {
+      "name": "모리",
+      "city": "부산",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "일식"
+    },
+    {
+      "name": "팔레트",
+      "city": "부산",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "피오또",
+      "city": "부산",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "이탤리언"
+    }
+  ]
+}

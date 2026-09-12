@@ -1,0 +1,122 @@
+{
+  "guide": "michelin",
+  "edition": "미쉐린 가이드 서울 & 부산 2024",
+  "year": 2024,
+  "published": "2024-02-22",
+  "source": "미쉐린 가이드 서울 & 부산 2024 발표 보도(etoday.co.kr/news/view/2333545)",
+  "coverage": "일부 — 3스타·2스타 전체와 신규 1스타 6곳만(기존 1스타 23곳 미확인, 빕 구르망 미포함)",
+  "items": [
+    {
+      "name": "빈호",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "호빈",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": null
+    },
+    {
+      "name": "임프레션",
+      "city": "서울",
+      "kind": "star",
+      "level": 1,
+      "cuisine": null
+    },
+    {
+      "name": "밍글스",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "한식"
+    },
+    {
+      "name": "권숙수",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "한식"
+    },
+    {
+      "name": "라연",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "한식"
+    },
+    {
+      "name": "레스토랑 알렌",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "미토우",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "일식"
+    },
+    {
+      "name": "스와니예",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "알라 프리마",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "이노베이티브"
+    },
+    {
+      "name": "정식당",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "코지마",
+      "city": "서울",
+      "kind": "star",
+      "level": 2,
+      "cuisine": null
+    },
+    {
+      "name": "모수",
+      "city": "서울",
+      "kind": "star",
+      "level": 3,
+      "cuisine": "모던"
+    },
+    {
+      "name": "모리",
+      "city": "부산",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "일식"
+    },
+    {
+      "name": "팔레트",
+      "city": "부산",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "컨템퍼러리"
+    },
+    {
+      "name": "피오또",
+      "city": "부산",
+      "kind": "star",
+      "level": 1,
+      "cuisine": "이탤리언"
+    }
+  ]
+}

@@ -14,6 +14,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
     { url: `${base}/drinks`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/foods`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${base}/michelin`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/awards`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/hot`, lastModified: now, changeFrequency: "daily", priority: 0.6 },
     ...c.dataset.drinks.map((d) => ({ url: `${base}/drinks/${encodeURIComponent(toSlug(d.name))}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 })),
     ...c.dataset.foods.map((f) => ({ url: `${base}/foods/${encodeURIComponent(toSlug(f.name))}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 })),
   ];

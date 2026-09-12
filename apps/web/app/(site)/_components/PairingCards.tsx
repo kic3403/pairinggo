@@ -1,5 +1,6 @@
 /** 페어링 카드 목록 — 술 상세(어울리는 음식)와 음식 상세(어울리는 전통주)가 함께 쓴다. */
 import Link from "next/link";
+import CardLink from "./CardLink";
 import ExtLink from "./ExtLink";
 import { SRC_LABEL, toSlug, type Pairing, type SrcTier } from "@pairinggo/shared";
 
@@ -21,7 +22,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
       {items.map(({ href, name, sub, overall, pairing: p }) => (
         <li key={href} className="card">
           <div className="top">
-            <Link href={href} className="name">{name}</Link>
+            <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
             <span className="score" title={`전문가 ${p.es} · 언급 ${(p.blog || 0).toLocaleString("ko-KR")}건`}>{overall}점</span>
           </div>
           {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}
