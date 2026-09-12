@@ -1,6 +1,8 @@
 import { placeQuery, RBY, D as _D } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
+import { loadAwards } from "@/lib/awards";
+import { matchAward } from "@pairinggo/shared";
 import { error, json, preflight } from "@/lib/http";
 
 export const runtime = "nodejs";
@@ -37,7 +39,10 @@ export async function GET(req: Request) {
       const wide = await searchPlaces({ query: `${keyword} 맛집`, lat, lng, radius: Math.min(20000, radius * 3), category: "FD6", sort });
       if (wide.places.length > places.length) { places = wide.places; radius = Math.min(20000, radius * 3); }
     }
-    return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none" }, { headers: CACHE });
+    // 미쉐린 배지 — 이름+좌표 대조(packages/shared/awards.ts). 표가 비어 있으면 그대로
+    const aw = await loadAwards();
+    if (aw.list.length) places = places.map((p) => ({ ...p, award: matchAward(p, aw.list) }));
+    return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year }, { headers: CACHE });
   } catch (e) {
     console.error("[places/restaurants]", (e as Error).message);
     return json(req, { food, query, center: null, places: [], total: 0, source: "none", error: "검색 실패" }, { headers: { "Cache-Control": "no-store" } });

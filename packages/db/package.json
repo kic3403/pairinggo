@@ -18,7 +18,8 @@
     "rollback": "tsx src/rollback.ts",
     "mentions:insta": "tsx src/mentions-insta.ts",
     "images": "tsx src/images.ts",
-    "photo-request": "tsx src/photo-request.ts"
+    "photo-request": "tsx src/photo-request.ts",
+    "awards": "tsx src/awards.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

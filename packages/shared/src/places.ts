@@ -13,6 +13,8 @@ export type Place = {
   /** 검색 중심으로부터 거리(km). 좌표 없이 검색하면 null */
   distanceKm: number | null;
   placeUrl: string | null;
+  /** 수상 배지(미쉐린 등) — 서버가 restaurant_awards와 대조해 붙인다. 없으면 undefined */
+  award?: import("./awards").AwardBadge | null;
 };
 
 /** 음식 이름 → 카카오 키워드. 검색이 안 되거나 엉뚱한 곳이 나오는 이름만 예외로 */

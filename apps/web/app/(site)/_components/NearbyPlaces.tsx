@@ -9,8 +9,10 @@ import Heart from "./Heart";
 import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
 
-type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null };
-type Res = { places: Place[]; source: string; error?: string };
+type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
+type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null };
+type Res = { places: Place[]; source: string; error?: string; awardsYear?: number | null };
+const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 type Props = { mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean };
 
 /** 관심지역이 없을 때 바로 고를 수 있는 곳 — id는 packages/shared/src/regions.ts와 같아야 한다 */
@@ -93,14 +95,22 @@ export default function NearbyPlaces(props: Props) {
       {state === "done" && res && (
         res.places.length ? (
           <>
-            <p className="small muted">{where} · {res.places.length}곳</p>
+            <p className="small muted">{where} · {res.places.length}곳{res.places.some((p) => p.award) && res.awardsYear ? ` · ★ 배지는 미쉐린 가이드 서울&부산 ${res.awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
             <ul className="places">
               {res.places.slice(0, 12).map((p) => (
                 <li key={p.id} className="place">
-                  <div className="n">{p.name}</div>
+                  <div className="n">
+                    {p.name}
+                    {p.award && (
+                      <span className={`award ${p.award.kind}`} title={`${p.award.label} — 미쉐린 가이드 서울&부산 ${p.award.year} 선정`}>
+                        {p.award.kind === "star" ? <><span className="stars" aria-hidden>{"★".repeat(Math.max(1, Math.min(3, p.award.level)))}</span> 미쉐린 {p.award.year}</> : p.award.kind === "bib" ? `빕구르망 ${p.award.year}` : p.award.label}
+                      </span>
+                    )}
+                  </div>
                   <div className="s">{[p.category, p.distanceKm != null ? `${p.distanceKm.toFixed(1)}km` : null, p.roadAddress || p.address].filter(Boolean).join(" · ")}</div>
                   {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}
                   {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "tel" })}>전화</a>}
+                  {props.mode === "restaurants" && <a className="lk br" href={blueRibbonUrl(p.name)} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("external_link", { ...key, place: p.name, kind: "blueribbon" })}>블루리본 확인 ↗</a>}
                   <Heart kind="place" id={p.id} name={p.name}
                     meta={{ name: p.name, address: p.roadAddress || p.address, phone: p.phone ?? undefined, url: p.placeUrl ?? undefined, category: p.category, food: savedAs }} />
                 </li>

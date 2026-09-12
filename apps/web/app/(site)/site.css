@@ -290,3 +290,11 @@ p { margin: 0 0 12px; }
 .rs-foot .btn { min-height: 50px; font-size: 16px; }
 .rs-foot .btn:disabled { opacity: .5; cursor: default; }
 .region-nav .region-tabs.sub2 { margin-left: 12px; }
+
+/* 식당 수상 배지 — 자체 별 문자(로고 아님) + 연도 */
+.place .award { display: inline-flex; align-items: center; gap: 3px; margin-left: 7px; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 800; vertical-align: 2px; white-space: nowrap; }
+.place .award.star { background: #FFF3D6; color: #8A5A00; border: 1px solid #F0D48A; }
+.place .award.star .stars { color: #C9880A; letter-spacing: -1px; font-size: 12px; }
+.place .award.bib { background: #FDECEC; color: #A93226; border: 1px solid #F5C2C2; }
+.place .award.green, .place .award.selected { background: #E9F3EA; color: #2F6B3A; border: 1px solid #BFE0C4; }
+.place .lk.br { color: #2F6FD6; }
