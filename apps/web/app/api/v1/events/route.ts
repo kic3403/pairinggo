@@ -1,5 +1,5 @@
 import { EventBatchSchema, normalize } from "@pairinggo/shared";
-import { auth } from "@/auth";
+import { getToken } from "next-auth/jwt";
 import { db } from "@/lib/db";
 import { error, json, preflight, NO_CACHE } from "@/lib/http";
 
@@ -19,9 +19,14 @@ export async function POST(req: Request) {
   const sb = db();
   if (!sb) return json(req, { accepted: parsed.data.events.length, stored: false }, { status: 202, headers: NO_CACHE });
 
-  // 로그인한 회원이면 회원 id를 함께 남긴다(성별·연령대·지역별 집계용). 세션이 없으면 null
+  // 로그인한 회원이면 회원 id를 함께 남긴다(성별·연령대·지역별 집계용). 세션이 없으면 null.
+  // auth() 대신 getToken(): auth()는 응답에 세션 쿠키를 다시 써서(갱신) 첫 화면 로그아웃(/api/auth/reset)과 경합해 쿠키를 되살렸다(실측).
   let userId: string | null = null;
-  try { const s = await auth(); userId = s?.user?.id ?? null; } catch { userId = null; }
+  try {
+    const secure = new URL(req.url).protocol === "https:";
+    const t = await getToken({ req, secret: process.env.AUTH_SECRET ?? "", secureCookie: secure, salt: secure ? "__Secure-authjs.session-token" : "authjs.session-token" });
+    userId = typeof t?.uid === "string" ? t.uid : null;
+  } catch { userId = null; }
   const now = Date.now();
   const rows = parsed.data.events.map((e) => {
     const { sid, ...props } = e.p as Record<string, unknown>;
