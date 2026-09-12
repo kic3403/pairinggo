@@ -8,7 +8,9 @@
  *     그대로 남아 예전 상태를 보여 주므로, 경로가 바뀌면 세션을 다시 확인한다.
  */
 import { usePathname } from "next/navigation";
+import { shouldClearSession } from "@pairinggo/shared";
 import { track } from "@/lib/track";
+import { AUTH_PENDING_KEY } from "./AuthAttempt";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type SavedKind = "drink" | "food" | "place";
@@ -36,11 +38,23 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let alive = true;
     (async () => {
-      // 첫 화면은 무조건 로그아웃 상태(사용자 결정) — 이 탭에서 처음 여는 것이면 남아 있던 세션을 지운다.
-      // 표시는 탭 단위(sessionStorage)라 로그인 뒤 같은 탭에서 옮겨 다니는 동안은 유지되고, 새 탭·새로 연 브라우저는 다시 로그아웃부터.
-      let fresh = false;
-      try { fresh = !window.sessionStorage.getItem("pg_tab"); if (fresh) window.sessionStorage.setItem("pg_tab", "1"); } catch { /* 사설 모드 등 — 그냥 진행 */ }
-      if (fresh) await fetch("/api/auth/reset", { method: "POST" }).catch(() => null);
+      // 첫 화면은 무조건 로그아웃 상태(사용자 결정) — 밖에서 들어온 화면이면 남아 있던 세션을 지운다.
+      // 판정 규칙과 예외(새로고침·로그인 직후)는 packages/shared/src/session.ts.
+      let clear = true;
+      try {
+        const ss = window.sessionStorage;
+        const authPending = !!ss.getItem(AUTH_PENDING_KEY);
+        if (authPending) ss.removeItem(AUTH_PENDING_KEY);
+        clear = shouldClearSession({
+          firstInTab: !ss.getItem("pg_tab"),
+          navType: (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined)?.type,
+          referrer: document.referrer || "",
+          origin: window.location.origin,
+          authPending,
+        });
+        ss.setItem("pg_tab", "1");
+      } catch { /* 사설 모드 등 — 지우는 쪽(기본값)으로 */ }
+      if (clear) await fetch("/api/auth/reset", { method: "POST" }).catch(() => null);
       if (!alive) return;
       const s = await fetch("/api/auth/session").then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (!alive) return;

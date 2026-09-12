@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { PROVIDER_LABEL, enabledProviders, signIn } from "@/auth";
 import { signUpWithEmail } from "@/lib/account";
+import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
 import ProfileFields from "../_components/ProfileFields";
 import type { Gender, Sido } from "@pairinggo/shared";
@@ -44,6 +45,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="wrap" style={{ maxWidth: 420 }}>
+      <AuthAttempt />
       <h1>회원가입</h1>
       <p className="lead">저장한 전통주·음식·음식점이 기기가 바뀌어도 남습니다.</p>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { PROVIDER_LABEL, enabledProviders, signIn } from "@/auth";
+import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +39,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
   return (
     <div className="wrap" style={{ maxWidth: 420 }}>
+      <AuthAttempt />
       <h1>로그인</h1>
       <p className="lead">저장한 전통주·음식·음식점을 어느 기기에서나 볼 수 있습니다.</p>
 
