@@ -15,7 +15,7 @@ const out = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "shared", 
 try {
   const drinks = await sql`select * from drinks order by id`;
   const foods = await sql`select * from foods order by id`;
-  const pairings = await sql`select p.*, (select json_agg(e order by e.id) from pairing_evidence e where e.pairing_id = p.id) as evidence from pairings p where p.status <> 'hidden' order by p.id`;
+  const pairings = await sql`select p.*, (select json_agg(e order by e.id) from pairing_evidence e where e.pairing_id = p.id) as evidence from pairings p where p.status in ('curated', 'ai') order by p.id`;   // 공개 카탈로그(apps/web/lib/catalog.ts)와 같은 기준 — pending(근거 1개, 검수 중)은 번들에도 넣지 않는다
   const [meta] = await sql<{ value: string }[]>`select value from catalog_meta where key = 'version'`;
   const ds = loadDatasetFromRows({ drinks, foods, pairings, trend_meta: DATA.trend_meta, src_meta: DATA.src_meta, profile_meta: DATA.profile_meta });
   writeFileSync(out, JSON.stringify(ds, null, 1));
