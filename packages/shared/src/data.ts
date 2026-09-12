@@ -44,6 +44,11 @@ export let FOOD_CATEGORIES: { key: string; count: number }[] = [];
 /** 양조장 목록 (술 수 순) */
 export let BREWERIES: { name: string; region: string; count: number }[] = [];
 let BEST: Pairing[] = [];
+/**
+ * 대중 언급 눈금의 기준 — 전체 페어링 블로그 언급 수의 95퍼센타일(log1p). 종합 점수의 '대중' 몫을
+ * 술·음식마다가 아니라 모든 조합에 같은 자로 잰다(2026-09-13, docs/13). 상위 5%는 100으로 잘린다.
+ */
+export let BLOG_REF = Math.log1p(1000);
 
 export const tscore = (x: { trend?: Trend }) => x.trend?.score || 0;
 const byRank = <T extends { trend?: Trend }>(xs: T[]) => xs.filter((x) => x.trend?.rank).sort((a, b) => a.trend!.rank! - b.trend!.rank!);
@@ -71,6 +76,9 @@ function rebuildIndexes() {
   for (const d of DATA.drinks) { if (!d.brewery) continue; const v = bm.get(d.brewery) || { region: d.region, count: 0 }; v.count++; bm.set(d.brewery, v); }
   BREWERIES = [...bm.entries()].map(([name, v]) => ({ name, ...v })).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "ko"));
   BEST = [...DATA.pairings].sort((a, b) => b.es - a.es).slice(0, 12);
+  const blogs = DATA.pairings.map((p) => Math.max(0, p.blog || 0)).sort((a, b) => a - b);
+  const p95 = blogs.length ? blogs[Math.min(blogs.length - 1, Math.floor(blogs.length * 0.95))] : 1000;
+  BLOG_REF = Math.log1p(Math.max(10, p95));
 }
 rebuildIndexes();
 

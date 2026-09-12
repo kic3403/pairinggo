@@ -4,7 +4,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { D, byFood, findBySlug, naverMapUrl, scorePairings, toSlug } from "@pairinggo/shared";
+import { D, SRC_LABEL, byFood, explainOverall, findBySlug, naverMapUrl, scorePairings, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, drinkHref, type CardItem } from "../../_components/PairingCards";
 import ExtLink from "../../_components/ExtLink";
@@ -42,7 +42,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   const items: CardItem[] = scored.map((s) => {
     const drink = D[s.p.d];
     const sub = [drink?.category, drink?.abv != null ? `${drink.abv}%` : null, drink?.region].filter(Boolean).join(" · ");
-    return { href: drinkHref(drink?.name || s.p.d), name: drink?.name || s.p.d, sub, overall: s.overall, pairing: s.p };
+    return { href: drinkHref(drink?.name || s.p.d), name: drink?.name || s.p.d, sub, grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p };
   });
 
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);
@@ -65,7 +65,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         <div>
           <h2>{food.name}에 어울리는 전통주 {items.length}가지</h2>
           <p className="small muted" style={{ marginTop: -6 }}>
-            종합 점수는 전문가 평가(60%)·대중 언급량(25%)·맛 프로필(15%)에 출처 등급을 더해 계산합니다.
+            어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 등급에 마우스를 올리면 점수 구성을 볼 수 있습니다.
           </p>
           <PairingCards items={items} />
           <NearbyPlaces mode="restaurants" food={food.name} foodId={food.id} />

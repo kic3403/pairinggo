@@ -4,9 +4,10 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CATEGORIES, D, POPULAR, POPULAR_FOODS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, parseRegionQuery, regionById, regionLabel, search, shortAward, toSlug } from "@pairinggo/shared";
+import { CATEGORIES, D, POPULAR, POPULAR_FOODS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, shortAward, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
+import GradeBadge from "../_components/GradeBadge";
 import Heart from "../_components/Heart";
 import SearchLog from "../_components/SearchLog";
 import RegionTabs from "../_components/RegionTabs";
@@ -129,7 +130,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                   <div className="top">
                     <span className="no">{i + 1}</span>
                     <Link href={drinkHref(r.drink.name)} className="name">{r.drink.name}</Link>
-                    <span className="score">{Math.round(r.score)}점</span>
+                    {r.via && <GradeBadge grade={pairingGrade(pairingScore(r.via))} title={`대표 조합 점수 ${pairingScore(r.via)} · 조건에 맞는 페어링 ${r.count}건`} />}
                   </div>
                   <div className="small muted">{[r.drink.category, r.drink.abv != null ? `${r.drink.abv}%` : null, r.drink.region, r.drink.awards?.[0] ? shortAward(r.drink.awards[0]) : null].filter(Boolean).join(" · ")}</div>
                   <p className="why">{r.via ? r.via.reason : r.drink.desc}</p>
@@ -146,7 +147,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                 <div className="top">
                   <span className="no">{i + 1}</span>
                   <Link href={foodHref(r.food.name)} className="name">{r.food.name}</Link>
-                  <span className="score">{Math.round(r.score)}점</span>
+                  {r.via && <GradeBadge grade={pairingGrade(pairingScore(r.via))} title={`대표 조합 점수 ${pairingScore(r.via)} · 조건에 맞는 페어링 ${r.count}건`} />}
                 </div>
                 <div className="small muted">{[r.food.category, ...r.food.tags.slice(0, 3)].join(" · ")}</div>
                 <p className="why">{r.via ? r.via.reason : r.food.tags.join(" · ")}</p>

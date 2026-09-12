@@ -5,7 +5,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { F, LINK_STATUS, byDrink, buyLink, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt } from "@pairinggo/shared";
+import { F, LINK_STATUS, byDrink, buyLink, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { PairingCards, foodHref, type CardItem } from "../../_components/PairingCards";
 import ExtLink from "../../_components/ExtLink";
@@ -42,7 +42,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const scored = scorePairings(rows, (p) => F[p.f]?.category || "");
   const items: CardItem[] = scored.map((s) => {
     const food = F[s.p.f];
-    return { href: foodHref(food?.name || s.p.f), name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), overall: s.overall, pairing: s.p };
+    return { href: foodHref(food?.name || s.p.f), name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p };
   });
 
   const bl = buyLink(drink);
@@ -103,7 +103,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <div>
           <h2>{josa(drink.name, "과/와")} 어울리는 음식 {items.length}가지</h2>
           <p className="small muted" style={{ marginTop: -6 }}>
-            종합 점수는 전문가 평가(60%)·대중 언급량(25%)·맛 프로필(15%)에 출처 등급을 더해 계산합니다.
+            어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 등급에 마우스를 올리면 점수 구성을 볼 수 있습니다.
           </p>
           <PairingCards items={items} />
           <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />

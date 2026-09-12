@@ -2,13 +2,16 @@
 import Link from "next/link";
 import CardLink from "./CardLink";
 import ExtLink from "./ExtLink";
-import { SRC_LABEL, toSlug, type Pairing, type SrcTier } from "@pairinggo/shared";
+import GradeBadge from "./GradeBadge";
+import { SRC_LABEL, toSlug, type Grade, type Pairing, type SrcTier } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
   name: string;
   sub?: string;
-  overall: number;
+  /** 등급(찰떡·잘 어울림·시도해 볼 만)과 툴팁용 설명 — 숫자 점수는 화면에 크게 쓰지 않는다 */
+  grade: Grade;
+  explain: string;
   pairing: Pairing;
 };
 
@@ -19,11 +22,11 @@ export function PairingCards({ items }: { items: CardItem[] }) {
   if (!items.length) return <p className="muted">아직 등록된 페어링이 없습니다.</p>;
   return (
     <ul className="cards">
-      {items.map(({ href, name, sub, overall, pairing: p }) => (
+      {items.map(({ href, name, sub, grade, explain, pairing: p }) => (
         <li key={href} className="card">
           <div className="top">
             <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
-            <span className="score" title={`전문가 ${p.es} · 언급 ${(p.blog || 0).toLocaleString("ko-KR")}건`}>{overall}점</span>
+            <GradeBadge grade={grade} title={explain} />
           </div>
           {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}
           {p.reason && <p className="why">{p.reason}</p>}
