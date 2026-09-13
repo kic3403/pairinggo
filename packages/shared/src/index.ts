@@ -6,6 +6,7 @@ export * from "./rating";
 export * from "./similarity";
 export * from "./search";
 export * from "./pairing/score";
+export * from "./pairing/blog-count";
 export * from "./browse";
 export * from "./schemas";
 export * from "./rows";

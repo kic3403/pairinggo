@@ -19,7 +19,8 @@
     "mentions:insta": "tsx src/mentions-insta.ts",
     "images": "tsx src/images.ts",
     "photo-request": "tsx src/photo-request.ts",
-    "awards": "tsx src/awards.ts"
+    "awards": "tsx src/awards.ts",
+    "blog-counts": "tsx src/blog-counts.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

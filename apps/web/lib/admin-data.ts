@@ -2,6 +2,7 @@
  * 어드민 데이터 접근 — 후보 목록·대시보드 집계·승격·발행. service_role(db()) 사용.
  */
 import { SRC_RANK, type SrcTier } from "@pairinggo/shared";
+import { countPairBlog } from "./blog-count";
 import { db } from "./db";
 import { getCatalog, invalidateCatalog } from "./catalog";
 
@@ -60,7 +61,10 @@ export async function promote(input: { candidateId: number; score: number; tier:
   let status: string;
   if (!existing) {
     status = ["official", "sommelier"].includes(tier) ? "curated" : "pending";
-    const { data: p, error: e1 } = await sb.from("pairings").insert({ drink_id: c.drink_id, food_id: c.food_id, expert_score: input.score, reason: input.reason, blog_count: 0, source_tier: tier, status }).select("id").single();
+    // 대중 언급 수 — 네이버 블로그 검색 결과 수. 실패하면 0으로 두고 blog-counts 스크립트로 나중에 채운다(예전엔 늘 0이었다)
+    const [{ data: dr }, { data: fo }] = await Promise.all([sb.from("drinks").select("name,alias").eq("id", c.drink_id).single(), sb.from("foods").select("name").eq("id", c.food_id).single()]);
+    const blogCount = dr && fo ? await countPairBlog({ name: dr.name, alias: (dr.alias as string[] | null)?.[0] ?? null }, { name: fo.name }) : null;
+    const { data: p, error: e1 } = await sb.from("pairings").insert({ drink_id: c.drink_id, food_id: c.food_id, expert_score: input.score, reason: input.reason, blog_count: blogCount ?? 0, source_tier: tier, status }).select("id").single();
     if (e1 || !p) throw new Error(e1?.message || "페어링 생성 실패");
     pairingId = p.id;
   } else {

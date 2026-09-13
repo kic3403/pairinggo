@@ -19,8 +19,8 @@ export type GradeKey = "best" | "good" | "try";
 export type Grade = { key: GradeKey; label: string };
 export const GRADE_LABEL: Record<GradeKey, string> = { best: "찰떡", good: "잘 어울림", try: "시도해 볼 만" };
 /**
- * 등급 경계 — 기본 점수(편중 보정 전) 기준. 2026-09-13 실데이터 918건: 찰떡 72(8%) · 잘 어울림 289(31%) · 시도해 볼 만 557(61%).
- * 출처별 중앙값: 양조장 공식 81 · 소믈리에 62 · 매체 49 · 맛 프로필 30.
+ * 등급 경계 — 기본 점수(편중 보정 전) 기준. 2026-09-13 실데이터 918건(언급 수 채운 뒤): 찰떡 72(8%) · 잘 어울림 295(32%) · 시도해 볼 만 551(60%).
+ * 출처별 중앙값: 양조장 공식 81 · 소믈리에 62 · 매체 49 · 맛 프로필 30 · 블로그 27.
  */
 export const GRADE_CUT = { best: 60, good: 40 } as const;
 
