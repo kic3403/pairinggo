@@ -73,7 +73,7 @@ export function scoreMentions(rows: MentionRow[], opts: { today: string; lookbac
 
 /* ---------- 언급 판정 ---------- */
 const DRINK_WORD = /막걸리|소주|약주|청주|탁주|증류|리큐르|와인|과실주|브랜디|미드|꿀술|생주|명주|법주|국화주|이화주|송주|배주|강주|홍로|력고|기술|리술|명주|춘$|주$/;
-const CONTEXT = /술|주류|막걸리|소주|약주|청주|전통주|양조|증류|리큐르|와인|한잔|한 잔|안주|시음|주점|바틀|보틀|도수|음주|마셨|마시/;
+export const DRINK_CONTEXT = /술|주류|막걸리|소주|약주|청주|전통주|양조|증류|리큐르|와인|한잔|한 잔|안주|시음|주점|바틀|보틀|도수|음주|마셨|마시/;
 const squash = (s: string) => s.replace(/\s+/g, "").toLowerCase();
 
 /**
@@ -85,7 +85,7 @@ export function isDrinkMention(text: string, terms: string[]): boolean {
   const hit = terms.map(squash).filter(Boolean).find((k) => t.includes(k));
   if (!hit) return false;
   if (terms.some((k) => DRINK_WORD.test(k))) return true;
-  return CONTEXT.test(text);
+  return DRINK_CONTEXT.test(text);
 }
 
 /** 설명 문구 — 어떤 채널이 반영됐는지, 기준 기간 */

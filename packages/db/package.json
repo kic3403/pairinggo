@@ -20,7 +20,9 @@
     "images": "tsx src/images.ts",
     "photo-request": "tsx src/photo-request.ts",
     "awards": "tsx src/awards.ts",
-    "blog-counts": "tsx src/blog-counts.ts"
+    "blog-counts": "tsx src/blog-counts.ts",
+    "shop-insight": "tsx src/shop-insight.ts",
+    "lineup": "tsx src/lineup.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
