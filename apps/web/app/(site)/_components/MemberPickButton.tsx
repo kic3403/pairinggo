@@ -5,7 +5,7 @@
  */
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
-import { MEMBER_PICK_MIN, MEMBER_PICK_NOTE_MAX, memberPickStatusText, validateMemberNote } from "@pairinggo/shared/member";
+import { MEMBER_PICK_NOTE_MAX, validateMemberNote } from "@pairinggo/shared/member";
 import { track } from "@/lib/track";
 import { useSaved } from "./SavedProvider";
 
@@ -55,9 +55,9 @@ export default function MemberPickButton({ mode, subjectId, subjectName, options
       if (r.status === 401) { router.push(`/login?next=${encodeURIComponent(pathname + "#recommend")}`); return; }
       if (!r.ok) { setMsg({ ok: false, text: j.error || "저장하지 못했어요" }); return; }
       track("member_pick", { d: mode === "drink" ? subjectId : chosen?.id ?? null, f: mode === "food" ? subjectId : chosen?.id ?? null, status: j.status, n: j.n });
-      setMsg({ ok: true, text: j.status === "review" ? "고마워요! 카탈로그에 없는 이름이라 확인한 뒤 게시돼요." : j.published ? `고마워요! 회원 ${j.n}명이 추천해 이 조합이 공개됐어요.` : `고마워요! ${memberPickStatusText("active", j.n)}` });
+      setMsg({ ok: true, text: j.status === "review" ? "고마워요! 카탈로그에 없는 이름이라 확인한 뒤 게시돼요." : j.published ? `고마워요! 글이 올라갔고, 이 조합은 페어링 카드에도 실렸어요.` : `고마워요! 글이 회원 추천에 바로 올라갔어요. 하트를 받으면 위로 올라가요.` });
       setNote(""); setQ(""); setPicked(null); if (file.current) file.current.value = "";
-      if (j.published) router.refresh();
+      router.refresh();   // 카드 줄·회원픽 카드가 바로 보이게
     } catch { setMsg({ ok: false, text: "저장하지 못했어요. 잠시 후 다시 눌러 주세요." }); }
     finally { setBusy(false); }
   };
@@ -68,7 +68,7 @@ export default function MemberPickButton({ mode, subjectId, subjectName, options
         <button type="button" className="btn mp-open" onClick={start}>🙌 {subjectName}{mode === "drink" ? "에 어울리는 음식" : "에 어울리는 전통주"} 추천하기</button>
       ) : (
         <form className="mp-form" onSubmit={submit}>
-          <div className="mp-head"><b>회원 추천</b><span className="small muted">같은 조합을 {MEMBER_PICK_MIN}명이 추천하면 모두에게 보여요. 닉네임만 표시돼요.</span></div>
+          <div className="mp-head"><b>회원 추천</b><span className="small muted">올리면 바로 회원 추천에 보여요. 닉네임만 표시돼요.</span></div>
           <label className="mp-field">
             <span>{otherLabel}</span>
             <input value={chosen ? chosen.name : q} onChange={(e) => { setQ(e.target.value); setPicked(null); }} placeholder={mode === "drink" ? "예: 육회, 감자전" : "예: 복순도가, 화요"} autoComplete="off" />

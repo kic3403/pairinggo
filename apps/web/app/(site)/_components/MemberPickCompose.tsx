@@ -5,7 +5,7 @@
  */
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
-import { MEMBER_PICK_MIN, MEMBER_PICK_NOTE_MAX, memberPickStatusText, validateMemberNote } from "@pairinggo/shared/member";
+import { MEMBER_PICK_NOTE_MAX, validateMemberNote } from "@pairinggo/shared/member";
 import { track } from "@/lib/track";
 import { useSaved } from "./SavedProvider";
 
@@ -74,10 +74,10 @@ export default function MemberPickCompose({ drinks, foods }: { drinks: Opt[]; fo
       if (r.status === 401) { router.push(`/login?next=${encodeURIComponent(pathname + "#compose")}`); return; }
       if (!r.ok) { setMsg({ ok: false, text: j.error || "저장하지 못했어요" }); return; }
       track("member_pick", { d: d?.id ?? null, f: f?.id ?? null, status: j.status, n: j.n, from: "picks" });
-      setMsg({ ok: true, text: j.status === "review" ? "고마워요! 카탈로그에 없는 이름이라 확인한 뒤 게시돼요." : j.published ? `고마워요! 회원 ${j.n}명이 추천해 이 조합이 공개됐어요.` : `고마워요! ${memberPickStatusText("active", j.n)} 마이페이지에서 볼 수 있어요.` });
+      setMsg({ ok: true, text: j.status === "review" ? "고마워요! 카탈로그에 없는 이름이라 확인한 뒤 게시돼요." : j.published ? `고마워요! 글이 올라갔고, 이 조합은 페어링 카드에도 실렸어요.` : `고마워요! 글이 회원 추천에 바로 올라갔어요. 하트를 받으면 위로 올라가요.` });
       setNote(""); setDrink({ q: "", picked: null }); setFood({ q: "", picked: null }); if (file.current) file.current.value = "";
       setOpen(false);
-      if (j.published) router.refresh();
+      router.refresh();   // 글이 바로 목록에 보이게
     } catch { setMsg({ ok: false, text: "저장하지 못했어요. 잠시 후 다시 눌러 주세요." }); }
     finally { setBusy(false); }
   };
@@ -91,7 +91,7 @@ export default function MemberPickCompose({ drinks, foods }: { drinks: Opt[]; fo
         </div>
       ) : (
         <form className="mp-form" onSubmit={submit}>
-          <div className="mp-head"><b>추천 남기기</b><span className="small muted">같은 조합을 {MEMBER_PICK_MIN}명이 추천하면 모두에게 보여요. 닉네임만 표시돼요.</span></div>
+          <div className="mp-head"><b>추천 남기기</b><span className="small muted">올리면 바로 회원 추천에 보여요. 닉네임만 표시돼요.</span></div>
           <Picker label="전통주" placeholder="예: 복순도가, 화요" options={drinks} value={drink} onChange={setDrink} />
           <Picker label="음식" placeholder="예: 육회, 감자전" options={foods} value={food} onChange={setFood} />
           <label className="mp-field">

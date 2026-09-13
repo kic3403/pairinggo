@@ -103,7 +103,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
               <div className="pair">
                 {d ? <Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link> : <span>{p.drink_raw}</span>}<span className="x">×</span>{f ? <Link href={`/foods/${toSlug(f.name)}`}>{f.name}</Link> : <span>{p.food_raw}</span>}
               </div>
-              <div className="small muted" style={{ marginTop: 2 }}>{memberPickStatusText(p.status, p.n)} · {p.created_at.slice(0, 10)}</div>
+              <div className="small muted" style={{ marginTop: 2 }}>{memberPickStatusText(p.status, p.n, p.likes)} · {p.created_at.slice(0, 10)}</div>
               {p.note && <p className="why" style={{ marginTop: 6 }}>“{p.note}”</p>}
             </li>
           ); })}

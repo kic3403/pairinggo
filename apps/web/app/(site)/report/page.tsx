@@ -44,8 +44,8 @@ export default async function ReportPage() {
           {r.rated.length ? <ol>{r.rated.map((x) => <li key={`${x.d}|${x.f}`}>{x.drink} × {x.food} <span className="muted small">— {x.text}</span></li>)}</ol> : <p className="muted">아직 3명 이상 평가한 조합이 없어요. 술·음식 화면에서 먹어본 조합을 평가해 주세요.</p>}
         </section>
         <section className="rp-sec">
-          <h2>회원 추천 조합</h2>
-          {r.picks.length ? <ol>{r.picks.map((p) => <li key={`${p.d}|${p.f}`}>{p.drink} × {p.food} <span className="muted small">— 회원 {p.n}명</span></li>)}</ol> : <p className="muted">아직 공개된 회원 추천이 없어요. <Link href="/picks">추천 남기기 →</Link></p>}
+          <h2>회원 추천 <span className="muted small">하트 많은 순</span></h2>
+          {r.picks.length ? <ol>{r.picks.map((p, i) => <li key={i}>{p.drink} × {p.food} <span className="muted small">♥{p.n}{p.note ? ` — “${p.note.slice(0, 40)}” ${p.nick}` : ""}</span></li>)}</ol> : <p className="muted">아직 공개된 회원 추천이 없어요. <Link href="/picks">추천 남기기 →</Link></p>}
         </section>
         <section className="rp-sec">
           <h2>많이 찾은 검색어</h2>

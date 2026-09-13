@@ -12,6 +12,7 @@
     "./ratings": "./src/pairing/ratings.ts",
     "./pick": "./src/pairing/pick.ts",
     "./member": "./src/pairing/member.ts",
+    "./slug": "./src/slug.ts",
     "./data/*": "./data/*"
   },
   "scripts": {

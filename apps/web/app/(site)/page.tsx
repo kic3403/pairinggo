@@ -6,9 +6,10 @@ import Heart from "./_components/Heart";
 import HeroMarquee from "./_components/HeroMarquee";
 import QuickMenu from "./_components/QuickMenu";
 import { loadAwards } from "@/lib/awards";
-import { listPublicPicks } from "@/lib/member-picks";
+import { listPosts } from "@/lib/member-picks";
+import PickFeed from "./_components/PickFeed";
 import { topDrinks } from "@/lib/popular";
-import { buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug, D, F, MEMBER_PICK_MIN, memberPickSummary } from "@pairinggo/shared";
+import { buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
 export const revalidate = 600;
@@ -23,7 +24,7 @@ export default async function Home() {
   const c = await getCatalog();
   const top = topDrinks(c.dataset, 10);
   const awards = await loadAwards();
-  const picks = await listPublicPicks(6).catch(() => []);
+  const picks = await listPosts(4).catch(() => []);
   const drinks = (top.list.length ? top.list : c.dataset.drinks).slice(0, 8);
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
 
@@ -69,16 +70,9 @@ export default async function Home() {
       <section className="home-picks">
         <div className="section-head"><h2>회원이 추천한 페어링</h2><Link href="/picks">전체 보기</Link></div>
         {picks.length ? (
-          <ul className="picks-list">
-            {picks.map((p) => { const d = D[p.d], f = F[p.f]; if (!d || !f) return null; const note = p.notes.find((n) => n.note); return (
-              <li key={`${p.d}|${p.f}`}>
-                <div className="pair"><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link><span className="x">×</span><Link href={`/foods/${toSlug(f.name)}`}>{f.name}</Link></div>
-                <div className="small muted" style={{ marginTop: 2 }}>{memberPickSummary(p.n)}{note ? <> · “{note.note.slice(0, 40)}{note.note.length > 40 ? "…" : ""}” — {note.nick}</> : null}</div>
-              </li>
-            ); })}
-          </ul>
+          <PickFeed posts={picks} compact />
         ) : (
-          <div className="cta">회원이 "이 술엔 이 음식"을 추천하면 여기에 모입니다. 같은 조합을 {MEMBER_PICK_MIN}명이 추천하면 공개돼요. 전통주·음식 화면의 <b>🙌 추천하기</b> 버튼으로 첫 추천을 남겨 보세요.</div>
+          <div className="cta">회원이 "이 술엔 이 음식"을 올리면 바로 여기에 보이고, 다른 회원이 ♥로 공감합니다. 전통주·음식 화면의 <b>🙌 추천하기</b> 버튼이나 <Link href="/picks">회원 추천</Link>에서 첫 글을 남겨 보세요.</div>
         )}
       </section>
 

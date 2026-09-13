@@ -1,12 +1,11 @@
 /**
- * 회원 추천 페어링 — 저장·집계·공개(materialize). 규칙은 packages/shared/src/pairing/member.ts.
- *  - 본인 것은 즉시(마이페이지), 남에게는 같은 조합에 MEMBER_PICK_MIN명 모여야 보인다.
- *  - 공개 조건이 되면 pairings에 src 'user' 행(회원픽)을 만들고 카탈로그를 다시 조립한다. 이미 있는 조합이면 카드에 "회원 N명 추천"만 붙는다.
- *  - 카탈로그에 없는 술/음식은 review 상태 → 어드민이 지정하면 그때 집계.
- *  - 화면에는 닉네임(users.name)만 나간다.
+ * 회원 추천 페어링 — 글(member_picks)·하트(member_pick_likes)·집계·회원픽 카드 생성. 규칙은 packages/shared/src/pairing/member.ts.
+ *  - 글은 올리면 바로 목록에 보인다(2026-09-14 개정). 다른 회원이 하트를 눌러 공감하고, 목록은 하트 많은 순 → 최근 순.
+ *  - 같은 조합에 글이 MEMBER_PICK_MIN건 모이거나 한 글이 하트 MEMBER_PICK_LIKES_MIN개를 받으면 pairings에 src 'user' 행(회원픽 카드)을 만든다(syncPair).
+ *  - 카탈로그에 없는 술/음식은 review 상태 → 어드민이 지정하면 게시. 화면에는 닉네임(users.name)만 나간다.
  */
 import { revalidatePath } from "next/cache";
-import { D, F, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, MEMBER_PICK_DAILY, MEMBER_PICK_ES, MEMBER_PICK_MIN, profileFit, toSlug, type MemberPickStatus } from "@pairinggo/shared";
+import { D, F, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, MEMBER_PICK_DAILY, MEMBER_PICK_ES, memberPickPublishes, profileFit, type MemberPickStatus } from "@pairinggo/shared";
 import { countPairBlog } from "./blog-count";
 import { getCatalog, invalidateCatalog } from "./catalog";
 import { db } from "./db";
@@ -19,48 +18,64 @@ export type PickRow = {
   note: string; image_url: string | null; status: MemberPickStatus; review_note: string | null; created_at: string;
   users?: { name: string | null } | null;
 };
-export type PickNote = { nick: string; note: string; image: string | null; at: string };
-export type PublicPick = { d: string; f: string; n: number; notes: PickNote[]; latest: string };
+/** 화면용 글 — 닉네임·하트 수만 나간다 */
+export type PickPost = { id: number; d: string; f: string; drink: string; food: string; nick: string; note: string; image: string | null; likes: number; at: string; mine: boolean };
+/** 조합별 집계(카드 줄용) */
+export type PublicPick = { d: string; f: string; n: number; likes: number; notes: { nick: string; note: string; image: string | null; at: string }[]; latest: string };
 
+// users 조인은 FK 이름을 지정한다 — member_pick_likes(→users)가 생긴 뒤 관계가 둘이라 PostgREST가 고르지 못한다(실측 2026-09-14)
 const nickOf = (r: PickRow) => (r.users?.name || "회원").slice(0, 20);
-const noteOf = (r: PickRow): PickNote => ({ nick: nickOf(r), note: r.note, image: r.image_url, at: r.created_at });
 
-/** active 추천을 조합별로 묶는다 — 공개 기준(MIN) 이상만 */
-function group(rows: PickRow[], min = MEMBER_PICK_MIN): Record<string, PublicPick> {
-  const by = new Map<string, PickRow[]>();
-  for (const r of rows) if (r.drink_id && r.food_id && r.status === "active") { const k = key(r.drink_id, r.food_id); by.set(k, [...(by.get(k) ?? []), r]); }
-  const out: Record<string, PublicPick> = {};
-  for (const [k, rs] of by) {
-    if (rs.length < min) continue;
-    rs.sort((a, b) => (b.note ? 1 : 0) - (a.note ? 1 : 0) || b.created_at.localeCompare(a.created_at));
-    out[k] = { d: rs[0].drink_id!, f: rs[0].food_id!, n: rs.length, notes: rs.filter((r) => r.note || r.image_url).slice(0, 3).map(noteOf), latest: rs.map((r) => r.created_at).sort().at(-1)! };
-  }
-  return out;
+/** 글 id별 하트 수 */
+async function likeCounts(ids: number[]): Promise<Map<number, number>> {
+  const m = new Map<number, number>();
+  const sb = db();
+  if (!sb || !ids.length) return m;
+  const { data } = await sb.from("member_pick_likes").select("pick_id").in("pick_id", ids).limit(50000);
+  for (const r of (data ?? []) as { pick_id: number }[]) m.set(r.pick_id, (m.get(r.pick_id) ?? 0) + 1);
+  return m;
 }
 
-/** 한 술(또는 음식) 화면의 공개 추천 + 내 추천 키 */
+const toPost = (r: PickRow, likes: Map<number, number>, uid: string | null): PickPost => ({
+  id: r.id, d: r.drink_id!, f: r.food_id!, drink: D[r.drink_id!]?.name ?? r.drink_id!, food: F[r.food_id!]?.name ?? r.food_id!,
+  nick: nickOf(r), note: r.note, image: r.image_url, likes: likes.get(r.id) ?? 0, at: r.created_at, mine: !!uid && r.user_id === uid,
+});
+const byLikes = (a: PickPost, b: PickPost) => b.likes - a.likes || b.at.localeCompare(a.at);
+
+/** 회원 추천 목록·홈 — 게시된 글 전부, 하트 많은 순 */
+export async function listPosts(limit = 60, userId: string | null = null): Promise<PickPost[]> {
+  const sb = db();
+  if (!sb) return [];
+  await getCatalog();
+  const { data, error } = await sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").eq("status", "active").not("drink_id", "is", null).not("food_id", "is", null).order("created_at", { ascending: false }).limit(2000);
+  if (error) throw new Error(error.message);
+  const rows = (data ?? []) as PickRow[];
+  const likes = await likeCounts(rows.map((r) => r.id));
+  return rows.map((r) => toPost(r, likes, userId)).sort(byLikes).slice(0, limit);
+}
+
+/** 한 술(또는 음식) 화면 — 조합별 집계(글 수·하트 합·대표 글) + 내 글 키 */
 export async function picksFor(subject: { drink?: string; food?: string }, userId: string | null) {
   const sb = db();
   if (!sb || (!subject.drink && !subject.food)) return { picks: {} as Record<string, PublicPick>, mine: [] as string[] };
-  let q = sb.from("member_picks").select("*,users(name)").eq("status", "active").limit(5000);
+  let q = sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").eq("status", "active").limit(5000);
   q = subject.drink ? q.eq("drink_id", subject.drink) : q.eq("food_id", subject.food!);
   const { data, error } = await q;
   if (error) throw new Error(error.message);
-  const rows = (data ?? []) as PickRow[];
-  return { picks: group(rows), mine: userId ? rows.filter((r) => r.user_id === userId && r.drink_id && r.food_id).map((r) => key(r.drink_id!, r.food_id!)) : [] };
+  const rows = ((data ?? []) as PickRow[]).filter((r) => r.drink_id && r.food_id);
+  const likes = await likeCounts(rows.map((r) => r.id));
+  const by = new Map<string, PickRow[]>();
+  for (const r of rows) { const k = key(r.drink_id!, r.food_id!); by.set(k, [...(by.get(k) ?? []), r]); }
+  const picks: Record<string, PublicPick> = {};
+  for (const [k, rs] of by) {
+    rs.sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0) || b.created_at.localeCompare(a.created_at));
+    picks[k] = { d: rs[0].drink_id!, f: rs[0].food_id!, n: rs.length, likes: rs.reduce((s, r) => s + (likes.get(r.id) ?? 0), 0), notes: rs.filter((r) => r.note || r.image_url).slice(0, 3).map((r) => ({ nick: nickOf(r), note: r.note, image: r.image_url, at: r.created_at })), latest: rs.map((r) => r.created_at).sort().at(-1)! };
+  }
+  return { picks, mine: userId ? rows.filter((r) => r.user_id === userId).map((r) => key(r.drink_id!, r.food_id!)) : [] };
 }
 
-/** 공개된 추천 전체 — 홈·/picks (많이 추천된 순, 같으면 최근) */
-export async function listPublicPicks(limit = 50): Promise<PublicPick[]> {
-  const sb = db();
-  if (!sb) return [];
-  const { data, error } = await sb.from("member_picks").select("*,users(name)").eq("status", "active").not("drink_id", "is", null).not("food_id", "is", null).limit(5000);
-  if (error) throw new Error(error.message);
-  return Object.values(group((data ?? []) as PickRow[])).sort((a, b) => b.n - a.n || b.latest.localeCompare(a.latest)).slice(0, limit);
-}
-
-export type MyPick = PickRow & { n: number };
-/** 내 추천 목록 + 같은 조합의 추천 수 */
+export type MyPick = PickRow & { n: number; likes: number };
+/** 내 글 + 같은 조합의 글 수·이 글의 하트 수 */
 export async function myPicks(userId: string): Promise<MyPick[]> {
   const sb = db();
   if (!sb) return [];
@@ -73,7 +88,41 @@ export async function myPicks(userId: string): Promise<MyPick[]> {
     const { data: all } = await sb.from("member_picks").select("drink_id,food_id").eq("status", "active").in("drink_id", [...new Set(pairs.map((r) => r.drink_id!))]).limit(5000);
     for (const r of (all ?? []) as { drink_id: string; food_id: string }[]) { const k = key(r.drink_id, r.food_id); counts.set(k, (counts.get(k) ?? 0) + 1); }
   }
-  return rows.map((r) => ({ ...r, n: r.drink_id && r.food_id ? counts.get(key(r.drink_id, r.food_id)) ?? 0 : 0 }));
+  const likes = await likeCounts(rows.map((r) => r.id));
+  return rows.map((r) => ({ ...r, n: r.drink_id && r.food_id ? counts.get(key(r.drink_id, r.food_id)) ?? 0 : 0, likes: likes.get(r.id) ?? 0 }));
+}
+
+/* ---------- 하트 ---------- */
+
+/** 내가 하트 누른 글 id */
+export async function myLikes(userId: string): Promise<number[]> {
+  const sb = db();
+  if (!sb) return [];
+  const { data } = await sb.from("member_pick_likes").select("pick_id").eq("user_id", userId).limit(5000);
+  return ((data ?? []) as { pick_id: number }[]).map((r) => r.pick_id);
+}
+
+/** 내 글 id — 목록에서 "(나)" 표시·내 글 하트 막기 */
+export async function myPostIds(userId: string): Promise<number[]> {
+  const sb = db();
+  if (!sb) return [];
+  const { data } = await sb.from("member_picks").select("id").eq("user_id", userId).limit(500);
+  return ((data ?? []) as { id: number }[]).map((r) => r.id);
+}
+
+/** 하트 토글 — 내 글에는 못 누른다. 결과의 likes는 토글 뒤 수 */
+export async function toggleLike(userId: string, pickId: number): Promise<{ ok: true; liked: boolean; likes: number; published: boolean } | { ok: false; error: string; code: number }> {
+  const sb = need();
+  const { data: p } = await sb.from("member_picks").select("id,user_id,drink_id,food_id,status").eq("id", pickId).maybeSingle();
+  if (!p || p.status !== "active" || !p.drink_id || !p.food_id) return { ok: false, error: "글을 찾을 수 없어요", code: 404 };
+  if (p.user_id === userId) return { ok: false, error: "내 글에는 하트를 누를 수 없어요", code: 400 };
+  const { count: has } = await sb.from("member_pick_likes").select("pick_id", { count: "exact", head: true }).eq("pick_id", pickId).eq("user_id", userId);
+  let liked: boolean;
+  if (has) { await sb.from("member_pick_likes").delete().eq("pick_id", pickId).eq("user_id", userId); liked = false; }
+  else { const { error } = await sb.from("member_pick_likes").insert({ pick_id: pickId, user_id: userId }); if (error && error.code !== "23505") throw new Error(error.message); liked = true; }
+  const { count } = await sb.from("member_pick_likes").select("pick_id", { count: "exact", head: true }).eq("pick_id", pickId);
+  const r = liked ? await syncPair(p.drink_id, p.food_id) : { created: false };
+  return { ok: true, liked, likes: count ?? 0, published: r.created };
 }
 
 /* ---------- 만들기 ---------- */
@@ -103,20 +152,24 @@ export async function createPick(userId: string, input: CreateInput): Promise<Cr
   const { error } = await sb.from("member_picks").insert({ user_id: userId, drink_id: drinkId, food_id: foodId, drink_raw: drinkRaw, food_raw: foodRaw, note: input.note.trim(), image_url: input.imageUrl ?? null, status });
   if (error?.code === "23503") return { ok: false, error: "회원 정보를 찾을 수 없어요. 다시 로그인해 주세요", code: 401 };   // 탈퇴한 계정의 남은 세션
   if (error) throw new Error(error.message);
+  try { revalidatePath("/"); revalidatePath("/picks"); } catch { /* 라우트 핸들러 밖 */ }
   if (status !== "active") return { ok: true, status, n: 0, published: false };
   const r = await syncPair(drinkId!, foodId!);
-  return { ok: true, status, n: r.n, published: r.n >= MEMBER_PICK_MIN };
+  return { ok: true, status, n: r.n, published: r.created || r.exists };
 }
 
-/** 조합의 추천 수를 세고, 공개 기준이 되면 pairings에 회원픽 행을 만든다(이미 있으면 그대로). 화면 캐시도 비운다 */
-export async function syncPair(drinkId: string, foodId: string): Promise<{ n: number; created: boolean }> {
+/** 조합의 글 수·최다 하트를 보고, 조건이 되면 pairings에 회원픽 행을 만든다(이미 있으면 그대로). 화면 캐시도 비운다 */
+export async function syncPair(drinkId: string, foodId: string): Promise<{ n: number; created: boolean; exists: boolean }> {
   const sb = need();
-  const { data } = await sb.from("member_picks").select("*,users(name)").eq("status", "active").eq("drink_id", drinkId).eq("food_id", foodId).order("created_at");
+  const { data } = await sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").eq("status", "active").eq("drink_id", drinkId).eq("food_id", foodId).order("created_at");
   const rows = (data ?? []) as PickRow[];
   const n = rows.length;
-  let created = false;
-  if (n >= MEMBER_PICK_MIN) {
+  const likes = await likeCounts(rows.map((r) => r.id));
+  const maxLikes = Math.max(0, ...rows.map((r) => likes.get(r.id) ?? 0));
+  let created = false, exists = false;
+  if (n && memberPickPublishes(n, maxLikes)) {
     const { data: existing } = await sb.from("pairings").select("id").eq("drink_id", drinkId).eq("food_id", foodId).maybeSingle();
+    exists = !!existing;
     if (!existing) {
       await getCatalog();
       const d = D[drinkId], f = F[foodId];
@@ -128,18 +181,18 @@ export async function syncPair(drinkId: string, foodId: string): Promise<{ n: nu
       if (error || !p) throw new Error(error?.message ?? "페어링 생성 실패");
       await sb.from("pairing_evidence").insert(rows.map((r) => ({ pairing_id: p.id, source: "회원 추천", url: null, quote: r.note ? r.note.slice(0, 120) : null, who: nickOf(r), tier: "user" })));
       created = true;
-      // 카탈로그 버전을 올려 다른 프로세스(다른 페이지·Vercel 함수)의 캐시도 15초 안에 새로 받게 한다. 스냅샷은 어드민 발행 때만(2MB씩 쌓이지 않게)
+      // 카탈로그 버전을 올려 다른 프로세스(다른 페이지·Vercel 함수)의 캐시도 15초 안에 새로 받게 한다. 스냅샷은 어드민 발행 때만
       const version = new Date().toISOString();
       await sb.from("catalog_meta").upsert({ key: "version", value: version, updated_at: version });
+      invalidateCatalog();
+      try {
+        // 상세 화면은 ISR(10분) — 새 회원픽 카드가 바로 보이게 술·음식 상세 전체를 다시 그리게 한다(개별 한글 경로 지정은 실측에서 지워지지 않았다)
+        revalidatePath("/"); revalidatePath("/picks");
+        revalidatePath("/drinks/[slug]", "page"); revalidatePath("/foods/[slug]", "page");
+      } catch (e) { console.warn("[member-picks] revalidate 실패", (e as Error).message); }
     }
-    invalidateCatalog();
-    try {
-      // 상세 화면은 ISR(10분) — 새 회원픽 카드가 바로 보이게 술·음식 상세 전체를 다시 그리게 한다(개별 한글 경로 지정은 실측에서 지워지지 않았다, 2026-09-13)
-      revalidatePath("/"); revalidatePath("/picks");
-      revalidatePath("/drinks/[slug]", "page"); revalidatePath("/foods/[slug]", "page");
-    } catch (e) { console.warn("[member-picks] revalidate 실패", (e as Error).message); }
   }
-  return { n, created };
+  return { n, created, exists };
 }
 
 /* ---------- 사진 ---------- */
@@ -167,7 +220,7 @@ export async function uploadPickImage(userId: string, file: File): Promise<{ ok:
 export async function listReviewPicks(): Promise<PickRow[]> {
   const sb = db();
   if (!sb) return [];
-  const { data, error } = await sb.from("member_picks").select("*,users(name)").in("status", ["review", "hidden"]).order("created_at", { ascending: false }).limit(200);
+  const { data, error } = await sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").in("status", ["review", "hidden"]).order("created_at", { ascending: false }).limit(200);
   if (error) throw new Error(error.message);
   return (data ?? []) as PickRow[];
 }
@@ -183,6 +236,7 @@ export async function resolvePick(id: number, drinkId: string, foodId: string, n
   if (dup) { await sb.from("member_picks").update({ status: "hidden", review_note: "같은 회원의 같은 조합이 이미 있음" }).eq("id", id); return { n: 0 }; }
   const { error } = await sb.from("member_picks").update({ drink_id: drinkId, food_id: foodId, status: "active", review_note: note || null, updated_at: new Date().toISOString() }).eq("id", id);
   if (error) throw new Error(error.message);
+  try { revalidatePath("/"); revalidatePath("/picks"); } catch { /* */ }
   return syncPair(drinkId, foodId);
 }
 
@@ -190,4 +244,5 @@ export async function hidePick(id: number, note: string) {
   const sb = need();
   const { error } = await sb.from("member_picks").update({ status: "hidden", review_note: note || null, updated_at: new Date().toISOString() }).eq("id", id);
   if (error) throw new Error(error.message);
+  try { revalidatePath("/"); revalidatePath("/picks"); } catch { /* */ }
 }

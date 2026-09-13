@@ -1,16 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { MEMBER_PICK_MIN, memberPickStatusText, memberPickSummary, validateMemberNote } from "../member";
+import { MEMBER_PICK_LIKES_MIN, MEMBER_PICK_MIN, memberPickPublishes, memberPickStatusText, memberPickSummary, validateMemberNote } from "../member";
 import { pickOf, PICK_LABEL } from "../pick";
 import { scorePairings } from "../score";
 import type { Pairing } from "../../types";
 
 describe("회원 추천 규칙", () => {
-  it("상태 문구 — 모이는 중 / 공개 / 검수 / 숨김", () => {
-    expect(memberPickStatusText("active", 1)).toBe(`${MEMBER_PICK_MIN - 1}명이 더 추천하면 공개돼요 (1/${MEMBER_PICK_MIN})`);
-    expect(memberPickStatusText("active", MEMBER_PICK_MIN)).toBe(`공개됨 · 회원 ${MEMBER_PICK_MIN}명 추천`);
+  it("상태 문구 — 글은 바로 게시, 카드 조건은 글 수 또는 하트 수", () => {
+    expect(memberPickStatusText("active", 1, 0)).toBe(`게시됨 · 하트 0 · 하트 ${MEMBER_PICK_LIKES_MIN}개를 더 받거나 같은 조합 글이 ${MEMBER_PICK_MIN - 1}개 더 오면 페어링 카드에 올라가요`);
+    expect(memberPickStatusText("active", MEMBER_PICK_MIN, 1)).toBe("게시됨 · 하트 1 · 페어링 카드에도 올라갔어요");
+    expect(memberPickStatusText("active", 1, MEMBER_PICK_LIKES_MIN)).toContain("카드에도 올라갔어요");
     expect(memberPickStatusText("review", 1)).toContain("검수 중");
     expect(memberPickStatusText("hidden", 5)).toContain("숨겼");
     expect(memberPickSummary(3)).toBe("회원 3명 추천");
+    expect(memberPickSummary(1, 4)).toBe("회원 1명 추천 · ♥ 4");
+    expect(memberPickPublishes(1, 0)).toBe(false);
+    expect(memberPickPublishes(2, 0)).toBe(true);
+    expect(memberPickPublishes(1, 3)).toBe(true);
   });
   it("글 검사 — 140자, 링크 금지, 빈 글 허용", () => {
     expect(validateMemberNote("")).toBeNull();

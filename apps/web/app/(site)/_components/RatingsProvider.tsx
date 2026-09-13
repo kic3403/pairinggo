@@ -8,7 +8,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { RatingCounts, RatingValue } from "@pairinggo/shared/ratings";
 import { track } from "@/lib/track";
 
-export type PublicPick = { d: string; f: string; n: number; notes: { nick: string; note: string; image: string | null; at: string }[] };
+export type PublicPick = { d: string; f: string; n: number; likes: number; notes: { nick: string; note: string; image: string | null; at: string }[] };
 type Ctx = {
   ready: boolean;
   /** 회원 추천(공개 기준 이상) — 카드의 "회원 N명 추천" 줄 */

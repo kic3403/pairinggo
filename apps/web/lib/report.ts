@@ -6,7 +6,7 @@
 import { D, F, MIN_N, deltaBadge, summarizeRatings, wilsonLower, type Dataset, type RatingCounts } from "@pairinggo/shared";
 import { db } from "./db";
 import { hotPairs } from "./hot";
-import { listPublicPicks } from "./member-picks";
+import { listPosts } from "./member-picks";
 import { topDrinks } from "./popular";
 
 export type Report = {
@@ -16,7 +16,7 @@ export type Report = {
   hot: { d: string; f: string; drink: string; food: string; taps: number; saves: number; buys: number; fromLogs: boolean }[];
   rated: { d: string; f: string; drink: string; food: string; n: number; goodPct: number; text: string }[];
   ratingsTotal: number;
-  picks: { d: string; f: string; drink: string; food: string; n: number }[];
+  picks: { d: string; f: string; drink: string; food: string; n: number; nick: string; note: string }[];
   terms: { q: string; n: number }[];
   regions: { region: string; n: number }[];
   activity: { screens: number; searches: number; buyClicks: number; restaurantClicks: number; saves: number; members: number };
@@ -70,7 +70,7 @@ export async function buildReport(ds: Dataset, days = 30): Promise<Report> {
     const { count } = await sb.from("users").select("id", { count: "exact", head: true });
     activity.members = count ?? 0;
   }
-  const picks = (await listPublicPicks(8).catch(() => [])).map((p) => ({ d: p.d, f: p.f, drink: D[p.d]?.name ?? p.d, food: F[p.f]?.name ?? p.f, n: p.n }));
+  const picks = (await listPosts(8).catch(() => [])).map((p) => ({ d: p.d, f: p.f, drink: p.drink, food: p.food, n: p.likes, nick: p.nick, note: p.note }));
   return { month: Number(kst(now).slice(5, 7)), from: kst(now - days * 86400000), to: kst(now), generatedAt: new Date(now).toISOString(), top, compared: t.compared, hot, rated, ratingsTotal, picks, terms, regions, activity };
 }
 
@@ -81,7 +81,7 @@ export function reportText(r: Report): string {
   if (r.top.length) { L.push("■ 요즘 많이 찾는 전통주 TOP 10 (인스타·유튜브·네이버·구글 30일 언급량)"); r.top.forEach((d, i) => L.push(`${i + 1}. ${d.name} (${d.category}·${d.region})${d.badge ? ` ${d.badge.label}` : ""}`)); L.push(""); }
   if (r.hot.length) { L.push(`■ 핫한 페어링${r.hot[0]?.fromLogs ? " (회원이 많이 누른 조합)" : " (근거 점수 순)"}`); r.hot.forEach((h, i) => L.push(`${i + 1}. ${h.drink} × ${h.food}`)); L.push(""); }
   if (r.rated.length) { L.push("■ 먹어봤어요 — 회원 평가"); r.rated.forEach((x) => L.push(`· ${x.drink} × ${x.food}: ${x.text}`)); L.push(""); }
-  if (r.picks.length) { L.push("■ 회원 추천 조합"); r.picks.forEach((p) => L.push(`· ${p.drink} × ${p.food} — 회원 ${p.n}명`)); L.push(""); }
+  if (r.picks.length) { L.push("■ 회원 추천 (하트 많은 순)"); r.picks.forEach((p) => L.push(`· ${p.drink} × ${p.food} ♥${p.n}${p.note ? ` — "${p.note}" (${p.nick})` : ""}`)); L.push(""); }
   if (r.terms.length) L.push(`■ 많이 찾은 검색어: ${r.terms.map((t) => `${t.q}(${t.n})`).join(", ")}`);
   if (r.regions.length) L.push(`■ 지역별 둘러보기: ${r.regions.map((x) => `${x.region}(${x.n})`).join(", ")}`);
   L.push("", `#페어링GO #전통주 #안주추천 #${r.month}월트렌드`);

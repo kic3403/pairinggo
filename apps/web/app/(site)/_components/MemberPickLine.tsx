@@ -11,7 +11,7 @@ export default function MemberPickLine({ d, f, hideNotes = false }: { d: string;
   const photo = p.notes.find((n) => n.image);
   return (
     <div className="mpick">
-      <span className="pick member">{memberPickSummary(p.n)}</span>
+      <span className="pick member">{memberPickSummary(p.n, p.likes)}</span>
       {!hideNotes && p.notes.filter((n) => n.note).slice(0, 2).map((n, i) => <span key={i} className="mpick-note">“{n.note}” <span className="muted">— {n.nick}</span></span>)}
       {photo?.image && <a href={photo.image} target="_blank" rel="noopener noreferrer" className="mpick-photo"><img src={photo.image} alt={`${photo.nick}님의 사진`} loading="lazy" /></a>}
     </div>
