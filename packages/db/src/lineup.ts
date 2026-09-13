@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  DATA, LINEUP_RULE, categoryAffinity, categoryOfKind, choseong, describeDrink, estimateProfile, isNameVariant, judgeLineup, loadDatasetFromRows, matchFoods, normalize, planPairings, relativeInterest, shopKeyword,
+  DATA, LINEUP_RULE, categoryAffinity, categoryOfKind, describeDrink, estimateProfile, isNameVariant, judgeLineup, matchFoods, planPairings, relativeInterest, shopKeyword,
   type DrinkProfile, type Interest, type Judged, type LineupCategory, type LineupRow, type PlannedPairing,
 } from "@pairinggo/shared";
 import { brewKey, loadResearch, norm, type ResearchProduct } from "./research";
@@ -36,7 +36,7 @@ const regionOf = (p: ResearchProduct) => {
   const city = (p.sigungu || "").split(/\s+/)[0].replace(/(특례)?[시군구]$/, "");
   return city.length >= 2 ? `${p.sido} ${city}` : p.sido;
 };
-const slug = (s: string) => normalize(s).replace(/[^a-z0-9가-힣]/g, "");
+import { slug } from "./catalog-write";
 const awardsOf = (s: string) => (s || "").split(/,|\/(?=\s*\d{4})/).map((x) => x.trim()).filter((x) => /\d{4}/.test(x) && /우리술\s*품평회/.test(x.replace(/\s/g, "")))
   .map((x) => x.replace(/대한민국\s*우리술\s*품평회|우리술\s*품평회/, "우리술품평회").replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim());
 
@@ -179,43 +179,11 @@ async function writeReport(x: ReturnType<typeof build>) {
 }
 
 async function applyToDb(drinks: NewDrink[]) {
-  const { connect } = await import("./sql");
-  const sql = connect();
-  try {
-    const existing = new Set((await sql<{ id: string }[]>`select id from drinks`).map((r) => r.id));
-    const clash = drinks.filter((d) => existing.has(d.id));
-    if (clash.length) throw new Error(`DB에 이미 있는 id: ${clash.map((d) => d.id).join(", ")} — DB와 번들 JSON이 어긋났습니다. 먼저 \`pnpm --filter @pairinggo/db export\``);
-    let pairs = 0;
-    await sql.begin(async (tx) => {
-      for (const d of drinks) {
-        // alias[0]은 화면·검색·언급 수집의 짧은 이름으로 쓰인다(rows.ts) — 짧은 이름이 없으면 양조장 이름이 아니라 제품명을 둔다
-        const alias = [...new Set([d.alias ?? d.name, d.brewery].filter((a): a is string => !!a))];
-        await tx`insert into drinks (id, slug, name, alias, chosung, category, abv, region, brewery_name, description, flavor_tags, profile, awards, is_generic, online_sellable, buy_url, buy_store, offline, trend, blog_anju, updated_at)
-          values (${d.id}, ${slug(d.name)}, ${d.name}, ${alias}, ${choseong(d.name.replace(/\s+/g, ""))}, ${d.category}, ${d.abv}, ${d.region}, ${d.brewery}, ${d.desc}, ${d.flavor},
-                  ${tx.json(d.profile)}, ${tx.json(d.awards)}, false, true, null, null, null, null, 0, now())`;
-        for (const p of d.pairings) {
-          const [row] = await tx<{ id: number }[]>`insert into pairings (drink_id, food_id, expert_score, reason, blog_count, source_tier, status, profile_score, updated_at)
-            values (${d.id}, ${p.f}, ${p.es}, ${p.reason}, 0, ${p.src}, 'curated', ${tx.json(p.pf)}, now()) returning id`;
-          if (p.src === "official") await tx`insert into pairing_evidence (pairing_id, source, url, quote, who, tier) values (${row.id}, ${d.source.name}, ${d.source.url}, null, ${d.brewery}, 'official')`;
-          pairs++;
-        }
-      }
-    });
-    // 발행 — 어드민 발행과 같은 순서: 스냅샷 → counts → version
-    const [dr, fo, pa] = await Promise.all([
-      sql`select * from drinks order by id`, sql`select * from foods order by id`,
-      sql`select p.*, (select json_agg(e order by e.id) from pairing_evidence e where e.pairing_id = p.id) as evidence from pairings p where p.status in ('curated','ai') order by p.id`,
-    ]);
-    const ds = loadDatasetFromRows({ drinks: dr, foods: fo, pairings: pa, trend_meta: DATA.trend_meta, src_meta: DATA.src_meta, profile_meta: DATA.profile_meta });
-    const version = new Date().toISOString();
-    const counts = { drinks: ds.drinks.length, foods: ds.foods.length, pairings: ds.pairings.length };
-    await sql`insert into catalog_snapshots (version, counts, data, note) values (${version}, ${sql.json(counts)}, ${sql.json(JSON.parse(JSON.stringify(ds)))}, ${`라인업 확장 +${drinks.length}종 (쇼핑인사이트)`})`;
-    await sql`insert into catalog_meta (key, value, updated_at) values ('counts', ${sql.json(counts)}, now()) on conflict (key) do update set value = excluded.value, updated_at = now()`;
-    await sql`insert into catalog_meta (key, value, updated_at) values ('version', ${sql.json(version)}, now()) on conflict (key) do update set value = excluded.value, updated_at = now()`;
-    console.log(`DB 반영 — 술 +${drinks.length} · 페어링 +${pairs} · 전체 ${counts.drinks}종/${counts.pairings}조합 · version ${version}`);
-  } finally {
-    await sql.end();
-  }
+  const { insertDrinks } = await import("./catalog-write");
+  await insertDrinks(drinks.map((d) => ({
+    ...d, buy: null, offline: null,
+    pairings: d.pairings.map((p) => ({ ...p, evidence: p.src === "official" ? [{ source: d.source.name, url: d.source.url, quote: null, who: d.brewery, tier: "official" as const }] : [] })),
+  })), `라인업 확장 +${drinks.length}종 (쇼핑인사이트)`);
 }
 
 const x = build();

@@ -63,7 +63,8 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
   for (const d of list) { const k = d.category || "기타"; groups.set(k, [...(groups.get(k) || []), d]); }
   const cats = [...groups.entries()].sort((a, b) => b[1].length - a[1].length).map(([k, v]) => ({ name: k, n: v.length }));
   const selected = cats.find((x) => x.name === filt.category)?.name ?? cats[0]?.name;
-  const missingCat = filt.category && selected !== filt.category ? filt.category : null;   // 이 지역에 없는 종류를 골랐을 때
+  // 이 지역에 없는 종류를 골랐을 때 — 조건에 맞는 술이 하나도 없으면(selected 없음) 안내하지 않는다(빈 값으로 조사 붙이다 오류 났음)
+  const missingCat = filt.category && selected && selected !== filt.category ? filt.category : null;   // 이 지역에 없는 종류를 골랐을 때
   const shown = selected ? groups.get(selected)! : [];
   const tabHref = (cat: string) => {
     const q = new URLSearchParams();
