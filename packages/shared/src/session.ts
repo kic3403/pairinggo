@@ -17,6 +17,9 @@ export type SessionEntry = {
   referrer: string;
   /** location.origin */
   origin: string;
+  /** 이 문서(페이지 로드)에서 이미 판정했는가 — 앱 라우터 화면 이동은 문서를 새로 열지 않아 referrer·navType이 첫 로드 값 그대로다.
+   *  다시 판정하면 링크로 들어와(referrer 없음) 로그인한 회원이 다음 화면에서 로그아웃된다(2026-09-13 실측). */
+  checkedInDocument?: boolean;
   /** 로그인·가입 폼을 방금 보냈다는 표시 */
   authPending: boolean;
 };
@@ -26,6 +29,7 @@ const originOf = (url: string) => (/^https?:\/\/[^/?#]+/i.exec(url) || [""])[0].
 const sameOrigin = (referrer: string, origin: string) => !!referrer && originOf(referrer) === originOf(origin);
 
 export function shouldClearSession(e: SessionEntry): boolean {
+  if (e.checkedInDocument) return false;    // 같은 문서 안의 화면 이동
   if (e.authPending) return false;          // 로그인 직후(소셜 포함)
   if (e.navType === "reload") return false; // 새로고침
   if (e.firstInTab) return true;            // 새 탭·새 브라우저

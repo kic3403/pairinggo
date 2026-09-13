@@ -26,6 +26,12 @@ describe("첫 화면 로그아웃 판정", () => {
     expect(shouldClearSession(base({ firstInTab: true }))).toBe(true);
     expect(shouldClearSession(base({ firstInTab: true, navType: "reload" }))).toBe(false);
   });
+  it("한 번 판정한 문서 안의 화면 이동(앱 라우터)은 다시 판정하지 않는다 — 링크로 들어와 로그인한 뒤 옮겨 다녀도 유지", () => {
+    // 카카오톡 링크로 연 문서는 referrer가 비어 있고, 앱 라우터 이동은 문서를 새로 열지 않아 referrer가 그대로다
+    expect(shouldClearSession(base({ referrer: "", checkedInDocument: true }))).toBe(false);
+    expect(shouldClearSession(base({ referrer: "", firstInTab: true, checkedInDocument: true }))).toBe(false);
+    expect(shouldClearSession(base({ referrer: "", checkedInDocument: false }))).toBe(true);
+  });
   it("이상한 referrer 값에도 안전하게 동작", () => {
     expect(shouldClearSession(base({ referrer: "not-a-url" }))).toBe(true);
   });

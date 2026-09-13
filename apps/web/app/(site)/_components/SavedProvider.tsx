@@ -28,6 +28,8 @@ type Ctx = {
 const SavedCtx = createContext<Ctx>({ ready: false, loggedIn: false, user: null, has: () => false, toggle: async () => {} });
 export const useSaved = () => useContext(SavedCtx);
 const key = (k: SavedKind, id: string) => `${k}:${id}`;
+/** 이 문서에서 첫 화면 판정을 이미 했는지 — 모듈 변수라 앱 라우터 이동에는 유지되고, 새 페이지 로드에서만 초기화된다 */
+let entryChecked = false;
 
 export default function SavedProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -40,7 +42,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
     (async () => {
       // 첫 화면은 무조건 로그아웃 상태(사용자 결정) — 밖에서 들어온 화면이면 남아 있던 세션을 지운다.
       // 판정 규칙과 예외(새로고침·로그인 직후)는 packages/shared/src/session.ts.
-      let clear = true;
+      let clear = !entryChecked;
       try {
         const ss = window.sessionStorage;
         const authPending = !!ss.getItem(AUTH_PENDING_KEY);
@@ -51,9 +53,11 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
           referrer: document.referrer || "",
           origin: window.location.origin,
           authPending,
+          checkedInDocument: entryChecked,
         });
         ss.setItem("pg_tab", "1");
-      } catch { /* 사설 모드 등 — 지우는 쪽(기본값)으로 */ }
+      } catch { /* 사설 모드 등 — 첫 판정이면 지우는 쪽으로 */ }
+      entryChecked = true;
       if (clear) await fetch("/api/auth/reset", { method: "POST" }).catch(() => null);
       if (!alive) return;
       const s = await fetch("/api/auth/session").then((r) => (r.ok ? r.json() : null)).catch(() => null);
