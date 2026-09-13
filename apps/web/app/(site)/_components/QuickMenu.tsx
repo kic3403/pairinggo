@@ -14,7 +14,7 @@ export default function QuickMenu({ michelinYear }: { michelinYear: number | nul
     { href: "/drinks", label: "전통주", icon: "🍶", tone: "#22406B" },
     { href: "/foods", label: "음식·안주", icon: "🍢", tone: "#6E9B6A" },
     { href: "/search", label: "상황 검색", icon: "🔎", tone: "#5B8DB8" },
-    { href: "/drinks?region=cap", label: "수도권 술", icon: "📍", tone: "#8B7BB5" },
+    { href: "/picks", label: "회원 추천", icon: "🙌", tone: "#3D4A9E" },   // 2026-09-13 회원 추천 페어링(사용자 결정) — '수도권 술' 칸을 대신(지역은 관심지역 줄에서)
     { href: "/my", label: "저장·마이", icon: "♥", tone: "#C77D5A" },
   ];
   return (

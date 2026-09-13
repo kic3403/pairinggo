@@ -24,7 +24,7 @@ export const FoodSchema = z.object({
 
 export const PairingSchema = z.object({
   d: z.string(), f: z.string(), es: z.number(), reason: z.string(), blog: z.number().default(0),
-  src: z.enum(["official", "sommelier", "media", "blog", "profile", "ai"]).optional(),
+  src: z.enum(["official", "sommelier", "media", "blog", "profile", "ai", "user"]).optional(),
   ev: z.object({ source: z.string().nullable().optional(), url: z.string().nullable().optional(), quote: z.string().nullable().optional(), who: z.string().nullable().optional() }).optional(),
   pf: z.object({ s: z.number(), plus: z.array(z.string()), minus: z.array(z.string()) }).optional(),
 }).passthrough();

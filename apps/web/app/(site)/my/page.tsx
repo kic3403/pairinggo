@@ -7,6 +7,8 @@ import { auth, signOut } from "@/auth";
 import { getCatalog } from "@/lib/catalog";
 import { KIND_LABEL, SAVED_KINDS, listSaved, type SavedKind } from "@/lib/saved";
 import { getProfile } from "@/lib/account";
+import { myPicks } from "@/lib/member-picks";
+import { memberPickStatusText } from "@pairinggo/shared";
 import { ageBand } from "@pairinggo/shared";
 import Heart from "../_components/Heart";
 
@@ -22,7 +24,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
   const tab = (SAVED_KINDS as string[]).includes(sp.tab || "") ? (sp.tab as SavedKind) : "drink";
 
   await getCatalog();
-  const [rows, profile] = await Promise.all([listSaved(uid), getProfile(uid)]);
+  const [rows, profile, picks] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => [])]);
   const count = (k: SavedKind) => rows.filter((r) => r.kind === k).length;
   const current = rows.filter((r) => r.kind === tab);
 
@@ -86,6 +88,23 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
                 <span className="s">{[f.category, `어울리는 술 ${(byFood[f.id] || []).length}`].filter(Boolean).join(" · ")}</span>
               </Link>
               <Heart kind="food" id={f.id} name={f.name} />
+            </li>
+          ); })}
+        </ul>
+      )}
+
+      <h2 style={{ marginTop: 26 }}>내가 추천한 페어링 <span className="muted small">{picks.length}건</span></h2>
+      {!picks.length ? (
+        <p className="small muted">전통주·음식 화면의 <b>🙌 추천하기</b> 버튼으로 "이 술엔 이 음식"을 남기면 여기에 모입니다. <Link href="/picks">회원 추천 보기 →</Link></p>
+      ) : (
+        <ul className="picks-list">
+          {picks.map((p) => { const d = p.drink_id ? D[p.drink_id] : null, f = p.food_id ? F[p.food_id] : null; return (
+            <li key={p.id}>
+              <div className="pair">
+                {d ? <Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link> : <span>{p.drink_raw}</span>}<span className="x">×</span>{f ? <Link href={`/foods/${toSlug(f.name)}`}>{f.name}</Link> : <span>{p.food_raw}</span>}
+              </div>
+              <div className="small muted" style={{ marginTop: 2 }}>{memberPickStatusText(p.status, p.n)} · {p.created_at.slice(0, 10)}</div>
+              {p.note && <p className="why" style={{ marginTop: 6 }}>“{p.note}”</p>}
             </li>
           ); })}
         </ul>

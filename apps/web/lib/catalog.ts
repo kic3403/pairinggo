@@ -8,7 +8,9 @@ import { db } from "./db";
 export type Catalog = { version: string; source: "db" | "static"; dataset: Dataset; counts: { drinks: number; foods: number; pairings: number } };
 
 const TTL_MS = 5 * 60 * 1000;
-let cache: { at: number; value: Catalog } | null = null;
+/** 캐시가 살아 있어도 이 간격마다 catalog_meta.version 한 줄만 확인해, 다른 프로세스(어드민 발행·회원 추천 공개)가 올린 버전을 곧바로 받는다(2026-09-13) */
+const VERSION_CHECK_MS = 15 * 1000;
+let cache: { at: number; value: Catalog; checkedAt: number } | null = null;
 let inflight: Promise<Catalog> | null = null;
 
 const counts = (ds: Dataset) => ({ drinks: ds.drinks.length, foods: ds.foods.length, pairings: ds.pairings.length });
@@ -67,8 +69,17 @@ async function fromDb(): Promise<Catalog | null> {
   return { version, source: "db", dataset, counts: counts(dataset) };
 }
 
+async function versionChanged(c: { value: Catalog; checkedAt: number }): Promise<boolean> {
+  if (c.value.source !== "db" || Date.now() - c.checkedAt < VERSION_CHECK_MS) return false;
+  c.checkedAt = Date.now();
+  const sb = db();
+  if (!sb) return false;
+  const { data } = await sb.from("catalog_meta").select("value").eq("key", "version").maybeSingle();
+  return !!data && String(data.value) !== c.value.version;
+}
+
 export async function getCatalog(): Promise<Catalog> {
-  if (cache && Date.now() - cache.at < TTL_MS) return cache.value;
+  if (cache && Date.now() - cache.at < TTL_MS && !(await versionChanged(cache))) return cache.value;
   if (inflight) return inflight;
   inflight = (async () => {
     let value: Catalog;
@@ -78,7 +89,7 @@ export async function getCatalog(): Promise<Catalog> {
     if (value.source === "db" && value.version !== CATALOG_VERSION) {
       try { applyDataset(value.dataset, value.version, "server"); } catch (e) { console.error("[catalog] applyDataset 실패:", (e as Error).message); }
     }
-    cache = { at: Date.now(), value };
+    cache = { at: Date.now(), value, checkedAt: Date.now() };
     return value;
   })();
   try { return await inflight; } finally { inflight = null; }

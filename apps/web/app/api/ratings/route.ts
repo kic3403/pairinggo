@@ -1,6 +1,6 @@
 /**
  * '먹어봤어요' 평가 API
- *   GET  /api/ratings?drink=d01  또는  ?food=f02  → { counts: {"d01|f02": {good,ok,bad}}, mine: {"d01|f02": "good"} }
+ *   GET  /api/ratings?drink=d01  또는  ?food=f02  → { counts: {"d01|f02": {good,ok,bad}}, mine: {"d01|f02": "good"}, picks: {"d01|f02": {n, notes[]}}, minePicks: [] }  (picks = 회원 추천, lib/member-picks)
  *   POST /api/ratings  { d, f, rating: "good"|"ok"|"bad"|null }  → 로그인한 회원만. null이면 내 평가 삭제
  * 세션은 getToken으로 읽는다 — auth()는 응답에 세션 쿠키를 다시 써서 첫 화면 로그아웃(/api/auth/reset)과 경합한다(docs/13).
  */
@@ -10,6 +10,7 @@ import { z } from "zod";
 import { D, F } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { ratingsFor, setRating } from "@/lib/ratings";
+import { picksFor } from "@/lib/member-picks";
 
 export const runtime = "nodejs";
 const NO_STORE = { "Cache-Control": "no-store" };
@@ -30,8 +31,9 @@ export async function GET(req: Request) {
   if (!(drink && Id.safeParse(drink).success) && !(food && Id.safeParse(food).success)) return NextResponse.json({ error: "drink 또는 food가 필요합니다" }, { status: 400, headers: NO_STORE });
   const uid = await userIdOf(req);
   try {
-    const r = await ratingsFor(drink ? { drink } : { food: food! }, uid);
-    return NextResponse.json({ ...r, loggedIn: !!uid }, { headers: NO_STORE });
+    const subject = drink ? { drink } : { food: food! };
+    const [r, mp] = await Promise.all([ratingsFor(subject, uid), picksFor(subject, uid).catch(() => ({ picks: {}, mine: [] }))]);
+    return NextResponse.json({ ...r, loggedIn: !!uid, picks: mp.picks, minePicks: mp.mine }, { headers: NO_STORE });
   } catch (e) { return NextResponse.json({ error: (e as Error).message }, { status: 500, headers: NO_STORE }); }
 }
 

@@ -8,13 +8,16 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { RatingCounts, RatingValue } from "@pairinggo/shared/ratings";
 import { track } from "@/lib/track";
 
+export type PublicPick = { d: string; f: string; n: number; notes: { nick: string; note: string; image: string | null; at: string }[] };
 type Ctx = {
   ready: boolean;
+  /** 회원 추천(공개 기준 이상) — 카드의 "회원 N명 추천" 줄 */
+  picksOf: (d: string, f: string) => PublicPick | undefined;
   countsOf: (d: string, f: string) => RatingCounts | undefined;
   mineOf: (d: string, f: string) => RatingValue | undefined;
   rate: (d: string, f: string, v: RatingValue | null) => Promise<"ok" | "login" | "error">;
 };
-const RatingsCtx = createContext<Ctx>({ ready: false, countsOf: () => undefined, mineOf: () => undefined, rate: async () => "error" });
+const RatingsCtx = createContext<Ctx>({ ready: false, picksOf: () => undefined, countsOf: () => undefined, mineOf: () => undefined, rate: async () => "error" });
 export const useRatings = () => useContext(RatingsCtx);
 const key = (d: string, f: string) => `${d}|${f}`;
 
@@ -22,6 +25,7 @@ export default function RatingsProvider({ subject, children }: { subject: { drin
   const pathname = usePathname();
   const [counts, setCounts] = useState<Record<string, RatingCounts>>({});
   const [mine, setMine] = useState<Record<string, RatingValue>>({});
+  const [picks, setPicks] = useState<Record<string, PublicPick>>({});
   const [ready, setReady] = useState(false);
   const qs = "drink" in subject ? `drink=${subject.drink}` : `food=${subject.food}`;
 
@@ -31,7 +35,7 @@ export default function RatingsProvider({ subject, children }: { subject: { drin
     const t = setTimeout(async () => {
       const j = await fetch(`/api/ratings?${qs}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (!alive) return;
-      setCounts(j?.counts ?? {}); setMine(j?.mine ?? {}); setReady(true);
+      setCounts(j?.counts ?? {}); setMine(j?.mine ?? {}); setPicks(j?.picks ?? {}); setReady(true);
     }, 400);
     return () => { alive = false; clearTimeout(t); };
   }, [qs, pathname]);
@@ -63,6 +67,6 @@ export default function RatingsProvider({ subject, children }: { subject: { drin
     }
   }, [mine, counts]);
 
-  const value = useMemo<Ctx>(() => ({ ready, countsOf: (d, f) => counts[key(d, f)], mineOf: (d, f) => mine[key(d, f)], rate }), [ready, counts, mine, rate]);
+  const value = useMemo<Ctx>(() => ({ ready, picksOf: (d, f) => picks[key(d, f)], countsOf: (d, f) => counts[key(d, f)], mineOf: (d, f) => mine[key(d, f)], rate }), [ready, counts, mine, picks, rate]);
   return <RatingsCtx.Provider value={value}>{children}</RatingsCtx.Provider>;
 }

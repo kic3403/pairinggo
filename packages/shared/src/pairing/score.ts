@@ -43,7 +43,7 @@ export type Scored<T extends Pairing = Pairing> = {
 };
 
 const ES_MIN = 84, ES_MAX = 97;
-const TIER_BONUS: Record<SrcTier, number> = { official: 4, sommelier: 3, media: 1.5, blog: 0.5, profile: 0, ai: 0 };
+const TIER_BONUS: Record<SrcTier, number> = { official: 4, sommelier: 3, media: 1.5, blog: 0.5, user: 0.5, profile: 0, ai: 0 };
 export const EVIDENCE_BONUS = 3;
 /** 근거 링크가 붙은 조합인가 — 출처 등급이 높아도 링크가 없으면 확인할 수 없으므로 링크 기준 */
 export const hasEvidence = (p: Pairing) => !!p.ev?.url;

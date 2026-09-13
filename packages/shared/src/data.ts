@@ -8,10 +8,10 @@ import linkStatusRaw from "../data/link-status.json";
 import type { Dataset, Drink, Food, Pairing, ProfileMeta, SrcTier, Trend } from "./types";
 
 export const SRC_LABEL: Record<SrcTier, string> = {
-  official: "양조장 공식", sommelier: "소믈리에·명인", media: "전문 매체", blog: "블로그 후기", profile: "맛 프로필", ai: "AI 생성",
+  official: "양조장 공식", sommelier: "소믈리에·명인", media: "전문 매체", blog: "블로그 후기", profile: "맛 프로필", ai: "AI 생성", user: "회원 추천",
 };
 /** 출처 등급 순서 (높을수록 신뢰) */
-export const SRC_RANK: Record<SrcTier, number> = { official: 4, sommelier: 3, media: 2, blog: 1.5, profile: 1, ai: 0 };
+export const SRC_RANK: Record<SrcTier, number> = { official: 4, sommelier: 3, media: 2, blog: 1.5, user: 1.5, profile: 1, ai: 0 };
 
 /** 전통주 미분류(일반주류) — 온라인 직배송 불가, 오프라인 안내는 '주류판매점' (docs/06 주류 규제 #5) */
 export const NON_TRAD = new Set(["d12", "d13", "d21", "d32", "d43", "d52", "d55"]);

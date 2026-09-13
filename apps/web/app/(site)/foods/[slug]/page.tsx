@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { D, SRC_LABEL, byFood, explainOverall, findBySlug, naverMapUrl, scorePairings, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import RatingsProvider from "../../_components/RatingsProvider";
+import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, drinkHref, type CardItem } from "../../_components/PairingCards";
 import ExtLink from "../../_components/ExtLink";
@@ -69,6 +70,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
           <p className="small muted" style={{ marginTop: -6 }}>
             어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 전문가픽은 양조장·소믈리에 추천, 대중픽은 블로그·유튜브 후기에서 확인된 조합이고, 먹어본 회원들의 평가가 함께 쌓입니다.
           </p>
+          <MemberPickButton mode="food" subjectId={food.id} subjectName={food.name} options={c.dataset.drinks.map((d) => ({ id: d.id, name: d.name }))} />
           <RatingsProvider subject={{ food: food.id }}>
             <PickTabs counts={pickCounts(items)}>
               <PairingCards items={items} />

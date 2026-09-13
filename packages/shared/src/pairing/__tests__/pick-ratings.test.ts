@@ -16,9 +16,9 @@ describe("전문가픽 · 대중픽 · 맛 분석", () => {
     expect(PICK_LABEL.public).toBe("대중픽");
   });
   it("실데이터: 세 묶음 합이 전체", () => {
-    const c = { expert: 0, public: 0, profile: 0 };
+    const c = { expert: 0, public: 0, member: 0, profile: 0 };
     for (const p of DATA.pairings) c[pickOf(p.src)]++;
-    expect(c.expert + c.public + c.profile).toBe(DATA.pairings.length);
+    expect(c.expert + c.public + c.member + c.profile).toBe(DATA.pairings.length);
     expect(c.expert).toBeGreaterThan(0);
     expect(c.public).toBeGreaterThan(0);
   });

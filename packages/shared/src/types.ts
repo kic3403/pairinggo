@@ -31,7 +31,7 @@ export type Food = {
 };
 
 /** 출처 등급: 양조장 공식 > 소믈리에·명인 > 전문 매체 > 블로그·카페 후기 > 맛 프로필 (> ai: Phase 9) */
-export type SrcTier = "official" | "sommelier" | "media" | "blog" | "profile" | "ai";
+export type SrcTier = "official" | "sommelier" | "media" | "blog" | "profile" | "ai" | "user";
 export type Evidence = { source?: string | null; url?: string | null; quote?: string | null; who?: string | null };
 
 export type Pairing = {

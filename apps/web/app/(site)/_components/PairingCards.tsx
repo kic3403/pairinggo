@@ -4,6 +4,7 @@ import CardLink from "./CardLink";
 import ExtLink from "./ExtLink";
 import GradeBadge from "./GradeBadge";
 import TriedRating from "./TriedRating";
+import MemberPickLine from "./MemberPickLine";
 import { PICK_DETAIL, PICK_LABEL, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
@@ -18,7 +19,7 @@ export type CardItem = {
 
 /** 묶음(전문가픽·대중픽·맛 분석)별 카드 수 — 탭 숫자용 */
 export function pickCounts(items: CardItem[]): Record<PickKey, number> {
-  const c: Record<PickKey, number> = { expert: 0, public: 0, profile: 0 };
+  const c: Record<PickKey, number> = { expert: 0, public: 0, member: 0, profile: 0 };
   for (const it of items) c[pickOf(it.pairing.src)]++;
   return c;
 }
@@ -48,8 +49,9 @@ export function PairingCards({ items }: { items: CardItem[] }) {
               <span className="muted">{PICK_DETAIL[p.src ?? "profile"]}</span>
               {p.ev?.url
                 ? <ExtLink href={p.ev.url} event="external_link" props={{ d: p.d, f: p.f, kind: "evidence" }}>{p.ev.source || "출처 보기"} ↗</ExtLink>
-                : pick !== "profile" && p.ev?.source ? <span>{p.ev.source}</span> : null}
+                : pick !== "profile" && pick !== "member" && p.ev?.source ? <span>{p.ev.source}</span> : null}   {/* 회원픽은 아래 "회원 N명 추천" 줄이 출처 */}
             </div>
+            <MemberPickLine d={p.d} f={p.f} hideNotes={pick === "member"} />
             <TriedRating d={p.d} f={p.f} />
           </li>
         );
