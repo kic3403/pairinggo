@@ -1,0 +1,100 @@
+{
+ "brewery": "백경증류소",
+ "checked_at": "2026-09-13",
+ "sources": [
+  { "name": "술달다 백경증류소 제품 목록(백경15 Black·Gold·White·향온 — 도수·용량·원료·가격)", "url": "https://www.sooldalda.com/breweries/%EB%B0%B1%EA%B2%BD%EC%A6%9D%EB%A5%98%EC%86%8C" },
+  { "name": "더술닷컴 백경15 화이트 제품 정보(양조장 등록)", "url": "https://thesool.com/front/find/M000000082/view.do?productId=PR00001249" },
+  { "name": "백경증류소 공식 사이트 — 네이버 스마트스토어 판매", "url": "https://www.bk-distillery.com/" },
+  { "name": "국가대표 전통주 소믈리에 블로그 — 화이트·골드·블랙은 누룩 차이, 화이트<골드<블랙 순으로 무거운 음식", "url": "https://blog.naver.com/memory_hong/224203869712" },
+  { "name": "양조장 방문기 — 백경15 실버·골드·화이트 당도(8·5브릭스)", "url": "https://blog.naver.com/pnla9635/223524131673" },
+  { "name": "세종소주28 제품 정보(28%·750ml·찹쌀·멥쌀·백경누룩)", "url": "https://blog.naver.com/dereve91/224023648738" },
+  { "name": "세종소주46 테이스팅 노트(46%·찹쌀·멥쌀, 감미 중·점도 중)", "url": "https://blog.naver.com/emptyh/224186307133" },
+  { "name": "백경53 — 53% 증류식 소주, 쌀·물·누룩, 면세점 입점", "url": "https://blog.naver.com/solppang/223528246832" }
+ ],
+ "buy": { "url": "https://smartstore.naver.com/bkdistillery", "store": "백경증류소 공식 스마트스토어" },
+ "offline": { "place": "백경증류소", "address": "세종특별자치시 장군면 평기길 151", "phone": "044-865-0151", "visit": true, "note": "양조장에서 시음·구매 가능(방문 후기 다수). 방문 전 연락 권장" },
+ "drinks": [
+  {
+   "name": "백경15 화이트", "alias": "백경 화이트", "category": "약주", "abv": 15, "region": "세종",
+   "desc": "세종 장군면 백경증류소가 찹쌀·멥쌀과 직접 띄운 누룩으로 세 번 빚은 15도 약주. 백경 약주 셋 중 가장 달고 가벼우며 꽃과 잘 익은 과일 향이 풍부합니다.",
+   "flavor": ["과일향", "꽃향", "달콤"],
+   "profile": { "sweet": 4, "acid": 3, "body": 2, "fizz": 1, "aroma": 5 },
+   "evidence": [
+    { "food": "족발", "es": 90, "src": "official", "reason": "양조장이 제품 정보에 추천 음식으로 등록한 조합입니다. 과일 향과 단맛이 족발의 기름진 맛을 가볍게 정리해 줍니다.",
+      "items": [
+       { "source": "더술닷컴 제품 정보", "url": "https://thesool.com/front/find/M000000082/view.do?productId=PR00001249", "quote": null, "who": "백경증류소", "tier": "official" },
+       { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/eungggg_lee/223412891042", "quote": "족발과 페어링 해보았어요", "who": null, "tier": "blog" }
+      ] },
+    { "food": "불고기", "es": 90, "src": "official", "reason": "양조장이 추천한 조합입니다. 달콤한 간장 양념과 약주의 단맛이 같은 방향으로 어울립니다.",
+      "items": [
+       { "source": "더술닷컴 제품 정보", "url": "https://thesool.com/front/find/M000000082/view.do?productId=PR00001249", "quote": null, "who": "백경증류소", "tier": "official" },
+       { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/dailysulsul/223635254844", "quote": "추천 페어링 안주는 샤브샤브, 불고기, 월남쌈 같은 수분감 있는 한식이나 육회", "who": null, "tier": "blog" }
+      ] },
+    { "food": "보쌈", "es": 90, "src": "official", "reason": "양조장이 추천한 조합(수육)입니다. 담백한 수육에 화사한 과일 향이 더해집니다.",
+      "items": [ { "source": "더술닷컴 제품 정보", "url": "https://thesool.com/front/find/M000000082/view.do?productId=PR00001249", "quote": null, "who": "백경증류소", "tier": "official" } ] },
+    { "food": "피자", "es": 90, "src": "official", "reason": "양조장이 추천한 조합입니다. 치즈의 짠맛과 기름기를 산미와 단맛이 받쳐 줍니다.",
+      "items": [ { "source": "더술닷컴 제품 정보", "url": "https://thesool.com/front/find/M000000082/view.do?productId=PR00001249", "quote": null, "who": "백경증류소", "tier": "official" } ] },
+    { "food": "샤브샤브", "es": 85, "src": "blog", "reason": "가볍고 수분감 있는 한식과 잘 맞는다는 시음 후기가 있는 조합입니다.",
+      "items": [ { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/dailysulsul/223635254844", "quote": "추천 페어링 안주는 샤브샤브, 불고기, 월남쌈 같은 수분감 있는 한식이나 육회", "who": null, "tier": "blog" } ] },
+    { "food": "월남쌈", "es": 85, "src": "blog", "reason": "채소와 새콤한 소스가 많은 월남쌈에 화사한 향의 가벼운 약주가 어울린다는 후기입니다.",
+      "items": [ { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/dailysulsul/223635254844", "quote": "추천 페어링 안주는 샤브샤브, 불고기, 월남쌈 같은 수분감 있는 한식이나 육회", "who": null, "tier": "blog" } ] },
+    { "food": "육회", "es": 85, "src": "blog", "reason": "달콤한 육회 양념과 과일 향 약주를 함께 추천한 후기입니다.",
+      "items": [ { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/dailysulsul/223635254844", "quote": "추천 페어링 안주는 샤브샤브, 불고기, 월남쌈 같은 수분감 있는 한식이나 육회", "who": null, "tier": "blog" } ] }
+   ]
+  },
+  {
+   "name": "백경15 골드", "alias": "백경 골드", "category": "약주", "abv": 15, "region": "세종",
+   "desc": "백경증류소의 15도 약주. 화이트와 누룩을 달리해 덜 달고(약 5브릭스) 단맛·산미·감칠맛의 균형이 좋아, 화이트보다 조금 더 무게 있는 음식과 맞습니다.",
+   "flavor": ["부드러움", "감칠맛", "과일향"],
+   "profile": { "sweet": 3, "acid": 3, "body": 3, "fizz": 1, "aroma": 4 },
+   "evidence": [
+    { "food": "갈비찜", "es": 86, "src": "blog", "reason": "균형 잡힌 맛이 달큰한 갈비찜 같은 명절 육류 요리와 어우러진다는 전통주 주점의 추천입니다.",
+      "items": [ { "source": "전통주 주점 블로그(이유있는술집)", "url": "https://blog.naver.com/2you_bar_namcheon/224401851628", "quote": "소갈비찜, 육전, 너비아니 같은 명절 육류 요리와 잘 어우러지며", "who": "이유있는술집 남천해변시장", "tier": "blog" } ] },
+    { "food": "육전", "es": 86, "src": "blog", "reason": "고소한 육전의 기름기를 산미가 정리해 준다는 전통주 주점의 추천입니다.",
+      "items": [ { "source": "전통주 주점 블로그(이유있는술집)", "url": "https://blog.naver.com/2you_bar_namcheon/224401851628", "quote": "소갈비찜, 육전, 너비아니 같은 명절 육류 요리와 잘 어우러지며", "who": "이유있는술집 남천해변시장", "tier": "blog" } ] },
+    { "food": "족발", "es": 85, "src": "blog", "reason": "기름진 족발과 잘 어울렸다는 시음 후기가 있는 조합입니다.",
+      "items": [ { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/juhwangdy/223628917889", "quote": "회나 해산물 같은 가벼운 요리도 잘 어울릴테고, 기름진 족발과도 잘 어울렸어요", "who": null, "tier": "blog" } ] },
+    { "food": "광어회", "es": 85, "src": "blog", "reason": "양조장이 회를 곁들일 안주로 권했다는 후기와, 회·해산물과 잘 맞는다는 시음기가 있습니다.",
+      "items": [
+       { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/wolfin/223701864074", "quote": "백경증류소에서는 백경15골드에 곁들일 안주로, 샐러드 회 또는", "who": "백경증류소 추천(후기 인용)", "tier": "blog" },
+       { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/juhwangdy/223628917889", "quote": "회나 해산물 같은 가벼운 요리도 잘 어울릴테고", "who": null, "tier": "blog" }
+      ] }
+   ]
+  },
+  {
+   "name": "백경15 블랙", "alias": "백경 블랙", "category": "약주", "abv": 15, "region": "세종",
+   "desc": "백경 약주 3종 가운데 가장 무게감 있는 15도 약주. 또렷한 산미와 누룩 향이 있어 기름지고 진한 음식과 맞춰 마시기 좋습니다.",
+   "flavor": ["산미", "묵직", "누룩향"],
+   "profile": { "sweet": 2, "acid": 4, "body": 4, "fizz": 1, "aroma": 4 },
+   "evidence": []
+  },
+  {
+   "name": "백경15 향온", "alias": "백경 향온", "category": "약주", "abv": 15, "region": "세종",
+   "desc": "밀과 녹두로 띄운 전통 누룩 향온곡으로 찹쌀·멥쌀을 빚은 15도 약주. 백경 약주 가운데 가장 고급 라인으로 누룩 향이 깊습니다.",
+   "flavor": ["누룩향", "묵직", "깊은 여운"],
+   "profile": { "sweet": 3, "acid": 3, "body": 4, "fizz": 1, "aroma": 5 },
+   "evidence": []
+  },
+  {
+   "name": "세종소주28", "alias": "세종소주28", "category": "증류주", "abv": 28, "region": "세종",
+   "desc": "찹쌀·멥쌀과 백경 누룩으로 빚은 술을 증류한 28도 증류식 소주. 도수가 비교적 낮고 맑고 향긋한 쌀 향이 특징입니다.",
+   "flavor": ["쌀향", "깔끔", "부드러움"],
+   "profile": { "sweet": 2, "acid": 1, "body": 2, "fizz": 1, "aroma": 4 },
+   "evidence": []
+  },
+  {
+   "name": "세종소주46", "alias": "세종소주46", "category": "증류주", "abv": 46, "region": "세종",
+   "desc": "찹쌀·멥쌀로 빚어 증류한 46도 증류식 소주. 은은한 단맛과 적당한 점도가 있어 도수에 비해 부드럽게 넘어갑니다.",
+   "flavor": ["쌀향", "은은한 단맛", "높은 도수"],
+   "profile": { "sweet": 3, "acid": 1, "body": 3, "fizz": 1, "aroma": 4 },
+   "evidence": []
+  },
+  {
+   "name": "백경53", "alias": "백경53", "category": "증류주", "abv": 53, "region": "세종",
+   "desc": "약주 백경15를 증류한 53도 증류식 소주. 감미료 없이 쌀·물·누룩만 쓰며, 높은 도수에 비해 뒷맛이 깔끔합니다.",
+   "flavor": ["높은 도수", "깔끔", "진한 향"],
+   "profile": { "sweet": 2, "acid": 1, "body": 4, "fizz": 1, "aroma": 4 },
+   "evidence": []
+  }
+ ]
+}
