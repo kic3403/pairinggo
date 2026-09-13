@@ -421,3 +421,6 @@ p { margin: 0 0 12px; }
 .picks-list .pair .x { color: var(--muted); font-weight: 500; }
 .home-picks { margin-top: 26px; }
 .home-picks .cta { background: #F5F6FC; border: 1px dashed #C9CDEA; border-radius: var(--radius); padding: 16px; font-size: 14px; }
+.mp-add { font-size: 15px; }
+.mp-chosen { font-style: normal; color: #2F6B3A; font-weight: 600; margin-left: 4px; }
+.picks-list + .mp, .mp + .small { margin-top: 6px; }

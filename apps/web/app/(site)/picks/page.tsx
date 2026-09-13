@@ -4,24 +4,24 @@ import Link from "next/link";
 import { D, F, MEMBER_PICK_MIN, memberPickSummary, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { listPublicPicks } from "@/lib/member-picks";
+import MemberPickCompose from "../_components/MemberPickCompose";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "회원 추천 페어링 | 페어링GO", description: "페어링GO 회원들이 직접 먹어 보고 추천한 전통주와 음식 조합입니다." };
 
 export default async function PicksPage() {
-  await getCatalog();
+  const c = await getCatalog();
   const picks = await listPublicPicks(60);
+  const drinks = c.dataset.drinks.map((d) => ({ id: d.id, name: d.name })), foods = c.dataset.foods.map((f) => ({ id: f.id, name: f.name }));
   return (
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link></p>
       <h1>회원 추천 페어링</h1>
       <p className="lead">회원이 "이 술엔 이 음식"을 추천하면, 같은 조합을 {MEMBER_PICK_MIN}명 이상 추천했을 때 여기에 올라옵니다. 닉네임과 한 줄 이유, 사진 한 장만 보여 드려요.</p>
-      <div className="home-picks cta" style={{ marginTop: 12 }}>
-        추천은 전통주 화면이나 음식 화면의 <b>🙌 추천하기</b> 버튼으로 남길 수 있어요. 카탈로그에 없는 술·음식은 확인한 뒤 게시됩니다.
-        <div className="btns" style={{ marginTop: 10 }}><Link className="btn p" href="/drinks">전통주에서 추천하기</Link><Link className="btn f" href="/foods">음식에서 추천하기</Link></div>
-      </div>
+      <MemberPickCompose drinks={drinks} foods={foods} />
+      <p className="small muted">술·음식 화면의 🙌 추천하기 버튼으로도 남길 수 있어요. 카탈로그에 없는 술·음식은 확인한 뒤 게시됩니다.</p>
       {!picks.length ? (
-        <p className="muted" style={{ marginTop: 18 }}>아직 공개된 회원 추천이 없어요. 첫 추천을 남겨 보세요.</p>
+        <p className="muted" style={{ marginTop: 18 }}>아직 공개된 회원 추천이 없어요. 위 버튼으로 첫 추천을 남겨 보세요.</p>
       ) : (
         <ul className="picks-list" style={{ marginTop: 18 }}>
           {picks.map((p) => {

@@ -101,6 +101,7 @@ export async function createPick(userId: string, input: CreateInput): Promise<Cr
   }
   const status: MemberPickStatus = drinkId && foodId ? "active" : "review";
   const { error } = await sb.from("member_picks").insert({ user_id: userId, drink_id: drinkId, food_id: foodId, drink_raw: drinkRaw, food_raw: foodRaw, note: input.note.trim(), image_url: input.imageUrl ?? null, status });
+  if (error?.code === "23503") return { ok: false, error: "회원 정보를 찾을 수 없어요. 다시 로그인해 주세요", code: 401 };   // 탈퇴한 계정의 남은 세션
   if (error) throw new Error(error.message);
   if (status !== "active") return { ok: true, status, n: 0, published: false };
   const r = await syncPair(drinkId!, foodId!);
