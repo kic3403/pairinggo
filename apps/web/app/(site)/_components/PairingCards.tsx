@@ -3,7 +3,8 @@ import Link from "next/link";
 import CardLink from "./CardLink";
 import ExtLink from "./ExtLink";
 import GradeBadge from "./GradeBadge";
-import { SRC_LABEL, toSlug, type Grade, type Pairing, type SrcTier } from "@pairinggo/shared";
+import TriedRating from "./TriedRating";
+import { PICK_DETAIL, PICK_LABEL, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -15,37 +16,44 @@ export type CardItem = {
   pairing: Pairing;
 };
 
-/** 근거가 붙은 추천인지 — 맛 프로필 계산(profile)과 구분해 표시한다 */
-const hasEvidence = (src: SrcTier | undefined, ev: Pairing["ev"]) => !!ev?.url || (src !== undefined && src !== "profile" && src !== "ai");
+/** 묶음(전문가픽·대중픽·맛 분석)별 카드 수 — 탭 숫자용 */
+export function pickCounts(items: CardItem[]): Record<PickKey, number> {
+  const c: Record<PickKey, number> = { expert: 0, public: 0, profile: 0 };
+  for (const it of items) c[pickOf(it.pairing.src)]++;
+  return c;
+}
 
 export function PairingCards({ items }: { items: CardItem[] }) {
   if (!items.length) return <p className="muted">아직 등록된 페어링이 없습니다.</p>;
   return (
     <ul className="cards">
-      {items.map(({ href, name, sub, grade, explain, pairing: p }) => (
-        <li key={href} className="card">
-          <div className="top">
-            <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
-            <GradeBadge grade={grade} title={explain} />
-          </div>
-          {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}
-          {p.reason && <p className="why">{p.reason}</p>}
-          {p.ev?.quote && (
-            <blockquote className="quote">
-              “{p.ev.quote}”
-              {p.ev.who && <span className="muted"> — {p.ev.who}</span>}
-            </blockquote>
-          )}
-          <div className="src">
-            <span className={`badge${p.src === "official" || p.src === "sommelier" ? " o" : ""}`}>{SRC_LABEL[p.src ?? "profile"]}</span>
-            {hasEvidence(p.src, p.ev)
-              ? (p.ev?.url
+      {items.map(({ href, name, sub, grade, explain, pairing: p }) => {
+        const pick = pickOf(p.src);
+        return (
+          <li key={href} className="card" data-pick={pick}>
+            <div className="top">
+              <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
+              <GradeBadge grade={grade} title={explain} />
+            </div>
+            {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}
+            {p.reason && <p className="why">{p.reason}</p>}
+            {p.ev?.quote && (
+              <blockquote className="quote">
+                “{p.ev.quote}”
+                {p.ev.who && <span className="muted"> — {p.ev.who}</span>}
+              </blockquote>
+            )}
+            <div className="src">
+              <span className={`pick ${pick}`}>{PICK_LABEL[pick]}</span>
+              <span className="muted">{PICK_DETAIL[p.src ?? "profile"]}</span>
+              {p.ev?.url
                 ? <ExtLink href={p.ev.url} event="external_link" props={{ d: p.d, f: p.f, kind: "evidence" }}>{p.ev.source || "출처 보기"} ↗</ExtLink>
-                : <span>{p.ev?.source || "전문가 추천"}</span>)
-              : <span>맛 프로필로 계산한 추정</span>}
-          </div>
-        </li>
-      ))}
+                : pick !== "profile" && p.ev?.source ? <span>{p.ev.source}</span> : null}
+            </div>
+            <TriedRating d={p.d} f={p.f} />
+          </li>
+        );
+      })}
     </ul>
   );
 }

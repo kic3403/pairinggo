@@ -7,6 +7,8 @@ export * from "./similarity";
 export * from "./search";
 export * from "./pairing/score";
 export * from "./pairing/blog-count";
+export * from "./pairing/pick";
+export * from "./pairing/ratings";
 export * from "./browse";
 export * from "./schemas";
 export * from "./rows";

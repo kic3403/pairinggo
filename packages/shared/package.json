@@ -9,6 +9,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./regions": "./src/regions.ts",
+    "./ratings": "./src/pairing/ratings.ts",
+    "./pick": "./src/pairing/pick.ts",
     "./data/*": "./data/*"
   },
   "scripts": {

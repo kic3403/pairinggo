@@ -1,10 +1,10 @@
 /**
  * 공개 웹 퍼널 이벤트 — 미니앱 analytics.ts와 같은 이름·속성으로 /api/v1/events 에 보낸다.
- * 이벤트: screen · search(서버에서 search_logs 직접) · buy_link_click · restaurant_link_click · external_link · save · restaurant_list
+ * 이벤트: screen · search(서버에서 search_logs 직접) · buy_link_click · restaurant_link_click · external_link · save · restaurant_list · card_tap · rate(먹어봤어요 평가)
  * 링크 클릭은 sendBeacon으로 보내 새 탭으로 넘어가도 유실되지 않는다. 실패는 조용히 버린다(분석 데이터가 화면을 막으면 안 된다).
  * buy_link_click의 d/f 는 refresh_pairing_feedback(0004)이 집계 키로 쓴다 — 술 id는 반드시 d 로.
  */
-export type WebEventName = "screen" | "buy_link_click" | "restaurant_link_click" | "external_link" | "save" | "restaurant_list" | "card_tap";
+export type WebEventName = "screen" | "buy_link_click" | "restaurant_link_click" | "external_link" | "save" | "restaurant_list" | "card_tap" | "rate";
 type Props = Record<string, string | number | boolean | null>;
 
 const KEY = "pg_sid";

@@ -350,3 +350,37 @@ p { margin: 0 0 12px; }
 .grade.best { background: var(--food); color: #fff; }
 .grade.good { background: var(--navy-soft); color: var(--navy-ink); border: 1px solid #C9D4E5; }
 .grade.try { background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
+
+/* 페어링 묶음 — 전문가픽(양조장·소믈리에) · 대중픽(블로그·유튜브·매체) · 맛 분석(추정). 탭은 data-show로 카드를 거른다 */
+.pick-tabs { margin: 12px 0 10px; }
+.pick-tabs button { display: inline-block; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--ink2); min-height: 40px; line-height: 22px; cursor: pointer; }
+.pick-tabs button.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+.pick-tabs button:disabled { opacity: 0.4; cursor: default; }
+.pick-tabs button:focus-visible, .tried-btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.pick-hint { margin: -2px 0 10px; }
+.pick-wrap[data-show="expert"] .card:not([data-pick="expert"]),
+.pick-wrap[data-show="public"] .card:not([data-pick="public"]),
+.pick-wrap[data-show="profile"] .card:not([data-pick="profile"]) { display: none; }
+.card .src { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.pick { display: inline-block; font-size: 11.5px; font-weight: 800; padding: 2px 8px; border-radius: 5px; letter-spacing: 0.01em; }
+.pick.expert { background: #E9F3EA; color: #2F6B3A; }
+.pick.public { background: var(--food-soft); color: var(--food-ink); }
+.pick.profile { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+
+/* 먹어봤어요 — 회원 평가 */
+.tried { margin: 12px 0 0; padding-top: 11px; border-top: 1px dashed var(--line); }
+.tried-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.tried-q { font-size: 13px; font-weight: 700; color: var(--ink2); }
+.tried-sum { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tried-sum.loved { color: #2F6B3A; font-weight: 700; }
+.tried-sum.disliked { color: var(--food-ink); }
+.tried-btns { display: flex; gap: 6px; margin-top: 7px; }
+.tried-btn { flex: 0 1 96px; min-height: 38px; padding: 0 10px; white-space: nowrap; border-radius: 10px; border: 1px solid var(--line); background: var(--surface);
+  font: inherit; font-size: 13.5px; font-weight: 600; color: var(--ink2); cursor: pointer; }
+.tried-btn:hover { border-color: var(--muted); }
+.tried-btn:disabled { cursor: progress; }
+.tried-btn.good.on { background: #E9F3EA; border-color: #2F6B3A; color: #2F6B3A; }
+.tried-btn.ok.on { background: var(--navy-soft); border-color: var(--navy); color: var(--navy-ink); }
+.tried-btn.bad.on { background: var(--food-soft); border-color: var(--food-ink); color: var(--food-ink); }
+.tried-msg { margin: 6px 0 0; font-size: 12.5px; color: var(--food-ink); }
