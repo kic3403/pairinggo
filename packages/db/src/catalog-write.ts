@@ -28,6 +28,22 @@ export async function nextDrinkNumber(): Promise<number> {
   } finally { await sql.end(); }
 }
 
+/** 발행 — 어드민 발행과 같은 순서: 스냅샷 → counts → version. 웹은 최대 5분(카탈로그 캐시)+10분(ISR) 뒤 반영 */
+export async function publishCatalog(sql: ReturnType<typeof connect>, note: string) {
+  const [dr, fo, pa] = await Promise.all([
+    sql`select * from drinks order by id`, sql`select * from foods order by id`,
+    sql`select p.*, (select json_agg(e order by e.id) from pairing_evidence e where e.pairing_id = p.id) as evidence from pairings p where p.status in ('curated','ai') order by p.id`,
+  ]);
+  const ds = loadDatasetFromRows({ drinks: dr, foods: fo, pairings: pa, trend_meta: DATA.trend_meta, src_meta: DATA.src_meta, profile_meta: DATA.profile_meta });
+  const version = new Date().toISOString();
+  const counts = { drinks: ds.drinks.length, foods: ds.foods.length, pairings: ds.pairings.length };
+  await sql`insert into catalog_snapshots (version, counts, data, note) values (${version}, ${sql.json(counts)}, ${sql.json(JSON.parse(JSON.stringify(ds)))}, ${note})`;
+  await sql`insert into catalog_meta (key, value, updated_at) values ('counts', ${sql.json(counts)}, now()) on conflict (key) do update set value = excluded.value, updated_at = now()`;
+  await sql`insert into catalog_meta (key, value, updated_at) values ('version', ${sql.json(version)}, now()) on conflict (key) do update set value = excluded.value, updated_at = now()`;
+  console.log(`발행 — ${counts.drinks}종/${counts.pairings}조합 · version ${version} · ${note}`);
+  return counts;
+}
+
 export async function insertDrinks(drinks: DrinkInput[], note: string) {
   const sql = connect();
   try {
@@ -53,17 +69,8 @@ export async function insertDrinks(drinks: DrinkInput[], note: string) {
         }
       }
     });
-    const [dr, fo, pa] = await Promise.all([
-      sql`select * from drinks order by id`, sql`select * from foods order by id`,
-      sql`select p.*, (select json_agg(e order by e.id) from pairing_evidence e where e.pairing_id = p.id) as evidence from pairings p where p.status in ('curated','ai') order by p.id`,
-    ]);
-    const ds = loadDatasetFromRows({ drinks: dr, foods: fo, pairings: pa, trend_meta: DATA.trend_meta, src_meta: DATA.src_meta, profile_meta: DATA.profile_meta });
-    const version = new Date().toISOString();
-    const counts = { drinks: ds.drinks.length, foods: ds.foods.length, pairings: ds.pairings.length };
-    await sql`insert into catalog_snapshots (version, counts, data, note) values (${version}, ${sql.json(counts)}, ${sql.json(JSON.parse(JSON.stringify(ds)))}, ${note})`;
-    await sql`insert into catalog_meta (key, value, updated_at) values ('counts', ${sql.json(counts)}, now()) on conflict (key) do update set value = excluded.value, updated_at = now()`;
-    await sql`insert into catalog_meta (key, value, updated_at) values ('version', ${sql.json(version)}, now()) on conflict (key) do update set value = excluded.value, updated_at = now()`;
-    console.log(`DB 반영 — 술 +${drinks.length} · 페어링 +${pairs} · 근거 +${evidence} · 전체 ${counts.drinks}종/${counts.pairings}조합 · version ${version}`);
+    const counts = await publishCatalog(sql, note);
+    console.log(`DB 반영 — 술 +${drinks.length} · 페어링 +${pairs} · 근거 +${evidence} · 전체 ${counts.drinks}종/${counts.pairings}조합`);
   } finally {
     await sql.end();
   }

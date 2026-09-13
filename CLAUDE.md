@@ -36,6 +36,7 @@
 - 주류 경고문구·만 19세 안내는 전 페이지 공통 푸터. AI 생성 페어링은 `source: ai` 배지(Phase 9).
 - 모든 UI 텍스트 한국어. **미니앱은 모바일 고정 390px(최대 430px 중앙) — 데스크톱까지 넓히지 않는다**(그대로 앱이 된다). **공개 웹(`apps/web/(site)`)은 반응형**. 라이트·다크 모두 토큰으로.
 - 외부 링크는 실제로 열렸을 때만 퍼널 이벤트를 남긴다(실패는 `link_open_failed`). `buy_link_click`은 입점 제안 자료이자 `refresh_pairing_feedback` 입력이라 부풀리면 안 된다.
+- 페어링 순위 = 등급 → 근거 링크 있음(+3) → 점수(`pairing/score.ts`). 맛 프로필 점수(pf.s)는 카탈로그 전체 `profileFit` 백분위 한 눈금 — 술·페어링을 넣거나 맛 규칙을 바꾸면 `pnpm --filter @pairinggo/db pf-recalc` → `db:export`(docs/18 §1-1).
 - 검색·점수·유사도 로직은 packages/shared에만 두고 테스트를 먼저 쓴다. 컴포넌트에 계산 로직을 넣지 않는다.
 - 커밋은 기능 단위로 작게. 커밋 메시지는 한국어 요약 + 영어 scope 허용.
 

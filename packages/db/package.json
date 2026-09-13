@@ -23,7 +23,8 @@
     "blog-counts": "tsx src/blog-counts.ts",
     "shop-insight": "tsx src/shop-insight.ts",
     "lineup": "tsx src/lineup.ts",
-    "add-drinks": "tsx src/add-drinks.ts"
+    "add-drinks": "tsx src/add-drinks.ts",
+    "pf-recalc": "tsx src/pf-recalc.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

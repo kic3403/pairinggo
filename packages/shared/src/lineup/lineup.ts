@@ -261,6 +261,19 @@ export function profileFit(d: DrinkProfile, abv: number | null, f: FoodProfile):
   return { s, plus, minus };
 }
 
+/**
+ * 맛 궁합 원점수들을 백분위(0~100)로 — 카탈로그 전체가 한 눈금을 쓰게 한다(2026-09-13). 같은 값은 같은 백분위(중간값).
+ * 예) [10, 20, 20, 30] → [13, 50, 50, 88]
+ */
+export function calibrateFits(raws: number[]): number[] {
+  const sorted = [...raws].sort((a, b) => a - b);
+  const n = sorted.length;
+  if (!n) return [];
+  const lower = new Map<number, number>(), count = new Map<number, number>();
+  for (let i = 0; i < n; i++) { const v = sorted[i]; if (!lower.has(v)) lower.set(v, i); count.set(v, (count.get(v) ?? 0) + 1); }
+  return raws.map((v) => Math.round(((lower.get(v)! + (count.get(v)! - 1) / 2 + 0.5) / n) * 100));
+}
+
 /* ---------- 8. 흔한 이름 걸러내기 ---------- */
 
 /** 여러 양조장이 같은 이름으로 파는 전통 술 종류 이름 — 쇼핑 클릭이 한 제품 몫이 아니다 */

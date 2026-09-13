@@ -108,6 +108,33 @@ describe("종합 점수", () => {
     for (const id of Object.keys(D)) for (const s of scorePairings(byDrink[id] || [], (p) => F[p.f].category)) { expect(s.overall).toBeGreaterThanOrEqual(0); expect(s.overall).toBeLessThanOrEqual(100); }
     for (const id of Object.keys(F)) for (const s of scorePairings(byFood[id] || [], (p) => D[p.d].category)) { expect(s.overall).toBeGreaterThanOrEqual(0); expect(s.overall).toBeLessThanOrEqual(100); }
   });
+  it("근거 링크 보너스 +3 — 링크가 있어야 붙는다", () => {
+    const withEv = mk({ f: "e", ev: { source: "x", url: "https://example.com" } });
+    const noEv = mk({ f: "n", ev: { source: "x", url: null } });
+    const s = scorePairings([withEv, noEv]);
+    expect(s[0].p.f).toBe("e");
+    expect(s[0].base - s[1].base).toBe(3);
+    expect(s[0].parts.ev).toBe(3);
+    expect(explainOverall(s[0], "맛 프로필")).toContain("근거 +3");
+  });
+  it("같은 등급이면 점수가 낮아도 근거 조합이 맛 분석보다 앞 — 등급이 다르면 등급 순", () => {
+    const strongProfile = mk({ f: "p", es: 86, blog: 300, pf: { s: 70, plus: [], minus: [] } });   // 종합 35 (시도해 볼 만)
+    const weakEvidence = mk({ f: "e", es: 84, blog: 30, src: "blog", ev: { source: "x", url: "https://example.com" } });   // 종합 20 (시도해 볼 만)
+    const s = scorePairings([strongProfile, weakEvidence]);
+    expect(s.find((x) => x.p.f === "p")!.base).toBeGreaterThan(s.find((x) => x.p.f === "e")!.base);
+    expect(s[0].grade.key).toBe(s[1].grade.key);
+    expect(s[0].p.f).toBe("e");
+    const best = mk({ f: "b", es: 97, blog: 9000, pf: { s: 95, plus: [], minus: [] } });
+    expect(scorePairings([best, weakEvidence])[0].p.f).toBe("b");
+  });
+  it("실데이터: 어떤 음식 화면에서도 맛 분석이 같은 등급의 근거 조합 위에 오지 않는다 (2026-09-13 전엔 81곳 중 28곳)", () => {
+    let bad = 0;
+    for (const id of Object.keys(F)) {
+      const s = scorePairings(byFood[id] || [], (p) => D[p.d].category);
+      for (let i = 0; i < s.length; i++) if (!s[i].p.ev?.url) for (let j = i + 1; j < s.length; j++) if (s[j].p.ev?.url && s[j].grade.key === s[i].grade.key) { bad++; break; }
+    }
+    expect(bad).toBe(0);
+  });
   it("툴팁 문구", () => {
     const s = scorePairings([mk({ src: "official", blog: 1445 })])[0];
     expect(explainOverall(s, "양조장 공식")).toContain("언급 1,445건");

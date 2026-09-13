@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DATA } from "../../data";
-import { categoryOfKind, describeDrink, isGenericKeyword, keywordCore, drinkContextShare, judgeLineup, planPairings, nameStem, isNameVariant, categoryAffinity, estimateProfile, keywordParams, mainIngredients, matchFoods, profileFit, relativeInterest, shopKeyword } from "../lineup";
+import { categoryOfKind, describeDrink, isGenericKeyword, keywordCore, drinkContextShare, judgeLineup, planPairings, nameStem, isNameVariant, categoryAffinity, calibrateFits, estimateProfile, keywordParams, mainIngredients, matchFoods, profileFit, relativeInterest, shopKeyword } from "../lineup";
 
 describe("쇼핑 검색어", () => {
   it("용량·도수·괄호·세트·끝 숫자를 뗀다", () => {
@@ -298,5 +298,13 @@ describe("종류 친화도", () => {
       expect(p[0].reason).toContain("과실주");
     }
     expect(p.every((x) => x.reason.includes("맛 분석"))).toBe(true);
+  });
+});
+
+describe("맛 궁합 백분위", () => {
+  it("같은 값은 같은 백분위, 순서 유지", () => {
+    expect(calibrateFits([10, 20, 20, 30])).toEqual([13, 50, 50, 88]);
+    expect(calibrateFits([5])).toEqual([50]);
+    expect(calibrateFits([])).toEqual([]);
   });
 });
