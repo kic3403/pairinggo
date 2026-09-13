@@ -50,8 +50,11 @@ describe("등급 표시 — 숫자 대신 찰떡·잘 어울림·시도해 볼 �
     expect(adj.overall).toBe(adj.base - 5);
     expect(adj.grade.key).toBe(pairingGrade(adj.base).key);
   });
-  it("실데이터: 양조장 공식 추천의 대부분이 찰떡, 맛 프로필 추정의 대부분은 찰떡이 아니다", () => {
-    const official = DATA.pairings.filter((p) => p.src === "official");
+  it("실데이터: 검수된 양조장 공식 인용의 대부분이 찰떡, 맛 프로필 추정의 대부분은 찰떡이 아니다", () => {
+    // es 90 = 라인업 확장 때 양조장 등록 정보(더술닷컴)에서 가져온 추천 음식 — 인용문 검수를 거친 공식 추천(91~97)보다 한 단계 아래라 대부분 '잘 어울림'
+    const official = DATA.pairings.filter((p) => p.src === "official" && p.es >= 91);
+    const registered = DATA.pairings.filter((p) => p.src === "official" && p.es === 90);
+    expect(registered.filter((p) => pairingGrade(pairingScore(p)).key !== "try").length / registered.length).toBeGreaterThan(0.9);
     const profile = DATA.pairings.filter((p) => p.src === "profile");
     expect(official.filter((p) => pairingGrade(pairingScore(p)).key === "best").length / official.length).toBeGreaterThan(0.6);
     expect(profile.filter((p) => pairingGrade(pairingScore(p)).key === "best").length / profile.length).toBeLessThan(0.05);

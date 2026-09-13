@@ -40,7 +40,8 @@
 - 커밋은 기능 단위로 작게. 커밋 메시지는 한국어 요약 + 영어 scope 허용.
 
 ## 데이터
-- 원본: packages/shared/data/pairings.json (전통주 108 · 음식 110 · 페어링 851). 필드: drinks{id,name,alias,category,abv,region,brewery,desc,flavor[],profile{sweet,acid,body,fizz,aroma},awards[],buy{url,store},offline{},trend{},blog_anju,generic} · foods{id,name,category,tags[],profile{fat,spice,umami,salt,sweet,weight},alias[],trend{},new} · pairings{d,f,es,reason,blog,src,ev{source,url,quote,who},pf{s,plus[],minus[]}}
+- 원본: packages/shared/data/pairings.json (전통주 207 · 음식 110 · 페어링 1,710 — 2026-09-13 라인업 확장 +99종, docs/11 §5-4). DB가 원본이고 JSON은 `db:export`로 내보낸 번들.
+- 라인업 확장(`shop-insight`·`lineup`): 네이버 쇼핑 검색 API는 2026-07-31 종료, 스마트스토어 자동 수집은 약관 위반 → 쇼핑인사이트만. 새 술 설명은 사실로 새로 짓고(aT 원문 금지) 맛 프로필·맛 분석 페어링은 추정값. drinks.alias[0]은 짧은 이름(양조장 이름 넣지 않기). 필드: drinks{id,name,alias,category,abv,region,brewery,desc,flavor[],profile{sweet,acid,body,fizz,aroma},awards[],buy{url,store},offline{},trend{},blog_anju,generic} · foods{id,name,category,tags[],profile{fat,spice,umami,salt,sweet,weight},alias[],trend{},new} · pairings{d,f,es,reason,blog,src,ev{source,url,quote,who},pf{s,plus[],minus[]}}
 - 출처 등급 src: official(양조장 공식) > sommelier(소믈리에·명인) > media(전문 매체) > profile(맛 프로필)
 - 온라인 판매 불가 7종: d12 d13 d21 d32 d43 d52 d55
 
