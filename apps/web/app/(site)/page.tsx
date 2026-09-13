@@ -37,7 +37,12 @@ export default async function Home() {
           <li><b>{c.counts.foods}</b><span>음식·안주</span></li>
           <li><b>{c.counts.pairings.toLocaleString("ko-KR")}</b><span>페어링</span></li>
         </ul>
-        <HeroMarquee drinks={top.list} note={top.note} />
+        <HeroMarquee drinks={top.list} note={top.note} compared={top.compared} />
+        <Link href="/report" className="report-card">
+          <span className="rp-k">{new Date(Date.now() + 9 * 3600 * 1000).getUTCMonth() + 1}월 트렌드 리포트</span>
+          <span className="rp-t">많이 찾는 전통주 순위 변동 · 핫한 페어링 · 회원 평가 · 지역별 검색을 한 장으로</span>
+          <span className="rp-a">보기 →</span>
+        </Link>
         <QuickMenu michelinYear={awards.year} />
         <div className="btns" style={{ marginTop: 18 }}>
           <Link className="btn p" href="/drinks">전통주 둘러보기</Link>

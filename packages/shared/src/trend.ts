@@ -94,3 +94,29 @@ export function trendNote(res: TrendResult, today: string, windowDays = 30): str
   const from = new Date(Date.parse(today + "T00:00:00Z") - (windowDays - 1) * 86400000).toISOString().slice(0, 10);
   return `최근 ${windowDays}일(${from.slice(5).replace("-", "/")}~${today.slice(5).replace("-", "/")}) ${used.join("·")} 언급량 — 채널별 최다 언급을 100점으로 맞춰 평균. 매일 00:00 갱신.`;
 }
+
+/* ---------- 급상승 (2026-09-14, docs/19 A3) ---------- */
+
+/**
+ * 오늘 순위에 일주일 전 순위를 붙인다 — prev는 7일 전을 today로 두고 같은 규칙으로 계산한 결과.
+ * delta = prev_rank − rank (양수 = 상승). 일주일 전에 순위가 없던 술은 prev_rank null(화면에서 NEW).
+ */
+export function attachRankDelta(cur: Record<string, Trend>, prev: Record<string, Trend>): Record<string, Trend> {
+  const out: Record<string, Trend> = {};
+  for (const [id, t] of Object.entries(cur)) {
+    const p = prev[id]?.rank ?? null;
+    out[id] = t.rank ? { ...t, prev_rank: p, delta: p == null ? null : p - t.rank } : { ...t, prev_rank: p, delta: null };
+  }
+  return out;
+}
+
+export type DeltaBadge = { kind: "up" | "down" | "same" | "new"; label: string } | null;
+/** 배너·순위 표시용 — compared=false(비교 기준이 아직 없음)면 아무것도 표시하지 않는다 */
+export function deltaBadge(t: Trend | undefined, compared: boolean): DeltaBadge {
+  if (!compared || !t?.rank) return null;
+  if (t.prev_rank == null) return { kind: "new", label: "NEW" };
+  const d = t.delta ?? 0;
+  if (d > 0) return { kind: "up", label: `▲${d}` };
+  if (d < 0) return { kind: "down", label: `▼${-d}` };
+  return { kind: "same", label: "–" };
+}

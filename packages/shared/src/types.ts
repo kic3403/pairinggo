@@ -3,6 +3,8 @@
 export type Trend = {
   naver: number | null; insta: number | null; youtube: number | null; google: number | null;
   score: number; channels: number; rank?: number;
+  /** 일주일 전 순위(같은 규칙으로 7일 전 기준 계산)와 변동(prev_rank − rank, +면 상승). prev_rank가 null이면 그때는 순위 밖·미집계(NEW) */
+  prev_rank?: number | null; delta?: number | null;
   raw?: Record<string, number | null>;
 };
 
@@ -52,7 +54,7 @@ export type ProfileMeta = {
 
 export type Dataset = {
   drinks: Drink[]; foods: Food[]; pairings: Pairing[];
-  trend_meta?: { period: string; collected: string; note: string };
+  trend_meta?: { period: string; collected: string; note: string; compared_to?: string | null };
   src_meta?: Record<string, unknown>;
   profile_meta?: ProfileMeta;
 };

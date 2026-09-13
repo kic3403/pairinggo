@@ -5,8 +5,10 @@
  */
 import type { Dataset, Drink } from "@pairinggo/shared";
 
-export function topDrinks(ds: Dataset, n = 10): { list: Drink[]; note: string } {
+export function topDrinks(ds: Dataset, n = 10): { list: Drink[]; note: string; compared: boolean } {
   const list = ds.drinks.filter((d) => d.trend?.rank).sort((a, b) => a.trend!.rank! - b.trend!.rank!).slice(0, n);
   const note = (ds.trend_meta?.note || "").replace(/<[^>]+>/g, "");
-  return { list, note };
+  // 급상승 ▲▼는 일주일 전 순위(크론이 함께 계산)가 있을 때만 — 없으면 배지 없이
+  const compared = !!ds.trend_meta?.compared_to;
+  return { list, note, compared };
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { isDrinkMention, scoreMentions, trendNote, type MentionRow } from "../trend";
+import { attachRankDelta, deltaBadge, isDrinkMention, scoreMentions, trendNote, type MentionRow } from "../trend";
+import type { Trend } from "../types";
 
 describe("isDrinkMention — 요일·사람 이름과 겹치는 글 거르기", () => {
   const hwayo = ["화요", "화요 41"];
@@ -66,5 +67,23 @@ describe("scoreMentions — 채널별 100점 정규화 후 평균", () => {
     expect(note).toContain("유튜브·네이버 블로그");
     expect(note).not.toContain("인스타그램");
     expect(note).toContain("08/14~09/12");
+  });
+});
+
+describe("급상승 — 일주일 전 순위와 비교", () => {
+  const t = (rank?: number): Trend => ({ naver: 1, insta: null, youtube: null, google: null, score: 1, channels: 1, rank });
+  it("delta = 지난주 순위 − 이번 주 순위, 지난주에 없던 술은 null", () => {
+    const r = attachRankDelta({ a: t(1), b: t(2), c: t(3) }, { a: t(3), b: t(2) });
+    expect(r.a).toMatchObject({ prev_rank: 3, delta: 2 });
+    expect(r.b).toMatchObject({ prev_rank: 2, delta: 0 });
+    expect(r.c).toMatchObject({ prev_rank: null, delta: null });
+  });
+  it("배지 — 비교 기준이 없으면 표시 안 함, 있으면 ▲▼–NEW", () => {
+    expect(deltaBadge({ ...t(1), prev_rank: 4, delta: 3 }, false)).toBeNull();
+    expect(deltaBadge({ ...t(1), prev_rank: 4, delta: 3 }, true)).toEqual({ kind: "up", label: "▲3" });
+    expect(deltaBadge({ ...t(5), prev_rank: 2, delta: -3 }, true)).toEqual({ kind: "down", label: "▼3" });
+    expect(deltaBadge({ ...t(2), prev_rank: 2, delta: 0 }, true)).toEqual({ kind: "same", label: "–" });
+    expect(deltaBadge({ ...t(2), prev_rank: null, delta: null }, true)).toEqual({ kind: "new", label: "NEW" });
+    expect(deltaBadge(undefined, true)).toBeNull();
   });
 });

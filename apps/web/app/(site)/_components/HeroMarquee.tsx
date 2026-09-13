@@ -3,11 +3,12 @@
  * 사진이 있으면 사진, 없으면 카테고리 색 타일(병 실루엣 + 이름). 마우스를 올리면 멈추고, 움직임 줄이기 설정이면 정지.
  */
 import Link from "next/link";
-import { toSlug, type Drink } from "@pairinggo/shared";
+import { deltaBadge, toSlug, type Drink } from "@pairinggo/shared";
 
 const TONE: Record<string, string> = { 탁주: "tone-tak", 약주: "tone-yak", 청주: "tone-yak", 증류주: "tone-so", 리큐르: "tone-li", 과실주: "tone-fr" };
 
-function Tile({ d, rank }: { d: Drink; rank: number }) {
+function Tile({ d, rank, compared }: { d: Drink; rank: number; compared: boolean }) {
+  const badge = deltaBadge(d.trend, compared);
   return (
     <Link href={`/drinks/${toSlug(d.name)}`} className={`mq-tile ${TONE[d.category] || "tone-etc"}`} aria-label={`${rank}위 ${d.name}`}>
       {d.image?.url ? (
@@ -19,23 +20,24 @@ function Tile({ d, rank }: { d: Drink; rank: number }) {
         </svg>
       )}
       <span className="rank">{rank}</span>
+      {badge && <span className={`dl ${badge.kind}`} title={badge.kind === "new" ? "지난주 순위 밖" : `지난주 ${d.trend?.prev_rank}위`}>{badge.label}</span>}
       <span className="nm">{d.name}</span>
       <span className="ct">{d.category}{d.abv != null ? ` · ${d.abv}%` : ""}</span>
     </Link>
   );
 }
 
-export default function HeroMarquee({ drinks, note }: { drinks: Drink[]; note: string }) {
+export default function HeroMarquee({ drinks, note, compared = false }: { drinks: Drink[]; note: string; compared?: boolean }) {
   if (!drinks.length) return null;
   const items = drinks.slice(0, 10);
   return (
     <section className="marquee" aria-label="요즘 많이 찾는 전통주">
-      <div className="mq-head"><b>요즘 많이 찾는 전통주 10</b><span className="muted small">{note}</span></div>
+      <div className="mq-head"><b>요즘 많이 찾는 전통주 10</b><span className="muted small">{note}{compared ? " ▲▼는 지난주 순위 대비." : ""}</span></div>
       <div className="mq-viewport">
         {/* 같은 목록을 두 번 이어 붙여 끊김 없이 돈다 — 두 번째는 보조기기에서 숨긴다 */}
         <div className="mq-track">
-          {items.map((d, i) => <Tile key={d.id} d={d} rank={i + 1} />)}
-          {items.map((d, i) => <span key={"dup" + d.id} aria-hidden><Tile d={d} rank={i + 1} /></span>)}
+          {items.map((d, i) => <Tile key={d.id} d={d} rank={i + 1} compared={compared} />)}
+          {items.map((d, i) => <span key={"dup" + d.id} aria-hidden><Tile d={d} rank={i + 1} compared={compared} /></span>)}
         </div>
       </div>
     </section>

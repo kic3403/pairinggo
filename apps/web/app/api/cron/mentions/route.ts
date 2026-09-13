@@ -5,7 +5,7 @@
  * 흐름: 수집 → drink_mentions_daily 저장 → 최근 7일 기록으로 점수·순위(shared trend.ts) → drinks.trend·catalog_meta.trend_meta 갱신
  *       → 상위 20 순서가 바뀌었으면 카탈로그 발행(앱도 다음 실행 때 받는다).
  */
-import { MENTION_CHANNELS, scoreMentions, trendNote, type Drink, type MentionChannel, type MentionRow } from "@pairinggo/shared";
+import { MENTION_CHANNELS, attachRankDelta, scoreMentions, trendNote, type Drink, type MentionChannel, type MentionRow } from "@pairinggo/shared";
 import { publish } from "@/lib/admin-data";
 import { getCatalog, invalidateCatalog } from "@/lib/catalog";
 import { db } from "@/lib/db";
@@ -38,7 +38,9 @@ export async function GET(req: Request) {
   const drinks = c.dataset.drinks.filter((d) => !d.generic);   // 일반 명사와 겹치는 이름은 세지 않는다
 
   // 최근 기록 — 회전 대상 고르기(backfill)와 점수 계산에 함께 쓴다
-  const since = new Date(Date.parse(today + "T00:00:00Z") - LOOKBACK * 86400000).toISOString().slice(0, 10);
+  // 급상승 비교용으로 일주일 전 기준 창(7+LOOKBACK일)까지 받는다
+  const weekAgo = new Date(Date.parse(today + "T00:00:00Z") - 7 * 86400000).toISOString().slice(0, 10);
+  const since = new Date(Date.parse(today + "T00:00:00Z") - (7 + LOOKBACK) * 86400000).toISOString().slice(0, 10);
   const prev = await sb.from("drink_mentions_daily").select("day,drink_id,channel,count").gte("day", since);
   if (prev.error) return error(req, 500, prev.error.message);
   const prevRows: MentionRow[] = (prev.data || []).map((r) => ({ day: String(r.day), drinkId: r.drink_id, channel: r.channel as MentionChannel, count: r.count }));
@@ -79,6 +81,10 @@ export async function GET(req: Request) {
   // 점수·순위 — 오늘 수집분 + 최근 기록
   const rows: MentionRow[] = [...prevRows.filter((r) => r.day !== today || !collected.some((x) => x.drinkId === r.drinkId && x.channel === r.channel)), ...collected.map((r) => ({ day: today, drinkId: r.drinkId, channel: r.channel, count: r.count }))];
   const res = scoreMentions(rows, { today, lookbackDays: LOOKBACK, drinkIds: drinks.map((d) => d.id) });
+  // 일주일 전 순위(같은 규칙, 7일 전을 오늘로) → 급상승 ▲▼
+  const prevRes = scoreMentions(prevRows, { today: weekAgo, lookbackDays: LOOKBACK, drinkIds: drinks.map((d) => d.id) });
+  const compared = Object.values(prevRes.trend).some((t) => t.rank);
+  res.trend = attachRankDelta(res.trend, compared ? prevRes.trend : {});
   const note = trendNote(res, today, WINDOW_DAYS);
   const ranked = Object.entries(res.trend).filter(([, t]) => t.rank).sort((a, b) => a[1].rank! - b[1].rank!);
   const top = ranked.slice(0, 20).map(([id, t]) => ({ id, name: c.dataset.drinks.find((d) => d.id === id)?.name, score: t.score, rank: t.rank, raw: t.raw }));
@@ -96,7 +102,7 @@ export async function GET(req: Request) {
       if (e) { failed++; if (failed <= 3) log.push(`drinks.trend ${id}: ${e.message}`); }
     }));
   }
-  const meta = await sb.from("catalog_meta").upsert({ key: "trend_meta", value: { period: `최근 ${WINDOW_DAYS}일`, collected: today, note, channels: res.channels }, updated_at: new Date().toISOString() });
+  const meta = await sb.from("catalog_meta").upsert({ key: "trend_meta", value: { period: `최근 ${WINDOW_DAYS}일`, collected: today, note, channels: res.channels, compared_to: compared ? weekAgo : null }, updated_at: new Date().toISOString() });
   if (meta.error) log.push(`trend_meta: ${meta.error.message}`);
 
   // 상위 20 순서가 바뀌었으면 발행 → 미니앱도 다음 실행 때 새 순위를 받는다
