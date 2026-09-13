@@ -15,7 +15,7 @@ export type DrinkInput = {
   alias: string | null;
   category: string; abv: number; region: string; brewery: string; desc: string; flavor: string[]; profile: DrinkProfile; awards: string[];
   buy?: { url: string; store: string } | null;
-  offline?: { place: string; address: string; phone: string | null; visit: boolean; note: string } | null;
+  offline?: { place: string | null; address: string; phone: string | null; visit: boolean | null; note: string } | null;
   pairings: PairingInput[];
 };
 

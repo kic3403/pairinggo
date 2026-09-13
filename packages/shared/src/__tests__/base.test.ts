@@ -6,10 +6,10 @@ import { estimateRegion, REGIONS, RBY, subRegions, fullLabel } from "../regions"
 import { similarDrinks, similarFoods, profileDistance } from "../similarity";
 
 describe("데이터 무결성", () => {
-  it("전통주 214 · 음식 110 · 페어링 1,766 (2026-09-13 라인업 확장 +99종, 백경증류소 +7종)", () => {
-    expect(DATA.drinks).toHaveLength(214);
+  it("전통주 217 · 음식 110 · 페어링 1,790 (2026-09-13 라인업 확장 +99종, 백경증류소 +7종, 한증류소 +3종)", () => {
+    expect(DATA.drinks).toHaveLength(217);
     expect(DATA.foods).toHaveLength(110);
-    expect(DATA.pairings).toHaveLength(1766);
+    expect(DATA.pairings).toHaveLength(1790);
   });
   it("모든 페어링이 존재하는 술·음식을 가리킨다", () => {
     for (const p of DATA.pairings) { expect(D[p.d], p.d).toBeDefined(); expect(F[p.f], p.f).toBeDefined(); }

@@ -1,0 +1,41 @@
+{
+ "brewery": "한증류소",
+ "checked_at": "2026-09-13",
+ "sources": [
+  { "name": "감싸주는날 붉은말 Limited edition 시음기 — 기존 감싸주는날에 홍미 술 블렌딩, 100일 숙성", "url": "https://blog.naver.com/happy-luna/224284664303" },
+  { "name": "붉은말 리미티드 에디션 — 2026 붉은 말의 해, 직접 재배한 쌀과 밀, 지역특산주", "url": "https://blog.naver.com/ireulzim/224286078992" },
+  { "name": "붉은말 에디션 시음 — 16%, 짙은 색, 녹진함, 은근한 달큰함", "url": "https://blog.naver.com/achim03/224281742339" },
+  { "name": "두레박(현 한증류소) 제품 구성 — 감싸주는날·소곡화주 낯꽃(41% 증류식 소주)", "url": "https://blog.naver.com/ilovebbs/224118542528" },
+  { "name": "낯꽃 테이스팅 노트 — 국화향", "url": "https://blog.naver.com/emptyh/223736823063" },
+  { "name": "2026 서울국제주류박람회 — 낯꽃·낯꽃 싱글캐스크: 고소한 곡물·견과류·숯향·생밤 향", "url": "https://blog.naver.com/sjmhunter/224322595933" },
+  { "name": "2026 서울바앤스피릿쇼 — 낯꽃 오크 55도: 강렬한 고소함·구운 보리", "url": "https://blog.naver.com/starmoni/224358588577" }
+ ],
+ "buy": { "url": "https://smartstore.naver.com/nanal1992", "store": "양조장 공식 스토어(나날1992)" },
+ "offline": { "place": null, "address": "충청남도 서천군 한산면 충절로 1154", "phone": "041-951-0073", "visit": null, "note": "개인 방문 현장 판매 여부는 확인되지 않음 — 한산소곡주갤러리(서천) 또는 전화 문의" },
+ "drinks": [
+  {
+   "name": "감싸주는날 붉은말 리미티드 에디션", "alias": "감싸주는날 붉은말", "category": "약주", "abv": 16, "region": "충남 서천",
+   "desc": "한증류소가 2026년 붉은 말의 해에 맞춰 낸 한정판 한산소곡주. 기존 감싸주는날에 홍미(붉은 찹쌀)로 빚은 술을 블렌딩해 100일 숙성했고, 색이 짙고 단맛과 질감이 더 진합니다.",
+   "flavor": ["진한 단맛", "진득함", "부드러운 목넘김"],
+   "profile": { "sweet": 4, "acid": 2, "body": 4, "fizz": 1, "aroma": 4 },
+   "evidence": []
+  },
+  {
+   "name": "소곡화주 낯꽃", "alias": "낯꽃", "category": "증류주", "abv": 41, "region": "충남 서천",
+   "desc": "한산소곡주를 증류한 41도 증류식 소주(나날 브랜드). 감미료 없이 은은한 국화 향과 고소한 곡물·견과류 풍미가 나고, 도수에 비해 목넘김이 부드럽습니다.",
+   "flavor": ["국화향", "곡물 풍미", "부드러운 목넘김"],
+   "profile": { "sweet": 2, "acid": 1, "body": 3, "fizz": 1, "aroma": 4 },
+   "evidence": [
+    { "food": "부각", "es": 84, "src": "blog", "reason": "깔끔한 증류주에 바삭하고 고소한 부각을 곁들인 시음 후기가 있는 조합입니다.",
+      "items": [ { "source": "네이버 블로그 시음기", "url": "https://blog.naver.com/yoojooyj/223188100672", "quote": "왠지 바삭한 게 먹고파서 부각을 준비했어요", "who": null, "tier": "blog" } ] }
+   ]
+  },
+  {
+   "name": "낯꽃 오크 55", "alias": "낯꽃 오크", "category": "증류주", "abv": 55, "region": "충남 서천",
+   "desc": "소곡화주 낯꽃을 오크통에 숙성한 55도 고도수 증류주. 낯꽃의 곡물 고소함에 구운 보리·토스트 같은 오크 숙성 향이 더해져 강렬합니다.",
+   "flavor": ["오크", "구운 곡물향", "높은 도수"],
+   "profile": { "sweet": 2, "acid": 1, "body": 5, "fizz": 1, "aroma": 5 },
+   "evidence": []
+  }
+ ]
+}
