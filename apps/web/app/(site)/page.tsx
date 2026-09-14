@@ -15,9 +15,11 @@ import { getCatalog } from "@/lib/catalog";
 export const revalidate = 600;
 
 export const metadata: Metadata = {
-  title: "페어링GO — 전통주와 어울리는 안주, 근거와 함께",
+  // 링크 공유(카카오톡·문자) 미리보기 문구 — 2026-09-14 사용자 결정. openGraph를 함께 둬야 카카오가 이 문구를 쓴다
+  title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?",
   description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 찾아 줍니다. 양조장·소믈리에·전문 매체의 근거를 함께 보여 줍니다.",
   alternates: { canonical: "/" },
+  openGraph: { title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?", description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 찾아 줍니다.", url: "/", siteName: "페어링GO", type: "website" },
 };
 
 export default async function Home() {
