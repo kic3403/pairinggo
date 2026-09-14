@@ -15,6 +15,8 @@ export type Place = {
   placeUrl: string | null;
   /** 수상 배지(미쉐린 등) — 서버가 restaurant_awards와 대조해 붙인다. 없으면 undefined */
   award?: import("./awards").AwardBadge | null;
+  /** 구글 지도 평점 — 서버가 place_ratings 캐시·Places API로 붙인다. 없으면 undefined */
+  rating?: import("./place-rating").PlaceRating | null;
 };
 
 /** 음식 이름 → 카카오 키워드. 검색이 안 되거나 엉뚱한 곳이 나오는 이름만 예외로 */

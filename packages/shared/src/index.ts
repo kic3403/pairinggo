@@ -18,6 +18,7 @@ export * from "./places";
 export * from "./slug";
 export * from "./trend";
 export * from "./awards";
+export * from "./place-rating";
 export * from "./profile";
 export * from "./session";
 export * from "./consent";

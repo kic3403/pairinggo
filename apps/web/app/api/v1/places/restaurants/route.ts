@@ -2,6 +2,7 @@ import { placeQuery, RBY, D as _D } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { loadAwards } from "@/lib/awards";
+import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
 import { matchAward } from "@pairinggo/shared";
 import { error, json, preflight } from "@/lib/http";
 
@@ -12,6 +13,7 @@ void _D;
 /**
  * GET /api/v1/places/restaurants?food=육회&lat=&lng=&radius=3000&region=hongdae&sort=distance
  * 카카오 로컬(음식점 FD6). 좌표가 있으면 반경·거리순, 없으면 관심지역 좌표(REGIONS) 또는 지역어+정확도순.
+ * 앞 12곳에는 구글 지도 평점(lib/google-places.ts, 30일 캐시)을 붙인다 — 응답 ratingSource: "google" | null.
  */
 export async function GET(req: Request) {
   if (!rateLimit(req, 30)) return error(req, 429, "요청이 너무 많아요. 잠시 후 다시 시도해 주세요");
@@ -42,7 +44,8 @@ export async function GET(req: Request) {
     // 미쉐린 배지 — 이름+좌표 대조(packages/shared/awards.ts). 표가 비어 있으면 그대로
     const aw = await loadAwards();
     if (aw.list.length) places = places.map((p) => ({ ...p, award: matchAward(p, aw.list) }));
-    return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year }, { headers: CACHE });
+    places = await attachRatings(places);
+    return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
     console.error("[places/restaurants]", (e as Error).message);
     return json(req, { food, query, center: null, places: [], total: 0, source: "none", error: "검색 실패" }, { headers: { "Cache-Control": "no-store" } });
