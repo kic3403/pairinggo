@@ -19,7 +19,8 @@ export const metadata: Metadata = {
   title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?",
   description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 찾아 줍니다. 양조장·소믈리에·전문 매체의 근거를 함께 보여 줍니다.",
   alternates: { canonical: "/" },
-  openGraph: { title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?", description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 찾아 줍니다.", url: "/", siteName: "페어링GO", type: "website" },
+  // images: 홈은 openGraph를 직접 적어 두어서 app/opengraph-image.tsx가 자동으로 붙지 않는다 — 명시(카톡 미리보기 그림)
+  openGraph: { title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?", description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 찾아 줍니다.", url: "/", siteName: "페어링GO", type: "website", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "페어링GO" }] },
 };
 
 export default async function Home() {
