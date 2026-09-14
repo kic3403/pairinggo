@@ -487,3 +487,7 @@ p { margin: 0 0 12px; }
 .social-google { background: #fff; color: #1F1F1F; border-color: #747775; font-weight: 500; }
 .social-btn:hover { filter: brightness(0.97); }
 .form-hint { display: block; margin-top: 5px; font-style: normal; color: var(--food-ink); }
+/* 섹션 제목 옆 작은 버튼(주변 맛집·판매점의 다시 찾기·닫기) */
+.sec-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 34px 0 12px; }
+.sec-head h2 { margin: 0; }
+.btn.xs { min-height: 30px; padding: 0 11px; font-size: 13px; border-radius: 8px; }

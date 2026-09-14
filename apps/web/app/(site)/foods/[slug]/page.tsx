@@ -60,7 +60,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
       </div>
 
       <div className="btns">
-        <ExtLink className="btn f" href={naverMapUrl(`${food.name} 맛집`)} event="restaurant_link_click" props={{ f: food.id, kind: "naver_map" }}>{food.name} 맛집 찾기 ↗</ExtLink>
+        <ExtLink className="btn f" href={naverMapUrl(`${food.name} 맛집`)} event="restaurant_link_click" props={{ f: food.id, kind: "naver_map" }}>내 주변 {food.name} 맛집 찾기 ↗</ExtLink>
         <Heart kind="food" id={food.id} name={food.name} variant="button" />
       </div>
 

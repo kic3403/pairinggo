@@ -28,7 +28,8 @@ export default function NearbyPlaces(props: Props) {
   const hydrated = useHydrated();
   // 하이드레이션 중에는 서버와 같은 화면(전국) — 관심지역 버튼은 그 뒤에 나타난다
   const rg = hydrated ? rg0 : { ...rg0, id: "all", region: null, label: "전국", gps: null };
-  const [state, setState] = useState<"idle" | "loading" | "done" | "denied">("idle");
+  // closed: 결과를 본 뒤 "닫기" — 제목과 "열기"만 남긴다(아래 페어링 목록으로 빨리 내려가게)
+  const [state, setState] = useState<"idle" | "loading" | "done" | "denied" | "closed">("idle");
   const [res, setRes] = useState<Res | null>(null);
   const [where, setWhere] = useState<string>("");
   // 결과를 보는 중에 관심지역을 바꾸면(상세 화면에서는 시트가 그 자리에 남는다) 처음 화면으로 돌아가 새 지역 버튼을 보여 준다
@@ -100,7 +101,16 @@ export default function NearbyPlaces(props: Props) {
 
   return (
     <section id="places">
-      <h2>{title}</h2>
+      <div className="sec-head">
+        <h2>{title}</h2>
+        {state === "done" && (
+          <>
+            <button type="button" className="btn xs" onClick={() => { setState("idle"); setRes(null); }}>다시 찾기</button>
+            <button type="button" className="btn xs" onClick={() => setState("closed")}>닫기</button>
+          </>
+        )}
+        {state === "closed" && <button type="button" className="btn xs" onClick={() => { setState("idle"); setRes(null); }}>열기</button>}
+      </div>
       {state === "idle" && (
         <>
           <p className="small muted" style={{ marginTop: -6 }}>{hint}</p>
@@ -143,7 +153,6 @@ export default function NearbyPlaces(props: Props) {
           </>
         ) : <p className="muted">{res.source === "none" ? "장소 검색을 쓸 수 없어요." : "결과가 없어요. 다른 지역으로 찾아보세요."}</p>
       )}
-      {state === "done" && <div className="btns"><button className="btn" onClick={() => { setState("idle"); setRes(null); }}>다시 찾기</button></div>}
     </section>
   );
 }
