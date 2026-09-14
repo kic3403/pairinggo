@@ -3,18 +3,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
-import { PROVIDER_LABEL, enabledProviders, signIn } from "@/auth";
+import { enabledProviders, signIn } from "@/auth";
+import SocialButton from "../_components/SocialButton";
 import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "로그인 | 페어링GO", robots: { index: false } };
-
-const STYLE: Record<string, { bg: string; fg: string; border?: string }> = {
-  kakao: { bg: "#FEE500", fg: "#191600" },
-  naver: { bg: "#03C75A", fg: "#fff" },
-  google: { bg: "#fff", fg: "#1F1E1C", border: "var(--line)" },
-};
 
 /** 내부 경로만 허용 — 오픈 리다이렉트 방지 */
 const safeNext = (v?: string) => (v && v.startsWith("/") && !v.startsWith("//") ? v : "/my");
@@ -62,9 +57,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <div style={{ display: "grid", gap: 10 }}>
             {social.map((p) => (
               <form key={p} action={async () => { "use server"; await signIn(p, { redirectTo: next }); }}>
-                <button type="submit" className="btn" style={{ width: "100%", background: STYLE[p].bg, color: STYLE[p].fg, borderColor: STYLE[p].border ?? STYLE[p].bg }}>
-                  {PROVIDER_LABEL[p]}로 계속하기
-                </button>
+                <SocialButton provider={p} />
               </form>
             ))}
           </div>

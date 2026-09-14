@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
-import { PROVIDER_LABEL, enabledProviders, signIn } from "@/auth";
+import { enabledProviders, signIn } from "@/auth";
+import SocialButton from "../_components/SocialButton";
 import { signUpWithEmail } from "@/lib/account";
 import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
@@ -79,7 +80,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
           <div style={{ display: "grid", gap: 10 }}>
             {social.map((p) => (
               <form key={p} action={async () => { "use server"; await signIn(p, { redirectTo: next }); }}>
-                <button type="submit" className="btn" style={{ width: "100%" }}>{PROVIDER_LABEL[p]}로 계속하기</button>
+                <SocialButton provider={p} />
               </form>
             ))}
           </div>

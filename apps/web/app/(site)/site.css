@@ -476,3 +476,13 @@ p { margin: 0 0 12px; }
 .btn.danger { background: var(--food-ink); border-color: var(--food-ink); color: #fff; }
 .site-foot .legal-links { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 10px; }
 .site-foot .legal-links a { color: var(--ink2); text-decoration: none; }
+
+/* 간편로그인 버튼 — 색·심볼은 각 회사 가이드 고정값(다크 모드에서도 바꾸지 않는다). _components/SocialButton.tsx */
+.social-btn { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; padding: 0 48px;
+  border: 1px solid transparent; border-radius: 12px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+.social-btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.social-sym { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); display: flex; }
+.social-kakao { background: #FEE500; color: rgba(0, 0, 0, 0.85); }
+.social-naver { background: #03C75A; color: #fff; }
+.social-google { background: #fff; color: #1F1F1F; border-color: #747775; font-weight: 500; }
+.social-btn:hover { filter: brightness(0.97); }
