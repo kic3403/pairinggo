@@ -11,6 +11,7 @@ export * from "./pairing/pick";
 export * from "./pairing/ratings";
 export * from "./pairing/member";
 export * from "./pairing/summary";
+export * from "./pairing/tried-suggest";
 export * from "./browse";
 export * from "./schemas";
 export * from "./rows";

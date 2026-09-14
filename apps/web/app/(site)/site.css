@@ -560,3 +560,13 @@ p { margin: 0 0 12px; }
 .share-msg { font-size: 12.5px; color: var(--navy); }
 .pk-foot .share-wrap { margin-left: auto; margin-right: 8px; }
 .pk-foot .share-wrap .btn.xs { min-height: 28px; padding: 0 8px; }
+
+/* 마이페이지 먹어봤나요? 카드(TriedCard) */
+.tried-card { margin: 18px 0 6px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.tried-card .section-head h2 { font-size: 17px; margin: 0; }
+.tried-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tried-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 8px 0; border-top: 1px dashed var(--line); }
+.tried-list .pair { font-weight: 700; }
+.tried-list .pair .x { margin: 0 6px; color: var(--muted); }
+.tried-list .tried-btns { display: flex; gap: 6px; }
+.tried-thanks { color: var(--navy); font-weight: 600; }

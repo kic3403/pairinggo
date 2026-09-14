@@ -2,11 +2,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { D, F, byDrink, byFood, toSlug } from "@pairinggo/shared";
+import { D, F, byDrink, byFood, scorePairings, suggestTried, toSlug } from "@pairinggo/shared";
 import { auth, signOut } from "@/auth";
 import { getCatalog } from "@/lib/catalog";
 import { KIND_LABEL, SAVED_KINDS, listSaved, type SavedKind } from "@/lib/saved";
-import { getProfile } from "@/lib/account";
+import { getProfile, referralInfo } from "@/lib/account";
+import { myRatings } from "@/lib/ratings";
+import TriedCard from "../_components/TriedCard";
 import { myPicks } from "@/lib/member-picks";
 import { memberPickStatusText } from "@pairinggo/shared";
 import { ageBand } from "@pairinggo/shared";
@@ -24,7 +26,12 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
   const tab = (SAVED_KINDS as string[]).includes(sp.tab || "") ? (sp.tab as SavedKind) : "drink";
 
   await getCatalog();
-  const [rows, profile, picks] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => [])]);
+  const [rows, profile, picks, rated, referral] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => []), myRatings(uid).catch(() => new Set<string>()), referralInfo(uid).catch(() => ({ invited: 0, referred: false }))]);
+  // 먹어봤나요? — 저장한 술·음식으로 아직 평가하지 않은 조합 3개(docs/20 P1-1). 정렬은 상세 화면과 같은 규칙
+  const tried = suggestTried({
+    savedDrinks: rows.filter((r) => r.kind === "drink").map((r) => r.item_id), savedFoods: rows.filter((r) => r.kind === "food").map((r) => r.item_id),
+    rated, byDrink, byFood, rank: (p) => scorePairings(p, (x) => D[x.d]?.category || "").map((s) => s.p),
+  }).map((t) => ({ ...t, drink: D[t.d]?.name ?? t.d, food: F[t.f]?.name ?? t.f }));
   const count = (k: SavedKind) => rows.filter((r) => r.kind === k).length;
   const current = rows.filter((r) => r.kind === tab);
 
@@ -37,10 +44,13 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
         <span>{session.user?.email || "간편로그인"}</span>
         {profile?.complete && <><span className="muted"> · </span><span>{profile.gender === "m" ? "남" : "여"} · {ageBand(profile.birthDate!)} · {profile.sido}</span></>}
         <span className="muted"> · </span><Link href="/profile">{profile?.complete ? "프로필 수정" : "프로필 채우기"}</Link>
+        {referral.invited > 0 && <><span className="muted"> · </span><span>초대한 친구 <b>{referral.invited}</b>명</span></>}
       </div>
       {profile && !profile.complete && (
         <p className="form-error" style={{ marginTop: 10 }}>성별·생년월일·사는 곳이 아직 없습니다. <Link href="/profile">프로필 채우기 →</Link></p>
       )}
+
+      <TriedCard items={tried} />
 
       <ul className="tabs">
         {SAVED_KINDS.map((k) => (

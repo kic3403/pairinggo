@@ -29,6 +29,13 @@ export async function ratingsFor(subject: { drink?: string; food?: string }, use
   return { counts, mine };
 }
 
+/** 내가 평가한 조합 "d|f" 목록 — 마이페이지 "먹어봤나요?"에서 이미 평가한 조합을 뺀다 */
+export async function myRatings(userId: string): Promise<Set<string>> {
+  const sb = db(); if (!sb) return new Set();
+  const { data } = await sb.from("pairing_ratings").select("drink_id,food_id").eq("user_id", userId).limit(2000);
+  return new Set(((data ?? []) as { drink_id: string; food_id: string }[]).map((r) => `${r.drink_id}|${r.food_id}`));
+}
+
 /** 내 평가 저장(같은 조합이면 덮어씀). rating이 null이면 지운다 */
 export async function setRating(userId: string, drinkId: string, foodId: string, rating: RatingValue | null) {
   const sb = need();
