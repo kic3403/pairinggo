@@ -2,7 +2,7 @@
 /**
  * 페어링GO 링크 상태 점검
  *   - 술 구매 링크(buy.url), 추천 근거 URL(pairings[].ev.url), 양조장 직판 정보(offline.place/phone)를 점검
- *   - 결과: src/data/link-status.json (앱이 읽어 죽은 링크를 네이버쇼핑 폴백으로 대체)
+ *   - 결과: packages/shared/data/link-status.json (앱이 읽어 죽은 링크를 네이버쇼핑 폴백으로 대체)
  *           reports/link-check-YYYY-MM-DD.md (사람이 읽는 요약)
  *   실행: node scripts/check-links.mjs [--concurrency 6] [--timeout 15000] [--only buy|ev]
  *   주의: 이 스크립트는 외부 네트워크가 열린 환경(로컬 PC, GitHub Actions)에서 실행해야 합니다.
@@ -17,8 +17,9 @@ const TIMEOUT = parseInt(args.timeout || "15000");
 const ONLY = args.only || "all";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const DATA_PATH = path.join(ROOT, "src/data/pairings.json");
-const STATUS_PATH = path.join(ROOT, "src/data/link-status.json");
+// 모노레포 이전(2026-09) 뒤 데이터는 packages/shared/data — 옛 경로(src/data)를 읽어 주간 점검이 9월 2일 이후 멈춰 있었다(docs/20 P0-3)
+const DATA_PATH = path.join(ROOT, "packages/shared/data/pairings.json");
+const STATUS_PATH = path.join(ROOT, "packages/shared/data/link-status.json");
 const REPORT_DIR = path.join(ROOT, "reports");
 const data = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
 const prev = fs.existsSync(STATUS_PATH) ? JSON.parse(fs.readFileSync(STATUS_PATH, "utf8")) : { checkedAt: null, links: {} };

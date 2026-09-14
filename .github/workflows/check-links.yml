@@ -24,7 +24,7 @@ jobs:
         run: |
           git config user.name "pairinggo-bot"
           git config user.email "bot@pairinggo.local"
-          git add src/data/link-status.json reports/
+          git add packages/shared/data/link-status.json reports/
           git diff --cached --quiet || git commit -m "chore(links): 주간 링크 점검 $(date -u +%F)"
           git push
       - name: 문제 링크가 있으면 이슈 생성
