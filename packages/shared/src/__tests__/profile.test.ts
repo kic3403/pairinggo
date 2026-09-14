@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ageBand, ageOn, birthDateToDigits, birthDigitsToDate, profileProblem, SIDO_OPTIONS } from "../profile";
+import { ageBand, ageOn, birthDateToDigits, birthDigitsToDate, cleanNickname, nicknameProblem, profileProblem, SIDO_OPTIONS } from "../profile";
 
 const ON = new Date("2026-09-12T00:00:00");
 
@@ -35,6 +35,21 @@ describe("회원 프로필 검증", () => {
   it("없는 날짜는 나이를 계산하지 않고 안내 문구에 8자리 예시를 보여 준다", () => {
     expect(ageOn("1987-02-31", ON)).toBeNull();
     expect(profileProblem({ gender: "m", birthDate: null, sido: "서울특별시" }, ON)).toMatch(/8자리/);
+  });
+  it("닉네임 — 앞뒤 공백 제거 후 2~12자, 링크·이메일·운영자 사칭 금지", () => {
+    expect(nicknameProblem("곰돌이푸훗")).toBeNull();
+    expect(nicknameProblem("  술꾼 A  ")).toBeNull();
+    expect(nicknameProblem("🍶막걸리러버")).toBeNull();
+    expect(nicknameProblem("")).toMatch(/닉네임/);
+    expect(nicknameProblem("가")).toMatch(/2~12자/);
+    expect(nicknameProblem("가나다라마바사아자차카타파")).toMatch(/2~12자/);   // 13자
+    expect(nicknameProblem("me@mail.com")).toMatch(/이메일|링크/);
+    expect(nicknameProblem("www.site")).toMatch(/링크/);
+    expect(nicknameProblem("http맛집")).toMatch(/링크/);
+    expect(nicknameProblem("페어링GO 운영자")).toMatch(/쓸 수 없는/);
+    expect(nicknameProblem("관리자")).toMatch(/쓸 수 없는/);
+    expect(nicknameProblem("회원")).toMatch(/쓸 수 없는/);
+    expect(cleanNickname("  술꾼   A ")).toBe("술꾼 A");
   });
   it("시도 16개 — 통합특별시 반영", () => {
     expect(SIDO_OPTIONS).toHaveLength(16);

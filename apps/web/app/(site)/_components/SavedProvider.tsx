@@ -72,7 +72,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
         fetch("/api/account/consent").then((r) => (r.ok ? r.json() : null)).catch(() => null),
       ]);
       if (!alive) return;
-      // 간편가입 직후이거나 약관이 바뀌어 동의가 필요한 회원 — 가입 마무리 화면으로(packages/shared/src/consent.ts)
+      // 간편가입 직후·약관 변경·닉네임 없음 — 가입 마무리 화면으로(consent.ts CONSENT_VERSION, profile.ts nicknameProblem)
       if (c?.needed && !CONSENT_FREE.includes(pathname)) router.replace(`/profile?next=${encodeURIComponent(pathname)}`);
       setKeys(new Set((j?.items || []).map((x: { kind: SavedKind; item_id: string }) => key(x.kind, x.item_id))));
       setReady(true);

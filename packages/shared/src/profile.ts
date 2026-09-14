@@ -52,3 +52,26 @@ export function profileProblem(p: { gender?: string | null; birthDate?: string |
 
 /** 로그 집계용 연령대 — 20대·30대… */
 export const ageBand = (birthDate: string, on = new Date()) => { const a = ageOn(birthDate, on); return a == null ? null : `${Math.floor(a / 10) * 10}대`; };
+
+/* ---------- 닉네임 — 회원 추천 글 작성자로 공개된다(개인정보처리방침 2번) ---------- */
+export const NICKNAME_MIN = 2;
+export const NICKNAME_MAX = 12;
+/** 운영자로 오해할 수 있거나 "닉네임 없음" 표시와 겹치는 이름 */
+const RESERVED_NICKNAMES = ["회원", "운영자", "관리자", "페어링go", "admin", "탈퇴회원"];
+
+/** 앞뒤 공백을 지우고 연속 공백은 하나로 */
+export const cleanNickname = (raw: string | null | undefined) => (raw ?? "").replace(/\s+/g, " ").trim();
+
+/** 닉네임 입력 검증. 문제가 있으면 안내 문장, 없으면 null. 글자 수는 이모지를 한 글자로 센다 */
+export function nicknameProblem(raw: string | null | undefined): string | null {
+  const n = cleanNickname(raw);
+  if (!n) return "닉네임을 입력해 주세요.";
+  const len = [...n].length;
+  if (len < NICKNAME_MIN || len > NICKNAME_MAX) return `닉네임은 ${NICKNAME_MIN}~${NICKNAME_MAX}자로 입력해 주세요.`;
+  const lower = n.toLowerCase();
+  if (n.includes("@")) return "닉네임에는 이메일 주소나 링크를 넣을 수 없어요.";
+  if (/https?|www\.|\.(com|net|kr|co)\b/.test(lower)) return "닉네임에는 이메일 주소나 링크를 넣을 수 없어요.";
+  const squashed = lower.replace(/\s+/g, "");
+  if (RESERVED_NICKNAMES.some((r) => squashed === r || (r !== "회원" && squashed.includes(r)))) return "쓸 수 없는 닉네임이에요. 다른 이름을 입력해 주세요.";
+  return null;
+}

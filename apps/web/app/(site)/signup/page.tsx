@@ -8,6 +8,7 @@ import SocialButton from "../_components/SocialButton";
 import { signUpWithEmail } from "@/lib/account";
 import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
+import NicknameField from "../_components/NicknameField";
 import ProfileFields from "../_components/ProfileFields";
 import { birthDigitsToDate, consentFromForm, consentProblem, type Gender, type Sido } from "@pairinggo/shared";
 import ConsentFields from "../_components/ConsentFields";
@@ -29,7 +30,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
     const email = String(formData.get("email") ?? "").trim();
     const password = String(formData.get("password") ?? "");
     const confirm = String(formData.get("password2") ?? "");
-    const name = String(formData.get("name") ?? "").trim();
+    const name = String(formData.get("nickname") ?? "");
     const to = safeNext(String(formData.get("next") ?? ""));
 
     // 브라우저 검사와 별개로 서버에서도 한 번 더 — 자바스크립트가 꺼진 경우
@@ -64,7 +65,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
         <label className="field"><span>이메일</span><input name="email" type="email" autoComplete="email" required placeholder="name@example.com" /></label>
         <PasswordField name="password" label="비밀번호" hint="8자 이상" autoComplete="new-password" minLength={8} />
         <PasswordField name="password2" label="비밀번호 확인" autoComplete="new-password" minLength={8} confirmOf="password" />
-        <label className="field"><span>닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택</span></span><input name="name" type="text" maxLength={20} placeholder="비우면 이메일 앞부분을 씁니다" /></label>
+        <NicknameField />
         <ProfileFields />
         <ConsentFields details={{ terms: <Terms />, privacy: <PrivacyConsentSummary /> }} />
         <button type="submit" className="btn p" style={{ width: "100%" }}>가입하고 시작하기</button>

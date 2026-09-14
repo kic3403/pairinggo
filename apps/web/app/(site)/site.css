@@ -486,3 +486,4 @@ p { margin: 0 0 12px; }
 .social-naver { background: #03C75A; color: #fff; }
 .social-google { background: #fff; color: #1F1F1F; border-color: #747775; font-weight: 500; }
 .social-btn:hover { filter: brightness(0.97); }
+.form-hint { display: block; margin-top: 5px; font-style: normal; color: var(--food-ink); }

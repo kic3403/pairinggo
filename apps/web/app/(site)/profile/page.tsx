@@ -1,6 +1,8 @@
 /**
- * 프로필 — 성별·생년월일·사는 곳. 소셜 로그인 회원은 여기서 채우고, 이메일 회원은 가입 때 채운 값을 고친다.
- * 동의 기록이 없거나 옛 버전이면(간편가입 직후·약관 변경) "가입 마무리"로 약관 동의를 함께 받는다 — SavedProvider가 여기로 보낸다.
+ * 프로필 — 닉네임·성별·생년월일·사는 곳. 소셜 로그인 회원은 여기서 채우고, 이메일 회원은 가입 때 채운 값을 고친다.
+ * 가입 마무리가 필요하면(약관 동의 전·옛 버전, 닉네임 없음) SavedProvider가 여기로 보낸다.
+ *  · 동의가 필요하면 "가입 마무리" — 약관 동의 + "동의하지 않고 나가기"(계정 연결 정보 삭제)
+ *  · 닉네임만 없으면(간편가입에서 닉네임 동의를 끈 경우) 프로필 화면에서 닉네임을 정하게 한다
  */
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -11,6 +13,7 @@ import { consentNeeded, deleteAccount, getProfile, recordConsent, updateProfile 
 import ConsentFields from "../_components/ConsentFields";
 import Terms from "../_components/legal/Terms";
 import { PrivacyConsentSummary } from "../_components/legal/PrivacyPolicy";
+import NicknameField from "../_components/NicknameField";
 import ProfileFields from "../_components/ProfileFields";
 
 export const dynamic = "force-dynamic";
@@ -32,10 +35,12 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     if (!s?.user?.id) redirect("/login?next=%2Fprofile");
     const input = { gender: String(formData.get("gender") ?? ""), birthDate: birthDigitsToDate(String(formData.get("birthDate") ?? "")) ?? "", sido: String(formData.get("sido") ?? "") };
     const to = safeNext(String(formData.get("next") ?? ""));
+    const back = (msg: string) => redirect(`/profile?error=${encodeURIComponent(msg)}&next=${encodeURIComponent(to)}`);
     const needConsent = await consentNeeded(s.user.id);
     const bad = profileProblem(input) ?? (needConsent ? consentProblem(consentFromForm((k) => formData.get(k))) : null);
-    if (bad) redirect(`/profile?error=${encodeURIComponent(bad)}&next=${encodeURIComponent(to)}`);
-    await updateProfile(s.user.id, { gender: input.gender as Gender, birthDate: input.birthDate, sido: input.sido as Sido });
+    if (bad) back(bad);
+    const r = await updateProfile(s.user.id, { gender: input.gender as Gender, birthDate: input.birthDate, sido: input.sido as Sido }, String(formData.get("nickname") ?? ""));
+    if (!r.ok) back(r.error);
     if (needConsent) await recordConsent(s.user.id);
     redirect(to === "/profile" ? "/profile?ok=1" : to);
   }
@@ -49,15 +54,18 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
   }
 
   const finishing = !!p?.consentNeeded;
+  const needNick = !!p?.nicknameNeeded;
   return (
     <div className="wrap" style={{ maxWidth: 420 }}>
       {!finishing && <p className="crumb"><Link href="/my">마이페이지</Link></p>}
       <h1>{finishing ? "가입 마무리" : "프로필"}</h1>
-      <p className="lead">{finishing ? "약관에 동의하고 프로필을 채우면 가입이 끝납니다. " : ""}성별·연령대·지역별로 어떤 페어링이 인기인지 보기 위해 받습니다. 개인을 식별하는 용도로 쓰지 않습니다.</p>
+      <p className="lead">{finishing ? "약관에 동의하고 프로필을 채우면 가입이 끝납니다. " : ""}성별·연령대·지역은 어떤 페어링이 인기인지 보는 통계에만 쓰고, 개인을 식별하는 용도로 쓰지 않습니다. 다른 회원에게는 닉네임만 보입니다.</p>
+      {!finishing && needNick && !sp.error && <p className="form-error">회원 추천 글에 보일 닉네임을 정해 주세요.</p>}
       {sp.error && <p className="form-error">{sp.error}</p>}
       {sp.ok && <p className="form-ok">저장했습니다.</p>}
       <form action={save} style={{ marginTop: 18 }}>
         <input type="hidden" name="next" value={next} />
+        <NicknameField defaultValue={p?.name} missing={needNick} />
         <ProfileFields gender={p?.gender} birthDate={p?.birthDate} sido={p?.sido} />
         {finishing && <ConsentFields details={{ terms: <Terms />, privacy: <PrivacyConsentSummary /> }} />}
         <button type="submit" className="btn p" style={{ width: "100%" }}>{finishing ? "동의하고 가입 마치기" : "저장"}</button>

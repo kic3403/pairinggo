@@ -12,6 +12,7 @@ import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
+import { cleanNickname } from "@pairinggo/shared";
 import { verifyEmailLogin } from "@/lib/account";
 import { db } from "@/lib/db";
 
@@ -36,10 +37,16 @@ async function upsertUser(p: { provider: SocialProvider; uid: string; email?: st
   const sb = db();
   if (!sb) return null;
   const now = new Date().toISOString();
+  // 이미 있는 회원이면 닉네임은 건드리지 않는다 — 회원이 /profile에서 정한 닉네임을 로그인할 때마다 공급자 값으로 덮어쓰면 안 된다
+  const { data: existing } = await sb.from("users").select("id,email,avatar_url").eq("provider", p.provider).eq("provider_uid", p.uid).maybeSingle();
+  if (existing) {
+    await sb.from("users").update({ last_login_at: now, email: existing.email ?? p.email ?? null, avatar_url: p.avatar ?? existing.avatar_url ?? null }).eq("id", existing.id);
+    return existing.id as string;
+  }
   const { data, error } = await sb
     .from("users")
     .upsert(
-      { provider: p.provider, provider_uid: p.uid, email: p.email ?? null, name: p.name ?? null, avatar_url: p.avatar ?? null, last_login_at: now },
+      { provider: p.provider, provider_uid: p.uid, email: p.email ?? null, name: cleanNickname(p.name) || null, avatar_url: p.avatar ?? null, last_login_at: now },
       { onConflict: "provider,provider_uid" },
     )
     .select("id")

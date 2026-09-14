@@ -32,7 +32,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
     <div className="wrap">
       <h1>마이페이지</h1>
       <div className="meta">
-        <span><b>{session.user?.name || "회원"}</b>님</span>
+        <span><b>{profile?.name || "회원"}</b>님</span>
         <span className="muted"> · </span>
         <span>{session.user?.email || "간편로그인"}</span>
         {profile?.complete && <><span className="muted"> · </span><span>{profile.gender === "m" ? "남" : "여"} · {ageBand(profile.birthDate!)} · {profile.sido}</span></>}
