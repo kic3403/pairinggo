@@ -10,6 +10,7 @@ export * from "./pairing/blog-count";
 export * from "./pairing/pick";
 export * from "./pairing/ratings";
 export * from "./pairing/member";
+export * from "./pairing/summary";
 export * from "./browse";
 export * from "./schemas";
 export * from "./rows";

@@ -491,3 +491,11 @@ p { margin: 0 0 12px; }
 .sec-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 34px 0 12px; }
 .sec-head h2 { margin: 0; }
 .btn.xs { min-height: 30px; padding: 0 11px; font-size: 13px; border-radius: 8px; }
+/* 페어링 카드 라벨 줄 — 페어링 포인트 · 주의 · 맛 프로필 */
+.card .kv { margin: 8px 0 0; display: grid; gap: 4px; font-size: 14px; }
+.card .kv > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: baseline; }
+.card .kv dt { font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.01em; }
+.card .kv dd { margin: 0; color: var(--ink2); line-height: 1.5; }
+.card .more { margin: 6px 0 0; }
+.card .more summary { font-size: 12.5px; color: var(--navy); cursor: pointer; }
+.card .more .why { margin-top: 4px; }

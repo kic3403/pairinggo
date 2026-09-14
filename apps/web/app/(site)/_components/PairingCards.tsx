@@ -1,11 +1,14 @@
-/** 페어링 카드 목록 — 술 상세(어울리는 음식)와 음식 상세(어울리는 전통주)가 함께 쓴다. */
+/**
+ * 페어링 카드 목록 — 술 상세(어울리는 음식)와 음식 상세(어울리는 전통주)가 함께 쓴다.
+ * 본문은 문장 대신 라벨 줄(페어링 포인트 · 주의 · 맛 프로필, pairing/summary.ts) — 2026-09-14 사용자 요청. 긴 설명(reason)은 "자세히"로 접는다.
+ */
 import Link from "next/link";
 import CardLink from "./CardLink";
 import ExtLink from "./ExtLink";
 import GradeBadge from "./GradeBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
-import { PICK_DETAIL, PICK_LABEL, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
+import { D, F, PICK_DETAIL, PICK_LABEL, cardSummary, pickOf, profileLine, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -30,6 +33,9 @@ export function PairingCards({ items }: { items: CardItem[] }) {
     <ul className="cards">
       {items.map(({ href, name, sub, grade, explain, pairing: p }) => {
         const pick = pickOf(p.src);
+        const isDrinkCard = href.startsWith("/drinks");
+        const { points, cautions } = cardSummary(p);
+        const profile = isDrinkCard ? profileLine("drink", D[p.d]?.profile) : profileLine("food", F[p.f]?.profile);
         return (
           <li key={href} className="card" data-pick={pick}>
             <div className="top">
@@ -37,7 +43,15 @@ export function PairingCards({ items }: { items: CardItem[] }) {
               <GradeBadge grade={grade} title={explain} />
             </div>
             {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}
-            {p.reason && <p className="why">{p.reason}</p>}
+            {(points.length > 0 || cautions.length > 0 || profile) && (
+              <dl className="kv">
+                {points.length > 0 ? <div><dt>페어링 포인트</dt><dd>{points.join(" · ")}</dd></div>
+                  : p.reason ? <div><dt>페어링 포인트</dt><dd>{p.reason}</dd></div> : null}   {/* 맛 궁합 포인트가 없으면 설명을 그 자리에 */}
+                {cautions.length > 0 && <div><dt>주의</dt><dd>{cautions.join(" · ")}</dd></div>}
+                {profile && <div><dt>맛 프로필</dt><dd>{profile}</dd></div>}
+              </dl>
+            )}
+            {p.reason && points.length > 0 && <details className="more"><summary>자세히</summary><p className="why">{p.reason}</p></details>}
             {p.ev?.quote && (
               <blockquote className="quote">
                 “{p.ev.quote}”
