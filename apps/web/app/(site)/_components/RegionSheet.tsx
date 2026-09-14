@@ -2,7 +2,8 @@
 /**
  * 관심지역 설정 화면 — 캐치테이블식. 현재 위치로 설정 · 인기 지역 · 최근 설정 지역 · 왼쪽 상위 지역/오른쪽 세부 지역.
  * 수도권은 수도권 전체 › 서울 전체·강남·서초·… › 경기 전체·경기북부·수원·… › 인천 순으로 펼친다. 한 곳만 고른다.
- * 완료를 누르면 저장하고, 검색·전통주 목록 화면이면 그 지역으로 다시 연다(그 밖의 화면이면 전통주 목록으로).
+ * 완료를 누르면 저장하고, 검색·전통주 목록 화면이면 그 지역으로 다시 연다. 술·음식 상세는 그 자리에 남는다(주변 맛집·판매점 버튼이 새 지역으로 바뀐다).
+ * 그 밖의 화면(홈 등)은 전통주 목록으로.
  */
 import { childrenOf, level2Of, RBY, REGION_TREE, regionById, regionLabel, TOP_REGIONS, topOf, type Region } from "@pairinggo/shared/regions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -46,6 +47,7 @@ export default function RegionSheet() {
     if (id === "all") q.delete("region"); else q.set("region", id);
     const qs = q.toString();
     if (pathname === "/search" || pathname === "/drinks") router.push(`${pathname}${qs ? `?${qs}` : ""}`);
+    else if (/^\/(foods|drinks)\/./.test(pathname)) return;   // 상세 화면 — 보던 음식·술의 주변 검색을 새 지역으로 이어서
     else router.push(`/drinks${id !== "all" ? `?region=${id}` : ""}`);
   };
   const locate = async () => {

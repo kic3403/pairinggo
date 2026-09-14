@@ -3,8 +3,10 @@
  * 내 주변 — 음식이면 맛집, 술이면 파는 곳(전통주 판매점·보틀샵, 온라인 불가 주류는 마트·주류판매점).
  * 눌렀을 때만 불러온다. 카카오 로컬은 유료 쿼터에 분당 제한이 있어 페이지를 열 때마다 부르면 금방 소진된다.
  * 위치는 브라우저가 허락할 때만 쓰고, 거부하면 지역 선택으로 넘어간다.
+ * 관심지역이 있으면 그 지역 검색이 기본 버튼, 현재 위치는 보조 버튼(2026-09-14 — 관심지역을 강남으로 두고도 맨 위 "내 주변" 버튼을 눌러
+ * 현재 위치 결과가 나온다는 사용자 지적). 관심지역을 "현재 위치로" 정했으면 그 좌표를 쓴다(지역 대표 좌표보다 정확).
  */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Heart from "./Heart";
 import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
@@ -29,10 +31,13 @@ export default function NearbyPlaces(props: Props) {
   const [state, setState] = useState<"idle" | "loading" | "done" | "denied">("idle");
   const [res, setRes] = useState<Res | null>(null);
   const [where, setWhere] = useState<string>("");
+  // 결과를 보는 중에 관심지역을 바꾸면(상세 화면에서는 시트가 그 자리에 남는다) 처음 화면으로 돌아가 새 지역 버튼을 보여 준다
+  const lastRegion = useRef(rg.id);
+  useEffect(() => { if (lastRegion.current !== rg.id) { lastRegion.current = rg.id; setState("idle"); setRes(null); } }, [rg.id]);
 
   const title = props.mode === "restaurants" ? `${props.food} 맛집` : props.trad ? "이 술 파는 곳" : "가까운 주류판매점";
   const hint = props.mode === "restaurants"
-    ? "내 주변이나 지역을 골라 찾아보세요. 마음에 드는 곳은 하트를 눌러 저장할 수 있습니다."
+    ? rg.region ? `관심지역 ${rg.label} 기준으로 찾습니다. 지금 있는 곳 주변이나 다른 지역으로도 찾을 수 있어요.` : "내 주변이나 지역을 골라 찾아보세요. 마음에 드는 곳은 하트를 눌러 저장할 수 있습니다."
     : props.trad
       ? "전통주 판매점과 보틀샵을 찾습니다. 재고는 매장마다 다르니 전화로 확인하는 게 좋습니다."
       : "이 술은 전통주가 아니라 온라인 직배송이 안 됩니다. 주류판매점·마트·편의점을 찾습니다.";
@@ -68,11 +73,24 @@ export default function NearbyPlaces(props: Props) {
     );
   };
 
+  /** 관심지역으로 찾기 — "현재 위치로" 정한 지역이면 저장된 좌표, 아니면 지역 대표 좌표(API의 region) */
+  const loadRegion = () => void (rg.gps ? load({ lat: rg.gps.lat, lng: rg.gps.lng }, `${rg.label}(현재 위치)`) : load({ region: rg.id }, `관심지역 ${rg.label}`));
+
+  /** 첫 줄 버튼 — 관심지역이 있으면 그게 기본, 현재 위치는 보조 */
+  const MainButtons = () => (
+    <div className="btns">
+      {rg.region ? (
+        <>
+          <button className="btn p" onClick={loadRegion}>📍 {rg.label}에서 찾기</button>
+          <button className="btn" onClick={useMyLocation}>지금 내 위치 주변</button>
+        </>
+      ) : (
+        <button className="btn p" onClick={useMyLocation}>내 주변에서 찾기</button>
+      )}
+    </div>
+  );
   const RegionButtons = () => (
     <ul className="tabs" style={{ marginTop: 10 }}>
-      {rg.region && (
-        <li><button className="btn p" style={{ minHeight: 40, padding: "0 15px" }} onClick={() => void (rg.gps ? load({ lat: rg.gps.lat, lng: rg.gps.lng }, rg.label) : load({ region: rg.id }, rg.label))}>관심지역 {rg.label}</button></li>
-      )}
       {QUICK.filter((r) => r.id !== rg.id).map((r) => (
         <li key={r.id}><button className="btn" style={{ minHeight: 40, padding: "0 15px" }} onClick={() => void load({ region: r.id }, r.label)}>{r.label}</button></li>
       ))}
@@ -86,12 +104,18 @@ export default function NearbyPlaces(props: Props) {
       {state === "idle" && (
         <>
           <p className="small muted" style={{ marginTop: -6 }}>{hint}</p>
-          <div className="btns"><button className="btn p" onClick={useMyLocation}>내 주변에서 찾기</button></div>
+          <MainButtons />
           <RegionButtons />
         </>
       )}
       {state === "loading" && <p className="muted">{where}에서 찾는 중…</p>}
-      {state === "denied" && (<><p className="muted">위치를 쓸 수 없어요. 지역을 골라 주세요.</p><RegionButtons /></>)}
+      {state === "denied" && (
+        <>
+          <p className="muted">위치를 쓸 수 없어요. {rg.region ? "관심지역이나 다른 지역으로 찾아보세요." : "지역을 골라 주세요."}</p>
+          {rg.region && <div className="btns" style={{ marginTop: 8 }}><button className="btn p" onClick={loadRegion}>📍 {rg.label}에서 찾기</button></div>}
+          <RegionButtons />
+        </>
+      )}
       {state === "done" && res && (
         res.places.length ? (
           <>
