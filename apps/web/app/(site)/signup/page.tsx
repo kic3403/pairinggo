@@ -41,7 +41,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
 
     // 생년월일은 8자리(19871024) → YYYY-MM-DD. 틀리면 빈 값이 되어 profileProblem이 안내한다
     const profile = { gender: String(formData.get("gender") ?? "") as Gender, birthDate: birthDigitsToDate(String(formData.get("birthDate") ?? "")) ?? "", sido: String(formData.get("sido") ?? "") as Sido };
-    const r = await signUpWithEmail(email, password, name, profile);
+    const r = await signUpWithEmail(email, password, name, profile, String(formData.get("referrer") ?? ""));
     if (!r.ok) redirect(`/signup?error=${encodeURIComponent(r.error)}&next=${encodeURIComponent(to)}`);
     try {
       await signIn("email", { email, password, redirectTo: to });
@@ -67,6 +67,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
         <PasswordField name="password2" label="비밀번호 확인" autoComplete="new-password" minLength={8} confirmOf="password" />
         <NicknameField />
         <ProfileFields />
+        <label className="field"><span>추천인 닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택 · 소개해 준 회원의 닉네임</span></span><input name="referrer" type="text" maxLength={24} placeholder="예: 막걸리러버" autoComplete="off" /></label>
         <ConsentFields details={{ terms: <Terms />, privacy: <PrivacyConsentSummary /> }} />
         <button type="submit" className="btn p" style={{ width: "100%" }}>가입하고 시작하기</button>
       </form>

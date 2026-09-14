@@ -9,7 +9,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { birthDigitsToDate, consentFromForm, consentProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
 import { auth, signOut } from "@/auth";
-import { consentNeeded, deleteAccount, getProfile, recordConsent, updateProfile } from "@/lib/account";
+import { consentNeeded, deleteAccount, getProfile, recordConsent, setReferrer, updateProfile } from "@/lib/account";
 import ConsentFields from "../_components/ConsentFields";
 import Terms from "../_components/legal/Terms";
 import { PrivacyConsentSummary } from "../_components/legal/PrivacyPolicy";
@@ -41,6 +41,9 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     if (bad) back(bad);
     const r = await updateProfile(s.user.id, { gender: input.gender as Gender, birthDate: input.birthDate, sido: input.sido as Sido }, String(formData.get("nickname") ?? ""));
     if (!r.ok) back(r.error);
+    // 추천인(가입 마무리 때만, 선택) — 못 찾으면 알려 주고 멈춘다(오타 확인)
+    const referrer = String(formData.get("referrer") ?? "").trim();
+    if (needConsent && referrer) { const rr = await setReferrer(s.user.id, referrer); if (!rr.ok) back(rr.error); }
     if (needConsent) await recordConsent(s.user.id);
     redirect(to === "/profile" ? "/profile?ok=1" : to);
   }
@@ -67,6 +70,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
         <input type="hidden" name="next" value={next} />
         <NicknameField defaultValue={p?.name} missing={needNick} />
         <ProfileFields gender={p?.gender} birthDate={p?.birthDate} sido={p?.sido} />
+        {finishing && <label className="field"><span>추천인 닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택 · 소개해 준 회원의 닉네임</span></span><input name="referrer" type="text" maxLength={24} placeholder="예: 막걸리러버" autoComplete="off" /></label>}
         {finishing && <ConsentFields details={{ terms: <Terms />, privacy: <PrivacyConsentSummary /> }} />}
         <button type="submit" className="btn p" style={{ width: "100%" }}>{finishing ? "동의하고 가입 마치기" : "저장"}</button>
       </form>

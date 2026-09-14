@@ -15,7 +15,7 @@ export type SignUpResult = { ok: true; id: string } | { ok: false; error: string
 
 export type ProfileInput = { gender: Gender; birthDate: string; sido: Sido };
 
-export async function signUpWithEmail(emailRaw: string, password: string, nameRaw: string, profile: ProfileInput): Promise<SignUpResult> {
+export async function signUpWithEmail(emailRaw: string, password: string, nameRaw: string, profile: ProfileInput, referrerNick?: string): Promise<SignUpResult> {
   const email = normalizeEmail(emailRaw);
   if (!emailLooksValid(email)) return { ok: false, error: "이메일 형식을 확인해 주세요." };
   const bad = nicknameProblem(nameRaw) ?? passwordProblem(password) ?? profileProblem(profile);
@@ -27,10 +27,13 @@ export async function signUpWithEmail(emailRaw: string, password: string, nameRa
   const { data: existing } = await sb.from("users").select("id").eq("provider", "email").ilike("email", email).maybeSingle();
   if (existing) return { ok: false, error: "이미 가입된 이메일입니다. 로그인해 주세요." };
   if (await nicknameTaken(name, null)) return { ok: false, error: "이미 쓰고 있는 닉네임이에요. 다른 이름을 입력해 주세요." };
+  // 추천인(선택) — 적었는데 없는 닉네임이면 가입을 막지 않고 알려 준다(오타로 가입이 막히면 더 손해)
+  const referrer = cleanNickname(referrerNick) ? await findUserIdByNickname(referrerNick!) : null;
+  if (cleanNickname(referrerNick) && !referrer) return { ok: false, error: "추천인 닉네임을 찾지 못했어요. 철자를 확인하거나 비워 주세요." };
 
   const { data, error } = await sb
     .from("users")
-    .insert({ provider: "email", provider_uid: email, email, name, password_hash: await hashPassword(password), gender: profile.gender, birth_date: profile.birthDate, sido: profile.sido, profile_at: new Date().toISOString(), consent_version: CONSENT_VERSION, consent_at: new Date().toISOString() })
+    .insert({ provider: "email", provider_uid: email, email, name, password_hash: await hashPassword(password), gender: profile.gender, birth_date: profile.birthDate, sido: profile.sido, profile_at: new Date().toISOString(), consent_version: CONSENT_VERSION, consent_at: new Date().toISOString(), referred_by: referrer, referred_at: referrer ? new Date().toISOString() : null })
     .select("id")
     .single();
   // 동시 가입 경합 — 고유 인덱스가 막아 준다
@@ -127,6 +130,35 @@ async function renameEvidence(userId: string, oldNick: string, newNick: string) 
 export async function setupNeeded(userId: string): Promise<boolean> {
   const p = await getProfile(userId).catch(() => null);
   return !!p && (p.consentNeeded || p.nicknameNeeded);
+}
+
+/* ---------- 추천인(docs/19 A1) — 닉네임으로 찾고, 가입 때 한 번만 기록. 보상은 마이페이지 "초대한 친구 N명"뿐 ---------- */
+export async function findUserIdByNickname(nickRaw: string): Promise<string | null> {
+  const sb = db(); if (!sb) return null;
+  const pattern = cleanNickname(nickRaw).replace(/[\\%_]/g, (c) => "\\" + c);
+  if (!pattern) return null;
+  const { data } = await sb.from("users").select("id").ilike("name", pattern).limit(1);
+  return (data?.[0]?.id as string | undefined) ?? null;
+}
+/** 간편가입 마무리(/profile)에서 추천인 기록 — 이미 있으면 바꾸지 않는다, 자기 자신은 안 됨 */
+export async function setReferrer(userId: string, nickRaw: string): Promise<{ ok: true } | { ok: false; error: string }> {
+  const sb = need();
+  const ref = await findUserIdByNickname(nickRaw);
+  if (!ref) return { ok: false, error: "추천인 닉네임을 찾지 못했어요. 철자를 확인하거나 비워 주세요." };
+  if (ref === userId) return { ok: false, error: "본인을 추천인으로 적을 수 없어요." };
+  const { data: cur } = await sb.from("users").select("referred_by").eq("id", userId).maybeSingle();
+  if (cur?.referred_by) return { ok: true };
+  const { error } = await sb.from("users").update({ referred_by: ref, referred_at: new Date().toISOString() }).eq("id", userId);
+  return error ? { ok: false, error: "저장하지 못했어요. 잠시 후 다시 시도해 주세요." } : { ok: true };
+}
+/** 내가 초대한 회원 수 + 나를 초대한 사람 유무 */
+export async function referralInfo(userId: string): Promise<{ invited: number; referred: boolean }> {
+  const sb = db(); if (!sb) return { invited: 0, referred: false };
+  const [{ count }, { data }] = await Promise.all([
+    sb.from("users").select("id", { count: "exact", head: true }).eq("referred_by", userId),
+    sb.from("users").select("referred_by").eq("id", userId).maybeSingle(),
+  ]);
+  return { invited: count ?? 0, referred: !!data?.referred_by };
 }
 
 /* ---------- 가입 동의·탈퇴 ---------- */
