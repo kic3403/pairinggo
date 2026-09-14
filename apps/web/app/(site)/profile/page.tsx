@@ -5,7 +5,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { consentFromForm, consentProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
+import { birthDigitsToDate, consentFromForm, consentProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
 import { auth, signOut } from "@/auth";
 import { consentNeeded, deleteAccount, getProfile, recordConsent, updateProfile } from "@/lib/account";
 import ConsentFields from "../_components/ConsentFields";
@@ -30,7 +30,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     "use server";
     const s = await auth();
     if (!s?.user?.id) redirect("/login?next=%2Fprofile");
-    const input = { gender: String(formData.get("gender") ?? ""), birthDate: String(formData.get("birthDate") ?? ""), sido: String(formData.get("sido") ?? "") };
+    const input = { gender: String(formData.get("gender") ?? ""), birthDate: birthDigitsToDate(String(formData.get("birthDate") ?? "")) ?? "", sido: String(formData.get("sido") ?? "") };
     const to = safeNext(String(formData.get("next") ?? ""));
     const needConsent = await consentNeeded(s.user.id);
     const bad = profileProblem(input) ?? (needConsent ? consentProblem(consentFromForm((k) => formData.get(k))) : null);

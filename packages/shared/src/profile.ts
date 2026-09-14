@@ -13,12 +13,27 @@ export type Sido = (typeof SIDO_OPTIONS)[number];
 
 export type Profile = { gender: Gender; birthDate: string /* YYYY-MM-DD */; sido: Sido };
 
+/** 달력에 있는 날짜인지(2월 30일·평년 2월 29일 거르기) */
+const realDate = (y: number, mo: number, d: number) => {
+  const t = new Date(Date.UTC(y, mo - 1, d));
+  return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === d;
+};
+
+/** 가입 화면 생년월일 입력(8자리 숫자, 19871024) → DB 형식 YYYY-MM-DD. 자릿수가 틀리거나 없는 날짜면 null */
+export function birthDigitsToDate(input: string | null | undefined): string | null {
+  const m = /^(\d{4})(\d{2})(\d{2})$/.exec((input ?? "").trim());
+  if (!m || !realDate(+m[1], +m[2], +m[3])) return null;
+  return `${m[1]}-${m[2]}-${m[3]}`;
+}
+/** DB 형식 → 입력칸에 채울 8자리 */
+export const birthDateToDigits = (date: string | null | undefined) => (date ?? "").replace(/-/g, "").slice(0, 8);
+
 /** 만 나이 */
 export function ageOn(birthDate: string, on = new Date()): number | null {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(birthDate);
   if (!m) return null;
   const y = +m[1], mo = +m[2], d = +m[3];
-  if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
+  if (!realDate(y, mo, d)) return null;
   let age = on.getFullYear() - y;
   if (on.getMonth() + 1 < mo || (on.getMonth() + 1 === mo && on.getDate() < d)) age--;
   return age;
@@ -28,9 +43,9 @@ export function ageOn(birthDate: string, on = new Date()): number | null {
 export function profileProblem(p: { gender?: string | null; birthDate?: string | null; sido?: string | null }, on = new Date()): string | null {
   if (!GENDER_OPTIONS.some((g) => g.value === p.gender)) return "성별을 골라 주세요.";
   const age = p.birthDate ? ageOn(p.birthDate, on) : null;
-  if (age == null) return "생년월일을 확인해 주세요.";
+  if (age == null) return "생년월일 8자리를 확인해 주세요. (예: 19871024)";
   if (age < 19) return "주류 정보 서비스는 만 19세 이상만 가입할 수 있습니다.";
-  if (age > 120) return "생년월일을 확인해 주세요.";
+  if (age > 120) return "생년월일 8자리를 확인해 주세요. (예: 19871024)";
   if (!SIDO_OPTIONS.includes(p.sido as Sido)) return "사는 곳(시·도)을 골라 주세요.";
   return null;
 }

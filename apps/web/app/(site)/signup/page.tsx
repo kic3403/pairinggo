@@ -9,7 +9,7 @@ import { signUpWithEmail } from "@/lib/account";
 import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
 import ProfileFields from "../_components/ProfileFields";
-import { consentFromForm, consentProblem, type Gender, type Sido } from "@pairinggo/shared";
+import { birthDigitsToDate, consentFromForm, consentProblem, type Gender, type Sido } from "@pairinggo/shared";
 import ConsentFields from "../_components/ConsentFields";
 import Terms from "../_components/legal/Terms";
 import { PrivacyConsentSummary } from "../_components/legal/PrivacyPolicy";
@@ -38,7 +38,8 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
     const noConsent = consentProblem(consentFromForm((k) => formData.get(k)));
     if (noConsent) redirect(`/signup?error=${encodeURIComponent(noConsent)}&next=${encodeURIComponent(to)}`);
 
-    const profile = { gender: String(formData.get("gender") ?? "") as Gender, birthDate: String(formData.get("birthDate") ?? ""), sido: String(formData.get("sido") ?? "") as Sido };
+    // 생년월일은 8자리(19871024) → YYYY-MM-DD. 틀리면 빈 값이 되어 profileProblem이 안내한다
+    const profile = { gender: String(formData.get("gender") ?? "") as Gender, birthDate: birthDigitsToDate(String(formData.get("birthDate") ?? "")) ?? "", sido: String(formData.get("sido") ?? "") as Sido };
     const r = await signUpWithEmail(email, password, name, profile);
     if (!r.ok) redirect(`/signup?error=${encodeURIComponent(r.error)}&next=${encodeURIComponent(to)}`);
     try {
