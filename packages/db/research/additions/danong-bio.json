@@ -1,0 +1,44 @@
+{
+ "brewery": "다농바이오",
+ "checked_at": "2026-09-15",
+ "sources": [
+  { "name": "더술닷컴 제품 정보 — 가무치 43도(증류주 43%, 375ml, 쌀·입국·효모, 충북 충주)", "url": "research/thesool-products.json (PR00001223)" },
+  { "name": "한국금융 [응답하라 우리술 352] 오크숙성소주 만드는 증류소 — 가무치(충주 쌀·입국, 옹기 약 8개월 숙성), 사과 증류주 능화(사과:쌀 4:1, 하이볼용), 낫포세일 → 정규 제품 예정 (김승호 편집위원)", "url": "https://www.kbanker.co.kr/news/articleView.html?idxno=215155" },
+  { "name": "한국금융 [응답하라 우리술 398] 국제 주류 품평회 — 가무치 43 골드 아웃스탠딩, 능화 실버", "url": "https://www.kbanker.co.kr/news/articleView.html?idxno=220939" },
+  { "name": "사과증류주 능화 — 40%, 375ml, 2021년 수확 충주 사과와 쌀", "url": "https://blog.naver.com/wrjoomin/223356638416" },
+  { "name": "수록 시그니처 블렌드 — 증류식소주 59도, 700ml, 쌀, PX·Tawny Port·Red Wine 캐스크", "url": "https://blog.naver.com/ksunhawk/223879731145" },
+  { "name": "수록 — 낫포세일로 나왔던 오크숙성 소주의 첫 정규 제품(2025-05-08)", "url": "https://blog.naver.com/skylink1/223854531539" }
+ ],
+ "buy": { "url": "https://smartstore.naver.com/danongbio", "store": "양조장 공식 스마트스토어" },
+ "offline": { "place": "다농바이오 비지터센터", "address": "충청북도 충주시 대소원면 메가폴리스1로 117", "phone": null, "visit": true, "note": "2026.07.31 비지터센터 개관(홍보관·판매장·체험공간·시음, 증류소 투어 예약제), 2026년 '찾아가는 양조장' 선정." },
+ "drinks": [
+  {
+   "name": "가무치소주 43도", "alias": "가무치 43", "category": "증류주", "abv": 43, "region": "충북 충주",
+   "desc": "충주 쌀과 직접 배양한 입국으로 빚어 증류한 43도 증류식 소주. 옹기에서 숙성하며, 25도보다 곡물의 고소함과 무게감이 짙고 여운이 깁니다.",
+   "flavor": ["곡물향", "고소함", "긴 여운"],
+   "profile": { "sweet": 2, "acid": 1, "body": 4, "fizz": 1, "aroma": 4 },
+   "evidence": [
+    { "food": "구운 견과", "es": 84, "src": "blog", "reason": "도수 높은 증류식 소주의 곡물 고소함에 견과류를 곁들이라는 시음 후기가 있는 조합입니다.",
+      "items": [ { "source": "네이버 블로그 가무치 25도·43도 비교 시음기", "url": "https://blog.naver.com/jupiter0311/224267245477", "quote": "견과류, 다크 초콜릿, 숙성 치즈가 잘 어울려요", "who": null, "tier": "blog" } ] },
+    { "food": "다크초콜릿", "es": 84, "src": "blog", "reason": "43도의 묵직한 여운을 쌉쌀한 다크 초콜릿이 받쳐 준다는 시음 후기가 있는 조합입니다.",
+      "items": [ { "source": "네이버 블로그 가무치 25도·43도 비교 시음기", "url": "https://blog.naver.com/jupiter0311/224267245477", "quote": "견과류, 다크 초콜릿, 숙성 치즈가 잘 어울려요", "who": null, "tier": "blog" } ] },
+    { "food": "치즈플래터", "es": 84, "src": "blog", "reason": "숙성 치즈의 짭짤한 감칠맛이 고도수 증류식 소주와 어울린다는 시음 후기가 있는 조합입니다.",
+      "items": [ { "source": "네이버 블로그 가무치 25도·43도 비교 시음기", "url": "https://blog.naver.com/jupiter0311/224267245477", "quote": "견과류, 다크 초콜릿, 숙성 치즈가 잘 어울려요", "who": null, "tier": "blog" } ] }
+   ]
+  },
+  {
+   "name": "능화", "alias": "능화", "category": "증류주", "abv": 40, "region": "충북 충주",
+   "desc": "충주 사과와 쌀을 4:1로 섞어 빚은 뒤 증류한 40도 사과 증류주. 사과 향이 은은하고 부드러워, 진저에일·토닉을 섞은 하이볼 베이스로도 많이 마십니다.",
+   "flavor": ["사과향", "부드러움", "하이볼"],
+   "profile": { "sweet": 2, "acid": 2, "body": 3, "fizz": 1, "aroma": 5 },
+   "evidence": []
+  },
+  {
+   "name": "수록 시그니처 블렌드 1장 서막", "alias": "수록", "category": "증류주", "abv": 59, "region": "충북 충주",
+   "desc": "다농바이오의 오크 숙성 소주 브랜드 '수록'의 첫 정규 제품. 쌀 증류식 소주를 PX 셰리·토니 포트·레드와인 캐스크에서 숙성해 블렌딩한 59도 캐스크 스트렝스(700ml)로, 한정판 '가무치 낫포세일'을 이었습니다.",
+   "flavor": ["오크", "건과일향", "높은 도수"],
+   "profile": { "sweet": 3, "acid": 1, "body": 5, "fizz": 1, "aroma": 5 },
+   "evidence": []
+  }
+ ]
+}

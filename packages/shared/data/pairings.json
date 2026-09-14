@@ -20,15 +20,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 207,
+     "naver": 215,
      "google": null,
      "youtube": 19
     },
     "rank": 3,
     "delta": null,
     "insta": null,
-    "naver": 80.2,
-    "score": 64.5,
+    "naver": 82.1,
+    "score": 65.4,
     "google": null,
     "youtube": 48.7,
     "channels": 2,
@@ -76,16 +76,16 @@
      "insta": null,
      "naver": 37,
      "google": null,
-     "youtube": null
+     "youtube": 5
     },
-    "rank": 17,
+    "rank": 20,
     "delta": null,
     "insta": null,
-    "naver": 14.3,
-    "score": 14.3,
+    "naver": 14.1,
+    "score": 13.5,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 12.8,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -128,15 +128,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 58,
+     "naver": 60,
      "google": null,
      "youtube": 18
     },
-    "rank": 8,
+    "rank": 7,
     "delta": null,
     "insta": null,
-    "naver": 22.5,
-    "score": 34.4,
+    "naver": 22.9,
+    "score": 34.6,
     "google": null,
     "youtube": 46.2,
     "channels": 2,
@@ -186,7 +186,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 130,
+    "rank": 132,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -240,7 +240,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 97,
+    "rank": 96,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -292,15 +292,15 @@
      "insta": null,
      "naver": 48,
      "google": null,
-     "youtube": 25
+     "youtube": 9
     },
-    "rank": 6,
+    "rank": 14,
     "delta": null,
     "insta": null,
-    "naver": 18.6,
-    "score": 41.3,
+    "naver": 18.3,
+    "score": 20.7,
     "google": null,
-    "youtube": 64.1,
+    "youtube": 23.1,
     "channels": 2,
     "prev_rank": null
    },
@@ -348,7 +348,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 69,
+    "rank": 68,
     "delta": null,
     "insta": null,
     "naver": 2.3,
@@ -400,15 +400,15 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": 2
+     "youtube": 0
     },
-    "rank": 41,
+    "rank": 133,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 2.6,
+    "score": 0,
     "google": null,
-    "youtube": 5.1,
+    "youtube": 0,
     "channels": 2,
     "prev_rank": null
    },
@@ -452,15 +452,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 52,
+     "naver": 56,
      "google": null,
      "youtube": 2
     },
-    "rank": 20,
+    "rank": 21,
     "delta": null,
     "insta": null,
-    "naver": 20.2,
-    "score": 12.6,
+    "naver": 21.4,
+    "score": 13.3,
     "google": null,
     "youtube": 5.1,
     "channels": 2,
@@ -510,7 +510,7 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 61,
+    "rank": 56,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -566,7 +566,7 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 67,
+    "rank": 63,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -622,7 +622,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 98,
+    "rank": 97,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -678,7 +678,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 131,
+    "rank": 134,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -732,15 +732,15 @@
      "insta": null,
      "naver": 3,
      "google": null,
-     "youtube": 1
+     "youtube": 0
     },
-    "rank": 53,
+    "rank": 84,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
-    "score": 1.9,
+    "naver": 1.1,
+    "score": 0.6,
     "google": null,
-    "youtube": 2.6,
+    "youtube": 0,
     "channels": 2,
     "prev_rank": null
    },
@@ -790,7 +790,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 132,
+    "rank": 135,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -842,17 +842,17 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 5,
+     "naver": 6,
      "google": null,
-     "youtube": 4
+     "youtube": 3
     },
-    "rank": 27,
+    "rank": 33,
     "delta": null,
     "insta": null,
-    "naver": 1.9,
-    "score": 6.1,
+    "naver": 2.3,
+    "score": 5,
     "google": null,
-    "youtube": 10.3,
+    "youtube": 7.7,
     "channels": 2,
     "prev_rank": null
    },
@@ -902,7 +902,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 133,
+    "rank": 136,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -958,7 +958,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 134,
+    "rank": 137,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -1045,15 +1045,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 89,
+     "naver": 90,
      "google": null,
      "youtube": 10
     },
-    "rank": 9,
+    "rank": 8,
     "delta": null,
     "insta": null,
-    "naver": 34.5,
-    "score": 30.1,
+    "naver": 34.4,
+    "score": 30,
     "google": null,
     "youtube": 25.6,
     "channels": 2,
@@ -1094,15 +1094,15 @@
      "insta": null,
      "naver": 6,
      "google": null,
-     "youtube": 1
+     "youtube": 0
     },
-    "rank": 43,
+    "rank": 69,
     "delta": null,
     "insta": null,
     "naver": 2.3,
-    "score": 2.5,
+    "score": 1.2,
     "google": null,
-    "youtube": 2.6,
+    "youtube": 0,
     "channels": 2,
     "prev_rank": null
    },
@@ -1148,10 +1148,10 @@
      "google": null,
      "youtube": 3
     },
-    "rank": 24,
+    "rank": 25,
     "delta": null,
     "insta": null,
-    "naver": 8.1,
+    "naver": 8,
     "score": 7.9,
     "google": null,
     "youtube": 7.7,
@@ -1191,18 +1191,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 14,
+     "naver": 15,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 29,
+    "rank": 37,
     "delta": null,
     "insta": null,
-    "naver": 5.4,
-    "score": 5.4,
+    "naver": 5.7,
+    "score": 2.9,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1241,10 +1241,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 90,
+    "rank": 85,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
+    "naver": 1.1,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -1284,16 +1284,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 135,
+    "rank": 138,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1333,7 +1333,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 99,
+    "rank": 98,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -1378,16 +1378,16 @@
      "insta": null,
      "naver": 3,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 71,
+    "rank": 86,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
-    "score": 1.2,
+    "naver": 1.1,
+    "score": 0.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1429,10 +1429,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 91,
+    "rank": 87,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
+    "naver": 1.1,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -1474,16 +1474,16 @@
      "insta": null,
      "naver": 4,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 57,
+    "rank": 45,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
-    "score": 1.6,
+    "naver": 1.5,
+    "score": 2.1,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1523,7 +1523,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 136,
+    "rank": 139,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -1566,16 +1566,16 @@
      "insta": null,
      "naver": 5,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 47,
+    "rank": 72,
     "delta": null,
     "insta": null,
     "naver": 1.9,
-    "score": 1.9,
+    "score": 1,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1611,15 +1611,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 12,
+     "naver": 17,
      "google": null,
      "youtube": 9
     },
     "rank": 18,
     "delta": null,
     "insta": null,
-    "naver": 4.7,
-    "score": 13.9,
+    "naver": 6.5,
+    "score": 14.8,
     "google": null,
     "youtube": 23.1,
     "channels": 2,
@@ -1663,18 +1663,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 4,
+     "naver": 3,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 58,
+    "rank": 88,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
-    "score": 1.6,
+    "naver": 1.1,
+    "score": 0.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1708,15 +1708,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 47,
+     "naver": 48,
      "google": null,
      "youtube": 0
     },
-    "rank": 23,
+    "rank": 24,
     "delta": null,
     "insta": null,
-    "naver": 18.2,
-    "score": 9.1,
+    "naver": 18.3,
+    "score": 9.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -1755,16 +1755,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 137,
+    "rank": 140,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1806,7 +1806,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 114,
+    "rank": 110,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -1849,18 +1849,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 6,
+     "naver": 7,
      "google": null,
-     "youtube": null
+     "youtube": 3
     },
-    "rank": 44,
+    "rank": 30,
     "delta": null,
     "insta": null,
-    "naver": 2.3,
-    "score": 2.3,
+    "naver": 2.7,
+    "score": 5.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 7.7,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1899,7 +1899,7 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 62,
+    "rank": 57,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -1947,16 +1947,16 @@
      "insta": null,
      "naver": 3,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 72,
+    "rank": 89,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
-    "score": 1.2,
+    "naver": 1.1,
+    "score": 0.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -1999,7 +1999,7 @@
     "rank": 74,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
+    "naver": 1.5,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -2039,16 +2039,16 @@
      "insta": null,
      "naver": 7,
      "google": null,
-     "youtube": null
+     "youtube": 3
     },
-    "rank": 38,
+    "rank": 31,
     "delta": null,
     "insta": null,
     "naver": 2.7,
-    "score": 2.7,
+    "score": 5.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 7.7,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2090,7 +2090,7 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 68,
+    "rank": 64,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2133,18 +2133,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 200,
+     "naver": 202,
      "google": null,
-     "youtube": null
+     "youtube": 22
     },
     "rank": 2,
     "delta": null,
     "insta": null,
-    "naver": 77.5,
-    "score": 77.5,
+    "naver": 77.1,
+    "score": 66.8,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 56.4,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2187,15 +2187,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 0,
+     "naver": 1,
      "google": null,
      "youtube": 0
     },
-    "rank": 138,
+    "rank": 111,
     "delta": null,
     "insta": null,
-    "naver": 0,
-    "score": 0,
+    "naver": 0.4,
+    "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -2236,16 +2236,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 102,
+    "rank": 112,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2284,7 +2284,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 115,
+    "rank": 113,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -2328,16 +2328,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 139,
+    "rank": 141,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2376,10 +2376,10 @@
      "google": null,
      "youtube": 17
     },
-    "rank": 14,
+    "rank": 12,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
+    "naver": 1.5,
     "score": 22.6,
     "google": null,
     "youtube": 43.6,
@@ -2419,16 +2419,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 103,
+    "rank": 58,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 1.5,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2466,15 +2466,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 3,
+     "naver": 4,
      "google": null,
      "youtube": 0
     },
-    "rank": 92,
+    "rank": 75,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
-    "score": 0.6,
+    "naver": 1.5,
+    "score": 0.8,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -2515,16 +2515,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 140,
+    "rank": 142,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2562,10 +2562,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 75,
+    "rank": 76,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
+    "naver": 1.5,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -2606,16 +2606,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 80,
+    "rank": 99,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 0.4,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2655,7 +2655,7 @@
      "google": null,
      "youtube": 2
     },
-    "rank": 42,
+    "rank": 40,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2705,16 +2705,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 81,
+    "rank": 100,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 0.4,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2752,15 +2752,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 8,
+     "naver": 9,
      "google": null,
      "youtube": 0
     },
-    "rank": 55,
+    "rank": 49,
     "delta": null,
     "insta": null,
-    "naver": 3.1,
-    "score": 1.6,
+    "naver": 3.4,
+    "score": 1.7,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -2800,16 +2800,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 104,
+    "rank": 114,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2848,7 +2848,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 141,
+    "rank": 143,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2895,16 +2895,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 142,
+    "rank": 144,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -2944,7 +2944,7 @@
      "google": null,
      "youtube": 3
     },
-    "rank": 32,
+    "rank": 35,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -2988,16 +2988,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 143,
+    "rank": 145,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3037,7 +3037,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 116,
+    "rank": 115,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3080,16 +3080,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 144,
+    "rank": 146,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3129,7 +3129,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 117,
+    "rank": 116,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3175,18 +3175,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 5,
+     "naver": 4,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 48,
+    "rank": 77,
     "delta": null,
     "insta": null,
-    "naver": 1.9,
-    "score": 1.9,
+    "naver": 1.5,
+    "score": 0.8,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3233,7 +3233,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 118,
+    "rank": 117,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3277,16 +3277,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 105,
+    "rank": 118,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3326,7 +3326,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 145,
+    "rank": 147,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3371,16 +3371,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 146,
+    "rank": 148,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3420,7 +3420,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 147,
+    "rank": 149,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3465,16 +3465,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 148,
+    "rank": 150,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3557,16 +3557,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 106,
+    "rank": 120,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3606,10 +3606,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 93,
+    "rank": 90,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
+    "naver": 1.1,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -3649,16 +3649,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 149,
+    "rank": 151,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3697,15 +3697,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 73,
+     "naver": 75,
      "google": null,
      "youtube": 11
     },
-    "rank": 10,
+    "rank": 9,
     "delta": null,
     "insta": null,
-    "naver": 28.3,
-    "score": 28.3,
+    "naver": 28.6,
+    "score": 28.4,
     "google": null,
     "youtube": 28.2,
     "channels": 2,
@@ -3753,16 +3753,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 107,
+    "rank": 121,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3802,7 +3802,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 120,
+    "rank": 122,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3849,16 +3849,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 150,
+    "rank": 152,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3896,7 +3896,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 151,
+    "rank": 153,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3939,16 +3939,16 @@
      "insta": null,
      "naver": 5,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 49,
+    "rank": 42,
     "delta": null,
     "insta": null,
     "naver": 1.9,
-    "score": 1.9,
+    "score": 2.3,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -3986,7 +3986,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 121,
+    "rank": 123,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4031,16 +4031,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 2
     },
-    "rank": 152,
+    "rank": 41,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 0,
+    "score": 2.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 5.1,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4078,7 +4078,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 153,
+    "rank": 154,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4122,16 +4122,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 154,
+    "rank": 155,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4168,15 +4168,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 8,
+     "naver": 9,
      "google": null,
      "youtube": 0
     },
-    "rank": 56,
+    "rank": 50,
     "delta": null,
     "insta": null,
-    "naver": 3.1,
-    "score": 1.6,
+    "naver": 3.4,
+    "score": 1.7,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -4217,16 +4217,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 82,
+    "rank": 51,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 1.7,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4271,7 +4271,7 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 63,
+    "rank": 59,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4315,16 +4315,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 155,
+    "rank": 156,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4364,7 +4364,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 156,
+    "rank": 157,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4407,16 +4407,16 @@
      "insta": null,
      "naver": 5,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 50,
+    "rank": 73,
     "delta": null,
     "insta": null,
     "naver": 1.9,
-    "score": 1.9,
+    "score": 1,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4459,7 +4459,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 157,
+    "rank": 158,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4503,16 +4503,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 158,
+    "rank": 159,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4552,7 +4552,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 122,
+    "rank": 124,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4597,16 +4597,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 83,
+    "rank": 101,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 0.4,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4644,7 +4644,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 159,
+    "rank": 160,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4687,16 +4687,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 160,
+    "rank": 161,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4736,10 +4736,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 94,
+    "rank": 91,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
+    "naver": 1.1,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -4788,16 +4788,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 161,
+    "rank": 65,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 0,
+    "score": 1.3,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4837,7 +4837,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 123,
+    "rank": 125,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4880,7 +4880,7 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
     "rank": 162,
     "delta": null,
@@ -4888,8 +4888,8 @@
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -4927,10 +4927,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 95,
+    "rank": 92,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
+    "naver": 1.1,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -4972,7 +4972,7 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
     "rank": 163,
     "delta": null,
@@ -4980,8 +4980,8 @@
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5065,7 +5065,7 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
     "rank": 165,
     "delta": null,
@@ -5073,8 +5073,8 @@
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5113,7 +5113,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 66,
+    "rank": 62,
     "delta": null,
     "insta": null,
     "naver": 2.7,
@@ -5157,16 +5157,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 84,
+    "rank": 102,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 0.4,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5249,18 +5249,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 102,
+     "naver": 105,
      "google": null,
-     "youtube": null
+     "youtube": 18
     },
-    "rank": 7,
+    "rank": 6,
     "delta": null,
     "insta": null,
-    "naver": 39.5,
-    "score": 39.5,
+    "naver": 40.1,
+    "score": 43.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 46.2,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5350,16 +5350,16 @@
      "insta": null,
      "naver": 6,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 45,
+    "rank": 70,
     "delta": null,
     "insta": null,
     "naver": 2.3,
-    "score": 2.3,
+    "score": 1.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5445,16 +5445,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 169,
+    "rank": 66,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 0,
+    "score": 1.3,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5494,10 +5494,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 76,
+    "rank": 78,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
+    "naver": 1.5,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -5538,16 +5538,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 170,
+    "rank": 169,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5585,7 +5585,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 171,
+    "rank": 170,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5629,16 +5629,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 172,
+    "rank": 171,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5677,7 +5677,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 173,
+    "rank": 172,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5721,16 +5721,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 174,
+    "rank": 173,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5766,15 +5766,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 2,
      "google": null,
      "youtube": 1
     },
-    "rank": 64,
+    "rank": 52,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 1.5,
+    "naver": 0.8,
+    "score": 1.7,
     "google": null,
     "youtube": 2.6,
     "channels": 2,
@@ -5820,16 +5820,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 175,
+    "rank": 174,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5867,7 +5867,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 176,
+    "rank": 175,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5912,16 +5912,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 177,
+    "rank": 176,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -5960,7 +5960,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 178,
+    "rank": 177,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6004,16 +6004,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 179,
+    "rank": 178,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6052,7 +6052,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 180,
+    "rank": 179,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6096,16 +6096,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 181,
+    "rank": 180,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6143,7 +6143,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 124,
+    "rank": 126,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -6188,16 +6188,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 85,
+    "rank": 103,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 0.4,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6244,7 +6244,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 100,
+    "rank": 104,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -6294,18 +6294,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 69,
+     "naver": 72,
      "google": null,
-     "youtube": null
+     "youtube": 4
     },
-    "rank": 11,
+    "rank": 16,
     "delta": null,
     "insta": null,
-    "naver": 26.7,
-    "score": 26.7,
+    "naver": 27.5,
+    "score": 18.9,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 10.3,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6352,7 +6352,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 182,
+    "rank": 181,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6404,16 +6404,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 183,
+    "rank": 182,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6460,7 +6460,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 184,
+    "rank": 183,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6512,16 +6512,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 185,
+    "rank": 184,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6568,7 +6568,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 186,
+    "rank": 185,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6620,16 +6620,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 187,
+    "rank": 186,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6676,7 +6676,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 125,
+    "rank": 127,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -6728,16 +6728,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 188,
+    "rank": 187,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6761,6 +6761,80 @@
    "image": null
   },
   {
+   "id": "d218",
+   "name": "가무치소주 43도",
+   "alias": "가무치 43",
+   "category": "증류주",
+   "abv": 43,
+   "region": "충북 충주",
+   "brewery": "다농바이오",
+   "desc": "충주 쌀과 직접 배양한 입국으로 빚어 증류한 43도 증류식 소주. 옹기에서 숙성하며, 25도보다 곡물의 고소함과 무게감이 짙고 여운이 깁니다.",
+   "flavor": [
+    "곡물향",
+    "고소함",
+    "긴 여운"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 1,
+    "body": 4,
+    "fizz": 1,
+    "aroma": 4,
+    "sweet": 2
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/danongbio",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2026.07.31 비지터센터 개관(홍보관·판매장·체험공간·시음, 증류소 투어 예약제), 2026년 '찾아가는 양조장' 선정.",
+    "phone": null,
+    "place": "다농바이오 비지터센터",
+    "visit": true,
+    "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
+   },
+   "image": null
+  },
+  {
+   "id": "d219",
+   "name": "능화",
+   "alias": "능화",
+   "category": "증류주",
+   "abv": 40,
+   "region": "충북 충주",
+   "brewery": "다농바이오",
+   "desc": "충주 사과와 쌀을 4:1로 섞어 빚은 뒤 증류한 40도 사과 증류주. 사과 향이 은은하고 부드러워, 진저에일·토닉을 섞은 하이볼 베이스로도 많이 마십니다.",
+   "flavor": [
+    "사과향",
+    "부드러움",
+    "하이볼"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 2,
+    "body": 3,
+    "fizz": 1,
+    "aroma": 5,
+    "sweet": 2
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/danongbio",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2026.07.31 비지터센터 개관(홍보관·판매장·체험공간·시음, 증류소 투어 예약제), 2026년 '찾아가는 양조장' 선정.",
+    "phone": null,
+    "place": "다농바이오 비지터센터",
+    "visit": true,
+    "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
+   },
+   "image": null
+  },
+  {
    "id": "d22",
    "name": "원소주 스피릿",
    "alias": "원소주",
@@ -6780,15 +6854,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 12,
+     "naver": 14,
      "google": null,
      "youtube": 18
     },
-    "rank": 12,
+    "rank": 10,
     "delta": null,
     "insta": null,
-    "naver": 4.7,
-    "score": 25.5,
+    "naver": 5.3,
+    "score": 25.8,
     "google": null,
     "youtube": 46.2,
     "channels": 2,
@@ -6815,6 +6889,228 @@
    "image": null
   },
   {
+   "id": "d220",
+   "name": "수록 시그니처 블렌드 1장 서막",
+   "alias": "수록",
+   "category": "증류주",
+   "abv": 59,
+   "region": "충북 충주",
+   "brewery": "다농바이오",
+   "desc": "다농바이오의 오크 숙성 소주 브랜드 '수록'의 첫 정규 제품. 쌀 증류식 소주를 PX 셰리·토니 포트·레드와인 캐스크에서 숙성해 블렌딩한 59도 캐스크 스트렝스(700ml)로, 한정판 '가무치 낫포세일'을 이었습니다.",
+   "flavor": [
+    "오크",
+    "건과일향",
+    "높은 도수"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 1,
+    "body": 5,
+    "fizz": 1,
+    "aroma": 5,
+    "sweet": 3
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/danongbio",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2026.07.31 비지터센터 개관(홍보관·판매장·체험공간·시음, 증류소 투어 예약제), 2026년 '찾아가는 양조장' 선정.",
+    "phone": null,
+    "place": "다농바이오 비지터센터",
+    "visit": true,
+    "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
+   },
+   "image": null
+  },
+  {
+   "id": "d221",
+   "name": "청주신선주 약주",
+   "alias": "신선주 약주",
+   "category": "약주",
+   "abv": 16,
+   "region": "충북 청주",
+   "brewery": "신선(청주신선주)",
+   "desc": "충북 무형유산 제4호이자 식품명인 제88호 박준미 명인이 함양 박씨 종가의 가양주를 이어 빚는 약주. 청원생명쌀·찹쌀과 앉은뱅이밀 누룩에 인삼·구기자·감국 등 약재 10여 가지를 넣었지만 누룩 냄새가 적고 꽃·과실 향이 은은합니다.",
+   "flavor": [
+    "약재향",
+    "꽃향",
+    "은은한 단맛"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 2,
+    "body": 3,
+    "fizz": 1,
+    "aroma": 4,
+    "sweet": 3
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/sinseon",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2025~2028 '찾아가는 양조장' 선정, 예약 방문. 양조장 겸 복합문화공간으로 운영(천지일보 2025 인터뷰). 현장 판매 여부는 방문 전 확인 필요.",
+    "phone": null,
+    "place": "청주신선주 문화양조장",
+    "visit": null,
+    "address": "충청북도 청주시 상당구 것대로 5"
+   },
+   "image": null
+  },
+  {
+   "id": "d222",
+   "name": "청주신선주 소주",
+   "alias": "신선주 소주",
+   "category": "증류주",
+   "abv": 42,
+   "region": "충북 청주",
+   "brewery": "신선(청주신선주)",
+   "desc": "약재 10여 가지를 넣어 빚은 청주신선주를 증류한 42도 소주. 신라 최치원이 즐겼다는 이야기가 전하는 충북 무형유산 신선주의 증류주로, 약재와 꽃 향이 짙게 남습니다.",
+   "flavor": [
+    "약재향",
+    "꽃향",
+    "묵직함"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 1,
+    "body": 4,
+    "fizz": 1,
+    "aroma": 5,
+    "sweet": 2
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/sinseon",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2025~2028 '찾아가는 양조장' 선정, 예약 방문. 양조장 겸 복합문화공간으로 운영(천지일보 2025 인터뷰). 현장 판매 여부는 방문 전 확인 필요.",
+    "phone": null,
+    "place": "청주신선주 문화양조장",
+    "visit": null,
+    "address": "충청북도 청주시 상당구 것대로 5"
+   },
+   "image": null
+  },
+  {
+   "id": "d223",
+   "name": "청주신선주 52",
+   "alias": "신선주 52",
+   "category": "증류주",
+   "abv": 52,
+   "region": "충북 청주",
+   "brewery": "신선(청주신선주)",
+   "desc": "청주신선주 증류주의 52도 고도수 제품(650ml). 약재를 넣어 빚은 술을 증류해 도수를 높였습니다.",
+   "flavor": [
+    "약재향",
+    "높은 도수",
+    "긴 여운"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 1,
+    "body": 5,
+    "fizz": 1,
+    "aroma": 5,
+    "sweet": 2
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/sinseon",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2025~2028 '찾아가는 양조장' 선정, 예약 방문. 양조장 겸 복합문화공간으로 운영(천지일보 2025 인터뷰). 현장 판매 여부는 방문 전 확인 필요.",
+    "phone": null,
+    "place": "청주신선주 문화양조장",
+    "visit": null,
+    "address": "충청북도 청주시 상당구 것대로 5"
+   },
+   "image": null
+  },
+  {
+   "id": "d224",
+   "name": "청주신선주 탁주",
+   "alias": "신선주 탁주",
+   "category": "탁주",
+   "abv": 12,
+   "region": "충북 청주",
+   "brewery": "신선(청주신선주)",
+   "desc": "청원생명쌀·찹쌀과 앉은뱅이밀 누룩, 생지황·숙지황·인삼·당귀·감국·구기자 등 약재 10가지로 빚은 12도 탁주. 식품첨가물 없이 빚어 걸쭉하고, 약재 향이 은은합니다.",
+   "flavor": [
+    "약재향",
+    "걸쭉함",
+    "부드러운 산미"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 3,
+    "body": 4,
+    "fizz": 1,
+    "aroma": 4,
+    "sweet": 3
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/sinseon",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2025~2028 '찾아가는 양조장' 선정, 예약 방문. 양조장 겸 복합문화공간으로 운영(천지일보 2025 인터뷰). 현장 판매 여부는 방문 전 확인 필요.",
+    "phone": null,
+    "place": "청주신선주 문화양조장",
+    "visit": null,
+    "address": "충청북도 청주시 상당구 것대로 5"
+   },
+   "image": null
+  },
+  {
+   "id": "d225",
+   "name": "신선막걸리",
+   "alias": "신선막걸리",
+   "category": "탁주",
+   "abv": 7,
+   "region": "충북 청주",
+   "brewery": "신선(청주신선주)",
+   "desc": "청주신선주 양조장(신선)이 탁주보다 도수를 낮춰 가볍게 마시도록 낸 7도 막걸리(650ml).",
+   "flavor": [
+    "부드러움",
+    "산미",
+    "가벼움"
+   ],
+   "blog_anju": 0,
+   "awards": [],
+   "generic": false,
+   "profile": {
+    "acid": 3,
+    "body": 3,
+    "fizz": 2,
+    "aroma": 3,
+    "sweet": 3
+   },
+   "buy": {
+    "url": "https://smartstore.naver.com/sinseon",
+    "store": "양조장 공식 스마트스토어"
+   },
+   "offline": {
+    "note": "2025~2028 '찾아가는 양조장' 선정, 예약 방문. 양조장 겸 복합문화공간으로 운영(천지일보 2025 인터뷰). 현장 판매 여부는 방문 전 확인 필요.",
+    "phone": null,
+    "place": "청주신선주 문화양조장",
+    "visit": null,
+    "address": "충청북도 청주시 상당구 것대로 5"
+   },
+   "image": null
+  },
+  {
    "id": "d23",
    "name": "토끼소주 23",
    "alias": "토끼소주",
@@ -6836,15 +7132,15 @@
      "insta": null,
      "naver": 4,
      "google": null,
-     "youtube": 2
+     "youtube": 1
     },
-    "rank": 34,
+    "rank": 46,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
-    "score": 3.4,
+    "naver": 1.5,
+    "score": 2.1,
     "google": null,
-    "youtube": 5.1,
+    "youtube": 2.6,
     "channels": 2,
     "prev_rank": null
    },
@@ -6892,11 +7188,11 @@
      "google": null,
      "youtube": 3
     },
-    "rank": 25,
+    "rank": 26,
     "delta": null,
     "insta": null,
-    "naver": 6.6,
-    "score": 7.2,
+    "naver": 6.5,
+    "score": 7.1,
     "google": null,
     "youtube": 7.7,
     "channels": 2,
@@ -6944,16 +7240,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 189,
+    "rank": 188,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -6996,15 +7292,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 43,
+     "naver": 47,
      "google": null,
      "youtube": 39
     },
     "rank": 5,
     "delta": null,
     "insta": null,
-    "naver": 16.7,
-    "score": 58.4,
+    "naver": 17.9,
+    "score": 59,
     "google": null,
     "youtube": 100,
     "channels": 2,
@@ -7052,16 +7348,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 108,
+    "rank": 128,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7104,15 +7400,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 10,
+     "naver": 11,
      "google": null,
      "youtube": 3
     },
     "rank": 28,
     "delta": null,
     "insta": null,
-    "naver": 3.9,
-    "score": 5.8,
+    "naver": 4.2,
+    "score": 6,
     "google": null,
     "youtube": 7.7,
     "channels": 2,
@@ -7158,18 +7454,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 258,
+     "naver": 262,
      "google": null,
-     "youtube": null
+     "youtube": 20
     },
     "rank": 1,
     "delta": null,
     "insta": null,
     "naver": 100,
-    "score": 100,
+    "score": 75.7,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 51.3,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7216,10 +7512,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 96,
+    "rank": 93,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
+    "naver": 1.1,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -7266,18 +7562,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 52,
+     "naver": 56,
      "google": null,
-     "youtube": null
+     "youtube": 3
     },
-    "rank": 16,
+    "rank": 19,
     "delta": null,
     "insta": null,
-    "naver": 20.2,
-    "score": 20.2,
+    "naver": 21.4,
+    "score": 14.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 7.7,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7324,7 +7620,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 190,
+    "rank": 189,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -7376,16 +7672,16 @@
      "insta": null,
      "naver": 5,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 51,
+    "rank": 43,
     "delta": null,
     "insta": null,
     "naver": 1.9,
-    "score": 1.9,
+    "score": 2.3,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7432,7 +7728,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 101,
+    "rank": 105,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -7484,16 +7780,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 86,
+    "rank": 106,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 0.4,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7540,7 +7836,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 191,
+    "rank": 190,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -7592,16 +7888,16 @@
      "insta": null,
      "naver": 9,
      "google": null,
-     "youtube": null
+     "youtube": 14
     },
-    "rank": 33,
+    "rank": 15,
     "delta": null,
     "insta": null,
-    "naver": 3.5,
-    "score": 3.5,
+    "naver": 3.4,
+    "score": 19.7,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 35.9,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7648,7 +7944,7 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 65,
+    "rank": 60,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -7698,17 +7994,17 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 2,
      "google": null,
-     "youtube": 2
+     "youtube": 1
     },
-    "rank": 36,
+    "rank": 53,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 2.8,
+    "naver": 0.8,
+    "score": 1.7,
     "google": null,
-    "youtube": 5.1,
+    "youtube": 2.6,
     "channels": 2,
     "prev_rank": null
    },
@@ -7756,7 +8052,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 192,
+    "rank": 191,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -7810,16 +8106,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 109,
+    "rank": 129,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7866,7 +8162,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 193,
+    "rank": 192,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -7918,16 +8214,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 194,
+    "rank": 67,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 0,
+    "score": 1.3,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -7974,7 +8270,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 195,
+    "rank": 193,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -8026,16 +8322,16 @@
      "insta": null,
      "naver": 4,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 59,
+    "rank": 79,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
-    "score": 1.6,
+    "naver": 1.5,
+    "score": 0.8,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8082,7 +8378,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 126,
+    "rank": 130,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -8134,16 +8430,16 @@
      "insta": null,
      "naver": 3,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 73,
+    "rank": 94,
     "delta": null,
     "insta": null,
-    "naver": 1.2,
-    "score": 1.2,
+    "naver": 1.1,
+    "score": 0.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8186,15 +8482,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 4,
+     "naver": 3,
      "google": null,
      "youtube": 0
     },
-    "rank": 77,
+    "rank": 95,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
-    "score": 0.8,
+    "naver": 1.1,
+    "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -8244,16 +8540,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 196,
+    "rank": 194,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8300,7 +8596,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 197,
+    "rank": 195,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -8352,16 +8648,16 @@
      "insta": null,
      "naver": 4,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 60,
+    "rank": 47,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
-    "score": 1.6,
+    "naver": 1.5,
+    "score": 2.1,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8404,15 +8700,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 231,
+     "naver": 227,
      "google": null,
      "youtube": 14
     },
     "rank": 4,
     "delta": null,
     "insta": null,
-    "naver": 89.5,
-    "score": 62.7,
+    "naver": 86.6,
+    "score": 61.3,
     "google": null,
     "youtube": 35.9,
     "channels": 2,
@@ -8460,16 +8756,16 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 87,
+    "rank": 54,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.8,
+    "score": 1.7,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8516,11 +8812,11 @@
      "google": null,
      "youtube": 8
     },
-    "rank": 19,
+    "rank": 22,
     "delta": null,
     "insta": null,
-    "naver": 6.2,
-    "score": 13.4,
+    "naver": 6.1,
+    "score": 13.3,
     "google": null,
     "youtube": 20.5,
     "channels": 2,
@@ -8568,16 +8864,16 @@
      "insta": null,
      "naver": 25,
      "google": null,
-     "youtube": null
+     "youtube": 10
     },
-    "rank": 22,
+    "rank": 17,
     "delta": null,
     "insta": null,
-    "naver": 9.7,
-    "score": 9.7,
+    "naver": 9.5,
+    "score": 17.6,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 25.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8620,15 +8916,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 25,
+     "naver": 26,
      "google": null,
      "youtube": 5
     },
-    "rank": 21,
+    "rank": 23,
     "delta": null,
     "insta": null,
-    "naver": 9.7,
-    "score": 11.3,
+    "naver": 9.9,
+    "score": 11.4,
     "google": null,
     "youtube": 12.8,
     "channels": 2,
@@ -8674,18 +8970,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 5,
+     "naver": 6,
      "google": null,
-     "youtube": null
+     "youtube": 3
     },
-    "rank": 52,
+    "rank": 34,
     "delta": null,
     "insta": null,
-    "naver": 1.9,
-    "score": 1.9,
+    "naver": 2.3,
+    "score": 5,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 7.7,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8732,10 +9028,10 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 31,
+    "rank": 32,
     "delta": null,
     "insta": null,
-    "naver": 7.4,
+    "naver": 7.3,
     "score": 5,
     "google": null,
     "youtube": 2.6,
@@ -8784,16 +9080,16 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": null
+     "youtube": 1
     },
-    "rank": 110,
+    "rank": 61,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 0.4,
+    "score": 1.5,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 2.6,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8840,7 +9136,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 198,
+    "rank": 196,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -8894,16 +9190,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 199,
+    "rank": 197,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -8952,7 +9248,7 @@
      "google": null,
      "youtube": 2
     },
-    "rank": 35,
+    "rank": 39,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -9006,16 +9302,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": null
+     "youtube": 0
     },
-    "rank": 200,
+    "rank": 198,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": null,
-    "channels": 1,
+    "youtube": 0,
+    "channels": 2,
     "prev_rank": null
    },
    "profile": {
@@ -9064,7 +9360,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 201,
+    "rank": 199,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9120,7 +9416,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 111,
+    "rank": 108,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -9176,7 +9472,7 @@
      "google": null,
      "youtube": 19
     },
-    "rank": 13,
+    "rank": 11,
     "delta": null,
     "insta": null,
     "naver": 2.3,
@@ -9232,7 +9528,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 88,
+    "rank": 82,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -9288,10 +9584,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 78,
+    "rank": 80,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
+    "naver": 1.5,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -9344,7 +9640,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 202,
+    "rank": 200,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9400,7 +9696,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 203,
+    "rank": 201,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9456,11 +9752,11 @@
      "google": null,
      "youtube": null
     },
-    "rank": 30,
+    "rank": 29,
     "delta": null,
     "insta": null,
-    "naver": 5.4,
-    "score": 5.4,
+    "naver": 5.3,
+    "score": 5.3,
     "google": null,
     "youtube": null,
     "channels": 1,
@@ -9512,7 +9808,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 204,
+    "rank": 202,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9568,7 +9864,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 205,
+    "rank": 203,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9620,15 +9916,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 9,
+     "naver": 8,
      "google": null,
      "youtube": 0
     },
-    "rank": 54,
+    "rank": 55,
     "delta": null,
     "insta": null,
-    "naver": 3.5,
-    "score": 1.8,
+    "naver": 3.1,
+    "score": 1.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -9719,7 +10015,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 112,
+    "rank": 109,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -9814,7 +10110,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 70,
+    "rank": 71,
     "delta": null,
     "insta": null,
     "naver": 2.3,
@@ -9870,7 +10166,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 206,
+    "rank": 204,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9926,7 +10222,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 207,
+    "rank": 205,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -9982,7 +10278,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 208,
+    "rank": 206,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -10038,7 +10334,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 209,
+    "rank": 207,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -10094,7 +10390,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 89,
+    "rank": 83,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -10150,10 +10446,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 79,
+    "rank": 81,
     "delta": null,
     "insta": null,
-    "naver": 1.6,
+    "naver": 1.5,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -10206,7 +10502,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 210,
+    "rank": 208,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -10262,7 +10558,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 211,
+    "rank": 209,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -10314,15 +10610,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 7,
+     "naver": 8,
      "google": null,
      "youtube": null
     },
-    "rank": 39,
+    "rank": 36,
     "delta": null,
     "insta": null,
-    "naver": 2.7,
-    "score": 2.7,
+    "naver": 3.1,
+    "score": 3.1,
     "google": null,
     "youtube": null,
     "channels": 1,
@@ -10374,11 +10670,11 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 46,
+    "rank": 48,
     "delta": null,
     "insta": null,
-    "naver": 3.9,
-    "score": 2,
+    "naver": 3.8,
+    "score": 1.9,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -10430,11 +10726,11 @@
      "google": null,
      "youtube": null
     },
-    "rank": 26,
+    "rank": 27,
     "delta": null,
     "insta": null,
-    "naver": 7,
-    "score": 7,
+    "naver": 6.9,
+    "score": 6.9,
     "google": null,
     "youtube": null,
     "channels": 1,
@@ -10482,15 +10778,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 7,
+     "naver": 8,
      "google": null,
      "youtube": 1
     },
-    "rank": 37,
+    "rank": 38,
     "delta": null,
     "insta": null,
-    "naver": 2.7,
-    "score": 2.7,
+    "naver": 3.1,
+    "score": 2.9,
     "google": null,
     "youtube": 2.6,
     "channels": 2,
@@ -10542,7 +10838,7 @@
      "google": null,
      "youtube": null
     },
-    "rank": 212,
+    "rank": 210,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -10594,15 +10890,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": 0
     },
-    "rank": 127,
+    "rank": 211,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.2,
+    "naver": 0,
+    "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -10689,15 +10985,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": null
     },
-    "rank": 113,
+    "rank": 212,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.4,
+    "naver": 0,
+    "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
@@ -10749,7 +11045,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 128,
+    "rank": 131,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -10801,15 +11097,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 7,
+     "naver": 6,
      "google": null,
      "youtube": null
     },
-    "rank": 40,
+    "rank": 44,
     "delta": null,
     "insta": null,
-    "naver": 2.7,
-    "score": 2.7,
+    "naver": 2.3,
+    "score": 2.3,
     "google": null,
     "youtube": null,
     "channels": 1,
@@ -10857,15 +11153,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 67,
+     "naver": 65,
      "google": null,
      "youtube": 7
     },
-    "rank": 15,
+    "rank": 13,
     "delta": null,
     "insta": null,
-    "naver": 26,
-    "score": 22,
+    "naver": 24.8,
+    "score": 21.4,
     "google": null,
     "youtube": 17.9,
     "channels": 2,
@@ -10969,15 +11265,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 2,
      "google": null,
      "youtube": 0
     },
-    "rank": 129,
+    "rank": 107,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.2,
+    "naver": 0.8,
+    "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -15091,7 +15387,7 @@
    "blog": 3321,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "적당한 단맛·바디가 감칠맛을 받쳐줌"
     ],
@@ -15402,7 +15698,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -15681,7 +15977,7 @@
    "blog": 185,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "적당한 단맛·바디가 감칠맛을 받쳐줌"
     ],
@@ -15833,7 +16129,7 @@
    "blog": 109,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 5점이 디저트 단맛과 어울림"
     ],
@@ -16098,7 +16394,7 @@
    "blog": 1180,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -16183,7 +16479,7 @@
    "blog": 5411,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -16395,7 +16691,7 @@
    "blog": 59,
    "src": "profile",
    "pf": {
-    "s": 36,
+    "s": 35,
     "plus": [
      "적당한 단맛·바디가 감칠맛을 받쳐줌",
      "절제된 향이 재료 맛을 살림",
@@ -16828,7 +17124,7 @@
    "blog": 238,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -17265,7 +17561,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -17288,7 +17584,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -17532,7 +17828,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 1점 균형"
     ],
@@ -17622,7 +17918,7 @@
    "blog": 14205,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -18091,7 +18387,7 @@
    "blog": 102,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 1점 ↔ 무게 2점 균형"
     ],
@@ -18519,7 +18815,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 5점이 디저트 단맛과 어울림"
     ],
@@ -18967,7 +19263,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 5점이 디저트 단맛과 어울림"
     ],
@@ -19098,7 +19394,7 @@
    "blog": 2036,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -19115,7 +19411,7 @@
    "blog": 3064,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -20214,7 +20510,7 @@
    "blog": 7,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -20492,7 +20788,7 @@
    "blog": 49,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -20536,7 +20832,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -21049,7 +21345,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -21242,7 +21538,7 @@
    "blog": 11,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 4점 균형"
     ],
@@ -21313,7 +21609,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 4점 균형"
     ],
@@ -21568,7 +21864,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 2점이 기름기 5점을 씻어냄"
     ],
@@ -21585,7 +21881,7 @@
    "blog": 4,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 2점이 기름기 4점을 씻어냄"
     ],
@@ -21790,7 +22086,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "절제된 향이 재료 맛을 살림"
     ],
@@ -22624,7 +22920,7 @@
    "blog": 8,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -22656,7 +22952,7 @@
    "blog": 12,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -22972,7 +23268,7 @@
    "blog": 24,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 3점이 달콤한 양념과 어울림"
     ],
@@ -23207,7 +23503,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 4점 ↔ 무게 3점 균형"
     ],
@@ -23277,7 +23573,7 @@
    "blog": 2,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "적당한 단맛·바디가 감칠맛을 받쳐줌"
     ],
@@ -23518,7 +23814,7 @@
     "who": "안중민 (와인 소믈리에)"
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -23690,7 +23986,7 @@
    "blog": 13,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 4점 ↔ 무게 4점 균형"
     ],
@@ -23713,7 +24009,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -24087,7 +24383,7 @@
    "blog": 94,
    "src": "profile",
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 5점이 디저트 단맛과 어울림"
     ],
@@ -24397,7 +24693,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 3점이 디저트 단맛과 어울림"
     ],
@@ -24605,7 +24901,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 5점이 기름기 5점을 씻어냄"
     ],
@@ -24649,7 +24945,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 5점이 기름기 5점을 씻어냄"
     ],
@@ -24666,7 +24962,7 @@
    "blog": 2,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 1점 ↔ 무게 1점 균형"
     ],
@@ -24683,7 +24979,7 @@
    "blog": 30,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 1점 ↔ 무게 1점 균형"
     ],
@@ -24749,7 +25045,7 @@
    "blog": 5,
    "src": "profile",
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 4점 균형"
     ],
@@ -24950,7 +25246,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -26066,7 +26362,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 5점이 디저트 단맛과 어울림"
     ],
@@ -26089,7 +26385,7 @@
     "who": "강진희 (술아원 대표)"
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "단맛 5점이 매운맛 3점을 감싸줌"
     ],
@@ -26376,7 +26672,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -26641,7 +26937,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 2점이 기름기 5점을 씻어냄"
     ],
@@ -26686,7 +26982,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "절제된 향이 재료 맛을 살림"
     ],
@@ -27126,7 +27422,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 5점이 기름기 5점을 씻어냄"
     ],
@@ -30398,7 +30694,7 @@
     "who": "배혜정도가 공식 블로그"
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 3·탄산 2점이 기름기 5점을 씻어냄"
     ],
@@ -31160,7 +31456,7 @@
     "who": null
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "단맛 5점이 매운맛 3점을 감싸줌"
     ],
@@ -31682,7 +31978,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -31705,7 +32001,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -31772,7 +32068,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 3점 균형"
     ],
@@ -34264,7 +34560,7 @@
     "who": "스마트브루어리"
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "적당한 단맛·바디가 감칠맛을 받쳐줌"
     ],
@@ -34287,7 +34583,7 @@
     "who": "스마트브루어리"
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "술 단맛 3점이 디저트 단맛과 어울림"
     ],
@@ -37168,7 +37464,7 @@
     "who": "상주주조"
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "산미 4·탄산 5점이 기름기 5점을 씻어냄"
     ],
@@ -39041,7 +39337,7 @@
     "who": "양지술곳간"
    },
    "pf": {
-    "s": 4,
+    "s": 3,
     "plus": [
      "절제된 향이 재료 맛을 살림"
     ],
@@ -39448,7 +39744,7 @@
     "who": "코아베스트브루잉"
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 1점 균형"
     ],
@@ -41269,7 +41565,7 @@
     "who": "추성고을"
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 3점 ↔ 무게 2점 균형"
     ],
@@ -43600,7 +43896,7 @@
     "who": "내올담 양조장"
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 2점 균형"
     ],
@@ -45173,7 +45469,7 @@
     "who": null
    },
    "pf": {
-    "s": 6,
+    "s": 5,
     "plus": [
      "바디 2점 ↔ 무게 1점 균형"
     ],
@@ -51825,6 +52121,1051 @@
     "plus": [
      "바디 4점 ↔ 무게 4점 균형",
      "단맛 5점이 매운맛 3점을 감싸줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f71",
+   "es": 84,
+   "reason": "도수 높은 증류식 소주의 곡물 고소함에 견과류를 곁들이라는 시음 후기가 있는 조합입니다.",
+   "blog": 28,
+   "src": "blog",
+   "ev": {
+    "source": "네이버 블로그 가무치 25도·43도 비교 시음기",
+    "url": "https://blog.naver.com/jupiter0311/224267245477",
+    "quote": "견과류, 다크 초콜릿, 숙성 치즈가 잘 어울려요",
+    "who": null
+   },
+   "pf": {
+    "s": 9,
+    "plus": [],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f52",
+   "es": 84,
+   "reason": "43도의 묵직한 여운을 쌉쌀한 다크 초콜릿이 받쳐 준다는 시음 후기가 있는 조합입니다.",
+   "blog": 12,
+   "src": "blog",
+   "ev": {
+    "source": "네이버 블로그 가무치 25도·43도 비교 시음기",
+    "url": "https://blog.naver.com/jupiter0311/224267245477",
+    "quote": "견과류, 다크 초콜릿, 숙성 치즈가 잘 어울려요",
+    "who": null
+   },
+   "pf": {
+    "s": 9,
+    "plus": [],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f49",
+   "es": 84,
+   "reason": "숙성 치즈의 짭짤한 감칠맛이 고도수 증류식 소주와 어울린다는 시음 후기가 있는 조합입니다.",
+   "blog": 4,
+   "src": "blog",
+   "ev": {
+    "source": "네이버 블로그 가무치 25도·43도 비교 시음기",
+    "url": "https://blog.naver.com/jupiter0311/224267245477",
+    "quote": "견과류, 다크 초콜릿, 숙성 치즈가 잘 어울려요",
+    "who": null
+   },
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "도수 43%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f01",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 8번 짝지은 음식. 맛 프로필로는 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 47,
+   "src": "profile",
+   "pf": {
+    "s": 16,
+    "plus": [
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f07",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 6번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 4점 균형, 도수 43%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 58,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 4점 균형",
+     "도수 43%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f31",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 5번 짝지은 음식. 맛 프로필로는 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 37,
+   "src": "profile",
+   "pf": {
+    "s": 16,
+    "plus": [
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f05",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 4점 균형, 도수 43%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 22,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 4점 ↔ 무게 4점 균형",
+     "도수 43%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d218",
+   "f": "f66",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 23,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f01",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 8번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 11,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f07",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 6번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 4점 균형, 도수 40%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 31,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 4점 균형",
+     "도수 40%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f31",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 5번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 10,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f49",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 도수 40%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 2,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "도수 40%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f17",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 4점 균형, 도수 40%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 3,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 4점 균형",
+     "도수 40%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f71",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 14,
+   "src": "profile",
+   "pf": {
+    "s": 27,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f21",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 4점 균형, 도수 40%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 2,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 4점 균형",
+     "도수 40%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d219",
+   "f": "f55",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 도수 40%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 9,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 40%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f07",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 6번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 59%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 98166,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 59%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f15",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 5점 균형, 도수 59%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 32453,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 5점 ↔ 무게 5점 균형",
+     "도수 59%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "술 단맛 3점이 달콤한 양념과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f05",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 59%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 15135,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 59%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f03",
+   "es": 85,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 도수 59%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 21029,
+   "src": "profile",
+   "pf": {
+    "s": 16,
+    "plus": [
+     "도수 59%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f56",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 59%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 24987,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 59%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f08",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 도수 59%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 6941,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 59%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f33",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 도수 59%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 48567,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 59%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d220",
+   "f": "f61",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 도수 59%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 8635,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 59%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f22",
+   "es": 89,
+   "reason": "국가인증농식품 블로그가 초복 보양식에 어울리는 우리술로 삼계탕과 짝지은 약주입니다. 인삼·약재 향이 닭과 인삼을 넣은 국물 맛과 이어집니다.",
+   "blog": 449,
+   "src": "media",
+   "ev": {
+    "source": "국가인증농식품 블로그 '초복 보양식에 잘 어울리는 우리술 추천'",
+    "url": "https://blog.naver.com/k-goodfood/222795968520",
+    "quote": "삼계탕과 청주신선주",
+    "who": null
+   },
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f30",
+   "es": 86,
+   "reason": "다른 약주에서 양조장·전문가·후기가 5번 짝지은 음식. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 530,
+   "src": "profile",
+   "pf": {
+    "s": 9,
+    "plus": [],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f01",
+   "es": 87,
+   "reason": "다른 약주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 1625,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f51",
+   "es": 87,
+   "reason": "다른 약주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 술 단맛 3점이 디저트 단맛과 어울림. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 453,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "술 단맛 3점이 디저트 단맛과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f15",
+   "es": 87,
+   "reason": "다른 약주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 적당한 단맛·바디가 감칠맛을 받쳐줌, 술 단맛 3점이 달콤한 양념과 어울림. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 655,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "술 단맛 3점이 달콤한 양념과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f50",
+   "es": 87,
+   "reason": "다른 약주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 술 단맛 3점이 디저트 단맛과 어울림. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 320,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "술 단맛 3점이 디저트 단맛과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f08",
+   "es": 86,
+   "reason": "다른 약주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 373,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d221",
+   "f": "f49",
+   "es": 86,
+   "reason": "다른 약주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 46,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f01",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 8번 짝지은 음식. 맛 프로필로는 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 37850,
+   "src": "profile",
+   "pf": {
+    "s": 16,
+    "plus": [
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f07",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 6번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 4점 균형, 도수 42%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 53828,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 4점 균형",
+     "도수 42%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f31",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 5번 짝지은 음식. 맛 프로필로는 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 17113,
+   "src": "profile",
+   "pf": {
+    "s": 16,
+    "plus": [
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f05",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 4점 균형, 도수 42%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 11259,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 4점 ↔ 무게 4점 균형",
+     "도수 42%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f66",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 13858,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f71",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 2336,
+   "src": "profile",
+   "pf": {
+    "s": 9,
+    "plus": [],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f55",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 5점 균형, 도수 42%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 16698,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 4점 ↔ 무게 5점 균형",
+     "도수 42%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d222",
+   "f": "f52",
+   "es": 85,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 652,
+   "src": "profile",
+   "pf": {
+    "s": 9,
+    "plus": [],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f07",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 6번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 52%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 3460,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 52%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f17",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 52%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 1816,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 52%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f49",
+   "es": 87,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 도수 52%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 150,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 52%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f21",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 52%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 442,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 52%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f03",
+   "es": 85,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 도수 52%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 1180,
+   "src": "profile",
+   "pf": {
+    "s": 16,
+    "plus": [
+     "도수 52%가 진한 기름기·무게를 정리"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f56",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 5점 ↔ 무게 4점 균형, 도수 52%가 진한 기름기·무게를 정리. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 1096,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 5점 ↔ 무게 4점 균형",
+     "도수 52%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f33",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 도수 52%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 4132,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 52%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d223",
+   "f": "f61",
+   "es": 86,
+   "reason": "다른 증류주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 도수 52%가 진한 기름기·무게를 정리, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 439,
+   "src": "profile",
+   "pf": {
+    "s": 37,
+    "plus": [
+     "도수 52%가 진한 기름기·무게를 정리",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f08",
+   "es": 87,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 14번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 340,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f12",
+   "es": 87,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 9번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 911,
+   "src": "profile",
+   "pf": {
+    "s": 27,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f49",
+   "es": 87,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 8번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 61,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f53",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 6번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 4점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 486,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 4점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f47",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 4번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형, 술 단맛 3점이 달콤한 양념과 어울림. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 493,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "술 단맛 3점이 달콤한 양념과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f63",
+   "es": 85,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 4번 짝지은 음식. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 664,
+   "src": "profile",
+   "pf": {
+    "s": 9,
+    "plus": [],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f14",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 496,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 4점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "술 단맛 3점이 달콤한 양념과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d224",
+   "f": "f13",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 4점 ↔ 무게 4점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 164,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 4점 ↔ 무게 4점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f08",
+   "es": 87,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 14번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 45296,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "산미 3·탄산 2점이 기름기 4점을 씻어냄"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f12",
+   "es": 87,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 9번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 산미 3·탄산 2점이 기름기 3점을 씻어냄. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 45085,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "산미 3·탄산 2점이 기름기 3점을 씻어냄"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f49",
+   "es": 87,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 8번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 1209,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "산미 3·탄산 2점이 기름기 5점을 씻어냄"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f10",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 3번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 산미 3·탄산 2점이 기름기 3점을 씻어냄. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 58770,
+   "src": "profile",
+   "pf": {
+    "s": 56,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "산미 3·탄산 2점이 기름기 3점을 씻어냄"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f42",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 4점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 48111,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 4점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "산미 3·탄산 2점이 기름기 4점을 씻어냄",
+     "짠맛을 단맛·산미가 중화"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f36",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 2점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 3395,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 2점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "절제된 향이 재료 맛을 살림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f16",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 4점 균형, 적당한 단맛·바디가 감칠맛을 받쳐줌. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 13499,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 4점 균형",
+     "적당한 단맛·바디가 감칠맛을 받쳐줌",
+     "산미 3·탄산 2점이 기름기 4점을 씻어냄",
+     "술 단맛 3점이 달콤한 양념과 어울림"
+    ],
+    "minus": []
+   }
+  },
+  {
+   "d": "d225",
+   "f": "f67",
+   "es": 86,
+   "reason": "다른 탁주에서 양조장·전문가·후기가 2번 짝지은 음식. 맛 프로필로는 바디 3점 ↔ 무게 3점 균형, 산미 3·탄산 2점이 기름기 4점을 씻어냄. (맛 분석 — 이 술로 직접 확인된 조합은 아닙니다)",
+   "blog": 1888,
+   "src": "profile",
+   "pf": {
+    "s": 87,
+    "plus": [
+     "바디 3점 ↔ 무게 3점 균형",
+     "산미 3·탄산 2점이 기름기 4점을 씻어냄",
+     "술 단맛 3점이 디저트 단맛과 어울림"
     ],
     "minus": []
    }

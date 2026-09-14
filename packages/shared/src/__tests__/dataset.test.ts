@@ -33,14 +33,14 @@ describe("applyDataset (카탈로그 핫스왑)", () => {
     data.applyDataset(ds, "v2");
     expect(data.DATA.drinks).toHaveLength(50);
     data.resetDataset();
-    expect(data.DATA.drinks).toHaveLength(217);
+    expect(data.DATA.drinks).toHaveLength(225);
     expect(data.CATALOG_VERSION).toBe("bundled");
     expect(search("복순도가").hits[0]?.doc.id).toBe("d01");
   });
   it("형식이 틀리면 거부하고 기존 데이터를 유지", () => {
     expect(() => data.applyDataset({ drinks: [], foods: [], pairings: [] } as unknown as Dataset, "x")).toThrow();
     expect(() => data.applyDataset({} as Dataset, "x")).toThrow();
-    expect(data.DATA.drinks).toHaveLength(217);
+    expect(data.DATA.drinks).toHaveLength(225);
   });
 });
 
