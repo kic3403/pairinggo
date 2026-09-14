@@ -6,7 +6,7 @@
  * 관심지역이 있으면 그 지역 검색이 기본 버튼, 현재 위치는 보조 버튼(2026-09-14 — 관심지역을 강남으로 두고도 맨 위 "내 주변" 버튼을 눌러
  * 현재 위치 결과가 나온다는 사용자 지적). 관심지역을 "현재 위치로" 정했으면 그 좌표를 쓴다(지역 대표 좌표보다 정확).
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Heart from "./Heart";
 import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
@@ -15,7 +15,10 @@ type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "se
 type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null };
 type Res = { places: Place[]; source: string; error?: string; awardsYear?: number | null };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
-type Props = { mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean };
+type Props = ({ mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean }) & {
+  /** 버튼 줄 오른쪽에 붙일 것(음식 상세의 저장 버튼). 결과를 보는 동안은 제목 옆으로 옮겨 항상 보이게 한다 */
+  actions?: ReactNode;
+};
 
 /** 관심지역이 없을 때 바로 고를 수 있는 곳 — id는 packages/shared/src/regions.ts와 같아야 한다 */
 const QUICK: { id: string; label: string }[] = [
@@ -77,17 +80,18 @@ export default function NearbyPlaces(props: Props) {
   /** 관심지역으로 찾기 — "현재 위치로" 정한 지역이면 저장된 좌표, 아니면 지역 대표 좌표(API의 region) */
   const loadRegion = () => void (rg.gps ? load({ lat: rg.gps.lat, lng: rg.gps.lng }, `${rg.label}(현재 위치)`) : load({ region: rg.id }, `관심지역 ${rg.label}`));
 
-  /** 첫 줄 버튼 — 관심지역이 있으면 그게 기본, 현재 위치는 보조 */
+  /** 첫 줄 버튼 — 관심지역이 있으면 그게 기본(남색), 현재 위치는 주황. 오른쪽에 actions(저장) */
   const MainButtons = () => (
     <div className="btns">
       {rg.region ? (
         <>
           <button className="btn p" onClick={loadRegion}>📍 {rg.label}에서 찾기</button>
-          <button className="btn" onClick={useMyLocation}>지금 내 위치 주변</button>
+          <button className="btn f" onClick={useMyLocation}>지금 내 위치 주변</button>
         </>
       ) : (
-        <button className="btn p" onClick={useMyLocation}>내 주변에서 찾기</button>
+        <button className="btn f" onClick={useMyLocation}>내 주변에서 찾기</button>
       )}
+      {props.actions}
     </div>
   );
   const RegionButtons = () => (
@@ -110,6 +114,7 @@ export default function NearbyPlaces(props: Props) {
           </>
         )}
         {state === "closed" && <button type="button" className="btn xs" onClick={() => { setState("idle"); setRes(null); }}>열기</button>}
+        {(state === "done" || state === "closed" || state === "loading") && props.actions}
       </div>
       {state === "idle" && (
         <>
