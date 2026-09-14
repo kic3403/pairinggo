@@ -34,7 +34,7 @@ export default async function Home() {
     <div className="wrap">
       <section className="hero">
         <h1>전통주에 뭘 곁들일까</h1>
-        <p>술을 고르면 어울리는 안주를, 안주를 고르면 어울리는 술을 찾아 드립니다. 양조장과 소믈리에, 전문 매체가 실제로 한 말을 근거로 함께 보여 줍니다.</p>
+        <p>양조장과 소믈리에, 전문 매체, 대중이 추천한 데이터를 기반으로 전통주를 검색하면 어울리는 음식을, 음식을 검색하면 어울리는 전통주를 찾아 드립니다.</p>
         <ul className="stat">
           <li><b>{c.counts.drinks}</b><span>전통주</span></li>
           <li><b>{c.counts.foods}</b><span>음식·안주</span></li>
