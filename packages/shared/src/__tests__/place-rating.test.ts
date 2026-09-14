@@ -28,3 +28,12 @@ describe("구글 장소 평점 대조", () => {
     expect(ratingText({ score: 4, count: 1234 })).toBe("★ 4.0 (1,234)");
   });
 });
+
+describe("식당 평점순 정렬", () => {
+  it("평점 높은 순, 같으면 리뷰 많은 순, 평점 없는 곳은 원래 순서로 뒤에", async () => {
+    const { sortByRating } = await import("../place-rating");
+    const g = (score: number, count: number) => ({ score, count, source: "google" as const });
+    const out = sortByRating([{ n: "a" }, { n: "b", rating: g(4.1, 10) }, { n: "c", rating: g(4.5, 20) }, { n: "d" }, { n: "e", rating: g(4.5, 300) }]);
+    expect(out.map((x) => x.n)).toEqual(["e", "c", "b", "a", "d"]);
+  });
+});

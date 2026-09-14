@@ -19,6 +19,7 @@ export * from "./slug";
 export * from "./trend";
 export * from "./awards";
 export * from "./place-rating";
+export * from "./food-groups";
 export * from "./profile";
 export * from "./session";
 export * from "./consent";

@@ -5,7 +5,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buyLink, byDrink, drinkInRegion, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
+import { buyLink, byDrink, byKoName, drinkInRegion, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
@@ -65,7 +65,7 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
   const selected = cats.find((x) => x.name === filt.category)?.name ?? cats[0]?.name;
   // 이 지역에 없는 종류를 골랐을 때 — 조건에 맞는 술이 하나도 없으면(selected 없음) 안내하지 않는다(빈 값으로 조사 붙이다 오류 났음)
   const missingCat = filt.category && selected && selected !== filt.category ? filt.category : null;   // 이 지역에 없는 종류를 골랐을 때
-  const shown = selected ? groups.get(selected)! : [];
+  const shown = selected ? [...groups.get(selected)!].sort(byKoName) : [];   // 가나다순(2026-09-14 사용자 결정)
   const tabHref = (cat: string) => {
     const q = new URLSearchParams();
     if (filt.region) q.set("region", filt.region);

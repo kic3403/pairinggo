@@ -37,3 +37,14 @@ export function pickGoogleMatch(place: { name: string; lat: number; lng: number 
 }
 
 export const ratingText = (r: Pick<PlaceRating, "score" | "count">) => `★ ${r.score.toFixed(1)} (${r.count.toLocaleString("ko-KR")})`;
+
+/** 평점 높은 순 — 평점 있는 곳(점수 → 리뷰 수) 먼저, 없는 곳은 원래 순서(거리순) 그대로 뒤에 */
+export function sortByRating<T extends { rating?: PlaceRating | null }>(places: T[]): T[] {
+  return places.map((p, i) => ({ p, i })).sort((a, b) => {
+    const ra = a.p.rating, rb = b.p.rating;
+    if (ra && rb) return rb.score - ra.score || rb.count - ra.count || a.i - b.i;
+    if (ra) return -1;
+    if (rb) return 1;
+    return a.i - b.i;
+  }).map((x) => x.p);
+}
