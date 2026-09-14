@@ -7,7 +7,7 @@
  *  2) 앱 라우터는 화면을 옮겨도 레이아웃을 다시 만들지 않는다. 로그인 직후에도 이 컴포넌트가
  *     그대로 남아 예전 상태를 보여 주므로, 경로가 바뀌면 세션을 다시 확인한다.
  */
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { shouldClearSession } from "@pairinggo/shared";
 import { track } from "@/lib/track";
 import { AUTH_PENDING_KEY } from "./AuthAttempt";
@@ -30,9 +30,12 @@ export const useSaved = () => useContext(SavedCtx);
 const key = (k: SavedKind, id: string) => `${k}:${id}`;
 /** 이 문서에서 첫 화면 판정을 이미 했는지 — 모듈 변수라 앱 라우터 이동에는 유지되고, 새 페이지 로드에서만 초기화된다 */
 let entryChecked = false;
+/** 약관 동의 전에도 볼 수 있는 화면 — 나머지 화면에서는 가입 마무리(/profile)로 보낸다 */
+const CONSENT_FREE = ["/profile", "/privacy", "/terms", "/login", "/signup"];
 
 export default function SavedProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState<User>(null);
   const [keys, setKeys] = useState<Set<string>>(new Set());
@@ -64,8 +67,13 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
       if (!alive) return;
       if (!s?.user) { setUser(null); setKeys(new Set()); setReady(true); return; }
       setUser({ name: s.user.name ?? null, email: s.user.email ?? null });
-      const j = await fetch("/api/saved").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      const [j, c] = await Promise.all([
+        fetch("/api/saved").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+        fetch("/api/account/consent").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+      ]);
       if (!alive) return;
+      // 간편가입 직후이거나 약관이 바뀌어 동의가 필요한 회원 — 가입 마무리 화면으로(packages/shared/src/consent.ts)
+      if (c?.needed && !CONSENT_FREE.includes(pathname)) router.replace(`/profile?next=${encodeURIComponent(pathname)}`);
       setKeys(new Set((j?.items || []).map((x: { kind: SavedKind; item_id: string }) => key(x.kind, x.item_id))));
       setReady(true);
     })();

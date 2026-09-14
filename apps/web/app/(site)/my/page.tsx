@@ -131,6 +131,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
       <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }} style={{ marginTop: 34 }}>
         <button type="submit" className="btn">로그아웃</button>
       </form>
+      <p className="small muted" style={{ marginTop: 14 }}><Link href="/terms">이용약관</Link> · <Link href="/privacy"><b>개인정보처리방침</b></Link> · <Link href="/withdraw">회원 탈퇴</Link></p>
     </div>
   );
 }

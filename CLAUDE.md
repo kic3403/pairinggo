@@ -31,7 +31,7 @@
 - 페어링 묶음: official·sommelier=**전문가픽**, media·blog=**대중픽**, profile·ai=맛 분석(`pairing/pick.ts`). 회원 '먹어봤어요'(어울렸다·보통·별로, `pairing_ratings`, `/api/ratings`)는 근거 점수·등급과 섞지 않는다. 첫 화면 로그아웃 판정은 **문서당 한 번**(앱 라우터 이동마다 다시 판정하면 링크로 들어와 로그인한 회원이 로그아웃된다).
 - 회원 추천 페어링(회원픽, docs/13): 글은 바로 게시, 하트(`member_pick_likes`) 많은 순. 한 글 하트 `MEMBER_PICK_LIKES_MIN`(3) 또는 같은 조합 글 `MEMBER_PICK_MIN`(2)이면 `pairings` src 'user' 자동 생성(`lib/member-picks.ts`). users 조인은 FK 이름 지정(`users!member_picks_user_id_fkey`). 닉네임만 노출, 글 140자·링크 금지, 사진 1장(Storage `member-picks`), 카탈로그에 없는 이름은 `/admin/picks` 검수 후. 카탈로그 캐시는 15초마다 version을 확인한다(다른 프로세스의 발행 반영).
 - 회원 프로필: 가입 때 성별·생년월일(만 19세 이상)·시도 필수(`packages/shared/src/profile.ts`), 소셜 회원은 `/profile`. 로그인 회원의 events·search_logs에 `user_id`가 붙는다.
-- 로그인 공개 전 개인정보처리방침·수집 동의 필요(성별·생년월일·지역·행동 로그 연결 포함). 주문을 받으면 양조장에 주문자 정보를 넘기므로 제3자 제공 동의도 별도.
+- 개인정보처리방침 `/privacy`·이용약관 `/terms`(본문 `_components/legal/`, 운영자·시행일 `lib/legal.ts`) + 가입 동의(이용약관·개인정보 수집·이용·만 19세, `packages/shared/src/consent.ts`, `users.consent_version`). 간편가입은 계정 연결 뒤 `/profile`(가입 마무리)에서 동의 — `SavedProvider`가 동의 전 회원을 보낸다. **수집 항목·목적·위탁이 바뀌면 방침 본문 + `CONSENT_VERSION`을 올린다**(기존 회원 재동의). 탈퇴 `/withdraw`(`deleteAccount`: cascade + 근거 글·사진 삭제, 로그는 user_id null). 주문을 받으면 양조장에 주문자 정보를 넘기므로 제3자 제공 동의는 그때 별도.
 - 비밀키는 apps/web/.env.local(SUPABASE_SERVICE_ROLE_KEY·CRON_SECRET·AUTH_*)과 packages/db/.env(DATABASE_URL)에만. 미니앱 번들엔 VITE_API_BASE_URL·VITE_KAKAO_JS_KEY(도메인 제한 공개 키)만. KAKAO_REST_KEY는 apps/web 서버 전용. 채팅·커밋에 키 금지.
 - 카탈로그 파생값(D·F·byDrink·DOCS 등)은 `export let` 라이브 바인딩 — 모듈 로드 시 복사하지 말고 사용 시점에 읽는다(applyDataset 핫스왑 대응).
 - 온라인 판매 불가 주류(`NON_TRAD`, online_sellable=false)는 구매 링크 대신 "온라인 직배송 불가" 안내.

@@ -1,0 +1,135 @@
+/**
+ * 개인정보처리방침 본문 — /privacy 페이지가 쓴다. 가입 동의 상자에는 요약(PrivacyConsentSummary)만 넣는다.
+ * 실제 저장 항목과 맞춰 둔다: users(0007·0008·0013·0017) · saved_items · pairing_ratings · member_picks·likes · events·search_logs(user_id).
+ * 항목·목적·위탁이 바뀌면 lib/legal.ts 시행일과 shared CONSENT_VERSION을 함께 올린다.
+ */
+import { LEGAL, contactEmail } from "@/lib/legal";
+import ExtLink from "../ExtLink";
+
+export const COLLECTION_ROWS: { when: string; items: string; purpose: string }[] = [
+  { when: "이메일로 가입", items: "이메일, 비밀번호(암호화해 저장), 닉네임", purpose: "회원 식별, 로그인" },
+  { when: "간편가입(카카오·네이버·구글)", items: "각 서비스의 회원 식별값, 이메일(제공하는 경우), 닉네임, 프로필 사진 주소", purpose: "회원 식별, 로그인" },
+  { when: "가입할 때(공통)", items: "성별, 생년월일, 사는 시·도", purpose: "만 19세 이상 확인(생년월일), 성별·연령대·지역별 페어링 선호 통계" },
+  { when: "서비스를 이용할 때", items: "저장한 전통주·음식·음식점, 먹어봤어요 평가, 회원 추천 글·사진·하트, 검색어, 화면 방문·링크 클릭 기록, 로그인 시각·실패 횟수", purpose: "저장·평가·추천 기능 제공, 페어링 통계와 서비스 개선, 부정 로그인 방지" },
+  { when: "자동으로 생성", items: "접속 IP, 브라우저 정보, 접속 시각(서버 기록), 로그인 쿠키", purpose: "로그인 유지, 보안·장애 대응" },
+];
+
+export function CollectionTable() {
+  return (
+    <div className="legal-table">
+      <table>
+        <thead><tr><th scope="col">언제</th><th scope="col">수집 항목</th><th scope="col">이용 목적</th></tr></thead>
+        <tbody>
+          {COLLECTION_ROWS.map((r) => <tr key={r.when}><th scope="row">{r.when}</th><td>{r.items}</td><td>{r.purpose}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/** 가입 동의 상자에 넣는 요약 — 개인정보 보호법 제15조 제2항의 알릴 사항 4가지 */
+export function PrivacyConsentSummary() {
+  return (
+    <div className="legal legal-mini">
+      <p><b>1. 수집 항목과 이용 목적</b></p>
+      <CollectionTable />
+      <p><b>2. 보유 기간</b> 회원 탈퇴 때까지. 탈퇴하면 바로 지웁니다. 검색·방문 기록은 회원과의 연결을 끊어 누구 것인지 알 수 없는 통계로만 남깁니다.</p>
+      <p><b>3. 동의를 거부할 권리</b> 동의하지 않을 수 있습니다. 다만 위 항목은 회원 서비스에 꼭 필요해 동의하지 않으면 가입할 수 없습니다. 가입하지 않아도 전통주·음식 검색과 페어링 보기는 그대로 쓸 수 있습니다.</p>
+      <p><b>4. 공개되는 정보</b> 회원 추천 글을 올리면 닉네임·글·사진이 누구에게나 보입니다.</p>
+      <p className="muted">자세한 내용은 개인정보처리방침(사이트 맨 아래 링크)에 있습니다.</p>
+    </div>
+  );
+}
+
+export default function PrivacyPolicy() {
+  return (
+    <div className="legal">
+      <p>{LEGAL.operator}(이하 &lsquo;운영자&rsquo;)는 {LEGAL.service}({LEGAL.site}) 이용자의 개인정보를 「개인정보 보호법」에 따라 처리하며, 이용자가 자신의 정보가 어떻게 쓰이는지 쉽게 알 수 있도록 이 방침을 공개합니다.</p>
+
+      <h2>1. 처리하는 개인정보와 목적</h2>
+      <p>회원가입 없이도 전통주·음식 검색과 페어링 보기를 쓸 수 있습니다. 이때는 회원을 알아볼 수 있는 정보를 받지 않고, 방문 세션마다 새로 만드는 임의 값으로 화면 방문·검색 기록만 남깁니다.</p>
+      <CollectionTable />
+      <p>성별·생년월일·사는 시·도는 개별 회원을 알아보는 데 쓰지 않고, &ldquo;30대 여성이 많이 찾는 조합&rdquo;처럼 묶은 통계로만 봅니다. 민감정보와 주민등록번호는 받지 않습니다.</p>
+
+      <h2>2. 공개되는 정보</h2>
+      <p>회원 추천에 글을 올리면 <b>닉네임, 글(140자 이내), 사진 1장</b>이 사이트에 공개됩니다. 이메일·성별·나이·지역은 공개하지 않습니다. 하트를 많이 받은 추천은 페어링 카드에도 닉네임과 한 줄 글이 함께 실립니다. 사진에 다른 사람의 얼굴이나 개인정보가 담기지 않도록 주의해 주세요.</p>
+
+      <h2>3. 보유 기간과 파기</h2>
+      <ul>
+        <li><b>회원 정보와 이용 기록</b> — 회원 탈퇴 때까지 보관하고, 탈퇴하면 지체 없이 지웁니다. 저장 목록·먹어봤어요 평가·회원 추천 글·사진·하트, 페어링 카드에 실린 한 줄 글과 닉네임도 함께 지웁니다.</li>
+        <li><b>검색·방문 기록</b> — 탈퇴하면 회원과의 연결을 끊어, 누구의 기록인지 알 수 없는 통계 자료로만 남깁니다.</li>
+        <li><b>간편가입 후 동의하지 않은 계정</b> — 동의 화면에서 &lsquo;동의하지 않고 나가기&rsquo;를 누르면 계정 연결 정보를 바로 지웁니다.</li>
+        <li><b>서버 접속 기록</b> — 호스팅 업체(아래 5번)가 보안·장애 대응을 위해 자체 정책에 따른 기간 동안 보관합니다.</li>
+      </ul>
+      <p>지운 정보는 데이터베이스와 파일 저장소에서 복구할 수 없게 삭제합니다. 종이 문서로는 개인정보를 보관하지 않습니다.</p>
+
+      <h2>4. 제3자 제공</h2>
+      <p>운영자는 이용자의 개인정보를 다른 곳에 제공하지 않습니다. 법령에 특별한 규정이 있는 경우만 예외입니다. 앞으로 주문 기능이 생겨 양조장·판매처에 주문자 정보를 넘겨야 하면, 그때 따로 동의를 받습니다.</p>
+      <p>간편가입을 하면 카카오·네이버·구글이 이용자가 그 서비스 화면에서 동의한 범위의 정보(식별값·이메일·닉네임·프로필 사진)를 운영자에게 보내 줍니다.</p>
+
+      <h2>5. 처리 위탁과 국외 이전</h2>
+      <p>서비스 운영을 위해 아래 업체에 개인정보 처리를 맡깁니다.</p>
+      <div className="legal-table">
+        <table>
+          <thead><tr><th scope="col">업체</th><th scope="col">맡기는 일</th><th scope="col">저장·처리 위치</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Supabase Inc.</th><td>회원 정보·이용 기록 데이터베이스, 회원 추천 사진 저장</td><td>대한민국(서울 리전)</td></tr>
+            <tr><th scope="row">Vercel Inc.</th><td>웹사이트 호스팅, 서버 기능 실행, 접속 기록</td><td>미국</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>국외 이전(Vercel Inc.)</b> 사이트를 이용하면 요청을 처리하는 과정에서 정보가 미국에 있는 서버를 거칩니다.</p>
+      <ul>
+        <li>이전 항목: 위 1번의 항목 중 사이트 이용 과정에서 전송되는 정보, 접속 IP·브라우저 정보</li>
+        <li>이전 국가·시기·방법: 미국, 사이트를 이용할 때마다 암호화된 네트워크(HTTPS)로 전송</li>
+        <li>이전받는 자: Vercel Inc.(privacy@vercel.com)</li>
+        <li>이용 목적·보유 기간: 웹사이트 호스팅과 서버 실행 — 요청 처리 후 지우며, 접속 기록은 Vercel의 보관 정책에 따릅니다</li>
+        <li>거부 방법과 영향: 이전을 원하지 않으면 사이트 이용을 멈추고 탈퇴할 수 있습니다. 호스팅에 꼭 필요한 이전이라 거부하면 서비스를 이용할 수 없습니다.</li>
+      </ul>
+
+      <h2>6. 위치 정보</h2>
+      <p>주변 판매점·식당을 찾을 때 이용자가 &lsquo;내 주변&rsquo;을 누르고 브라우저 위치 권한을 허용한 경우에만 현재 위치(좌표)를 씁니다. 좌표는 카카오 로컬 검색에 보내 가까운 곳을 찾는 데만 쓰고 운영자 서버에 저장하지 않습니다. 관심 지역을 기억하려고 이용자 기기(브라우저 저장소)에 대략의 좌표를 남길 수 있으며, 브라우저 데이터를 지우면 사라집니다.</p>
+
+      <h2>7. 쿠키와 브라우저 저장소</h2>
+      <p>로그인을 유지하려고 로그인 쿠키(최대 24시간)를 쓰고, 관심 지역·방문 세션 값을 브라우저 저장소에 둡니다. 광고나 외부 분석 도구의 추적 쿠키는 쓰지 않습니다. 브라우저 설정에서 쿠키를 막을 수 있지만, 그러면 로그인할 수 없습니다.</p>
+
+      <h2>8. 이용자의 권리와 행사 방법</h2>
+      <ul>
+        <li>내 정보 보기·고치기: 마이페이지 → 프로필</li>
+        <li>저장·먹어봤어요 평가 취소: 각 화면에서 같은 버튼을 다시 누르기</li>
+        <li>회원 추천 글 하나만 지우기: 아래 이메일로 요청</li>
+        <li>탈퇴(전체 삭제): 마이페이지 맨 아래 &lsquo;회원 탈퇴&rsquo;</li>
+        <li>열람·정정·삭제·처리정지 요구: 아래 개인정보 보호책임자 이메일로 요청하면 10일 안에 조치하고 결과를 알려 드립니다. 법정대리인이나 위임받은 사람도 요청할 수 있습니다.</li>
+      </ul>
+
+      <h2>9. 안전성 확보 조치</h2>
+      <ul>
+        <li>비밀번호는 복원할 수 없는 방식(scrypt)으로 암호화해 저장합니다.</li>
+        <li>모든 통신은 HTTPS로 암호화합니다.</li>
+        <li>데이터베이스 접근 키는 서버에만 두고, 운영 화면은 별도 비밀번호로 막습니다.</li>
+        <li>로그인을 10번 연속 실패하면 15분 동안 잠급니다.</li>
+      </ul>
+
+      <h2>10. 만 19세 미만</h2>
+      <p>주류 정보 서비스라 만 19세 미만은 가입할 수 없고, 그 정보를 받지 않습니다.</p>
+
+      <h2>11. 개인정보 보호책임자</h2>
+      <ul>
+        <li>이름: {LEGAL.officer.name} ({LEGAL.officer.role})</li>
+        <li>이메일: {contactEmail()}</li>
+      </ul>
+
+      <h2>12. 권익 침해 구제</h2>
+      <p>개인정보 침해에 대한 상담이나 신고는 아래 기관에도 할 수 있습니다.</p>
+      <ul>
+        <li>개인정보분쟁조정위원회: 1833-6972, <ExtLink href="https://www.kopico.go.kr" event="external_link" props={{ from: "privacy" }}>www.kopico.go.kr</ExtLink></li>
+        <li>개인정보침해신고센터: 118, <ExtLink href="https://privacy.kisa.or.kr" event="external_link" props={{ from: "privacy" }}>privacy.kisa.or.kr</ExtLink></li>
+        <li>대검찰청: 1301, <ExtLink href="https://www.spo.go.kr" event="external_link" props={{ from: "privacy" }}>www.spo.go.kr</ExtLink></li>
+        <li>경찰청: 182, <ExtLink href="https://ecrm.police.go.kr" event="external_link" props={{ from: "privacy" }}>ecrm.police.go.kr</ExtLink></li>
+      </ul>
+
+      <h2>13. 방침의 변경</h2>
+      <p>이 방침은 {LEGAL.effective}부터 적용합니다. 내용이 바뀌면 적용 7일 전(이용자에게 불리하거나 수집 항목이 늘어나면 30일 전)부터 사이트에 알리고, 필요하면 다시 동의를 받습니다.</p>
+    </div>
+  );
+}

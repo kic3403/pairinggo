@@ -8,7 +8,10 @@ import { signUpWithEmail } from "@/lib/account";
 import AuthAttempt from "../_components/AuthAttempt";
 import PasswordField from "../_components/PasswordField";
 import ProfileFields from "../_components/ProfileFields";
-import type { Gender, Sido } from "@pairinggo/shared";
+import { consentFromForm, consentProblem, type Gender, type Sido } from "@pairinggo/shared";
+import ConsentFields from "../_components/ConsentFields";
+import Terms from "../_components/legal/Terms";
+import { PrivacyConsentSummary } from "../_components/legal/PrivacyPolicy";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "회원가입 | 페어링GO", robots: { index: false } };
@@ -30,6 +33,9 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
 
     // 브라우저 검사와 별개로 서버에서도 한 번 더 — 자바스크립트가 꺼진 경우
     if (password !== confirm) redirect(`/signup?error=${encodeURIComponent("비밀번호가 서로 다릅니다. 다시 입력해 주세요.")}&next=${encodeURIComponent(to)}`);
+
+    const noConsent = consentProblem(consentFromForm((k) => formData.get(k)));
+    if (noConsent) redirect(`/signup?error=${encodeURIComponent(noConsent)}&next=${encodeURIComponent(to)}`);
 
     const profile = { gender: String(formData.get("gender") ?? "") as Gender, birthDate: String(formData.get("birthDate") ?? ""), sido: String(formData.get("sido") ?? "") as Sido };
     const r = await signUpWithEmail(email, password, name, profile);
@@ -58,6 +64,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
         <PasswordField name="password2" label="비밀번호 확인" autoComplete="new-password" minLength={8} confirmOf="password" />
         <label className="field"><span>닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택</span></span><input name="name" type="text" maxLength={20} placeholder="비우면 이메일 앞부분을 씁니다" /></label>
         <ProfileFields />
+        <ConsentFields details={{ terms: <Terms />, privacy: <PrivacyConsentSummary /> }} />
         <button type="submit" className="btn p" style={{ width: "100%" }}>가입하고 시작하기</button>
       </form>
 
@@ -68,6 +75,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
       {!!social.length && (
         <>
           <div className="divider">간편가입</div>
+          <p className="small muted" style={{ margin: "0 0 10px" }}>계정을 연결한 뒤 약관 동의와 프로필 입력 화면으로 이어집니다.</p>
           <div style={{ display: "grid", gap: 10 }}>
             {social.map((p) => (
               <form key={p} action={async () => { "use server"; await signIn(p, { redirectTo: next }); }}>
@@ -79,7 +87,8 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
       )}
 
       <p className="small muted" style={{ marginTop: 22 }}>
-        가입하면 이메일·닉네임·성별·생년월일·사는 시도를 저장합니다. 성별·연령대·지역별 페어링 통계에만 쓰고 개인을 식별하는 데 쓰지 않습니다. 주류 정보 서비스라 만 19세 이상만 가입할 수 있습니다. 페어링GO는 주류를 직접 판매하지 않으며, 만 19세 이상만 주류를 구매할 수 있습니다.
+        성별·생년월일·사는 시·도는 성별·연령대·지역별 페어링 통계에만 쓰고 개인을 알아보는 데 쓰지 않습니다. 주류 정보 서비스라 만 19세 이상만 가입할 수 있습니다. 페어링GO는 주류를 직접 판매하지 않습니다.
+        {" "}<Link href="/terms">이용약관</Link> · <Link href="/privacy"><b>개인정보처리방침</b></Link>
       </p>
     </div>
   );
