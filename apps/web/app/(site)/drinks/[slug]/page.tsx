@@ -104,6 +104,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>
+          {/* 파는 곳 찾기는 페어링 목록 위에 — 온라인 구매 바로 아래(음식 상세의 맛집 칸과 같은 자리) */}
+          <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />
           <h2 id="pairings">{josa(drink.name, "과/와")} 어울리는 음식 {items.length}가지</h2>
           <p className="small muted" style={{ marginTop: -6 }}>
             어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 전문가픽은 양조장·소믈리에 추천, 대중픽은 블로그·유튜브 후기에서 확인된 조합이고, 먹어본 회원들의 평가가 함께 쌓입니다.
@@ -114,7 +116,6 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <PairingCards items={items} />
             </PickTabs>
           </RatingsProvider>
-          <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />
         </div>
 
         <aside>
