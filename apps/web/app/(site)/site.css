@@ -502,3 +502,49 @@ p { margin: 0 0 12px; }
 /* 식당 구글 평점 — ★ 4.3 (512) Google */
 .place .rating { display: inline-flex; align-items: center; gap: 4px; margin-right: 8px; color: #B8860B; font-weight: 700; }
 .place .rating i { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--muted); }
+
+/* ---------- 앱형 모바일 레이아웃(2026-09-14, 데일리샷·캐치테이블 참고 — docs/19 §5) ---------- */
+/* 하단 탭바 — 767px 이하에서만. 헤더 메뉴는 숨기고 탭바가 대신한다 */
+.tabbar { display: none; }
+.actionbar { display: none; }
+@media (max-width: 767px) {
+  .site-nav { display: none; }
+  .tabbar { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: var(--surface); border-top: 1px solid var(--line); padding: 4px 0 calc(4px + env(safe-area-inset-bottom)); }
+  .tabbar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 52px;
+    font-size: 11px; font-weight: 600; color: var(--muted); text-decoration: none; }
+  .tabbar a.on { color: var(--navy); }
+  .tabbar a:focus-visible { outline: 2px solid var(--navy); outline-offset: -4px; border-radius: 10px; }
+  body:has(.tabbar) .site-foot { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+
+  /* 상세 하단 고정 버튼 — ♡ 저장 | 목록 이동 · 핵심 행동 */
+  .actionbar { display: flex; align-items: center; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: var(--surface); border-top: 1px solid var(--line); padding: 8px 14px calc(8px + env(safe-area-inset-bottom)); box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06); }
+  .actionbar .ab-save { flex: none; }
+  .actionbar .ab-save .btn { min-height: 46px; padding: 0 12px; }
+  .actionbar .ab-main { flex: 1; display: grid; grid-template-columns: auto 1fr; gap: 8px; min-width: 0; }
+  .actionbar .ab-main .btn { min-height: 46px; padding: 0 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body:has(.actionbar) .site-foot { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
+  html { scroll-padding-top: 70px; }
+}
+
+/* 페어링 카드 접기 — 전체 탭은 10장까지(PickTabs) */
+.pick-wrap[data-collapsed="1"] .cards > li:nth-child(n+11) { display: none; }
+.more-row { justify-content: center; margin-top: 14px; }
+.more-row .btn { min-width: 220px; }
+
+/* 맛 프로필 막대(ProfileBars) */
+.pbars { margin: 14px 0 4px; max-width: 420px; }
+.pbars h3 { font-size: 13px; color: var(--ink2); margin: 0 0 6px; }
+.pbars dl { margin: 0; display: grid; gap: 5px; }
+.pbars dl > div { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 10px; }
+.pbars dt { font-size: 13px; color: var(--muted); font-weight: 600; }
+.pbars dd { margin: 0; display: flex; align-items: center; gap: 4px; }
+.pbars dd i { width: 26px; height: 8px; border-radius: 4px; background: var(--line); }
+.pbars dd i.on { background: var(--navy); }
+.pbars dd b { font-size: 12px; color: var(--ink2); margin-left: 6px; font-variant-numeric: tabular-nums; }
+
+/* 홈 음식 종류 칩 */
+.group-chips a { font-weight: 700; }
+.m-search { display: none; }
+@media (max-width: 767px) { .m-search { display: inline-flex; margin-left: auto; padding: 8px; color: var(--ink); } }

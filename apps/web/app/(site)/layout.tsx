@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import AuthNav from "./_components/AuthNav";
+import MobileTabBar from "./_components/MobileTabBar";
 import PageView from "./_components/PageView";
 import RegionBar from "./_components/RegionBar";
 import RegionProvider from "./_components/RegionProvider";
@@ -25,6 +26,10 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <span>페어링<span style={{ color: "var(--food)" }}>GO</span></span>
           </Link>
           <SearchBox compact />
+          {/* 휴대폰: 헤더 메뉴 대신 하단 탭바 — 탭바가 없는 상세 화면에서도 검색으로 갈 수 있게 돋보기만 남긴다 */}
+          <Link href="/search" className="m-search" aria-label="검색">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.2-4.2" /></svg>
+          </Link>
           <nav className="site-nav" aria-label="주요 메뉴">
             <Link href="/search" className="search-link">검색</Link>
             <Link href="/drinks">전통주</Link>
@@ -54,6 +59,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </p>
         </div>
       </footer>
+      <MobileTabBar />
     </RegionProvider>
     </SavedProvider>
   );

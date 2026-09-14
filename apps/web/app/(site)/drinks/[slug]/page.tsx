@@ -14,6 +14,8 @@ import { PairingCards, pickCounts, foodHref, type CardItem } from "../../_compon
 import ExtLink from "../../_components/ExtLink";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
+import DetailActionBar from "../../_components/DetailActionBar";
+import ProfileBars from "../../_components/ProfileBars";
 
 export const revalidate = 600;
 
@@ -68,6 +70,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       {!!drink.awards?.length && (
         <ul className="tags">{drink.awards.map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
       )}
+      <ProfileBars kind="drink" profile={drink.profile} />
 
       {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
       <section className="buy">
@@ -141,6 +144,12 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           </div>
         </aside>
       </div>
+      <DetailActionBar save={<Heart kind="drink" id={drink.id} name={drink.name} variant="button" />}>
+        <a className="btn" href="#pairings">어울리는 음식 {items.length}</a>
+        {sellable && !bl.fallback && <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_bar" }}>공식몰 구매 ↗</ExtLink>}
+        {sellable && bl.fallback && <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_bar_fallback" }}>네이버쇼핑 ↗</ExtLink>}
+        {!sellable && <a className="btn p" href="#places">파는 곳 찾기</a>}
+      </DetailActionBar>
     </div>
   );
 }

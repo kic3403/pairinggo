@@ -9,7 +9,7 @@ import { loadAwards } from "@/lib/awards";
 import { listPosts } from "@/lib/member-picks";
 import PickFeed from "./_components/PickFeed";
 import { topDrinks } from "@/lib/popular";
-import { buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
+import { FOOD_GROUPS, buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
 export const revalidate = 600;
@@ -76,6 +76,17 @@ export default async function Home() {
         ) : (
           <div className="cta">회원이 "이 술엔 이 음식"을 올리면 바로 여기에 보이고, 다른 회원이 ♥로 공감합니다. 전통주·음식 화면의 <b>🙌 추천하기</b> 버튼이나 <Link href="/picks">회원 추천</Link>에서 첫 글을 남겨 보세요.</div>
         )}
+      </section>
+
+      {/* 음식 종류별로 찾기 — 캐치테이블 홈의 "음식종류별 BEST" 칩 줄(docs/19 §5). 대분류는 shared food-groups.ts */}
+      <section>
+        <div className="section-head"><h2>음식 종류별로 찾기</h2><Link href="/foods">전체 보기</Link></div>
+        <ul className="tabs group-chips" style={{ marginTop: 0 }}>
+          {FOOD_GROUPS.map((g) => {
+            const n = c.dataset.foods.filter((f) => g.categories.includes(f.category)).length;
+            return n ? <li key={g.key}><Link href={`/foods?group=${encodeURIComponent(g.key)}`}>{g.key}<span className="cnt">{n}</span></Link></li> : null;
+          })}
+        </ul>
       </section>
 
       <section>

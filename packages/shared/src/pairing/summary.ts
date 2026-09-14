@@ -31,6 +31,13 @@ export function cardSummary(p: Pick<Pairing, "pf" | "reason">): CardSummary {
 const DRINK_AXES: [keyof DrinkProfile, string][] = [["body", "바디"], ["acid", "산미"], ["sweet", "단맛"], ["fizz", "탄산"], ["aroma", "향"]];
 const FOOD_AXES: [keyof FoodProfile, string][] = [["weight", "무게"], ["fat", "기름기"], ["spice", "매운맛"], ["umami", "감칠맛"], ["salt", "짠맛"], ["sweet", "단맛"]];
 
+/** 맛 프로필 축 목록 — 상세 화면 막대(데일리샷 Tasting Notes 자리)와 카드 한 줄이 같은 순서·이름을 쓴다. 값은 1~5 */
+export function profileAxes(kind: "drink" | "food", p: DrinkProfile | FoodProfile | undefined): { key: string; label: string; value: number }[] {
+  if (!p) return [];
+  const axes = (kind === "drink" ? DRINK_AXES : FOOD_AXES) as [string, string][];
+  return axes.map(([key, label]) => ({ key, label, value: Math.max(0, Math.min(5, Number((p as Record<string, number>)[key]) || 0)) }));
+}
+
 /** 맛 프로필 한 줄 — "바디 3 · 산미 2 · …". 프로필이 없으면 null */
 export function profileLine(kind: "drink", p: DrinkProfile | undefined): string | null;
 export function profileLine(kind: "food", p: FoodProfile | undefined): string | null;

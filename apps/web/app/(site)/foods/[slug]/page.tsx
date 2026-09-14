@@ -12,6 +12,8 @@ import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, drinkHref, type CardItem } from "../../_components/PairingCards";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
+import DetailActionBar from "../../_components/DetailActionBar";
+import ProfileBars from "../../_components/ProfileBars";
 
 export const revalidate = 600;
 
@@ -57,6 +59,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         <span>{food.category}</span>
         {!!food.tags?.length && <><span className="muted"> · </span><span>{food.tags.join(" · ")}</span></>}
       </div>
+      <ProfileBars kind="food" profile={food.profile} />
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>
@@ -92,6 +95,10 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
           </div>
         </aside>
       </div>
+      <DetailActionBar save={<Heart kind="food" id={food.id} name={food.name} variant="button" />}>
+        <a className="btn" href="#pairings">어울리는 전통주 {items.length}</a>
+        <a className="btn f" href="#places">맛집 찾기</a>
+      </DetailActionBar>
     </div>
   );
 }

@@ -2,11 +2,13 @@
 /**
  * 페어링 목록의 묶음 탭 — 전체 · 전문가픽 · 대중픽 · 맛 분석.
  * 카드는 서버에서 모두 그려 두고(검색엔진·정적 생성용), 탭은 목록 감싸개의 data-show 값만 바꿔 CSS로 거른다.
+ * "전체" 탭은 처음 COLLAPSE_AT장만 보이고 "나머지 N개 더 보기"로 편다(2026-09-14 — 휴대폰에서 카드 34장이 세로 15,000px, 데일리샷·캐치테이블처럼 목록은 접는다).
  */
 import { useState, type ReactNode } from "react";
 import type { PickKey } from "@pairinggo/shared/pick";
 
 type Tab = "all" | PickKey;
+const COLLAPSE_AT = 10;
 const LABEL: Record<Tab, string> = { all: "전체", expert: "전문가픽", public: "대중픽", member: "회원픽", profile: "맛 분석" };
 const HINT: Record<Tab, string> = {
   all: "",
@@ -18,10 +20,11 @@ const HINT: Record<Tab, string> = {
 
 export default function PickTabs({ counts, children }: { counts: Record<PickKey, number>; children: ReactNode }) {
   const [tab, setTab] = useState<Tab>("all");
+  const [open, setOpen] = useState(false);
   const total = counts.expert + counts.public + counts.member + counts.profile;
   const tabs: Tab[] = (["all", "expert", "public", "member", "profile"] as Tab[]).filter((t) => t !== "member" || counts.member > 0);   // 회원픽은 있을 때만 탭을 보인다
   return (
-    <div className="pick-wrap" data-show={tab}>
+    <div className="pick-wrap" data-show={tab} data-collapsed={tab === "all" && !open && total > COLLAPSE_AT ? "1" : undefined}>
       <ul className="tabs pick-tabs" role="tablist" aria-label="추천 묶음">
         {tabs.map((t) => {
           const n = t === "all" ? total : counts[t];
@@ -36,6 +39,9 @@ export default function PickTabs({ counts, children }: { counts: Record<PickKey,
       </ul>
       {HINT[tab] && <p className="small muted pick-hint">{HINT[tab]}</p>}
       {children}
+      {tab === "all" && !open && total > COLLAPSE_AT && (
+        <div className="btns more-row"><button type="button" className="btn" onClick={() => setOpen(true)}>나머지 {total - COLLAPSE_AT}개 더 보기</button></div>
+      )}
     </div>
   );
 }
