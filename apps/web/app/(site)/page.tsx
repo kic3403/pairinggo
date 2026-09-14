@@ -9,7 +9,7 @@ import { loadAwards } from "@/lib/awards";
 import { listPosts } from "@/lib/member-picks";
 import PickFeed from "./_components/PickFeed";
 import { topDrinks } from "@/lib/popular";
-import { FOOD_GROUPS, buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
+import { FOOD_GROUPS, homePicksMode, buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 
 export const revalidate = 600;
@@ -27,6 +27,7 @@ export default async function Home() {
   const top = topDrinks(c.dataset, 10);
   const awards = await loadAwards();
   const picks = await listPosts(4).catch(() => []);
+  const picksMode = homePicksMode(picks.length);   // 글이 3건 미만이면 가운데 큰 칸 대신 아래쪽 작은 초대 카드(docs/20 P0-5)
   const drinks = (top.list.length ? top.list : c.dataset.drinks).slice(0, 8);
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
 
@@ -69,14 +70,12 @@ export default async function Home() {
         </ul>
       </section>
 
-      <section className="home-picks">
-        <div className="section-head"><h2>회원이 추천한 페어링</h2><Link href="/picks">전체 보기</Link></div>
-        {picks.length ? (
+      {picksMode === "feed" && (
+        <section className="home-picks">
+          <div className="section-head"><h2>회원이 추천한 페어링</h2><Link href="/picks">전체 보기</Link></div>
           <PickFeed posts={picks} compact />
-        ) : (
-          <div className="cta">회원이 "이 술엔 이 음식"을 올리면 바로 여기에 보이고, 다른 회원이 ♥로 공감합니다. 전통주·음식 화면의 <b>🙌 추천하기</b> 버튼이나 <Link href="/picks">회원 추천</Link>에서 첫 글을 남겨 보세요.</div>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* 음식 종류별로 찾기 — 캐치테이블 홈의 "음식종류별 BEST" 칩 줄(docs/19 §5). 대분류는 shared food-groups.ts */}
       <section>
@@ -88,6 +87,14 @@ export default async function Home() {
           })}
         </ul>
       </section>
+
+      {picksMode === "invite" && (
+        <Link href="/picks#compose" className="picks-invite">
+          <span className="pi-k">🙌 회원 추천{picks.length ? ` ${picks.length}건` : ""}</span>
+          <span className="pi-t">나만 아는 “이 술엔 이 음식”을 남겨 주세요</span>
+          <span className="pi-a">추천 남기기 →</span>
+        </Link>
+      )}
 
       <section>
         <div className="section-head"><h2>안주로 찾기</h2><Link href="/foods">전체 보기</Link></div>

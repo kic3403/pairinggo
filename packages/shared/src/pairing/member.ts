@@ -42,3 +42,10 @@ export function validateMemberNote(note: string): string | null {
   if (/https?:\/\/|www\./i.test(s)) return "링크는 넣을 수 없어요";
   return null;
 }
+
+/**
+ * 홈 가운데 "회원이 추천한 페어링" 칸 — 글이 적을 때 큰 자리를 비워 두면 서비스가 비어 보인다(2026-09-15 실측: 글 1·하트 0, docs/20 P0-5).
+ * HOME_PICKS_MIN건 이상이면 목록(feed), 그보다 적으면 홈 아래쪽 작은 초대 카드(invite).
+ */
+export const HOME_PICKS_MIN = 3;
+export const homePicksMode = (count: number): "feed" | "invite" => (count >= HOME_PICKS_MIN ? "feed" : "invite");

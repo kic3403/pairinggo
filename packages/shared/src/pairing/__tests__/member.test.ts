@@ -36,3 +36,13 @@ describe("회원 추천 규칙", () => {
     expect(scorePairings([mk({ blog: 100000, pf: { s: 100, plus: [], minus: [] } })])[0].grade.key).not.toBe("best");
   });
 });
+
+describe("홈 회원 추천 칸 크기", () => {
+  it("글이 HOME_PICKS_MIN(3)건 이상이면 목록, 그보다 적으면 작은 초대 카드", async () => {
+    const { HOME_PICKS_MIN, homePicksMode } = await import("../member");
+    expect(HOME_PICKS_MIN).toBe(3);
+    expect(homePicksMode(0)).toBe("invite");
+    expect(homePicksMode(2)).toBe("invite");
+    expect(homePicksMode(3)).toBe("feed");
+  });
+});
