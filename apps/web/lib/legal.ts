@@ -9,7 +9,7 @@ export const LEGAL = {
   /** 운영자 — 사업자 등록 전에는 개인 운영자 이름으로 둔다 */
   operator: "페어링GO 운영자",
   /** 개인정보 보호책임자 */
-  officer: { name: "페어링GO 운영자", role: "운영자", email: "" },
+  officer: { name: "페어링GO 운영자", role: "운영자", email: "kic3403@gmail.com" },
 } as const;
 
 /** 문의 이메일 — 비어 있으면 화면에 "준비 중"으로 보인다 */
