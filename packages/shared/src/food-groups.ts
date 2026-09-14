@@ -7,6 +7,7 @@ export const FOOD_GROUPS: { key: string; categories: string[] }[] = [
   { key: "양식", categories: ["양식"] },
   { key: "중식", categories: ["중식"] },
   { key: "일식", categories: ["일식"] },
+  { key: "아시아", categories: ["아시아"] },
   { key: "안주·간식", categories: ["안주", "마른안주", "튀김", "치킨"] },
   { key: "디저트", categories: ["디저트"] },
 ];

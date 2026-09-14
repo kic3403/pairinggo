@@ -1,0 +1,46 @@
+{
+  "note": "2026-09-14 음식 확장 — 한식에 치우친 음식 목록(110종 중 양식 7·중식 2·일식 1)을 양식·중식·일식·아시아로 넓힌다. 맛 프로필(1~5)은 대표 조리법 기준 추정값. 페어링은 근거 조합(evidence) + 맛 분석(planDrinksForFood)으로 음식당 10개.",
+  "recategorize": { "월남쌈": "아시아" },
+  "foods": [
+    { "name": "토마토 파스타", "category": "양식", "tags": ["새콤", "토마토"], "alias": ["볼로네제", "아라비아타", "토마토 스파게티"], "profile": { "fat": 3, "salt": 3, "spice": 1, "sweet": 2, "umami": 4, "weight": 3 } },
+    { "name": "알리오 올리오", "category": "양식", "tags": ["마늘향", "오일"], "alias": ["오일 파스타", "봉골레 파스타"], "profile": { "fat": 4, "salt": 3, "spice": 2, "sweet": 1, "umami": 3, "weight": 2 } },
+    { "name": "리조또", "category": "양식", "tags": ["크리미", "고소"], "alias": ["버섯 리조또", "해산물 리조또"], "profile": { "fat": 4, "salt": 3, "spice": 1, "sweet": 1, "umami": 4, "weight": 4 } },
+    { "name": "햄버거", "category": "양식", "tags": ["육즙", "기름진"], "alias": ["수제버거", "치즈버거"], "profile": { "fat": 5, "salt": 4, "spice": 1, "sweet": 2, "umami": 4, "weight": 5 } },
+    { "name": "바비큐 립", "category": "양식", "tags": ["훈연", "달콤"], "alias": ["폭립", "바베큐 립"], "profile": { "fat": 4, "salt": 3, "spice": 2, "sweet": 4, "umami": 4, "weight": 5 } },
+    { "name": "카프레제", "category": "양식", "tags": ["상큼", "담백"], "alias": ["카프레제 샐러드", "부라타 샐러드"], "profile": { "fat": 3, "salt": 2, "spice": 1, "sweet": 2, "umami": 2, "weight": 1 } },
+    { "name": "샤퀴테리", "category": "양식", "tags": ["짭짤", "숙성"], "alias": ["살라미", "프로슈토"], "profile": { "fat": 4, "salt": 5, "spice": 1, "sweet": 1, "umami": 5, "weight": 2 },
+      "evidence": [{ "drink": "크라테 드라이", "es": 91, "src": "sommelier", "reason": "김주용 소믈리에가 잘 숙성된 치즈·샤퀴테리와 어울린다고 추천한 술입니다. 드라이한 맛과 산미가 짭짤한 숙성육의 기름기를 정리합니다.",
+        "items": [{ "source": "소믈리에타임즈 '2026 전통주·한국와인 베스트 트로피'", "url": "https://www.sommeliertimes.com/news/articleView.html?idxno=130208", "quote": null, "who": "김주용 소믈리에", "tier": "sommelier" }] }] },
+    { "name": "피시앤칩스", "category": "양식", "tags": ["바삭", "기름진"], "alias": ["피쉬앤칩스", "생선튀김"], "profile": { "fat": 5, "salt": 3, "spice": 1, "sweet": 1, "umami": 3, "weight": 3 } },
+
+    { "name": "짬뽕", "category": "중식", "tags": ["매콤", "해물"], "alias": ["해물짬뽕", "굴짬뽕"], "profile": { "fat": 3, "salt": 4, "spice": 4, "sweet": 1, "umami": 5, "weight": 3 } },
+    { "name": "탕수육", "category": "중식", "tags": ["바삭", "새콤달콤"], "alias": ["꿔바로우"], "profile": { "fat": 4, "salt": 2, "spice": 1, "sweet": 4, "umami": 3, "weight": 4 },
+      "evidence": [{ "drink": "베리와인1168CS", "es": 91, "src": "sommelier", "reason": "정호철 전통주 소믈리에가 치킨·순대·탕수육과 추천한 술입니다. 과실 산미와 단맛이 새콤달콤한 소스, 튀김옷의 기름기와 맞습니다.",
+        "items": [{ "source": "소믈리에타임즈 '2026 전통주·한국와인 베스트 트로피'", "url": "https://www.sommeliertimes.com/news/articleView.html?idxno=130208", "quote": null, "who": "정호철 전통주 소믈리에", "tier": "sommelier" }] }] },
+    { "name": "마라탕", "category": "중식", "tags": ["얼얼", "향신료"], "alias": ["훠궈"], "profile": { "fat": 3, "salt": 4, "spice": 5, "sweet": 1, "umami": 4, "weight": 3 } },
+    { "name": "마라샹궈", "category": "중식", "tags": ["얼얼", "기름진"], "alias": [], "profile": { "fat": 5, "salt": 4, "spice": 5, "sweet": 1, "umami": 4, "weight": 4 } },
+    { "name": "깐풍기", "category": "중식", "tags": ["매콤달콤", "바삭"], "alias": ["깐풍새우"], "profile": { "fat": 4, "salt": 3, "spice": 3, "sweet": 4, "umami": 3, "weight": 4 } },
+    { "name": "유린기", "category": "중식", "tags": ["새콤", "바삭"], "alias": [], "profile": { "fat": 4, "salt": 3, "spice": 2, "sweet": 3, "umami": 3, "weight": 3 } },
+    { "name": "딤섬", "category": "중식", "tags": ["육즙", "담백"], "alias": ["샤오롱바오", "하가우"], "profile": { "fat": 3, "salt": 3, "spice": 1, "sweet": 1, "umami": 4, "weight": 2 } },
+    { "name": "멘보샤", "category": "중식", "tags": ["바삭", "새우"], "alias": [], "profile": { "fat": 5, "salt": 2, "spice": 1, "sweet": 1, "umami": 3, "weight": 3 } },
+    { "name": "마파두부", "category": "중식", "tags": ["매콤", "얼얼"], "alias": [], "profile": { "fat": 3, "salt": 4, "spice": 4, "sweet": 1, "umami": 4, "weight": 3 } },
+    { "name": "양장피", "category": "중식", "tags": ["새콤", "겨자"], "alias": [], "profile": { "fat": 2, "salt": 3, "spice": 3, "sweet": 2, "umami": 3, "weight": 2 } },
+
+    { "name": "라멘", "category": "일식", "tags": ["진한 국물", "기름진"], "alias": ["돈코츠 라멘", "쇼유 라멘"], "profile": { "fat": 4, "salt": 4, "spice": 1, "sweet": 1, "umami": 5, "weight": 4 } },
+    { "name": "돈카츠", "category": "일식", "tags": ["바삭", "고소"], "alias": ["돈가스", "규카츠"], "profile": { "fat": 5, "salt": 3, "spice": 1, "sweet": 2, "umami": 3, "weight": 4 } },
+    { "name": "오코노미야키", "category": "일식", "tags": ["달콤짭짤", "소스"], "alias": [], "profile": { "fat": 4, "salt": 3, "spice": 1, "sweet": 3, "umami": 4, "weight": 3 } },
+    { "name": "우동", "category": "일식", "tags": ["담백", "국물"], "alias": ["냉우동", "가락국수"], "profile": { "fat": 2, "salt": 3, "spice": 1, "sweet": 2, "umami": 3, "weight": 2 } },
+    { "name": "가라아게", "category": "일식", "tags": ["바삭", "짭짤"], "alias": ["일본식 닭튀김"], "profile": { "fat": 5, "salt": 3, "spice": 1, "sweet": 1, "umami": 4, "weight": 3 } },
+    { "name": "스키야키", "category": "일식", "tags": ["달콤짭짤", "소고기"], "alias": [], "profile": { "fat": 4, "salt": 4, "spice": 1, "sweet": 4, "umami": 5, "weight": 4 } },
+    { "name": "타코야키", "category": "일식", "tags": ["소스", "문어"], "alias": [], "profile": { "fat": 3, "salt": 3, "spice": 1, "sweet": 3, "umami": 3, "weight": 2 } },
+    { "name": "사케동", "category": "일식", "tags": ["기름진", "담백"], "alias": ["연어덮밥"], "profile": { "fat": 4, "salt": 2, "spice": 1, "sweet": 2, "umami": 4, "weight": 3 } },
+    { "name": "텐동", "category": "일식", "tags": ["바삭", "달콤짭짤"], "alias": ["튀김덮밥"], "profile": { "fat": 5, "salt": 3, "spice": 1, "sweet": 3, "umami": 3, "weight": 4 } },
+    { "name": "모츠나베", "category": "일식", "tags": ["곱창", "진한 국물"], "alias": [], "profile": { "fat": 5, "salt": 4, "spice": 2, "sweet": 2, "umami": 5, "weight": 4 } },
+
+    { "name": "쌀국수", "category": "아시아", "tags": ["담백", "국물"], "alias": ["베트남 쌀국수"], "profile": { "fat": 2, "salt": 3, "spice": 1, "sweet": 1, "umami": 4, "weight": 2 } },
+    { "name": "팟타이", "category": "아시아", "tags": ["달콤새콤", "볶음면"], "alias": [], "profile": { "fat": 3, "salt": 3, "spice": 2, "sweet": 3, "umami": 3, "weight": 3 } },
+    { "name": "똠얌꿍", "category": "아시아", "tags": ["새콤", "매콤"], "alias": [], "profile": { "fat": 2, "salt": 3, "spice": 4, "sweet": 2, "umami": 4, "weight": 2 } },
+    { "name": "분짜", "category": "아시아", "tags": ["새콤달콤", "숯불"], "alias": [], "profile": { "fat": 3, "salt": 3, "spice": 1, "sweet": 3, "umami": 3, "weight": 2 } },
+    { "name": "카레", "category": "아시아", "tags": ["향신료", "진한"], "alias": ["인도 커리", "버터치킨 커리"], "profile": { "fat": 4, "salt": 3, "spice": 3, "sweet": 2, "umami": 3, "weight": 4 } }
+  ]
+}

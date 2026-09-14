@@ -459,3 +459,59 @@ export function planPairings(drink: { profile: DrinkProfile; abv: number | null 
   if (usage) for (const o of out) usage.set(o.f, (usage.get(o.f) ?? 0) + 1);
   return out;
 }
+
+/* ---------- 음식 확장(2026-09-14) — 새 음식에 어울리는 술 고르기. planPairings(새 술 → 음식)의 반대 방향 ---------- */
+
+export type DrinkCatAffinity = { counts: Map<string, number>; max: number; label: string };
+/**
+ * 같은 음식 분류(중식 등)에서 양조장·전문가·후기가 짝지은 술 종류 횟수. 그런 조합이 minPairs개보다 적으면(새 분류) 전체 근거 조합으로.
+ * label: 화면 이유 문장용 — 분류가 있으면 그 이름, 없으면 "다른".
+ */
+export function drinkCategoryAffinity(pairings: { d: string; f: string; src?: string | null }[], drinks: { id: string; category: string }[], foods: { id: string; category: string }[], foodCategory: string, minPairs = 5): DrinkCatAffinity {
+  const backed = pairings.filter((p) => p.src && p.src !== "profile" && p.src !== "ai");
+  const drinkCat = new Map(drinks.map((d) => [d.id, d.category]));
+  const foodCat = new Map(foods.map((f) => [f.id, f.category]));
+  const inCat = backed.filter((p) => foodCat.get(p.f) === foodCategory);
+  const use = inCat.length >= minPairs ? inCat : backed;
+  const counts = new Map<string, number>();
+  for (const p of use) { const c = drinkCat.get(p.d); if (c) counts.set(c, (counts.get(c) ?? 0) + 1); }
+  return { counts, max: Math.max(1, ...counts.values()), label: use === inCat ? foodCategory : "다른" };
+}
+
+export type PlanDrink = { id: string; name: string; category: string; abv: number | null; profile?: DrinkProfile; trend?: { score?: number | null } | null };
+export type PlannedDrinkPairing = { d: string; es: number; src: "profile"; reason: string; pf: Fit };
+
+/**
+ * 새 음식의 페어링 — 맛 분석(profile)만으로 `total`개. 순서: ① 맛 프로필 궁합 점수 ② 그 음식 분류에서 전문가가 자주 짝지은 술 종류 ③ 인기.
+ * 감점 이유(minus)가 있거나 장점(plus)이 없는 술은 뺀다. 같은 술 종류는 `perCategory`개까지(증류주만 10개 같은 쏠림 방지).
+ * 이번 확장에서 이미 쓴 술은 쓴 횟수만큼 감점하고, 앞 4개 뒤로는 상위 30개 후보 안에서 덜 쓴 술부터(usage) — 새 음식들이 모두 같은 인기 술이 되지 않게.
+ * es 84~87(맛 분석 범위). 이유 문장 끝에 "맛 분석 — 직접 확인된 조합은 아닙니다"를 붙인다.
+ */
+const USAGE_PENALTY = 6;
+export function planDrinksForFood(food: { category: string; profile: FoodProfile }, drinks: PlanDrink[], opts = { total: 10, perCategory: 3 }, usage?: Map<string, number>, affinity?: DrinkCatAffinity): PlannedDrinkPairing[] {
+  const aff = (cat: string) => (affinity ? (affinity.counts.get(cat) ?? 0) / affinity.max : 0);
+  const ranked = drinks
+    .filter((d) => d.profile)
+    .map((d) => ({ d, pf: profileFit(d.profile!, d.abv, food.profile), a: aff(d.category) }))
+    .filter((x) => x.pf.minus.length === 0 && x.pf.plus.length > 0)
+    // 이번 확장에서 이미 쓴 만큼 감점(한 번에 USAGE_PENALTY점) — 없으면 인기 탁주 한두 개가 거의 모든 새 음식에 들어갔다(미리보기 29/33)
+    .map((x) => ({ ...x, score: x.pf.s + 25 * x.a + Math.min(5, (x.d.trend?.score ?? 0) / 20) - USAGE_PENALTY * (usage?.get(x.d.id) ?? 0) }))
+    .sort((x, y) => y.score - x.score);
+  const KEEP = 4, POOL = 30;
+  const perCat = new Map<string, number>();
+  const order: typeof ranked = [];
+  const tryAdd = (x: (typeof ranked)[number]) => { const n = perCat.get(x.d.category) ?? 0; if (n >= opts.perCategory || order.includes(x)) return; perCat.set(x.d.category, n + 1); order.push(x); };
+  for (const x of ranked) { if (order.length >= Math.min(KEEP, opts.total)) break; tryAdd(x); }
+  const pool = ranked.filter((x) => !order.includes(x)).slice(0, POOL).sort((x, y) => (usage?.get(x.d.id) ?? 0) - (usage?.get(y.d.id) ?? 0) || ranked.indexOf(x) - ranked.indexOf(y));
+  for (const x of [...pool, ...ranked]) { if (order.length >= opts.total) break; tryAdd(x); }
+  const out = order.map(({ d, pf, a }) => {
+    const times = affinity?.counts.get(d.category) ?? 0;
+    const why = [
+      times ? `${affinity!.label === "다른" ? "다른 음식에서" : `다른 ${affinity!.label} 음식에서`} 양조장·전문가·후기가 ${d.category}${/[가-힣]$/.test(d.category) && ((d.category.charCodeAt(d.category.length - 1) - 0xac00) % 28) ? "을" : "를"} ${times}번 짝지음` : "",
+      `맛 프로필로는 ${pf.plus.slice(0, 2).join(", ")}`,
+    ].filter(Boolean).join(". ");
+    return { d: d.id, es: 84 + (a >= 0.5 ? 2 : a > 0 ? 1 : 0) + (pf.s >= 60 ? 1 : 0), src: "profile" as const, reason: `${why}. (맛 분석 — 이 음식과 직접 확인된 조합은 아닙니다)`, pf };
+  });
+  if (usage) for (const o of out) usage.set(o.d, (usage.get(o.d) ?? 0) + 1);
+  return out;
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { DATA } from "../../data";
-import { categoryOfKind, describeDrink, isGenericKeyword, keywordCore, drinkContextShare, judgeLineup, planPairings, nameStem, isNameVariant, categoryAffinity, calibrateFits, estimateProfile, keywordParams, mainIngredients, matchFoods, profileFit, relativeInterest, shopKeyword } from "../lineup";
+import { categoryOfKind, describeDrink, drinkCategoryAffinity, isGenericKeyword, keywordCore, drinkContextShare, judgeLineup, planDrinksForFood, planPairings, nameStem, isNameVariant, categoryAffinity, calibrateFits, estimateProfile, keywordParams, mainIngredients, matchFoods, profileFit, relativeInterest, shopKeyword } from "../lineup";
 
 describe("쇼핑 검색어", () => {
   it("용량·도수·괄호·세트·끝 숫자를 뗀다", () => {
@@ -306,5 +306,42 @@ describe("맛 궁합 백분위", () => {
     expect(calibrateFits([10, 20, 20, 30])).toEqual([13, 50, 50, 88]);
     expect(calibrateFits([5])).toEqual([50]);
     expect(calibrateFits([])).toEqual([]);
+  });
+});
+
+describe("새 음식의 술 고르기(planDrinksForFood) — 음식 확장 2026-09-14", () => {
+  const drinks = DATA.drinks.map((d) => ({ id: d.id, name: d.name, category: d.category, abv: d.abv ?? null, profile: d.profile, trend: d.trend }));
+  const mala = { category: "중식", profile: { fat: 5, salt: 4, spice: 5, sweet: 1, umami: 4, weight: 4 } };
+  const aff = drinkCategoryAffinity(DATA.pairings, DATA.drinks, DATA.foods, "중식");
+  it("총 N개, 모두 맛 분석(84~87), 감점 이유가 있는 술은 빼고 같은 종류는 perCategory개까지", () => {
+    const p = planDrinksForFood(mala, drinks, { total: 10, perCategory: 3 }, undefined, aff);
+    expect(p).toHaveLength(10);
+    expect(new Set(p.map((x) => x.d)).size).toBe(10);
+    expect(p.every((x) => x.src === "profile" && x.es >= 84 && x.es <= 87 && x.pf.minus.length === 0)).toBe(true);
+    const per = new Map<string, number>();
+    for (const x of p) { const c = DATA.drinks.find((d) => d.id === x.d)!.category; per.set(c, (per.get(c) ?? 0) + 1); }
+    expect(Math.max(...per.values())).toBeLessThanOrEqual(3);
+    expect(p[0].reason).toMatch(/맛 분석/);
+  });
+  it("기름지고 매운 중식에는 증류주가 들어가고, 담백한 음식에는 도수 높은 술이 앞서지 않는다", () => {
+    const p = planDrinksForFood(mala, drinks, { total: 10, perCategory: 3 }, undefined, aff);
+    expect(p.some((x) => DATA.drinks.find((d) => d.id === x.d)!.category === "증류주")).toBe(true);
+    const light = planDrinksForFood({ category: "일식", profile: { fat: 2, salt: 3, spice: 1, sweet: 1, umami: 4, weight: 2 } }, drinks, { total: 8, perCategory: 3 });
+    expect(light.slice(0, 3).every((x) => (DATA.drinks.find((d) => d.id === x.d)!.abv ?? 0) < 25)).toBe(true);
+  });
+  it("여러 음식을 만들 때 이미 많이 쓴 술은 뒤로 — 인기 술 몇 개로만 쏠리지 않게", () => {
+    const mid = { category: "양식", profile: { fat: 3, salt: 3, spice: 1, sweet: 2, umami: 4, weight: 3 } };
+    const same = planDrinksForFood(mid, drinks, { total: 10, perCategory: 3 });
+    const usage = new Map<string, number>();
+    const a = planDrinksForFood(mid, drinks, { total: 10, perCategory: 3 }, usage);
+    const b = planDrinksForFood(mid, drinks, { total: 10, perCategory: 3 }, usage);
+    expect(a.map((x) => x.d)).toEqual(same.map((x) => x.d));
+    const overlap = b.filter((x) => a.some((y) => y.d === x.d)).length;
+    expect(overlap).toBeLessThanOrEqual(6);   // 앞 4개는 점수 그대로라 겹쳐도, 나머지는 덜 쓴 술로
+  });
+  it("같은 음식 분류의 전문가 조합이 적으면 전체 전문가 조합으로 친화도를 잡는다", () => {
+    const none = drinkCategoryAffinity(DATA.pairings, DATA.drinks, DATA.foods, "없는분류");
+    expect(none.label).toBe("다른");
+    expect(none.max).toBeGreaterThan(0);
   });
 });

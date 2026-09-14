@@ -24,6 +24,7 @@
     "shop-insight": "tsx src/shop-insight.ts",
     "lineup": "tsx src/lineup.ts",
     "add-drinks": "tsx src/add-drinks.ts",
+    "add-foods": "tsx src/add-foods.ts",
     "pf-recalc": "tsx src/pf-recalc.ts"
   },
   "dependencies": {

@@ -14,8 +14,8 @@ describe("음식 대분류", () => {
     expect(foodGroupOf("양식")).toBe("양식");
     expect(foodGroupOf("없는분류")).toBe("기타");
   });
-  it("대분류 순서는 한식 → 양식 → 중식 → 일식 → 안주·간식 → 디저트", () => {
-    expect(FOOD_GROUPS.map((g) => g.key)).toEqual(["한식", "양식", "중식", "일식", "안주·간식", "디저트"]);
+  it("대분류 순서는 한식 → 양식 → 중식 → 일식 → 아시아 → 안주·간식 → 디저트", () => {
+    expect(FOOD_GROUPS.map((g) => g.key)).toEqual(["한식", "양식", "중식", "일식", "아시아", "안주·간식", "디저트"]);
   });
   it("가나다순 정렬", () => {
     expect([{ name: "홍어삼합" }, { name: "감자전" }, { name: "육회" }, { name: "김치전" }].sort(byKoName).map((x) => x.name)).toEqual(["감자전", "김치전", "육회", "홍어삼합"]);
