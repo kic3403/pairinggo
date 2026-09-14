@@ -7,6 +7,7 @@
   { "name": "동양일보 — 10가지 이상 약재, 청원생명쌀·청주산 찹쌀, 직접 재배한 앉은뱅이 밀 누룩, 1994년 충북무형문화재 4호, 19대 박준미 명인", "url": "http://www.dynews.co.kr/news/articleView.html?idxno=716125" },
   { "name": "천지일보 인터뷰 — 충북무형문화재 제4호·대한민국 식품명인 제88호 박준미 명인, 청주신선주 문화양조장(복합문화공간)", "url": "https://www.newscj.com/news/articleView.html?idxno=3282717" },
   { "name": "찾아가는 양조장 목록 — 농업회사법인 (주)신선, 예약 방문 가능, 선정 유효 2028", "url": "research/visiting-brewery.csv" },
+  { "name": "한국전통주백과 — 신선주 탁주(2026): 쌀과 누룩만 사용한 고도 탁주 / 신선주 백주·약주·증류주(2022) 항목", "url": "https://terms.naver.com/entry.naver?docId=6916275&cid=58637&categoryId=58653" },
   { "name": "네이버 지식백과 — 신선주(일반 증류주 43%, 찹쌀·인삼·구기자·숙지황·생지황·감국화·맥문동·지골피)", "url": "https://terms.naver.com/entry.naver?docId=5701761&cid=58637" }
  ],
  "buy": { "url": "https://smartstore.naver.com/sinseon", "store": "양조장 공식 스마트스토어" },
@@ -38,8 +39,8 @@
   },
   {
    "name": "청주신선주 탁주", "alias": "신선주 탁주", "category": "탁주", "abv": 12, "region": "충북 청주",
-   "desc": "청원생명쌀·찹쌀과 앉은뱅이밀 누룩, 생지황·숙지황·인삼·당귀·감국·구기자 등 약재 10가지로 빚은 12도 탁주. 식품첨가물 없이 빚어 걸쭉하고, 약재 향이 은은합니다.",
-   "flavor": ["약재향", "걸쭉함", "부드러운 산미"],
+   "desc": "청주신선주 양조장(신선)의 12도 고도 탁주(375ml). 신선주 약주·소주와 같은 집안 가양주 계보의 술이지만, 원료는 자료마다 달라(쌀·누룩만 / 약재 포함) 병 라벨로 확인하는 게 좋습니다.",
+   "flavor": ["묵직함", "부드러운 산미", "곡물향"],
    "profile": { "sweet": 3, "acid": 3, "body": 4, "fizz": 1, "aroma": 4 },
    "evidence": []
   },
