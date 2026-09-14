@@ -17,6 +17,15 @@ import ProfileBars from "../../_components/ProfileBars";
 import ShareButton from "../../_components/ShareButton";
 
 export const revalidate = 600;
+/**
+ * 빌드 때 카탈로그의 모든 음식 페이지와 공유 이미지(opengraph-image.tsx)를 미리 만든다(2026-09-15).
+ * 없으면 상세·공유 이미지가 첫 요청 때 생성돼 3초 넘게 걸리고, 카카오 링크 미리보기 스크래퍼가 그림을 못 받았다(docs/20 P0-1).
+ * 새로 넣은 음식(빌드 뒤 발행)은 첫 요청 때 만들어진다(dynamicParams 기본값).
+ */
+export async function generateStaticParams() {
+  const c = await getCatalog();
+  return c.dataset.foods.map((x) => ({ slug: toSlug(x.name) }));
+}
 
 async function load(slug: string) {
   const c = await getCatalog();

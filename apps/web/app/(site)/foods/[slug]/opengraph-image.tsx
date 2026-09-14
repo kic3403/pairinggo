@@ -1,5 +1,5 @@
 /** 음식 상세 공유 이미지 — 음식 이름 + 어울리는 전통주 3개(등급순). 없는 음식이면 홈 그림 */
-import { D, byFood, findBySlug, scorePairings } from "@pairinggo/shared";
+import { D, byFood, findBySlug, scorePairings, toSlug } from "@pairinggo/shared";
 import { ogImage, OG_SIZE } from "@/lib/og";
 import { getCatalog } from "@/lib/catalog";
 
@@ -7,6 +7,11 @@ export const alt = "음식에 어울리는 전통주 | 페어링GO";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 export const revalidate = 3600;
+/** 페이지의 generateStaticParams만으로는 이미지 라우트가 동적(ƒ)으로 남았다(빌드 실측) — 이미지 파일에도 적어야 빌드 때 미리 만든다 */
+export async function generateStaticParams() {
+  const c = await getCatalog();
+  return c.dataset.foods.map((x) => ({ slug: toSlug(x.name) }));
+}
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const c = await getCatalog();
