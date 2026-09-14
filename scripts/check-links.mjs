@@ -26,7 +26,26 @@ const prev = fs.existsSync(STATUS_PATH) ? JSON.parse(fs.readFileSync(STATUS_PATH
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36 PairingGO-LinkCheck/1.0";
 // 품절 판정은 '페이지 어딘가에 품절이라는 낱말'이 아니라, 상품 상태 표시에 쓰이는 강한 패턴만 본다 (쇼핑몰 템플릿의 "품절 상품 제외" 같은 문구로 오탐하지 않게)
-const SOLDOUT_RE = /(class="[^"]*\b(sold[-_]?out|soldout)\b[^"]*"|icon_status_soldout|"isSoldOut"\s*:\s*true|"soldOut"\s*:\s*true|>\s*(일시\s*)?품절\s*<|>\s*SOLD\s*OUT\s*<|판매\s*종료된\s*상품|현재\s*판매하지\s*않는\s*상품|상품이\s*존재하지\s*않|삭제된\s*상품)/i;
+/**
+ * 품절 판정 — 2026-09-15 점검에서 22건 중 대부분이 오탐이었다(쇼핑몰 첫 화면·추천 상품 목록의 "품절"/"SOLD OUT" 배지에 걸림, docs/20).
+ * 그래서 "페이지 어딘가의 품절 낱말"은 보지 않고, 그 상품 자체를 가리키는 강한 신호만 본다.
+ *   1) 구조화 데이터(JSON-LD availability, og product:availability) — 있으면 이것이 최종. InStock이면 절대 품절로 보지 않는다
+ *   2) 상품 페이지 수준 문구 — 판매 종료된 상품, 현재 판매하지 않는 상품, 상품이 존재하지 않, 삭제된 상품
+ *   3) 쇼핑몰 스크립트 플래그 — "isSoldOut":true, "soldOut":true, "is_soldout":true(아임웹)
+ *   4) 카페24 상세의 품절 래퍼 `class="ac-soldout wrap"`가 displaynone 없이 보이는 경우
+ * 목록 배지(class에 soldout, >품절<, >SOLD OUT<)는 쓰지 않는다 — 오탐이 실탐보다 많았다.
+ */
+function soldoutSignal(html) {
+  const avail = (html.match(/"availability"\s*:\s*"([^"]+)"/i) || [])[1] ?? (html.match(/product:availability"?\s+content="([^"]+)"/i) || [])[1] ?? (html.match(/content="([^"]+)"\s+property="product:availability"/i) || [])[1] ?? null;
+  if (avail) {
+    if (/instock|in_stock|in stock|preorder|limitedavailability/i.test(avail)) return null;
+    if (/outofstock|out_of_stock|out of stock|soldout|sold_out|discontinued/i.test(avail)) return `구조화 데이터 availability=${avail.replace(/^.*schema\.org\//i, "")}`;
+  }
+  if (/(판매\s*종료된\s*상품|현재\s*판매하지\s*않는\s*상품|상품이\s*존재하지\s*않|삭제된\s*상품)/.test(html)) return "상품 페이지에 판매 종료·삭제 문구";
+  if (/"(isSoldOut|soldOut|is_soldout|soldout)"\s*:\s*(true|1|"Y")/i.test(html)) return "쇼핑몰 데이터에 품절 플래그";
+  if (/class="ac-soldout wrap\s*"/.test(html)) return "카페24 상세 품절 표시";
+  return null;
+}
 const NOTFOUND_RE = /(페이지를 찾을 수 없|존재하지 않는 페이지|page not found|404 not found|삭제되었거나|접근할 수 없는 페이지)/i;
 
 /** 점검 대상 수집 */
@@ -59,7 +78,7 @@ async function check(t) {
       if (ct.includes("text/html")) {
         const html = (await res.text()).slice(0, 400_000);
         if (NOTFOUND_RE.test(html)) out.status = "dead", out.note = "본문에 '페이지 없음' 문구";
-        else if (t.kind === "buy" && SOLDOUT_RE.test(html)) out.status = "soldout", out.note = "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)";
+        else if (t.kind === "buy") { const why = soldoutSignal(html); if (why) out.status = "soldout", out.note = `${why} (참고용 · 수동 확인)`; }
       }
     }
   } catch (e) {

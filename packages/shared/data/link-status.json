@@ -1,6 +1,6 @@
 {
- "checkedAt": "2026-09-14T16:24:19.803Z",
- "total": 391,
+ "checkedAt": "2026-09-14T16:35:01.390Z",
+ "total": 114,
  "links": {
   "https://smartstore.naver.com/hangangbrewery": {
    "kind": "buy",
@@ -9,7 +9,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -17,11 +17,11 @@
   "https://boksoon.com/product/%EB%B3%B5%EC%88%9C%EB%8F%84%EA%B0%80-%EC%86%90%EB%A7%89%EA%B1%B8%EB%A6%AC-1%EB%B3%91-65%EB%8F%84-935ml-%EC%A0%84%ED%86%B5%EC%A3%BC/83/": {
    "kind": "buy",
    "ref": "d01",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -33,7 +33,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -45,7 +45,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -57,7 +57,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -69,7 +69,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -81,7 +81,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -89,11 +89,11 @@
   "https://byeoljumak.com/shop_view/?idx=58": {
    "kind": "buy",
    "ref": "d04",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -105,7 +105,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -117,7 +117,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -125,11 +125,11 @@
   "https://www.11st.co.kr/products/4036791922": {
    "kind": "buy",
    "ref": "d14",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -141,7 +141,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -153,7 +153,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -165,7 +165,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -177,7 +177,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -189,7 +189,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -201,7 +201,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -213,7 +213,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -221,11 +221,11 @@
   "https://www.thingoolmarket.com/goods/goods_view.php?goodsNo=1000010167": {
    "kind": "buy",
    "ref": "d23",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -233,11 +233,11 @@
   "https://byeoljumak.com/83/?idx=51": {
    "kind": "buy",
    "ref": "d25",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -245,11 +245,11 @@
   "https://soollove.com/product/detail.html?product_no=17": {
    "kind": "buy",
    "ref": "d24",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -261,7 +261,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.thehan.kr/product/seoulnight",
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -273,7 +273,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -285,7 +285,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -297,7 +297,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -309,7 +309,7 @@
    "http": 403,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -321,7 +321,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -333,7 +333,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -345,7 +345,7 @@
    "http": 429,
    "note": "",
    "finalUrl": "https://smartstore.naver.com/back_streetmakgeolli/products/11459585811",
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -357,7 +357,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -365,11 +365,11 @@
   "https://www.homesool.com/": {
    "kind": "buy",
    "ref": "d31",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -381,7 +381,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -393,7 +393,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -405,7 +405,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -413,11 +413,11 @@
   "https://byeoljumak.com/83/?idx=72": {
    "kind": "buy",
    "ref": "d46",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -429,7 +429,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -441,7 +441,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://jejusaemju.co.kr/login?back_url=L2dvc29yaTAy",
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -449,11 +449,11 @@
   "http://www.paegiljumall.com/": {
    "kind": "buy",
    "ref": "d45",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": "https://www.paegiljumall.com/",
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -465,7 +465,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -477,7 +477,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -489,7 +489,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -497,11 +497,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=22014303&pavlnDivCd=01": {
    "kind": "buy",
    "ref": "d54",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -513,7 +513,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -525,7 +525,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -537,7 +537,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -545,11 +545,11 @@
   "https://gamwine.com/24": {
    "kind": "buy",
    "ref": "d58",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -561,7 +561,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -573,7 +573,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -585,7 +585,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -597,7 +597,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -609,7 +609,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -621,7 +621,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -633,19 +633,19 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://www.sooldamhwa.com/damhwaMarket/detail/1060": {
-   "kind": "ev",
-   "ref": "d73|f34",
+   "kind": "buy",
+   "ref": "d73",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -657,7 +657,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -665,11 +665,11 @@
   "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000974": {
    "kind": "buy",
    "ref": "d69",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -681,19 +681,19 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://www.sooldamhwa.com/damhwaMarket/detail/85": {
-   "kind": "ev",
-   "ref": "d77|f05",
+   "kind": "buy",
+   "ref": "d77",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -701,11 +701,11 @@
   "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000951": {
    "kind": "buy",
    "ref": "d70",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -717,7 +717,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -725,11 +725,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1055896&pavlnDivCd=02": {
    "kind": "buy",
    "ref": "d74",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -741,7 +741,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -753,7 +753,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -765,7 +765,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -777,7 +777,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -789,7 +789,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -801,7 +801,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -813,7 +813,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -825,7 +825,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -837,7 +837,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -845,11 +845,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1081012&pavlnDivCd=02": {
    "kind": "buy",
    "ref": "d83",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -861,7 +861,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -873,7 +873,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -885,7 +885,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -893,11 +893,11 @@
   "https://samsanjujo.co.kr/product/해남막걸리-9도/11/": {
    "kind": "buy",
    "ref": "d84",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": "https://samsanjujo.co.kr/product/%ED%95%B4%EB%82%A8%EB%A7%89%EA%B1%B8%EB%A6%AC-9%EB%8F%84/11/",
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -909,7 +909,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -921,7 +921,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -929,11 +929,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1045885&pavlnDivCd=02": {
    "kind": "buy",
    "ref": "d95",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -945,7 +945,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -957,7 +957,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -965,11 +965,11 @@
   "https://beei21.cafe24.com/product/detail.html?product_no=47&cate_no=43&display_group=1": {
    "kind": "buy",
    "ref": "d93",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -981,7 +981,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -993,7 +993,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1005,7 +1005,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1013,11 +1013,11 @@
   "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000001368": {
    "kind": "buy",
    "ref": "d100",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1041,7 +1041,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1051,9 +1051,9 @@
    "ref": "d105",
    "status": "soldout",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "카페24 상세 품절 표시 (참고용 · 수동 확인)",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1065,7 +1065,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1073,11 +1073,11 @@
   "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000001512": {
    "kind": "buy",
    "ref": "d107",
-   "status": "soldout",
+   "status": "ok",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1087,9 +1087,9 @@
    "ref": "d104",
    "status": "soldout",
    "http": 200,
-   "note": "품절/판매종료 상태 표시 감지 (참고용 · 수동 확인)",
+   "note": "구조화 데이터 availability=OutOfStock (참고용 · 수동 확인)",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2541,7 +2541,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2553,7 +2553,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2565,7 +2565,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2577,7 +2577,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-14T16:24:19.803Z",
+   "checkedAt": "2026-09-14T16:35:01.390Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
