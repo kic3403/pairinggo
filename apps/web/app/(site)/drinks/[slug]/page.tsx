@@ -16,6 +16,7 @@ import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
 import ProfileBars from "../../_components/ProfileBars";
+import ShareButton from "../../_components/ShareButton";
 
 export const revalidate = 600;
 
@@ -71,6 +72,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <ul className="tags">{drink.awards.map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
       )}
       <ProfileBars kind="drink" profile={drink.profile} />
+      <div className="share-row"><ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} /></div>
 
       {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
       <section className="buy">

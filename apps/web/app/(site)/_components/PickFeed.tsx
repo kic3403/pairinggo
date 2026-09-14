@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { toSlug } from "@pairinggo/shared/slug";
 import { track } from "@/lib/track";
 import { useSaved } from "./SavedProvider";
+import ShareButton from "./ShareButton";
 
 export type FeedPost = { id: number; d: string; f: string; drink: string; food: string; nick: string; note: string; image: string | null; likes: number; at: string; mine: boolean };
 
@@ -66,6 +67,7 @@ export default function PickFeed({ posts, compact = false }: { posts: FeedPost[]
           {!compact && p.image && <a href={p.image} target="_blank" rel="noopener noreferrer" className="mpick-photo" style={{ display: "inline-block", marginTop: 8 }}><img src={p.image} alt={`${p.nick}님의 사진`} loading="lazy" /></a>}
           <div className="pk-foot">
             <span className="small muted">{p.nick}{p.mine || mineIds.has(p.id) ? " (나)" : ""} · {p.at.slice(0, 10)}</span>
+            {!compact && <ShareButton className="btn xs" label="" title={`${p.drink} × ${p.food} — ${p.nick}님의 추천`} text={p.note ? `“${p.note}” — 페어링GO 회원 추천` : "페어링GO 회원 추천"} path="/picks" d={p.d} f={p.f} pick={p.id} />}
             <button type="button" className={`heart-btn pk-heart${liked.has(p.id) ? " on" : ""}`} aria-pressed={liked.has(p.id)} disabled={busy === p.id} onClick={() => void heart(p)} aria-label={`${p.drink} × ${p.food} 추천에 하트`}>
               {liked.has(p.id) ? "♥" : "♡"} <b>{likes[p.id] ?? p.likes}</b>
             </button>

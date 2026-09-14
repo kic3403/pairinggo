@@ -14,6 +14,7 @@ import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
 import ProfileBars from "../../_components/ProfileBars";
+import ShareButton from "../../_components/ShareButton";
 
 export const revalidate = 600;
 
@@ -60,6 +61,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         {!!food.tags?.length && <><span className="muted"> · </span><span>{food.tags.join(" · ")}</span></>}
       </div>
       <ProfileBars kind="food" profile={food.profile} />
+      <div className="share-row"><ShareButton className="btn xs" title={`${food.name}에 어울리는 전통주 ${items.length}가지`} text={`${food.name}에 어울리는 전통주를 근거와 함께 — 페어링GO`} f={food.id} /></div>
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>

@@ -553,3 +553,10 @@ p { margin: 0 0 12px; }
 .picks-invite .pi-k { font-weight: 800; color: var(--ink); }
 .picks-invite .pi-a { margin-left: auto; font-weight: 700; color: var(--navy); white-space: nowrap; }
 .picks-invite:hover { border-color: var(--navy); }
+/* 공유 버튼(ShareButton) */
+.share-row { display: flex; align-items: center; gap: 8px; margin: 8px 0 0; }
+.share-wrap { display: inline-flex; align-items: center; gap: 8px; }
+.share-wrap .btn { gap: 4px; }
+.share-msg { font-size: 12.5px; color: var(--navy); }
+.pk-foot .share-wrap { margin-left: auto; margin-right: 8px; }
+.pk-foot .share-wrap .btn.xs { min-height: 28px; padding: 0 8px; }
