@@ -1,16 +1,32 @@
 /**
  * 링크 공유 미리보기 이미지(OG 이미지) 공통 — 홈·술 상세·음식 상세의 opengraph-image.tsx가 쓴다(docs/20 P0-1).
- * 카톡·문자로 링크를 보내면 이 그림이 뜬다. 한글은 기본 폰트에 없어서 Google Fonts에서 Noto Sans KR을 필요한 글자만 받아 넣는다.
- * 폰트를 못 받으면(네트워크) 그림은 나오되 한글이 깨질 수 있어 배경·로고는 글자 없이도 뜻이 통하게 그린다.
+ * 카톡·문자로 링크를 보내면 이 그림이 뜬다. 한글은 기본 폰트에 없어서 번들한 Noto Sans KR 부분집합(lib/fonts, packages/db og-font로 생성)을 쓴다.
+ * 처음엔 Google Fonts에서 요청 때 받았는데 첫 생성이 5초를 넘겨 카카오 스크래퍼가 그림을 못 받았다(2026-09-15) — 번들 폰트를 못 읽을 때만 그 방법으로 간다.
  */
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 const NAVY = "#22406B", FOOD = "#E4572E", INK = "#1F1E1C", MUTED = "#6B6963", BG = "#FBFAF7";
 
+let localFont: Promise<ArrayBuffer | null> | null = null;
+/** 번들한 Noto Sans KR 700 부분집합(KS X 1001 2,350자 + 카탈로그 글자, packages/db og-font) — 요청 때 밖에서 받지 않아 첫 생성이 빠르다 */
+function loadLocalFont(): Promise<ArrayBuffer | null> {
+  if (!localFont) {
+    localFont = (async () => {
+      try {
+        const buf = await readFile(join(process.cwd(), "lib", "fonts", "NotoSansKR-Bold-ko.ttf"));
+        return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
+      } catch { return null; }
+    })();
+  }
+  return localFont;
+}
+
 const fontCache = new Map<string, Promise<ArrayBuffer | null>>();
-/** Noto Sans KR 700 — text에 든 글자만 담은 TTF. Node fetch(브라우저 UA 없음)에는 구글이 truetype을 준다 */
-export function loadKoreanFont(text: string): Promise<ArrayBuffer | null> {
+/** 예비: 번들 폰트를 못 읽을 때 Google Fonts에서 text에 든 글자만 받은 TTF. Node fetch(브라우저 UA 없음)에는 구글이 truetype을 준다 */
+function loadGoogleFont(text: string): Promise<ArrayBuffer | null> {
   const chars = [...new Set(text + "페어링GO전통주에어울리는음식·%0123456789")].join("");
   const key = chars.split("").sort().join("");
   if (!fontCache.has(key)) {
@@ -24,6 +40,10 @@ export function loadKoreanFont(text: string): Promise<ArrayBuffer | null> {
     })());
   }
   return fontCache.get(key)!;
+}
+
+export async function loadKoreanFont(text: string): Promise<ArrayBuffer | null> {
+  return (await loadLocalFont()) ?? loadGoogleFont(text);
 }
 
 export type OgCard = {
