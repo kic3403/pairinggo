@@ -14,6 +14,7 @@
 - 홈 아이콘 메뉴(`QuickMenu`) — 기획 화면 `/michelin`(최근 3년, docs/17) · `/awards`(우리술품평회 수상주) · `/hot`(최근 30일 조합, `lib/hot.ts`). 새 기능은 여기에 한 칸씩.
 - 목록 정렬(2026-09-14 사용자 결정): `/drinks`·`/foods` 목록은 가나다순(`byKoName`), 식당 목록은 평점 높은 순(`sortByRating`, 평점 없는 곳은 거리순으로 뒤). `/foods`는 대분류(`shared/food-groups.ts` FOOD_GROUPS: 한식·양식·중식·일식·안주·간식·디저트) 탭 → 소분류 칩(?group=&category=). 새 음식 category는 FOOD_GROUPS에 넣는다(테스트가 잡는다).
 - 식당 평점: 구글 지도 평점만(Places API (New) Text Search, `GOOGLE_PLACES_KEY` 서버 전용, 2026-09-14). 카카오 목록 앞 12곳을 이름+좌표로 대조(`shared/place-rating.ts`, 150m·리뷰 5개 이상), `place_ratings`(0018)에 30일 캐시(구글 정책 상한). 평점 필드는 Enterprise 등급(월 1,000회 무료) — 하루 150회 상한(`lib/google-places.ts`). 카카오·네이버 별점은 API 없음·수집 금지. 화면엔 "Google" 표기 필수.
+- 근거 검수 대기열(docs/20 P2-1): `/admin/review` 기본 화면은 근거 없는 술·음식(출처 official·sommelier·media·blog·user 페어링이 하나도 없는 것, 앱 카탈로그 기준)에 걸린 draft 후보만 — 같은 조합은 대표 1장, 둘 다 빈칸 → 한쪽 빈칸, 같은 술·음식이 몰리지 않게 감점(`shared/pairing/review-queue.ts` `buildReviewQueue`), 50장씩. 기존 목록은 `?view=all`.
 - 식당 수상 배지: 미쉐린만(`restaurant_awards`, 매년 docs/17 절차로 갱신, 로고 금지·자체 ★+연도). **블루리본 목록은 계약 전 절대 가져오지 않는다**(DB 제작자 권리·약관) — 검색 링크만.
 - 전통주 지역별 목록(2026-09-11, docs/11 §5-1): `packages/db/research/`(더술닷컴 1,300종·찾아가는 양조장 64·네이버 백과) → `pnpm --filter @pairinggo/db regional` → `templates/전통주_지역별_목록.xlsx`. 시도 순서·정규화는 `packages/db/src/sido.ts` (광주는 전남에 묶음, 2026-07 통합). aT 문구는 공공누리 4유형 — 앱 화면에 원문 그대로 싣지 않는다.
 

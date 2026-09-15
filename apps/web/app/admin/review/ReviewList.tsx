@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { CandidateRow } from "@/lib/admin-data";
 import type { Pairing } from "@pairinggo/shared";
 
-export type Card = CandidateRow & { drinkName: string; foodName: string; existing: Pairing | null; siblings: number; sameUrl: boolean };
+export type Card = CandidateRow & { drinkName: string; foodName: string; existing: Pairing | null; siblings: number; sameUrl: boolean; gap: "both" | "drink" | "food" | null };
 const TIERS = ["official", "sommelier", "media", "blog", "user"];
 const TIER_DEFAULT: Record<string, number> = { official: 96, sommelier: 93, media: 89, blog: 85, user: 85 };
 const REJECT_REASONS = ["관련 없음(이름만 등장)", "광고·협찬 글", "근거 부족", "중복", "음식·술 매칭 오류", "기타"];
@@ -85,6 +85,7 @@ function CardView({ c, selected, onFocus, reviewer, busy, say, remove }: { c: Ca
       <div className="row" style={{ justifyContent: "space-between" }}>
         <div className="pair">{c.drinkName}<span className="x">✕</span>{c.foodName}</div>
         <div className="row">
+          {c.gap && <span className="tag w">{c.gap === "both" ? "술·음식 첫 근거" : c.gap === "drink" ? "술 첫 근거" : "음식 첫 근거"}</span>}
           {c.mention_count > 1 && <span className="tag">언급 {c.mention_count}</span>}
           {c.siblings > 0 && <span className="tag m">같은 조합 후보 +{c.siblings}</span>}
           <span className="tag m">{c.source_kind || c.origin}</span>

@@ -17,7 +17,8 @@ export default async function AdminHome() {
         <div><b>{d.byStatus.promoted || 0}</b><span>승격됨 · 거절 {d.byStatus.rejected || 0}</span></div>
       </div>
       <div className="row" style={{ marginBottom: 16 }}>
-        <Link className="btn p" href="/admin/review">검수 시작 →</Link>
+        <Link className="btn p" href="/admin/review">검수 시작 (근거 빈칸 우선) →</Link>
+        <Link className="btn" href="/admin/review?view=all">전체 후보 (언급 많은 순)</Link>
         <Link className="btn" href="/admin/review?status=needs_entity">지정 필요 보기</Link>
       </div>
 

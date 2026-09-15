@@ -25,3 +25,4 @@ export * from "./profile";
 export * from "./session";
 export * from "./consent";
 export * from "./lineup/lineup";
+export * from "./pairing/review-queue";

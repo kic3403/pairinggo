@@ -1,7 +1,7 @@
 /**
  * 어드민 데이터 접근 — 후보 목록·대시보드 집계·승격·발행. service_role(db()) 사용.
  */
-import { SRC_RANK, type SrcTier } from "@pairinggo/shared";
+import { buildReviewQueue, evidenceGaps, SRC_RANK, type SrcTier } from "@pairinggo/shared";
 import { countPairBlog } from "./blog-count";
 import { db } from "./db";
 import { getCatalog, invalidateCatalog } from "./catalog";
@@ -27,16 +27,37 @@ export async function listCandidates(opts: { status?: string; tier?: string; dri
   return (data || []) as CandidateRow[];
 }
 
+/**
+ * 근거 빈칸 대기열(docs/20 P2-1) — 근거 없는 술·음식에 걸린 draft 후보만 모아 우선순위·조합 묶음으로 한 페이지(50장).
+ * 빈칸은 앱에 보이는 카탈로그(curated·ai) 기준 — pending으로 승격된 조합은 같은 조합 후보가 계속 대기열에 남아 두 번째 근거로 게시된다.
+ */
+export async function gapQueue(page = 0) {
+  const sb = need();
+  const c = await getCatalog();
+  const gaps = evidenceGaps(c.dataset);
+  if (!gaps.drinks.size && !gaps.foods.size) return { items: [], totalPairs: 0, totalCandidates: 0, gapDrinks: 0, gapFoods: 0 };
+  const inList = (ids: Set<string>) => [...ids].map((id) => `"${id}"`).join(",");
+  const ors = [gaps.drinks.size ? `drink_id.in.(${inList(gaps.drinks)})` : "", gaps.foods.size ? `food_id.in.(${inList(gaps.foods)})` : ""].filter(Boolean).join(",");
+  const rows: CandidateRow[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await sb.from("pairing_candidates").select("*").eq("status", "draft").or(ors).order("id").range(from, from + 999);
+    if (error) throw new Error(error.message);
+    rows.push(...((data || []) as CandidateRow[]));
+    if (!data || data.length < 1000 || rows.length >= 20000) break;
+  }
+  return { ...buildReviewQueue(rows, gaps, { page }), gapDrinks: gaps.drinks.size, gapFoods: gaps.foods.size };
+}
+
 export async function dashboard() {
   const sb = need();
   const [cands, pairCounts, empties, lastPub] = await Promise.all([
-    sb.from("pairing_candidates").select("status"),
+    Promise.all(["draft", "needs_entity", "promoted", "rejected"].map((st) => sb.from("pairing_candidates").select("id", { count: "exact", head: true }).eq("status", st).then((r) => [st, r.count || 0] as const))),
     sb.from("pairings").select("drink_id"),
     sb.from("popular_terms").select("term,type,count").eq("type", "empty").order("count", { ascending: false }).limit(20),
     sb.from("catalog_meta").select("value,updated_at").eq("key", "version").maybeSingle(),
   ]);
   const byStatus: Record<string, number> = {};
-  for (const c of cands.data || []) byStatus[c.status] = (byStatus[c.status] || 0) + 1;
+  for (const [st, n] of cands) byStatus[st] = n;
   const perDrink = new Map<string, number>();
   for (const p of pairCounts.data || []) perDrink.set(p.drink_id, (perDrink.get(p.drink_id) || 0) + 1);
   const c = await getCatalog();
