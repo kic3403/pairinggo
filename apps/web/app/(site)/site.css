@@ -570,3 +570,15 @@ p { margin: 0 0 12px; }
 .tried-list .pair .x { margin: 0 6px; color: var(--muted); }
 .tried-list .tried-btns { display: flex; gap: 6px; }
 .tried-thanks { color: var(--navy); font-weight: 600; }
+/* 홈 화면에 추가 안내(InstallPrompt) — 휴대폰에서만, 탭바 위 */
+.install { display: none; }
+@media (max-width: 767px) {
+  .install { display: flex; align-items: center; gap: 10px; position: fixed; left: 10px; right: 10px; bottom: calc(70px + env(safe-area-inset-bottom)); z-index: 29;
+    padding: 10px 12px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+  .install .dots { display: flex; flex: none; }
+  .install .dots i { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--navy); }
+  .install .dots i + i { background: var(--food); margin-left: -6px; opacity: 0.92; }
+  .install .in-t { display: flex; flex-direction: column; min-width: 0; flex: 1; font-size: 14px; line-height: 1.35; }
+  .install .in-t .small { color: var(--muted); }
+  .install .in-x { flex: none; border: 0; background: none; color: var(--muted); font-size: 16px; padding: 6px; cursor: pointer; }
+}

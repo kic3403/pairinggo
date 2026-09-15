@@ -6,6 +6,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import AuthNav from "./_components/AuthNav";
+import InstallPrompt from "./_components/InstallPrompt";
 import KakaoSdk from "./_components/KakaoSdk";
 import MobileTabBar from "./_components/MobileTabBar";
 import PageView from "./_components/PageView";
@@ -62,6 +63,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       </footer>
       <MobileTabBar />
       <KakaoSdk />
+      <InstallPrompt />
     </RegionProvider>
     </SavedProvider>
   );
