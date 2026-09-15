@@ -48,3 +48,30 @@ export function fmtDistance(km: number | null | undefined): string {
 /** 카카오맵 길찾기 링크 (이름, 위도, 경도) */
 export const kakaoRouteUrl = (name: string, lat: number, lng: number) => `https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}`;
 export const kakaoSearchUrl = (q: string) => `https://map.kakao.com/link/search/${encodeURIComponent(q)}`;
+
+/* ---------- 식당 결과 관련도(2026-09-15, docs/20 P1-5) ----------
+ * 카카오 키워드 검색은 "육회 맛집"에 메뉴에 육회가 있는 고깃집·한정식까지 준다. 카카오 분류(categoryPath)는 "한식 > 육류,고기"처럼 거칠어
+ * 완벽히 거를 수는 없지만, 이름·분류에 음식 이름(또는 검색 키워드)이 든 곳을 앞에, 음식 계열과 다른 분류(예: 육회 검색에 국밥·카페)를 뒤로 보낸다. */
+const CUISINE_TOKENS: Record<string, string[]> = {
+  한식: ["한식"], 구이: ["한식", "육류", "고기"], 전: ["한식"], 해산물: ["해물", "생선", "한식", "조개", "굴"], 회: ["회", "해물", "생선", "일식", "초밥"],
+  분식: ["분식", "한식"], 면: ["한식", "국수", "냉면"], 무침: ["한식"], 안주: ["술집", "호프", "한식", "요리주점"], 마른안주: ["술집", "호프", "바"],
+  튀김: ["한식", "치킨", "술집"], 치킨: ["치킨", "닭"], 양식: ["양식", "이탈리안", "스테이크", "패밀리레스토랑", "햄버거", "피자", "파스타"],
+  중식: ["중식", "중국"], 일식: ["일식", "돈까스", "초밥", "라멘", "우동", "일본"], 아시아: ["아시아", "베트남", "태국", "인도", "동남아", "쌀국수"], 디저트: ["카페", "디저트", "베이커리"],
+};
+const nz = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+/** 2: 이름·분류에 음식 이름이나 검색 키워드가 있음 · 1: 음식 계열 분류(한식·중식…) · 0: 그 밖(다른 계열) */
+export function placeRelevance(place: { name: string; categoryPath?: string }, food: { name: string; category?: string }): 0 | 1 | 2 {
+  const hay = nz(`${place.name} ${place.categoryPath ?? ""}`);
+  const kw = nz(placeQuery(food));
+  const fname = nz(food.name);
+  // 검색 키워드가 "중식당·태국 음식·스페인 요리"처럼 업종 말이면 접미사를 뗀 핵심어("중식"·"태국"·"스페인")로도 본다
+  const kwCore = kw.replace(/(전문점|요리|음식|포차|호프|카페|펍|바|당|집)$/, "");   // "중식당"→"중식"("식당"을 떼면 "중"만 남아 못 씀)
+  if ((fname.length >= 2 && hay.includes(fname)) || (kw.length >= 2 && hay.includes(kw)) || (kwCore.length >= 2 && hay.includes(kwCore))) return 2;
+  const tokens = CUISINE_TOKENS[food.category ?? ""] ?? [];
+  if (!tokens.length) return 1;
+  return tokens.some((t) => hay.includes(nz(t))) ? 1 : 0;
+}
+/** 관련도 높은 순, 같으면 원래 순서(평점순·거리순)를 지킨다 */
+export function rankPlaces<T extends { name: string; categoryPath?: string }>(places: T[], food: { name: string; category?: string }): T[] {
+  return places.map((p, i) => ({ p, i, r: placeRelevance(p, food) })).sort((a, b) => b.r - a.r || a.i - b.i).map((x) => x.p);
+}

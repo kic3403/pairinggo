@@ -3,7 +3,7 @@ import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { loadAwards } from "@/lib/awards";
 import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
-import { matchAward, sortByRating } from "@pairinggo/shared";
+import { matchAward, rankPlaces, sortByRating } from "@pairinggo/shared";
 import { error, json, preflight } from "@/lib/http";
 
 export const runtime = "nodejs";
@@ -44,7 +44,8 @@ export async function GET(req: Request) {
     // 미쉐린 배지 — 이름+좌표 대조(packages/shared/awards.ts). 표가 비어 있으면 그대로
     const aw = await loadAwards();
     if (aw.list.length) places = places.map((p) => ({ ...p, award: matchAward(p, aw.list) }));
-    places = sortByRating(await attachRatings(places));
+    // 평점 높은 순 → 그 위에 관련도(이름·분류에 음식 이름/키워드 → 같은 계열 → 다른 계열, shared placeRelevance)로 다시 묶는다
+    places = rankPlaces(sortByRating(await attachRatings(places)), f ?? { name: food });
     return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
     console.error("[places/restaurants]", (e as Error).message);
