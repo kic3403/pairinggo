@@ -156,7 +156,8 @@ describe("맛 궁합 계산", () => {
       const d = D.get(p.d), f = F.get(p.f);
       if (!p.pf || !d?.profile || !f?.profile) continue;
       const fit = profileFit(d.profile, d.abv ?? null, f.profile);
-      const want = new Set([...p.pf.plus, ...p.pf.minus].map(norm));
+      // "근거 조합에서 …"는 친화도 문구(pairing/affinity.ts, 2026-09-17) — 맛 궁합 규칙이 만든 문구만 견준다
+      const want = new Set([...p.pf.plus, ...p.pf.minus].filter((t) => !t.startsWith("근거 조합에서")).map(norm));
       const got = new Set([...fit.plus, ...fit.minus].map(norm));
       n++;
       if ([...want].every((w) => got.has(w))) same++;
