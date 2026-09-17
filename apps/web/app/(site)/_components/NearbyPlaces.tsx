@@ -15,7 +15,7 @@ import { useHydrated, useRegion } from "./RegionProvider";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
 type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] } };
-type Named = { id: string; name: string; slug: string };
+type Named = { id: string; name: string; slug: string | null };
 type Res = { places: Place[]; source: string; error?: string; awardsYear?: number | null; ratingSource?: "google" | null };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 type Props = ({ mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean }) & {
@@ -158,11 +158,13 @@ export default function NearbyPlaces(props: Props) {
                     <div className="pinfo">
                       <span className="pv">{verifiedLabel(p.info)}</span>
                       {placeNoteLine(p.info) && <span> · {placeNoteLine(p.info)}</span>}
-                      {!!p.infoView?.drinks.length && <div><b>전통주</b> {p.infoView.drinks.map((d, i) => <span key={d.id}>{i > 0 && " · "}<Link href={`/drinks/${d.slug}`}>{d.name}</Link></span>)}</div>}
-                      {(!!p.infoView?.foods.length || p.info.menuNote) && <div><b>메뉴</b> {p.infoView?.foods.map((x, i) => <span key={x.id}>{i > 0 && " · "}<Link href={`/foods/${x.slug}`}>{x.name}</Link></span>)}{p.info.menuNote && <span>{p.infoView?.foods.length ? " · " : ""}{p.info.menuNote}</span>}</div>}
+                      {!!p.infoView?.drinks.length && <div><b>술</b> {p.infoView.drinks.map((d, i) => <span key={d.id}>{i > 0 && " · "}{d.slug ? <Link href={`/drinks/${d.slug}`}>{d.name}</Link> : d.name}</span>)}</div>}
+                      {!!p.infoView?.foods.length && <div><b>메뉴</b> {p.infoView?.foods.map((x, i) => <span key={x.id}>{i > 0 && " · "}{x.slug ? <Link href={`/foods/${x.slug}`}>{x.name}</Link> : x.name}</span>)}</div>}
+                      {p.info.menuNote && <div>{p.info.menuNote}</div>}
                     </div>
                   )}
                   {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}
+                  {p.info?.naverUrl && <a className="lk" href={p.info.naverUrl} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "naver_map" })}>네이버 지도 ↗</a>}
                   {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "tel" })}>전화</a>}
                   {props.mode === "restaurants" && <a className="lk br" href={blueRibbonUrl(p.name)} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("external_link", { ...key, place: p.name, kind: "blueribbon" })}>블루리본 확인 ↗</a>}
                   <Heart kind="place" id={p.id} name={p.name}

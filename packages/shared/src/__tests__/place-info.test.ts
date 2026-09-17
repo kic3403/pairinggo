@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanPlaceInfo, isEmptyPlaceInfo, placeChips, placeNoteLine, verifiedFirst, verifiedLabel, PLACE_NOTE_MAX } from "../place-info";
+import { addListItem, cleanContactPhone, cleanNames, cleanNaverUrl, cleanPlaceInfo, isEmptyPlaceInfo, placeChips, placeNoteLine, verifiedFirst, verifiedLabel, PLACE_NOTE_MAX } from "../place-info";
 
 const known = { drinks: new Set(["d11", "d45"]), foods: new Set(["f08"]) };
 
@@ -17,6 +17,46 @@ describe("운영자 식당 정보 — 입력 정리", () => {
     expect(isEmptyPlaceInfo(cleanPlaceInfo({}))).toBe(true);
     expect(isEmptyPlaceInfo(cleanPlaceInfo({ room: "no" }))).toBe(false);
     expect(isEmptyPlaceInfo(cleanPlaceInfo({ drinks: ["d11"] }, known))).toBe(false);
+  });
+});
+
+describe("술·메뉴 추가 버튼", () => {
+  const catalog = [{ id: "d11", name: "한산소곡주" }, { id: "d45", name: "계룡백일주" }];
+  it("카탈로그 이름과 같으면(띄어쓰기 무시) id로, 아니면 적은 이름 그대로", () => {
+    const a = addListItem({ ids: [], names: [] }, "한산 소곡주", catalog);
+    expect(a).toEqual({ ids: ["d11"], names: [], added: true });
+    const b = addListItem(a, "하우스 와인", catalog);
+    expect(b).toEqual({ ids: ["d11"], names: ["하우스 와인"], added: true });
+  });
+  it("이미 있는 것·빈 입력은 넣지 않는다", () => {
+    const base = { ids: ["d11"], names: ["하우스 와인"] };
+    expect(addListItem(base, "한산소곡주", catalog).added).toBe(false);
+    expect(addListItem(base, "하우스  와인", catalog).added).toBe(false);
+    expect(addListItem(base, "   ", catalog).added).toBe(false);
+  });
+  it("직접 적은 이름은 30자·중복 제거·링크 금지", () => {
+    expect(cleanNames(["  참이슬 ", "참이슬", "https://x.com 술", "가".repeat(50)])).toEqual(["참이슬", "가".repeat(30)]);
+    const i = cleanPlaceInfo({ drinkNames: ["하우스 와인"], menuNames: ["모둠전", "모둠전"] });
+    expect(i.drinkNames).toEqual(["하우스 와인"]);
+    expect(i.menuNames).toEqual(["모둠전"]);
+    expect(isEmptyPlaceInfo(i)).toBe(false);
+  });
+});
+
+describe("네이버 링크·대표 번호", () => {
+  it("네이버 주소(https)만 받는다", () => {
+    expect(cleanNaverUrl("https://naver.me/abc123")).toBe("https://naver.me/abc123");
+    expect(cleanNaverUrl("https://map.naver.com/p/entry/place/12345")).toBe("https://map.naver.com/p/entry/place/12345");
+    expect(cleanNaverUrl("http://map.naver.com/p/1")).toBeNull();
+    expect(cleanNaverUrl("https://evil-naver.com/x")).toBeNull();
+    expect(cleanNaverUrl("https://example.com/naver.com")).toBeNull();
+    expect(cleanNaverUrl("javascript:alert(1)")).toBeNull();
+    expect(cleanNaverUrl("")).toBeNull();
+    expect(cleanPlaceInfo({ corkage: "yes", naverUrl: "https://naver.me/abc" }).naverUrl).toBe("https://naver.me/abc");
+  });
+  it("대표 번호는 숫자·하이픈만 — 공개 정보(PlaceInfo)에는 들어가지 않는다", () => {
+    expect(cleanContactPhone(" 042-123-4567 (점장) ")).toBe("042-123-4567");
+    expect(Object.keys(cleanPlaceInfo({ contactPhone: "010-1234-5678" }))).not.toContain("contactPhone");
   });
 });
 

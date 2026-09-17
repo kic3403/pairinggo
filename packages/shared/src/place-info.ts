@@ -12,18 +12,66 @@ export type PlaceInfo = {
   parking: ParkingKind | null; parkingNote: string;
   corkage: Tri; corkageNote: string;
   room: Tri; roomNote: string;
-  /** 취급 전통주 — 카탈로그 술 id */
+  /** 술 — 카탈로그에 있는 술 id(화면에서 그 술 페이지로 이어진다) */
   drinks: string[];
-  /** 대표 메뉴 중 카탈로그에 있는 음식 id */
+  /** 술 — 카탈로그에 없는 술 이름(와인·사케·다른 전통주 등, 적은 그대로 보인다) */
+  drinkNames: string[];
+  /** 메뉴 — 카탈로그에 있는 음식 id */
   foods: string[];
-  /** 카탈로그에 없는 대표 메뉴 등 짧은 메모(화면에 그대로 보인다) */
+  /** 메뉴 — 카탈로그에 없는 메뉴 이름 */
+  menuNames: string[];
+  /** 한 줄 소개(화면에 그대로 보인다) */
   menuNote: string;
+  /** 네이버 지도(플레이스) 링크 — 화면에 "네이버 지도 ↗"로 보인다. 데이터를 가져오지 않고 링크만 건다 */
+  naverUrl: string | null;
   source: PlaceInfoSource;
   /** 확인한 날 YYYY-MM-DD */
   verifiedAt: string | null;
 };
 
-export const PLACE_NOTE_MAX = 40, PLACE_MENU_NOTE_MAX = 120, PLACE_LIST_MAX = 30;
+export const PLACE_NOTE_MAX = 40, PLACE_MENU_NOTE_MAX = 120, PLACE_LIST_MAX = 30, PLACE_ITEM_MAX = 30;
+
+/** 직접 적은 술·메뉴 이름 목록 — 공백 정리, 30자, 같은 이름(띄어쓰기 무시) 한 번만, 링크는 받지 않는다 */
+export function cleanNames(v: unknown): string[] {
+  const out: string[] = [], seen = new Set<string>();
+  for (const raw of Array.isArray(v) ? v : []) {
+    const name = String(raw ?? "").replace(/\s+/g, " ").trim().slice(0, PLACE_ITEM_MAX);
+    const key = name.replace(/\s+/g, "").toLowerCase();
+    if (!key || seen.has(key) || /https?:|www\./i.test(name)) continue;
+    seen.add(key); out.push(name);
+    if (out.length >= PLACE_LIST_MAX) break;
+  }
+  return out;
+}
+
+/** 네이버 지도·플레이스 주소만 받는다(https, naver.com·naver.me). 그 밖의 주소는 null */
+export function cleanNaverUrl(v: unknown): string | null {
+  const s = String(v ?? "").trim();
+  if (!s) return null;
+  try {
+    const u = new URL(s);
+    if (u.protocol !== "https:") return null;
+    const host = u.hostname.toLowerCase();
+    return host === "naver.me" || host === "naver.com" || host.endsWith(".naver.com") ? u.toString().slice(0, 300) : null;
+  } catch { return null; }
+}
+
+/** 운영자 전용 대표 번호 — 숫자·하이픈만, 화면에 내보내지 않는다(PlaceInfo에 넣지 않는다) */
+export const cleanContactPhone = (v: unknown) => String(v ?? "").replace(/[^0-9+\-]/g, "").slice(0, 20);
+
+/**
+ * "추가" 버튼 — 적은 이름이 카탈로그 이름과 같으면(띄어쓰기 무시) 그 id로, 아니면 직접 적은 이름으로 넣는다.
+ * 이미 있는 것은 다시 넣지 않는다(added: false).
+ */
+export function addListItem(list: { ids: string[]; names: string[] }, input: string, catalog: { id: string; name: string }[]): { ids: string[]; names: string[]; added: boolean } {
+  const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+  const k = key(input);
+  if (!k) return { ...list, added: false };
+  const hit = catalog.find((c) => key(c.name) === k);
+  if (hit) return list.ids.includes(hit.id) ? { ...list, added: false } : { ids: [...list.ids, hit.id], names: list.names.filter((n) => key(n) !== k), added: true };
+  const names = cleanNames([...list.names, input]);
+  return { ids: list.ids, names, added: names.length > list.names.length };
+}
 const PARKING: readonly string[] = ["free", "paid", "valet", "street", "none"];
 const tri = (v: unknown): Tri => (v === "yes" || v === "no" ? v : null);
 const text = (v: unknown, max: number) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, max);
@@ -36,8 +84,9 @@ export function cleanPlaceInfo(raw: Record<string, unknown>, known?: { drinks: S
     parking: PARKING.includes(String(raw.parking)) ? (raw.parking as ParkingKind) : null, parkingNote: text(raw.parkingNote, PLACE_NOTE_MAX),
     corkage: tri(raw.corkage), corkageNote: text(raw.corkageNote, PLACE_NOTE_MAX),
     room: tri(raw.room), roomNote: text(raw.roomNote, PLACE_NOTE_MAX),
-    drinks: ids(raw.drinks, known?.drinks).filter((id) => id.startsWith("d")), foods: ids(raw.foods, known?.foods).filter((id) => id.startsWith("f")),
-    menuNote: text(raw.menuNote, PLACE_MENU_NOTE_MAX),
+    drinks: ids(raw.drinks, known?.drinks).filter((id) => id.startsWith("d")), drinkNames: cleanNames(raw.drinkNames),
+    foods: ids(raw.foods, known?.foods).filter((id) => id.startsWith("f")), menuNames: cleanNames(raw.menuNames),
+    menuNote: text(raw.menuNote, PLACE_MENU_NOTE_MAX), naverUrl: cleanNaverUrl(raw.naverUrl),
     source: raw.source === "partner" ? "partner" : "operator",
     verifiedAt: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null,
   };
@@ -45,7 +94,7 @@ export function cleanPlaceInfo(raw: Record<string, unknown>, known?: { drinks: S
 
 /** 아무것도 적지 않은 입력인가 — 빈 값은 저장하지 않는다 */
 export function isEmptyPlaceInfo(i: PlaceInfo): boolean {
-  return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.foods.length && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;
+  return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.drinkNames.length && !i.foods.length && !i.menuNames.length && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;
 }
 
 const PARKING_LABEL: Record<ParkingKind, string> = { free: "주차 무료", paid: "주차 유료", valet: "발레파킹", street: "노상 주차", none: "주차 불가" };

@@ -50,8 +50,8 @@ export async function GET(req: Request) {
     places = rankPlaces(sortByRating(await attachRatings(places)), f ?? { name: food });
     // 운영자(제휴 식당)가 확인한 정보(place_info 0021: 콜키지·룸·주차·취급 전통주·대표 메뉴) — 확인된 식당을 맨 앞으로. 이름·주소는 화면용으로 풀어 준다
     const DN = new Map(c.dataset.drinks.map((d) => [d.id, d.name])), FN = new Map(c.dataset.foods.map((x) => [x.id, x.name]));
-    const named = (ids: string[], by: Map<string, string>) => ids.filter((id) => by.has(id)).map((id) => ({ id, name: by.get(id)!, slug: toSlug(by.get(id)!) }));
-    places = verifiedFirst(await attachPlaceInfo(places)).map((p) => (p.info ? { ...p, infoView: { drinks: named(p.info.drinks, DN), foods: named(p.info.foods, FN) } } : p));
+    const named = (ids: string[], by: Map<string, string>) => ids.filter((id) => by.has(id)).map((id) => ({ id, name: by.get(id)!, slug: toSlug(by.get(id)!) as string | null }));
+    places = verifiedFirst(await attachPlaceInfo(places)).map((p) => (p.info ? { ...p, infoView: { drinks: [...named(p.info.drinks, DN), ...p.info.drinkNames.map((name) => ({ id: name, name, slug: null }))], foods: [...named(p.info.foods, FN), ...p.info.menuNames.map((name) => ({ id: name, name, slug: null }))] } } : p));
     return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
     console.error("[places/restaurants]", (e as Error).message);
