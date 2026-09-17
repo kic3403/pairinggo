@@ -500,6 +500,9 @@ p { margin: 0 0 12px; }
 .card .more summary { font-size: 12.5px; color: var(--navy); cursor: pointer; }
 .card .more .why { margin-top: 4px; }
 /* 식당 구글 평점 — ★ 4.3 (512) Google */
+/* 식당 편의 정보 칩(주차·단체·예약) — 구글 지도 정보 */
+.place .amen { display: inline-flex; align-items: center; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; vertical-align: 2px; white-space: nowrap; background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
+.place .amen.no { color: var(--muted); background: transparent; }
 .place .rating { display: inline-flex; align-items: center; gap: 4px; margin-right: 8px; color: #B8860B; font-weight: 700; }
 .place .rating i { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--muted); }
 

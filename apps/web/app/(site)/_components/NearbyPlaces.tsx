@@ -7,13 +7,13 @@
  * 현재 위치 결과가 나온다는 사용자 지적). 관심지역을 "현재 위치로" 정했으면 그 좌표를 쓴다(지역 대표 좌표보다 정확).
  */
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ratingText, type PlaceRating } from "@pairinggo/shared";
+import { amenityChips, ratingText, type PlaceAmenities, type PlaceRating } from "@pairinggo/shared";
 import Heart from "./Heart";
 import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
-type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null };
+type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null };
 type Res = { places: Place[]; source: string; error?: string; awardsYear?: number | null; ratingSource?: "google" | null };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 type Props = ({ mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean }) & {
@@ -135,7 +135,7 @@ export default function NearbyPlaces(props: Props) {
       {state === "done" && res && (
         res.places.length ? (
           <>
-            <p className="small muted">{where} · {res.places.length}곳{res.places.some((p) => p.rating) ? " · ★ 평점은 Google 지도 이용자 평가" : ""}{res.places.some((p) => p.award) && res.awardsYear ? ` · 미쉐린 배지는 미쉐린 가이드 서울&부산 ${res.awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
+            <p className="small muted">{where} · {res.places.length}곳{res.places.some((p) => p.rating) ? " · ★ 평점은 Google 지도 이용자 평가" : ""}{res.places.some((p) => amenityChips(p.amenities).length) ? " · 주차·단체·예약 표시는 Google 지도 정보(없는 곳은 표시 안 함)" : ""}{res.places.some((p) => p.award) && res.awardsYear ? ` · 미쉐린 배지는 미쉐린 가이드 서울&부산 ${res.awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
             <ul className="places">
               {res.places.slice(0, 12).map((p) => (
                 <li key={p.id} className="place">
@@ -146,6 +146,7 @@ export default function NearbyPlaces(props: Props) {
                         {p.award.kind === "star" ? <><span className="stars" aria-hidden>{"★".repeat(Math.max(1, Math.min(3, p.award.level)))}</span> 미쉐린 {p.award.year}</> : p.award.kind === "bib" ? `빕구르망 ${p.award.year}` : p.award.label}
                       </span>
                     )}
+                    {amenityChips(p.amenities).map((c) => <span key={c.key} className={`amen ${c.tone}`} title="Google 지도 정보 — 방문 전 매장에 확인하세요">{c.label}</span>)}
                   </div>
                   <div className="s">
                     {p.rating && <span className="rating" title={`Google 지도 이용자 평점 ${p.rating.score.toFixed(1)} · 리뷰 ${p.rating.count.toLocaleString("ko-KR")}개`}>{ratingText(p.rating)}<i>Google</i></span>}

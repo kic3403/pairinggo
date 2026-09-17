@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pickGoogleMatch, ratingText, type GoogleCandidate } from "../place-rating";
+import { amenitiesFromGoogle, amenityChips, pickGoogleMatch, ratingText, type GoogleCandidate } from "../place-rating";
 
 const kakao = { name: "투뿔등심 강남점", lat: 37.4979, lng: 127.0276 };
 const c = (name: string, lat: number, lng: number, rating = 4.0, count = 100): GoogleCandidate => ({ id: name, name, lat, lng, rating, count });
@@ -35,5 +35,34 @@ describe("식당 평점순 정렬", () => {
     const g = (score: number, count: number) => ({ score, count, source: "google" as const });
     const out = sortByRating([{ n: "a" }, { n: "b", rating: g(4.1, 10) }, { n: "c", rating: g(4.5, 20) }, { n: "d" }, { n: "e", rating: g(4.5, 300) }]);
     expect(out.map((x) => x.n)).toEqual(["e", "c", "b", "a", "d"]);
+  });
+});
+
+describe("구글 편의 정보(주차·단체·예약)", () => {
+  it("주차 — 무료가 하나라도 있으면 무료, 아니면 유료·발레·노상 순", () => {
+    expect(amenitiesFromGoogle({ parkingOptions: { freeParkingLot: true, paidParkingLot: true } }).parking).toBe("free");
+    expect(amenitiesFromGoogle({ parkingOptions: { freeGarageParking: true } }).parking).toBe("free");
+    expect(amenitiesFromGoogle({ parkingOptions: { paidParkingLot: true, freeStreetParking: true } }).parking).toBe("paid");
+    expect(amenitiesFromGoogle({ parkingOptions: { valetParking: true } }).parking).toBe("valet");
+    expect(amenitiesFromGoogle({ parkingOptions: { freeStreetParking: true } }).parking).toBe("street");
+  });
+  it("모든 항목이 false로 적혀 있을 때만 '주차 불가', 정보가 없으면 말하지 않는다", () => {
+    expect(amenitiesFromGoogle({ parkingOptions: { freeParkingLot: false, paidParkingLot: false } }).parking).toBe("none");
+    expect(amenitiesFromGoogle({ parkingOptions: {} }).parking).toBeNull();
+    expect(amenitiesFromGoogle({}).parking).toBeNull();
+  });
+  it("단체·예약은 적혀 있는 값 그대로, 없으면 null", () => {
+    expect(amenitiesFromGoogle({ goodForGroups: true, reservable: false })).toEqual({ parking: null, groups: true, reservable: false });
+    expect(amenitiesFromGoogle({})).toEqual({ parking: null, groups: null, reservable: null });
+  });
+  it("칩 — 확인된 것만, '불가'는 주차만 보여 준다(단체·예약의 false는 빈칸과 구분이 어려워 숨김)", () => {
+    expect(amenityChips({ parking: "free", groups: true, reservable: true })).toEqual([{ key: "parking", label: "주차 무료", tone: "yes" }, { key: "groups", label: "단체 가능", tone: "yes" }, { key: "reservable", label: "예약 가능", tone: "yes" }]);
+    expect(amenityChips({ parking: "none", groups: false, reservable: false })).toEqual([{ key: "parking", label: "주차 불가", tone: "no" }]);
+    expect(amenityChips({ parking: null, groups: null, reservable: null })).toEqual([]);
+    expect(amenityChips(null)).toEqual([]);
+  });
+  it("대조된 후보의 편의 정보가 따라온다", () => {
+    const c = { id: "g1", name: "진미식당", lat: 37.5, lng: 127, rating: 4.4, count: 120, amenities: { parking: "paid" as const, groups: true, reservable: null } };
+    expect(pickGoogleMatch({ name: "진미식당", lat: 37.5, lng: 127 }, [c])?.amenities?.parking).toBe("paid");
   });
 });

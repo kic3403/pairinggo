@@ -5,7 +5,7 @@
 import { normalizePlaceName } from "./awards";
 
 export type PlaceRating = { score: number; count: number; source: "google"; googleId?: string };
-export type GoogleCandidate = { id: string; name: string; lat: number; lng: number; rating: number | null; count: number };
+export type GoogleCandidate = { id: string; name: string; lat: number; lng: number; rating: number | null; count: number; amenities?: PlaceAmenities | null };
 
 /** 같은 가게로 보는 최대 거리 — 카카오·구글 좌표가 건물 안에서 조금씩 다르다. 체인점끼리는 이보다 멀다 */
 export const MATCH_RADIUS_M = 150;
@@ -47,4 +47,42 @@ export function sortByRating<T extends { rating?: PlaceRating | null }>(places: 
     if (rb) return 1;
     return a.i - b.i;
   }).map((x) => x.p);
+}
+
+/* ---------- 편의 정보 — 주차·단체·예약 (2026-09-17) ---------- */
+/**
+ * 구글 Places의 parkingOptions·goodForGroups·reservable. 평점과 같은 호출에 필드만 더한다(요금 등급이 Enterprise + Atmosphere로 오른다).
+ * 콜키지·룸은 구글에도 카카오에도 없다 — 회원 제보·제휴 식당 입력으로 따로 채운다.
+ * 한국 식당은 이 칸이 비어 있는 곳이 많다: 적혀 있지 않은 것은 null(말하지 않음), "불가"는 적힌 항목이 모두 false일 때만.
+ */
+export type ParkingKind = "free" | "paid" | "valet" | "street" | "none";
+export type PlaceAmenities = { parking: ParkingKind | null; groups: boolean | null; reservable: boolean | null };
+export type GoogleAmenityFields = {
+  parkingOptions?: Partial<Record<"freeParkingLot" | "paidParkingLot" | "freeStreetParking" | "paidStreetParking" | "valetParking" | "freeGarageParking" | "paidGarageParking", boolean>>;
+  goodForGroups?: boolean; reservable?: boolean;
+};
+
+export function amenitiesFromGoogle(g: GoogleAmenityFields): PlaceAmenities {
+  const po = g.parkingOptions ?? {};
+  const known = Object.values(po).filter((v) => typeof v === "boolean");
+  const parking: ParkingKind | null =
+    po.freeParkingLot || po.freeGarageParking ? "free"
+    : po.paidParkingLot || po.paidGarageParking ? "paid"
+    : po.valetParking ? "valet"
+    : po.freeStreetParking || po.paidStreetParking ? "street"
+    : known.length ? "none" : null;
+  return { parking, groups: typeof g.goodForGroups === "boolean" ? g.goodForGroups : null, reservable: typeof g.reservable === "boolean" ? g.reservable : null };
+}
+
+const PARKING_LABEL: Record<ParkingKind, string> = { free: "주차 무료", paid: "주차 유료", valet: "발레파킹", street: "노상 주차", none: "주차 불가" };
+export type AmenityChip = { key: "parking" | "groups" | "reservable"; label: string; tone: "yes" | "no" };
+
+/** 식당 이름 옆 칩 — 확인된 것만. 단체·예약은 true일 때만(구글의 false는 "정보 없음"과 섞여 있다) */
+export function amenityChips(a: PlaceAmenities | null | undefined): AmenityChip[] {
+  if (!a) return [];
+  const out: AmenityChip[] = [];
+  if (a.parking) out.push({ key: "parking", label: PARKING_LABEL[a.parking], tone: a.parking === "none" ? "no" : "yes" });
+  if (a.groups) out.push({ key: "groups", label: "단체 가능", tone: "yes" });
+  if (a.reservable) out.push({ key: "reservable", label: "예약 가능", tone: "yes" });
+  return out;
 }

@@ -17,6 +17,8 @@ export type Place = {
   award?: import("./awards").AwardBadge | null;
   /** 구글 지도 평점 — 서버가 place_ratings 캐시·Places API로 붙인다. 없으면 undefined */
   rating?: import("./place-rating").PlaceRating | null;
+  /** 구글 지도 편의 정보(주차·단체·예약) — 평점과 함께 붙는다. 정보가 없으면 undefined/null */
+  amenities?: import("./place-rating").PlaceAmenities | null;
 };
 
 /** 음식 이름 → 카카오 키워드. 검색이 안 되거나 엉뚱한 곳이 나오는 이름만 예외로 */
