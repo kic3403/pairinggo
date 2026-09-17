@@ -45,7 +45,7 @@
 - 주류 경고문구·만 19세 안내는 전 페이지 공통 푸터. AI 생성 페어링은 `source: ai` 배지(Phase 9).
 - 모든 UI 텍스트 한국어. **미니앱은 모바일 고정 390px(최대 430px 중앙) — 데스크톱까지 넓히지 않는다**(그대로 앱이 된다). **공개 웹(`apps/web/(site)`)은 반응형**. 라이트·다크 모두 토큰으로.
 - 외부 링크는 실제로 열렸을 때만 퍼널 이벤트를 남긴다(실패는 `link_open_failed`). `buy_link_click`은 입점 제안 자료이자 `refresh_pairing_feedback` 입력이라 부풀리면 안 된다.
-- 페어링 순위 = 등급 → 근거 링크 있음(+3) → 점수(`pairing/score.ts`). 맛 분석 점수(pf.s)는 **근거 조합에서 배운 친화도**(`pairing/affinity.ts`: 술 종류 × 음식 분류·매운 음식·기름진 음식의 lift 로그 합, 모든 술×음식 조합 기준 백분위, 2026-09-17) — 예전 `profileFit` 규칙은 근거 조합을 무작위 수준(AUC 0.50)으로밖에 못 골라 점수에서 빼고 카드 문구로만 쓴다. 점수 규칙을 바꿀 때는 `pairing/fit-eval.ts`의 교차검증 AUC로 재고(테스트가 0.56 미만이면 실패), 근거가 늘면 `pf-recalc`를 다시 돌린다. (이전 설명: 카탈로그 전체 `profileFit` 백분위 한 눈금 — 술·페어링을 넣거나 맛 규칙을 바꾸면 `pnpm --filter @pairinggo/db pf-recalc` → `db:export`(docs/18 §1-1).
+- 페어링 순위 = 등급 → 근거 링크 있음(+3) → 점수(`pairing/score.ts`). 맛 분석 점수(pf.s)는 **근거 조합에서 배운 친화도**(`pairing/affinity.ts`: 술 종류 × 음식(분류에서 출발해 그 음식 자체의 근거로 보정)·매운 음식·기름진 음식의 lift 로그 합 → 50이 중립인 0~100 곡선 `affinityScore`, 2026-09-17) — 예전 `profileFit` 규칙은 근거 조합을 무작위 수준(AUC 0.50)으로밖에 못 골라 점수에서 빼고 카드 문구로만 쓴다. 점수 규칙을 바꿀 때는 `pairing/fit-eval.ts`의 교차검증 AUC로 재고(테스트가 0.56 미만이면 실패), 근거가 늘면 `pf-recalc`를 다시 돌린다. (이전 설명: 카탈로그 전체 `profileFit` 백분위 한 눈금 — 술·페어링을 넣거나 맛 규칙을 바꾸면 `pnpm --filter @pairinggo/db pf-recalc` → `db:export`(docs/18 §1-1).
 - 검색·점수·유사도 로직은 packages/shared에만 두고 테스트를 먼저 쓴다. 컴포넌트에 계산 로직을 넣지 않는다.
 - 커밋은 기능 단위로 작게. 커밋 메시지는 한국어 요약 + 영어 scope 허용.
 

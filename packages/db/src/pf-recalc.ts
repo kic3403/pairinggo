@@ -1,12 +1,12 @@
 /**
  * 맛 분석 점수(pairings.profile_score) 재계산 — 근거 조합에서 배운 친화도(shared/pairing/affinity.ts)로 매기고,
- * 카탈로그의 모든 술 × 음식 조합을 기준으로 0~100 백분위에 놓는다.
+ * 0~100 점수로 옮긴다(50 = 중립, affinityScore).
  *   pnpm --filter @pairinggo/db pf-recalc [--dry]
  * 왜(2026-09-17): 예전 점수(profileFit 규칙)는 실제 근거 조합을 무작위 수준(AUC 0.50)으로밖에 못 골랐다. 친화도는 교차검증 0.60.
  *   카드 문구(plus/minus)는 profileFit 문구를 그대로 두고, 뚜렷한 친화도가 있으면 맨 앞에 한 줄 붙인다.
  * 근거 조합이 늘어난 뒤 다시 돌리면 점수도 따라 좋아진다. 끝나면 발행(카탈로그 버전 갱신)까지 하고, 이어서 `pnpm db:export`.
  */
-import { affinityNotes, affinityRaw, affinityScale, buildAffinity, crossValidatedAuc, profileFit, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
+import { affinityNotes, affinityRaw, affinityScore, buildAffinity, crossValidatedAuc, DATA, pairingGrade, pairingScore, profileFit, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
 import { publishCatalog } from "./catalog-write";
 import { connect } from "./sql";
 
@@ -20,7 +20,6 @@ try {
   const D = new Map(drinks.map((d) => [d.id, d])), F = new Map(foods.map((f) => [f.id, { ...f, profile: f.profile ?? undefined }]));
   // 친화도는 앱에 보이는 근거 조합(curated)으로만 배운다 — 검수 중(pending)인 조합은 아직 근거로 치지 않는다
   const model = buildAffinity({ drinks, foods: [...F.values()], pairings: rows.filter((r) => r.status === "curated") });
-  const scale = affinityScale(model, drinks, [...F.values()]);
 
   let changed = 0, missing = 0;
   const updates = rows.map((r) => {
@@ -28,7 +27,7 @@ try {
     if (!d?.profile || !f?.profile) { missing++; return null; }
     const rule = profileFit(d.profile, d.abv == null ? null : Number(d.abv), f.profile);
     const notes = affinityNotes(model, d, f);
-    const pf = { s: scale(affinityRaw(model, d, f)), plus: [...notes.plus, ...rule.plus], minus: [...notes.minus, ...rule.minus] };
+    const pf = { s: affinityScore(affinityRaw(model, d, f)), plus: [...notes.plus, ...rule.plus], minus: [...notes.minus, ...rule.minus] };
     if ((r.old?.s ?? -1) !== pf.s) changed++;
     return { id: r.id, pf, r };
   });
@@ -37,7 +36,7 @@ try {
   const q = (a: number[], p: number) => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length * p)]; };
   const evid = ok.filter((u) => model.evidence.has(`${u.r.d}|${u.r.f}`)), est = ok.filter((u) => !model.evidence.has(`${u.r.d}|${u.r.f}`));
   console.log(`근거 조합 ${model.n}건으로 학습 · 대상 ${rows.length} · 프로필 없음 ${missing} · 값 바뀜 ${changed}`);
-  console.log(`새 점수 중앙값 — 근거 조합 ${q(evid.map((u) => u.pf.s), 0.5)} · 맛 분석 조합 ${q(est.map((u) => u.pf.s), 0.5)} (50 = 모든 술×음식 조합의 한가운데)`);
+  console.log(`새 점수 중앙값 — 근거 조합 ${q(evid.map((u) => u.pf.s), 0.5)} · 맛 분석 조합 ${q(est.map((u) => u.pf.s), 0.5)} (50 = 중립)`);
   const pos = evid.map((u) => ({ d: u.r.d, f: u.r.f }));
   const cv = crossValidatedAuc(pos, (train) => { const m = buildAffinity({ drinks, foods: [...F.values()], pairings: train.map((p) => ({ ...p, src: "media" })) }); return (d, f) => affinityRaw(m, D.get(d)!, F.get(f)!); });
   const cvRule = crossValidatedAuc(pos, () => (d, f) => profileFit(D.get(d)!.profile!, D.get(d)!.abv == null ? null : Number(D.get(d)!.abv), F.get(f)!.profile!).s);
@@ -47,6 +46,14 @@ try {
     const moved = est.map((u) => ({ u, diff: u.pf.s - (u.r.old?.s ?? 50) })).sort((a, b) => b.diff - a.diff);
     console.log("\n맛 분석 조합 중 가장 많이 오른 10개"); for (const { u, diff } of moved.slice(0, 10)) console.log(`  +${diff} → ${u.pf.s}  ${name(u)}  ${u.pf.plus[0] ?? ""}`);
     console.log("맛 분석 조합 중 가장 많이 내린 10개"); for (const { u, diff } of moved.slice(-10).reverse()) console.log(`  ${diff} → ${u.pf.s}  ${name(u)}  ${u.pf.minus[0] ?? ""}`);
+    // 등급 변화 — 앱에 보이는 조합(번들 JSON) 기준
+    const byKey = new Map(ok.map((u) => [u.r.d + "|" + u.r.f, u.pf]));
+    const tally = (next: boolean) => { const t: Record<string, number> = { best: 0, good: 0, try: 0 }; for (const p of DATA.pairings) { const pf = next ? byKey.get(p.d + "|" + p.f) ?? p.pf : p.pf; t[pairingGrade(pairingScore({ ...p, pf })).key]++; } return t; };
+    const before = tally(false), after = tally(true);
+    console.log(`\n등급(찰떡/잘 어울림/시도해 볼 만) — 지금 ${before.best}/${before.good}/${before.try} → 적용 후 ${after.best}/${after.good}/${after.try}`);
+    const probe: [string, string][] = [["복숭아와인", "불고기"], ["다래와인", "육개장"], ["크라테 드라이", "스테이크"], ["백세주", "불고기"], ["해창막걸리 12도", "해물파전"], ["두레앙 브랜디", "곶감"]];
+    console.log("확인용 조합:");
+    for (const [dn, fn] of probe) { const u = ok.find((x) => D.get(x.r.d)!.name === dn && F.get(x.r.f)!.name === fn); if (u) console.log(`  ${dn} × ${fn}: ${u.r.old?.s} → ${u.pf.s}  ${[...u.pf.plus.slice(0, 1), ...u.pf.minus.slice(0, 1).map((t) => "주의: " + t)].join(" / ")}`); }
     console.log("\n저장 안 함 (--dry)");
   } else {
     await sql.begin(async (tx) => {
