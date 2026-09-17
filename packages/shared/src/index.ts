@@ -28,3 +28,4 @@ export * from "./lineup/lineup";
 export * from "./pairing/review-queue";
 export * from "./pairing/affinity";
 export * from "./pairing/fit-eval";
+export * from "./place-info";

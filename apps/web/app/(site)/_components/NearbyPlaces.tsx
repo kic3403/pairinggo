@@ -7,13 +7,15 @@
  * 현재 위치 결과가 나온다는 사용자 지적). 관심지역을 "현재 위치로" 정했으면 그 좌표를 쓴다(지역 대표 좌표보다 정확).
  */
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { amenityChips, ratingText, type PlaceAmenities, type PlaceRating } from "@pairinggo/shared";
+import Link from "next/link";
+import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceRating } from "@pairinggo/shared";
 import Heart from "./Heart";
 import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
-type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null };
+type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] } };
+type Named = { id: string; name: string; slug: string };
 type Res = { places: Place[]; source: string; error?: string; awardsYear?: number | null; ratingSource?: "google" | null };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 type Props = ({ mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean }) & {
@@ -135,7 +137,7 @@ export default function NearbyPlaces(props: Props) {
       {state === "done" && res && (
         res.places.length ? (
           <>
-            <p className="small muted">{where} · {res.places.length}곳{res.places.some((p) => p.rating) ? " · ★ 평점은 Google 지도 이용자 평가" : ""}{res.places.some((p) => amenityChips(p.amenities).length) ? " · 주차·단체·예약 표시는 Google 지도 정보(없는 곳은 표시 안 함)" : ""}{res.places.some((p) => p.award) && res.awardsYear ? ` · 미쉐린 배지는 미쉐린 가이드 서울&부산 ${res.awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
+            <p className="small muted">{where} · {res.places.length}곳{res.places.some((p) => p.rating) ? " · ★ 평점은 Google 지도 이용자 평가" : ""}{res.places.some((p) => p.info) ? " · 색이 있는 칩은 페어링GO가 매장에 직접 확인한 정보" : ""}{res.places.some((p) => placeChips(null, p.amenities).length) ? " · 회색 칩(주차·단체·예약)은 Google 지도 정보" : ""}{res.places.some((p) => p.award) && res.awardsYear ? ` · 미쉐린 배지는 미쉐린 가이드 서울&부산 ${res.awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
             <ul className="places">
               {res.places.slice(0, 12).map((p) => (
                 <li key={p.id} className="place">
@@ -146,12 +148,20 @@ export default function NearbyPlaces(props: Props) {
                         {p.award.kind === "star" ? <><span className="stars" aria-hidden>{"★".repeat(Math.max(1, Math.min(3, p.award.level)))}</span> 미쉐린 {p.award.year}</> : p.award.kind === "bib" ? `빕구르망 ${p.award.year}` : p.award.label}
                       </span>
                     )}
-                    {amenityChips(p.amenities).map((c) => <span key={c.key} className={`amen ${c.tone}`} title="Google 지도 정보 — 방문 전 매장에 확인하세요">{c.label}</span>)}
+                    {placeChips(p.info, p.amenities).map((c) => <span key={c.key} className={`amen ${c.tone}${c.verified ? " ok" : ""}`} title={c.verified ? "페어링GO가 매장에 확인한 정보" : "Google 지도 정보 — 방문 전 매장에 확인하세요"}>{c.label}</span>)}
                   </div>
                   <div className="s">
                     {p.rating && <span className="rating" title={`Google 지도 이용자 평점 ${p.rating.score.toFixed(1)} · 리뷰 ${p.rating.count.toLocaleString("ko-KR")}개`}>{ratingText(p.rating)}<i>Google</i></span>}
                     {[p.category, p.distanceKm != null ? `${p.distanceKm.toFixed(1)}km` : null, p.roadAddress || p.address].filter(Boolean).join(" · ")}
                   </div>
+                  {p.info && (
+                    <div className="pinfo">
+                      <span className="pv">{verifiedLabel(p.info)}</span>
+                      {placeNoteLine(p.info) && <span> · {placeNoteLine(p.info)}</span>}
+                      {!!p.infoView?.drinks.length && <div><b>전통주</b> {p.infoView.drinks.map((d, i) => <span key={d.id}>{i > 0 && " · "}<Link href={`/drinks/${d.slug}`}>{d.name}</Link></span>)}</div>}
+                      {(!!p.infoView?.foods.length || p.info.menuNote) && <div><b>메뉴</b> {p.infoView?.foods.map((x, i) => <span key={x.id}>{i > 0 && " · "}<Link href={`/foods/${x.slug}`}>{x.name}</Link></span>)}{p.info.menuNote && <span>{p.infoView?.foods.length ? " · " : ""}{p.info.menuNote}</span>}</div>}
+                    </div>
+                  )}
                   {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}
                   {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "tel" })}>전화</a>}
                   {props.mode === "restaurants" && <a className="lk br" href={blueRibbonUrl(p.name)} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("external_link", { ...key, place: p.name, kind: "blueribbon" })}>블루리본 확인 ↗</a>}

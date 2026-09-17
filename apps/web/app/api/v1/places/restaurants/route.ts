@@ -3,7 +3,8 @@ import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { loadAwards } from "@/lib/awards";
 import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
-import { matchAward, rankPlaces, sortByRating } from "@pairinggo/shared";
+import { attachPlaceInfo } from "@/lib/place-info";
+import { matchAward, rankPlaces, sortByRating, toSlug, verifiedFirst } from "@pairinggo/shared";
 import { error, json, preflight } from "@/lib/http";
 
 export const runtime = "nodejs";
@@ -13,6 +14,7 @@ void _D;
 /**
  * GET /api/v1/places/restaurants?food=육회&lat=&lng=&radius=3000&region=hongdae&sort=distance
  * 카카오 로컬(음식점 FD6). 좌표가 있으면 반경·거리순, 없으면 관심지역 좌표(REGIONS) 또는 지역어+정확도순.
+ * 운영자가 확인한 식당(place_info)은 콜키지·룸·주차·취급 전통주·대표 메뉴를 붙여 맨 앞에 둔다(2026-09-17).
  * 앞 12곳에는 구글 지도 평점(lib/google-places.ts, 30일 캐시)을 붙이고 평점 높은 순으로 정렬한다(2026-09-14 사용자 결정) — 응답 ratingSource: "google" | null.
  */
 export async function GET(req: Request) {
@@ -46,6 +48,10 @@ export async function GET(req: Request) {
     if (aw.list.length) places = places.map((p) => ({ ...p, award: matchAward(p, aw.list) }));
     // 평점 높은 순 → 그 위에 관련도(이름·분류에 음식 이름/키워드 → 같은 계열 → 다른 계열, shared placeRelevance)로 다시 묶는다
     places = rankPlaces(sortByRating(await attachRatings(places)), f ?? { name: food });
+    // 운영자(제휴 식당)가 확인한 정보(place_info 0021: 콜키지·룸·주차·취급 전통주·대표 메뉴) — 확인된 식당을 맨 앞으로. 이름·주소는 화면용으로 풀어 준다
+    const DN = new Map(c.dataset.drinks.map((d) => [d.id, d.name])), FN = new Map(c.dataset.foods.map((x) => [x.id, x.name]));
+    const named = (ids: string[], by: Map<string, string>) => ids.filter((id) => by.has(id)).map((id) => ({ id, name: by.get(id)!, slug: toSlug(by.get(id)!) }));
+    places = verifiedFirst(await attachPlaceInfo(places)).map((p) => (p.info ? { ...p, infoView: { drinks: named(p.info.drinks, DN), foods: named(p.info.foods, FN) } } : p));
     return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
     console.error("[places/restaurants]", (e as Error).message);

@@ -503,6 +503,13 @@ p { margin: 0 0 12px; }
 /* 식당 편의 정보 칩(주차·단체·예약) — 구글 지도 정보 */
 .place .amen { display: inline-flex; align-items: center; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; vertical-align: 2px; white-space: nowrap; background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
 .place .amen.no { color: var(--muted); background: transparent; }
+/* 페어링GO가 매장에 직접 확인한 칩(콜키지·룸·주차) — 구글 정보(회색)와 구분 */
+.place .amen.ok { background: var(--navy-soft); color: var(--navy-ink); border-color: transparent; }
+.place .amen.ok.no { background: transparent; color: var(--ink2); border-color: var(--line); }
+.place .pinfo { margin: 6px 0 4px; padding: 8px 10px; border-radius: 10px; background: var(--bg2); font-size: 13px; line-height: 1.6; color: var(--ink2); }
+.place .pinfo .pv { font-weight: 700; color: var(--navy-ink); }
+.place .pinfo b { margin-right: 4px; color: var(--ink); }
+.place .pinfo a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .place .rating { display: inline-flex; align-items: center; gap: 4px; margin-right: 8px; color: #B8860B; font-weight: 700; }
 .place .rating i { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--muted); }
 

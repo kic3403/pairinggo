@@ -19,6 +19,8 @@ export type Place = {
   rating?: import("./place-rating").PlaceRating | null;
   /** 구글 지도 편의 정보(주차·단체·예약) — 평점과 함께 붙는다. 정보가 없으면 undefined/null */
   amenities?: import("./place-rating").PlaceAmenities | null;
+  /** 운영자(제휴 식당)가 확인한 정보 — 콜키지·룸·주차·취급 전통주·대표 메뉴. 서버가 place_info(0021)에서 붙인다 */
+  info?: import("./place-info").PlaceInfo | null;
 };
 
 /** 음식 이름 → 카카오 키워드. 검색이 안 되거나 엉뚱한 곳이 나오는 이름만 예외로 */
