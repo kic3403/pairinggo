@@ -2,6 +2,7 @@
 import { requireAdmin } from "@/lib/admin-auth";
 import { getCatalog } from "@/lib/catalog";
 import { listPlaceInfo } from "@/lib/place-info";
+import { menuReadConfigured } from "@/lib/menu-read";
 import { byKoName } from "@pairinggo/shared";
 import PlaceEditor from "./PlaceEditor";
 
@@ -17,7 +18,7 @@ export default async function AdminPlacesPage() {
         전화·방문으로 <b>직접 확인한 것만</b> 적어 주세요. 저장하면 음식 상세의 “맛집 찾기” 목록에서 그 식당이 맨 위로 올라오고(식당 목록은 10분 단위로 캐시되어 최대 10분 걸립니다), 이름 옆에 콜키지·룸·주차 칩과 취급 전통주가 보입니다.
         네이버 지도·캐치테이블 화면의 내용을 옮겨 적지 않습니다(약관). 모르는 항목은 “모름”으로 두면 표시되지 않아요.
       </p>
-      <PlaceEditor rows={rows} drinks={[...c.dataset.drinks].sort(byKoName).map((d) => ({ id: d.id, name: d.name }))} foods={[...c.dataset.foods].sort(byKoName).map((f) => ({ id: f.id, name: f.name }))} />
+      <PlaceEditor rows={rows} menuReadEnabled={menuReadConfigured()}drinks={[...c.dataset.drinks].sort(byKoName).map((d) => ({ id: d.id, name: d.name }))} foods={[...c.dataset.foods].sort(byKoName).map((f) => ({ id: f.id, name: f.name }))} />
     </>
   );
 }

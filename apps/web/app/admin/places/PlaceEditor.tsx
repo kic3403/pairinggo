@@ -1,7 +1,7 @@
 "use client";
 /** 식당 정보 입력 — ① 카카오에서 식당 찾기 ② 확인한 내용 적기 ③ 저장. 아래 목록에서 고치거나 지운다. 표시 규칙은 shared place-info.ts */
 import { useMemo, useState } from "react";
-import { addListItem, cleanNaverUrl, placeChips, placeNoteLine, verifiedLabel, type PlaceInfo } from "@pairinggo/shared";
+import { addListItem, cleanNaverUrl, mergeMenuRead, placeChips, placeNoteLine, verifiedLabel, type MenuMerge, type MenuReadItem, type PlaceInfo } from "@pairinggo/shared";
 import type { PlaceInfoRow } from "@/lib/place-info";
 
 type Found = { id: string; name: string; category?: string; address: string; phone: string | null; lat?: number; lng?: number; placeUrl: string | null };
@@ -16,7 +16,7 @@ const fromRow = (r: PlaceInfoRow): Form => ({
   verifiedAt: r.info.verifiedAt ?? today(), memo: r.memo,
 });
 
-export default function PlaceEditor({ rows: initial, drinks, foods }: { rows: PlaceInfoRow[]; drinks: Item[]; foods: Item[] }) {
+export default function PlaceEditor({ rows: initial, drinks, foods, menuReadEnabled }: { rows: PlaceInfoRow[]; drinks: Item[]; foods: Item[]; menuReadEnabled: boolean }) {
   const [rows, setRows] = useState(initial);
   const [q, setQ] = useState(""); const [found, setFound] = useState<Found[] | null>(null); const [searching, setSearching] = useState(false);
   const [place, setPlace] = useState<Found | null>(null);
@@ -93,6 +93,11 @@ export default function PlaceEditor({ rows: initial, drinks, foods }: { rows: Pl
             <div><label>주차</label><select value={form.parking} onChange={(e) => set("parking", e.target.value)}><option value="">모름(구글 정보 사용)</option><option value="free">무료</option><option value="paid">유료</option><option value="valet">발레파킹</option><option value="street">노상 주차</option><option value="none">불가</option></select>
               <input value={form.parkingNote} onChange={(e) => set("parkingNote", e.target.value)} placeholder="예) 건물 지하 2시간 무료" maxLength={40} style={{ marginTop: 6 }} /></div>
           </div>
+          <MenuPhotoReader enabled={menuReadEnabled} say={say} onRead={(items) => {
+            const r = mergeMenuRead({ drinks: { ids: form.drinks, names: form.drinkNames }, foods: { ids: form.foods, names: form.menuNames } }, items, { drinks, foods });
+            setForm((f) => ({ ...f, drinks: r.drinks.ids, drinkNames: r.drinks.names, foods: r.foods.ids, menuNames: r.foods.names }));
+            return r;
+          }} />
           <div className="grid2" style={{ marginTop: 10 }}>
             <ListAdder label="술 종류" placeholder="예) 한산소곡주, 하우스 와인" catalog={drinks} ids={form.drinks} names={form.drinkNames} nameOf={dName} tone="" onChange={(ids, names) => setForm((f) => ({ ...f, drinks: ids, drinkNames: names }))} say={say} />
             <ListAdder label="메뉴" placeholder="예) 해물파전, 모둠전" catalog={foods} ids={form.foods} names={form.menuNames} nameOf={fName} tone="v" onChange={(ids, names) => setForm((f) => ({ ...f, foods: ids, menuNames: names }))} say={say} />
@@ -175,6 +180,60 @@ function ListAdder({ label, placeholder, catalog, ids, names, nameOf, tone, onCh
           {names.map((n) => <button type="button" key={n} className="tag m" style={{ border: 0, cursor: "pointer" }} title="직접 적은 이름 — 누르면 빠집니다" onClick={() => onChange(ids, names.filter((x) => x !== n))}>{n} ×</button>)}
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * 메뉴판 사진 → 술·메뉴 자동 입력. 사진은 브라우저에서 긴 변 1,600px JPEG로 줄여 보내고, 서버는 읽기만 하고 저장하지 않는다.
+ * 읽은 결과는 입력칸에 더하기만 한다(지우지 않음) — 틀린 칩은 눌러서 빼면 된다.
+ */
+const MENU_MAX_EDGE = 1600, MENU_MAX_FILES = 4;
+async function shrinkToJpeg(file: File): Promise<{ type: "image/jpeg"; data: string }> {
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, MENU_MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(bitmap.width * scale); canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+  return { type: "image/jpeg", data: dataUrl.slice(dataUrl.indexOf(",") + 1) };
+}
+
+function MenuPhotoReader({ enabled, say, onRead }: { enabled: boolean; say: (m: string) => void; onRead: (items: MenuReadItem[]) => MenuMerge }) {
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const read = async (files: FileList | null) => {
+    if (!files?.length || busy) return;
+    const list = [...files].filter((f) => f.type.startsWith("image/")).slice(0, MENU_MAX_FILES);
+    if (!list.length) { say("사진 파일을 골라 주세요"); return; }
+    if (files.length > MENU_MAX_FILES) say(`한 번에 ${MENU_MAX_FILES}장까지 읽어요 — 앞의 ${MENU_MAX_FILES}장만 읽습니다`);
+    setBusy(true); setResult(null);
+    try {
+      const images = await Promise.all(list.map(shrinkToJpeg));
+      const res = await fetch("/admin/api/places/menu-read", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ images }) });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.error || `HTTP ${res.status}`);
+      const items = (j.items ?? []) as MenuReadItem[];
+      const m = onRead(items);
+      const drinksN = items.filter((i) => i.kind === "drink").length, foodsN = items.length - drinksN;
+      setResult(items.length
+        ? `읽은 항목: 술 ${drinksN} · 메뉴 ${foodsN} → 새로 추가 ${m.added}개(페어링GO와 연결 ${m.linked}개)${m.skipped ? ` · 이미 있음 ${m.skipped}개` : ""}. 틀린 칩은 눌러서 빼 주세요.`
+        : `읽은 항목이 없어요.${j.note ? ` (${j.note})` : ""}`);
+    } catch (e) { say((e as Error).message); } finally { setBusy(false); }
+  };
+  return (
+    <div className="card" style={{ marginTop: 10, background: "var(--bg)" }}>
+      <div className="row" style={{ justifyContent: "space-between" }}>
+        <div><b>메뉴판 사진으로 자동 입력</b> <span className="muted">사진을 올리면 술·메뉴를 읽어 아래 목록에 더합니다(최대 {MENU_MAX_FILES}장). 사진은 저장하지 않아요.</span></div>
+        {enabled ? (
+          <label className="btn" style={{ margin: 0, cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1 }}>
+            {busy ? "읽는 중… (10~30초)" : "메뉴판 사진 올리기"}
+            <input type="file" accept="image/*" multiple hidden disabled={busy} onChange={(e) => { void read(e.target.files); e.target.value = ""; }} />
+          </label>
+        ) : <span className="tag w">꺼짐 — ANTHROPIC_API_KEY 필요</span>}
+      </div>
+      {result && <p style={{ margin: "8px 0 0" }}>{result}</p>}
     </div>
   );
 }

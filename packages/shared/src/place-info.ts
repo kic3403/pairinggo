@@ -92,6 +92,34 @@ export function cleanPlaceInfo(raw: Record<string, unknown>, known?: { drinks: S
   };
 }
 
+/* ---------- 메뉴판 사진 읽기 결과 → 술·메뉴 목록 (2026-09-17) ---------- */
+/** AI가 메뉴판에서 읽은 한 줄 — 메뉴판에 적힌 이름과, 카탈로그의 같은 술·음식으로 본 이름(없으면 null) */
+export type MenuReadItem = { kind: "drink" | "food"; name: string; catalogName: string | null };
+export type MenuMerge = { drinks: { ids: string[]; names: string[] }; foods: { ids: string[]; names: string[] }; added: number; linked: number; skipped: number };
+
+/**
+ * 읽은 목록을 지금 입력칸에 더한다(지우지 않는다). catalogName이 실제 카탈로그 이름이면 그 이름으로 연결, 아니면 메뉴판 이름 그대로.
+ * AI가 지어낸 카탈로그 이름은 카탈로그에 없으니 자연히 연결되지 않는다. 이미 있는 것·빈 이름은 건너뛴다.
+ */
+export function mergeMenuRead(
+  current: { drinks: { ids: string[]; names: string[] }; foods: { ids: string[]; names: string[] } },
+  items: MenuReadItem[],
+  catalog: { drinks: { id: string; name: string }[]; foods: { id: string; name: string }[] },
+): MenuMerge {
+  let drinks = current.drinks, foods = current.foods, added = 0, linked = 0, skipped = 0;
+  for (const it of items) {
+    const list = it.kind === "drink" ? drinks : foods;
+    const cat = it.kind === "drink" ? catalog.drinks : catalog.foods;
+    const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+    const hit = it.catalogName ? cat.find((c) => key(c.name) === key(it.catalogName!)) : undefined;
+    const r = addListItem(list, hit ? hit.name : it.name, cat);
+    if (!r.added) { skipped++; continue; }
+    added++; if (r.ids.length > list.ids.length) linked++;
+    if (it.kind === "drink") drinks = { ids: r.ids, names: r.names }; else foods = { ids: r.ids, names: r.names };
+  }
+  return { drinks, foods, added, linked, skipped };
+}
+
 /** 아무것도 적지 않은 입력인가 — 빈 값은 저장하지 않는다 */
 export function isEmptyPlaceInfo(i: PlaceInfo): boolean {
   return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.drinkNames.length && !i.foods.length && !i.menuNames.length && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;

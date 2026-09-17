@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addListItem, cleanContactPhone, cleanNames, cleanNaverUrl, cleanPlaceInfo, isEmptyPlaceInfo, placeChips, placeNoteLine, verifiedFirst, verifiedLabel, PLACE_NOTE_MAX } from "../place-info";
+import { addListItem, mergeMenuRead, cleanContactPhone, cleanNames, cleanNaverUrl, cleanPlaceInfo, isEmptyPlaceInfo, placeChips, placeNoteLine, verifiedFirst, verifiedLabel, PLACE_NOTE_MAX } from "../place-info";
 
 const known = { drinks: new Set(["d11", "d45"]), foods: new Set(["f08"]) };
 
@@ -40,6 +40,34 @@ describe("술·메뉴 추가 버튼", () => {
     expect(i.drinkNames).toEqual(["하우스 와인"]);
     expect(i.menuNames).toEqual(["모둠전"]);
     expect(isEmptyPlaceInfo(i)).toBe(false);
+  });
+});
+
+describe("메뉴판 사진 읽기 결과 합치기", () => {
+  const catalog = { drinks: [{ id: "d11", name: "한산소곡주" }, { id: "d45", name: "계룡백일주" }], foods: [{ id: "f08", name: "해물파전" }] };
+  const empty = { drinks: { ids: [], names: [] }, foods: { ids: [], names: [] } };
+  it("카탈로그와 같다고 본 것은 연결, 아닌 것은 메뉴판 이름 그대로", () => {
+    const r = mergeMenuRead(empty, [
+      { kind: "food", name: "해물 파전(大)", catalogName: "해물파전" },
+      { kind: "food", name: "모둠전", catalogName: null },
+      { kind: "drink", name: "소곡주 750ml", catalogName: "한산소곡주" },
+      { kind: "drink", name: "참이슬", catalogName: null },
+    ], catalog);
+    expect(r.foods).toEqual({ ids: ["f08"], names: ["모둠전"] });
+    expect(r.drinks).toEqual({ ids: ["d11"], names: ["참이슬"] });
+    expect([r.added, r.linked, r.skipped]).toEqual([4, 2, 0]);
+  });
+  it("카탈로그에 없는 이름을 지어내면 연결하지 않고, 이미 있는 것은 건너뛴다", () => {
+    const current = { drinks: { ids: ["d11"], names: [] }, foods: { ids: [], names: ["모둠전"] } };
+    const r = mergeMenuRead(current, [
+      { kind: "drink", name: "소곡주", catalogName: "한산소곡주" },
+      { kind: "drink", name: "대강 막걸리", catalogName: "없는막걸리" },
+      { kind: "food", name: "모둠 전", catalogName: null },
+      { kind: "food", name: "  ", catalogName: null },
+    ], catalog);
+    expect(r.drinks).toEqual({ ids: ["d11"], names: ["대강 막걸리"] });
+    expect(r.foods.names).toEqual(["모둠전"]);
+    expect([r.added, r.linked, r.skipped]).toEqual([1, 0, 3]);
   });
 });
 
