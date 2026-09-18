@@ -25,10 +25,18 @@ export async function GET(req: Request) {
   const hasLoc = Number.isFinite(lat) && Number.isFinite(lng);
   try {
     const r = await searchPlaces({ query: q, lat: hasLoc ? lat : undefined, lng: hasLoc ? lng : undefined, radius: 20000, category: "FD6", sort: "accuracy", pages: 2 });
-    const aw = await withAwards(r.places);
+    // 이름으로 찾는 사람이 많다 — 주변 결과에 그 이름이 없으면 전국에서도 찾아, 이름이 맞는 곳을 맨 앞에 붙인다(2026-09-19: 대전 관심지역에서 서울 "유록"이 안 나옴)
+    const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+    let found = r.places, widened = false;
+    if (hasLoc && !found.some((p) => key(p.name).includes(key(q)))) {
+      const all = await searchPlaces({ query: q, category: "FD6", sort: "accuracy", pages: 1 });
+      const named = all.places.filter((p) => key(p.name).includes(key(q)) && !found.some((x) => x.id === p.id));
+      if (named.length) { found = [...named, ...found]; widened = true; }
+    }
+    const aw = await withAwards(found);
     const places = await withBookable(await withInfo(await attachRatings(aw.places)), false);
     return json(req, {
-      query: q, center: hasLoc ? { lat, lng, radius: 20000 } : null, places, total: r.total,
+      query: q, center: hasLoc ? { lat, lng, radius: 20000 } : null, places, total: r.total, widened,
       source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null,
     }, { headers: CACHE });
   } catch (e) {

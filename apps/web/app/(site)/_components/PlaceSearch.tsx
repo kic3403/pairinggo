@@ -9,7 +9,7 @@ import PlaceList, { type PlaceView } from "./PlaceList";
 import { useHydrated, useRegion } from "./RegionProvider";
 import { track } from "@/lib/track";
 
-type Res = { places: PlaceView[]; source: string; awardsYear?: number | null; error?: string };
+type Res = { places: PlaceView[]; source: string; awardsYear?: number | null; error?: string; widened?: boolean };
 type Where = "region" | "gps" | "all";
 
 export default function PlaceSearch({ initialQuery }: { initialQuery: string }) {
@@ -85,7 +85,10 @@ export default function PlaceSearch({ initialQuery }: { initialQuery: string }) 
       {state === "denied" ? <p className="muted">위치를 쓸 수 없어요. 관심지역이나 전국으로 찾아 주세요.</p> : null}
       {state === "done" && res ? (
         res.error ? <p className="form-error">{res.error}</p>
-          : res.places.length ? <PlaceList places={res.places} where={label} awardsYear={res.awardsYear ?? null} restaurants eventKey={{}} savedAs={q.trim()} limit={30} />
+          : res.places.length ? <>
+            {res.widened ? <p className="small muted" style={{ margin: "0 0 8px" }}>{label}에 ‘{q.trim()}’ 이름의 식당이 없어, 전국에서 찾은 곳을 앞에 함께 보여 드려요.</p> : null}
+            <PlaceList places={res.places} where={res.widened ? `${label} + 전국` : label} awardsYear={res.awardsYear ?? null} restaurants eventKey={{}} savedAs={q.trim()} limit={30} />
+          </>
           : <p className="muted">{res.source === "none" ? "식당 검색을 쓸 수 없어요." : `${label}에서 찾은 식당이 없어요. 이름을 조금 다르게 적거나 전국으로 찾아보세요.`}</p>
       ) : null}
     </section>
