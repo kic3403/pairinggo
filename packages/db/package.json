@@ -26,7 +26,8 @@
     "add-drinks": "tsx src/add-drinks.ts",
     "add-foods": "tsx src/add-foods.ts",
     "pf-recalc": "tsx src/pf-recalc.ts",
-    "og-font": "tsx src/og-font.ts"
+    "og-font": "tsx src/og-font.ts",
+    "reserve-race": "tsx src/reserve-race.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
