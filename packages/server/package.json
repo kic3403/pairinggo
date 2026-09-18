@@ -12,17 +12,22 @@
     "./password": "./src/password.ts",
     "./reservations": "./src/reservations.ts",
     "./kakao": "./src/kakao.ts",
-    "./merchant-store": "./src/merchant-store.ts"
+    "./merchant-store": "./src/merchant-store.ts",
+    "./sms": "./src/sms.ts",
+    "./push": "./src/push.ts",
+    "./notify": "./src/notify.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
-    "@supabase/supabase-js": "^2.116.0"
+    "@supabase/supabase-js": "^2.116.0",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "@types/web-push": "^3.6.4",
     "typescript": "^5.9.0"
   }
 }

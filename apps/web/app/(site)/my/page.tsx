@@ -44,6 +44,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
         <span>{session.user?.email || "간편로그인"}</span>
         {profile?.complete && <><span className="muted"> · </span><span>{profile.gender === "m" ? "남" : "여"} · {ageBand(profile.birthDate!)} · {profile.sido}</span></>}
         <span className="muted"> · </span><Link href="/profile">{profile?.complete ? "프로필 수정" : "프로필 채우기"}</Link>
+        <span className="muted"> · </span><Link href="/my/reservations">내 예약</Link>
         {referral.invited > 0 && <><span className="muted"> · </span><span>초대한 친구 <b>{referral.invited}</b>명</span></>}
       </div>
       {profile && !profile.complete && (

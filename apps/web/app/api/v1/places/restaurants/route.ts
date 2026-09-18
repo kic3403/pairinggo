@@ -1,4 +1,5 @@
 import { placeQuery, RBY, D as _D } from "@pairinggo/shared";
+import { bookableKakaoIds } from "@pairinggo/server/reservations";
 import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { loadAwards } from "@/lib/awards";
@@ -52,6 +53,9 @@ export async function GET(req: Request) {
     const DN = new Map(c.dataset.drinks.map((d) => [d.id, d.name])), FN = new Map(c.dataset.foods.map((x) => [x.id, x.name]));
     const named = (ids: string[], by: Map<string, string>) => ids.filter((id) => by.has(id)).map((id) => ({ id, name: by.get(id)!, slug: toSlug(by.get(id)!) as string | null }));
     places = verifiedFirst(await attachPlaceInfo(places)).map((p) => (p.info ? { ...p, infoView: { drinks: [...named(p.info.drinks, DN), ...p.info.drinkNames.map((name) => ({ id: name, name, slug: null }))], foods: [...named(p.info.foods, FN), ...p.info.menuNames.map((name) => ({ id: name, name, slug: null }))] } } : p));
+    // 파트너 앱에서 예약을 받는 매장 — [예약하기] 버튼, 목록 맨 앞(같은 순서 안에서 안정 정렬). 10분 캐시라 켜고 끈 것은 최대 10분 뒤 반영
+    const bookable = await bookableKakaoIds(places.map((p) => p.id)).catch(() => new Set<string>());
+    if (bookable.size) places = [...places.filter((p) => bookable.has(p.id)).map((p) => ({ ...p, bookable: true })), ...places.filter((p) => !bookable.has(p.id))];
     return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
     console.error("[places/restaurants]", (e as Error).message);

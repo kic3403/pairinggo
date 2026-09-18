@@ -66,13 +66,14 @@ export async function searchMany(queries: string[], base: Omit<PlaceSearch, "que
   return { places, total: places.length, source: "kakao", cached: results.every((r) => r.cached) };
 }
 
-/* ---------- 간단 레이트리밋: IP당 분당 N회 (인스턴스 메모리) ---------- */
+/* ---------- 간단 레이트리밋: IP당 분당 N회 (인스턴스 메모리). scope마다 따로 센다 — 한 버킷을 같이 쓰면 식당 검색을 몇 번 한 손님의 예약·인증이 막힌다 ---------- */
 const buckets = new Map<string, { n: number; reset: number }>();
-export function rateLimit(req: Request, limit = 30): boolean {
+export function rateLimit(req: Request, limit = 30, scope = "default"): boolean {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || req.headers.get("x-real-ip") || "local";
   const now = Date.now();
-  const b = buckets.get(ip);
-  if (!b || b.reset < now) { buckets.set(ip, { n: 1, reset: now + 60_000 }); return true; }
+  const k = `${scope}:${ip}`;
+  const b = buckets.get(k);
+  if (!b || b.reset < now) { buckets.set(k, { n: 1, reset: now + 60_000 }); return true; }
   if (b.n >= limit) return false;
   b.n++; return true;
 }

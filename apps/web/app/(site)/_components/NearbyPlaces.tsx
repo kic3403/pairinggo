@@ -14,7 +14,7 @@ import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
-type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] } };
+type Place = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean };
 type Named = { id: string; name: string; slug: string | null };
 type Res = { places: Place[]; source: string; error?: string; awardsYear?: number | null; ratingSource?: "google" | null };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
@@ -161,6 +161,12 @@ export default function NearbyPlaces(props: Props) {
                       {!!p.infoView?.drinks.length && <div><b>술</b> {p.infoView.drinks.map((d, i) => <span key={d.id}>{i > 0 && " · "}{d.slug ? <Link href={`/drinks/${d.slug}`}>{d.name}</Link> : d.name}</span>)}</div>}
                       {!!p.infoView?.foods.length && <div><b>메뉴</b> {p.infoView?.foods.map((x, i) => <span key={x.id}>{i > 0 && " · "}{x.slug ? <Link href={`/foods/${x.slug}`}>{x.name}</Link> : x.name}</span>)}</div>}
                       {p.info.menuNote && <div>{p.info.menuNote}</div>}
+                    </div>
+                  )}
+                  {p.bookable && props.mode === "restaurants" && (
+                    <div style={{ margin: "9px 0 2px" }}>
+                      <Link className="btn f sm" href={`/reserve/${p.id}?food=${encodeURIComponent(props.foodId)}`} onClick={() => track("reserve_click", { ...key, place: p.name })}>예약하기</Link>
+                      <span className="small muted" style={{ marginLeft: 8 }}>바로 확정 · 페어링GO 파트너</span>
                     </div>
                   )}
                   {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...key, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}

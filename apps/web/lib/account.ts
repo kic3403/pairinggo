@@ -5,6 +5,8 @@
 import { CONSENT_VERSION, cleanNickname, needsConsent, nicknameProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
 import { db } from "./db";
 import { emailLooksValid, hashPassword, normalizeEmail, passwordProblem, verifyPassword } from "./password";
+import { transitionReservation } from "@pairinggo/server/reservations";
+import { notifyReservation } from "@pairinggo/server/notify";
 
 const MAX_FAILS = 10;
 const LOCK_MINUTES = 15;
@@ -190,6 +192,14 @@ export async function deleteAccount(userId: string): Promise<void> {
     const q = sb.from("pairing_evidence").delete().eq("tier", "user").eq("who", nick);
     await (note ? q.eq("quote", note.slice(0, 120)) : q.is("quote", null));
   }
+  // 식당 예약(0023) — 앞으로의 확정 예약은 취소(매장에 알림), 모든 예약의 예약자 이름·번호는 지운다(매장 통계용 건수만 남음, 개인정보처리방침 3번)
+  const { data: upcoming } = await sb.from("reservations").select("id").eq("user_id", userId).eq("status", "confirmed").gt("visit_at", new Date().toISOString());
+  for (const r of upcoming ?? []) {
+    const t = await transitionReservation(String(r.id), "cancelled_by_user", "admin", "withdraw", "회원 탈퇴");
+    if (t.ok) await notifyReservation(String(r.id), "cancelled_by_user").catch(() => null);
+  }
+  await sb.from("reservations").update({ guest_name: "탈퇴 회원", guest_phone: "", note: "", updated_at: new Date().toISOString() }).eq("user_id", userId);
+  await sb.from("push_subscriptions").delete().eq("owner_type", "user").eq("owner_id", userId);
   const { data: files } = await sb.storage.from("member-picks").list(userId, { limit: 1000 }).catch(() => ({ data: null }));
   if (files?.length) await sb.storage.from("member-picks").remove(files.map((f) => `${userId}/${f.name}`)).catch(() => null);
   const { error } = await sb.from("users").delete().eq("id", userId);
