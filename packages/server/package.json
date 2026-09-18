@@ -15,15 +15,18 @@
     "./merchant-store": "./src/merchant-store.ts",
     "./sms": "./src/sms.ts",
     "./push": "./src/push.ts",
-    "./notify": "./src/notify.ts"
+    "./notify": "./src/notify.ts",
+    "./menu-read": "./src/menu-read.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.126.0",
     "@pairinggo/shared": "workspace:*",
     "@supabase/supabase-js": "^2.116.0",
-    "web-push": "^3.6.7"
+    "web-push": "^3.6.7",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

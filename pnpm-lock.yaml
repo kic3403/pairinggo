@@ -259,6 +259,9 @@ importers:
 
   packages/server:
     dependencies:
+      '@anthropic-ai/sdk':
+        specifier: ^0.126.0
+        version: 0.126.0(zod@4.5.4)
       '@pairinggo/shared':
         specifier: workspace:*
         version: link:../shared
@@ -268,6 +271,9 @@ importers:
       web-push:
         specifier: ^3.6.7
         version: 3.6.7
+      zod:
+        specifier: ^4.5.4
+        version: 4.5.4
     devDependencies:
       '@types/node':
         specifier: ^24.0.0

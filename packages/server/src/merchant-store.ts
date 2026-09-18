@@ -5,7 +5,7 @@
  * 모든 저장은 merchant_changes에 전후 값을 남기고, 운영자는 /admin/partners에서 되돌린다.
  */
 import {
-  cleanHours, cleanPlaceInfo, cleanSettings, isDate, isEmptyPlaceInfo, kstParts,
+  cleanDrinkItems, cleanHours, cleanMenuItems, cleanPlaceInfo, cleanSettings, isDate, isEmptyPlaceInfo, itemsToLists, kstParts,
   type BusinessHours, type PlaceInfo, type ReservationSettings,
 } from "@pairinggo/shared";
 import { db } from "./db";
@@ -37,6 +37,7 @@ const placeRowToInfo = (r: Row): PlaceInfo => ({
   parking: (r.parking as PlaceInfo["parking"]) ?? null, parkingNote: String(r.parking_note ?? ""), corkage: (r.corkage as PlaceInfo["corkage"]) ?? null, corkageNote: String(r.corkage_note ?? ""),
   room: (r.room as PlaceInfo["room"]) ?? null, roomNote: String(r.room_note ?? ""), drinks: (r.drink_ids as string[]) ?? [], drinkNames: (r.drink_names as string[]) ?? [],
   foods: (r.food_ids as string[]) ?? [], menuNames: (r.menu_names as string[]) ?? [], menuNote: String(r.menu_note ?? ""), naverUrl: (r.naver_url as string) ?? null,
+  menuItems: cleanMenuItems(r.menu_items), drinkItems: cleanDrinkItems(r.drink_items),
   source: r.source === "partner" ? "partner" : "operator", verifiedAt: (r.verified_at as string) ?? null,
 });
 
@@ -50,6 +51,11 @@ export async function saveStoreInfo(m: Merchant, partner: { id: string; name: st
   const c = need();
   const cat = await catalogNames();
   const info = cleanPlaceInfo({ ...(raw.info ?? {}), source: "partner", verifiedAt: kstParts(new Date()).date }, { drinks: new Set(cat.drinks.map((d) => d.id)), foods: new Set(cat.foods.map((f) => f.id)) });
+  // 메뉴판 표가 있으면 식당 카드의 술·메뉴 목록(카탈로그 연결)은 표에서 뽑는다 — 표가 원본
+  if (info.menuItems.length || info.drinkItems.length) {
+    const l = itemsToLists(info.menuItems, info.drinkItems, cat);
+    info.drinks = l.drinkIds; info.drinkNames = l.drinkNames; info.foods = l.foodIds; info.menuNames = l.menuNames;
+  }
   const phone = String(raw.phone ?? "").replace(/[^0-9\-]/g, "").slice(0, 20);
   const { data: before } = await c.from("place_info").select("*").eq("kakao_id", m.kakaoPlaceId).maybeSingle();
   const beforeAll = { phone: m.phone, place: before ?? null };
@@ -66,6 +72,7 @@ export async function saveStoreInfo(m: Merchant, partner: { id: string; name: st
       kakao_id: m.kakaoPlaceId, name: m.name, address: m.address || null, phone: phone || null, lat: m.lat, lng: m.lng, place_url: m.placeUrl,
       parking: info.parking, parking_note: info.parkingNote, corkage: info.corkage, corkage_note: info.corkageNote, room: info.room, room_note: info.roomNote,
       drink_ids: info.drinks, food_ids: info.foods, drink_names: info.drinkNames, menu_names: info.menuNames, menu_note: info.menuNote, naver_url: info.naverUrl,
+      menu_items: info.menuItems, drink_items: info.drinkItems,
       source: "partner", verified_at: info.verifiedAt, updated_by: `파트너 ${partner.name}`.slice(0, 40), updated_at: new Date().toISOString(),
       // contact_phone·memo는 운영자 전용 — 넣지 않아 기존 값이 그대로 남는다
     };

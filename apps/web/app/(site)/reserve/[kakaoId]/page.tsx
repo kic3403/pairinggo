@@ -8,6 +8,7 @@ import { kstParts, placeChips, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { reservePageData } from "@/lib/reservations";
 import ReserveForm from "./ReserveForm";
+import MenuBoard from "../../_components/MenuBoard";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "예약하기 | 페어링GO", robots: { index: false, follow: false } };
@@ -42,6 +43,12 @@ export default async function ReservePage({ params, searchParams }: { params: Pr
           {chips.map((ch) => <span key={ch.key} className={`amen ${ch.tone} ok`}>{ch.label}</span>)}
           {data.info?.menuNote ? <p>{data.info.menuNote}</p> : null}
         </div>
+      ) : null}
+      {data.info && (data.info.menuItems.length || data.info.drinkItems.length) ? (
+        <details className="rsv-menu">
+          <summary>메뉴판 보기 <span className="muted small">메뉴 {data.info.menuItems.length} · 술 {data.info.drinkItems.length}</span></summary>
+          <MenuBoard menu={data.info.menuItems} drinks={data.info.drinkItems} />
+        </details>
       ) : null}
       {data.settings.notice ? <p className="rsv-notice">{data.settings.notice}</p> : null}
       {!data.bookable ? (

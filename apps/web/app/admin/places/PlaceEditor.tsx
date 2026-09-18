@@ -1,6 +1,7 @@
 "use client";
 /** 식당 정보 입력 — ① 카카오에서 식당 찾기 ② 확인한 내용 적기 ③ 저장. 아래 목록에서 고치거나 지운다. 표시 규칙은 shared place-info.ts */
 import { useMemo, useState } from "react";
+import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
 import { addListItem, cleanNaverUrl, mergeMenuRead, placeChips, placeNoteLine, verifiedLabel, type MenuMerge, type MenuReadItem, type PlaceInfo } from "@pairinggo/shared";
 import type { PlaceInfoRow } from "@/lib/place-info";
 
@@ -57,7 +58,7 @@ export default function PlaceEditor({ rows: initial, drinks, foods, menuReadEnab
     if (res.ok) { setRows((rs) => rs.filter((x) => x.kakaoId !== r.kakaoId)); say("지웠어요"); } else say("지우지 못했어요");
   };
 
-  const preview: PlaceInfo = { parking: (form.parking || null) as PlaceInfo["parking"], parkingNote: form.parkingNote, corkage: (form.corkage || null) as PlaceInfo["corkage"], corkageNote: form.corkageNote, room: (form.room || null) as PlaceInfo["room"], roomNote: form.roomNote, drinks: form.drinks, drinkNames: form.drinkNames, foods: form.foods, menuNames: form.menuNames, menuNote: form.menuNote, naverUrl: cleanNaverUrl(form.naverUrl), source: "operator", verifiedAt: form.verifiedAt };
+  const preview: PlaceInfo = { parking: (form.parking || null) as PlaceInfo["parking"], parkingNote: form.parkingNote, corkage: (form.corkage || null) as PlaceInfo["corkage"], corkageNote: form.corkageNote, room: (form.room || null) as PlaceInfo["room"], roomNote: form.roomNote, drinks: form.drinks, drinkNames: form.drinkNames, foods: form.foods, menuNames: form.menuNames, menuNote: form.menuNote, naverUrl: cleanNaverUrl(form.naverUrl), menuItems: [], drinkItems: [], source: "operator", verifiedAt: form.verifiedAt };
 
   return (
     <>
@@ -188,18 +189,6 @@ function ListAdder({ label, placeholder, catalog, ids, names, nameOf, tone, onCh
  * 메뉴판 사진 → 술·메뉴 자동 입력. 사진은 브라우저에서 긴 변 1,600px JPEG로 줄여 보내고, 서버는 읽기만 하고 저장하지 않는다.
  * 읽은 결과는 입력칸에 더하기만 한다(지우지 않음) — 틀린 칩은 눌러서 빼면 된다.
  */
-const MENU_MAX_EDGE = 1600, MENU_MAX_FILES = 4;
-async function shrinkToJpeg(file: File): Promise<{ type: "image/jpeg"; data: string }> {
-  const bitmap = await createImageBitmap(file);
-  const scale = Math.min(1, MENU_MAX_EDGE / Math.max(bitmap.width, bitmap.height));
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bitmap.width * scale); canvas.height = Math.round(bitmap.height * scale);
-  canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  bitmap.close();
-  const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
-  return { type: "image/jpeg", data: dataUrl.slice(dataUrl.indexOf(",") + 1) };
-}
-
 function MenuPhotoReader({ enabled, say, onRead }: { enabled: boolean; say: (m: string) => void; onRead: (items: MenuReadItem[]) => MenuMerge }) {
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<string | null>(null);

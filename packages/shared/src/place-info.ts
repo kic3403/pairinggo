@@ -5,6 +5,7 @@
  * 저장·조회는 apps/web/lib/place-info.ts, 표는 place_info(0021). 여기는 검증·표시 규칙만(순수 함수).
  */
 import type { AmenityChip, ParkingKind, PlaceAmenities } from "./place-rating";
+import { cleanDrinkItems, cleanMenuItems, type DrinkItem, type MenuItem } from "./menu-items";
 
 export type Tri = "yes" | "no" | null;
 export type PlaceInfoSource = "operator" | "partner";
@@ -24,6 +25,10 @@ export type PlaceInfo = {
   menuNote: string;
   /** 네이버 지도(플레이스) 링크 — 화면에 "네이버 지도 ↗"로 보인다. 데이터를 가져오지 않고 링크만 건다 */
   naverUrl: string | null;
+  /** 메뉴판(2026-09-19) — 음식명·설명·가격. 파트너가 사진으로 채운다. 없으면 [] */
+  menuItems: MenuItem[];
+  /** 술 메뉴판 — 이름·용량·도수·가격 */
+  drinkItems: DrinkItem[];
   source: PlaceInfoSource;
   /** 확인한 날 YYYY-MM-DD */
   verifiedAt: string | null;
@@ -87,6 +92,7 @@ export function cleanPlaceInfo(raw: Record<string, unknown>, known?: { drinks: S
     drinks: ids(raw.drinks, known?.drinks).filter((id) => id.startsWith("d")), drinkNames: cleanNames(raw.drinkNames),
     foods: ids(raw.foods, known?.foods).filter((id) => id.startsWith("f")), menuNames: cleanNames(raw.menuNames),
     menuNote: text(raw.menuNote, PLACE_MENU_NOTE_MAX), naverUrl: cleanNaverUrl(raw.naverUrl),
+    menuItems: cleanMenuItems(raw.menuItems), drinkItems: cleanDrinkItems(raw.drinkItems),
     source: raw.source === "partner" ? "partner" : "operator",
     verifiedAt: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null,
   };
@@ -122,7 +128,7 @@ export function mergeMenuRead(
 
 /** 아무것도 적지 않은 입력인가 — 빈 값은 저장하지 않는다 */
 export function isEmptyPlaceInfo(i: PlaceInfo): boolean {
-  return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.drinkNames.length && !i.foods.length && !i.menuNames.length && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;
+  return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.drinkNames.length && !i.foods.length && !i.menuNames.length && !(i.menuItems?.length) && !(i.drinkItems?.length) && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;
 }
 
 const PARKING_LABEL: Record<ParkingKind, string> = { free: "주차 무료", paid: "주차 유료", valet: "발레파킹", street: "노상 주차", none: "주차 불가" };
