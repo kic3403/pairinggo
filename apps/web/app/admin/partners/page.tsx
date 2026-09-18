@@ -1,14 +1,16 @@
 /** 어드민 — 파트너 식당: 가입 신청 승인·반려, 정지·재개. 승인 뒤 예약 받기는 사장님이 파트너 앱에서 켠다 */
 import { requireAdmin } from "@/lib/admin-auth";
-import { listMerchants } from "@/lib/partners-admin";
+import { listMerchants, summarizeChange } from "@/lib/partners-admin";
+import { recentChanges } from "@pairinggo/server/merchant-store";
 import PartnerActions from "./PartnerActions";
+import ChangeLog from "./ChangeLog";
 import { formatBizNo, formatMobile, MERCHANT_STATUS_LABEL } from "@pairinggo/shared";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPartnersPage() {
   await requireAdmin();
-  const rows = await listMerchants();
+  const [rows, changes] = await Promise.all([listMerchants(), recentChanges(60)]);
   const order = { applied: 0, suspended: 1, approved: 2, rejected: 3 } as const;
   rows.sort((a, b) => order[a.status] - order[b.status] || b.createdAt.localeCompare(a.createdAt));
   const waiting = rows.filter((r) => r.status === "applied").length;
@@ -37,6 +39,8 @@ export default async function AdminPartnersPage() {
           <PartnerActions id={m.id} status={m.status} />
         </div>
       ))}
+      <h2 style={{ margin: "22px 0 8px" }}>최근 변경 <span className="muted">파트너가 고친 내용은 바로 반영돼요 — 사실과 다르면 되돌리기</span></h2>
+      <ChangeLog rows={changes.map((c) => ({ id: c.id, merchantName: c.merchantName, who: c.partnerName ? `파트너 ${c.partnerName}` : "운영자", section: c.section, summary: summarizeChange(c.section, c.before, c.after), createdAt: c.createdAt, revertedAt: c.revertedAt }))} />
     </>
   );
 }

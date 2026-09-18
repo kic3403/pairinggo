@@ -16,3 +16,18 @@ export function Bar({ store, signedIn }: { store?: string; signedIn?: boolean })
     </header>
   );
 }
+
+const TABS = [
+  { key: "home", href: "/", label: "오늘" },
+  { key: "store", href: "/store", label: "매장 정보" },
+  { key: "settings", href: "/settings", label: "예약 설정" },
+] as const;
+
+/** 아래 탭 — 승인된 매장 화면에서만 */
+export function Tabs({ active }: { active: (typeof TABS)[number]["key"] }) {
+  return (
+    <nav className="tabs" aria-label="파트너 메뉴">
+      {TABS.map((t) => <Link key={t.key} href={t.href} aria-current={t.key === active ? "page" : undefined}>{t.label}</Link>)}
+    </nav>
+  );
+}

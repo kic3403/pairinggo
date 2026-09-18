@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { formatBizNo, MERCHANT_STATUS_LABEL } from "@pairinggo/shared";
-import { Bar } from "./_bar";
+import { Bar, Tabs } from "./_bar";
 import { myMerchants, type MyMerchant } from "@/lib/partner";
 import { requirePartner } from "@/lib/session";
 
@@ -44,6 +44,7 @@ export default async function Home() {
           </section>
         )}
       </main>
+      {m?.status === "approved" ? <Tabs active="home" /> : null}
     </>
   );
 }

@@ -11,7 +11,8 @@
     "./db": "./src/db.ts",
     "./password": "./src/password.ts",
     "./reservations": "./src/reservations.ts",
-    "./kakao": "./src/kakao.ts"
+    "./kakao": "./src/kakao.ts",
+    "./merchant-store": "./src/merchant-store.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

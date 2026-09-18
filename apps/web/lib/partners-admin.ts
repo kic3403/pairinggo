@@ -56,3 +56,50 @@ export async function actOnMerchant(id: string, action: MerchantAction, reason: 
   // 정지하면 새 예약이 들어오지 않게 예약 받기도 끈다(이미 잡힌 예약은 그대로 — 필요하면 매장이 취소)
   if (action === "suspend") await c.from("reservation_settings").update({ accepting: false, updated_at: now }).eq("merchant_id", id);
 }
+
+type AnyRow = Record<string, unknown> | null | undefined;
+const SETTING_LABEL: Record<string, string> = {
+  accepting: "예약 받기", slot_minutes: "간격", capacity_parties: "최대 팀", capacity_people: "최대 인원", min_party: "최소 인원", max_party: "최대 인원",
+  lead_minutes: "당일 마감", horizon_days: "받는 기간", room_bookable: "룸 희망", notice: "안내 문구",
+};
+const INFO_LABEL: Record<string, string> = {
+  menu_note: "소개", parking: "주차", parking_note: "주차 메모", corkage: "콜키지", corkage_note: "콜키지 메모", room: "룸", room_note: "룸 메모",
+  drink_ids: "술", drink_names: "술", food_ids: "메뉴", menu_names: "메뉴", naver_url: "네이버 링크",
+};
+const same = (a: unknown, b: unknown) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+const show = (v: unknown) => (typeof v === "boolean" ? (v ? "켬" : "끔") : v == null || v === "" ? "없음" : String(v));
+
+/** 변경 한 줄 요약 — 무엇이 어떻게 바뀌었는지 */
+export function summarizeChange(section: string, before: unknown, after: unknown): string {
+  if (section === "settings") {
+    const b = (before ?? {}) as Record<string, unknown>, a = (after ?? {}) as Record<string, unknown>;
+    const d = Object.keys(SETTING_LABEL).filter((k) => !same(b[k], a[k])).map((k) => `${SETTING_LABEL[k]} ${show(b[k])}→${show(a[k])}`);
+    return d.join(", ") || "바뀐 값 없음";
+  }
+  if (section === "hours") {
+    const key = (r: AnyRow) => (r ? (r.closed ? "휴무" : `${r.open}~${r.close}${r.break_start ? ` (쉼 ${r.break_start}~${r.break_end})` : ""}`) : "없음");
+    const W = "일월화수목금토";
+    const b = new Map(((before as AnyRow[]) ?? []).map((r) => [Number(r?.weekday), key(r)])), a = new Map(((after as AnyRow[]) ?? []).map((r) => [Number(r?.weekday), key(r)]));
+    const d = [1, 2, 3, 4, 5, 6, 0].filter((w) => b.get(w) !== a.get(w)).map((w) => `${W[w]} ${a.get(w) ?? "없음"}`);
+    return d.join(", ") || "바뀐 요일 없음";
+  }
+  if (section === "closures") {
+    const days = (x: unknown) => new Set(((x as { day: string }[]) ?? []).map((r) => r.day));
+    const b = days(before), a = days(after);
+    const add = [...a].filter((d) => !b.has(d)), rm = [...b].filter((d) => !a.has(d));
+    return [add.length ? `휴무 추가 ${add.join(", ")}` : "", rm.length ? `휴무 해제 ${rm.join(", ")}` : ""].filter(Boolean).join(" · ") || "바뀐 날짜 없음";
+  }
+  if (section === "info") {
+    const b = (before ?? {}) as { phone?: string; place?: AnyRow }, a = (after ?? {}) as { phone?: string; place?: AnyRow };
+    const out: string[] = [];
+    if (b.phone !== undefined && a.phone !== undefined && b.phone !== a.phone) out.push(`대표 번호 ${show(b.phone)}→${show(a.phone)}`);
+    if (!b.place && a.place) out.push("매장 정보 처음 입력");
+    else if (b.place && !a.place) out.push("매장 정보 모두 지움");
+    else if (b.place && a.place) {
+      const labels = new Set(Object.keys(INFO_LABEL).filter((k) => !same(b.place![k], a.place![k])).map((k) => INFO_LABEL[k]));
+      if (labels.size) out.push(`${[...labels].join("·")} 수정`);
+    }
+    return out.join(", ") || "바뀐 값 없음";
+  }
+  return "";
+}

@@ -5,6 +5,8 @@ import { db } from "@pairinggo/server/db";
 import { hashPassword, passwordProblem, verifyPassword } from "@pairinggo/server/password";
 import { merchantFromRow, type Merchant } from "@pairinggo/server/reservations";
 import { validatePartnerSignup, type PartnerSignupInput } from "@pairinggo/shared";
+import { redirect } from "next/navigation";
+import { currentPartner, requirePartner, type PartnerUser } from "./session";
 
 export const LOGIN_MAX_FAILS = 5, LOCK_MINUTES = 15;
 
@@ -77,4 +79,21 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick): P
   await c.from("merchant_members").insert({ merchant_id: m.id, partner_user_id: user.id, role: "owner" });
   await c.from("reservation_settings").insert({ merchant_id: m.id, accepting: false });
   return { ok: true, id: String(user.id), passwordHash };
+}
+
+/** 승인된 내 매장 — 페이지: 없으면 홈(상태 안내)으로 */
+export async function requireApprovedMerchant(): Promise<{ user: PartnerUser; merchant: MyMerchant }> {
+  const user = await requirePartner();
+  const merchant = (await myMerchants(user.id)).find((m) => m.status === "approved");
+  if (!merchant) redirect("/");
+  return { user, merchant };
+}
+
+/** 승인된 내 매장 — API: 로그인 안 했으면 401, 승인 매장이 없으면 403 */
+export async function approvedOrError(): Promise<{ user: PartnerUser; merchant: MyMerchant } | Response> {
+  const user = await currentPartner();
+  if (!user) return Response.json({ error: "다시 로그인해 주세요" }, { status: 401 });
+  const merchant = (await myMerchants(user.id)).find((m) => m.status === "approved");
+  if (!merchant) return Response.json({ error: "승인된 매장이 없어요" }, { status: 403 });
+  return { user, merchant };
 }
