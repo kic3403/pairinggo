@@ -50,6 +50,26 @@ export function validateReservationRequest(raw: ReservationRequestInput, setting
   };
 }
 
+/** DB 함수 reserve()·reservation_transition()이 돌려주는 오류 코드 → 화면 안내 */
+export const RESERVE_ERROR_MESSAGE: Record<string, string> = {
+  not_accepting: "지금은 예약을 받지 않는 매장이에요",
+  merchant_unavailable: "예약할 수 없는 매장이에요",
+  party_range: "인원을 다시 골라 주세요",
+  past: "지난 시간은 예약할 수 없어요",
+  full: "방금 그 시간이 마감됐어요 — 다른 시간을 골라 주세요",
+  duplicate: "같은 날 이 매장에 이미 예약이 있어요 — 내 예약에서 확인해 주세요",
+  too_many: "앞으로 잡힌 예약이 5건이에요 — 방문한 뒤에 더 예약할 수 있어요",
+  not_found: "예약을 찾을 수 없어요",
+  forbidden: "이 예약을 바꿀 권한이 없어요",
+  same_status: "이미 그 상태예요",
+  final: "이미 끝난 예약이에요",
+  not_allowed: "지금 상태에서는 바꿀 수 없어요",
+  too_early: "아직 처리할 수 있는 시간이 아니에요",
+  too_late: "방문 1시간 전이 지나 앱에서 취소할 수 없어요 — 매장에 전화해 주세요",
+  reason_required: "취소 사유를 적어 주세요",
+};
+export const reserveErrorMessage = (code?: string | null) => (code && RESERVE_ERROR_MESSAGE[code]) || "잠시 뒤 다시 시도해 주세요";
+
 /** 페어링을 들고 들어온 요청사항 초안 — "해물파전 × 한산소곡주 페어링으로 방문해요" */
 export function pairingNoteDraft(foodName?: string | null, drinkName?: string | null, bringOwnDrink?: boolean): string {
   const pair = [foodName, drinkName].filter(Boolean).join(" × ");
