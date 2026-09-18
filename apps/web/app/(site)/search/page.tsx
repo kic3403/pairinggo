@@ -59,6 +59,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       <SearchBox initial={q} region={rid} autoFocus={!q} />
       {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} />}
       <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} />
+      {/* 식당 이름으로 찾는 사람도 여기로 온다 — 카카오 검색은 누를 때만(유료 쿼터) */}
+      {q && q.length >= 2 && q.length <= 40 && (
+        <Link className="place-cta" href={`/places?q=${encodeURIComponent(q)}`}>‘{q}’ 식당 찾기 → <span>식당 이름·동네로 찾고, 파트너 매장은 바로 예약</span></Link>
+      )}
 
       {regional && (
         <section>
