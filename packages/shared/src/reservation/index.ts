@@ -4,3 +4,4 @@ export * from "./phone";
 export * from "./status";
 export * from "./slots";
 export * from "./request";
+export * from "./partner";

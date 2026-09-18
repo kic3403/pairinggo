@@ -21,6 +21,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           <Link href="/admin/publish">발행</Link>
           <Link href="/admin/picks">회원 추천</Link>
           <Link href="/admin/places">식당 정보</Link>
+          <Link href="/admin/partners">파트너</Link>
           <a href="/admin/api/logout">로그아웃</a>
         </nav>
       )}

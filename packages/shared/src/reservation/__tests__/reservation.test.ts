@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   addDays, availableSlots, canTransition, cleanHours, cleanSettings, DEFAULT_SETTINGS, formatMobile, formatVisit, isDate, kstInstant, kstParts,
   maskMobile, normalizeMobile, otpLooksValid, pairingNoteDraft, slotTimes, storeActions, toMinutes, validateReservationRequest,
+  cleanBizNo, formatBizNo, validatePartnerSignup, reserveErrorMessage,
   type BusinessHours, type ReservationSettings,
 } from "..";
 
@@ -137,5 +138,28 @@ describe("예약 요청 검증", () => {
   it("페어링 요청사항 초안", () => {
     expect(pairingNoteDraft("해물파전", "한산소곡주", true)).toBe("해물파전 × 한산소곡주 페어링으로 방문해요. 한산소곡주은(는) 가져갈게요(콜키지)");
     expect(pairingNoteDraft(null, null)).toBe("");
+  });
+});
+
+describe("파트너 가입", () => {
+  it("사업자등록번호 검증번호", () => {
+    expect(cleanBizNo("220-81-62517")).toBe("2208162517"); // 공개된 대기업 번호(검증번호 맞음)
+    expect(cleanBizNo("220-81-62518")).toBeNull();
+    expect(cleanBizNo("123")).toBeNull();
+    expect(formatBizNo("2208162517")).toBe("220-81-62517");
+  });
+  it("신청 입력 정리·문제 안내", () => {
+    const base = { email: " Owner@Shop.KR ", password: "x", name: "김 사장", phone: "010-1234-5678", kakaoPlaceId: "12345", ownerName: "김사장", bizNo: "220-81-62517", agree: true };
+    const r = validatePartnerSignup(base);
+    expect(r.ok && r.value).toMatchObject({ email: "owner@shop.kr", phone: "01012345678", bizNo: "2208162517" });
+    const bad = (p: object) => { const x = validatePartnerSignup({ ...base, ...p }); return x.ok ? "" : x.problem; };
+    expect(bad({ kakaoPlaceId: "" })).toContain("매장");
+    expect(bad({ bizNo: "1234567890" })).toContain("사업자");
+    expect(bad({ agree: false })).toContain("동의");
+    expect(bad({ phone: "02-123-4567" })).toContain("휴대폰");
+  });
+  it("DB 오류 코드 안내", () => {
+    expect(reserveErrorMessage("full")).toContain("마감");
+    expect(reserveErrorMessage("??")).toContain("다시 시도");
   });
 });

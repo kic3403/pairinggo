@@ -1,0 +1,26 @@
+{
+  "name": "partner",
+  "private": true,
+  "version": "0.1.0",
+  "description": "페어링GO 파트너 — 식당 사장님용 예약·매장 관리 웹앱(PWA), Next.js, Vercel 별도 프로젝트",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pairinggo/server": "workspace:*",
+    "@pairinggo/shared": "workspace:*",
+    "@supabase/supabase-js": "^2.116.0",
+    "next": "^16.3.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "typescript": "^5.9.0"
+  }
+}

@@ -10,7 +10,8 @@
     ".": "./src/index.ts",
     "./db": "./src/db.ts",
     "./password": "./src/password.ts",
-    "./reservations": "./src/reservations.ts"
+    "./reservations": "./src/reservations.ts",
+    "./kakao": "./src/kakao.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
