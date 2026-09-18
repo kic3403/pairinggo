@@ -36,8 +36,8 @@ export default function SearchBox({ initial = "", region = "", autoFocus = false
         )}
       <input
         type="search" name="q" defaultValue={initial} autoFocus={autoFocus}
-        placeholder={compact ? "술·음식 검색" : "복순도가, 육회, 매운 안주에 어울리는 술…"}
-        aria-label="전통주·음식 검색" autoComplete="off" maxLength={80}
+        placeholder={compact ? "술·음식·식당 검색" : "복순도가, 육회, 매운 안주에 어울리는 술, 식당 이름…"}
+        aria-label="전통주·음식·식당 검색" autoComplete="off" maxLength={80}
       />
       <button type="submit" aria-label="검색">검색</button>
     </form>
