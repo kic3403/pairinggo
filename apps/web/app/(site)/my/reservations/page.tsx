@@ -6,6 +6,7 @@ import { formatVisit, toSlug } from "@pairinggo/shared";
 import { auth } from "@/auth";
 import { myReservations, type MyReservation } from "@/lib/reservations";
 import CancelButton from "./CancelButton";
+import PushButton from "./PushButton";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "내 예약 | 페어링GO", robots: { index: false } };
@@ -44,6 +45,7 @@ export default async function MyReservationsPage() {
     <div className="wrap rsv">
       <p className="crumb"><Link href="/my">마이페이지</Link> · 내 예약</p>
       <h1>내 예약</h1>
+      <PushButton />
       <h2>다가오는 예약</h2>
       {upcoming.length ? <ul className="rsv-list">{upcoming.map((r) => <Card key={r.id} r={r} />)}</ul> : (
         <p className="muted">잡힌 예약이 없어요. 음식 상세의 “맛집 찾기”에서 <b>예약하기</b>가 붙은 파트너 매장을 예약할 수 있어요.</p>

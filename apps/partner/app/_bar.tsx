@@ -19,6 +19,7 @@ export function Bar({ store, signedIn }: { store?: string; signedIn?: boolean })
 
 const TABS = [
   { key: "home", href: "/", label: "오늘" },
+  { key: "reservations", href: "/reservations", label: "예약" },
   { key: "store", href: "/store", label: "매장 정보" },
   { key: "settings", href: "/settings", label: "예약 설정" },
 ] as const;

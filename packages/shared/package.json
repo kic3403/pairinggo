@@ -13,6 +13,7 @@
     "./pick": "./src/pairing/pick.ts",
     "./member": "./src/pairing/member.ts",
     "./slug": "./src/slug.ts",
+    "./push-client": "./src/push-client.ts",
     "./data/*": "./data/*"
   },
   "scripts": {

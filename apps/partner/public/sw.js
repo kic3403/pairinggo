@@ -1,13 +1,12 @@
-/* 페어링GO 서비스워커 — 설치 조건(홈 화면에 추가) + 예약 알림(웹 푸시). 캐시는 하지 않는다(카탈로그·평점이 자주 바뀌어 오래된 화면이 남으면 안 됨). */
+/* 페어링GO 파트너 서비스워커 — 홈 화면 설치 + 새 예약·손님 취소 알림(웹 푸시). 캐시는 하지 않는다(예약 화면이 오래된 채로 남으면 안 됨). */
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => e.waitUntil(self.clients.claim()));
 self.addEventListener("fetch", () => { /* 네트워크 그대로 */ });
 
-/* 예약 알림 — 서버(packages/server/push)가 { title, body, url, tag } JSON을 보낸다 */
 self.addEventListener("push", (e) => {
   let d = {};
-  try { d = e.data ? e.data.json() : {}; } catch { d = { title: "페어링GO", body: e.data ? e.data.text() : "" }; }
-  e.waitUntil(self.registration.showNotification(d.title || "페어링GO", { body: d.body || "", tag: d.tag, data: { url: d.url || "/" }, icon: "/icon-192.png", badge: "/icon-192.png" }));
+  try { d = e.data ? e.data.json() : {}; } catch { d = { title: "페어링GO 파트너", body: e.data ? e.data.text() : "" }; }
+  e.waitUntil(self.registration.showNotification(d.title || "페어링GO 파트너", { body: d.body || "", tag: d.tag, renotify: !!d.tag, requireInteraction: true, data: { url: d.url || "/" }, icon: "/icon.svg" }));
 });
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();

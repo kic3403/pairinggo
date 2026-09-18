@@ -93,3 +93,16 @@ export async function notifyReservation(reservationId: string, event: NotifyEven
     await alimtalk(userTarget, r.guestPhone, TPL.userReminder(), "user_reminder", v, r.id);
   }
 }
+
+/** 매장 아침 안내 — "오늘 예약 N팀 M명"(아침 크론). 알림톡 템플릿 SOLAPI_TPL_STORE_TODAY가 있으면 함께 */
+export async function notifyStoreToday(merchantId: string, merchantName: string, parties: number, people: number): Promise<void> {
+  if (!db() || parties <= 0) return;
+  const partners = await merchantPartners(merchantId);
+  for (const p of partners) {
+    const t: Target = { type: "partner", id: p.id };
+    const r = await pushTo("partner", p.id, { title: `오늘 예약 ${parties}팀 · ${people}명`, body: `${merchantName} — 시간순으로 확인해 주세요`, url: partnerUrl() ? `${partnerUrl()}/` : "/", tag: "today" });
+    if (r.subscriptions) await db()!.from("notifications").insert({ channel: "push", target_type: "partner", target_id: p.id, template: "store_today", status: r.sent ? "sent" : "failed", error: (r.error ?? "").slice(0, 300) });
+    const a = await sendAlimtalk(p.phone, process.env.SOLAPI_TPL_STORE_TODAY || "", { "#{매장}": merchantName, "#{팀}": String(parties), "#{인원}": String(people) });
+    await db()!.from("notifications").insert({ channel: "alimtalk", target_type: t.type, target_id: t.id, template: "store_today", status: a.ok ? (a.dev ? "skipped" : "sent") : a.reason === "not_configured" ? "skipped" : "failed", error: a.ok ? "" : (a.reason === "failed" ? a.error ?? "" : "설정 없음").slice(0, 300) });
+  }
+}
