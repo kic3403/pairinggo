@@ -667,3 +667,5 @@ p { margin: 0 0 12px; }
 .psearch-where button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
 .place-cta { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--navy-soft); color: var(--navy-ink); border-radius: 12px; padding: 12px 14px; margin: 12px 0; text-decoration: none; font-weight: 700; }
 .place-cta span { font-weight: 500; font-size: 13px; color: var(--ink2); }
+.search-places { margin-top: 8px; }
+.search-places h2 { display: flex; gap: 8px; align-items: baseline; }

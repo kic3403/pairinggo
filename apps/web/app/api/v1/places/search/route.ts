@@ -10,7 +10,8 @@ const CACHE = { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=1
 export async function OPTIONS(req: Request) { return preflight(req); }
 
 /**
- * GET /api/v1/places/search?q=성심당&lat=&lng=&region=hongdae — 식당 이름·키워드 검색(2026-09-19 사용자 요청).
+ * GET /api/v1/places/search?q=성심당&lat=&lng=&region=hongdae&lite=1 — 식당 이름·키워드 검색(2026-09-19 사용자 요청).
+ * lite=1: 술·음식 검색 결과 화면의 식당 칸 — 구글 평점을 붙이지 않는다(하루 150회 상한 보호).
  * 카카오 로컬(음식점 FD6)을 사용자가 검색할 때만 부른다. 좌표·관심지역이 있으면 그 주변 20km 안에서, 없으면 전국.
  * 순서는 카카오 정확도 그대로(이름 검색이라 맞는 이름이 먼저) — 평점·확인 정보·메뉴판·예약 가능 표시는 맛집 목록과 같게 붙인다.
  */
@@ -34,7 +35,8 @@ export async function GET(req: Request) {
       if (named.length) { found = [...named, ...found]; widened = true; }
     }
     const aw = await withAwards(found);
-    const places = await withBookable(await withInfo(await attachRatings(aw.places)), false);
+    const lite = sp.get("lite") === "1";
+    const places = await withBookable(await withInfo(lite ? aw.places : await attachRatings(aw.places)), false);
     return json(req, {
       query: q, center: hasLoc ? { lat, lng, radius: 20000 } : null, places, total: r.total, widened,
       source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null,

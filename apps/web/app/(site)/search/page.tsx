@@ -12,6 +12,7 @@ import Heart from "../_components/Heart";
 import SearchLog from "../_components/SearchLog";
 import RegionTabs from "../_components/RegionTabs";
 import SearchBox from "../_components/SearchBox";
+import SearchPlaces from "../_components/SearchPlaces";
 
 export const dynamic = "force-dynamic";
 
@@ -51,6 +52,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   // 검색 로그(클라이언트 이벤트 → search_logs). pick = "drink:d01" 형식, 지역 검색은 "browse:부산"(events API가 ":"로 나누므로 두 조각만)
   const top = res.drinks[0] ?? res.foods[0] ?? res.browse[0];
   const logKind = intent ? "search_intent" : rq || hitCount ? "search" : "search_empty";
+  // 식당 칸 — 이름·키워드 검색일 때만(상황 검색·지역 술 검색 제외)
+  const placesQ = q && !intent && !rq && q.length >= 2 && q.length <= 40 ? q : null;
+  const placesRegion = region ? { id: region.id, label: regionLabel(region) } : null;
   const pick = intent ? null : rq ? `browse:${rq.label}` : top ? `${top.doc.type}:${top.doc.id}` : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
 
   return (
@@ -59,10 +63,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       <SearchBox initial={q} region={rid} autoFocus={!q} />
       {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} />}
       <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} />
-      {/* 식당 이름으로 찾는 사람도 여기로 온다 — 카카오 검색은 누를 때만(유료 쿼터) */}
-      {q && q.length >= 2 && q.length <= 40 && (
-        <Link className="place-cta" href={`/places?q=${encodeURIComponent(q)}`}>‘{q}’ 식당 찾기 → <span>식당 이름·동네로 찾고, 파트너 매장은 바로 예약</span></Link>
-      )}
+      {/* 같은 검색어로 식당도 — 찾은 술·음식이 없으면 맨 위, 있으면 결과 아래(상황·지역 검색에는 붙이지 않는다) */}
+      {placesQ && empty && <SearchPlaces q={placesQ} region={placesRegion} empty />}
 
       {regional && (
         <section>
@@ -205,9 +207,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         </section>
       )}
 
+      {placesQ && !empty && <SearchPlaces q={placesQ} region={placesRegion} empty={false} />}
+
       {empty && (
         <section>
-          <h2>‘{q}’ — {region ? `${regionLabel(region)}에는 없습니다` : "아직 데이터에 없습니다"}</h2>
+          <h2>‘{q}’ — {region ? `${regionLabel(region)} 전통주·음식에는 없습니다` : "전통주·음식 데이터에는 아직 없습니다"}</h2>
           <p className="muted">{region ? <><Link href={withRegion(q, "all")}>전국으로 보기</Link> 또는 </> : ""}비슷한 이름이나 상황으로 다시 찾아보세요.</p>
           {res.suggestions.length > 0 && (
             <>
