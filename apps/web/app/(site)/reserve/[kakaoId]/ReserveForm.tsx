@@ -9,7 +9,7 @@ import { track } from "@/lib/track";
 type Named = { id: string; name: string };
 type Slot = { time: string; available: boolean; few: boolean };
 type Day = { date: string; reason: string; slots: Slot[] };
-type Phone = { phone: string | null; verified: boolean; available: boolean };
+type Phone = { phone: string | null; verified: boolean; available: boolean; blocked?: string | null };
 type Props = {
   kakaoId: string; storeName: string; today: string;
   settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes">;
@@ -192,7 +192,9 @@ export default function ReserveForm(p: Props) {
             <p className="muted" style={{ margin: "0 0 10px" }}>예약하려면 로그인해 주세요. 고른 날짜·시간은 로그인 뒤 다시 골라 주세요.</p>
             <Link className="btn p" href={`/login?next=${encodeURIComponent(next)}`}>로그인하고 예약하기</Link>
           </div>
-        ) : !phone ? <p className="muted">확인하는 중…</p> : !phone.verified ? (
+        ) : !phone ? <p className="muted">확인하는 중…</p> : phone.blocked ? (
+          <p className="form-error">{phone.blocked}</p>
+        ) : !phone.verified ? (
           <PhoneVerify available={phone.available} onDone={(masked) => setPhone({ phone: masked, verified: true, available: true })} />
         ) : (
           <>
@@ -211,7 +213,7 @@ export default function ReserveForm(p: Props) {
         )}
       </section>
 
-      {loggedIn && phone?.verified ? (
+      {loggedIn && phone?.verified && !phone.blocked ? (
         <section className="rsv-step">
           <div className="rsv-sum">
             <b>{p.storeName}</b>

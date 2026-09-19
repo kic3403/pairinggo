@@ -3,7 +3,8 @@
  * 규칙은 @pairinggo/shared reservation, 정원·전이의 최종 판정은 DB 함수 reserve()·reservation_transition()(0023).
  */
 import {
-  availableSlots, cleanHours, DEFAULT_SETTINGS, reserveErrorMessage, validateReservationRequest,
+  availableSlots, cleanHours, DEFAULT_SETTINGS, NO_SHOW_WINDOW_DAYS, noShowBlock, reserveErrorMessage, validateReservationRequest,
+  type NoShowBlock,
   type BookedSlot, type BusinessHours, type DayAvailability, type ReservationActor, type ReservationRequestInput,
   type ReservationSettings, type ReservationStatus,
 } from "@pairinggo/shared";
@@ -188,4 +189,13 @@ export async function reservationEvents(id: string): Promise<ReservationEvent[]>
   if (!c) return [];
   const { data } = await c.from("reservation_events").select("from_status, to_status, actor, note, created_at").eq("reservation_id", id).order("created_at");
   return (data ?? []).map((r) => ({ from: (r.from_status as ReservationStatus) ?? null, to: r.to_status as ReservationStatus, actor: r.actor as ReservationActor, note: str(r.note), at: str(r.created_at) }));
+}
+
+/** 노쇼 제한 상태(이용약관 제6조의2) — 최근 90일의 노쇼 처리 시각으로 판정(shared noShowBlock) */
+export async function noShowState(userId: string, now = new Date()): Promise<NoShowBlock> {
+  const c = db();
+  if (!c) return { blocked: false, until: null, recent: 0 };
+  const since = new Date(now.getTime() - NO_SHOW_WINDOW_DAYS * 86400_000).toISOString();
+  const { data } = await c.from("reservations").select("no_show_at").eq("user_id", userId).eq("status", "no_show").gte("no_show_at", since);
+  return noShowBlock((data ?? []).map((r) => String(r.no_show_at)), now);
 }

@@ -1,7 +1,7 @@
 /** 내 예약 — GET 목록 · POST 예약(즉시 확정). 로그인 + 휴대폰 인증 + 최신 약관 동의 + 예약마다 매장 제공 동의 */
 import { NextResponse } from "next/server";
-import type { ReservationRequestInput } from "@pairinggo/shared";
-import { bookingContextByKakao, createReservation } from "@pairinggo/server/reservations";
+import { noShowMessage, type ReservationRequestInput } from "@pairinggo/shared";
+import { bookingContextByKakao, createReservation, noShowState } from "@pairinggo/server/reservations";
 import { auth } from "@/auth";
 import { rateLimit } from "@/lib/kakao";
 import { myReservations, reserverState } from "@/lib/reservations";
@@ -22,6 +22,8 @@ export async function POST(req: Request) {
   if (!rateLimit(req, 10, "reserve")) return NextResponse.json({ error: "요청이 너무 많아요 — 1분 뒤 다시 시도해 주세요" }, { status: 429 });
   const me = await reserverState(uid);
   if (!me.consentOk) return NextResponse.json({ error: "바뀐 약관에 먼저 동의해 주세요", need: "consent" }, { status: 403 });
+  const ns = await noShowState(uid);
+  if (ns.blocked) return NextResponse.json({ error: noShowMessage(ns), need: "noshow" }, { status: 403 });
   if (!me.verified || !me.phone) return NextResponse.json({ error: "휴대폰 번호를 먼저 인증해 주세요", need: "phone" }, { status: 403 });
   const b = (await req.json().catch(() => ({}))) as ReservationRequestInput & { kakaoId?: string };
   const ctx = await bookingContextByKakao(String(b.kakaoId ?? ""));

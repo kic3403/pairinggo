@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   addDays, availableSlots, canTransition, cleanHours, cleanSettings, DEFAULT_SETTINGS, formatMobile, formatVisit, isDate, kstInstant, kstParts,
   maskMobile, normalizeMobile, otpLooksValid, pairingNoteDraft, slotTimes, storeActions, toMinutes, validateReservationRequest,
-  cleanBizNo, formatBizNo, validatePartnerSignup, reserveErrorMessage,
+  cleanBizNo, formatBizNo, validatePartnerSignup, reserveErrorMessage, noShowBlock, noShowMessage,
   type BusinessHours, type ReservationSettings,
 } from "..";
 
@@ -161,5 +161,22 @@ describe("파트너 가입", () => {
   it("DB 오류 코드 안내", () => {
     expect(reserveErrorMessage("full")).toContain("마감");
     expect(reserveErrorMessage("??")).toContain("다시 시도");
+  });
+});
+
+describe("노쇼 제한", () => {
+  const now = new Date("2026-09-19T03:00:00Z");
+  const daysAgo = (n: number) => new Date(now.getTime() - n * 86400_000);
+  it("90일 안 1번은 괜찮고, 2번이면 마지막 노쇼로부터 30일", () => {
+    expect(noShowBlock([daysAgo(10)], now).blocked).toBe(false);
+    const b = noShowBlock([daysAgo(50), daysAgo(10)], now);
+    expect(b).toMatchObject({ blocked: true, recent: 2 });
+    expect(b.until?.toISOString()).toBe(new Date(daysAgo(10).getTime() + 30 * 86400_000).toISOString());
+    expect(noShowMessage(b)).toContain("10월 9일까지");
+  });
+  it("30일이 지나면 풀리고, 90일 밖 노쇼는 세지 않는다", () => {
+    expect(noShowBlock([daysAgo(60), daysAgo(40)], now).blocked).toBe(false);
+    expect(noShowBlock([daysAgo(120), daysAgo(5)], now).blocked).toBe(false);
+    expect(noShowMessage(noShowBlock([], now))).toBeNull();
   });
 });

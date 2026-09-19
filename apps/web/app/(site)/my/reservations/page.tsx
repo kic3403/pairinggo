@@ -2,7 +2,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { formatVisit, toSlug } from "@pairinggo/shared";
+import { formatVisit, noShowMessage, toSlug } from "@pairinggo/shared";
+import { noShowState } from "@pairinggo/server/reservations";
 import { auth } from "@/auth";
 import { myReservations, type MyReservation } from "@/lib/reservations";
 import CancelButton from "./CancelButton";
@@ -37,7 +38,8 @@ function Card({ r }: { r: MyReservation }) {
 export default async function MyReservationsPage() {
   const uid = (await auth())?.user?.id;
   if (!uid) redirect("/login?next=%2Fmy%2Freservations");
-  const rows = await myReservations(uid);
+  const [rows, ns] = await Promise.all([myReservations(uid), noShowState(uid)]);
+  const blocked = noShowMessage(ns);
   const now = Date.now();
   const upcoming = rows.filter((r) => (r.status === "confirmed" || r.status === "seated") && new Date(r.visitAt).getTime() > now - 3 * 3600_000).reverse();
   const past = rows.filter((r) => !upcoming.includes(r));
@@ -45,6 +47,7 @@ export default async function MyReservationsPage() {
     <div className="wrap rsv">
       <p className="crumb"><Link href="/my">마이페이지</Link> · 내 예약</p>
       <h1>내 예약</h1>
+      {blocked ? <p className="form-error">{blocked}</p> : null}
       <PushButton />
       <h2>다가오는 예약</h2>
       {upcoming.length ? <ul className="rsv-list">{upcoming.map((r) => <Card key={r.id} r={r} />)}</ul> : (

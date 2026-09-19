@@ -1,6 +1,7 @@
 /** 휴대폰 문자 인증 — GET 내 상태 · POST {op:"start", phone} 인증번호 보내기 · {op:"confirm", code} 확인 */
 import { NextResponse } from "next/server";
-import { maskMobile } from "@pairinggo/shared";
+import { maskMobile, noShowMessage } from "@pairinggo/shared";
+import { noShowState } from "@pairinggo/server/reservations";
 import { auth } from "@/auth";
 import { rateLimit } from "@/lib/kakao";
 import { confirmVerification, phoneState, startVerification } from "@/lib/phone-verify";
@@ -11,8 +12,9 @@ const NO_STORE = { "Cache-Control": "no-store" };
 export async function GET() {
   const uid = (await auth())?.user?.id;
   if (!uid) return NextResponse.json({ error: "로그인이 필요합니다" }, { status: 401, headers: NO_STORE });
-  const s = await phoneState(uid);
-  return NextResponse.json({ phone: s.phone ? maskMobile(s.phone) : null, verified: s.verified, available: s.available }, { headers: NO_STORE });
+  const [s, ns] = await Promise.all([phoneState(uid), noShowState(uid)]);
+  // blocked: 노쇼 제한 안내(예약 화면이 예약 버튼 대신 보여 준다)
+  return NextResponse.json({ phone: s.phone ? maskMobile(s.phone) : null, verified: s.verified, available: s.available, blocked: noShowMessage(ns) }, { headers: NO_STORE });
 }
 
 export async function POST(req: Request) {
