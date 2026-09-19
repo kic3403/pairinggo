@@ -3,7 +3,7 @@ import { Bar } from "../_bar";
 export const metadata = { title: "파트너 이용약관" };
 
 /** 파트너 이용약관·개인정보 수집 안내(시범 운영판). 조건(수수료·정산)이 바뀌면 시행일을 고치고 기존 파트너에게 알린다 */
-const EFFECTIVE = "2026년 9월 18일";
+const EFFECTIVE = "2026년 9월 19일";
 const CONTACT = "kic3403@gmail.com";
 
 export default function PartnerTerms() {
@@ -49,9 +49,9 @@ export default function PartnerTerms() {
         <h2>7. 파트너 개인정보 수집·이용</h2>
         <ul>
           <li>수집 항목: 담당자 이름·휴대폰 번호·이메일·비밀번호(암호화 저장), 대표자 이름, 사업자등록번호, 매장 정보</li>
-          <li>목적: 가입 확인·승인, 로그인, 예약 알림(알림톡·웹 푸시), 문의 응대</li>
+          <li>목적: 가입 확인·승인, 로그인, 비밀번호 재설정(휴대폰 문자 인증), 예약 알림(알림톡·웹 푸시), 문의 응대</li>
           <li>보유 기간: 탈퇴할 때까지(관계 법령이 정한 기간은 그 기간까지)</li>
-          <li>위탁: Supabase(데이터 보관), Vercel(서비스 운영), 알림 발송 업체(알림톡·문자 — 도입 시 이 약관에 이름을 적습니다)</li>
+          <li>위탁: Supabase(데이터 보관), Vercel(서비스 운영), 주식회사 솔라피(SOLAPI — 예약 알림톡·문자, 비밀번호 재설정 인증 문자), Anthropic(메뉴판 사진 읽기 — 사진은 읽은 뒤 저장하지 않음, 미국)</li>
           <li>동의를 거부할 수 있으나, 그러면 파트너 서비스를 이용할 수 없습니다.</li>
         </ul>
 
