@@ -20,8 +20,9 @@ export async function reportError(app: ErrorApp, place: string, err: unknown, ex
     const e = err as { message?: string; stack?: string; digest?: string };
     const raw = typeof err === "string" ? err : e?.message ?? String(err);
     console.error(`[${app}:${place}]`, raw);
-    // 로컬 개발 서버도 운영과 같은 DB를 쓴다 — 개발 중 오류가 운영 어드민에 섞이지 않게(시험할 때만 ERROR_LOG_DEV=1)
-    if (process.env.NODE_ENV !== "production" && !process.env.ERROR_LOG_DEV) return;
+    // 로컬 개발 서버도 운영과 같은 DB를 쓴다 — 개발 중 오류가 운영 어드민에 섞이지 않게 Vercel에서 돌 때만 기록(시험할 때만 ERROR_LOG_DEV=1).
+    // NODE_ENV만 보면 부족했다: 2026-09-19 로컬 dev 서버의 모듈 해석 오류가 기록됨(개발 서버가 옛 모듈을 들고 있었음)
+    if ((process.env.NODE_ENV !== "production" || !process.env.VERCEL) && !process.env.ERROR_LOG_DEV) return;
     const c = db();
     if (!c) return;
     const message = clean(raw) || "(메시지 없음)";
