@@ -3,7 +3,7 @@ import { reportError } from "@pairinggo/server/errors";
 import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
-import { withAwards, withBookable, withInfo } from "@/lib/place-enrich";
+import { withAwards, withBookable, withInfo, withReviews } from "@/lib/place-enrich";
 import { rankPlaces, sortByRating, verifiedFirst } from "@pairinggo/shared";
 import { error, json, preflight } from "@/lib/http";
 
@@ -48,7 +48,7 @@ export async function GET(req: Request) {
     // 평점 높은 순 → 그 위에 관련도(이름·분류에 음식 이름/키워드 → 같은 계열 → 다른 계열, shared placeRelevance)로 다시 묶는다
     places = rankPlaces(sortByRating(await attachRatings(aw.places)), f ?? { name: food });
     // 운영자·파트너가 확인한 정보(place_info) — 확인된 식당을 맨 앞으로, 그 위에 예약 받는 파트너 매장. 목록 API는 10분 캐시라 반영에 최대 10분
-    places = await withBookable(verifiedFirst(await withInfo(places)), true);
+    places = await withReviews(await withBookable(verifiedFirst(await withInfo(places)), true));
     return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
     void reportError("web", "places/restaurants", e);

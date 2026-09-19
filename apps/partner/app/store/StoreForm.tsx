@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { cleanNaverUrl, formatPrice, mergeMenuRows, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PlaceInfo } from "@pairinggo/shared";
+import { STORE_PHOTOS_MAX, cleanNaverUrl, formatPrice, mergeMenuRows, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PlaceInfo } from "@pairinggo/shared";
 import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 type Named = { id: string; name: string };
@@ -101,7 +101,53 @@ function PhotoCell({ img, label, onChange, onError }: { img?: string; label: str
     </div>
   );
 }
-const MENU_PHOTO_EDGE = 800;
+const MENU_PHOTO_EDGE = 800, STORE_PHOTO_EDGE = 1280;
+
+/**
+ * 대표 사진(최대 10장) — 페어링GO 매장 상세 맨 위에 이 순서대로 보인다(첫 장이 대표). ‹ › 로 순서 바꾸기, × 빼기.
+ * 메뉴 사진과 같은 저장소·같은 올리기 경로(/api/menu-photo), 긴 변 1,280px. [저장]을 눌러야 반영된다.
+ */
+function StorePhotos({ photos, onChange }: { photos: string[]; onChange: (f: (p: string[]) => string[]) => void }) {
+  const [busy, setBusy] = useState(0);
+  const [err, setErr] = useState("");
+  async function add(files: FileList | null) {
+    const list = [...(files ?? [])].filter((f) => f.type.startsWith("image/")).slice(0, STORE_PHOTOS_MAX - photos.length - busy);
+    if (!list.length) { if (files?.length) setErr(`대표 사진은 ${STORE_PHOTOS_MAX}장까지예요`); return; }
+    setErr(""); setBusy((n) => n + list.length);
+    for (const f of list) {
+      try {
+        const { data } = await shrinkToJpeg(f, STORE_PHOTO_EDGE);
+        const r = await fetch("/api/menu-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ data }) });
+        const j = (await r.json().catch(() => ({}))) as { url?: string; error?: string };
+        if (!r.ok || !j.url) throw new Error(j.error ?? "사진을 올리지 못했어요");
+        onChange((p) => (p.length < STORE_PHOTOS_MAX ? [...p, j.url!] : p));
+      } catch (e) { setErr((e as Error).message); } finally { setBusy((n) => n - 1); }
+    }
+  }
+  const move = (i: number, d: number) => onChange((p) => { const q = [...p]; const j = i + d; if (j < 0 || j >= q.length) return p; [q[i], q[j]] = [q[j], q[i]]; return q; });
+  return (
+    <div className="sphotos">
+      {photos.map((u, i) => (
+        <figure key={u} className="sph">
+          <img src={u} alt={`대표 사진 ${i + 1}`} />
+          {i === 0 ? <figcaption>대표</figcaption> : null}
+          <div className="sph-bar">
+            <button type="button" aria-label="앞으로" disabled={i === 0} onClick={() => move(i, -1)}>‹</button>
+            <button type="button" aria-label="뒤로" disabled={i === photos.length - 1} onClick={() => move(i, 1)}>›</button>
+            <button type="button" aria-label={`사진 ${i + 1} 빼기`} onClick={() => onChange((p) => p.filter((x) => x !== u))}>×</button>
+          </div>
+        </figure>
+      ))}
+      {photos.length + busy < STORE_PHOTOS_MAX ? (
+        <label className="sph add">
+          <span>{busy ? `올리는 중… (${busy})` : `+ 사진 추가\n${photos.length}/${STORE_PHOTOS_MAX}`}</span>
+          <input type="file" accept="image/*" multiple hidden onChange={(e) => { void add(e.target.files); e.target.value = ""; }} />
+        </label>
+      ) : null}
+      {err ? <p className="err" role="alert" style={{ margin: 0, gridColumn: "1 / -1" }}>{err}</p> : null}
+    </div>
+  );
+}
 const withImg = <T extends { img?: string }>(r: T, url: string | undefined): T => { const { img: _, ...rest } = r; return (url ? { ...rest, img: url } : rest) as T; };
 
 function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onChange: (r: MenuItem[]) => void; onImg: (i: number, url: string | undefined) => void; onError: (m: string) => void }) {
@@ -150,6 +196,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
     corkage: info?.corkage ?? "", corkageNote: info?.corkageNote ?? "", room: info?.room ?? "", roomNote: info?.roomNote ?? "", naverUrl: info?.naverUrl ?? "",
   });
   const [tables, setTables] = useState(() => initialTables(info, drinks, foods));
+  const [photos, setPhotos] = useState<string[]>(() => info?.photos ?? []);
   const [state, setState] = useState<{ busy?: boolean; ok?: string; err?: string }>({});
   const [photoErr, setPhotoErr] = useState("");
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
@@ -164,7 +211,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
     if (f.naverUrl.trim() && !cleanNaverUrl(f.naverUrl)) { setState({ err: "네이버 지도 링크는 https://naver.me/… 또는 https://map.naver.com/… 모양만 받아요" }); return; }
     setState({ busy: true });
     const menuItems = tables.menu.filter((m) => m.name.trim()), drinkItems = tables.drinks.filter((d) => d.name.trim());
-    const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, info: { ...f, menuItems, drinkItems } }) }).catch(() => null);
+    const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, info: { ...f, menuItems, drinkItems, photos } }) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
     setState(r?.ok ? { ok: "저장했어요 — 페어링GO 식당 목록과 예약 화면에 바로 반영돼요(목록 캐시로 최대 10분)" } : { err: j?.error ?? "저장하지 못했어요" });
   }
@@ -178,6 +225,14 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
         <label className="f">한 줄 소개 <span className="hint">120자 — 페어링GO 식당 카드에 그대로 보여요</span>
           <textarea value={f.menuNote} onChange={set("menuNote")} maxLength={120} placeholder="예: 대전 한우 수육과 지역 막걸리를 함께 내는 한식 주점" />
         </label>
+      </section>
+
+      <section className="panel stack">
+        <div>
+          <h2 style={{ margin: 0 }}>대표 사진 <span className="muted small">{photos.length}/{STORE_PHOTOS_MAX}</span></h2>
+          <p className="small muted" style={{ margin: "2px 0 0" }}>페어링GO 매장 상세 맨 위에 이 순서대로 보여요(첫 장이 대표). 매장 외관·내부·대표 메뉴·술 사진을 올려 주세요 — 직접 찍었거나 쓸 권리가 있는 사진만.</p>
+        </div>
+        <StorePhotos photos={photos} onChange={setPhotos} />
       </section>
 
       <section className="panel stack">

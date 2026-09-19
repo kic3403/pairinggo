@@ -3,14 +3,15 @@
  *  · 미쉐린 배지(이름+좌표 대조) · 운영자·파트너 확인 정보(place_info)와 화면용 술·메뉴 이름 · 파트너 예약 가능 여부
  * 정렬은 각 라우트가 정한다(맛집 = 평점·관련도·확인 우선, 검색 = 카카오 정확도 그대로).
  */
-import { matchAward, toSlug, type Place } from "@pairinggo/shared";
+import { matchAward, toSlug, type Place, type ReviewStats } from "@pairinggo/shared";
+import { reviewStatsFor } from "./reviews";
 import { bookableKakaoIds } from "@pairinggo/server/reservations";
 import { loadAwards } from "./awards";
 import { getCatalog } from "./catalog";
 import { attachPlaceInfo } from "./place-info";
 
 type Named = { id: string; name: string; slug: string | null };
-export type EnrichedPlace = Place & { infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean };
+export type EnrichedPlace = Place & { infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean; reviews?: ReviewStats };
 
 /** 미쉐린 배지 — 표가 비어 있으면 그대로 */
 export async function withAwards<T extends Place>(places: T[]): Promise<{ places: T[]; year: number | null }> {
@@ -38,4 +39,10 @@ export async function withBookable<T extends Place>(places: T[], front: boolean)
   if (!ids.size) return places;
   const marked = places.map((p) => (ids.has(p.id) ? { ...p, bookable: true } : p));
   return front ? [...marked.filter((p) => ids.has(p.id)), ...marked.filter((p) => !ids.has(p.id))] : marked;
+}
+
+/** 페어링GO 방문 인증 리뷰 평균·개수(있는 곳만) — 카드의 "★ 4.5 (3) 페어링GO" */
+export async function withReviews<T extends Place>(places: T[]): Promise<(T & { reviews?: ReviewStats })[]> {
+  const m = await reviewStatsFor(places.map((p) => p.id)).catch(() => new Map<string, ReviewStats>());
+  return m.size ? places.map((p) => (m.has(p.id) ? { ...p, reviews: m.get(p.id) } : p)) : places;
 }

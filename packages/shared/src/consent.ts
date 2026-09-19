@@ -3,7 +3,7 @@
  * 약관이나 개인정보처리방침의 수집 항목·목적이 바뀌면 CONSENT_VERSION을 올린다 → 기존 회원도 다음 로그인 때 다시 동의한다.
  * 문서 본문은 apps/web/app/(site)/_components/legal/, 동의 기록은 users.consent_version·consent_at(0017).
  */
-export const CONSENT_VERSION = "2026-09-19.2";   // .2: 이메일·휴대폰 번호 이용 목적에 "중복 가입 확인" 추가
+export const CONSENT_VERSION = "2026-09-19.3";   // .2: 이메일·휴대폰 번호 이용 목적에 "중복 가입 확인" 추가 · .3: 식당 리뷰(수집 항목·공개 정보·Anthropic 국외 이전)와 이용약관 제8조의2
 
 export const CONSENT_ITEMS = [
   { key: "terms", label: "이용약관에 동의합니다", required: true, missing: "이용약관에 동의해 주세요." },

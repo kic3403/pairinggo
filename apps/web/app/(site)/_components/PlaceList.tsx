@@ -4,14 +4,14 @@
  * 칩(운영자·파트너 확인 = 남색, 구글 = 회색) · 구글 평점 · 확인 정보 상자 · 메뉴판 · [예약하기](파트너 매장) · 지도·전화·저장.
  */
 import Link from "next/link";
-import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceRating } from "@pairinggo/shared";
+import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceRating, type ReviewStats } from "@pairinggo/shared";
 import Heart from "./Heart";
 import MenuBoard, { MenuThumbs } from "./MenuBoard";
 import { track } from "@/lib/track";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
 type Named = { id: string; name: string; slug: string | null };
-export type PlaceView = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean };
+export type PlaceView = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean; reviews?: ReviewStats };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 
 export default function PlaceList({ places, where, awardsYear, restaurants, reserveFood, eventKey, savedAs, limit = 12 }: {
@@ -29,7 +29,7 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
         {places.slice(0, limit).map((p) => (
           <li key={p.id} className="place">
             <div className="n">
-              {p.name}
+              <Link className="pname" href={`/places/${p.id}?n=${encodeURIComponent(p.name)}`}>{p.name}</Link>
               {p.award && (
                 <span className={`award ${p.award.kind}`} title={`${p.award.label} — 미쉐린 가이드 서울&부산 ${p.award.year} 선정`}>
                   {p.award.kind === "star" ? <><span className="stars" aria-hidden>{"★".repeat(Math.max(1, Math.min(3, p.award.level)))}</span> 미쉐린 {p.award.year}</> : p.award.kind === "bib" ? `빕구르망 ${p.award.year}` : p.award.label}
@@ -38,6 +38,7 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
               {placeChips(p.info, p.amenities).map((c) => <span key={c.key} className={`amen ${c.tone}${c.verified ? " ok" : ""}`} title={c.verified ? "페어링GO가 매장에 확인한 정보" : "Google 지도 정보 — 방문 전 매장에 확인하세요"}>{c.label}</span>)}
             </div>
             <div className="s">
+              {p.reviews?.count ? <span className="rv-mini" title={`페어링GO 방문 인증 리뷰 ${p.reviews.count}개 평균`}>★ {p.reviews.avg?.toFixed(1)} ({p.reviews.count})<i>페어링GO</i></span> : null}
               {p.rating && <span className="rating" title={`Google 지도 이용자 평점 ${p.rating.score.toFixed(1)} · 리뷰 ${p.rating.count.toLocaleString("ko-KR")}개`}>{ratingText(p.rating)}<i>Google</i></span>}
               {[p.category, p.distanceKm != null ? `${p.distanceKm.toFixed(1)}km` : null, p.roadAddress || p.address].filter(Boolean).join(" · ")}
             </div>

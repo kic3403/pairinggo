@@ -6,6 +6,7 @@
  */
 import type { AmenityChip, ParkingKind, PlaceAmenities } from "./place-rating";
 import { cleanDrinkItems, cleanMenuItems, type DrinkItem, type MenuItem } from "./menu-items";
+import { cleanStorePhotos } from "./reviews";
 
 export type Tri = "yes" | "no" | null;
 export type PlaceInfoSource = "operator" | "partner";
@@ -29,6 +30,8 @@ export type PlaceInfo = {
   menuItems: MenuItem[];
   /** 술 메뉴판 — 이름·용량·도수·가격 */
   drinkItems: DrinkItem[];
+  /** 대표 사진(2026-09-19) — 파트너가 올린 매장 사진, 최대 10장. 매장 상세 맨 위에 보인다 */
+  photos?: string[];
   source: PlaceInfoSource;
   /** 확인한 날 YYYY-MM-DD */
   verifiedAt: string | null;
@@ -92,7 +95,7 @@ export function cleanPlaceInfo(raw: Record<string, unknown>, known?: { drinks: S
     drinks: ids(raw.drinks, known?.drinks).filter((id) => id.startsWith("d")), drinkNames: cleanNames(raw.drinkNames),
     foods: ids(raw.foods, known?.foods).filter((id) => id.startsWith("f")), menuNames: cleanNames(raw.menuNames),
     menuNote: text(raw.menuNote, PLACE_MENU_NOTE_MAX), naverUrl: cleanNaverUrl(raw.naverUrl),
-    menuItems: cleanMenuItems(raw.menuItems), drinkItems: cleanDrinkItems(raw.drinkItems),
+    menuItems: cleanMenuItems(raw.menuItems), drinkItems: cleanDrinkItems(raw.drinkItems), photos: cleanStorePhotos(raw.photos),
     source: raw.source === "partner" ? "partner" : "operator",
     verifiedAt: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : null,
   };
@@ -128,7 +131,7 @@ export function mergeMenuRead(
 
 /** 아무것도 적지 않은 입력인가 — 빈 값은 저장하지 않는다 */
 export function isEmptyPlaceInfo(i: PlaceInfo): boolean {
-  return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.drinkNames.length && !i.foods.length && !i.menuNames.length && !(i.menuItems?.length) && !(i.drinkItems?.length) && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;
+  return !i.parking && !i.corkage && !i.room && !i.drinks.length && !i.drinkNames.length && !i.foods.length && !i.menuNames.length && !(i.menuItems?.length) && !(i.drinkItems?.length) && !(i.photos?.length) && !i.menuNote && !i.parkingNote && !i.corkageNote && !i.roomNote;
 }
 
 const PARKING_LABEL: Record<ParkingKind, string> = { free: "주차 무료", paid: "주차 유료", valet: "발레파킹", street: "노상 주차", none: "주차 불가" };

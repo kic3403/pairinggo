@@ -695,3 +695,95 @@ p { margin: 0 0 12px; }
 .sbox-pop .n { font-size: 14.5px; font-weight: 700; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sbox-pop .m { grid-column: 2; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sbox-pop .wait { color: var(--muted); font-size: 13px; cursor: default; display: block; }
+
+/* 매장 상세(2026-09-19) — 대표 사진 줄 · 이름·두 평점(페어링GO 인증 리뷰 / Google) · 칩 · 버튼 · 매장 정보 · 메뉴판 · 리뷰 */
+.btn.sm { min-height: 36px; padding: 0 13px; font-size: 14px; border-radius: 9px; }
+.pd { padding-bottom: 40px; }
+.pd-gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 42%); gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -16px 14px; padding: 0 16px 4px; scrollbar-width: thin; }
+.pd-gallery.one { grid-auto-columns: min(100%, 720px); }
+.pd-shot { padding: 0; border: 0; background: var(--bg2); border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 3; scroll-snap-align: start; cursor: zoom-in; }
+.pd-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 767px) { .pd-gallery { grid-auto-columns: 82%; } }
+.pd-lightbox { max-width: min(96vw, 1100px); max-height: 94vh; padding: 0; border: 0; border-radius: 12px; background: #111; color: #fff; }
+.pd-lightbox::backdrop { background: rgba(0, 0, 0, 0.72); }
+.pd-lightbox img { display: block; max-width: min(96vw, 1100px); max-height: calc(94vh - 52px); object-fit: contain; margin: 0 auto; }
+.pd-lb-bar { display: flex; align-items: center; justify-content: center; gap: 14px; height: 52px; font-variant-numeric: tabular-nums; }
+.pd-lb-bar button { min-width: 44px; min-height: 40px; border: 1px solid #444; background: #1c1c1c; color: #fff; border-radius: 9px; font-size: 18px; cursor: pointer; }
+.pd-head { display: grid; gap: 10px; margin-bottom: 18px; }
+.pd-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.pd-title h1 { margin: 0; font-size: clamp(24px, 4vw, 32px); line-height: 1.25; text-wrap: balance; }
+.pd-title .award { display: inline-flex; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 800; background: #FFF3D6; color: #8A5A00; border: 1px solid #F0D48A; }
+.pd-title .award.bib { background: #FDECEC; color: #A93226; border-color: #F5C2C2; }
+.pd-partner { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--navy-soft); color: var(--navy-ink); }
+.pd-meta { margin: 0; color: var(--ink2); font-size: 14.5px; }
+.pd-scores { display: flex; flex-wrap: wrap; gap: 8px; }
+.pd-score { display: grid; gap: 0; padding: 8px 14px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; min-width: 150px; }
+.pd-score b { font-size: 20px; color: #B8860B; font-variant-numeric: tabular-nums; }
+.pd-score span { font-size: 12.5px; color: var(--muted); }
+.pd-score.g b { color: var(--ink2); font-size: 17px; }
+a.pd-score:hover { border-color: var(--navy); }
+.pd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pd-chips .amen { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 700; white-space: nowrap; background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
+.pd-chips .amen.no { color: var(--muted); background: transparent; }
+.pd-chips .amen.ok { background: var(--navy-soft); color: var(--navy-ink); border-color: transparent; }
+.pd-chips .amen.ok.no { background: transparent; color: var(--ink2); border-color: var(--line); }
+.pd-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.pd-sec { border-top: 1px solid var(--line); padding: 18px 0 4px; }
+.pd-sec h2 { margin: 0 0 10px; font-size: 19px; }
+.pd-sec h2 .pv { font-size: 12.5px; font-weight: 600; color: var(--navy); margin-left: 6px; }
+.pd-note { margin: 0 0 6px; font-size: 15px; }
+.pd-links { margin: 4px 0; font-size: 14.5px; }
+.pd-links b { margin-right: 6px; }
+.pd-rev-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pd-rev-head h2 { margin: 0 0 6px; }
+.pd-empty { display: grid; justify-items: start; gap: 8px; padding: 16px; border: 1px dashed var(--line); border-radius: 12px; color: var(--ink2); }
+.pd-empty p { margin: 0; }
+
+/* 리뷰 목록 */
+.rv-list { list-style: none; margin: 0; padding: 0; }
+.rv { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.rv-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.rv-stars { color: #D19A0B; letter-spacing: 1px; font-size: 15px; }
+.rv-nick { font-size: 14.5px; }
+.rv-badge { padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+.rv-badge.reservation { background: var(--food-soft); color: var(--food-ink); }
+.rv-badge.receipt { background: var(--navy-soft); color: var(--navy-ink); }
+.rv-body { margin: 8px 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; }
+.rv-photos { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+.rv-photos button { flex: 0 0 auto; padding: 0; border: 0; background: var(--bg2); border-radius: 9px; overflow: hidden; width: 96px; height: 96px; cursor: zoom-in; }
+.rv-photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rv-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+.rv-act { background: none; border: 0; padding: 6px 2px; font: inherit; color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.rv-act:hover { color: var(--food-ink); }
+.rv-zoom { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; background: rgba(0, 0, 0, 0.8); padding: 16px; cursor: zoom-out; }
+.rv-zoom img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
+.rv-zoom button { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.15); color: #fff; font-size: 20px; }
+
+/* 리뷰 쓰기 */
+.rvw-form { display: grid; gap: 4px; }
+.rvw-step { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.rvw-step h2 { margin: 0 0 10px; font-size: 17px; }
+.rvw-step.dim { opacity: 0.5; }
+.rvw-ok { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 11px 14px; border-radius: 11px; background: var(--navy-soft); color: var(--navy-ink); font-weight: 700; }
+.rvw-resv { display: grid; gap: 6px; justify-items: start; }
+.rvw-receipt label.btn { cursor: pointer; }
+.rvw-receipt .is-busy { opacity: 0.6; pointer-events: none; }
+.rvw-stars { display: flex; align-items: center; gap: 4px; }
+.rvw-stars button { width: 40px; height: 44px; border: 0; background: none; font-size: 32px; line-height: 1; color: #D8D6D0; cursor: pointer; padding: 0; }
+.rvw-stars button.on { color: #E0A10D; }
+.rvw-stars span { margin-left: 6px; white-space: nowrap; }
+.rvw-form textarea { width: 100%; padding: 11px 13px; border: 1.5px solid var(--line); border-radius: 11px; font: inherit; font-size: 16px; resize: vertical; background: var(--surface); color: var(--ink); }
+.rvw-form textarea:focus { outline: 2px solid var(--navy); outline-offset: 1px; border-color: var(--navy); }
+.rvw-form .field i { font-style: normal; font-weight: 500; }
+.rvw-photos { display: flex; flex-wrap: wrap; gap: 8px; }
+.rvw-ph { position: relative; width: 88px; height: 88px; border-radius: 10px; overflow: hidden; background: var(--bg2); }
+.rvw-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rvw-ph button { position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, 0.55); color: #fff; font-size: 15px; line-height: 1; cursor: pointer; }
+.rvw-ph.add { display: grid; place-items: center; border: 1.5px dashed var(--line); background: var(--surface); color: var(--ink2); font-size: 12.5px; font-weight: 700; text-align: center; cursor: pointer; }
+.rvw-ph.add:hover { border-color: var(--navy); color: var(--navy); }
+.rvw-ph.add:has(input:focus-visible) { outline: 2px solid var(--navy); outline-offset: 2px; }
+/* 식당 카드 — 이름은 매장 상세로, 페어링GO 인증 리뷰 평점 */
+.place .rv-mini { display: inline-flex; align-items: center; gap: 3px; margin-right: 8px; color: #B8860B; font-weight: 700; }
+.place .rv-mini i { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--muted); }
+.place .n a.pname { text-decoration: none; }
+.place .n a.pname:hover { text-decoration: underline; }

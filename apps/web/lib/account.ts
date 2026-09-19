@@ -224,6 +224,9 @@ export async function deleteAccount(userId: string): Promise<void> {
   await sb.from("push_subscriptions").delete().eq("owner_type", "user").eq("owner_id", userId);
   const { data: files } = await sb.storage.from("member-picks").list(userId, { limit: 1000 }).catch(() => ({ data: null }));
   if (files?.length) await sb.storage.from("member-picks").remove(files.map((f) => `${userId}/${f.name}`)).catch(() => null);
+  // 리뷰 사진(리뷰 행은 users cascade로 지워진다)
+  const { data: rfiles } = await sb.storage.from("review-photos").list(userId, { limit: 1000 }).catch(() => ({ data: null }));
+  if (rfiles?.length) await sb.storage.from("review-photos").remove(rfiles.map((f) => `${userId}/${f.name}`)).catch(() => null);
   const { error } = await sb.from("users").delete().eq("id", userId);
   if (error) throw new Error(error.message);
 }

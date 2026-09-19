@@ -65,7 +65,7 @@ export default function SearchBox({ initial = "", region = "", autoFocus = false
         .then((j: { places?: PlaceRow[] }) => {
           const rows = nameMatchedOrAll(j.places ?? [], q).slice(0, 3);
           setPlaces(rows.map((x) => ({
-            type: "place", id: x.id, name: x.name, href: `/places?q=${encodeURIComponent(x.name)}`,
+            type: "place", id: x.id, name: x.name, href: `/places/${x.id}?n=${encodeURIComponent(x.name)}`,
             meta: [x.category, (x.roadAddress || x.address).split(" ").slice(0, 2).join(" "), x.bookable ? "예약 가능" : ""].filter(Boolean).join(" · "),
           })));
           setPlacesLoading(false); setActive(-1);

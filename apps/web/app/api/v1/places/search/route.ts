@@ -3,7 +3,7 @@ import { reportError } from "@pairinggo/server/errors";
 import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
 import { error, json, preflight } from "@/lib/http";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
-import { withAwards, withBookable, withInfo } from "@/lib/place-enrich";
+import { withAwards, withBookable, withInfo, withReviews } from "@/lib/place-enrich";
 
 export const runtime = "nodejs";
 const CACHE = { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=1800" };
@@ -38,7 +38,7 @@ export async function GET(req: Request) {
     const aw = await withAwards(found);
     const lite = sp.get("lite") === "1";
     // 카카오는 메뉴명·태그까지 보고 찾는다("유록" → 이름이 다른 "오징어세상") — 이름이 맞는 곳을 먼저
-    const places = sortByNameMatch(await withBookable(await withInfo(lite ? aw.places : await attachRatings(aw.places)), false), q);
+    const places = sortByNameMatch(await withReviews(await withBookable(await withInfo(lite ? aw.places : await attachRatings(aw.places)), false)), q);
     return json(req, {
       query: q, center: hasLoc ? { lat, lng, radius: 20000 } : null, places, total: r.total, widened,
       source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null,

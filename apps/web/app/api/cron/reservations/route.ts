@@ -2,6 +2,7 @@ import { addDays, kstParts } from "@pairinggo/shared";
 import { notifyReservation, notifyStoreToday } from "@pairinggo/server/notify";
 import { reportError } from "@pairinggo/server/errors";
 import { cleanupMenuPhotos } from "@pairinggo/server/menu-photo";
+import { cleanupReviewPhotos } from "@/lib/reviews";
 import { db } from "@/lib/db";
 import { error, json, NO_CACHE } from "@/lib/http";
 
@@ -39,6 +40,10 @@ export async function GET(req: Request) {
   await sb.from("server_errors").delete().lt("last_at", new Date(Date.now() - 90 * 86400_000).toISOString());
   // 표에서 빠진 메뉴 사진 — 30일(변경 이력 되돌리기 기간) 지나면 지운다
   const purgedMenuPhotos = await cleanupMenuPhotos().catch((e) => { void reportError("web", "cron/menu-photos", e); return 0; });
+  // 리뷰에 붙지 않은 채 하루 지난 리뷰 사진(쓰다 만 것)
+  const purgedReviewPhotos = await cleanupReviewPhotos().catch((e) => { void reportError("web", "cron/review-photos", e); return 0; });
+  // 영수증 읽기 기록 — 하루 횟수 제한용이라 7일이면 충분
+  await sb.from("receipt_reads").delete().lt("created_at", new Date(Date.now() - 7 * 86400_000).toISOString());
   const { count: purgedNotifications } = await sb.from("notifications").delete({ count: "exact" }).lt("created_at", new Date(Date.now() - 180 * 86400_000).toISOString());
-  return json(req, { ok: true, today, reminded, merchants: byMerchant.size, purgedReservations: purgedReservations ?? 0, purgedOtp: purgedOtp ?? 0, purgedNotifications: purgedNotifications ?? 0, purgedMenuPhotos }, { headers: NO_CACHE });
+  return json(req, { ok: true, today, reminded, merchants: byMerchant.size, purgedReservations: purgedReservations ?? 0, purgedOtp: purgedOtp ?? 0, purgedNotifications: purgedNotifications ?? 0, purgedMenuPhotos, purgedReviewPhotos }, { headers: NO_CACHE });
 }

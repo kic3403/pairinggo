@@ -2,14 +2,14 @@
  * 운영자가 확인한 식당 정보(place_info, 0021) — 어드민 저장·목록, 공개 식당 검색 결과에 붙이기. service_role(db()) 사용.
  * 검증·표시 규칙은 shared place-info.ts. DB가 없으면 조용히 건너뛴다(정보 없이 목록만).
  */
-import { cleanContactPhone, cleanDrinkItems, cleanMenuItems, cleanPlaceInfo, isEmptyPlaceInfo, type Place, type PlaceInfo } from "@pairinggo/shared";
+import { cleanContactPhone, cleanDrinkItems, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, isEmptyPlaceInfo, type Place, type PlaceInfo } from "@pairinggo/shared";
 import { db } from "./db";
 import { getCatalog } from "./catalog";
 
 type Row = {
   kakao_id: string; name: string; address: string | null; phone: string | null; lat: number | null; lng: number | null; place_url: string | null;
   parking: PlaceInfo["parking"]; parking_note: string; corkage: PlaceInfo["corkage"]; corkage_note: string; room: PlaceInfo["room"]; room_note: string;
-  drink_ids: string[]; food_ids: string[]; drink_names: string[]; menu_names: string[]; contact_phone: string; naver_url: string | null; menu_note: string; menu_items: unknown; drink_items: unknown; memo: string; source: PlaceInfo["source"]; verified_at: string | null; updated_by: string | null; updated_at: string;
+  drink_ids: string[]; food_ids: string[]; drink_names: string[]; menu_names: string[]; contact_phone: string; naver_url: string | null; menu_note: string; menu_items: unknown; drink_items: unknown; photos: unknown; memo: string; source: PlaceInfo["source"]; verified_at: string | null; updated_by: string | null; updated_at: string;
 };
 /** contactPhone·memo는 운영자 전용 — 어드민 화면에만 내려간다(공개 API는 info만 쓴다) */
 export type PlaceInfoRow = { kakaoId: string; name: string; address: string; phone: string | null; placeUrl: string | null; contactPhone: string; memo: string; updatedBy: string | null; updatedAt: string; info: PlaceInfo };
@@ -17,7 +17,7 @@ export type PlaceInfoRow = { kakaoId: string; name: string; address: string; pho
 const toInfo = (r: Row): PlaceInfo => ({
   parking: r.parking, parkingNote: r.parking_note, corkage: r.corkage, corkageNote: r.corkage_note, room: r.room, roomNote: r.room_note,
   drinks: r.drink_ids ?? [], drinkNames: r.drink_names ?? [], foods: r.food_ids ?? [], menuNames: r.menu_names ?? [], menuNote: r.menu_note, naverUrl: r.naver_url ?? null,
-  menuItems: cleanMenuItems(r.menu_items), drinkItems: cleanDrinkItems(r.drink_items), source: r.source, verifiedAt: r.verified_at,
+  menuItems: cleanMenuItems(r.menu_items), drinkItems: cleanDrinkItems(r.drink_items), photos: cleanStorePhotos(r.photos), source: r.source, verifiedAt: r.verified_at,
 });
 const toRow = (r: Row): PlaceInfoRow => ({ kakaoId: r.kakao_id, name: r.name, address: r.address ?? "", phone: r.phone, placeUrl: r.place_url, contactPhone: r.contact_phone ?? "", memo: r.memo, updatedBy: r.updated_by, updatedAt: r.updated_at, info: toInfo(r) });
 

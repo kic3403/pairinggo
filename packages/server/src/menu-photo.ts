@@ -1,10 +1,10 @@
 /**
- * 메뉴·술 사진(2026-09-19) — 파트너가 표의 한 줄에 붙이는 사진. Supabase Storage 공개 버킷 menu-photos/{매장 id}/{시각-난수}.jpg
+ * 메뉴·술 사진·매장 대표 사진(2026-09-19) — 파트너가 표의 한 줄에 붙이는 사진과 매장 상세 맨 위 사진(최대 10장). Supabase Storage 공개 버킷 menu-photos/{매장 id}/{시각-난수}.jpg
  * 브라우저에서 긴 변 800px JPEG로 줄여 보내고(image-client shrinkToJpeg), 여기서는 JPEG인지·크기만 확인해 올린다.
  * 표에서 빠진 사진은 바로 지우지 않는다 — 운영자가 변경 이력으로 되돌릴 수 있게 30일 둔 뒤 아침 크론이 정리(cleanupMenuPhotos).
  */
 import { randomBytes } from "node:crypto";
-import { MENU_PHOTO_BUCKET, cleanDrinkItems, cleanMenuItems, menuImages } from "@pairinggo/shared";
+import { MENU_PHOTO_BUCKET, cleanDrinkItems, cleanMenuItems, cleanStorePhotos, menuImages } from "@pairinggo/shared";
 import { db } from "./db";
 
 export const MENU_PHOTO_MAX_BYTES = 1_000_000, MENU_PHOTO_MAX_PER_STORE = 400, MENU_PHOTO_KEEP_DAYS = 30;
@@ -41,8 +41,9 @@ export async function cleanupMenuPhotos(now = Date.now()): Promise<number> {
   for (const f of folders) {
     const merchantId = f.name;
     const { data: m } = await c.from("merchants").select("kakao_place_id").eq("id", merchantId).maybeSingle();
-    const { data: p } = m ? await c.from("place_info").select("menu_items, drink_items").eq("kakao_id", m.kakao_place_id).maybeSingle() : { data: null };
-    const used = new Set(menuImages(cleanMenuItems(p?.menu_items), cleanDrinkItems(p?.drink_items)).map((u) => u.slice(u.lastIndexOf("/") + 1)));
+    const { data: p } = m ? await c.from("place_info").select("menu_items, drink_items, photos").eq("kakao_id", m.kakao_place_id).maybeSingle() : { data: null };
+    // 대표 사진(photos)도 같은 폴더에 있다 — 표·대표 사진 어디에도 없는 것만 지운다
+    const used = new Set([...menuImages(cleanMenuItems(p?.menu_items), cleanDrinkItems(p?.drink_items)), ...cleanStorePhotos(p?.photos)].map((u) => u.slice(u.lastIndexOf("/") + 1)));
     const { data: files } = await c.storage.from(MENU_PHOTO_BUCKET).list(merchantId, { limit: 1000 });
     const old = (files ?? []).filter((x) => !used.has(x.name) && new Date(x.created_at ?? now).getTime() < cutoff).map((x) => `${merchantId}/${x.name}`);
     if (old.length) { await c.storage.from(MENU_PHOTO_BUCKET).remove(old); removed += old.length; }
