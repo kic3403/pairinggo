@@ -31,7 +31,8 @@
     "liquor-awards-fetch": "tsx src/liquor-awards-fetch.ts",
     "drink-awards": "tsx src/drink-awards.ts",
     "expand-candidates": "tsx src/expand-candidates.ts",
-    "buy-links": "tsx src/buy-links.ts"
+    "buy-links": "tsx src/buy-links.ts",
+    "add-candidates": "tsx src/add-candidates.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

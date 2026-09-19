@@ -103,7 +103,7 @@ describe("이름 검색", () => {
     expect(r.foods).toHaveLength(0);
   });
   it("인덱스 크기", () => {
-    expect(DOCS.filter((d) => d.type === "drink")).toHaveLength(225);
+    expect(DOCS.filter((d) => d.type === "drink")).toHaveLength(509);
     expect(DOCS.filter((d) => d.type === "food")).toHaveLength(143);
     expect(DOCS.filter((d) => d.kind === "category")).toHaveLength(8);
     expect(DOCS.filter((d) => d.kind === "brewery").length).toBeGreaterThan(50);

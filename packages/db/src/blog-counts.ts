@@ -3,10 +3,11 @@
  *   pnpm --filter @pairinggo/db blog-counts [--all] [--dry]
  *     기본: blog_count = 0 인 행만(공개·검수 중 모두)   --all: 전체를 다시 센다   --dry: 저장하지 않고 결과만
  * 규칙: max(총수("{술 별칭} {음식}"), 총수("{술 이름} {음식}")) — packages/shared/src/pairing/blog-count.ts
+ * 이름만으로 검색한 결과가 100만 건을 넘는 흔한 이름(해·달·이제…)은 검색어에서 빼고, 쓸 이름이 없으면 0으로 둔다.
  * 검색이 실패한 행은 건드리지 않는다(0으로 덮어쓰지 않음). 끝나면 어드민에서 발행하거나 `pnpm db:export`.
  * 키: packages/db/.env 의 NCP_API_KEY_ID / NCP_API_KEY (없으면 NAVER_CLIENT_ID / NAVER_CLIENT_SECRET)
  */
-import { blogCountQueries, pickBlogCount } from "@pairinggo/shared";
+import { blogCountNames, blogNameUsable, capByNameTotal, pickBlogCount } from "@pairinggo/shared";
 import { connect } from "./sql";
 
 const all = process.argv.includes("--all");
@@ -40,14 +41,26 @@ try {
     order by p.id`;
   console.log(`대상 ${rows.length}건 (${all ? "전체" : "blog_count 0"}${dry ? ", 저장 안 함" : ""})`);
 
+  // 이름이 너무 흔하면(이름만 검색해 100만 건 초과) 그 이름으로는 세지 않는다 — "해 삼겹살" 같은 검색어가 다른 글을 잡는다
+  const names = [...new Set(rows.flatMap((r) => blogCountNames({ name: r.dname, alias: r.alias?.[0] ?? null })))];
+  const nameTotal = new Map<string, number | null>();
+  let ni = 0;
+  await Promise.all(Array.from({ length: 4 }, async () => {
+    while (ni < names.length) { const n = names[ni++]; nameTotal.set(n, await naverTotal(n)); }
+  }));
+  const usable = (n: string) => blogNameUsable(nameTotal.get(n));
+  const tooCommon = names.filter((n) => !usable(n));
+  if (tooCommon.length) console.log(`너무 흔한 이름 ${tooCommon.length}개는 검색어에서 뺍니다 — ${tooCommon.map((n) => `${n}(${nameTotal.get(n)?.toLocaleString()})`).join(", ")}`);
+
   const results: { id: number; label: string; before: number; after: number | null }[] = [];
   let i = 0;
   const worker = async () => {
     while (i < rows.length) {
       const r = rows[i++];
-      const drink = { name: r.dname, alias: r.alias?.[0] ?? null };
-      const totals = [];
-      for (const q of blogCountQueries(drink, { name: r.fname })) totals.push(await naverTotal(q));
+      const use = blogCountNames({ name: r.dname, alias: r.alias?.[0] ?? null }, usable);
+      // 쓸 이름이 하나도 없으면 0 (부풀려진 값이 남지 않게 덮어쓴다)
+      const totals = use.length ? [] as (number | null)[] : [0];
+      for (const n of use) totals.push(capByNameTotal(await naverTotal(`${n} ${r.fname}`), nameTotal.get(n)));
       results.push({ id: r.id, label: `${r.dname} × ${r.fname}`, before: r.blog_count, after: pickBlogCount(totals) });
     }
   };
