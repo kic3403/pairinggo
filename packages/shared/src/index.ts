@@ -35,3 +35,4 @@ export * from "./oauth-profile";
 export * from "./account-dup";
 export * from "./reviews";
 export * from "./place-match";
+export * from "./drink-awards";

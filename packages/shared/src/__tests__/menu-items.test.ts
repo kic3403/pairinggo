@@ -75,6 +75,6 @@ describe("메뉴 사진", () => {
   it("사진 읽기로 더해도 이미 붙인 사진은 그대로", () => {
     const m = mergeMenuRows({ menu: [{ name: "수육", desc: "", price: null, img: ok }], drinks: [] }, [{ kind: "food", name: "수육", catalogName: null, desc: "", price: 30000 }], catalog);
     expect(m.menu[0]).toEqual({ name: "수육", desc: "", price: 30000, img: ok });
-    expect(menuImages(m.menu, [{ name: "a", volume: "", abv: null, price: null }])).toEqual([ok]);
+    expect(menuImages(m.menu, [{ img: undefined }])).toEqual([ok]);
   });
 });

@@ -20,19 +20,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 238,
+     "naver": 241,
      "google": null,
-     "youtube": 18
+     "youtube": 16
     },
     "rank": 2,
-    "delta": null,
+    "delta": 2,
     "insta": null,
-    "naver": 90.2,
-    "score": 69.4,
+    "naver": 97.6,
+    "score": 66.6,
     "google": null,
-    "youtube": 48.6,
+    "youtube": 35.6,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 4
    },
    "profile": {
     "acid": 4,
@@ -74,19 +74,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 39,
+     "naver": 33,
      "google": null,
-     "youtube": 3
+     "youtube": 5
     },
-    "rank": 22,
-    "delta": null,
+    "rank": 21,
+    "delta": -7,
     "insta": null,
-    "naver": 14.8,
-    "score": 11.5,
+    "naver": 13.4,
+    "score": 12.3,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 11.1,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 14
    },
    "profile": {
     "acid": 2,
@@ -123,24 +123,27 @@
     "깔끔"
    ],
    "blog_anju": 43563,
-   "awards": [],
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상",
+    "2022 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 56,
+     "naver": 55,
      "google": null,
-     "youtube": 17
+     "youtube": 18
     },
     "rank": 7,
-    "delta": null,
+    "delta": -2,
     "insta": null,
-    "naver": 21.2,
-    "score": 33.6,
+    "naver": 22.3,
+    "score": 31.2,
     "google": null,
-    "youtube": 45.9,
+    "youtube": 40,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 5
    },
    "profile": {
     "acid": 2,
@@ -186,15 +189,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 141,
-    "delta": null,
+    "rank": 139,
+    "delta": -64,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 75
    },
    "profile": {
     "acid": 3,
@@ -231,7 +234,9 @@
     "부드러움"
    ],
    "blog_anju": 8967,
-   "awards": [],
+   "awards": [
+    "2021 우리술품평회 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -240,15 +245,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 115,
-    "delta": null,
+    "rank": 113,
+    "delta": -107,
     "insta": null,
     "naver": 0.4,
     "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 6
    },
    "profile": {
     "acid": 4,
@@ -294,15 +299,15 @@
      "google": null,
      "youtube": 9
     },
-    "rank": 13,
-    "delta": null,
+    "rank": 12,
+    "delta": -4,
     "insta": null,
-    "naver": 19.3,
-    "score": 21.8,
+    "naver": 20.6,
+    "score": 20.3,
     "google": null,
-    "youtube": 24.3,
+    "youtube": 20,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 8
    },
    "profile": {
     "acid": 2,
@@ -344,19 +349,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 6,
+     "naver": 4,
      "google": null,
      "youtube": 0
     },
-    "rank": 70,
-    "delta": null,
+    "rank": 74,
+    "delta": -56,
     "insta": null,
-    "naver": 2.3,
-    "score": 1.2,
+    "naver": 1.6,
+    "score": 0.8,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 18
    },
    "profile": {
     "acid": 2,
@@ -402,15 +407,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 142,
-    "delta": null,
+    "rank": 140,
+    "delta": -101,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 39
    },
    "profile": {
     "acid": 2,
@@ -452,19 +457,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 57,
+     "naver": 49,
      "google": null,
-     "youtube": 2
+     "youtube": 3
     },
-    "rank": 20,
-    "delta": null,
+    "rank": 19,
+    "delta": -4,
     "insta": null,
-    "naver": 21.6,
-    "score": 13.5,
+    "naver": 19.8,
+    "score": 13.3,
     "google": null,
-    "youtube": 5.4,
+    "youtube": 6.7,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 15
    },
    "profile": {
     "acid": 2,
@@ -506,19 +511,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 2,
      "google": null,
      "youtube": 1
     },
-    "rank": 55,
-    "delta": null,
+    "rank": 56,
+    "delta": -8,
     "insta": null,
-    "naver": 0.4,
-    "score": 1.6,
+    "naver": 0.8,
+    "score": 1.5,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 48
    },
    "profile": {
     "acid": 4,
@@ -556,7 +561,9 @@
    ],
    "blog_anju": 261,
    "awards": [
-    "2025 우리술품평회 과실주 대상"
+    "2026 대한민국주류대상 한국와인 Best of Best",
+    "2025 우리술품평회 과실주 대상",
+    "2024 대한민국주류대상 한국와인 대상"
    ],
    "generic": false,
    "trend": {
@@ -567,14 +574,14 @@
      "youtube": 1
     },
     "rank": 65,
-    "delta": null,
+    "delta": 11,
     "insta": null,
     "naver": 0,
-    "score": 1.4,
+    "score": 1.1,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 76
    },
    "profile": {
     "acid": 3,
@@ -612,7 +619,8 @@
    ],
    "blog_anju": 109,
    "awards": [
-    "2025 우리술품평회 과실주 최우수상"
+    "2025 우리술품평회 과실주 최우수상",
+    "2025 대한민국주류대상 한국와인 대상"
    ],
    "generic": false,
    "trend": {
@@ -622,15 +630,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 98,
-    "delta": null,
+    "rank": 96,
+    "delta": -32,
     "insta": null,
     "naver": 0.8,
     "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 64
    },
    "profile": {
     "acid": 4,
@@ -668,7 +676,12 @@
    ],
    "blog_anju": 40,
    "awards": [
-    "2025 우리술품평회 과실주 우수상"
+    "2026 대한민국주류대상 한국와인 대상",
+    "2025 우리술품평회 과실주 우수상",
+    "2025 대한민국주류대상 한국와인 대상",
+    "2024 대한민국주류대상 한국와인 대상",
+    "2022 대한민국주류대상 한국와인 대상",
+    "2020 우리술품평회 과실주 대상"
    ],
    "generic": false,
    "trend": {
@@ -678,15 +691,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 143,
-    "delta": null,
+    "rank": 141,
+    "delta": -86,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 55
    },
    "profile": {
     "acid": 3,
@@ -730,19 +743,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 3,
+     "naver": 5,
      "google": null,
      "youtube": 0
     },
-    "rank": 84,
-    "delta": null,
+    "rank": 71,
+    "delta": -26,
     "insta": null,
-    "naver": 1.1,
-    "score": 0.6,
+    "naver": 2,
+    "score": 1,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 45
    },
    "profile": {
     "acid": 1,
@@ -780,7 +793,8 @@
    ],
    "blog_anju": 226,
    "awards": [
-    "2025 우리술품평회 증류주 최우수상"
+    "2025 우리술품평회 증류주 최우수상",
+    "2022 대한민국주류대상 증류주 대상"
    ],
    "generic": false,
    "trend": {
@@ -790,15 +804,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 144,
-    "delta": null,
+    "rank": 142,
+    "delta": -65,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 77
    },
    "profile": {
     "acid": 1,
@@ -836,25 +850,27 @@
    ],
    "blog_anju": 1129,
    "awards": [
-    "2025 우리술품평회 증류주 우수상"
+    "2026 대한민국주류대상 증류주 대상",
+    "2025 우리술품평회 증류주 우수상",
+    "2025 대한민국주류대상 증류주 대상"
    ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 8,
+     "naver": 12,
      "google": null,
      "youtube": 3
     },
-    "rank": 32,
-    "delta": null,
+    "rank": 31,
+    "delta": -8,
     "insta": null,
-    "naver": 3,
-    "score": 5.6,
+    "naver": 4.9,
+    "score": 5.8,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 23
    },
    "profile": {
     "acid": 1,
@@ -902,15 +918,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 145,
-    "delta": null,
+    "rank": 143,
+    "delta": -65,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 78
    },
    "profile": {
     "acid": 2,
@@ -958,15 +974,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 146,
-    "delta": null,
+    "rank": 144,
+    "delta": -65,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 79
    },
    "profile": {
     "acid": 3,
@@ -1003,7 +1019,10 @@
     "부드러운 목넘김"
    ],
    "blog_anju": 120634,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 약·청주 대상",
+    "2022 대한민국주류대상 약·청주 대상"
+   ],
    "generic": true,
    "profile": {
     "acid": 2,
@@ -1040,22 +1059,25 @@
     "달콤"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 탁주 대상",
+    "2024 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 93,
+     "naver": 95,
      "google": null,
-     "youtube": 9
+     "youtube": 8
     },
-    "rank": 9,
+    "rank": 8,
     "delta": null,
     "insta": null,
-    "naver": 35.2,
-    "score": 29.8,
+    "naver": 38.5,
+    "score": 28.2,
     "google": null,
-    "youtube": 24.3,
+    "youtube": 17.8,
     "channels": 2,
     "prev_rank": null
    },
@@ -1096,15 +1118,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 71,
-    "delta": null,
+    "rank": 64,
+    "delta": -26,
     "insta": null,
-    "naver": 2.3,
+    "naver": 2.4,
     "score": 1.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 38
    },
    "profile": {
     "acid": 2,
@@ -1144,17 +1166,17 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 20,
+     "naver": 19,
      "google": null,
-     "youtube": 2
+     "youtube": 3
     },
-    "rank": 28,
+    "rank": 26,
     "delta": null,
     "insta": null,
-    "naver": 7.6,
-    "score": 6.5,
+    "naver": 7.7,
+    "score": 7.2,
     "google": null,
-    "youtube": 5.4,
+    "youtube": 6.7,
     "channels": 2,
     "prev_rank": null
    },
@@ -1191,15 +1213,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 16,
+     "naver": 11,
      "google": null,
      "youtube": 0
     },
-    "rank": 38,
+    "rank": 42,
     "delta": null,
     "insta": null,
-    "naver": 6.1,
-    "score": 3.1,
+    "naver": 4.5,
+    "score": 2.3,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -1232,22 +1254,25 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 약·청주 대상",
+    "2025 대한민국주류대상 약·청주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
      "naver": 3,
      "google": null,
-     "youtube": 0
+     "youtube": 1
     },
-    "rank": 85,
+    "rank": 52,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
-    "score": 0.6,
+    "naver": 1.2,
+    "score": 1.7,
     "google": null,
-    "youtube": 0,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -1286,7 +1311,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 147,
+    "rank": 145,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -1333,7 +1358,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 99,
+    "rank": 97,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -1376,15 +1401,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 4,
+     "naver": 3,
      "google": null,
      "youtube": 0
     },
-    "rank": 74,
+    "rank": 82,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
-    "score": 0.8,
+    "naver": 1.2,
+    "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -1425,15 +1450,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 3,
+     "naver": 2,
      "google": null,
      "youtube": 0
     },
-    "rank": 86,
+    "rank": 98,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
-    "score": 0.6,
+    "naver": 0.8,
+    "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -1476,13 +1501,13 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 46,
+    "rank": 47,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
-    "score": 2.1,
+    "naver": 1.6,
+    "score": 1.9,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -1523,7 +1548,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 116,
+    "rank": 114,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -1564,15 +1589,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 3,
+     "naver": 2,
      "google": null,
      "youtube": 0
     },
-    "rank": 87,
+    "rank": 99,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
-    "score": 0.6,
+    "naver": 0.8,
+    "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -1611,19 +1636,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 20,
+     "naver": 22,
      "google": null,
-     "youtube": 8
+     "youtube": 6
     },
-    "rank": 19,
-    "delta": null,
+    "rank": 22,
+    "delta": 2,
     "insta": null,
-    "naver": 7.6,
-    "score": 14.6,
+    "naver": 8.9,
+    "score": 11.1,
     "google": null,
-    "youtube": 21.6,
+    "youtube": 13.3,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 24
    },
    "profile": {
     "acid": 2,
@@ -1658,7 +1683,9 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2023 대한민국주류대상 증류주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -1667,10 +1694,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 88,
+    "rank": 83,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -1703,19 +1730,22 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 탁주 대상",
+    "2024 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 35,
+     "naver": 33,
      "google": null,
      "youtube": 0
     },
-    "rank": 27,
+    "rank": 28,
     "delta": null,
     "insta": null,
-    "naver": 13.3,
+    "naver": 13.4,
     "score": 6.7,
     "google": null,
     "youtube": 0,
@@ -1757,7 +1787,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 148,
+    "rank": 146,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -1802,15 +1832,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": 0
     },
-    "rank": 117,
+    "rank": 147,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.2,
+    "naver": 0,
+    "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -1849,17 +1879,17 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 6,
+     "naver": 5,
      "google": null,
      "youtube": 3
     },
-    "rank": 35,
+    "rank": 37,
     "delta": null,
     "insta": null,
-    "naver": 2.3,
-    "score": 5.2,
+    "naver": 2,
+    "score": 4.4,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
     "prev_rank": null
    },
@@ -1899,13 +1929,13 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 56,
+    "rank": 59,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 1.6,
+    "score": 1.3,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -1949,10 +1979,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 89,
+    "rank": 84,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -1999,7 +2029,7 @@
     "rank": 75,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
+    "naver": 1.6,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -2041,13 +2071,13 @@
      "google": null,
      "youtube": 3
     },
-    "rank": 34,
+    "rank": 36,
     "delta": null,
     "insta": null,
-    "naver": 2.7,
-    "score": 5.4,
+    "naver": 2.8,
+    "score": 4.8,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
     "prev_rank": null
    },
@@ -2088,15 +2118,15 @@
      "insta": null,
      "naver": 1,
      "google": null,
-     "youtube": 1
+     "youtube": 0
     },
-    "rank": 57,
+    "rank": 115,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 1.6,
+    "score": 0.2,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 0,
     "channels": 2,
     "prev_rank": null
    },
@@ -2128,24 +2158,27 @@
     "부드러움"
    ],
    "blog_anju": 13779,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 약·청주 대상",
+    "2022 대한민국주류대상 약·청주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 195,
+     "naver": 190,
      "google": null,
-     "youtube": 20
+     "youtube": 22
     },
     "rank": 3,
-    "delta": null,
+    "delta": 0,
     "insta": null,
-    "naver": 73.9,
-    "score": 64,
+    "naver": 76.9,
+    "score": 62.9,
     "google": null,
-    "youtube": 54.1,
+    "youtube": 48.9,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 3
    },
    "profile": {
     "acid": 2,
@@ -2191,7 +2224,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 118,
+    "rank": 116,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -2229,7 +2262,10 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 리큐르 대상",
+    "2025 대한민국주류대상 리큐르 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -2238,7 +2274,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 119,
+    "rank": 117,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -2284,7 +2320,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 120,
+    "rank": 118,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -2321,7 +2357,9 @@
     "달콤"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -2330,7 +2368,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 149,
+    "rank": 148,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2367,22 +2405,26 @@
     "숙성향"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 약·청주 대상",
+    "2024 대한민국주류대상 약·청주 Best of Best",
+    "2022 대한민국주류대상 약·청주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 4,
+     "naver": 3,
      "google": null,
      "youtube": 16
     },
-    "rank": 12,
+    "rank": 17,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
-    "score": 22.4,
+    "naver": 1.2,
+    "score": 18.4,
     "google": null,
-    "youtube": 43.2,
+    "youtube": 35.6,
     "channels": 2,
     "prev_rank": null
    },
@@ -2421,13 +2463,13 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 58,
+    "rank": 60,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 1.6,
+    "score": 1.3,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -2470,10 +2512,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 90,
+    "rank": 85,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -2517,7 +2559,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 150,
+    "rank": 149,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2565,7 +2607,7 @@
     "rank": 76,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
+    "naver": 1.6,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -2604,15 +2646,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 3,
      "google": null,
      "youtube": 0
     },
-    "rank": 100,
+    "rank": 86,
     "delta": null,
     "insta": null,
-    "naver": 0.8,
-    "score": 0.4,
+    "naver": 1.2,
+    "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -2653,17 +2695,17 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": 2
+     "youtube": 1
     },
-    "rank": 42,
-    "delta": null,
+    "rank": 66,
+    "delta": -26,
     "insta": null,
     "naver": 0,
-    "score": 2.7,
+    "score": 1.1,
     "google": null,
-    "youtube": 5.4,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 40
    },
    "profile": {
     "acid": 2,
@@ -2707,7 +2749,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 101,
+    "rank": 100,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -2752,15 +2794,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 9,
+     "naver": 8,
      "google": null,
      "youtube": 0
     },
     "rank": 53,
     "delta": null,
     "insta": null,
-    "naver": 3.4,
-    "score": 1.7,
+    "naver": 3.2,
+    "score": 1.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -2802,7 +2844,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 121,
+    "rank": 119,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -2848,7 +2890,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 151,
+    "rank": 150,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2897,7 +2939,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 152,
+    "rank": 151,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -2944,13 +2986,13 @@
      "google": null,
      "youtube": 3
     },
-    "rank": 36,
+    "rank": 38,
     "delta": null,
     "insta": null,
     "naver": 0.4,
-    "score": 4.3,
+    "score": 3.6,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
     "prev_rank": null
    },
@@ -2990,7 +3032,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 153,
+    "rank": 152,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3037,7 +3079,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 122,
+    "rank": 120,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3082,7 +3124,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 123,
+    "rank": 121,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3129,7 +3171,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 124,
+    "rank": 122,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3168,26 +3210,26 @@
    ],
    "blog_anju": 1391,
    "awards": [
-    "2021 우리술품평회 대통령상",
-    "2024 우리술품평회 약·청주 우수상"
+    "2024 우리술품평회 약·청주 우수상",
+    "2021 우리술품평회 약·청주 대통령상"
    ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 4,
+     "naver": 3,
      "google": null,
      "youtube": 0
     },
-    "rank": 77,
-    "delta": null,
+    "rank": 87,
+    "delta": -46,
     "insta": null,
-    "naver": 1.5,
-    "score": 0.8,
+    "naver": 1.2,
+    "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 41
    },
    "profile": {
     "acid": 3,
@@ -3233,7 +3275,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 125,
+    "rank": 123,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3275,15 +3317,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 2,
      "google": null,
      "youtube": 0
     },
-    "rank": 126,
+    "rank": 101,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.2,
+    "naver": 0.8,
+    "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -3326,7 +3368,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 154,
+    "rank": 153,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3364,7 +3406,9 @@
     "산미"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -3373,7 +3417,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 155,
+    "rank": 154,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3420,7 +3464,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 127,
+    "rank": 124,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3457,6 +3501,7 @@
    ],
    "blog_anju": 0,
    "awards": [
+    "2022 우리술품평회 증류주 우수상",
     "2016년 우리술품평회 최우수상"
    ],
    "generic": false,
@@ -3467,7 +3512,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 156,
+    "rank": 155,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3514,7 +3559,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 157,
+    "rank": 156,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3559,7 +3604,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 128,
+    "rank": 125,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3606,10 +3651,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 91,
+    "rank": 88,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -3651,7 +3696,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 158,
+    "rank": 157,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -3690,8 +3735,10 @@
    ],
    "blog_anju": 2782,
    "awards": [
-    "2022 우리술품평회 대통령상",
-    "2023 우리술품평회 약·청주 우수상"
+    "2026 우리술품평회 약·청주 우수상",
+    "2023 우리술품평회 약·청주 우수상",
+    "2022 우리술품평회 약·청주 대통령상",
+    "2022 대한민국주류대상 약·청주 대상"
    ],
    "generic": false,
    "trend": {
@@ -3699,17 +3746,17 @@
      "insta": null,
      "naver": 75,
      "google": null,
-     "youtube": 11
+     "youtube": 7
     },
     "rank": 10,
-    "delta": null,
+    "delta": -1,
     "insta": null,
-    "naver": 28.4,
-    "score": 29.1,
+    "naver": 30.4,
+    "score": 23,
     "google": null,
-    "youtube": 29.7,
+    "youtube": 15.6,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 9
    },
    "profile": {
     "acid": 3,
@@ -3746,20 +3793,22 @@
     "산미"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2024 대한민국주류대상 한국와인 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": 0
     },
-    "rank": 129,
+    "rank": 158,
     "delta": null,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.2,
+    "naver": 0,
+    "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -3793,7 +3842,9 @@
     "산미"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -3802,7 +3853,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 130,
+    "rank": 126,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -3937,17 +3988,17 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 5,
+     "naver": 4,
      "google": null,
      "youtube": 1
     },
-    "rank": 44,
+    "rank": 48,
     "delta": null,
     "insta": null,
-    "naver": 1.9,
-    "score": 2.3,
+    "naver": 1.6,
+    "score": 1.9,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -3986,7 +4037,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 131,
+    "rank": 127,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4031,15 +4082,15 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": 1
+     "youtube": 2
     },
-    "rank": 66,
+    "rank": 44,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 1.4,
+    "score": 2.2,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 4.4,
     "channels": 2,
     "prev_rank": null
    },
@@ -4168,15 +4219,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 9,
+     "naver": 8,
      "google": null,
      "youtube": 0
     },
     "rank": 54,
     "delta": null,
     "insta": null,
-    "naver": 3.4,
-    "score": 1.7,
+    "naver": 3.2,
+    "score": 1.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -4215,19 +4266,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": 1
     },
-    "rank": 59,
-    "delta": null,
+    "rank": 67,
+    "delta": -11,
     "insta": null,
-    "naver": 0.4,
-    "score": 1.6,
+    "naver": 0,
+    "score": 1.1,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 56
    },
    "profile": {
     "acid": 2,
@@ -4269,15 +4320,15 @@
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": 1
+     "youtube": 4
     },
-    "rank": 49,
+    "rank": 35,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 1.8,
+    "score": 4.9,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 8.9,
     "channels": 2,
     "prev_rank": null
    },
@@ -4409,10 +4460,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 73,
+    "rank": 72,
     "delta": null,
     "insta": null,
-    "naver": 1.9,
+    "naver": 2,
     "score": 1,
     "google": null,
     "youtube": 0,
@@ -4501,15 +4552,15 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 0,
+     "naver": 1,
      "google": null,
      "youtube": 0
     },
-    "rank": 166,
+    "rank": 128,
     "delta": null,
     "insta": null,
-    "naver": 0,
-    "score": 0,
+    "naver": 0.4,
+    "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -4552,7 +4603,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 132,
+    "rank": 129,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4644,7 +4695,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 167,
+    "rank": 166,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4689,7 +4740,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 168,
+    "rank": 167,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4736,15 +4787,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 92,
-    "delta": null,
+    "rank": 89,
+    "delta": -40,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 49
    },
    "profile": {
     "acid": 4,
@@ -4790,13 +4841,13 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 67,
+    "rank": 68,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 1.4,
+    "score": 1.1,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -4837,7 +4888,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 133,
+    "rank": 130,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -4882,7 +4933,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 169,
+    "rank": 168,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -4918,7 +4969,9 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2024 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -4927,10 +4980,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 93,
+    "rank": 90,
     "delta": null,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
@@ -4974,7 +5027,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 170,
+    "rank": 169,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5020,7 +5073,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 171,
+    "rank": 170,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5067,7 +5120,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 172,
+    "rank": 171,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5113,11 +5166,11 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 63,
+    "rank": 55,
     "delta": null,
     "insta": null,
-    "naver": 3,
-    "score": 1.5,
+    "naver": 3.2,
+    "score": 1.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -5150,7 +5203,9 @@
     "높은 도수"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 증류주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -5206,7 +5261,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 173,
+    "rank": 172,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5249,19 +5304,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 105,
+     "naver": 107,
      "google": null,
-     "youtube": 20
+     "youtube": 18
     },
     "rank": 6,
-    "delta": null,
+    "delta": 1,
     "insta": null,
-    "naver": 39.8,
-    "score": 47,
+    "naver": 43.3,
+    "score": 41.7,
     "google": null,
-    "youtube": 54.1,
+    "youtube": 40,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 7
    },
    "profile": {
     "acid": 1,
@@ -5298,7 +5353,9 @@
     "묵직"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 증류주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -5307,7 +5364,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 174,
+    "rank": 173,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5352,10 +5409,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 78,
+    "rank": 77,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
+    "naver": 1.6,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -5390,7 +5447,9 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -5399,7 +5458,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 175,
+    "rank": 174,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5437,7 +5496,7 @@
    ],
    "blog_anju": 0,
    "awards": [
-    "2020 우리술품평회 약청주 우수상"
+    "2020 우리술품평회 약·청주 우수상"
    ],
    "generic": false,
    "trend": {
@@ -5447,13 +5506,13 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 68,
+    "rank": 69,
     "delta": null,
     "insta": null,
     "naver": 0,
-    "score": 1.4,
+    "score": 1.1,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
     "prev_rank": null
    },
@@ -5494,10 +5553,10 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 79,
+    "rank": 78,
     "delta": null,
     "insta": null,
-    "naver": 1.5,
+    "naver": 1.6,
     "score": 0.8,
     "google": null,
     "youtube": 0,
@@ -5540,7 +5599,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 176,
+    "rank": 175,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5585,7 +5644,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 177,
+    "rank": 176,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5622,22 +5681,26 @@
     "가벼움"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 우리술품평회 약·청주 대상",
+    "2025 대한민국주류대상 약·청주 대상",
+    "2023 대한민국주류대상 약·청주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 0,
+     "naver": 1,
      "google": null,
-     "youtube": 1
+     "youtube": 0
     },
-    "rank": 69,
+    "rank": 131,
     "delta": null,
     "insta": null,
-    "naver": 0,
-    "score": 1.4,
+    "naver": 0.4,
+    "score": 0.2,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 0,
     "channels": 2,
     "prev_rank": null
    },
@@ -5677,7 +5740,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 178,
+    "rank": 177,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5723,7 +5786,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 179,
+    "rank": 178,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5766,19 +5829,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 1,
      "google": null,
      "youtube": 1
     },
-    "rank": 50,
-    "delta": null,
+    "rank": 61,
+    "delta": 4,
     "insta": null,
-    "naver": 0.8,
-    "score": 1.8,
+    "naver": 0.4,
+    "score": 1.3,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 65
    },
    "profile": {
     "acid": 1,
@@ -5822,7 +5885,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 180,
+    "rank": 179,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5867,7 +5930,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 181,
+    "rank": 180,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5914,7 +5977,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 182,
+    "rank": 181,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5951,7 +6014,9 @@
     "산미"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -5960,7 +6025,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 183,
+    "rank": 182,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -5997,7 +6062,9 @@
     "달콤"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2020 우리술품평회 기타주류 우수상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -6006,7 +6073,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 184,
+    "rank": 183,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6043,7 +6110,10 @@
     "산미"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 한국와인 대상",
+    "2025 대한민국주류대상 한국와인 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -6052,7 +6122,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 185,
+    "rank": 184,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6098,7 +6168,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 186,
+    "rank": 185,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6143,7 +6213,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 134,
+    "rank": 132,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -6294,19 +6364,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 74,
+     "naver": 77,
      "google": null,
      "youtube": 4
     },
-    "rank": 16,
-    "delta": null,
+    "rank": 13,
+    "delta": -2,
     "insta": null,
-    "naver": 28,
-    "score": 19.4,
+    "naver": 31.2,
+    "score": 20.1,
     "google": null,
-    "youtube": 10.8,
+    "youtube": 8.9,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 11
    },
    "profile": {
     "acid": 1,
@@ -6352,7 +6422,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 187,
+    "rank": 186,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6406,7 +6476,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 188,
+    "rank": 187,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6460,7 +6530,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 189,
+    "rank": 188,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6514,7 +6584,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 190,
+    "rank": 189,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6568,7 +6638,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 191,
+    "rank": 190,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6622,7 +6692,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 192,
+    "rank": 191,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6676,7 +6746,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 135,
+    "rank": 133,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -6730,7 +6800,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 193,
+    "rank": 192,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -6775,20 +6845,22 @@
     "긴 여운"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2026 우리술품평회 증류주 우수상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 3,
      "google": null,
      "youtube": 0
     },
-    "rank": 106,
+    "rank": 91,
     "delta": null,
     "insta": null,
-    "naver": 0.8,
-    "score": 0.4,
+    "naver": 1.2,
+    "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
@@ -6836,16 +6908,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": 0
+     "youtube": null
     },
-    "rank": 194,
+    "rank": 193,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": 0,
-    "channels": 2,
+    "youtube": null,
+    "channels": 1,
     "prev_rank": null
    },
    "profile": {
@@ -6888,19 +6960,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 14,
+     "naver": 17,
      "google": null,
-     "youtube": 22
+     "youtube": 20
     },
-    "rank": 8,
-    "delta": null,
+    "rank": 9,
+    "delta": 17,
     "insta": null,
-    "naver": 5.3,
-    "score": 32.4,
+    "naver": 6.9,
+    "score": 25.7,
     "google": null,
-    "youtube": 59.5,
+    "youtube": 44.4,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 26
    },
    "profile": {
     "acid": 1,
@@ -6942,18 +7014,18 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 36,
+     "naver": 48,
      "google": null,
-     "youtube": 4
+     "youtube": null
     },
-    "rank": 21,
+    "rank": 14,
     "delta": null,
     "insta": null,
-    "naver": 13.6,
-    "score": 12.2,
+    "naver": 19.4,
+    "score": 19.4,
     "google": null,
-    "youtube": 10.8,
-    "channels": 2,
+    "youtube": null,
+    "channels": 1,
     "prev_rank": null
    },
    "profile": {
@@ -6991,7 +7063,11 @@
     "은은한 단맛"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 약·청주 대상",
+    "2022 대한민국주류대상 약·청주 대상",
+    "2021 우리술품평회 약·청주 우수상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -7000,7 +7076,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 107,
+    "rank": 106,
     "delta": null,
     "insta": null,
     "naver": 0.8,
@@ -7052,16 +7128,16 @@
      "insta": null,
      "naver": 0,
      "google": null,
-     "youtube": 0
+     "youtube": null
     },
-    "rank": 195,
+    "rank": 194,
     "delta": null,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
-    "youtube": 0,
-    "channels": 2,
+    "youtube": null,
+    "channels": 1,
     "prev_rank": null
    },
    "profile": {
@@ -7108,7 +7184,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 196,
+    "rank": 195,
     "delta": null,
     "insta": null,
     "naver": 0,
@@ -7153,23 +7229,25 @@
     "곡물향"
    ],
    "blog_anju": 0,
-   "awards": [],
+   "awards": [
+    "2022 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
      "naver": 2,
      "google": null,
-     "youtube": 0
+     "youtube": null
     },
-    "rank": 108,
+    "rank": 80,
     "delta": null,
     "insta": null,
     "naver": 0.8,
-    "score": 0.4,
+    "score": 0.8,
     "google": null,
-    "youtube": 0,
-    "channels": 2,
+    "youtube": null,
+    "channels": 1,
     "prev_rank": null
    },
    "profile": {
@@ -7216,7 +7294,7 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 136,
+    "rank": 134,
     "delta": null,
     "insta": null,
     "naver": 0.4,
@@ -7270,15 +7348,15 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 47,
-    "delta": null,
+    "rank": 49,
+    "delta": -19,
     "insta": null,
-    "naver": 1.5,
-    "score": 2.1,
+    "naver": 1.6,
+    "score": 1.9,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 30
    },
    "profile": {
     "acid": 1,
@@ -7320,19 +7398,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 21,
+     "naver": 23,
      "google": null,
-     "youtube": 3
+     "youtube": 4
     },
     "rank": 25,
-    "delta": null,
+    "delta": -4,
     "insta": null,
-    "naver": 8,
-    "score": 8.1,
+    "naver": 9.3,
+    "score": 9.1,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 8.9,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 21
    },
    "profile": {
     "acid": 1,
@@ -7378,15 +7456,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 197,
-    "delta": null,
+    "rank": 196,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 80
    },
    "profile": {
     "acid": 1,
@@ -7428,19 +7506,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 48,
+     "naver": 56,
      "google": null,
-     "youtube": 37
+     "youtube": 45
     },
-    "rank": 5,
-    "delta": null,
+    "rank": 4,
+    "delta": 9,
     "insta": null,
-    "naver": 18.2,
-    "score": 59.1,
+    "naver": 22.7,
+    "score": 61.4,
     "google": null,
     "youtube": 100,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 13
    },
    "profile": {
     "acid": 1,
@@ -7482,19 +7560,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": 0
     },
-    "rank": 137,
-    "delta": null,
+    "rank": 197,
+    "delta": -131,
     "insta": null,
-    "naver": 0.4,
-    "score": 0.2,
+    "naver": 0,
+    "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 66
    },
    "profile": {
     "acid": 4,
@@ -7536,19 +7614,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 12,
+     "naver": 11,
      "google": null,
      "youtube": 3
     },
-    "rank": 30,
-    "delta": null,
+    "rank": 33,
+    "delta": -4,
     "insta": null,
     "naver": 4.5,
-    "score": 6.3,
+    "score": 5.6,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 29
    },
    "profile": {
     "acid": 5,
@@ -7590,19 +7668,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 264,
+     "naver": 247,
      "google": null,
-     "youtube": 16
+     "youtube": 20
     },
     "rank": 1,
-    "delta": null,
+    "delta": 0,
     "insta": null,
     "naver": 100,
-    "score": 71.6,
+    "score": 72.2,
     "google": null,
-    "youtube": 43.2,
+    "youtube": 44.4,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 1
    },
    "profile": {
     "acid": 3,
@@ -7648,15 +7726,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 94,
-    "delta": null,
+    "rank": 92,
+    "delta": -42,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 50
    },
    "profile": {
     "acid": 3,
@@ -7693,24 +7771,27 @@
     "깔끔"
    ],
    "blog_anju": 43553,
-   "awards": [],
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상",
+    "2022 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 57,
+     "naver": 49,
      "google": null,
      "youtube": 3
     },
-    "rank": 18,
-    "delta": null,
+    "rank": 20,
+    "delta": -8,
     "insta": null,
-    "naver": 21.6,
-    "score": 14.9,
+    "naver": 19.8,
+    "score": 13.3,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 12
    },
    "profile": {
     "acid": 2,
@@ -7747,7 +7828,10 @@
     "요거트향"
    ],
    "blog_anju": 1004,
-   "awards": [],
+   "awards": [
+    "2026 대한민국주류대상 탁주 대상",
+    "2022 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
@@ -7757,14 +7841,14 @@
      "youtube": 0
     },
     "rank": 198,
-    "delta": null,
+    "delta": -117,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 81
    },
    "profile": {
     "acid": 4,
@@ -7801,24 +7885,26 @@
     "깔끔한 여운"
    ],
    "blog_anju": 16436,
-   "awards": [],
+   "awards": [
+    "2024 대한민국주류대상 탁주 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 6,
+     "naver": 7,
      "google": null,
      "youtube": 1
     },
-    "rank": 43,
-    "delta": null,
+    "rank": 40,
+    "delta": 2,
     "insta": null,
-    "naver": 2.3,
+    "naver": 2.8,
     "score": 2.5,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 42
    },
    "profile": {
     "acid": 2,
@@ -7860,19 +7946,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 1,
      "google": null,
      "youtube": 0
     },
-    "rank": 109,
-    "delta": null,
+    "rank": 135,
+    "delta": -78,
     "insta": null,
-    "naver": 0.8,
-    "score": 0.4,
+    "naver": 0.4,
+    "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 57
    },
    "profile": {
     "acid": 3,
@@ -7918,15 +8004,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 110,
-    "delta": null,
+    "rank": 107,
+    "delta": -49,
     "insta": null,
     "naver": 0.8,
     "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 58
    },
    "profile": {
     "acid": 4,
@@ -7973,14 +8059,14 @@
      "youtube": 0
     },
     "rank": 199,
-    "delta": null,
+    "delta": -117,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 82
    },
    "profile": {
     "acid": 5,
@@ -8022,19 +8108,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 13,
+     "naver": 16,
      "google": null,
-     "youtube": 13
+     "youtube": 14
     },
-    "rank": 15,
-    "delta": null,
+    "rank": 16,
+    "delta": 15,
     "insta": null,
-    "naver": 4.9,
-    "score": 20,
+    "naver": 6.5,
+    "score": 18.8,
     "google": null,
-    "youtube": 35.1,
+    "youtube": 31.1,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 31
    },
    "profile": {
     "acid": 3,
@@ -8080,15 +8166,15 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 60,
-    "delta": null,
+    "rank": 62,
+    "delta": 5,
     "insta": null,
     "naver": 0.4,
-    "score": 1.6,
+    "score": 1.3,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 67
    },
    "profile": {
     "acid": 4,
@@ -8134,15 +8220,15 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 51,
-    "delta": null,
+    "rank": 57,
+    "delta": -24,
     "insta": null,
     "naver": 0.8,
-    "score": 1.8,
+    "score": 1.5,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 33
    },
    "profile": {
     "acid": 2,
@@ -8189,14 +8275,14 @@
      "youtube": 0
     },
     "rank": 200,
-    "delta": null,
+    "delta": -117,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 83
    },
    "profile": {
     "acid": 2,
@@ -8234,7 +8320,8 @@
    ],
    "blog_anju": 410,
    "awards": [
-    "2025 우리술품평회 약·청주 최우수상"
+    "2025 우리술품평회 약·청주 최우수상",
+    "2025 대한민국주류대상 약·청주 대상"
    ],
    "generic": false,
    "trend": {
@@ -8244,15 +8331,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 138,
-    "delta": null,
+    "rank": 136,
+    "delta": -68,
     "insta": null,
     "naver": 0.4,
     "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 68
    },
    "profile": {
     "acid": 2,
@@ -8299,14 +8386,14 @@
      "youtube": 0
     },
     "rank": 201,
-    "delta": null,
+    "delta": -117,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 84
    },
    "profile": {
     "acid": 2,
@@ -8352,15 +8439,15 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 61,
-    "delta": null,
+    "rank": 63,
+    "delta": 22,
     "insta": null,
     "naver": 0.4,
-    "score": 1.6,
+    "score": 1.3,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 85
    },
    "profile": {
     "acid": 2,
@@ -8407,14 +8494,14 @@
      "youtube": 0
     },
     "rank": 202,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 86
    },
    "profile": {
     "acid": 4,
@@ -8460,15 +8547,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 80,
-    "delta": null,
+    "rank": 79,
+    "delta": -33,
     "insta": null,
-    "naver": 1.5,
+    "naver": 1.6,
     "score": 0.8,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 46
    },
    "profile": {
     "acid": 2,
@@ -8514,15 +8601,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 139,
-    "delta": null,
+    "rank": 137,
+    "delta": -68,
     "insta": null,
     "naver": 0.4,
     "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 69
    },
    "profile": {
     "acid": 1,
@@ -8568,15 +8655,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 95,
-    "delta": null,
+    "rank": 93,
+    "delta": -42,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 51
    },
    "profile": {
     "acid": 1,
@@ -8618,19 +8705,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 3,
+     "naver": 4,
      "google": null,
-     "youtube": 0
+     "youtube": 1
     },
-    "rank": 96,
-    "delta": null,
+    "rank": 50,
+    "delta": 2,
     "insta": null,
-    "naver": 1.1,
-    "score": 0.6,
+    "naver": 1.6,
+    "score": 1.9,
     "google": null,
-    "youtube": 0,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 52
    },
    "profile": {
     "acid": 1,
@@ -8679,14 +8766,14 @@
      "youtube": 0
     },
     "rank": 203,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 87
    },
    "profile": {
     "acid": 1,
@@ -8733,14 +8820,14 @@
      "youtube": 0
     },
     "rank": 204,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 88
    },
    "profile": {
     "acid": 1,
@@ -8787,14 +8874,14 @@
      "youtube": 1
     },
     "rank": 45,
-    "delta": null,
+    "delta": 8,
     "insta": null,
-    "naver": 1.9,
-    "score": 2.3,
+    "naver": 2,
+    "score": 2.1,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 53
    },
    "profile": {
     "acid": 2,
@@ -8836,19 +8923,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 232,
+     "naver": 202,
      "google": null,
      "youtube": 14
     },
-    "rank": 4,
-    "delta": null,
+    "rank": 5,
+    "delta": -3,
     "insta": null,
-    "naver": 87.9,
-    "score": 62.9,
+    "naver": 81.8,
+    "score": 56.5,
     "google": null,
-    "youtube": 37.8,
+    "youtube": 31.1,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 2
    },
    "profile": {
     "acid": 1,
@@ -8885,24 +8972,27 @@
     "서늘한 피니시"
    ],
    "blog_anju": 1649,
-   "awards": [],
+   "awards": [
+    "2025 대한민국주류대상 리큐르 대상",
+    "2023 대한민국주류대상 리큐르 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 1,
+     "naver": 0,
      "google": null,
      "youtube": 1
     },
-    "rank": 62,
-    "delta": null,
+    "rank": 70,
+    "delta": -11,
     "insta": null,
-    "naver": 0.4,
-    "score": 1.6,
+    "naver": 0,
+    "score": 1.1,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 59
    },
    "profile": {
     "acid": 1,
@@ -8944,19 +9034,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 16,
+     "naver": 13,
      "google": null,
      "youtube": 6
     },
-    "rank": 23,
-    "delta": null,
+    "rank": 24,
+    "delta": -2,
     "insta": null,
-    "naver": 6.1,
-    "score": 11.1,
+    "naver": 5.3,
+    "score": 9.3,
     "google": null,
-    "youtube": 16.2,
+    "youtube": 13.3,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 22
    },
    "profile": {
     "acid": 1,
@@ -8998,19 +9088,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 26,
+     "naver": 22,
      "google": null,
      "youtube": 10
     },
-    "rank": 17,
-    "delta": null,
+    "rank": 18,
+    "delta": -1,
     "insta": null,
-    "naver": 9.8,
-    "score": 18.4,
+    "naver": 8.9,
+    "score": 15.6,
     "google": null,
-    "youtube": 27,
+    "youtube": 22.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 17
    },
    "profile": {
     "acid": 4,
@@ -9052,19 +9142,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 25,
+     "naver": 27,
      "google": null,
      "youtube": 4
     },
-    "rank": 24,
-    "delta": null,
+    "rank": 23,
+    "delta": -7,
     "insta": null,
-    "naver": 9.5,
-    "score": 10.2,
+    "naver": 10.9,
+    "score": 9.9,
     "google": null,
-    "youtube": 10.8,
+    "youtube": 8.9,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 16
    },
    "profile": {
     "acid": 5,
@@ -9101,24 +9191,27 @@
     "드라이"
    ],
    "blog_anju": 561,
-   "awards": [],
+   "awards": [
+    "2024 대한민국주류대상 한국와인 대상",
+    "2023 대한민국주류대상 한국와인 대상"
+   ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 8,
+     "naver": 12,
      "google": null,
      "youtube": 3
     },
-    "rank": 33,
-    "delta": null,
+    "rank": 32,
+    "delta": 11,
     "insta": null,
-    "naver": 3,
-    "score": 5.6,
+    "naver": 4.9,
+    "score": 5.8,
     "google": null,
-    "youtube": 8.1,
+    "youtube": 6.7,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 43
    },
    "profile": {
     "acid": 4,
@@ -9160,19 +9253,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 19,
+     "naver": 18,
      "google": null,
      "youtube": 2
     },
-    "rank": 29,
-    "delta": null,
+    "rank": 30,
+    "delta": -11,
     "insta": null,
-    "naver": 7.2,
-    "score": 6.3,
+    "naver": 7.3,
+    "score": 5.9,
     "google": null,
-    "youtube": 5.4,
+    "youtube": 4.4,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 19
    },
    "profile": {
     "acid": 3,
@@ -9218,15 +9311,15 @@
      "google": null,
      "youtube": 1
     },
-    "rank": 52,
-    "delta": null,
+    "rank": 58,
+    "delta": -4,
     "insta": null,
     "naver": 0.8,
-    "score": 1.8,
+    "score": 1.5,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 54
    },
    "profile": {
     "acid": 3,
@@ -9273,14 +9366,14 @@
      "youtube": 0
     },
     "rank": 205,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 89
    },
    "profile": {
     "acid": 1,
@@ -9329,14 +9422,14 @@
      "youtube": 0
     },
     "rank": 206,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 90
    },
    "profile": {
     "acid": 2,
@@ -9380,19 +9473,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 4,
      "google": null,
      "youtube": 2
     },
     "rank": 39,
-    "delta": null,
+    "delta": 21,
     "insta": null,
-    "naver": 0.8,
-    "score": 3.1,
+    "naver": 1.6,
+    "score": 3,
     "google": null,
-    "youtube": 5.4,
+    "youtube": 4.4,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 60
    },
    "profile": {
     "acid": 2,
@@ -9430,7 +9523,7 @@
    ],
    "blog_anju": 879,
    "awards": [
-    "2020 우리술품평회 대통령상"
+    "2020 우리술품평회 증류주 대통령상"
    ],
    "generic": false,
    "trend": {
@@ -9441,14 +9534,14 @@
      "youtube": 0
     },
     "rank": 207,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 91
    },
    "profile": {
     "acid": 1,
@@ -9486,7 +9579,10 @@
    ],
    "blog_anju": 179,
    "awards": [
-    "2023 우리술품평회 대통령상"
+    "2023 우리술품평회 과실주 대통령상",
+    "2023 대한민국주류대상 한국와인 대상",
+    "2022 우리술품평회 과실주 대상",
+    "2022 대한민국주류대상 한국와인 대상"
    ],
    "generic": false,
    "trend": {
@@ -9497,14 +9593,14 @@
      "youtube": 0
     },
     "rank": 208,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 92
    },
    "profile": {
     "acid": 4,
@@ -9542,7 +9638,8 @@
    ],
    "blog_anju": 828,
    "awards": [
-    "2024 우리술품평회 대통령상"
+    "2026 우리술품평회 증류주 대상",
+    "2024 우리술품평회 증류주 대통령상"
    ],
    "generic": false,
    "trend": {
@@ -9552,15 +9649,15 @@
      "google": null,
      "youtube": null
     },
-    "rank": 112,
-    "delta": null,
+    "rank": 109,
+    "delta": -48,
     "insta": null,
     "naver": 0.4,
     "score": 0.4,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 61
    },
    "profile": {
     "acid": 1,
@@ -9598,7 +9695,11 @@
    ],
    "blog_anju": 620,
    "awards": [
-    "2025 우리술품평회 대통령상"
+    "2025 우리술품평회 약·청주 대통령상",
+    "2023 대한민국주류대상 약·청주 대상",
+    "2022 우리술품평회 약·청주 최우수상",
+    "2021 우리술품평회 약·청주 최우수상",
+    "2020 우리술품평회 약·청주 대상"
    ],
    "generic": false,
    "trend": {
@@ -9609,14 +9710,14 @@
      "youtube": 19
     },
     "rank": 11,
-    "delta": null,
+    "delta": 23,
     "insta": null,
-    "naver": 2.7,
-    "score": 27.1,
+    "naver": 2.8,
+    "score": 22.5,
     "google": null,
-    "youtube": 51.4,
+    "youtube": 42.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 34
    },
    "profile": {
     "acid": 2,
@@ -9654,7 +9755,10 @@
    ],
    "blog_anju": 47,
    "awards": [
-    "2026 우리술품평회 대통령상"
+    "2026 우리술품평회 과실주 대통령상",
+    "2026 대한민국주류대상 한국와인 대상",
+    "2025 대한민국주류대상 한국와인 대상",
+    "2023 대한민국주류대상 한국와인 대상"
    ],
    "generic": false,
    "trend": {
@@ -9664,15 +9768,15 @@
      "google": null,
      "youtube": null
     },
-    "rank": 82,
-    "delta": null,
+    "rank": 81,
+    "delta": -19,
     "insta": null,
     "naver": 0.8,
     "score": 0.8,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 62
    },
    "profile": {
     "acid": 3,
@@ -9720,15 +9824,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 97,
-    "delta": null,
+    "rank": 94,
+    "delta": -47,
     "insta": null,
-    "naver": 1.1,
+    "naver": 1.2,
     "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 47
    },
    "profile": {
     "acid": 3,
@@ -9777,14 +9881,14 @@
      "youtube": null
     },
     "rank": 209,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 93
    },
    "profile": {
     "acid": 2,
@@ -9833,14 +9937,14 @@
      "youtube": 0
     },
     "rank": 210,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 94
    },
    "profile": {
     "acid": 4,
@@ -9878,6 +9982,7 @@
    ],
    "blog_anju": 717,
    "awards": [
+    "2025 우리술품평회 약·청주 우수상",
     "2023 우리술품평회 약·청주 대상"
    ],
    "generic": false,
@@ -9888,15 +9993,15 @@
      "google": null,
      "youtube": null
     },
-    "rank": 31,
-    "delta": null,
+    "rank": 29,
+    "delta": -4,
     "insta": null,
-    "naver": 5.7,
-    "score": 5.7,
+    "naver": 6.1,
+    "score": 6.1,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 25
    },
    "profile": {
     "acid": 3,
@@ -9945,14 +10050,14 @@
      "youtube": 0
     },
     "rank": 211,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 95
    },
    "profile": {
     "acid": 2,
@@ -9990,7 +10095,14 @@
    ],
    "blog_anju": 867,
    "awards": [
-    "2023 우리술품평회 과실주 최우수상"
+    "2026 우리술품평회 과실주 우수상",
+    "2025 대한민국주류대상 한국와인 대상",
+    "2024 우리술품평회 과실주 우수상",
+    "2024 대한민국주류대상 한국와인 대상",
+    "2023 우리술품평회 과실주 최우수상",
+    "2022 우리술품평회 과실주 최우수상",
+    "2022 대한민국주류대상 한국와인 대상",
+    "2021 우리술품평회 과실주 최우수상"
    ],
    "generic": false,
    "trend": {
@@ -10001,14 +10113,14 @@
      "youtube": null
     },
     "rank": 212,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 96
    },
    "profile": {
     "acid": 4,
@@ -10052,19 +10164,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 8,
+     "naver": 9,
      "google": null,
      "youtube": 0
     },
-    "rank": 64,
-    "delta": null,
+    "rank": 51,
+    "delta": -24,
     "insta": null,
-    "naver": 3,
-    "score": 1.5,
+    "naver": 3.6,
+    "score": 1.8,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 27
    },
    "profile": {
     "acid": 3,
@@ -10151,15 +10263,15 @@
      "google": null,
      "youtube": null
     },
-    "rank": 113,
-    "delta": null,
+    "rank": 110,
+    "delta": -40,
     "insta": null,
     "naver": 0.4,
     "score": 0.4,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 70
    },
    "profile": {
     "acid": 1,
@@ -10236,25 +10348,28 @@
    ],
    "blog_anju": 148,
    "awards": [
-    "2023 우리술품평회 기타주류 대상"
+    "2026 우리술품평회 기타주류 최우수상",
+    "2023 우리술품평회 기타주류 대상",
+    "2021 우리술품평회 기타주류 대상",
+    "2020 우리술품평회 기타주류 최우수상"
    ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 6,
+     "naver": 5,
      "google": null,
      "youtube": 0
     },
-    "rank": 72,
-    "delta": null,
+    "rank": 73,
+    "delta": -38,
     "insta": null,
-    "naver": 2.3,
-    "score": 1.2,
+    "naver": 2,
+    "score": 1,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 35
    },
    "profile": {
     "acid": 2,
@@ -10292,6 +10407,7 @@
    ],
    "blog_anju": 155,
    "awards": [
+    "2025 대한민국주류대상 기타 대상",
     "2023 우리술품평회 기타주류 최우수상"
    ],
    "generic": false,
@@ -10303,14 +10419,14 @@
      "youtube": null
     },
     "rank": 213,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 97
    },
    "profile": {
     "acid": 3,
@@ -10348,7 +10464,8 @@
    ],
    "blog_anju": 207,
    "awards": [
-    "2023 우리술품평회 기타주류 우수상"
+    "2023 우리술품평회 기타주류 우수상",
+    "2022 우리술품평회 기타주류 대상"
    ],
    "generic": false,
    "trend": {
@@ -10359,14 +10476,14 @@
      "youtube": 0
     },
     "rank": 214,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 98
    },
    "profile": {
     "acid": 1,
@@ -10415,14 +10532,14 @@
      "youtube": null
     },
     "rank": 215,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 99
    },
    "profile": {
     "acid": 2,
@@ -10471,14 +10588,14 @@
      "youtube": 0
     },
     "rank": 216,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 100
    },
    "profile": {
     "acid": 3,
@@ -10516,25 +10633,27 @@
    ],
    "blog_anju": 228,
    "awards": [
+    "2026 우리술품평회 저도탁주 대상",
+    "2025 우리술품평회 저도탁주 우수상",
     "2024 우리술품평회 저도탁주 우수상"
    ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 1,
      "google": null,
      "youtube": null
     },
-    "rank": 83,
-    "delta": null,
+    "rank": 111,
+    "delta": -48,
     "insta": null,
-    "naver": 0.8,
-    "score": 0.8,
+    "naver": 0.4,
+    "score": 0.4,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 63
    },
    "profile": {
     "acid": 2,
@@ -10578,19 +10697,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 4,
+     "naver": 2,
      "google": null,
      "youtube": 0
     },
-    "rank": 81,
-    "delta": null,
+    "rank": 108,
+    "delta": -64,
     "insta": null,
-    "naver": 1.5,
-    "score": 0.8,
+    "naver": 0.8,
+    "score": 0.4,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 44
    },
    "profile": {
     "acid": 2,
@@ -10639,14 +10758,14 @@
      "youtube": null
     },
     "rank": 217,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 101
    },
    "profile": {
     "acid": 4,
@@ -10695,14 +10814,14 @@
      "youtube": 0
     },
     "rank": 218,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 102
    },
    "profile": {
     "acid": 2,
@@ -10746,19 +10865,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 10,
+     "naver": 12,
      "google": null,
      "youtube": null
     },
-    "rank": 37,
-    "delta": null,
+    "rank": 34,
+    "delta": 2,
     "insta": null,
-    "naver": 3.8,
-    "score": 3.8,
+    "naver": 4.9,
+    "score": 4.9,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 36
    },
    "profile": {
     "acid": 3,
@@ -10796,7 +10915,9 @@
    ],
    "blog_anju": 620,
    "awards": [
-    "2024 우리술품평회 약·청주 최우수상"
+    "2026 우리술품평회 약·청주 최우수상",
+    "2024 우리술품평회 약·청주 최우수상",
+    "2022 우리술품평회 약·청주 우수상"
    ],
    "generic": false,
    "trend": {
@@ -10806,15 +10927,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 48,
-    "delta": null,
+    "rank": 46,
+    "delta": -18,
     "insta": null,
-    "naver": 3.8,
-    "score": 1.9,
+    "naver": 4,
+    "score": 2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 28
    },
    "profile": {
     "acid": 2,
@@ -10852,25 +10973,27 @@
    ],
    "blog_anju": 102,
    "awards": [
-    "2024 우리술품평회 과실주 대상"
+    "2025 대한민국주류대상 한국와인 대상",
+    "2024 우리술품평회 과실주 대상",
+    "2024 대한민국주류대상 한국와인 대상"
    ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 18,
+     "naver": 17,
      "google": null,
      "youtube": null
     },
-    "rank": 26,
-    "delta": null,
+    "rank": 27,
+    "delta": -7,
     "insta": null,
-    "naver": 6.8,
-    "score": 6.8,
+    "naver": 6.9,
+    "score": 6.9,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 20
    },
    "profile": {
     "acid": 4,
@@ -10914,19 +11037,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 7,
+     "naver": 6,
      "google": null,
      "youtube": 1
     },
-    "rank": 40,
-    "delta": null,
+    "rank": 43,
+    "delta": -11,
     "insta": null,
-    "naver": 2.7,
-    "score": 2.7,
+    "naver": 2.4,
+    "score": 2.3,
     "google": null,
-    "youtube": 2.7,
+    "youtube": 2.2,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 32
    },
    "profile": {
     "acid": 4,
@@ -10964,7 +11087,8 @@
    ],
    "blog_anju": 1158,
    "awards": [
-    "2024 우리술품평회 증류주 최우수상"
+    "2024 우리술품평회 증류주 최우수상",
+    "2020 우리술품평회 증류주 최우수상"
    ],
    "generic": false,
    "trend": {
@@ -10975,14 +11099,14 @@
      "youtube": null
     },
     "rank": 219,
-    "delta": null,
+    "delta": -116,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 103
    },
    "profile": {
     "acid": 1,
@@ -11020,7 +11144,10 @@
    ],
    "blog_anju": 521,
    "awards": [
-    "2024 우리술품평회 증류주 우수상"
+    "2026 우리술품평회 증류주 최우수상",
+    "2024 우리술품평회 증류주 우수상",
+    "2022 우리술품평회 증류주 대상",
+    "2021 우리술품평회 증류주 최우수상"
    ],
    "generic": false,
    "trend": {
@@ -11031,14 +11158,14 @@
      "youtube": 0
     },
     "rank": 220,
-    "delta": null,
+    "delta": -149,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 71
    },
    "profile": {
     "acid": 1,
@@ -11076,7 +11203,10 @@
    ],
    "blog_anju": 53,
    "awards": [
-    "2024 우리술품평회 기타주류 대상"
+    "2025 우리술품평회 기타주류 대상",
+    "2024 우리술품평회 기타주류 대상",
+    "2021 우리술품평회 기타주류 최우수상",
+    "2020 우리술품평회 기타주류 대상"
    ],
    "generic": true,
    "profile": {
@@ -11125,15 +11255,15 @@
      "google": null,
      "youtube": null
     },
-    "rank": 114,
-    "delta": null,
+    "rank": 112,
+    "delta": -40,
     "insta": null,
     "naver": 0.4,
     "score": 0.4,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 72
    },
    "profile": {
     "acid": 2,
@@ -11171,7 +11301,8 @@
    ],
    "blog_anju": 2139,
    "awards": [
-    "2024 우리술품평회 기타주류 우수상"
+    "2024 우리술품평회 기타주류 우수상",
+    "2021 우리술품평회 기타주류 우수상"
    ],
    "generic": false,
    "trend": {
@@ -11181,15 +11312,15 @@
      "google": null,
      "youtube": 0
     },
-    "rank": 140,
-    "delta": null,
+    "rank": 138,
+    "delta": -65,
     "insta": null,
     "naver": 0.4,
     "score": 0.2,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 73
    },
    "profile": {
     "acid": 2,
@@ -11233,19 +11364,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 7,
+     "naver": 6,
      "google": null,
      "youtube": null
     },
     "rank": 41,
-    "delta": null,
+    "delta": -4,
     "insta": null,
-    "naver": 2.7,
-    "score": 2.7,
+    "naver": 2.4,
+    "score": 2.4,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 37
    },
    "profile": {
     "acid": 3,
@@ -11289,19 +11420,19 @@
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 63,
+     "naver": 56,
      "google": null,
      "youtube": 7
     },
-    "rank": 14,
-    "delta": null,
+    "rank": 15,
+    "delta": -5,
     "insta": null,
-    "naver": 23.9,
-    "score": 21.4,
+    "naver": 22.7,
+    "score": 19.2,
     "google": null,
-    "youtube": 18.9,
+    "youtube": 15.6,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 10
    },
    "profile": {
     "acid": 3,
@@ -11350,14 +11481,14 @@
      "youtube": null
     },
     "rank": 221,
-    "delta": null,
+    "delta": -117,
     "insta": null,
     "naver": 0,
     "score": 0,
     "google": null,
     "youtube": null,
     "channels": 1,
-    "prev_rank": null
+    "prev_rank": 104
    },
    "profile": {
     "acid": 2,
@@ -11395,25 +11526,27 @@
    ],
    "blog_anju": 1101,
    "awards": [
-    "2025 우리술품평회 고도탁주 최우수상"
+    "2026 우리술품평회 고도탁주 최우수상",
+    "2025 우리술품평회 고도탁주 최우수상",
+    "2020 우리술품평회 탁주 우수상"
    ],
    "generic": false,
    "trend": {
     "raw": {
      "insta": null,
-     "naver": 2,
+     "naver": 3,
      "google": null,
      "youtube": 0
     },
-    "rank": 111,
-    "delta": null,
+    "rank": 95,
+    "delta": -21,
     "insta": null,
-    "naver": 0.8,
-    "score": 0.4,
+    "naver": 1.2,
+    "score": 0.6,
     "google": null,
     "youtube": 0,
     "channels": 2,
-    "prev_rank": null
+    "prev_rank": 74
    },
    "profile": {
     "acid": 2,

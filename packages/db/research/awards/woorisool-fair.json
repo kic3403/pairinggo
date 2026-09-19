@@ -1,0 +1,1053 @@
+{
+ "meta": {
+  "competition": "우리술품평회",
+  "host": "농림축산식품부·한국농수산식품유통공사(aT)",
+  "note": "대통령상은 그해 대상 중 한 병 — prize \"대상·대통령상\". 2026 과실주는 대통령상이 대상을 겸해 별도 대상 없음.",
+  "sources": {
+   "2020": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)",
+   "2021": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)",
+   "2022": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)",
+   "2023": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)",
+   "2024": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)",
+   "2025": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)",
+   "2026": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  "years": [
+   2026,
+   2025,
+   2024,
+   2023,
+   2022,
+   2021,
+   2020
+  ]
+ },
+ "items": [
+  {
+   "year": 2026,
+   "part": "과실주",
+   "prize": "대상·대통령상",
+   "name": "베리와인 1168CS",
+   "brewery": "블루와인컴퍼니",
+   "region": "충북 영동",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "저도탁주",
+   "prize": "대상",
+   "name": "산정호수 동정춘 막걸리",
+   "brewery": "술빚는 전가네",
+   "region": "경기 포천",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "고도탁주",
+   "prize": "대상",
+   "name": "우리첫술 청설",
+   "brewery": "우리첫술",
+   "region": "경기 구리",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "약·청주",
+   "prize": "대상",
+   "name": "담 골드",
+   "brewery": "내올담",
+   "region": "경기 성남",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "증류주",
+   "prize": "대상",
+   "name": "이도 42",
+   "brewery": "조은술세종",
+   "region": "충북 청주",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "복도만취 6도",
+   "brewery": "착한농부 예천지점",
+   "region": "경북 예천",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "저도탁주",
+   "prize": "최우수상",
+   "name": "토마토바질",
+   "brewery": "팔레트 브루어리",
+   "region": "경북 의성",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "고도탁주",
+   "prize": "최우수상",
+   "name": "지란지교 탁주",
+   "brewery": "친구들의술 지란지교",
+   "region": "전북 순창",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "지란지교 약주",
+   "brewery": "친구들의술 지란지교",
+   "region": "전북 순창",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "마셔블랑 스프링",
+   "brewery": "시트러스",
+   "region": "제주 서귀포",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "려 증류소주 40",
+   "brewery": "국순당여주명주",
+   "region": "경기 여주",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "두레앙 브랜디",
+   "brewery": "두레양조",
+   "region": "충남 천안",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "저도탁주",
+   "prize": "우수상",
+   "name": "딸기막걸리",
+   "brewery": "청산녹수",
+   "region": "전남 장성",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "고도탁주",
+   "prize": "우수상",
+   "name": "향미곡주",
+   "brewery": "민주술도가",
+   "region": "경기 포천",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "청명주",
+   "brewery": "중원당",
+   "region": "충북 충주",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "시나브로 청수 화이트",
+   "brewery": "불휘농장",
+   "region": "충북 영동",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "가무치소주 43도",
+   "brewery": "다농바이오",
+   "region": "충북 충주",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2026,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "허니와인 프로포즈",
+   "brewery": "아이비영농조합",
+   "region": "경기 양평",
+   "source": "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+  },
+  {
+   "year": 2025,
+   "part": "약·청주",
+   "prize": "대상·대통령상",
+   "name": "천비향 약주",
+   "brewery": "좋은술",
+   "region": "경기 평택",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "저도탁주",
+   "prize": "대상",
+   "name": "호랑이 유자 생막걸리",
+   "brewery": "밝은세상영농조합",
+   "region": "경기 평택",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "고도탁주",
+   "prize": "대상",
+   "name": "은하수 별헤는밤",
+   "brewery": "발효공방1991",
+   "region": "경북 영양",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "과실주",
+   "prize": "대상",
+   "name": "미르아토 샤인머스켓 스파클링",
+   "brewery": "시나브로 와이너리(불휘농장)",
+   "region": "충북 영동",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "증류주",
+   "prize": "대상",
+   "name": "가무치소주 25",
+   "brewery": "다농바이오",
+   "region": "충북 충주",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "허니문",
+   "brewery": "아이비영농조합",
+   "region": "경기 양평",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "저도탁주",
+   "prize": "최우수상",
+   "name": "딸기막걸리",
+   "brewery": "성수주조장",
+   "region": "전북 진안",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "고도탁주",
+   "prize": "최우수상",
+   "name": "지란지교 프리미엄 탁주",
+   "brewery": "지란지교",
+   "region": "전북 순창",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "경성과하주",
+   "brewery": "술아원",
+   "region": "경기 여주",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "크라테 드라이",
+   "brewery": "수도산와이너리",
+   "region": "경북 김천",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "여유 40",
+   "brewery": "양촌양조",
+   "region": "충남 논산",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "달하늘꿀술 애플",
+   "brewery": "달하늘",
+   "region": "경기",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "저도탁주",
+   "prize": "우수상",
+   "name": "산정호수 동정춘막걸리",
+   "brewery": "술빚는 전가네",
+   "region": "경기 포천",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "고도탁주",
+   "prize": "우수상",
+   "name": "청명주 탁주",
+   "brewery": "중원당",
+   "region": "충북 충주",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "두두물물 약주",
+   "brewery": "수블가",
+   "region": "경기 용인",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "컨츄리 캠벨 스위트",
+   "brewery": "컨츄리와이너리",
+   "region": "충북 영동",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "추사 50",
+   "brewery": "예산사과와인",
+   "region": "충남 예산",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2025,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "코아베스트 배럴에이징 보쉐",
+   "brewery": "코아베스트브루잉",
+   "region": "경기 김포",
+   "source": "농식품부 2025.8 발표 (kbanker.co.kr·segye.com 보도)"
+  },
+  {
+   "year": 2024,
+   "part": "증류주",
+   "prize": "대상·대통령상",
+   "name": "이도 42",
+   "brewery": "조은술세종",
+   "region": "충북 청주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "두레앙 일반증류주",
+   "brewery": "두레양조",
+   "region": "충남 천안",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "려 증류소주 40 (고구마100%)",
+   "brewery": "국순당여주명주",
+   "region": "경기 여주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "저도탁주",
+   "prize": "대상",
+   "name": "독수리막걸리",
+   "brewery": "신탄진주조",
+   "region": "대전",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "저도탁주",
+   "prize": "최우수상",
+   "name": "새냉이길 막걸리",
+   "brewery": "진정브루잉",
+   "region": "강원 강릉",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "저도탁주",
+   "prize": "우수상",
+   "name": "산정호수 동정춘막걸리",
+   "brewery": "술빚는 전가네",
+   "region": "경기 포천",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "고도탁주",
+   "prize": "대상",
+   "name": "해남찹쌀생막걸리 9도",
+   "brewery": "삼산주조장",
+   "region": "전남 해남",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "고도탁주",
+   "prize": "최우수상",
+   "name": "볼빨간막걸리 10",
+   "brewery": "벗드림",
+   "region": "부산",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "고도탁주",
+   "prize": "우수상",
+   "name": "프리미엄 막걸리 이바비",
+   "brewery": "흥해라 이팝",
+   "region": "경북 포항",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "약·청주",
+   "prize": "대상",
+   "name": "한영석 백수환동주",
+   "brewery": "한영석의 발효연구소",
+   "region": "전북 정읍",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "지란지교 프리미엄 약주",
+   "brewery": "지란지교",
+   "region": "전북 순창",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "풍정사계 춘",
+   "brewery": "화양",
+   "region": "충북 청주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "과실주",
+   "prize": "대상",
+   "name": "포엠 로제",
+   "brewery": "갈기산포도농원",
+   "region": "충북 영동",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "예밀와인 드라이",
+   "brewery": "예밀2리영농조합",
+   "region": "강원 영월",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "시나브로 청수 화이트",
+   "brewery": "불휘농장",
+   "region": "충북 영동",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "허니문",
+   "brewery": "아이비영농조합",
+   "region": "경기 양평",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "코아베스트 포트미드",
+   "brewery": "코아베스트브루잉",
+   "region": "경기 김포",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2024,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "우도땅콩생전통주",
+   "brewery": "우도땅콩막걸리 낙화곡주",
+   "region": "제주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/579772/download.do (농식품부 보도자료 2024.8.8)"
+  },
+  {
+   "year": 2023,
+   "part": "탁주",
+   "prize": "대상",
+   "name": "라봉",
+   "brewery": "다도참주가",
+   "region": "전남 나주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "탁주",
+   "prize": "최우수상",
+   "name": "고향춘",
+   "brewery": "술빚는 전가네",
+   "region": "경기 포천",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "탁주",
+   "prize": "우수상",
+   "name": "탁100 내추럴",
+   "brewery": "탁브루",
+   "region": "인천",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "약·청주",
+   "prize": "대상",
+   "name": "두두물물 약주",
+   "brewery": "수블가",
+   "region": "경기 용인",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "경산대추약주 추",
+   "brewery": "미송주가",
+   "region": "경북 경산",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "청명주",
+   "brewery": "중원당",
+   "region": "충북 충주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "과실주",
+   "prize": "대상·대통령상",
+   "name": "크라테 미디엄 드라이",
+   "brewery": "수도산와이너리",
+   "region": "경북 김천",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "시나브로 청수 화이트",
+   "brewery": "불휘농장",
+   "region": "충북 영동",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "너브내 레드",
+   "brewery": "샤또나드리",
+   "region": "강원 홍천",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "증류주",
+   "prize": "대상",
+   "name": "겨울소주 45",
+   "brewery": "아리랑주조",
+   "region": "충남 청양",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "필40",
+   "brewery": "술아원",
+   "region": "경기 여주",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "화주 40",
+   "brewery": "좋은술",
+   "region": "경기 평택",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "두레앙 브랜디",
+   "brewery": "두레양조",
+   "region": "충남 천안",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "코아베스트 보쉐",
+   "brewery": "코아베스트브루잉",
+   "region": "경기 김포",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2023,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "오크불소곡주",
+   "brewery": "한산소곡주명인",
+   "region": "충남 서천",
+   "source": "https://www.mafra.go.kr/bbs/home/792/570180/download.do (농식품부 보도자료 2023.8.15)"
+  },
+  {
+   "year": 2022,
+   "part": "탁주",
+   "prize": "대상",
+   "name": "이화주",
+   "brewery": "양주골이가",
+   "region": "경기 양주",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "탁주",
+   "prize": "최우수상",
+   "name": "보은주",
+   "brewery": "보은주조",
+   "region": "충북 보은",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "탁주",
+   "prize": "우수상",
+   "name": "감천막걸리",
+   "brewery": "감천양조장",
+   "region": "경북 김천",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "약·청주",
+   "prize": "대상·대통령상",
+   "name": "청명주",
+   "brewery": "중원당",
+   "region": "충북 충주",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "천비향 약주",
+   "brewery": "좋은술",
+   "region": "경기 평택",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "지란지교 약주",
+   "brewery": "지란지교",
+   "region": "전북 순창",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "과실주",
+   "prize": "대상",
+   "name": "크라테 미디엄 드라이",
+   "brewery": "수도산와이너리",
+   "region": "경북 김천",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "시나브로 청수 화이트",
+   "brewery": "불휘농장",
+   "region": "충북 영동",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "그랑꼬또 청수 화이트 와인10",
+   "brewery": "그린영농조합",
+   "region": "경기 안산",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "증류주",
+   "prize": "대상",
+   "name": "려 증류소주 40",
+   "brewery": "국순당여주명주",
+   "region": "경기 여주",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "병영소주",
+   "brewery": "병영양조장",
+   "region": "전남 강진",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "풍정사계 동",
+   "brewery": "화양",
+   "region": "충북 청주",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "오크불소곡주",
+   "brewery": "한산소곡주명인",
+   "region": "충남 서천",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "허니비와인",
+   "brewery": "아이비영농조합",
+   "region": "경기 양평",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2022,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "코아베스트 아카시아미드",
+   "brewery": "코아베스트브루잉",
+   "region": "경기 김포",
+   "source": "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+  },
+  {
+   "year": 2021,
+   "part": "약·청주",
+   "prize": "대상·대통령상",
+   "name": "풍정사계 춘",
+   "brewery": "화양",
+   "region": "충북 청주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "탁주",
+   "prize": "대상",
+   "name": "나루 생막걸리",
+   "brewery": "한강주조",
+   "region": "서울 성동",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "과실주",
+   "prize": "대상",
+   "name": "산머루 크라테 스위트",
+   "brewery": "수도산와이너리",
+   "region": "경북 김천",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "증류주",
+   "prize": "대상",
+   "name": "죽향41",
+   "brewery": "죽향도가",
+   "region": "전남 담양",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "두레앙 브랜디",
+   "brewery": "두레양조",
+   "region": "충남 천안",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "탁주",
+   "prize": "최우수상",
+   "name": "백년향",
+   "brewery": "추연당",
+   "region": "경기 여주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "천비향",
+   "brewery": "좋은술",
+   "region": "경기 평택",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "시나브로 청수 화이트",
+   "brewery": "불휘농장",
+   "region": "충북 영동",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "려40",
+   "brewery": "국순당여주명주",
+   "region": "경기 여주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "허니문",
+   "brewery": "아이비영농조합",
+   "region": "경기 양평",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "탁주",
+   "prize": "우수상",
+   "name": "별산",
+   "brewery": "양주도가",
+   "region": "경기 양주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "청주신선주 약주",
+   "brewery": "신선",
+   "region": "충북 청주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "여포의꿈 화이트",
+   "brewery": "여포와인농장",
+   "region": "충북 영동",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "유기농 이도42",
+   "brewery": "조은술세종",
+   "region": "충북 청주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2021,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "우도땅콩 전통주",
+   "brewery": "우도땅콩막걸리 낙화곡주",
+   "region": "제주",
+   "source": "농식품부 2021.7 발표 (agrinet.co.kr·thinkfood.co.kr 보도)"
+  },
+  {
+   "year": 2020,
+   "part": "증류주",
+   "prize": "대상·대통령상",
+   "name": "모월 인",
+   "brewery": "협동조합 모월",
+   "region": "강원 원주",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "탁주",
+   "prize": "대상",
+   "name": "대대포",
+   "brewery": "죽향도가",
+   "region": "전남 담양",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "약·청주",
+   "prize": "대상",
+   "name": "천비향",
+   "brewery": "좋은술",
+   "region": "경기 평택",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "과실주",
+   "prize": "대상",
+   "name": "컨츄리 캠벨 스위트",
+   "brewery": "컨츄리농원",
+   "region": "충북 영동",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "기타주류",
+   "prize": "대상",
+   "name": "허니문와인",
+   "brewery": "아이비영농조합",
+   "region": "경기 양평",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "탁주",
+   "prize": "최우수상",
+   "name": "배꽃필무렵",
+   "brewery": "예술",
+   "region": "강원 춘천",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "약·청주",
+   "prize": "최우수상",
+   "name": "천년담주",
+   "brewery": "죽향도가",
+   "region": "전남 담양",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "과실주",
+   "prize": "최우수상",
+   "name": "샤토미소 로제스위트",
+   "brewery": "도란원",
+   "region": "충북 영동",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "증류주",
+   "prize": "최우수상",
+   "name": "두레앙 일반증류주",
+   "brewery": "두레양조",
+   "region": "충남 천안",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "기타주류",
+   "prize": "최우수상",
+   "name": "두레앙 브랜디",
+   "brewery": "두레양조",
+   "region": "충남 천안",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "탁주",
+   "prize": "우수상",
+   "name": "지란지교",
+   "brewery": "친구들의술 지란지교",
+   "region": "전북 순창",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "약·청주",
+   "prize": "우수상",
+   "name": "순향주",
+   "brewery": "추연당",
+   "region": "경기 여주",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "과실주",
+   "prize": "우수상",
+   "name": "그랑꼬또 청수화이트와인 12",
+   "brewery": "그린영농조합",
+   "region": "경기 안산",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "증류주",
+   "prize": "우수상",
+   "name": "유기농이도 32",
+   "brewery": "조은술세종",
+   "region": "충북 청주",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  },
+  {
+   "year": 2020,
+   "part": "기타주류",
+   "prize": "우수상",
+   "name": "구기홍주360",
+   "brewery": "아리랑주조",
+   "region": "충남 청양",
+   "source": "https://www.mafra.go.kr/bbs/mafra/68/244883/download.do (농식품부 보도자료 2020.11)"
+  }
+ ]
+}

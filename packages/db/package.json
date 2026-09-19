@@ -27,7 +27,10 @@
     "add-foods": "tsx src/add-foods.ts",
     "pf-recalc": "tsx src/pf-recalc.ts",
     "og-font": "tsx src/og-font.ts",
-    "reserve-race": "tsx src/reserve-race.ts"
+    "reserve-race": "tsx src/reserve-race.ts",
+    "liquor-awards-fetch": "tsx src/liquor-awards-fetch.ts",
+    "drink-awards": "tsx src/drink-awards.ts",
+    "expand-candidates": "tsx src/expand-candidates.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

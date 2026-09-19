@@ -70,7 +70,7 @@ describe("콜키지 값", () => {
   });
   it("같은 순위는 콜키지 싼 곳부터(무료 → 값 → 값 모름 → 콜키지 없음), 순위가 먼저", () => {
     const m = (score: number, fee?: number | null): { match: PlaceMatch } => ({ match: { score, drink: null, drinkName: null, food: null, foodName: null, corkage: fee === undefined ? null : { fee }, label: "" } });
-    const list = [
+    const list: { id: string; match?: PlaceMatch }[] = [
       { id: "a" }, { id: "b", ...m(70, 15000) }, { id: "c", ...m(70, null) }, { id: "d", ...m(70, 0) },
       { id: "e", ...m(90) }, { id: "f", ...m(70, 5000) }, { id: "g", ...m(20) },
     ];

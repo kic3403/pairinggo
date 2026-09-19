@@ -9,7 +9,7 @@ type Item = { href: string; label: string; icon: string; tone: string; badge?: s
 export default function QuickMenu({ michelinYear }: { michelinYear: number | null }) {
   const items: Item[] = [
     { href: "/michelin", label: michelinYear ? `${michelinYear} 미쉐린` : "미쉐린", icon: "★", tone: "#B3261E" },
-    { href: "/awards", label: "우리술품평회", icon: "🏆", tone: "#C9880A" },
+    { href: "/awards", label: "수상 전통주", icon: "🏆", tone: "#C9880A" },
     { href: "/hot", label: "핫한 페어링", icon: "🔥", tone: "#E4572E", badge: "N" },
     { href: "/drinks", label: "전통주", icon: "🍶", tone: "#22406B" },
     { href: "/foods", label: "음식·안주", icon: "🍢", tone: "#6E9B6A" },
