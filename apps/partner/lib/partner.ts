@@ -4,7 +4,8 @@
 import { db } from "@pairinggo/server/db";
 import { hashPassword, passwordProblem, verifyPassword } from "@pairinggo/server/password";
 import { merchantFromRow, type Merchant } from "@pairinggo/server/reservations";
-import { validatePartnerSignup, type PartnerSignupInput } from "@pairinggo/shared";
+import { validatePartnerSignup, type OAuthProfile, type OAuthProvider, type PartnerSignupInput } from "@pairinggo/shared";
+import { randomBytes } from "node:crypto";
 import { redirect } from "next/navigation";
 import { currentPartner, requirePartner, type PartnerUser } from "./session";
 
@@ -48,15 +49,22 @@ export async function checkLogin(emailRaw: string, password: string): Promise<Lo
 
 export type PlacePick = { name: string; address: string; phone: string; lat: number | null; lng: number | null; placeUrl: string | null };
 
-/** 가입 신청 — 계정 + 매장(승인 대기) + 소유자 연결 + 예약 설정 기본값(받기 꺼짐) */
-export async function applyPartner(raw: PartnerSignupInput, place: PlacePick): Promise<LoginResult> {
+/**
+ * 가입 신청 — 계정 + 매장(승인 대기) + 소유자 연결 + 예약 설정 기본값(받기 꺼짐).
+ * social이 있으면 카카오·네이버로 가입: 비밀번호 없이(쓸 수 없는 표시 "oauth:…"), 그 계정을 바로 잇는다.
+ */
+export async function applyPartner(raw: PartnerSignupInput, place: PlacePick, social?: OAuthProfile | null): Promise<LoginResult> {
   const c = db();
   if (!c) return { ok: false, problem: "지금은 가입할 수 없어요" };
   const v = validatePartnerSignup(raw);
   if (!v.ok) return { ok: false, problem: v.problem };
   const s = v.value;
-  const pwp = passwordProblem(s.password);
+  const pwp = social ? null : passwordProblem(s.password);
   if (pwp) return { ok: false, problem: pwp };
+  if (social) {
+    const { data: taken } = await c.from("partner_identities").select("partner_user_id").eq("provider", social.provider).eq("provider_uid", social.uid).maybeSingle();
+    if (taken) return { ok: false, problem: `이미 가입한 ${social.provider === "kakao" ? "카카오" : "네이버"} 계정이에요 — 로그인해 주세요` };
+  }
 
   const [{ data: dupUser }, { data: dupMerchant }] = await Promise.all([
     c.from("partner_users").select("id").eq("email", s.email).maybeSingle(),
@@ -65,7 +73,7 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick): P
   if (dupUser) return { ok: false, problem: "이미 가입한 이메일이에요 — 로그인해 주세요" };
   if (dupMerchant) return { ok: false, problem: "이미 파트너 신청이 된 매장이에요 — 함께 쓰려면 운영자에게 문의해 주세요" };
 
-  const passwordHash = await hashPassword(s.password);
+  const passwordHash = social ? `oauth:${randomBytes(18).toString("base64url")}` : await hashPassword(s.password);
   const { data: user, error: ue } = await c.from("partner_users").insert({ email: s.email, password_hash: passwordHash, name: s.name, phone: s.phone }).select("id").single();
   if (ue || !user) return { ok: false, problem: "가입을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   const { data: m, error: me } = await c.from("merchants").insert({
@@ -77,6 +85,7 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick): P
     return { ok: false, problem: me?.code === "23505" ? "이미 파트너 신청이 된 매장이에요" : "매장을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   }
   await c.from("merchant_members").insert({ merchant_id: m.id, partner_user_id: user.id, role: "owner" });
+  if (social) await c.from("partner_identities").insert({ provider: social.provider, provider_uid: social.uid, partner_user_id: user.id, email: social.email, last_login_at: new Date().toISOString() });
   await c.from("reservation_settings").insert({ merchant_id: m.id, accepting: false });
   return { ok: true, id: String(user.id), passwordHash };
 }
@@ -96,4 +105,49 @@ export async function approvedOrError(): Promise<{ user: PartnerUser; merchant: 
   const merchant = (await myMerchants(user.id)).find((m) => m.status === "approved");
   if (!merchant) return Response.json({ error: "승인된 매장이 없어요" }, { status: 403 });
   return { user, merchant };
+}
+
+/* ---------- 간편로그인(카카오·네이버) 연결 ---------- */
+/** 연결된 파트너 — 로그인 쿠키를 만들 비밀번호 해시까지 */
+export async function partnerByIdentity(p: OAuthProvider, uid: string): Promise<{ id: string; passwordHash: string } | null> {
+  const c = db();
+  if (!c) return null;
+  const { data } = await c.from("partner_identities").select("partner_user_id, partner_users(id, password_hash)").eq("provider", p).eq("provider_uid", uid).maybeSingle();
+  const u = data?.partner_users as unknown as { id: string; password_hash: string } | null;
+  if (!u) return null;
+  await c.from("partner_identities").update({ last_login_at: new Date().toISOString() }).eq("provider", p).eq("provider_uid", uid);
+  await c.from("partner_users").update({ last_login_at: new Date().toISOString() }).eq("id", u.id);
+  return { id: String(u.id), passwordHash: String(u.password_hash) };
+}
+
+export async function linkIdentity(userId: string, prof: OAuthProfile): Promise<"linked" | "taken" | "already"> {
+  const c = db()!;
+  const { data: other } = await c.from("partner_identities").select("partner_user_id").eq("provider", prof.provider).eq("provider_uid", prof.uid).maybeSingle();
+  if (other) return other.partner_user_id === userId ? "already" : "taken";
+  const { data: mine } = await c.from("partner_identities").select("provider_uid").eq("partner_user_id", userId).eq("provider", prof.provider).maybeSingle();
+  if (mine) return "already";
+  const { error } = await c.from("partner_identities").insert({ provider: prof.provider, provider_uid: prof.uid, partner_user_id: userId, email: prof.email });
+  return error ? "taken" : "linked";
+}
+
+export async function unlinkIdentity(userId: string, p: OAuthProvider): Promise<{ ok: boolean; problem?: string }> {
+  const c = db()!;
+  // 비밀번호가 없는 계정은 마지막 로그인 방법을 끊지 않게
+  const [{ data: u }, { count }] = await Promise.all([
+    c.from("partner_users").select("password_hash").eq("id", userId).single(),
+    c.from("partner_identities").select("provider", { count: "exact", head: true }).eq("partner_user_id", userId),
+  ]);
+  if (String(u?.password_hash ?? "").startsWith("oauth:") && (count ?? 0) <= 1) return { ok: false, problem: "로그인할 다른 방법이 없어요 — 먼저 비밀번호를 만들어 주세요(비밀번호 찾기)" };
+  await c.from("partner_identities").delete().eq("partner_user_id", userId).eq("provider", p);
+  return { ok: true };
+}
+
+export async function linkedProviders(userId: string): Promise<{ providers: OAuthProvider[]; hasPassword: boolean }> {
+  const c = db();
+  if (!c) return { providers: [], hasPassword: true };
+  const [{ data: ids }, { data: u }] = await Promise.all([
+    c.from("partner_identities").select("provider").eq("partner_user_id", userId),
+    c.from("partner_users").select("password_hash").eq("id", userId).maybeSingle(),
+  ]);
+  return { providers: (ids ?? []).map((r) => r.provider as OAuthProvider), hasPassword: !String(u?.password_hash ?? "").startsWith("oauth:") };
 }

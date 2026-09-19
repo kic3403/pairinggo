@@ -31,3 +31,4 @@ export * from "./pairing/fit-eval";
 export * from "./place-info";
 export * from "./reservation";
 export * from "./menu-items";
+export * from "./oauth-profile";

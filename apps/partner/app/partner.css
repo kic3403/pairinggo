@@ -186,3 +186,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .unit { position: relative; display: block; min-width: 0; }
 .unit input { width: 100%; padding-right: 26px; }
 .unit::after { content: attr(data-u); position: absolute; right: 9px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--muted); pointer-events: none; }
+
+/* 간편로그인(카카오·네이버 디자인 가이드 색) */
+.social { display: grid; gap: 10px; margin-top: 16px; }
+.social-div { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; }
+.social-div::before, .social-div::after { content: ""; flex: 1; border-top: 1px solid var(--line); }
+.social-btn { position: relative; display: flex; align-items: center; justify-content: center; min-height: 48px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; }
+.social-sym { position: absolute; left: 16px; display: flex; }
+.social-kakao { background: #FEE500; color: rgba(0, 0, 0, 0.85); }
+.social-naver { background: #03C75A; color: #fff; }
+.social-btn:hover { filter: brightness(0.97); }
+.acct { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.acct li { display: flex; justify-content: space-between; align-items: center; gap: 10px; }

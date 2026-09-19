@@ -3,7 +3,10 @@ import { useRef, useState } from "react";
 
 type Place = { id: string; name: string; category: string; address: string; phone: string | null };
 
-export function SignupForm() {
+/** social: 카카오·네이버로 들어온 가입(비밀번호 없이, 받은 이름·휴대폰·이메일을 미리 채움) */
+export type SocialSignup = { provider: "kakao" | "naver"; label: string; name: string | null; phone: string | null; email: string | null };
+
+export function SignupForm({ social }: { social?: SocialSignup | null }) {
   const [q, setQ] = useState("");
   const [places, setPlaces] = useState<Place[] | null>(null);
   const [picked, setPicked] = useState<Place | null>(null);
@@ -28,10 +31,10 @@ export function SignupForm() {
     e.preventDefault();
     if (!picked) { setErr("매장을 검색해서 골라 주세요"); return; }
     const f = new FormData(e.currentTarget);
-    if (f.get("password") !== f.get("password2")) { setErr("비밀번호 두 칸이 서로 달라요"); return; }
+    if (!social && f.get("password") !== f.get("password2")) { setErr("비밀번호 두 칸이 서로 달라요"); return; }
     setBusy(true); setErr("");
     const body = {
-      email: f.get("email"), password: f.get("password"), name: f.get("name"), phone: f.get("phone"),
+      email: f.get("email"), password: social ? "" : f.get("password"), name: f.get("name"), phone: f.get("phone"), social: !!social,
       kakaoPlaceId: picked.id, placeName: picked.name, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on",
     };
     const r = await fetch("/api/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
@@ -67,11 +70,16 @@ export function SignupForm() {
       </section>
       <section className="panel stack">
         <h2 style={{ margin: 0 }}>로그인 계정</h2>
-        <label className="f">담당자 이름<input type="text" name="name" required maxLength={20} autoComplete="name" /></label>
-        <label className="f">담당자 휴대폰 <span className="hint">예약 알림(알림톡)을 받을 번호</span><input type="tel" name="phone" required inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" /></label>
-        <label className="f">이메일<input type="email" name="email" required autoComplete="username" /></label>
-        <label className="f">비밀번호 <span className="hint">8자 이상, 숫자만으로는 안 돼요</span><input type="password" name="password" required minLength={8} autoComplete="new-password" /></label>
-        <label className="f">비밀번호 확인<input type="password" name="password2" required minLength={8} autoComplete="new-password" /></label>
+        {social ? <p className="okmsg" style={{ margin: 0 }}>{social.label} 계정으로 가입해요 — 비밀번호 없이 다음부터 {social.label} 로그인으로 들어와요.</p> : null}
+        <label className="f">담당자 이름<input type="text" name="name" required maxLength={20} autoComplete="name" defaultValue={social?.name ?? ""} /></label>
+        <label className="f">담당자 휴대폰 <span className="hint">예약 알림(알림톡)·비밀번호 찾기에 쓰는 번호</span><input type="tel" name="phone" required inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" defaultValue={social?.phone ?? ""} /></label>
+        <label className="f">이메일 <span className="hint">운영자 연락용</span><input type="email" name="email" required autoComplete="username" defaultValue={social?.email ?? ""} /></label>
+        {!social ? (
+          <>
+            <label className="f">비밀번호 <span className="hint">8자 이상, 숫자만으로는 안 돼요</span><input type="password" name="password" required minLength={8} autoComplete="new-password" /></label>
+            <label className="f">비밀번호 확인<input type="password" name="password2" required minLength={8} autoComplete="new-password" /></label>
+          </>
+        ) : null}
         <label className="check"><input type="checkbox" name="agree" required /><span><a href="/terms" target="_blank" rel="noreferrer">파트너 이용약관과 개인정보 수집·이용</a>에 동의합니다.</span></label>
       </section>
       {err ? <p className="err" role="alert">{err}</p> : null}
