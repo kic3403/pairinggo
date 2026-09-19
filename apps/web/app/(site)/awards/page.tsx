@@ -1,18 +1,18 @@
 /**
- * 전통주 수상작 — 우리술품평회(농식품부·aT) · 대한민국주류대상(조선비즈) 우리술 부문, 대회마다 최근 5개 연도(2026-09-20 사용자 결정).
+ * 전통주 수상작 — 우리술품평회(농식품부·aT) 최근 5년 · 대한민국주류대상(조선비즈) 우리술 부문 최근 3년(2026-09-20 사용자 결정, 연도 수는 shared DRINK_COMPETITIONS).
  * 카탈로그 drinks.awards("2025 우리술품평회 과실주 대상", "2026 대한민국주류대상 탁주 Best of Best")를 대회·연도·등급별로 묶고 양조장·구매 링크를 붙인다.
  * 명단을 카탈로그에 붙이는 것은 `pnpm --filter @pairinggo/db drink-awards`(research/awards/). 수상 사실은 두 대회의 공개 발표.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AWARD_YEARS, DRINK_COMPETITIONS, awardYears, buyLink, onlineSellable, parseDrinkAward, prizeRank, toSlug, type DrinkAward, type Drink } from "@pairinggo/shared";
+import { DRINK_COMPETITIONS, awardYears, buyLink, onlineSellable, parseDrinkAward, prizeRank, toSlug, type DrinkAward, type Drink } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
 
 export const dynamic = "force-dynamic";   // ?c=&year= 탭
 export const metadata: Metadata = {
-  title: "전통주 수상작 — 우리술품평회·대한민국주류대상 최근 5년 | 페어링GO",
+  title: "전통주 수상작 — 우리술품평회·대한민국주류대상 수상 전통주 | 페어링GO",
   description: "우리술품평회(농림축산식품부)와 대한민국주류대상(조선비즈) 우리술 부문에서 상을 받은 전통주를 연도·부문별로 정리하고 양조장과 구매처를 연결합니다.",
   alternates: { canonical: "/awards" },
 };
@@ -26,7 +26,7 @@ export default async function AwardsPage({ searchParams }: { searchParams: Promi
   const all: Row[] = [];
   for (const d of c.dataset.drinks) for (const raw of d.awards || []) { const a = parseDrinkAward(raw); if (a) all.push({ ...a, drink: d, raw }); }
   const rows = all.filter((r) => r.competition === comp.name);
-  const years = awardYears(rows.map((r) => r.year), AWARD_YEARS);
+  const years = awardYears(rows.map((r) => r.year), comp.years);
   const want = Number(sp.year);
   const selected = years.includes(want) ? want : years[0];
   const list = rows.filter((r) => r.year === selected)

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  awardYears, drinkAwardString, matchAwardDrink, mergeDrinkAwards, normAwardPart, parseDrinkAward, prizeRank, sameBrewery, type AwardDrink,
+  awardYearCount, awardYears, drinkAwardString, matchAwardDrink, mergeDrinkAwards, normAwardPart, parseDrinkAward, prizeRank, sameBrewery, type AwardDrink,
 } from "../drink-awards";
 
 describe("수상 문자열", () => {
@@ -40,6 +40,12 @@ describe("수상 문자열", () => {
   it("최근 N개 연도 — 가장 최근 연도부터 거꾸로, 빈 연도도 칸을 둔다", () => {
     expect(awardYears([2026, 2024, 2019], 5)).toEqual([2026, 2025, 2024, 2023, 2022]);
     expect(awardYears([], 5)).toEqual([]);
+  });
+
+  it("대회마다 다루는 연도 수 — 우리술품평회 5년, 대한민국주류대상 3년", () => {
+    expect(awardYearCount("우리술품평회")).toBe(5);
+    expect(awardYearCount("대한민국주류대상")).toBe(3);
+    expect(awardYears([2026, 2025, 2024, 2023], awardYearCount("대한민국주류대상"))).toEqual([2026, 2025, 2024]);
   });
 });
 

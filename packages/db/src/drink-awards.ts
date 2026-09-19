@@ -4,13 +4,14 @@
  *   pnpm --filter @pairinggo/db drink-awards --apply   drinks.awards 갱신 + 발행 → 이어서 `export`
  *
  * 명단: research/awards/woorisool-fair.json(농식품부 발표) · korea-liquor-awards.json(`liquor-awards-fetch`로 받음)
+ * 다루는 연도: 우리술품평회 5년 · 대한민국주류대상 3년(shared DRINK_COMPETITIONS). 범위 밖 주류대상 수상은 붙이지 않고 이미 붙은 것도 뗀다.
  * 대조 규칙은 shared `matchAwardDrink`(양조장 같음 + 이름 같음/도수·양조장 표기 차이만). 자동으로 안 붙는 것은
  * research/awards/match-overrides.json에 { "대회|제품명|업체": "d108" } (붙이지 말아야 할 것은 null)로 적는다.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { drinkAwardString, matchAwardDrink, mergeDrinkAwards, sameBrewery, type AwardDrink, type DrinkAward, type DrinkCompetition } from "@pairinggo/shared";
+import { awardYearCount, awardYears, drinkAwardString, matchAwardDrink, mergeDrinkAwards, parseDrinkAward, sameBrewery, type AwardDrink, type DrinkAward, type DrinkCompetition } from "@pairinggo/shared";
 import { publishCatalog } from "./catalog-write";
 import { connect } from "./sql";
 
@@ -49,7 +50,17 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     const rows = await sql<Row[]>`select id, name, alias, brewery_name, abv, awards from drinks order by id`;
     const drinks: AwardDrink[] = rows.map((r) => ({ id: r.id, name: r.name, alias: r.alias ?? [], brewery: r.brewery_name, abv: r.abv }));
     const byId = new Map(rows.map((r) => [r.id, r]));
-    const entries = loadAwardEntries(), overrides = loadOverrides();
+    const overrides = loadOverrides();
+    // 대회마다 다루는 연도 (우리술품평회 5년 · 대한민국주류대상 3년) — 범위 밖 수상은 붙이지 않고, 이미 붙은 것은 뗀다.
+    // 다만 우리술품평회는 예전 aT 자료로 들어온 옛 수상(2010~)이 있어 떼지 않고 그대로 둔다.
+    const allEntries = loadAwardEntries();
+    const cutoff = new Map<DrinkCompetition, number>();
+    for (const c of ["우리술품평회", "대한민국주류대상"] as const) {
+      const ys = awardYears(allEntries.filter((e) => e.competition === c).map((e) => e.year), awardYearCount(c));
+      if (ys.length) cutoff.set(c, Math.min(...ys));
+    }
+    const entries = allEntries.filter((e) => e.year >= (cutoff.get(e.competition) ?? 0));
+    const keepOld = (s: string) => { const a = parseDrinkAward(s); return !a || a.competition !== "대한민국주류대상" || a.year >= (cutoff.get(a.competition) ?? 0); };
 
     const add = new Map<string, DrinkAward[]>();
     const unmatched: AwardEntry[] = [];
@@ -60,11 +71,12 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     }
 
     const changes: { id: string; before: string[]; after: string[] }[] = [];
-    for (const [id, list] of add) {
-      const r = byId.get(id)!;
+    for (const r of rows) {
       const before = r.awards ?? [];
-      const after = mergeDrinkAwards(before, list);
-      if (JSON.stringify(before) !== JSON.stringify(after)) changes.push({ id, before, after });
+      const list = add.get(r.id) ?? [];
+      if (!list.length && before.every(keepOld)) continue;
+      const after = mergeDrinkAwards(before.filter(keepOld), list);
+      if (JSON.stringify(before) !== JSON.stringify(after)) changes.push({ id: r.id, before, after });
     }
 
     const count = (c: DrinkCompetition) => entries.filter((e) => e.competition === c).length;

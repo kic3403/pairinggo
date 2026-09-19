@@ -30,6 +30,7 @@ export function cleanShopUrl(raw: string): { url: string; kind: BuyLinkKind } | 
   try { u = new URL(s); } catch { return null; }
   const host = u.hostname.replace(/^www\./, "").replace(/^m\./, "");
   if (/(instagram|facebook|youtube|twitter|x)\.com$|blog\.naver\.com$|cafe\.naver\.com$|tistory\.com$|band\.us$|kakao\.com$|thesool\.com$|yosool\.co\.kr$/.test(host)) return null;
+  if (/modoo\.at$/.test(host)) return null;   // 네이버 모두 홈페이지 — 판매처로 쓰지 않는다(2026-09-20 사용자 결정)
   if (/^(smartstore|brand)\.naver\.com$/.test(host)) {
     const id = u.pathname.split("/").filter(Boolean)[0];
     return id ? { url: `https://${host}/${id}`, kind: "스마트스토어" } : null;

@@ -2,7 +2,7 @@
  * 전통주 목록 확장 후보 — "온라인으로 살 수 있는 전통주를 빠짐없이"(2026-09-20 사용자 요청, 1번 방법)
  *   pnpm --filter @pairinggo/db expand-candidates   → templates/전통주_추가후보.xlsx + research/expand-candidates.json
  *
- * 후보 = 더술닷컴(aT) 제품 중 카탈로그에 없는 것 + 최근 5년 수상작(우리술품평회·대한민국주류대상 우리술) 중 카탈로그에 없는 것.
+ * 후보 = 더술닷컴(aT) 제품 중 카탈로그에 없는 것 + 수상작(우리술품평회 최근 5년 · 대한민국주류대상 우리술 최근 3년) 중 카탈로그에 없는 것.
  * 같은 제품은 한 줄로 묶는다(수상작 ↔ 더술닷컴은 shared matchAwardDrink — 양조장 같음 + 이름 같음/표기 차이만).
  * 점수 = 수상(최근 5년) + 거점(충남·세종·대전) + 카탈로그에 없는 양조장 + 양조장 추천 음식 + 쇼핑 수요. 양조장당 3종.
  * 온라인 판매는 법에서 정한 전통주(민속주·지역특산주)만 된다 — 수입 원료·대형 주류회사 제품은 "확인 필요"로 빼고,
@@ -13,7 +13,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  AWARD_YEARS, DATA, awardYears, categoryOfKind, drinkAwardString, matchAwardDrink, prizeRank, relativeInterest, sameBrewery,
+  DATA, awardYearCount, awardYears, categoryOfKind, drinkAwardString, matchAwardDrink, prizeRank, relativeInterest, sameBrewery,
   type AwardDrink, type LineupCategory,
 } from "@pairinggo/shared";
 import { loadAwardEntries, loadOverrides, matchEntry, type AwardEntry } from "./drink-awards";
@@ -24,7 +24,7 @@ import { sidoOf, sigunguOf, type Sido } from "./sido";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const XLSX = join(ROOT, "templates", "전통주_추가후보.xlsx");
 const JSON_OUT = join(ROOT, "research", "expand-candidates.json");
-/** 추천 = 최근 5년 수상작 전부(2026-09-20 사용자 요청: 수상작을 넣는다) + 수상 없는 후보 점수 순 NON_AWARD_PICK종(거점·새 양조장·추천 음식) */
+/** 추천 = 다루는 연도 안의 수상작 전부(2026-09-20 사용자 요청: 수상작을 넣는다) + 수상 없는 후보 점수 순 NON_AWARD_PICK종(거점·새 양조장·추천 음식) */
 const NON_AWARD_PICK = 60;
 const PER_BREWERY = 3;   // 수상 없는 후보만 — 수상작은 양조장당 제한 없음
 const HUB: Sido[] = ["충남", "세종", "대전"];
@@ -84,11 +84,16 @@ function build() {
   // 2) 최근 5년 수상작 — 카탈로그에 있으면 건너뛰고(수상 이력은 drink-awards가 붙임), 더술닷컴 후보와 같으면 합치고, 아니면 새 후보
   const entries = loadAwardEntries(), overrides = loadOverrides();
   const years = new Set<number>();
-  for (const c of ["우리술품평회", "대한민국주류대상"] as const) for (const y of awardYears(entries.filter((e) => e.competition === c).map((e) => e.year), AWARD_YEARS)) years.add(y);
+  const compYears = new Map<string, number[]>();   // 대회마다 다루는 연도 (우리술품평회 5년 · 대한민국주류대상 3년)
+  for (const c of ["우리술품평회", "대한민국주류대상"] as const) {
+    const ys = awardYears(entries.filter((e) => e.competition === c).map((e) => e.year), awardYearCount(c));
+    compYears.set(c, ys);
+    for (const y of ys) years.add(y);
+  }
   const kla = existsSync(join(ROOT, "research", "awards", "korea-liquor-awards.json"))
     ? (JSON.parse(readFileSync(join(ROOT, "research", "awards", "korea-liquor-awards.json"), "utf8")) as { items: { name: string; brewery: string; abv: number | null; materials: string; sido: string; sigungu: string; url: string }[] }).items : [];
   for (const e of entries) {
-    if (!years.has(e.year)) continue;
+    if (!(compYears.get(e.competition) ?? []).includes(e.year)) continue;
     if (matchEntry(e, catalog, overrides)) continue;
     const hit = matchAwardDrink(e, productDrinks);
     if (hit) { const c = cands.get(hit)!; c.awards.push(e); if (!c.sources.includes(e.source)) c.sources.push(e.source); continue; }
@@ -157,8 +162,8 @@ async function write({ all, years }: ReturnType<typeof build>) {
     ["만든 날", new Date().toISOString().slice(0, 10)],
     ["현재 카탈로그", `전통주 ${DATA.drinks.length}종`],
     ["후보", `${all.length}종 — 더술닷컴(aT) 중 카탈로그에 없는 제품 ${all.filter((c) => c.productId).length} + 수상작만 있는 제품 ${all.filter((c) => !c.productId).length}`],
-    ["수상 기준", `최근 5년(${years[years.length - 1]}~${years[0]}) 우리술품평회 + 대한민국주류대상 우리술 부문 — 수상 후보 ${all.filter((c) => c.awards.length).length}종`],
-    ["추천", `${picks.length}종 = 최근 5년 수상작 전부 ${picks.filter((c) => c.awards.length).length} + 수상 없는 후보 점수순 ${picks.filter((c) => !c.awards.length).length}(양조장당 ${PER_BREWERY}종) · 확인 필요 제외 — 넣으면 카탈로그 ${DATA.drinks.length + picks.length}종`],
+    ["수상 기준", `우리술품평회 최근 ${awardYearCount("우리술품평회")}년 + 대한민국주류대상 우리술 부문 최근 ${awardYearCount("대한민국주류대상")}년(2026-09-20 사용자 결정) — 수상 후보 ${all.filter((c) => c.awards.length).length}종`],
+    ["추천", `${picks.length}종 = 수상작 전부 ${picks.filter((c) => c.awards.length).length} + 수상 없는 후보 점수순 ${picks.filter((c) => !c.awards.length).length}(양조장당 ${PER_BREWERY}종) · 확인 필요 제외 — 넣으면 카탈로그 ${DATA.drinks.length + picks.length}종`],
     ["추천 — 종류", [...count(picks, (c) => c.category ?? "-")].map(([k, v]) => `${k} ${v}`).join(" · ")],
     ["추천 — 수상작", `${picks.filter((c) => c.awards.length).length}종 (우리술품평회 ${picks.filter((c) => c.awards.some((a) => a.competition === "우리술품평회")).length} · 대한민국주류대상 ${picks.filter((c) => c.awards.some((a) => a.competition === "대한민국주류대상")).length})`],
     ["추천 — 거점(충남·세종·대전)", `${picks.filter((c) => c.hub).length}종`],
@@ -177,7 +182,7 @@ async function write({ all, years }: ReturnType<typeof build>) {
     { header: "추천", key: "pick", width: 6 }, { header: "제품명", key: "name", width: 30 }, { header: "양조장", key: "brewery", width: 24 },
     { header: "판매처", key: "shop", width: 40 }, { header: "판매처 출처", key: "shopFrom", width: 30 },
     { header: "종류", key: "category", width: 8 }, { header: "도수", key: "abv", width: 6 }, { header: "시도", key: "sido", width: 6 }, { header: "시군구", key: "sigungu", width: 10 },
-    { header: "거점", key: "hub", width: 6 }, { header: "새 양조장", key: "newBrewery", width: 8 }, { header: "수상(최근 5년)", key: "awards", width: 60 },
+    { header: "거점", key: "hub", width: 6 }, { header: "새 양조장", key: "newBrewery", width: 8 }, { header: "수상", key: "awards", width: 60 },
     { header: "양조장 추천 음식", key: "food", width: 30 }, { header: "쇼핑 수요", key: "interest", width: 8 }, { header: "원료", key: "ingredients", width: 36 },
     { header: "판단", key: "reason", width: 28 }, { header: "출처", key: "source", width: 50 }, { header: "우선순위 점수(고르기용)", key: "score", width: 10 },
   ];

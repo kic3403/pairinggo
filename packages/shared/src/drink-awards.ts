@@ -8,12 +8,13 @@
 export type DrinkCompetition = "우리술품평회" | "대한민국주류대상";
 export type DrinkAward = { competition: DrinkCompetition; year: number; part: string; prize: string };
 
-/** /awards 화면 탭 순서·설명 */
-export const DRINK_COMPETITIONS: { key: "fair" | "kla"; name: DrinkCompetition; host: string; about: string }[] = [
-  { key: "fair", name: "우리술품평회", host: "농림축산식품부·aT", about: "농림축산식품부가 해마다 여는 국내 유일의 정부 주관 전통주 경연입니다. 부문마다 대상·최우수상·우수상을 주고, 대통령상은 그해 최고의 술 한 병에만 주어집니다." },
-  { key: "kla", name: "대한민국주류대상", host: "조선비즈", about: "조선비즈가 해마다 여는 주류 품평회로, 주류 전문가 100여 명이 주종별로 심사합니다. 우리술 부문 수상작(대상)이며, Best of Best는 그해 주종별 최고점을 받은 술입니다." },
+/** /awards 화면 탭 순서·설명, 다루는 연도 수 (2026-09-20 사용자 결정: 우리술품평회 5년 · 대한민국주류대상 3년) */
+export const DRINK_COMPETITIONS: { key: "fair" | "kla"; name: DrinkCompetition; host: string; years: number; about: string }[] = [
+  { key: "fair", name: "우리술품평회", host: "농림축산식품부·aT", years: 5, about: "농림축산식품부가 해마다 여는 국내 유일의 정부 주관 전통주 경연입니다. 부문마다 대상·최우수상·우수상을 주고, 대통령상은 그해 최고의 술 한 병에만 주어집니다." },
+  { key: "kla", name: "대한민국주류대상", host: "조선비즈", years: 3, about: "조선비즈가 해마다 여는 주류 품평회로, 주류 전문가 100여 명이 주종별로 심사합니다. 우리술 부문 수상작(대상)이며, Best of Best는 그해 주종별 최고점을 받은 술입니다." },
 ];
-/** 화면에 보이는 연도 수 (2026-09-20 사용자 결정: 두 대회 모두 최근 5년) */
+export const awardYearCount = (c: DrinkCompetition) => DRINK_COMPETITIONS.find((x) => x.name === c)?.years ?? 5;
+/** 기본 연도 수 */
 export const AWARD_YEARS = 5;
 
 const PRIZES = ["대상·대통령상", "대통령상", "Best of Best", "최우수상", "우수상", "장려상", "대상"] as const;

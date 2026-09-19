@@ -17,12 +17,6 @@
   "from": "요즘이술 홈페이지(업체 등록)",
   "ok": true
  },
- "병영소주|병영양조장": {
-  "url": "https://byjujo.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "추사백25|예산사과와인": {
   "url": "https://www.xn--vf4b19u.com",
   "kind": "공식몰·홈페이지",
@@ -34,12 +28,6 @@
   "kind": "스마트스토어",
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
- },
- "레드오서주|태령주조장": {
-  "url": "https://oseojoo.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": true
  },
  "매화깊은밤|백제명가주조": {
   "url": "https://smartstore.naver.com/baekje2012",
@@ -88,12 +76,6 @@
   "kind": "스마트스토어",
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
- },
- "골드오서주|태령주조장": {
-  "url": "https://oseojoo.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": true
  },
  "일지춘|노금주가": {
   "url": "https://smartstore.naver.com/woochang2016",
@@ -467,18 +449,6 @@
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": true
  },
- "입장탁주|입장주조": {
-  "url": "https://yeonmiju.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
- "명인홍삼주|금산인삼주": {
-  "url": "https://insamwine.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "대천바다금빛|명주도가": {
   "url": "https://xn--o39a70mg2fhxq.com",
   "kind": "공식몰·홈페이지",
@@ -695,26 +665,8 @@
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
  },
- "예화|대윤가야곡주조": {
-  "url": "https://dygayagok.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "코아베스트배럴에이징보쉐|코아베스트": {
   "url": "https://www.corevest.co.kr/Home",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
- "사임주|사리원": {
-  "url": "https://sariwon1951.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
- "청양둔송구기주|청양둔송구기주": {
-  "url": "https://dunsong.modoo.at",
   "kind": "공식몰·홈페이지",
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": true
@@ -725,23 +677,11 @@
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": false
  },
- "천안연미주|입장주조": {
-  "url": "https://yeonmiju.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "한산예담은한산소곡화주|한산예담은소곡주": {
   "url": "http://xn--399a58ii8nflevubg8d.com",
   "kind": "공식몰·홈페이지",
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": false
- },
- "설레온|대윤가야곡주조": {
-  "url": "https://dygayagok.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
  },
  "겨울소주25|두이술공방": {
   "url": "https://smartstore.naver.com/arirangjujo",
@@ -855,12 +795,6 @@
   "url": "https://xn--h50bx7nmc99h97t2wb.com",
   "kind": "공식몰·홈페이지",
   "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": true
- },
- "단심|미소주방": {
-  "url": "https://misojubang.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "요즘이술 홈페이지(업체 등록)",
   "ok": true
  },
  "담브리즈|대밭고을": {
@@ -1457,12 +1391,6 @@
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": null
  },
- "무주구천동머루와인|덕유양조": {
-  "url": "https://meorusove.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "일엽편주|농암종택전통주": {
   "url": "http://www.ellyeoppyunjoo.com",
   "kind": "공식몰·홈페이지",
@@ -1531,12 +1459,6 @@
  },
  "미르아토로제스파클링|금용농산": {
   "url": "http://www.mirattowine.com/index.html",
-  "kind": "공식몰·홈페이지",
-  "from": "요즘이술 홈페이지(업체 등록)",
-  "ok": true
- },
- "약천골지장수생막걸리|낙천": {
-  "url": "https://nakchun.modoo.at",
   "kind": "공식몰·홈페이지",
   "from": "요즘이술 홈페이지(업체 등록)",
   "ok": true
@@ -1685,12 +1607,6 @@
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": true
  },
- "포엠드라이|갈기산포도농원": {
-  "url": "https://fourmwine.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": true
- },
  "레돔화이트스파클링와인|작은알자스": {
   "url": "https://smartstore.naver.com/lesdom",
   "kind": "스마트스토어",
@@ -1751,17 +1667,17 @@
   "from": "같은 양조장 제품의 더술닷컴 홈페이지(양조장 등록)",
   "ok": true
  },
- "대윤가야곡왕주|대윤가야곡주조": {
-  "url": "https://dygayagok.modoo.at",
-  "kind": "공식몰·홈페이지",
-  "from": "같은 양조장 제품의 더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "감이슬|양촌감": {
   "url": "https://smartstore.naver.com/choosi",
   "kind": "스마트스토어",
   "from": "같은 양조장 제품의 요즘이술 구매하러 가기(업체 등록)",
   "ok": null
+ },
+ "명인홍삼주|금산인삼주": {
+  "url": "https://www.insamwine.com",
+  "kind": "공식몰·홈페이지",
+  "from": "같은 양조장 제품의 더술닷컴 홈페이지(양조장 등록)",
+  "ok": true
  },
  "남한산성소주|남한산성소주": {
   "url": "http://www.sansungsoju.com",
