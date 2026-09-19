@@ -1,4 +1,5 @@
 import { notifyReservation } from "@pairinggo/server/notify";
+import { reportError } from "@pairinggo/server/errors";
 import { transitionReservation } from "@pairinggo/server/reservations";
 import { RESERVATION_STATUSES, type ReservationStatus } from "@pairinggo/shared";
 import { approvedOrError } from "@/lib/partner";
@@ -11,6 +12,6 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   if (!/^[0-9a-f-]{36}$/.test(id) || !(RESERVATION_STATUSES as readonly string[]).includes(String(b.to))) return Response.json({ error: "잘못된 요청이에요" }, { status: 400 });
   const r = await transitionReservation(id, b.to as ReservationStatus, "store", a.user.id, String(b.note ?? "").slice(0, 100));
   if (!r.ok) return Response.json({ error: r.problem }, { status: 400 });
-  if (r.to === "cancelled_by_store") await notifyReservation(id, "cancelled_by_store").catch((e) => console.error("[notify]", (e as Error).message));
+  if (r.to === "cancelled_by_store") await notifyReservation(id, "cancelled_by_store").catch((e) => reportError("partner", "notify/cancelled_by_store", e));
   return Response.json({ ok: true });
 }

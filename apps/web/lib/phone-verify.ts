@@ -6,6 +6,7 @@
 import { createHmac, randomInt, timingSafeEqual } from "node:crypto";
 import { normalizeMobile, OTP_DAILY_MAX, OTP_LENGTH, OTP_MAX_ATTEMPTS, OTP_RESEND_SEC, OTP_TTL_SEC, otpLooksValid } from "@pairinggo/shared";
 import { phoneVerifyAvailable, sendSms } from "@pairinggo/server/sms";
+import { reportError } from "@pairinggo/server/errors";
 import { db } from "./db";
 
 const need = () => { const c = db(); if (!c) throw new Error("지금은 인증할 수 없어요"); return c; };
@@ -37,7 +38,7 @@ export async function startVerification(userId: string, raw: string): Promise<{ 
   const { error } = await c.from("phone_verifications").insert({ user_id: userId, phone, code_hash: hash(userId, phone, code), expires_at: new Date(Date.now() + OTP_TTL_SEC * 1000).toISOString() });
   if (error) return { ok: false, problem: "잠시 뒤 다시 시도해 주세요" };
   const sent = await sendSms(phone, `[페어링GO] 인증번호 ${code} — ${OTP_TTL_SEC / 60}분 안에 입력해 주세요.`);
-  if (!sent.ok) { console.error("[phone-verify] 문자 발송 실패", sent.reason, sent.ok === false ? sent.error : ""); return { ok: false, problem: "문자를 보내지 못했어요 — 잠시 뒤 다시 시도해 주세요" }; }
+  if (!sent.ok) { void reportError("web", "sms/phone-verify", `문자 발송 실패 ${sent.reason} ${sent.error ?? ""}`); return { ok: false, problem: "문자를 보내지 못했어요 — 잠시 뒤 다시 시도해 주세요" }; }
   return { ok: true, phone };
 }
 

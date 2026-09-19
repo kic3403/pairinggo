@@ -17,7 +17,8 @@
     "./push": "./src/push.ts",
     "./notify": "./src/notify.ts",
     "./menu-read": "./src/menu-read.ts",
-    "./password-reset": "./src/password-reset.ts"
+    "./password-reset": "./src/password-reset.ts",
+    "./errors": "./src/errors.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

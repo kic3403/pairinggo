@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { noShowMessage, type ReservationRequestInput } from "@pairinggo/shared";
 import { bookingContextByKakao, createReservation, noShowState } from "@pairinggo/server/reservations";
+import { reportError } from "@pairinggo/server/errors";
 import { auth } from "@/auth";
 import { rateLimit } from "@/lib/kakao";
 import { myReservations, reserverState } from "@/lib/reservations";
@@ -31,6 +32,6 @@ export async function POST(req: Request) {
   const r = await createReservation({ ctx, userId: uid, guestPhone: me.phone, input: b });
   if (!r.ok) return NextResponse.json({ error: r.problem }, { status: 409 });
   // 알림(매장 푸시·알림톡, 손님 확정 안내)은 예약을 막지 않는다 — 실패는 notifications에 기록
-  await notifyReservation(r.id, "created").catch((e) => console.error("[notify]", (e as Error).message));
+  await notifyReservation(r.id, "created").catch((e) => reportError("web", "notify/created", e));
   return NextResponse.json({ ok: true, id: r.id, code: r.code });
 }

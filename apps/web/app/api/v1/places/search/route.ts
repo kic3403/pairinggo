@@ -1,4 +1,5 @@
 import { RBY, sortByNameMatch } from "@pairinggo/shared";
+import { reportError } from "@pairinggo/server/errors";
 import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
 import { error, json, preflight } from "@/lib/http";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
@@ -43,7 +44,7 @@ export async function GET(req: Request) {
       source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null,
     }, { headers: CACHE });
   } catch (e) {
-    console.error("[places/search]", (e as Error).message);
+    void reportError("web", "places/search", e);
     return json(req, { query: q, center: null, places: [], total: 0, source: "none", error: "검색 실패" }, { headers: { "Cache-Control": "no-store" } });
   }
 }

@@ -3,6 +3,7 @@
  * 서버 프로세스의 shared 인덱스(검색 엔진)도 같은 버전으로 맞춘다(applyDataset).
  */
 import { DATA as BUNDLED, CATALOG_VERSION, applyDataset, loadDatasetFromRows, type Dataset } from "@pairinggo/shared";
+import { reportError } from "@pairinggo/server/errors";
 import { db } from "./db";
 
 export type Catalog = { version: string; source: "db" | "static"; dataset: Dataset; counts: { drinks: number; foods: number; pairings: number } };
@@ -84,7 +85,7 @@ export async function getCatalog(): Promise<Catalog> {
   inflight = (async () => {
     let value: Catalog;
     try { value = (await fromDb()) ?? staticCatalog(); }
-    catch (e) { console.error("[catalog] DB 조회 실패, 정적 폴백:", (e as Error).message); value = staticCatalog(); }
+    catch (e) { void reportError("web", "catalog", e); value = staticCatalog(); }
     // 서버 검색 엔진도 같은 카탈로그를 보게 한다
     if (value.source === "db" && value.version !== CATALOG_VERSION) {
       try { applyDataset(value.dataset, value.version, "server"); } catch (e) { console.error("[catalog] applyDataset 실패:", (e as Error).message); }

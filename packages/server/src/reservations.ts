@@ -9,6 +9,7 @@ import {
   type ReservationSettings, type ReservationStatus,
 } from "@pairinggo/shared";
 import { db } from "./db";
+import { currentApp, reportError } from "./errors";
 
 export type MerchantStatus = "applied" | "approved" | "rejected" | "suspended";
 export type Merchant = {
@@ -118,7 +119,7 @@ export async function createReservation(args: { ctx: BookingContext; userId: str
     p_room: r.roomRequested, p_byo: r.bringOwnDrink, p_drink: r.drinkId, p_food: r.foodId, p_note: r.note,
     p_guest_name: r.guestName, p_guest_phone: guestPhone,
   });
-  if (error) { console.error("[reserve]", error.message); return { ok: false, problem: reserveErrorMessage(null) }; }
+  if (error) { void reportError(currentApp(), "reserve", error.message); return { ok: false, problem: reserveErrorMessage(null) }; }
   const res = data as { ok: boolean; error?: string; id?: string; code?: string };
   return res.ok ? { ok: true, id: str(res.id), code: str(res.code) } : { ok: false, problem: reserveErrorMessage(res.error) };
 }
@@ -129,7 +130,7 @@ export async function transitionReservation(id: string, to: ReservationStatus, a
   const c = db();
   if (!c) return { ok: false, problem: reserveErrorMessage(null) };
   const { data, error } = await c.rpc("reservation_transition", { p_id: id, p_to: to, p_actor: actor, p_actor_id: actorId, p_note: note });
-  if (error) { console.error("[reservation_transition]", error.message); return { ok: false, problem: reserveErrorMessage(null) }; }
+  if (error) { void reportError(currentApp(), "reservation_transition", error.message); return { ok: false, problem: reserveErrorMessage(null) }; }
   const res = data as { ok: boolean; error?: string; from?: ReservationStatus; to?: ReservationStatus };
   return res.ok ? { ok: true, from: res.from!, to: res.to! } : { ok: false, problem: reserveErrorMessage(res.error), code: res.error };
 }

@@ -1,6 +1,7 @@
 /** 내 예약 취소 — 방문 1시간 전까지(DB 함수가 본인 예약인지·시각을 한 번 더 확인) */
 import { NextResponse } from "next/server";
 import { transitionReservation } from "@pairinggo/server/reservations";
+import { reportError } from "@pairinggo/server/errors";
 import { auth } from "@/auth";
 import { notifyReservation } from "@/lib/reservation-notify";
 
@@ -14,6 +15,6 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   const b = (await req.json().catch(() => ({}))) as { reason?: string };
   const r = await transitionReservation(id, "cancelled_by_user", "user", uid, String(b.reason ?? "").slice(0, 100));
   if (!r.ok) return NextResponse.json({ error: r.problem }, { status: 400 });
-  await notifyReservation(id, "cancelled_by_user").catch((e) => console.error("[notify]", (e as Error).message));
+  await notifyReservation(id, "cancelled_by_user").catch((e) => reportError("web", "notify/cancelled_by_user", e));
   return NextResponse.json({ ok: true });
 }

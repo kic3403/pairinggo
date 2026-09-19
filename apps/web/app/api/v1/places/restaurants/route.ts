@@ -1,4 +1,5 @@
 import { placeQuery, RBY, D as _D } from "@pairinggo/shared";
+import { reportError } from "@pairinggo/server/errors";
 import { getCatalog } from "@/lib/catalog";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
@@ -50,7 +51,7 @@ export async function GET(req: Request) {
     places = await withBookable(verifiedFirst(await withInfo(places)), true);
     return json(req, { food: f?.name ?? food, query, center: Number.isFinite(lat) ? { lat, lng, radius } : null, places, total: r.total, source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null }, { headers: CACHE });
   } catch (e) {
-    console.error("[places/restaurants]", (e as Error).message);
+    void reportError("web", "places/restaurants", e);
     return json(req, { food, query, center: null, places: [], total: 0, source: "none", error: "검색 실패" }, { headers: { "Cache-Control": "no-store" } });
   }
 }

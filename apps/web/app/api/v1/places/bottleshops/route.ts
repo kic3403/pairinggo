@@ -1,4 +1,5 @@
 import { RBY } from "@pairinggo/shared";
+import { reportError } from "@pairinggo/server/errors";
 import { kakaoConfigured, rateLimit, searchMany } from "@/lib/kakao";
 import { error, json, preflight } from "@/lib/http";
 
@@ -31,7 +32,7 @@ export async function GET(req: Request) {
     const places = r.places.filter((p) => SELLS.test(p.categoryPath) && !NOISE.test(p.categoryPath)).slice(0, 30);
     return json(req, { kind, center: hasLoc ? { lat, lng, radius } : null, places, total: places.length, source: kakaoConfigured() ? r.source : "none" }, { headers: CACHE });
   } catch (e) {
-    console.error("[places/bottleshops]", (e as Error).message);
+    void reportError("web", "places/bottleshops", e);
     return json(req, { kind, center: null, places: [], total: 0, source: "none", error: "검색 실패" }, { headers: { "Cache-Control": "no-store" } });
   }
 }

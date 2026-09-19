@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { dashboard } from "@/lib/admin-data";
+import { openErrorCount } from "@pairinggo/server/errors";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
   await requireAdmin();
-  const d = await dashboard();
+  const [d, errors] = await Promise.all([dashboard(), openErrorCount()]);
   return (
     <>
+      {errors > 0 && <div className="card" style={{ borderColor: "#c0362c", marginBottom: 12 }}><b style={{ color: "#c0362c" }}>최근 24시간 운영 오류 {errors}건</b> <Link href="/admin/errors">확인하기 →</Link></div>}
       <h2 style={{ margin: "0 0 4px" }}>대시보드</h2>
       <p className="muted">카탈로그 버전 <code>{d.version.slice(0, 19)}</code> · 페어링 {d.totalPairings} · 발행 후 승격 {d.promotedAfter}건 {d.promotedAfter > 0 && <Link href="/admin/publish">→ 발행하기</Link>}</p>
       <div className="kpi">
