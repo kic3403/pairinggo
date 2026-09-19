@@ -4,7 +4,7 @@
 import { db } from "@pairinggo/server/db";
 import { hashPassword, passwordProblem, verifyPassword } from "@pairinggo/server/password";
 import { merchantFromRow, type Merchant } from "@pairinggo/server/reservations";
-import { cleanMethods, duplicateMessage, normalizeMobile, sameIdentity, validatePartnerSignup, type Identity, type LoginMethod, type OAuthProfile, type OAuthProvider, type PartnerSignupInput } from "@pairinggo/shared";
+import { MANUAL_PLACE_PREFIX, cleanMethods, duplicateMessage, normalizeMobile, sameIdentity, validatePartnerSignup, type Identity, type LoginMethod, type OAuthProfile, type OAuthProvider, type PartnerSignupInput } from "@pairinggo/shared";
 import { randomBytes } from "node:crypto";
 import { redirect } from "next/navigation";
 import { currentPartner, requirePartner, type PartnerUser } from "./session";
@@ -67,9 +67,14 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick, so
   }
 
   // 같은 사람 중복 가입 금지 — 이메일이 같거나 이름 + 휴대폰 번호가 같은 파트너 계정이 있으면(가입 방법 무관) 막는다
+  // 직접 입력한 매장은 카카오 id가 없어 "manual-…" 표시 id를 만든다 — 같은 상호·주소로 이미 신청된 매장이 있으면 막는다
+  const kakaoPlaceId = s.manualPlace ? `${MANUAL_PLACE_PREFIX}${randomBytes(6).toString("hex")}` : s.kakaoPlaceId;
+  const esc = (v: string) => v.replace(/[\\%_]/g, (ch) => "\\" + ch);
   const [dup, { data: dupMerchant }] = await Promise.all([
     existingPartnerMethods({ email: s.email, name: s.name, phone: s.phone }),
-    c.from("merchants").select("id, status").eq("kakao_place_id", s.kakaoPlaceId).maybeSingle(),
+    s.manualPlace
+      ? c.from("merchants").select("id, status").ilike("name", esc(s.manualPlace.name)).ilike("address", esc(s.manualPlace.address)).limit(1).maybeSingle()
+      : c.from("merchants").select("id, status").eq("kakao_place_id", s.kakaoPlaceId).maybeSingle(),
   ]);
   if (dup) return { ok: false, problem: duplicateMessage(dup, "partner") };
   if (dupMerchant) return { ok: false, problem: "이미 파트너 신청이 된 매장이에요 — 함께 쓰려면 운영자에게 문의해 주세요" };
@@ -78,7 +83,7 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick, so
   const { data: user, error: ue } = await c.from("partner_users").insert({ email: s.email, password_hash: passwordHash, name: s.name, phone: s.phone }).select("id").single();
   if (ue || !user) return { ok: false, problem: "가입을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   const { data: m, error: me } = await c.from("merchants").insert({
-    kakao_place_id: s.kakaoPlaceId, name: place.name.slice(0, 80), address: place.address.slice(0, 200), phone: place.phone.slice(0, 20),
+    kakao_place_id: kakaoPlaceId, name: place.name.slice(0, 80), address: place.address.slice(0, 200), phone: place.phone.slice(0, 20),
     lat: place.lat, lng: place.lng, place_url: place.placeUrl, owner_name: s.ownerName, biz_no: s.bizNo, status: "applied",
   }).select("id").single();
   if (me || !m) {

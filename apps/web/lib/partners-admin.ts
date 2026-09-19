@@ -4,6 +4,8 @@
  */
 import { db } from "@/lib/db";
 import type { MerchantStatus } from "@pairinggo/server/reservations";
+import { isManualPlaceId } from "@pairinggo/shared";
+import { searchPlaces } from "@/lib/kakao";
 
 export type AdminMerchant = {
   id: string; kakaoPlaceId: string; name: string; address: string; phone: string; placeUrl: string | null;
@@ -55,6 +57,42 @@ export async function actOnMerchant(id: string, action: MerchantAction, reason: 
   if (error) throw new Error(error.message);
   // 정지하면 새 예약이 들어오지 않게 예약 받기도 끈다(이미 잡힌 예약은 그대로 — 필요하면 매장이 취소)
   if (action === "suspend") await c.from("reservation_settings").update({ accepting: false, updated_at: now }).eq("merchant_id", id);
+}
+
+/**
+ * 직접 입력한 매장(manual-…)을 카카오맵 장소에 연결 — 그때부터 페어링GO 식당 검색·예약 화면에 나온다.
+ * 장소 값은 브라우저를 믿지 않고 카카오에서 다시 찾는다. 사장님이 이미 적은 매장 정보(place_info)는 새 id로 옮긴다
+ * (그 장소에 운영자가 적어 둔 정보가 있으면 공개 값은 사장님 것으로 덮고, 운영자 전용 값 contact_phone·memo는 남긴다).
+ */
+export async function linkKakaoPlace(id: string, kakaoId: string, query: string): Promise<void> {
+  const c = db();
+  if (!c) throw new Error("DB가 연결되지 않았어요");
+  if (!/^\d{1,20}$/.test(kakaoId)) throw new Error("카카오 장소를 골라 주세요");
+  const { data: m } = await c.from("merchants").select("id, kakao_place_id, phone").eq("id", id).maybeSingle();
+  if (!m) throw new Error("매장을 찾을 수 없어요");
+  if (!isManualPlaceId(m.kakao_place_id)) throw new Error("이미 카카오맵 장소에 연결된 매장이에요");
+  const { data: taken } = await c.from("merchants").select("id").eq("kakao_place_id", kakaoId).maybeSingle();
+  if (taken) throw new Error("그 장소는 다른 파트너 매장에 이미 연결돼 있어요");
+  const found = await searchPlaces({ query: String(query ?? "").slice(0, 60), category: "FD6", sort: "accuracy" }).catch(() => null);
+  const p = found?.places.find((x) => x.id === kakaoId) ?? (await searchPlaces({ query: String(query ?? "").slice(0, 60), sort: "accuracy" }).catch(() => null))?.places.find((x) => x.id === kakaoId);
+  if (!p) throw new Error("카카오에서 그 장소를 다시 찾지 못했어요 — 다시 검색해 주세요");
+  const now = new Date().toISOString();
+  const place = { name: p.name.slice(0, 80), address: (p.roadAddress || p.address).slice(0, 200), lat: p.lat, lng: p.lng, place_url: p.placeUrl };
+  const { error } = await c.from("merchants").update({ kakao_place_id: kakaoId, ...place, phone: m.phone || (p.phone ?? ""), updated_at: now }).eq("id", id);
+  if (error) throw new Error(error.code === "23505" ? "그 장소는 다른 파트너 매장에 이미 연결돼 있어요" : error.message);
+  const [{ data: mine }, { data: there }] = await Promise.all([
+    c.from("place_info").select("*").eq("kakao_id", m.kakao_place_id).maybeSingle(),
+    c.from("place_info").select("kakao_id").eq("kakao_id", kakaoId).maybeSingle(),
+  ]);
+  if (!mine) return;
+  const { kakao_id: _old, contact_phone: _cp, memo: _memo, ...pub } = mine as Record<string, unknown>;
+  const row = { ...pub, ...place, updated_at: now };
+  if (there) {
+    await c.from("place_info").update(row).eq("kakao_id", kakaoId);
+    await c.from("place_info").delete().eq("kakao_id", m.kakao_place_id);
+  } else {
+    await c.from("place_info").update({ ...row, kakao_id: kakaoId }).eq("kakao_id", m.kakao_place_id);
+  }
 }
 
 type AnyRow = Record<string, unknown> | null | undefined;

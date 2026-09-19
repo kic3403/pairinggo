@@ -78,6 +78,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .btn:disabled { opacity: 0.5; cursor: default; }
 .linklike { background: none; border: 0; padding: 4px 2px; font: inherit; font-size: 13.5px; color: var(--muted); cursor: pointer; }
 .linklike:hover { color: var(--ink); }
+.linklike.to-manual { justify-self: start; color: var(--navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 .err { background: var(--bad-soft); color: var(--bad); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
 .okmsg { background: var(--ok-soft); color: var(--ok); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
@@ -210,3 +211,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .social-btn:hover { filter: brightness(0.97); }
 .acct { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .acct li { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+
+/* 직접 입력한 매장(카카오맵 미연결) 안내 */
+.manual-note { margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-size: 13.5px; color: var(--ink2); }

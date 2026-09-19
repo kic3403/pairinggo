@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   addDays, availableSlots, canTransition, cleanHours, cleanSettings, DEFAULT_SETTINGS, formatMobile, formatVisit, isDate, kstInstant, kstParts,
   maskMobile, normalizeMobile, otpLooksValid, pairingNoteDraft, slotTimes, storeActions, toMinutes, validateReservationRequest,
-  cleanBizNo, formatBizNo, validatePartnerSignup, reserveErrorMessage, noShowBlock, noShowMessage,
+  cleanBizNo, formatBizNo, isManualPlaceId, validatePartnerSignup, reserveErrorMessage, noShowBlock, noShowMessage,
   type BusinessHours, type ReservationSettings,
 } from "..";
 
@@ -148,8 +148,8 @@ describe("파트너 가입", () => {
     expect(cleanBizNo("123")).toBeNull();
     expect(formatBizNo("2208162517")).toBe("220-81-62517");
   });
+  const base = { email: " Owner@Shop.KR ", password: "x", name: "김 사장", phone: "010-1234-5678", kakaoPlaceId: "12345", ownerName: "김사장", bizNo: "220-81-62517", agree: true };
   it("신청 입력 정리·문제 안내", () => {
-    const base = { email: " Owner@Shop.KR ", password: "x", name: "김 사장", phone: "010-1234-5678", kakaoPlaceId: "12345", ownerName: "김사장", bizNo: "220-81-62517", agree: true };
     const r = validatePartnerSignup(base);
     expect(r.ok && r.value).toMatchObject({ email: "owner@shop.kr", phone: "01012345678", bizNo: "2208162517" });
     const bad = (p: object) => { const x = validatePartnerSignup({ ...base, ...p }); return x.ok ? "" : x.problem; };
@@ -157,6 +157,20 @@ describe("파트너 가입", () => {
     expect(bad({ bizNo: "1234567890" })).toContain("사업자");
     expect(bad({ agree: false })).toContain("동의");
     expect(bad({ phone: "02-123-4567" })).toContain("휴대폰");
+  });
+  it("검색이 안 되는 매장은 직접 입력 — 상호·주소 필수, 전화 선택", () => {
+    const m = validatePartnerSignup({ ...base, kakaoPlaceId: "", manualPlace: { name: "  새로 연  주점 ", address: "대전 서구 둔산로 100 1층", phone: "" } });
+    expect(m.ok && m.value).toMatchObject({ kakaoPlaceId: "", manualPlace: { name: "새로 연 주점", address: "대전 서구 둔산로 100 1층", phone: "" } });
+    const bad = (mp: object) => { const x = validatePartnerSignup({ ...base, kakaoPlaceId: "", manualPlace: { name: "새로 연 주점", address: "대전 서구 둔산로 100", ...mp } }); return x.ok ? "" : x.problem; };
+    expect(bad({ name: "a" })).toContain("상호");
+    expect(bad({ address: "대전" })).toContain("주소");
+    expect(bad({ address: "https://evil.example.com/대전" })).toContain("주소");
+    expect(bad({ phone: "12" })).toContain("전화");
+    expect(bad({ phone: "042-123-4567" })).toBe("");
+    // 카카오 id를 골랐으면 직접 입력 값은 쓰지 않는다
+    const k = validatePartnerSignup({ ...base, manualPlace: { name: "무시", address: "무시되는 주소" } });
+    expect(k.ok && k.value.manualPlace).toBeNull();
+    expect(isManualPlaceId("manual-a1b2") && !isManualPlaceId("12345")).toBe(true);
   });
   it("DB 오류 코드 안내", () => {
     expect(reserveErrorMessage("full")).toContain("마감");

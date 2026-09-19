@@ -19,11 +19,33 @@ export const formatBizNo = (d: string) => (d.length === 10 ? `${d.slice(0, 3)}-$
 
 export const MERCHANT_STATUS_LABEL = { applied: "승인 대기", approved: "승인", rejected: "반려", suspended: "정지" } as const;
 
+/**
+ * 매장 직접 입력(2026-09-19 사용자 요청) — 카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 상호·주소·전화를 직접 적어 신청한다.
+ * 이런 매장은 카카오 장소 id 대신 "manual-…" 표시 id를 쓰고, 운영자가 카카오맵 장소를 찾아 연결하기 전까지는
+ * 페어링GO 식당 검색·예약 화면(카카오 id 기준)에 나오지 않는다 — 파트너 앱 기능(매장 정보·영업시간)은 그대로 쓸 수 있다.
+ */
+export type ManualPlaceInput = { name: string; address: string; phone?: string };
+export const MANUAL_PLACE_PREFIX = "manual-";
+export const isManualPlaceId = (id: string | null | undefined) => String(id ?? "").startsWith(MANUAL_PLACE_PREFIX);
+
+/** 직접 입력한 매장 정리 — 상호 2~40자·주소 5~120자(링크 금지), 전화는 선택(숫자·하이픈, 숫자 8자리 이상·20자 이하) */
+export function cleanManualPlace(raw: Partial<ManualPlaceInput> | null | undefined): { ok: true; value: Required<ManualPlaceInput> } | { ok: false; problem: string } {
+  const one = (v: unknown) => String(v ?? "").replace(/\s+/g, " ").trim();
+  const name = one(raw?.name), address = one(raw?.address);
+  const link = (x: string) => /https?:|www\./i.test(x);
+  if (name.length < 2 || name.length > 40 || link(name)) return { ok: false, problem: "매장 상호를 2~40자로 적어 주세요" };
+  if (address.length < 5 || address.length > 120 || link(address)) return { ok: false, problem: "매장 주소를 도로명 주소로 적어 주세요(예: 대전 서구 둔산로 100 1층)" };
+  const phone = String(raw?.phone ?? "").replace(/[^\d-]/g, "");
+  if (phone && (phone.replace(/\D/g, "").length < 8 || phone.length > 20)) return { ok: false, problem: "매장 전화번호를 확인해 주세요(없으면 비워 두세요)" };
+  return { ok: true, value: { name, address, phone } };
+}
+
 export type PartnerSignupInput = {
   email: string; password: string; name: string; phone: string;
-  kakaoPlaceId: string; ownerName: string; bizNo: string; agree: boolean;
+  /** 카카오맵에서 고른 매장 id — 직접 입력이면 비우고 manualPlace를 채운다 */
+  kakaoPlaceId: string; manualPlace?: ManualPlaceInput | null; ownerName: string; bizNo: string; agree: boolean;
 };
-export type CleanPartnerSignup = Omit<PartnerSignupInput, "agree"> & { agree: true };
+export type CleanPartnerSignup = Omit<PartnerSignupInput, "agree" | "manualPlace"> & { agree: true; manualPlace: Required<ManualPlaceInput> | null };
 
 /** 가입 신청 입력 정리 — 비밀번호 세기는 서버의 passwordProblem이 따로 본다 */
 export function validatePartnerSignup(raw: PartnerSignupInput): { ok: true; value: CleanPartnerSignup } | { ok: false; problem: string } {
@@ -35,11 +57,16 @@ export function validatePartnerSignup(raw: PartnerSignupInput): { ok: true; valu
   const phone = normalizeMobile(String(raw.phone ?? ""));
   if (!phone) return no("휴대폰 번호를 확인해 주세요");
   const kakaoPlaceId = String(raw.kakaoPlaceId ?? "").trim();
-  if (!/^\d{1,20}$/.test(kakaoPlaceId)) return no("매장을 검색해서 골라 주세요");
+  let manualPlace: Required<ManualPlaceInput> | null = null;
+  if (!kakaoPlaceId && raw.manualPlace) {
+    const mp = cleanManualPlace(raw.manualPlace);
+    if (!mp.ok) return no(mp.problem);
+    manualPlace = mp.value;
+  } else if (!/^\d{1,20}$/.test(kakaoPlaceId)) return no("매장을 검색해서 고르거나, 검색이 안 되면 직접 입력해 주세요");
   const ownerName = String(raw.ownerName ?? "").replace(/\s+/g, " ").trim();
   if (ownerName.length < 2 || ownerName.length > 20) return no("대표자 이름을 적어 주세요");
   const bizNo = cleanBizNo(raw.bizNo);
   if (!bizNo) return no("사업자등록번호 10자리를 확인해 주세요");
   if (raw.agree !== true) return no("파트너 이용약관과 개인정보 수집·이용에 동의해 주세요");
-  return { ok: true, value: { email, password: String(raw.password ?? ""), name, phone, kakaoPlaceId, ownerName, bizNo, agree: true } };
+  return { ok: true, value: { email, password: String(raw.password ?? ""), name, phone, kakaoPlaceId: manualPlace ? "" : kakaoPlaceId, manualPlace, ownerName, bizNo, agree: true } };
 }

@@ -10,6 +10,8 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
   const [q, setQ] = useState("");
   const [places, setPlaces] = useState<Place[] | null>(null);
   const [picked, setPicked] = useState<Place | null>(null);
+  // 검색에 안 나오는 매장 — 상호·주소·전화 직접 입력(운영자가 승인할 때 카카오맵 장소를 찾아 연결)
+  const [manual, setManual] = useState(false);
   const [searchErr, setSearchErr] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -29,13 +31,14 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!picked) { setErr("매장을 검색해서 골라 주세요"); return; }
+    if (!picked && !manual) { setErr("매장을 검색해서 고르거나, 검색이 안 되면 직접 입력해 주세요"); return; }
     const f = new FormData(e.currentTarget);
     if (!social && f.get("password") !== f.get("password2")) { setErr("비밀번호 두 칸이 서로 달라요"); return; }
     setBusy(true); setErr("");
     const body = {
       email: f.get("email"), password: social ? "" : f.get("password"), name: f.get("name"), phone: f.get("phone"), social: !!social,
-      kakaoPlaceId: picked.id, placeName: picked.name, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on",
+      kakaoPlaceId: manual ? "" : picked!.id, placeName: manual ? "" : picked!.name,
+      manualPlace: manual ? { name: f.get("placeName"), address: f.get("placeAddress"), phone: f.get("placePhone") } : null, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on",
     };
     const r = await fetch("/api/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
@@ -47,7 +50,15 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
     <form className="stack" onSubmit={submit}>
       <section className="panel stack">
         <h2 style={{ margin: 0 }}>매장</h2>
-        {picked ? (
+        {manual ? (
+          <div className="stack manual-place">
+            <p className="hint" style={{ margin: 0 }}>카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 직접 적어 신청해 주세요. 운영자가 승인할 때 확인해 카카오맵 장소와 연결하고, <b>연결 전까지는 페어링GO 식당 검색·예약에 나오지 않아요.</b> 매장 정보·영업시간은 승인되면 바로 정할 수 있어요.</p>
+            <label className="f">매장 상호<input type="text" name="placeName" required minLength={2} maxLength={40} placeholder="예: 페어링 주점 둔산점" /></label>
+            <label className="f">매장 주소 <span className="hint">도로명 주소 + 층·호수</span><input type="text" name="placeAddress" required minLength={5} maxLength={120} placeholder="예: 대전 서구 둔산로 100 1층" autoComplete="street-address" /></label>
+            <label className="f">매장 전화 <span className="hint">선택</span><input type="tel" name="placePhone" inputMode="tel" maxLength={20} placeholder="042-000-0000" /></label>
+            <button type="button" className="linklike" style={{ justifySelf: "start" }} onClick={() => { setManual(false); setErr(""); }}>← 다시 검색하기</button>
+          </div>
+        ) : picked ? (
           <div className="picked">
             <div><b>{picked.name}</b><span>{picked.address}{picked.phone ? ` · ${picked.phone}` : ""}</span></div>
             <button type="button" className="btn ghost sm" onClick={() => { setPicked(null); setPlaces(null); setQ(""); }}>다시 찾기</button>
@@ -65,6 +76,11 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
             ) : places ? <span className="hint">검색 결과가 없어요 — 상호를 조금 다르게 적어 보세요</span> : null}
           </label>
         )}
+        {!manual && !picked ? (
+          <button type="button" className="linklike to-manual" onClick={() => { setManual(true); setErr(""); }}>
+            검색해도 내 매장이 안 나와요 → 직접 입력하기
+          </button>
+        ) : null}
         <label className="f">대표자 이름<input type="text" name="ownerName" required maxLength={20} /></label>
         <label className="f">사업자등록번호 <span className="hint">숫자 10자리 — 승인할 때 운영자가 확인해요</span><input type="text" name="bizNo" inputMode="numeric" required placeholder="000-00-00000" maxLength={12} /></label>
       </section>
