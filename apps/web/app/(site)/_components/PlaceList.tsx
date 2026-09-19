@@ -6,7 +6,7 @@
 import Link from "next/link";
 import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceRating } from "@pairinggo/shared";
 import Heart from "./Heart";
-import MenuBoard from "./MenuBoard";
+import MenuBoard, { MenuThumbs } from "./MenuBoard";
 import { track } from "@/lib/track";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
@@ -49,7 +49,7 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
                 {!!p.infoView?.foods.length && <div><b>메뉴</b> {p.infoView?.foods.map((x, i) => <span key={x.id}>{i > 0 && " · "}{x.slug ? <Link href={`/foods/${x.slug}`}>{x.name}</Link> : x.name}</span>)}</div>}
                 {p.info.menuNote && <div>{p.info.menuNote}</div>}
                 {!!(p.info.menuItems?.length || p.info.drinkItems?.length) && (
-                  <details className="pmenu"><summary>메뉴판 보기</summary><MenuBoard menu={p.info.menuItems ?? []} drinks={p.info.drinkItems ?? []} /></details>
+                  <details className="pmenu"><summary>메뉴판 보기 <MenuThumbs menu={p.info.menuItems ?? []} drinks={p.info.drinkItems ?? []} /></summary><MenuBoard menu={p.info.menuItems ?? []} drinks={p.info.drinkItems ?? []} /></details>
                 )}
               </div>
             )}

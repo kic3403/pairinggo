@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanDrinkItems, cleanMenuItems, cleanVolume, formatAbv, formatPrice, itemsToLists, mergeMenuRows, parseAbv, parsePrice } from "../menu-items";
+import { cleanDrinkItems, cleanMenuImage, cleanMenuItems, cleanVolume, formatAbv, formatPrice, itemsToLists, menuImages, mergeMenuRows, parseAbv, parsePrice } from "../menu-items";
 
 const catalog = { drinks: [{ id: "d11", name: "한산소곡주" }], foods: [{ id: "f08", name: "해물파전" }] };
 
@@ -54,5 +54,27 @@ describe("사진에서 읽은 줄 더하기", () => {
   it("표 → 카탈로그 연결 목록", () => {
     expect(itemsToLists([{ name: "해물파전", desc: "", price: null }, { name: "도토리묵", desc: "", price: null }], [{ name: "한산소곡주", volume: "", abv: null, price: null }, { name: "생맥주", volume: "", abv: null, price: null }], catalog))
       .toEqual({ drinkIds: ["d11"], drinkNames: ["생맥주"], foodIds: ["f08"], menuNames: ["도토리묵"] });
+  });
+});
+
+describe("메뉴 사진", () => {
+  const ok = "https://abcdefgh.supabase.co/storage/v1/object/public/menu-photos/1f0c2a3b-aaaa-bbbb-cccc-1234567890ab/1789800000000-x7k2.jpg";
+  it("우리 저장소 menu-photos 공개 주소만 받는다", () => {
+    expect(cleanMenuImage(ok)).toBe(ok);
+    expect(cleanMenuImage("https://evil.example.com/a.jpg")).toBe("");
+    expect(cleanMenuImage("https://abcdefgh.supabase.co/storage/v1/object/public/member-picks/u/a.jpg")).toBe("");
+    expect(cleanMenuImage("javascript:alert(1)")).toBe("");
+    expect(cleanMenuImage(ok.replace(".jpg", ".jpg?x=1"))).toBe("");
+    expect(cleanMenuImage(ok.replace("/1789", "/../1789"))).toBe("");
+  });
+  it("표에 사진을 붙여 두고, 이상한 주소는 떼어 낸다(없으면 속성 없음)", () => {
+    expect(cleanMenuItems([{ name: "수육", desc: "", price: 30000, img: ok }, { name: "파전", price: 1, img: "http://x/a.jpg" }]))
+      .toEqual([{ name: "수육", desc: "", price: 30000, img: ok }, { name: "파전", desc: "", price: 1 }]);
+    expect(cleanDrinkItems([{ name: "소곡주", volume: "700ml", abv: 18, price: 25000, img: ok }])[0].img).toBe(ok);
+  });
+  it("사진 읽기로 더해도 이미 붙인 사진은 그대로", () => {
+    const m = mergeMenuRows({ menu: [{ name: "수육", desc: "", price: null, img: ok }], drinks: [] }, [{ kind: "food", name: "수육", catalogName: null, desc: "", price: 30000 }], catalog);
+    expect(m.menu[0]).toEqual({ name: "수육", desc: "", price: 30000, img: ok });
+    expect(menuImages(m.menu, [{ name: "a", volume: "", abv: null, price: null }])).toEqual([ok]);
   });
 });

@@ -6,8 +6,17 @@
  */
 import { addListItem } from "./place-info";
 
-export type MenuItem = { name: string; desc: string; price: number | null };
-export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null };
+/** img: 사장님이 올린 사진(우리 저장소 menu-photos 공개 주소만, 없으면 속성 자체가 없음 — 2026-09-19) */
+export type MenuItem = { name: string; desc: string; price: number | null; img?: string };
+export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null; img?: string };
+
+/** 메뉴 사진 저장소(Supabase Storage 공개 버킷) — 경로는 {매장 id}/{파일} */
+export const MENU_PHOTO_BUCKET = "menu-photos";
+const MENU_PHOTO_URL = /^https:\/\/[a-z0-9-]+\.supabase\.co\/storage\/v1\/object\/public\/menu-photos\/[A-Za-z0-9-]{1,64}\/[A-Za-z0-9_-]{1,80}\.(?:jpg|jpeg|png|webp)$/;
+/** 메뉴 사진 주소 — 우리 저장소 공개 주소만 받는다(다른 사이트 사진·스크립트 주소 차단). 아니면 "" */
+export const cleanMenuImage = (v: unknown): string => { const s = String(v ?? "").trim(); return s.length <= 300 && MENU_PHOTO_URL.test(s) ? s : ""; };
+/** 표에 쓰인 사진 주소들(저장소 정리 때 지우지 않을 것) */
+export const menuImages = (menu: { img?: string }[], drinks: { img?: string }[]): string[] => [...menu, ...drinks].map((x) => x.img ?? "").filter(Boolean);
 
 export const MENU_ITEMS_MAX = 80, MENU_NAME_MAX = 40, MENU_DESC_MAX = 60, DRINK_VOLUME_MAX = 20, PRICE_MAX = 10_000_000;
 
@@ -49,7 +58,8 @@ export function cleanMenuItems(raw: unknown): MenuItem[] {
     const name = text(o.name, MENU_NAME_MAX), desc = text(o.desc, MENU_DESC_MAX);
     if (!name || seen.has(key(name)) || hasLink(name) || hasLink(desc)) continue;
     seen.add(key(name));
-    out.push({ name, desc, price: parsePrice(o.price) });
+    const img = cleanMenuImage(o.img);
+    out.push({ name, desc, price: parsePrice(o.price), ...(img ? { img } : {}) });
     if (out.length >= MENU_ITEMS_MAX) break;
   }
   return out;
@@ -64,7 +74,8 @@ export function cleanDrinkItems(raw: unknown): DrinkItem[] {
     const k = `${key(name)}|${key(volume)}`;
     if (!name || seen.has(k) || hasLink(name)) continue;
     seen.add(k);
-    out.push({ name, volume, abv: parseAbv(o.abv), price: parsePrice(o.price) });
+    const img = cleanMenuImage(o.img);
+    out.push({ name, volume, abv: parseAbv(o.abv), price: parsePrice(o.price), ...(img ? { img } : {}) });
     if (out.length >= MENU_ITEMS_MAX) break;
   }
   return out;

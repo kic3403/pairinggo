@@ -1,6 +1,7 @@
 import { addDays, kstParts } from "@pairinggo/shared";
 import { notifyReservation, notifyStoreToday } from "@pairinggo/server/notify";
 import { reportError } from "@pairinggo/server/errors";
+import { cleanupMenuPhotos } from "@pairinggo/server/menu-photo";
 import { db } from "@/lib/db";
 import { error, json, NO_CACHE } from "@/lib/http";
 
@@ -9,7 +10,7 @@ export const maxDuration = 60;
 
 /**
  * GET /api/cron/reservations — 매일 아침(08:00 KST 무렵, Vercel Hobby 크론은 한 시간 안에서 흔들림).
- *  1. 손님 당일 안내(확정 예약) 2. 매장 "오늘 예약 N팀" 3. 방문일 1년 지난 예약 삭제 4. 하루 지난 인증번호 기록 삭제 — 개인정보처리방침 3번
+ *  1. 손님 당일 안내(확정 예약) 2. 매장 "오늘 예약 N팀" 3. 방문일 1년 지난 예약 삭제 4. 하루 지난 인증번호 기록 삭제 — 개인정보처리방침 3번 5. 표에서 빠진 지 30일 된 메뉴 사진 삭제
  */
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
@@ -36,6 +37,8 @@ export async function GET(req: Request) {
   // 운영 오류 기록 — 해결한 것은 30일, 나머지는 마지막으로 난 지 90일 지나면 지운다
   await sb.from("server_errors").delete().not("resolved_at", "is", null).lt("last_at", new Date(Date.now() - 30 * 86400_000).toISOString());
   await sb.from("server_errors").delete().lt("last_at", new Date(Date.now() - 90 * 86400_000).toISOString());
+  // 표에서 빠진 메뉴 사진 — 30일(변경 이력 되돌리기 기간) 지나면 지운다
+  const purgedMenuPhotos = await cleanupMenuPhotos().catch((e) => { void reportError("web", "cron/menu-photos", e); return 0; });
   const { count: purgedNotifications } = await sb.from("notifications").delete({ count: "exact" }).lt("created_at", new Date(Date.now() - 180 * 86400_000).toISOString());
-  return json(req, { ok: true, today, reminded, merchants: byMerchant.size, purgedReservations: purgedReservations ?? 0, purgedOtp: purgedOtp ?? 0, purgedNotifications: purgedNotifications ?? 0 }, { headers: NO_CACHE });
+  return json(req, { ok: true, today, reminded, merchants: byMerchant.size, purgedReservations: purgedReservations ?? 0, purgedOtp: purgedOtp ?? 0, purgedNotifications: purgedNotifications ?? 0, purgedMenuPhotos }, { headers: NO_CACHE });
 }

@@ -60,7 +60,7 @@ function MenuPhotoUpload({ enabled, onRows }: { enabled: boolean; onRows: (rows:
     <div className="mphoto">
       <div>
         <b>메뉴판 사진으로 채우기</b>
-        <p className="small muted" style={{ margin: "2px 0 0" }}>사진(최대 {MENU_MAX_FILES}장)을 올리면 음식·술 이름과 설명·가격·용량·도수를 읽어 아래 표에 더해요. 적혀 있지 않은 칸은 빈칸으로 둬요. 사진은 저장하지 않아요.</p>
+        <p className="small muted" style={{ margin: "2px 0 0" }}>사진(최대 {MENU_MAX_FILES}장)을 올리면 음식·술 이름과 설명·가격·용량·도수를 읽어 아래 표에 더해요. 적혀 있지 않은 칸은 빈칸으로 둬요. 메뉴판 사진은 저장하지 않아요.</p>
       </div>
       {enabled ? (
         <label className={`btn primary${busy ? " is-busy" : ""}`}>
@@ -73,13 +73,45 @@ function MenuPhotoUpload({ enabled, onRows }: { enabled: boolean; onRows: (rows:
   );
 }
 
-function MenuTable({ rows, onChange }: { rows: MenuItem[]; onChange: (r: MenuItem[]) => void }) {
+/**
+ * 한 줄 사진 — 비어 있으면 [+ 사진], 있으면 작은 사진(누르면 바꾸기) + 빼기.
+ * 긴 변 800px JPEG로 줄여 /api/menu-photo 에 올리고 주소만 표에 붙인다 — [저장]을 눌러야 페어링GO에 보인다.
+ */
+function PhotoCell({ img, label, onChange, onError }: { img?: string; label: string; onChange: (url: string | undefined) => void; onError: (m: string) => void }) {
+  const [busy, setBusy] = useState(false);
+  async function pick(file: File | undefined) {
+    if (!file || busy) return;
+    if (!file.type.startsWith("image/")) { onError("사진 파일을 골라 주세요"); return; }
+    setBusy(true); onError("");
+    try {
+      const { data } = await shrinkToJpeg(file, MENU_PHOTO_EDGE);
+      const r = await fetch("/api/menu-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ data }) });
+      const j = (await r.json().catch(() => ({}))) as { url?: string; error?: string };
+      if (!r.ok || !j.url) throw new Error(j.error ?? "사진을 올리지 못했어요");
+      onChange(j.url);
+    } catch (e) { onError((e as Error).message); } finally { setBusy(false); }
+  }
+  return (
+    <div className={`mimg${img ? " has" : ""}${busy ? " is-busy" : ""}`}>
+      <label title={img ? "사진 바꾸기" : "사진 추가"}>
+        {img ? <img src={img} alt={`${label} 사진`} /> : <span>{busy ? "…" : "+ 사진"}</span>}
+        <input type="file" accept="image/*" hidden disabled={busy} aria-label={`${label || "이 줄"} 사진 ${img ? "바꾸기" : "추가"}`} onChange={(e) => { void pick(e.target.files?.[0]); e.target.value = ""; }} />
+      </label>
+      {img && !busy ? <button type="button" className="mimg-x" aria-label={`${label || "이 줄"} 사진 빼기`} onClick={() => onChange(undefined)}>×</button> : null}
+    </div>
+  );
+}
+const MENU_PHOTO_EDGE = 800;
+const withImg = <T extends { img?: string }>(r: T, url: string | undefined): T => { const { img: _, ...rest } = r; return (url ? { ...rest, img: url } : rest) as T; };
+
+function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onChange: (r: MenuItem[]) => void; onImg: (i: number, url: string | undefined) => void; onError: (m: string) => void }) {
   const set = (i: number, patch: Partial<MenuItem>) => onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
   return (
     <div className="mtable">
-      <div className="mhead menu"><span>음식명</span><span>간단한 설명</span><span>가격(원)</span><span /></div>
+      <div className="mhead menu"><span>사진</span><span>음식명</span><span>간단한 설명</span><span>가격(원)</span><span /></div>
       {rows.map((r, i) => (
         <div className="mrow menu" key={i}>
+          <PhotoCell img={r.img} label={r.name} onError={onError} onChange={(url) => onImg(i, url)} />
           <input type="text" aria-label="음식명" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="음식명" />
           <input type="text" aria-label="간단한 설명" value={r.desc} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="설명(없으면 비워 두세요)" />
           <NumInput value={r.price} onChange={(v) => set(i, { price: v })} parse={priceOf} unit="원" label="가격" />
@@ -91,13 +123,14 @@ function MenuTable({ rows, onChange }: { rows: MenuItem[]; onChange: (r: MenuIte
   );
 }
 
-function DrinkTable({ rows, onChange }: { rows: DrinkItem[]; onChange: (r: DrinkItem[]) => void }) {
+function DrinkTable({ rows, onChange, onImg, onError }: { rows: DrinkItem[]; onChange: (r: DrinkItem[]) => void; onImg: (i: number, url: string | undefined) => void; onError: (m: string) => void }) {
   const set = (i: number, patch: Partial<DrinkItem>) => onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
   return (
     <div className="mtable">
-      <div className="mhead drink"><span>술 이름</span><span>용량</span><span>도수(%)</span><span>가격(원)</span><span /></div>
+      <div className="mhead drink"><span>사진</span><span>술 이름</span><span>용량</span><span>도수(%)</span><span>가격(원)</span><span /></div>
       {rows.map((r, i) => (
         <div className="mrow drink" key={i}>
+          <PhotoCell img={r.img} label={r.name} onError={onError} onChange={(url) => onImg(i, url)} />
           <input type="text" aria-label="술 이름" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="술 이름" />
           <input type="text" aria-label="용량" value={r.volume} maxLength={20} onChange={(e) => set(i, { volume: e.target.value })} placeholder="750ml·잔" />
           <NumInput value={r.abv} onChange={(v) => set(i, { abv: v })} parse={abvOf} unit="%" label="도수" decimal />
@@ -118,6 +151,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
   });
   const [tables, setTables] = useState(() => initialTables(info, drinks, foods));
   const [state, setState] = useState<{ busy?: boolean; ok?: string; err?: string }>({});
+  const [photoErr, setPhotoErr] = useState("");
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
 
   const preview: PlaceInfo = {
@@ -153,13 +187,15 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
           setTables({ menu: m.menu, drinks: m.drinks });
           return m;
         }} />
+        <p className="small muted" style={{ margin: 0 }}>줄마다 <b>+ 사진</b>을 눌러 음식·술 사진을 붙일 수 있어요. 손님 화면 메뉴판에 사진·이름·설명·가격이 함께 보여요. 직접 찍었거나 쓸 권리가 있는 사진만 올려 주세요.</p>
+        {photoErr ? <p className="err" role="alert" style={{ margin: 0 }}>{photoErr}</p> : null}
         <div>
           <h3 className="mtitle">메뉴 <span className="muted small">{tables.menu.length}개</span></h3>
-          <MenuTable rows={tables.menu} onChange={(menu) => setTables({ ...tables, menu })} />
+          <MenuTable rows={tables.menu} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, menu: t.menu.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(menu) => setTables((t) => ({ ...t, menu }))} />
         </div>
         <div>
           <h3 className="mtitle">술 <span className="muted small">{tables.drinks.length}개</span></h3>
-          <DrinkTable rows={tables.drinks} onChange={(d) => setTables({ ...tables, drinks: d })} />
+          <DrinkTable rows={tables.drinks} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, drinks: t.drinks.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(d) => setTables((t) => ({ ...t, drinks: d }))} />
         </div>
         <p className="small muted" style={{ margin: 0 }}>페어링GO에 있는 음식·전통주와 이름이 같으면 손님 화면에서 그 페이지로 이어져요.</p>
       </section>
