@@ -79,3 +79,24 @@ export function placeRelevance(place: { name: string; categoryPath?: string }, f
 export function rankPlaces<T extends { name: string; categoryPath?: string }>(places: T[], food: { name: string; category?: string }): T[] {
   return places.map((p, i) => ({ p, i, r: placeRelevance(p, food) })).sort((a, b) => b.r - a.r || a.i - b.i).map((x) => x.p);
 }
+
+/* ---------- 식당 이름 검색(2026-09-19) ---------- */
+const nameKey = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+/**
+ * 이름이 검색어와 얼마나 맞나 — 0 같음 · 1 이름에 든다 · 2 이름에 없다.
+ * 카카오 키워드 검색은 메뉴명·태그까지 봐서 "유록"에 이름이 다른 "오징어세상"도 돌려준다 — 이름이 맞는 곳을 먼저 보여 주려고 쓴다.
+ */
+export function placeNameMatch(name: string, q: string): 0 | 1 | 2 {
+  const n = nameKey(name), k = nameKey(q);
+  if (!k) return 2;
+  return n === k ? 0 : n.includes(k) ? 1 : 2;
+}
+/** 이름이 같은 곳 → 이름에 든 곳 → 나머지(각 묶음 안에서는 원래 순서) */
+export function sortByNameMatch<T extends { name: string }>(places: T[], q: string): T[] {
+  return places.map((p, i) => ({ p, i, m: placeNameMatch(p.name, q) })).sort((a, b) => a.m - b.m || a.i - b.i).map((x) => x.p);
+}
+/** 자동완성용 — 이름이 맞는 곳이 하나라도 있으면 그곳들만, 없으면 전부(키워드 검색: "을지로 노가리") */
+export function nameMatchedOrAll<T extends { name: string }>(places: T[], q: string): T[] {
+  const named = places.filter((p) => placeNameMatch(p.name, q) < 2);
+  return named.length ? named : places;
+}

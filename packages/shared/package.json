@@ -13,6 +13,7 @@
     "./pick": "./src/pairing/pick.ts",
     "./member": "./src/pairing/member.ts",
     "./slug": "./src/slug.ts",
+    "./places": "./src/places.ts",
     "./push-client": "./src/push-client.ts",
     "./image-client": "./src/image-client.ts",
     "./data/*": "./data/*"
