@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
+import { duplicateMessage } from "@pairinggo/shared";
 import { enabledProviders, signIn } from "@/auth";
 import SocialButton from "../_components/SocialButton";
 import AuthAttempt from "../_components/AuthAttempt";
@@ -14,7 +15,7 @@ export const metadata: Metadata = { title: "로그인 | 페어링GO", robots: { 
 /** 내부 경로만 허용 — 오픈 리다이렉트 방지 */
 const safeNext = (v?: string) => (v && v.startsWith("/") && !v.startsWith("//") ? v : "/my");
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; error?: string }> }) {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; error?: string; via?: string }> }) {
   const sp = await searchParams;
   const next = safeNext(sp.next);
   const social = enabledProviders();
@@ -38,7 +39,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <h1>로그인</h1>
       <p className="lead">저장한 전통주·음식·음식점을 어느 기기에서나 볼 수 있습니다.</p>
 
-      {sp.error && <p className="form-error">{sp.error === "cred" ? "이메일 또는 비밀번호가 맞지 않습니다." : "로그인에 실패했습니다. 다시 시도해 주세요."}</p>}
+      {sp.error && <p className="form-error" role="alert">{sp.error === "cred" ? "이메일 또는 비밀번호가 맞지 않습니다." : sp.error === "dup" ? duplicateMessage(sp.via) : "로그인에 실패했습니다. 다시 시도해 주세요."}</p>}
 
       <form action={emailLogin} style={{ marginTop: 18 }}>
         <input type="hidden" name="next" value={next} />

@@ -2,7 +2,7 @@
  * 이메일 계정 — 가입·로그인 검증. service_role로만 접근한다.
  * 연속 실패 잠금: 10회 실패하면 15분. 비밀번호 해시가 느려도(scrypt) 무차별 대입을 늦추는 장치가 하나는 필요하다.
  */
-import { CONSENT_VERSION, cleanNickname, needsConsent, nicknameProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
+import { CONSENT_VERSION, cleanMethods, cleanNickname, duplicateMessage, needsConsent, normalizeMobile, sameIdentity, type Identity, type LoginMethod, nicknameProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
 import { db } from "./db";
 import { emailLooksValid, hashPassword, normalizeEmail, passwordProblem, verifyPassword } from "./password";
 import { transitionReservation } from "@pairinggo/server/reservations";
@@ -26,8 +26,10 @@ export async function signUpWithEmail(emailRaw: string, password: string, nameRa
   const name = cleanNickname(nameRaw);
 
   const sb = need();
-  const { data: existing } = await sb.from("users").select("id").eq("provider", "email").ilike("email", email).maybeSingle();
-  if (existing) return { ok: false, error: "이미 가입된 이메일입니다. 로그인해 주세요." };
+  // 이메일 가입뿐 아니라 카카오·네이버·구글로 같은 이메일을 쓰는 회원이 있어도 막는다(같은 사람 중복 가입 금지)
+  const dup = await existingAccountMethods({ email });
+  if (dup.includes("email")) return { ok: false, error: "이미 가입된 이메일입니다. 로그인해 주세요." };
+  if (dup.length) return { ok: false, error: duplicateMessage(dup) };
   if (await nicknameTaken(name, null)) return { ok: false, error: "이미 쓰고 있는 닉네임이에요. 다른 이름을 입력해 주세요." };
   // 추천인(선택) — 적었는데 없는 닉네임이면 가입을 막지 않고 알려 준다(오타로 가입이 막히면 더 손해)
   const referrer = cleanNickname(referrerNick) ? await findUserIdByNickname(referrerNick!) : null;
@@ -41,6 +43,26 @@ export async function signUpWithEmail(emailRaw: string, password: string, nameRa
   // 동시 가입 경합 — 고유 인덱스가 막아 준다
   if (error) return { ok: false, error: error.code === "23505" ? "이미 가입된 이메일입니다." : "가입에 실패했습니다. 잠시 후 다시 시도해 주세요." };
   return { ok: true, id: data.id as string };
+}
+
+/**
+ * 같은 사람이 이미 가입했는지 — 이메일(가입 방법 무관) 또는 문자 인증한 휴대폰 번호가 같은 회원의 가입 방법들(없으면 빈 배열).
+ * 페어링GO는 실명을 받지 않아 번호는 인증된 것만으로 본다(shared sameIdentity). except: 지금 그 회원 자신은 빼기.
+ */
+export async function existingAccountMethods(who: Identity, except?: { id?: string; provider?: string; uid?: string }): Promise<LoginMethod[]> {
+  const sb = db(); if (!sb) return [];
+  const email = String(who.email ?? "").trim().toLowerCase();
+  const phone = who.phone ? normalizeMobile(who.phone) : null;
+  const cols = "id, provider, provider_uid, email, phone";
+  const [byEmail, byPhone] = await Promise.all([
+    email ? sb.from("users").select(cols).ilike("email", email.replace(/[\\%_]/g, (c) => "\\" + c)).limit(5) : Promise.resolve({ data: [] }),
+    phone ? sb.from("users").select(cols).eq("phone", phone).not("phone_verified_at", "is", null).limit(5) : Promise.resolve({ data: [] }),
+  ]);
+  const rows = [...(byEmail.data ?? []), ...(byPhone.data ?? [])] as { id: string; provider: string; provider_uid: string; email: string | null; phone: string | null }[];
+  const hits = rows.filter((r) =>
+    r.id !== except?.id && !(except?.provider && r.provider === except.provider && r.provider_uid === except.uid) &&
+    sameIdentity({ email, phone }, { email: r.email, phone: r.phone }) != null);
+  return cleanMethods(hits.map((r) => r.provider));
 }
 
 export type AccountUser = { id: string; email: string; name: string | null };

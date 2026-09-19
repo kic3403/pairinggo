@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { duplicateMessage } from "@pairinggo/shared";
 import { Bar } from "../_bar";
 import { SocialButtons } from "../SocialButtons";
 import { enabledProviders } from "@/lib/oauth";
@@ -17,9 +18,10 @@ const ERR: Record<string, string> = {
   oauth_fail: "간편로그인을 확인하지 못했어요 — 잠시 뒤 다시 시도하거나 이메일로 로그인해 주세요",
 };
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string; via?: string }> }) {
   if (await currentPartner()) redirect("/");
-  const err = ERR[(await searchParams).error ?? ""];
+  const sp = await searchParams;
+  const err = sp.error === "dup" ? duplicateMessage(sp.via, "partner") : ERR[sp.error ?? ""];
   return (
     <>
       <Bar />

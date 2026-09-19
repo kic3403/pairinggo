@@ -4,9 +4,10 @@
  * 번호는 인증에 성공했을 때만 users.phone에 저장한다. 인증번호는 HMAC 해시로만 보관.
  */
 import { createHmac, randomInt, timingSafeEqual } from "node:crypto";
-import { normalizeMobile, OTP_DAILY_MAX, OTP_LENGTH, OTP_MAX_ATTEMPTS, OTP_RESEND_SEC, OTP_TTL_SEC, otpLooksValid } from "@pairinggo/shared";
+import { LOGIN_METHOD_LABEL, normalizeMobile, OTP_DAILY_MAX, OTP_LENGTH, OTP_MAX_ATTEMPTS, OTP_RESEND_SEC, OTP_TTL_SEC, otpLooksValid } from "@pairinggo/shared";
 import { phoneVerifyAvailable, sendSms } from "@pairinggo/server/sms";
 import { reportError } from "@pairinggo/server/errors";
+import { existingAccountMethods } from "./account";
 import { db } from "./db";
 
 const need = () => { const c = db(); if (!c) throw new Error("지금은 인증할 수 없어요"); return c; };
@@ -58,6 +59,9 @@ export async function confirmVerification(userId: string, code: string): Promise
   }
   const now = new Date().toISOString();
   await c.from("phone_verifications").update({ verified_at: now }).eq("id", v.id);
+  // 같은 번호를 다른 가입 방법의 계정에서 이미 인증했으면 같은 사람의 두 번째 계정 — 번호 주인임을 확인한 뒤에만 알려 준다
+  const dup = await existingAccountMethods({ phone: String(v.phone) }, { id: userId });
+  if (dup.length) return { ok: false, problem: `이 번호로 인증한 다른 계정이 있어요. ${dup.map((m) => LOGIN_METHOD_LABEL[m]).join("·")}로 가입한 계정으로 로그인해 주세요.` };
   const { error } = await c.from("users").update({ phone: v.phone, phone_verified_at: now }).eq("id", userId);
   if (error) return { ok: false, problem: "저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   return { ok: true, phone: String(v.phone) };

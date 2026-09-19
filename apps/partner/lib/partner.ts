@@ -4,7 +4,7 @@
 import { db } from "@pairinggo/server/db";
 import { hashPassword, passwordProblem, verifyPassword } from "@pairinggo/server/password";
 import { merchantFromRow, type Merchant } from "@pairinggo/server/reservations";
-import { validatePartnerSignup, type OAuthProfile, type OAuthProvider, type PartnerSignupInput } from "@pairinggo/shared";
+import { cleanMethods, duplicateMessage, normalizeMobile, sameIdentity, validatePartnerSignup, type Identity, type LoginMethod, type OAuthProfile, type OAuthProvider, type PartnerSignupInput } from "@pairinggo/shared";
 import { randomBytes } from "node:crypto";
 import { redirect } from "next/navigation";
 import { currentPartner, requirePartner, type PartnerUser } from "./session";
@@ -66,11 +66,12 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick, so
     if (taken) return { ok: false, problem: `이미 가입한 ${social.provider === "kakao" ? "카카오" : "네이버"} 계정이에요 — 로그인해 주세요` };
   }
 
-  const [{ data: dupUser }, { data: dupMerchant }] = await Promise.all([
-    c.from("partner_users").select("id").eq("email", s.email).maybeSingle(),
+  // 같은 사람 중복 가입 금지 — 이메일이 같거나 이름 + 휴대폰 번호가 같은 파트너 계정이 있으면(가입 방법 무관) 막는다
+  const [dup, { data: dupMerchant }] = await Promise.all([
+    existingPartnerMethods({ email: s.email, name: s.name, phone: s.phone }),
     c.from("merchants").select("id, status").eq("kakao_place_id", s.kakaoPlaceId).maybeSingle(),
   ]);
-  if (dupUser) return { ok: false, problem: "이미 가입한 이메일이에요 — 로그인해 주세요" };
+  if (dup) return { ok: false, problem: duplicateMessage(dup, "partner") };
   if (dupMerchant) return { ok: false, problem: "이미 파트너 신청이 된 매장이에요 — 함께 쓰려면 운영자에게 문의해 주세요" };
 
   const passwordHash = social ? `oauth:${randomBytes(18).toString("base64url")}` : await hashPassword(s.password);
@@ -105,6 +106,28 @@ export async function approvedOrError(): Promise<{ user: PartnerUser; merchant: 
   const merchant = (await myMerchants(user.id)).find((m) => m.status === "approved");
   if (!merchant) return Response.json({ error: "승인된 매장이 없어요" }, { status: 403 });
   return { user, merchant };
+}
+
+/**
+ * 같은 사람이 이미 가입한 파트너 계정의 가입 방법들(이메일·카카오·네이버) — 없으면 null.
+ * 이메일이 같거나, 이름 + 휴대폰 번호가 같은 계정(shared sameIdentity). 비밀번호가 있으면 "이메일", 연결된 간편로그인은 그 공급자.
+ */
+export async function existingPartnerMethods(who: Identity): Promise<LoginMethod[] | null> {
+  const c = db();
+  if (!c) return null;
+  const email = String(who.email ?? "").trim().toLowerCase();
+  const phone = who.phone ? normalizeMobile(who.phone) : null;
+  const cols = "id, email, name, phone, password_hash";
+  const [byEmail, byPhone] = await Promise.all([
+    email ? c.from("partner_users").select(cols).eq("email", email).limit(5) : Promise.resolve({ data: [] }),
+    phone ? c.from("partner_users").select(cols).eq("phone", phone).limit(5) : Promise.resolve({ data: [] }),
+  ]);
+  const rows = [...(byEmail.data ?? []), ...(byPhone.data ?? [])] as { id: string; email: string; name: string | null; phone: string | null; password_hash: string }[];
+  const hits = rows.filter((r) => sameIdentity(who, r) != null);
+  if (!hits.length) return null;
+  const { data: ids } = await c.from("partner_identities").select("provider").in("partner_user_id", [...new Set(hits.map((r) => r.id))]);
+  const methods = [...(hits.some((r) => !String(r.password_hash).startsWith("oauth:")) ? ["email"] : []), ...(ids ?? []).map((r) => String(r.provider))];
+  return cleanMethods(methods);
 }
 
 /* ---------- 간편로그인(카카오·네이버) 연결 ---------- */

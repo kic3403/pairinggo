@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { reportError } from "@pairinggo/server/errors";
 import { isProvider, oauthCookie, PENDING_COOKIE, profileFromCode, readState, redirectUri, sealPending, STATE_COOKIE } from "@/lib/oauth";
-import { linkIdentity, partnerByIdentity } from "@/lib/partner";
+import { existingPartnerMethods, linkIdentity, partnerByIdentity } from "@/lib/partner";
 import { COOKIE, cookieOptions, currentPartner, issueToken } from "@/lib/session";
 
 /**
@@ -34,6 +34,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ provider
     jar.set(COOKIE, issueToken(found.id, found.passwordHash), cookieOptions);
     return back("/");
   }
+  // 처음 오는 간편로그인 계정 — 같은 이메일이거나 이름 + 번호가 같은 파트너 계정이 있으면 새 가입 대신 원래 방법으로 로그인하라고 안내
+  const dup = await existingPartnerMethods(prof);
+  if (dup) return back(`/login?error=dup&via=${dup.join(",")}`);
   jar.set(PENDING_COOKIE, sealPending(prof), oauthCookie(900));
   return back(`/signup?social=${provider}`);
 }

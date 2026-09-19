@@ -12,8 +12,8 @@ import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
-import { cleanNickname } from "@pairinggo/shared";
-import { verifyEmailLogin } from "@/lib/account";
+import { cleanNickname, parseKakaoProfile, parseNaverProfile, type Identity } from "@pairinggo/shared";
+import { existingAccountMethods, verifyEmailLogin } from "@/lib/account";
 import { db } from "@/lib/db";
 
 export type SocialProvider = "kakao" | "naver" | "google";
@@ -55,6 +55,27 @@ async function upsertUser(p: { provider: SocialProvider; uid: string; email?: st
   return data?.id as string | undefined ?? null;
 }
 
+/** 공급자 원본 프로필 → 중복 가입 확인용 이메일·번호(인증된 이메일만) */
+function socialIdentity(provider: SocialProvider, raw: unknown, fallbackEmail?: string | null): Identity {
+  if (provider === "kakao") { const p = parseKakaoProfile(raw); return { email: p?.email ?? null, phone: p?.phone ?? null }; }
+  if (provider === "naver") { const p = parseNaverProfile(raw); return { email: p?.email ?? fallbackEmail ?? null, phone: p?.phone ?? null }; }
+  const g = (raw ?? {}) as { email?: string; email_verified?: boolean };
+  return { email: g.email_verified === false ? null : g.email ?? null };
+}
+
+/**
+ * 같은 사람 중복 가입 막기(2026-09-19) — 처음 오는 간편로그인 계정인데 같은 이메일·인증 번호로 가입한 회원이 있으면 새로 만들지 않고
+ * 로그인 화면에 "이미 가입된 계정 — ○○로 가입하셨어요"를 띄운다. 이미 이 공급자로 가입한 회원은 그대로 통과.
+ */
+async function duplicateRedirect(provider: SocialProvider, uid: string, raw: unknown, fallbackEmail?: string | null): Promise<string | null> {
+  const sb = db();
+  if (!sb || !uid) return null;
+  const { data: mine } = await sb.from("users").select("id").eq("provider", provider).eq("provider_uid", uid).maybeSingle();
+  if (mine) return null;
+  const via = await existingAccountMethods(socialIdentity(provider, raw, fallbackEmail), { provider, uid });
+  return via.length ? `/login?error=dup&via=${via.join(",")}` : null;
+}
+
 const providers: NextAuthConfig["providers"] = [
   // 이메일·비밀번호 — 소셜 키가 하나도 없어도 가입·로그인이 된다
   Credentials({
@@ -78,6 +99,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt", maxAge: 60 * 60 * 24 },
   pages: { signIn: "/login", error: "/login" },
   callbacks: {
+    async signIn({ account, profile, user }) {
+      if (!account || account.provider === "email") return true;
+      const uid = String(account.providerAccountId ?? "");
+      return (await duplicateRedirect(account.provider as SocialProvider, uid, profile, user?.email)) ?? true;
+    },
     async jwt({ token, account, profile, user }) {
       // 이메일 로그인은 authorize()가 이미 users 행을 확인했으므로 그 id를 그대로 쓴다
       if (account?.provider === "email" && user?.id) { token.uid = user.id; token.provider = "email"; return token; }
