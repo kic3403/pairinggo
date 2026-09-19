@@ -17,12 +17,12 @@ import { connect } from "./sql";
 const DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "research", "awards");
 const apply = process.argv.includes("--apply");
 
-export type AwardEntry = DrinkAward & { name: string; brewery: string; source: string };
+export type AwardEntry = DrinkAward & { name: string; brewery: string; source: string; region?: string };
 /** 두 대회 명단을 한 형식으로 */
 export function loadAwardEntries(): AwardEntry[] {
   const out: AwardEntry[] = [];
-  const fair = JSON.parse(readFileSync(join(DIR, "woorisool-fair.json"), "utf8")) as { items: { year: number; part: string; prize: string; name: string; brewery: string; source: string }[] };
-  for (const x of fair.items) out.push({ competition: "우리술품평회", year: x.year, part: x.part, prize: x.prize, name: x.name, brewery: x.brewery, source: x.source });
+  const fair = JSON.parse(readFileSync(join(DIR, "woorisool-fair.json"), "utf8")) as { items: { year: number; part: string; prize: string; name: string; brewery: string; region: string; source: string }[] };
+  for (const x of fair.items) out.push({ competition: "우리술품평회", year: x.year, part: x.part, prize: x.prize, name: x.name, brewery: x.brewery, source: x.source, region: x.region });
   const klaFile = join(DIR, "korea-liquor-awards.json");
   if (existsSync(klaFile)) {
     const kla = JSON.parse(readFileSync(klaFile, "utf8")) as { items: { year: number; part: string; prize: string; name: string; brewery: string; url: string }[] };

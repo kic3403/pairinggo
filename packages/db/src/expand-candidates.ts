@@ -29,6 +29,9 @@ const NON_AWARD_PICK = 60;
 const PER_BREWERY = 3;   // 수상 없는 후보만 — 수상작은 양조장당 제한 없음
 const HUB: Sido[] = ["충남", "세종", "대전"];
 /** 온라인 판매가 안 될 가능성이 큰 신호 — 전통주(지역특산주)는 지역 농산물 원료, 대형 주류회사의 일반 주류는 통신판매 불가 */
+const NON_ALCOHOL = /[논무]\s*알(콜|코올)|non[-\s]?alcohol/i;
+/** 같은 제품 묶기 — 용량 표기(480ml·1.8L)만 다른 이름은 한 제품 */
+const nameKey = (s: string) => norm(s.replace(/\d+(\.\d+)?\s*(ml|mL|ML|l|L|리터)\b/g, " "));
 const IMPORTED = /수입|외국산|호주산|미국산|중국산|베트남산|태국산|칠레산|프랑스산|독일산|이탈리아산|스페인산/;
 /** 지금 온라인 판매 불가(NON_TRAD)인 7종의 회사(국순당 횡성·경주법주·화요·하이트진로·보해양조) + 대도시 탁주 제조사·대형 소주 회사 — 국순당여주명주(려)는 지역특산주라 뺀다 */
 const BIG_MAKER = /하이트진로|롯데칠성|서울장수|서울탁주|인천탁주|부산합동양조|무학|금복주|대선주조|오비맥주|보해양조|경주법주|화요|국순당(?!\s*여주)/;
@@ -68,7 +71,7 @@ function build() {
   const productDrinks: AwardDrink[] = [];
   for (const p of research) {
     if (!p.name || inCatalog(p.name, p.brewery)) continue;
-    const key = `${norm(p.name)}|${norm(cleanBrew(p.brewery))}`;
+    const key = `${nameKey(p.name)}|${norm(cleanBrew(p.brewery))}`;
     if (cands.has(key)) continue;   // 용량만 다른 같은 제품
     cands.set(key, {
       key, name: p.name, brewery: cleanBrew(p.brewery), category: categoryOfKind(p.kind, p.name, p.ingredients), abv: p.abv, sido: p.sido, sigungu: p.sigungu,
@@ -89,12 +92,11 @@ function build() {
     if (matchEntry(e, catalog, overrides)) continue;
     const hit = matchAwardDrink(e, productDrinks);
     if (hit) { const c = cands.get(hit)!; c.awards.push(e); if (!c.sources.includes(e.source)) c.sources.push(e.source); continue; }
-    const key = `${norm(e.name)}|${norm(cleanBrew(e.brewery))}`;
+    const key = `${nameKey(e.name)}|${norm(cleanBrew(e.brewery))}`;
     const same = [...cands.values()].find((c) => c.key === key || (!c.productId && sameBrewery(c.brewery, e.brewery) && norm(c.name) === norm(e.name)));
     if (same) { same.awards.push(e); if (!same.sources.includes(e.source)) same.sources.push(e.source); continue; }
     const k = kla.find((x) => x.url === e.source);
-    const fair = e.competition === "우리술품평회" ? (e as AwardEntry & { region?: string }) : null;
-    const addr = k ? `${k.sido} ${k.sigungu}` : (fair?.region ?? "");
+    const addr = k ? `${k.sido} ${k.sigungu}` : (e.region ?? "");
     cands.set(key, {
       key, name: e.name, brewery: cleanBrew(e.brewery), category: partCategory(e.part, e.name, k?.materials ?? ""), abv: k?.abv ?? null,
       sido: sidoOf(addr), sigungu: sigunguOf(addr), ingredients: k?.materials ?? "", food: "", awards: [e], interest: null, sources: [e.source], productId: null,
@@ -110,6 +112,7 @@ function build() {
     if (IMPORTED.test(c.ingredients)) c.caution.push("수입 원료");
     if (BIG_MAKER.test(c.brewery)) c.caution.push("대형 주류회사");
     if (!c.category) c.caution.push("종류 모름");
+    if (NON_ALCOHOL.test(c.name)) c.caution.push("무알코올");
     if (c.abv == null) c.notes.push("도수 확인");
     const best = c.awards.length ? Math.min(...c.awards.map((a) => prizeRank(a.prize))) : 9;
     const fairWin = c.awards.some((a) => a.competition === "우리술품평회");
@@ -132,6 +135,13 @@ function build() {
   for (const c of all) if (c.caution.length) c.reason = `확인 필요 — ${c.caution.join(", ")}`;
   return { all: all.sort((a, b) => Number(b.pick) - Number(a.pick) || b.score - a.score), years: [...years].sort((a, b) => b - a) };
 }
+
+/** 판매처 — buy-links(업체가 요즘이술·더술닷컴에 등록한 링크) 먼저, 없으면 buy-links-search(검색으로 찾은 양조장 공식 스토어, 확인 권장) */
+type Shop = { url: string; kind: string; from: string; ok: boolean | null };
+const readJson = <T,>(p: string): T | null => (existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as T) : null);
+const shops: Record<string, Shop> = { ...(readJson<Record<string, Shop>>(join(ROOT, "research", "buy-links-search.json")) ?? {}) };
+for (const [k, v] of Object.entries(readJson<Record<string, Shop>>(join(ROOT, "research", "buy-links.json")) ?? {})) if (v.ok !== false || !shops[k]) shops[k] = v;
+const shopOf = (c: Cand) => { const s = shops[c.key]; return s && s.ok !== false ? s : null; };
 
 async function write({ all, years }: ReturnType<typeof build>) {
   const wb = new ExcelJS.Workbook();
@@ -156,24 +166,27 @@ async function write({ all, years }: ReturnType<typeof build>) {
     ["추천 — 양조장 추천 음식 있음", `${picks.filter((c) => c.food).length}종 → 공식 페어링(근거 링크)으로 들어감`],
     ["점수", "수상: 우리술품평회 40 · 주류대상만 25 · 대통령상/Best of Best +15 · 품평회 대상 +8 · 여러 해 수상 +5/해(최대 15) | 거점 +20 | 카탈로그에 없는 양조장 +12 | 양조장 추천 음식 +8 | 쇼핑 수요 20 이상 +15, 조금 +6"],
     ["확인 필요(추천에서 뺌)", `${all.filter((c) => c.caution.length).length}종 — 수입 원료 ${all.filter((c) => c.caution.includes("수입 원료")).length} · 대형 주류회사 ${all.filter((c) => c.caution.includes("대형 주류회사")).length} · 종류 모름 ${all.filter((c) => c.caution.includes("종류 모름")).length}. 도수를 모르는 수상작(품평회 명단엔 도수가 없음) ${all.filter((c) => c.pick && c.notes.includes("도수 확인")).length}종은 넣을 때 확인. 온라인 판매는 전통주(민속주·지역특산주)만 가능`],
-    ["넣기 전 확인", "① 온라인 판매처(양조장 공식몰·스마트스토어)가 있는지 ② 단종 여부 — '판매처' 열에 적어 주면 그 링크를 구매 버튼으로 씁니다"],
+    ["판매처", `추천 ${picks.length}종 중 ${picks.filter((c) => shopOf(c)).length}종 채움 — 스마트스토어 ${picks.filter((c) => shopOf(c)?.kind === "스마트스토어").length} · 공식몰·홈페이지 ${picks.filter((c) => shopOf(c) && shopOf(c)!.kind !== "스마트스토어").length} · 빈칸 ${picks.filter((c) => !shopOf(c)).length}. 업체가 요즘이술·더술닷컴에 직접 등록한 링크가 먼저, '검색으로 찾음'은 확인 권장. 빈칸이면 지금처럼 네이버쇼핑 검색으로 연결`],
+    ["넣기 전 확인", "넣지 않을 술은 지우고, 판매처가 틀렸으면 고쳐 주세요(빈칸은 채우지 않아도 됩니다). 우선순위 점수는 후보를 고르는 데만 쓴 값이라 페어링과 무관합니다"],
     ["넣는 방법", "확인 뒤 add(설명은 사실로 새로 씀 · 맛 프로필 추정 · 양조장 추천 음식은 공식 페어링 · 나머지 맛 분석 8개) → blog-counts → pf-recalc → export"],
   ];
   for (const r of rows) s0.addRow(r);
   s0.getColumn(1).font = { bold: true };
 
   const cols = [
-    { header: "추천", key: "pick", width: 6 }, { header: "점수", key: "score", width: 6 }, { header: "제품명", key: "name", width: 30 }, { header: "양조장", key: "brewery", width: 24 },
+    { header: "추천", key: "pick", width: 6 }, { header: "제품명", key: "name", width: 30 }, { header: "양조장", key: "brewery", width: 24 },
+    { header: "판매처", key: "shop", width: 40 }, { header: "판매처 출처", key: "shopFrom", width: 30 },
     { header: "종류", key: "category", width: 8 }, { header: "도수", key: "abv", width: 6 }, { header: "시도", key: "sido", width: 6 }, { header: "시군구", key: "sigungu", width: 10 },
     { header: "거점", key: "hub", width: 6 }, { header: "새 양조장", key: "newBrewery", width: 8 }, { header: "수상(최근 5년)", key: "awards", width: 60 },
     { header: "양조장 추천 음식", key: "food", width: 30 }, { header: "쇼핑 수요", key: "interest", width: 8 }, { header: "원료", key: "ingredients", width: 36 },
-    { header: "판단", key: "reason", width: 28 }, { header: "판매처(확인해서 적기)", key: "shop", width: 30 }, { header: "출처", key: "source", width: 50 },
+    { header: "판단", key: "reason", width: 28 }, { header: "출처", key: "source", width: 50 }, { header: "우선순위 점수(고르기용)", key: "score", width: 10 },
   ];
   const put = (ws: ExcelJS.Worksheet, list: Cand[]) => {
     ws.columns = cols; head(ws);
     for (const c of list) ws.addRow({
       pick: c.pick ? "○" : "", score: c.score, name: c.name, brewery: c.brewery, category: c.category ?? "", abv: c.abv, sido: c.sido === "미상" ? "" : c.sido, sigungu: c.sigungu,
-      hub: c.hub ? "○" : "", newBrewery: c.newBrewery ? "○" : "", awards: awardText(c), food: c.food, interest: c.interest, ingredients: c.ingredients, reason: [c.reason, ...c.notes].join(" · "), shop: "", source: c.sources.join("\n"),
+      hub: c.hub ? "○" : "", newBrewery: c.newBrewery ? "○" : "", awards: awardText(c), food: c.food, interest: c.interest, ingredients: c.ingredients, reason: [c.reason, ...c.notes].join(" · "), source: c.sources.join("\n"),
+      shop: shopOf(c)?.url ?? (shops[c.key]?.ok === false ? `(안 열림) ${shops[c.key].url}` : ""), shopFrom: shopOf(c)?.from ?? "",
     });
   };
   put(wb.addWorksheet(`추천 ${picks.length}`), picks);
