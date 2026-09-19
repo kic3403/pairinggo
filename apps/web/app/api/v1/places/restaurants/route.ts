@@ -18,6 +18,7 @@ void _D;
  * 운영자가 확인한 식당(place_info)은 콜키지·룸·주차·취급 전통주·대표 메뉴를 붙여 맨 앞에 둔다(2026-09-17).
  * 앞 12곳에는 구글 지도 평점(lib/google-places.ts, 30일 캐시)을 붙이고 평점 높은 순으로 정렬한다(2026-09-14 사용자 결정) — 응답 ratingSource: "google" | null.
  * &drink=d11(2026-09-19): 술을 골라 들어왔으면 그 술과 같은(비슷한) 음식을 함께 파는 식당을 맨 앞에(shared place-match — 확인 정보 기준).
+ *   같은 음식 + 콜키지 가능(고른 술을 가져가기)도 그 술을 파는 곳 다음 순위, 같은 순위 안에서는 콜키지가 싼 곳부터(place_info.corkage_note에서 값을 읽는다).
  *   카카오 키워드 검색에 안 걸린 주변의 확인된 식당도 그 음식(또는 그 술)을 팔면 5곳까지 더한다. 술이 없으면 같은·비슷한 메뉴가 있는 곳만 앞으로.
  */
 export async function GET(req: Request) {
@@ -61,9 +62,12 @@ export async function GET(req: Request) {
     // 카카오 검색에 없던 주변의 확인된 식당 중 고른 조합(술 또는 같은 음식)을 파는 곳 — 가까운 순 5곳까지
     if (Number.isFinite(lat)) {
       const seen = new Set(places.map((p) => p.id));
-      const near = (await nearbyPlaceInfo(lat, lng, radius).catch(() => [] as Place[]))
-        // 그 술을 팔거나, 같은 음식을 팔거나, 비슷한 음식 + 같은 종류 술 — 같은 종류 술만·비슷한 음식만 있는 곳은 넣지 않는다
-        .filter((p) => { const m = placeMatch(p.info, target); return !seen.has(p.id) && (m.drink === "exact" || m.food === "exact" || (m.drink === "kind" && m.food === "similar")); }).slice(0, 5);
+      // 그 술을 팔거나, 같은 음식을 팔거나, 비슷한 음식 + (같은 종류 술 또는 콜키지) — 같은 종류 술만·비슷한 음식만 있는 곳은 넣지 않는다.
+      // 5곳을 고를 때도 순위·콜키지 싼 순이 먼저(가까운 순은 그다음) — 가까운 곳만 채우다 더 맞는 곳이 빠지지 않게
+      const near = matchFirst((await nearbyPlaceInfo(lat, lng, radius).catch(() => [] as Place[]))
+        .filter((p) => !seen.has(p.id))
+        .map((p) => ({ ...p, match: placeMatch(p.info, target) }))
+        .filter((p) => p.match.score >= 20 && (p.match.drink === "exact" || !!p.match.food))).slice(0, 5);
       places = [...places, ...near];
     }
     // 운영자·파트너가 확인한 정보(place_info) — 확인된 식당을 맨 앞으로, 그 위에 예약 받는 파트너 매장. 목록 API는 10분 캐시라 반영에 최대 10분

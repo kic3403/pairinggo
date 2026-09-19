@@ -262,7 +262,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
             <label className="f">{label}
               <select value={f[k]} onChange={set(k)}>{opts.map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>
             </label>
-            <label className="f"><span className="hint">덧붙일 말(40자)</span><input type="text" value={f[nk]} onChange={set(nk)} maxLength={40} placeholder={ph} /></label>
+            <label className="f"><span className="hint">{k === "corkage" ? "병당 금액 — 적으면 페어링GO가 싼 곳부터 먼저 보여 줘요" : "덧붙일 말(40자)"}</span><input type="text" value={f[nk]} onChange={set(nk)} maxLength={40} placeholder={ph} /></label>
           </div>
         ))}
         <label className="f">네이버 지도 링크 <span className="hint">선택 — 손님이 누르면 네이버 지도로 가요</span>

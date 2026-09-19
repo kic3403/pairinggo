@@ -29,8 +29,8 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
       <p className="small muted">{where} · {places.length}곳{places.some((p) => p.rating) ? " · ★ 평점은 Google 지도 이용자 평가" : ""}{places.some((p) => p.info) ? " · 색이 있는 칩은 페어링GO가 매장에 직접 확인한 정보" : ""}{places.some((p) => placeChips(null, p.amenities).length) ? " · 회색 칩(주차·단체·예약)은 Google 지도 정보" : ""}{places.some((p) => p.award) && awardsYear ? ` · 미쉐린 배지는 미쉐린 가이드 서울&부산 ${awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
       <ul className="places">
         {places.slice(0, limit).map((p) => (
-          <li key={p.id} className={`place${p.match && p.match.score >= 6 ? " matched" : ""}`}>
-            {p.match ? <div className={`pmatch${p.match.score >= 6 ? " strong" : ""}`} title="페어링GO가 매장에 확인한 메뉴·술 기준">{p.match.score >= 8 ? "딱 맞는 곳 · " : ""}{p.match.label}</div> : null}
+          <li key={p.id} className={`place${p.match && p.match.score >= 60 ? " matched" : ""}`}>
+            {p.match ? <div className={`pmatch${p.match.score >= 60 ? " strong" : ""}`} title="페어링GO가 매장에 확인한 메뉴·술 기준">{p.match.score >= 90 ? "딱 맞는 곳 · " : ""}{p.match.label}</div> : null}
             <div className="n">
               <Link className="pname" href={`/places/${p.id}?n=${encodeURIComponent(p.name)}`}>{p.name}</Link>
               {p.award && (
