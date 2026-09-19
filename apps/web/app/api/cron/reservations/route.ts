@@ -31,6 +31,7 @@ export async function GET(req: Request) {
 
   const { count: purgedReservations } = await sb.from("reservations").delete({ count: "exact" }).lt("visit_date", addDays(today, -365));
   const { count: purgedOtp } = await sb.from("phone_verifications").delete({ count: "exact" }).lt("created_at", new Date(Date.now() - 86400_000).toISOString());
+  await sb.from("password_resets").delete().lt("created_at", new Date(Date.now() - 86400_000).toISOString());
   const { count: purgedNotifications } = await sb.from("notifications").delete({ count: "exact" }).lt("created_at", new Date(Date.now() - 180 * 86400_000).toISOString());
   return json(req, { ok: true, today, reminded, merchants: byMerchant.size, purgedReservations: purgedReservations ?? 0, purgedOtp: purgedOtp ?? 0, purgedNotifications: purgedNotifications ?? 0 }, { headers: NO_CACHE });
 }

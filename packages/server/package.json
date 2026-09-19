@@ -16,7 +16,8 @@
     "./sms": "./src/sms.ts",
     "./push": "./src/push.ts",
     "./notify": "./src/notify.ts",
-    "./menu-read": "./src/menu-read.ts"
+    "./menu-read": "./src/menu-read.ts",
+    "./password-reset": "./src/password-reset.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

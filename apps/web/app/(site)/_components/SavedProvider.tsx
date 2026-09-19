@@ -31,7 +31,7 @@ const key = (k: SavedKind, id: string) => `${k}:${id}`;
 /** 이 문서에서 첫 화면 판정을 이미 했는지 — 모듈 변수라 앱 라우터 이동에는 유지되고, 새 페이지 로드에서만 초기화된다 */
 let entryChecked = false;
 /** 약관 동의 전에도 볼 수 있는 화면 — 나머지 화면에서는 가입 마무리(/profile)로 보낸다 */
-const CONSENT_FREE = ["/profile", "/privacy", "/terms", "/login", "/signup"];
+const CONSENT_FREE = ["/profile", "/privacy", "/terms", "/login", "/signup", "/forgot"];
 
 export default function SavedProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();

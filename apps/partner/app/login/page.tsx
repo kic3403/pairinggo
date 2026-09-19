@@ -17,6 +17,7 @@ export default async function LoginPage() {
           <h1>파트너 로그인</h1>
           <p className="lead">페어링GO로 들어온 예약을 확인하고 매장 정보를 관리해요.</p>
           <LoginForm />
+          <p className="foot"><Link href="/forgot">비밀번호를 잊으셨나요?</Link></p>
           <p className="foot">아직 파트너가 아니신가요? <Link href="/signup">가입 신청</Link></p>
         </div>
       </main>

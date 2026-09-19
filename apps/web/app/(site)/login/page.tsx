@@ -49,6 +49,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
       <p className="small muted" style={{ marginTop: 12 }}>
         계정이 없으신가요? <Link href={`/signup?next=${encodeURIComponent(next)}`}>회원가입</Link>
+        <span> · </span><Link href="/forgot">비밀번호를 잊으셨나요?</Link>
       </p>
 
       {!!social.length && (
