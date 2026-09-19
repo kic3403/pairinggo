@@ -5,14 +5,18 @@
  * 위치는 브라우저가 허락할 때만 쓰고, 거부하면 지역 선택으로 넘어간다.
  * 관심지역이 있으면 그 지역 검색이 기본 버튼, 현재 위치는 보조 버튼(2026-09-14 — 관심지역을 강남으로 두고도 맨 위 "내 주변" 버튼을 눌러
  * 현재 위치 결과가 나온다는 사용자 지적). 관심지역을 "현재 위치로" 정했으면 그 좌표를 쓴다(지역 대표 좌표보다 정확).
+ * 함께 마실 술(2026-09-19): 술 화면의 페어링 카드에서 들어오면 주소의 ?d=술id를 읽어, 그 술과 이 음식(또는 비슷한 음식)을 함께 파는 식당을 맨 앞에 둔다.
+ *   음식 화면에서 바로 왔으면 잘 어울리는 술 몇 가지를 칩으로 보여 고르게 한다(고르면 결과를 다시 불러온다).
  */
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { josa } from "@pairinggo/shared";
 import PlaceList, { type PlaceView } from "./PlaceList";
 import { track } from "@/lib/track";
 import { useHydrated, useRegion } from "./RegionProvider";
 
-type Res = { places: PlaceView[]; source: string; error?: string; awardsYear?: number | null; ratingSource?: "google" | null };
-type Props = ({ mode: "restaurants"; food: string; foodId: string } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean }) & {
+type Named = { id: string; name: string };
+type Res = { places: PlaceView[]; source: string; error?: string; awardsYear?: number | null; ratingSource?: "google" | null; drink?: Named | null };
+type Props = ({ mode: "restaurants"; food: string; foodId: string; /** 이 음식과 어울리는 술(어울림 순) — ?d= 술 이름 찾기, 앞 5개는 고르기 칩 */ drinkOptions?: Named[] } | { mode: "bottleshops"; drinkName: string; drinkId: string; trad: boolean }) & {
   /** 버튼 줄 오른쪽에 붙일 것(음식 상세의 저장 버튼). 결과를 보는 동안은 제목 옆으로 옮겨 항상 보이게 한다 */
   actions?: ReactNode;
 };
@@ -34,6 +38,14 @@ export default function NearbyPlaces(props: Props) {
   const [where, setWhere] = useState<string>("");
   // 결과를 보는 중에 관심지역을 바꾸면(상세 화면에서는 시트가 그 자리에 남는다) 처음 화면으로 돌아가 새 지역 버튼을 보여 준다
   const lastRegion = useRef(rg.id);
+  // 함께 마실 술 — 주소의 ?d= 또는 칩으로 고른 것. 이름은 후보 목록이나 서버 응답에서
+  const [drink, setDrink] = useState<Named | null>(null);
+  const lastQuery = useRef<{ q: { lat?: number; lng?: number; region?: string }; label: string } | null>(null);
+  useEffect(() => {
+    if (props.mode !== "restaurants") return;
+    const d = new URLSearchParams(window.location.search).get("d");
+    if (d && /^d\d+$/.test(d)) setDrink({ id: d, name: props.drinkOptions?.find((x) => x.id === d)?.name ?? "" });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (lastRegion.current !== rg.id) { lastRegion.current = rg.id; setState("idle"); setRes(null); } }, [rg.id]);
 
   const title = props.mode === "restaurants" ? `${props.food} 맛집` : props.trad ? "이 술 파는 곳" : "가까운 주류판매점";
@@ -46,13 +58,13 @@ export default function NearbyPlaces(props: Props) {
   /** 이벤트 집계 키 — 음식 상세면 f, 술 상세면 d (refresh_pairing_feedback이 d/f 로 묶는다) */
   const key: Record<string, string> = props.mode === "restaurants" ? { f: props.foodId } : { d: props.drinkId };
 
-  const load = async (q: { lat?: number; lng?: number; region?: string }, label: string) => {
-    setState("loading"); setWhere(label);
+  const load = async (q: { lat?: number; lng?: number; region?: string }, label: string, withDrink: Named | null = drink) => {
+    setState("loading"); setWhere(label); lastQuery.current = { q, label };
     const p = new URLSearchParams();
     if (q.lat != null && q.lng != null) { p.set("lat", String(q.lat)); p.set("lng", String(q.lng)); }
     if (q.region) p.set("region", q.region);
     let url: string;
-    if (props.mode === "restaurants") { p.set("food", props.food); url = `/api/v1/places/restaurants?${p}`; }
+    if (props.mode === "restaurants") { p.set("food", props.food); if (withDrink) p.set("drink", withDrink.id); url = `/api/v1/places/restaurants?${p}`; }
     else { p.set("kind", props.trad ? "trad" : "all"); url = `/api/v1/places/bottleshops?${p}`; }
     let out: Res;
     try {
@@ -60,8 +72,9 @@ export default function NearbyPlaces(props: Props) {
       out = r.ok ? await r.json() : { places: [], source: "none", error: "검색 실패" };
     } catch { out = { places: [], source: "none", error: "검색 실패" }; }
     setRes(out);
+    if (withDrink && out.drink && !withDrink.name) setDrink(out.drink);
     setState("done");
-    track("restaurant_list", { food: savedAs, mode: props.mode, n: out.places.length, source: out.source, basis: q.lat != null ? "gps" : q.region ?? "none" });
+    track("restaurant_list", { food: savedAs, mode: props.mode, n: out.places.length, source: out.source, basis: q.lat != null ? "gps" : q.region ?? "none", ...(withDrink ? { d: withDrink.id, matched: out.places.filter((x) => x.match).length } : {}) });
   };
 
   const useMyLocation = () => {
@@ -100,6 +113,21 @@ export default function NearbyPlaces(props: Props) {
     </ul>
   );
 
+  /** 술 바꾸기 — 결과를 보는 중이면 같은 곳에서 다시 불러온다 */
+  const pickDrink = (d: Named | null) => { setDrink(d); if (lastQuery.current && state === "done") void load(lastQuery.current.q, lastQuery.current.label, d); };
+  const opts = props.mode === "restaurants" ? (props.drinkOptions ?? []).slice(0, 5) : [];
+  const PairWith = () => props.mode !== "restaurants" ? null : drink ? (
+    <p className="pair-with">
+      <span><b>{drink.name || "고른 술"}</b>{drink.name ? josa(drink.name, "과/와").slice(drink.name.length) : "과"} 함께 — 이 술과 {props.food}(또는 비슷한 음식)을 함께 파는 식당을 먼저 보여 드려요</span>
+      <button type="button" className="linklike" onClick={() => pickDrink(null)} aria-label="함께 마실 술 빼기">✕ 빼기</button>
+    </p>
+  ) : opts.length ? (
+    <div className="pair-pick">
+      <span className="small muted">함께 마실 술을 고르면 그 술도 파는 식당을 먼저 보여 드려요</span>
+      <div className="chips">{opts.map((o) => <button key={o.id} type="button" className="chip-btn" onClick={() => pickDrink(o)}>{o.name}</button>)}</div>
+    </div>
+  ) : null;
+
   return (
     <section id="places">
       <div className="sec-head">
@@ -113,6 +141,7 @@ export default function NearbyPlaces(props: Props) {
         {state === "closed" && <button type="button" className="btn xs" onClick={() => { setState("idle"); setRes(null); }}>열기</button>}
         {(state === "done" || state === "closed" || state === "loading") && props.actions}
       </div>
+      {state !== "closed" && <PairWith />}
       {state === "idle" && (
         <>
           <p className="small muted" style={{ marginTop: -6 }}>{hint}</p>
@@ -131,7 +160,7 @@ export default function NearbyPlaces(props: Props) {
       {state === "done" && res && (
         res.places.length ? (
           <>
-            <PlaceList places={res.places} where={where} awardsYear={res.awardsYear ?? null} restaurants={props.mode === "restaurants"} reserveFood={props.mode === "restaurants" ? props.foodId : undefined} eventKey={key} savedAs={savedAs} />
+            <PlaceList places={res.places} where={where} awardsYear={res.awardsYear ?? null} restaurants={props.mode === "restaurants"} reserveFood={props.mode === "restaurants" ? props.foodId : undefined} reserveDrink={props.mode === "restaurants" ? drink?.id : undefined} eventKey={key} savedAs={savedAs} />
           </>
         ) : <p className="muted">{res.source === "none" ? "장소 검색을 쓸 수 없어요." : "결과가 없어요. 다른 지역으로 찾아보세요."}</p>
       )}

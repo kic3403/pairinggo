@@ -4,22 +4,24 @@
  * 칩(운영자·파트너 확인 = 남색, 구글 = 회색) · 구글 평점 · 확인 정보 상자 · 메뉴판 · [예약하기](파트너 매장) · 지도·전화·저장.
  */
 import Link from "next/link";
-import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceRating, type ReviewStats } from "@pairinggo/shared";
+import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceMatch, type PlaceRating, type ReviewStats } from "@pairinggo/shared";
 import Heart from "./Heart";
 import MenuBoard, { MenuThumbs } from "./MenuBoard";
 import { track } from "@/lib/track";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
 type Named = { id: string; name: string; slug: string | null };
-export type PlaceView = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean; reviews?: ReviewStats };
+export type PlaceView = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean; reviews?: ReviewStats; match?: PlaceMatch | null };
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 
-export default function PlaceList({ places, where, awardsYear, restaurants, reserveFood, eventKey, savedAs, limit = 12 }: {
+export default function PlaceList({ places, where, awardsYear, restaurants, reserveFood, reserveDrink, eventKey, savedAs, limit = 12 }: {
   places: PlaceView[]; where: string; awardsYear: number | null;
   /** 음식점 목록(블루리본 링크) — 판매점 목록이면 false */
   restaurants: boolean;
   /** [예약하기]에 붙일 음식 id(음식 상세에서 들어온 페어링) */
   reserveFood?: string;
+  /** [예약하기]에 붙일 술 id(술 화면에서 골라 들어온 조합) */
+  reserveDrink?: string;
   eventKey: Record<string, string>; savedAs: string; limit?: number;
 }) {
   return (
@@ -27,7 +29,8 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
       <p className="small muted">{where} · {places.length}곳{places.some((p) => p.rating) ? " · ★ 평점은 Google 지도 이용자 평가" : ""}{places.some((p) => p.info) ? " · 색이 있는 칩은 페어링GO가 매장에 직접 확인한 정보" : ""}{places.some((p) => placeChips(null, p.amenities).length) ? " · 회색 칩(주차·단체·예약)은 Google 지도 정보" : ""}{places.some((p) => p.award) && awardsYear ? ` · 미쉐린 배지는 미쉐린 가이드 서울&부산 ${awardsYear} 선정(공개된 사실을 출처와 함께 표시, 로고 아님)` : ""}</p>
       <ul className="places">
         {places.slice(0, limit).map((p) => (
-          <li key={p.id} className="place">
+          <li key={p.id} className={`place${p.match && p.match.score >= 6 ? " matched" : ""}`}>
+            {p.match ? <div className={`pmatch${p.match.score >= 6 ? " strong" : ""}`} title="페어링GO가 매장에 확인한 메뉴·술 기준">{p.match.score >= 8 ? "딱 맞는 곳 · " : ""}{p.match.label}</div> : null}
             <div className="n">
               <Link className="pname" href={`/places/${p.id}?n=${encodeURIComponent(p.name)}`}>{p.name}</Link>
               {p.award && (
@@ -56,7 +59,7 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
             )}
             {p.bookable && (
               <div style={{ margin: "9px 0 2px" }}>
-                <Link className="btn f sm" href={`/reserve/${p.id}${reserveFood ? `?food=${encodeURIComponent(reserveFood)}` : ""}`} onClick={() => track("reserve_click", { ...eventKey, place: p.name })}>예약하기</Link>
+                <Link className="btn f sm" href={`/reserve/${p.id}${reserveFood || reserveDrink ? `?${new URLSearchParams({ ...(reserveFood ? { food: reserveFood } : {}), ...(reserveDrink ? { drink: reserveDrink } : {}) })}` : ""}`} onClick={() => track("reserve_click", { ...eventKey, place: p.name })}>예약하기</Link>
                 <span className="small muted" style={{ marginLeft: 8 }}>바로 확정 · 페어링GO 파트너</span>
               </div>
             )}

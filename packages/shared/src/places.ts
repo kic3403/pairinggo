@@ -21,6 +21,8 @@ export type Place = {
   amenities?: import("./place-rating").PlaceAmenities | null;
   /** 운영자(제휴 식당)가 확인한 정보 — 콜키지·룸·주차·취급 전통주·대표 메뉴. 서버가 place_info(0021)에서 붙인다 */
   info?: import("./place-info").PlaceInfo | null;
+  /** 고른 술·음식을 함께 파는지(2026-09-19) — 서버가 place_info로 매긴다(place-match.ts). 점수 0이면 붙이지 않는다 */
+  match?: import("./place-match").PlaceMatch | null;
 };
 
 /** 음식 이름 → 카카오 키워드. 검색이 안 되거나 엉뚱한 곳이 나오는 이름만 예외로 */

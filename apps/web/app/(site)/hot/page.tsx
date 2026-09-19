@@ -56,7 +56,7 @@ export default async function HotPage() {
               <div className="acts">
                 <Heart kind="drink" id={d.id} name={d.name} />
                 {onlineSellable(d) && <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, f: f.id, store: bl.store, from: "hot" }}>구매 ↗</ExtLink>}
-                <Link href={`/foods/${toSlug(f.name)}#places`}>{f.name} 맛집</Link>
+                <Link href={`/foods/${toSlug(f.name)}?d=${d.id}#places`}>{f.name} 맛집</Link>
                 <Link href={`/drinks/${toSlug(d.name)}`}>자세히 →</Link>
               </div>
             </li>

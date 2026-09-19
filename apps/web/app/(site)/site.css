@@ -787,3 +787,15 @@ a.pd-score:hover { border-color: var(--navy); }
 .place .rv-mini i { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--muted); }
 .place .n a.pname { text-decoration: none; }
 .place .n a.pname:hover { text-decoration: underline; }
+
+/* 고른 조합을 파는 식당 먼저(2026-09-19) — 맛집 위 "함께 마실 술" 줄, 카드 맨 위 맞춤 줄 */
+.pair-with { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: -4px 0 12px; padding: 10px 13px; border-radius: 11px; background: var(--food-soft); color: var(--food-ink); font-size: 14px; }
+.pair-with b { color: var(--ink); }
+.pair-with .linklike { flex: none; color: var(--food-ink); font-size: 13px; }
+.pair-pick { margin: -4px 0 12px; display: grid; gap: 6px; }
+.pair-pick .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-btn { min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink2); font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.chip-btn:hover { border-color: var(--food); color: var(--food-ink); }
+.place.matched { border-color: var(--food); box-shadow: 0 0 0 1px var(--food) inset; }
+.place .pmatch { display: inline-flex; align-items: center; margin: 0 0 6px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--bg2); color: var(--ink2); }
+.place .pmatch.strong { background: var(--food); color: #fff; }

@@ -57,7 +57,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const scored = scorePairings(rows, (p) => F[p.f]?.category || "");
   const items: CardItem[] = scored.map((s) => {
     const food = F[s.p.f];
-    return { href: foodHref(food?.name || s.p.f), name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p };
+    // 음식 화면으로 넘어갈 때 이 술을 들고 간다(?d=) — 맛집 목록이 이 술과 그 음식을 함께 파는 식당을 먼저 보여 준다
+    return { href: `${foodHref(food?.name || s.p.f)}?d=${drink.id}`, name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p };
   });
 
   const bl = buyLink(drink);

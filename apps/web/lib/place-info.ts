@@ -2,7 +2,7 @@
  * 운영자가 확인한 식당 정보(place_info, 0021) — 어드민 저장·목록, 공개 식당 검색 결과에 붙이기. service_role(db()) 사용.
  * 검증·표시 규칙은 shared place-info.ts. DB가 없으면 조용히 건너뛴다(정보 없이 목록만).
  */
-import { cleanContactPhone, cleanDrinkItems, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, isEmptyPlaceInfo, type Place, type PlaceInfo } from "@pairinggo/shared";
+import { cleanContactPhone, cleanDrinkItems, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, haversineKm, isEmptyPlaceInfo, type Place, type PlaceInfo } from "@pairinggo/shared";
 import { db } from "./db";
 import { getCatalog } from "./catalog";
 
@@ -29,6 +29,27 @@ export async function attachPlaceInfo(places: Place[]): Promise<Place[]> {
   if (error) { console.warn("[place-info]", error.message); return places; }
   const by = new Map(((data ?? []) as Row[]).map((r) => [r.kakao_id, toInfo(r)]));
   return by.size ? places.map((p) => (by.has(p.id) ? { ...p, info: by.get(p.id)! } : p)) : places;
+}
+
+/**
+ * 검색 중심 주변의 확인된 식당(운영자·파트너 정보가 있는 곳) — 카카오 키워드 검색에 안 걸렸어도 고른 조합을 파는 곳을 맛집 목록에 넣으려고(2026-09-19).
+ * 좌표가 있는 행만, 반경 안(네모로 거른 뒤 실제 거리로 한 번 더), 가까운 순 최대 60곳. 직접 입력 매장(manual-…)은 카카오 id가 없어 뺀다.
+ */
+export async function nearbyPlaceInfo(lat: number, lng: number, radiusM: number): Promise<Place[]> {
+  const sb = db();
+  if (!sb || !Number.isFinite(lat) || !Number.isFinite(lng)) return [];
+  const dLat = radiusM / 111_000, dLng = radiusM / (111_000 * Math.cos((lat * Math.PI) / 180));
+  const { data, error } = await sb.from("place_info").select("*")
+    .gte("lat", lat - dLat).lte("lat", lat + dLat).gte("lng", lng - dLng).lte("lng", lng + dLng).not("kakao_id", "like", "manual-%").limit(200);
+  if (error) { console.warn("[place-info] nearby", error.message); return []; }
+  return ((data ?? []) as Row[])
+    .map((r): Place => ({
+      id: r.kakao_id, name: r.name, category: "", categoryPath: "", address: r.address ?? "", roadAddress: r.address ?? "", phone: r.phone,
+      lat: Number(r.lat), lng: Number(r.lng), distanceKm: Math.round(haversineKm(lat, lng, Number(r.lat), Number(r.lng)) * 100) / 100,
+      placeUrl: r.place_url ?? `https://place.map.kakao.com/${r.kakao_id}`, info: toInfo(r),
+    }))
+    .filter((p) => p.distanceKm != null && p.distanceKm * 1000 <= radiusM)
+    .sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0)).slice(0, 60);
 }
 
 const need = () => { const sb = db(); if (!sb) throw new Error("Supabase 미설정 — 어드민은 DB가 필요합니다"); return sb; };
