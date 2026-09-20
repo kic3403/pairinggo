@@ -222,7 +222,7 @@ export async function transitionOrder(t: TransitionInput): Promise<OrderView | n
   // 발송은 택배사·송장이 있어야 한다 — 상태를 바꾸기 전에 확인한다(예전엔 상태만 바뀌고 송장이 비었다)
   let shipPatch: Row | null = null;
   if (t.sellerId && (t.to === "shipped" || t.to === "delivered")) {
-    shipPatch = { updated_at: new Date().toISOString() };
+    shipPatch = {};   // shipments에는 updated_at이 없다(0032) — shipped_at·delivered_at으로 때를 남긴다
     if (t.to === "shipped") {
       const courier = cleanCourier(t.courier?.code, t.courier?.name);
       const invoice = cleanInvoice(t.invoice);
