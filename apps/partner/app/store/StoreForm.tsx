@@ -35,7 +35,7 @@ function initialTables(info: PlaceInfo | null, drinks: Named[], foods: Named[]) 
   return { menu, drinks: drinkRows };
 }
 
-function MenuPhotoUpload({ enabled, onRows }: { enabled: boolean; onRows: (rows: MenuReadRow[]) => { added: number; filled: number } }) {
+function MenuPhotoUpload({ enabled, onRows, drinkOnly }: { enabled: boolean; onRows: (rows: MenuReadRow[]) => { added: number; filled: number }; drinkOnly?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ ok?: string; err?: string }>({});
   async function read(files: FileList | null) {
@@ -59,12 +59,12 @@ function MenuPhotoUpload({ enabled, onRows }: { enabled: boolean; onRows: (rows:
   return (
     <div className="mphoto">
       <div>
-        <b>메뉴판 사진으로 채우기</b>
-        <p className="small muted" style={{ margin: "2px 0 0" }}>사진(최대 {MENU_MAX_FILES}장)을 올리면 음식·술 이름과 설명·가격·용량·도수를 읽어 아래 표에 더해요. 적혀 있지 않은 칸은 빈칸으로 둬요. 메뉴판 사진은 저장하지 않아요.</p>
+        <b>{drinkOnly ? "술 목록 사진으로 채우기" : "메뉴판 사진으로 채우기"}</b>
+        <p className="small muted" style={{ margin: "2px 0 0" }}>사진(최대 {MENU_MAX_FILES}장)을 올리면 {drinkOnly ? "술 이름과 설명·용량·도수·가격을" : "음식·술 이름과 설명·가격·용량·도수를"} 읽어 아래 표에 더해요. 적혀 있지 않은 칸은 빈칸으로 둬요. 올린 사진은 저장하지 않아요.</p>
       </div>
       {enabled ? (
         <label className={`btn primary${busy ? " is-busy" : ""}`}>
-          {busy ? "읽는 중… (10~30초)" : "메뉴판 사진 올리기"}
+          {busy ? "읽는 중… (10~30초)" : drinkOnly ? "술 목록 사진 올리기" : "메뉴판 사진 올리기"}
           <input type="file" accept="image/*" multiple hidden disabled={busy} onChange={(e) => { void read(e.target.files); e.target.value = ""; }} />
         </label>
       ) : <span className="chip mute">자동 읽기 준비 중 — 표에 직접 적어 주세요</span>}
@@ -169,15 +169,20 @@ function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onCha
   );
 }
 
-function DrinkTable({ rows, onChange, onImg, onError }: { rows: DrinkItem[]; onChange: (r: DrinkItem[]) => void; onImg: (i: number, url: string | undefined) => void; onError: (m: string) => void }) {
+function DrinkTable({ rows, onChange, onImg, onError, withDesc }: { rows: DrinkItem[]; onChange: (r: DrinkItem[]) => void; onImg: (i: number, url: string | undefined) => void; onError: (m: string) => void; withDesc?: boolean }) {
   const set = (i: number, patch: Partial<DrinkItem>) => onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
+  // 술만 파는 곳(양조장·리쿼샵)은 술을 소개할 설명 칸이 하나 더 있다(2026-09-21)
+  const cls = withDesc ? "drink desc" : "drink";
   return (
     <div className="mtable">
-      <div className="mhead drink"><span>사진</span><span>술 이름</span><span>용량</span><span>도수(%)</span><span>가격(원)</span><span /></div>
+      <div className={`mhead ${cls}`}>
+        <span>사진</span><span>술 이름</span>{withDesc ? <span>설명</span> : null}<span>용량</span><span>도수(%)</span><span>가격(원)</span><span />
+      </div>
       {rows.map((r, i) => (
-        <div className="mrow drink" key={i}>
+        <div className={`mrow ${cls}`} key={i}>
           <PhotoCell img={r.img} label={r.name} onError={onError} onChange={(url) => onImg(i, url)} />
           <input type="text" aria-label="술 이름" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="술 이름" />
+          {withDesc ? <input type="text" aria-label="설명" value={r.desc ?? ""} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="예: 백일 동안 빚는 약주" /> : null}
           <input type="text" aria-label="용량" value={r.volume} maxLength={20} onChange={(e) => set(i, { volume: e.target.value })} placeholder="750ml·잔" />
           <NumInput value={r.abv} onChange={(v) => set(i, { abv: v })} parse={abvOf} unit="%" label="도수" decimal />
           <NumInput value={r.price} onChange={(v) => set(i, { price: v })} parse={priceOf} unit="원" label="가격" />
@@ -189,7 +194,7 @@ function DrinkTable({ rows, onChange, onImg, onError }: { rows: DrinkItem[]; onC
   );
 }
 
-export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId, menuReadEnabled, kind = "restaurant", brewery: brewery0 = "", breweries = [] }: { phone: string; info: PlaceInfo | null; drinks: Named[]; foods: Named[]; siteUrl: string; kakaoId: string; menuReadEnabled: boolean; kind?: PartnerKind; brewery?: string; breweries?: string[] }) {
+export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId, menuReadEnabled, kind = "restaurant", brewery: brewery0 = "", breweries = [], ourDrinks = [] }: { phone: string; info: PlaceInfo | null; drinks: Named[]; foods: Named[]; siteUrl: string; kakaoId: string; menuReadEnabled: boolean; kind?: PartnerKind; brewery?: string; breweries?: string[]; ourDrinks?: { id: string; name: string; abv: number | null }[] }) {
   const [phone, setPhone] = useState(phone0);
   const [brewery, setBrewery] = useState(brewery0);   // 양조장 파트너가 고른 카탈로그 양조장(0031)
   const [f, setF] = useState({
@@ -197,6 +202,15 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
     corkage: info?.corkage ?? "", corkageNote: info?.corkageNote ?? "", room: info?.room ?? "", roomNote: info?.roomNote ?? "", naverUrl: info?.naverUrl ?? "",
   });
   const [tables, setTables] = useState(() => initialTables(info, drinks, foods));
+  // 양조장·리쿼샵은 음식 메뉴가 없다 — 술 표만 쓰고, 술마다 설명을 받는다
+  const drinkOnly = kind !== "restaurant";
+  /** 카탈로그에 있는 우리 양조장 술을 표에 한 번에 더한다(이미 적은 이름은 건드리지 않는다) */
+  const addOurDrinks = () => setTables((t) => {
+    const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+    const have = new Set(t.drinks.map((d) => key(d.name)));
+    const add = ourDrinks.filter((d) => !have.has(key(d.name))).map((d) => ({ name: d.name, volume: "", abv: d.abv, price: null }));
+    return add.length ? { ...t, drinks: [...t.drinks.filter((d) => d.name.trim()), ...add] } : t;
+  });
   const [photos, setPhotos] = useState<string[]>(() => info?.photos ?? []);
   const [state, setState] = useState<{ busy?: boolean; ok?: string; err?: string }>({});
   const [photoErr, setPhotoErr] = useState("");
@@ -242,24 +256,41 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
         <StorePhotos photos={photos} onChange={setPhotos} />
       </section>
 
+      {/* 양조장·리쿼샵은 음식 메뉴가 없다 — 술만 적는다(2026-09-21 사용자 요청) */}
       <section className="panel stack">
-        <h2 style={{ margin: 0 }}>메뉴판</h2>
-        <MenuPhotoUpload enabled={menuReadEnabled} onRows={(rows) => {
-          const m = mergeMenuRows({ menu: tables.menu, drinks: tables.drinks }, rows, { drinks, foods });
+        <h2 style={{ margin: 0 }}>{drinkOnly ? (kind === "brewery" ? "우리 술" : "취급하는 술") : "메뉴판"}</h2>
+        <MenuPhotoUpload enabled={menuReadEnabled} drinkOnly={drinkOnly} onRows={(rows) => {
+          const use = drinkOnly ? rows.filter((r) => r.kind === "drink") : rows;
+          const m = mergeMenuRows({ menu: tables.menu, drinks: tables.drinks }, use, { drinks, foods });
           setTables({ menu: m.menu, drinks: m.drinks });
           return m;
         }} />
-        <p className="small muted" style={{ margin: 0 }}>줄마다 <b>+ 사진</b>을 눌러 음식·술 사진을 붙일 수 있어요. 손님 화면 메뉴판에 사진·이름·설명·가격이 함께 보여요. 직접 찍었거나 쓸 권리가 있는 사진만 올려 주세요.</p>
+        <p className="small muted" style={{ margin: 0 }}>
+          줄마다 <b>+ 사진</b>을 눌러 술 사진을 붙일 수 있어요. 손님 화면에 사진·이름·설명·용량·도수·가격이 함께 보여요.
+          직접 찍었거나 쓸 권리가 있는 사진만 올려 주세요.
+        </p>
         {photoErr ? <p className="err" role="alert" style={{ margin: 0 }}>{photoErr}</p> : null}
+        {!drinkOnly ? (
+          <div>
+            <h3 className="mtitle">메뉴 <span className="muted small">{tables.menu.length}개</span></h3>
+            <MenuTable rows={tables.menu} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, menu: t.menu.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(menu) => setTables((t) => ({ ...t, menu }))} />
+          </div>
+        ) : null}
         <div>
-          <h3 className="mtitle">메뉴 <span className="muted small">{tables.menu.length}개</span></h3>
-          <MenuTable rows={tables.menu} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, menu: t.menu.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(menu) => setTables((t) => ({ ...t, menu }))} />
+          <div className="mtitle-row">
+            <h3 className="mtitle">술 <span className="muted small">{tables.drinks.length}개</span></h3>
+            {kind === "brewery" && ourDrinks.length ? (
+              <button type="button" className="btn ghost sm" onClick={addOurDrinks}>
+                우리 술 {ourDrinks.length}종 불러오기
+              </button>
+            ) : null}
+          </div>
+          <DrinkTable withDesc={drinkOnly} rows={tables.drinks} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, drinks: t.drinks.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(d) => setTables((t) => ({ ...t, drinks: d }))} />
         </div>
-        <div>
-          <h3 className="mtitle">술 <span className="muted small">{tables.drinks.length}개</span></h3>
-          <DrinkTable rows={tables.drinks} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, drinks: t.drinks.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(d) => setTables((t) => ({ ...t, drinks: d }))} />
-        </div>
-        <p className="small muted" style={{ margin: 0 }}>페어링GO에 있는 음식·전통주와 이름이 같으면 손님 화면에서 그 페이지로 이어져요.</p>
+        <p className="small muted" style={{ margin: 0 }}>
+          {kind === "brewery" && !brewery ? "위에서 ‘우리 양조장’을 고르면 페어링GO에 있는 우리 술을 한 번에 불러올 수 있어요. " : ""}
+          페어링GO에 있는 {drinkOnly ? "전통주와" : "음식·전통주와"} 이름이 같으면 손님 화면에서 그 페이지로 이어져요.
+        </p>
       </section>
 
       <section className="panel stack">

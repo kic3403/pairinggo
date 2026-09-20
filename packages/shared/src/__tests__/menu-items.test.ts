@@ -78,3 +78,19 @@ describe("메뉴 사진", () => {
     expect(menuImages(m.menu, [{ img: undefined }])).toEqual([ok]);
   });
 });
+
+describe("술 설명(양조장·리쿼샵)", () => {
+  it("술에도 설명을 담고 링크는 막는다", () => {
+    const [ok] = cleanDrinkItems([{ name: "한산소곡주", volume: "750ml", abv: 18, price: 20000, desc: "백일 동안 빚는 약주" }]);
+    expect(ok.desc).toBe("백일 동안 빚는 약주");
+    expect(cleanDrinkItems([{ name: "소곡주", desc: "www.example.com 참고" }])).toHaveLength(0);
+    expect(cleanDrinkItems([{ name: "소곡주" }])[0].desc).toBeUndefined();
+  });
+  it("메뉴판을 읽어 더할 때 빈 설명을 채운다", () => {
+    const cur = { menu: [], drinks: cleanDrinkItems([{ name: "낯꽃", volume: "500ml" }]) };
+    const m = mergeMenuRows(cur, [{ kind: "drink", name: "낯꽃", catalogName: null, desc: "소곡주를 내린 증류주", abv: 41 }], { drinks: [], foods: [] });
+    expect(m.drinks[0].desc).toBe("소곡주를 내린 증류주");
+    expect(m.drinks[0].abv).toBe(41);
+    expect(m.filled).toBe(2);
+  });
+});

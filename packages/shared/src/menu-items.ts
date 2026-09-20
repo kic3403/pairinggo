@@ -8,7 +8,7 @@ import { addListItem } from "./place-info";
 
 /** img: 사장님이 올린 사진(우리 저장소 menu-photos 공개 주소만, 없으면 속성 자체가 없음 — 2026-09-19) */
 export type MenuItem = { name: string; desc: string; price: number | null; img?: string };
-export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null; img?: string };
+export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null; desc?: string; img?: string };
 
 /** 메뉴 사진 저장소(Supabase Storage 공개 버킷) — 경로는 {매장 id}/{파일} */
 export const MENU_PHOTO_BUCKET = "menu-photos";
@@ -69,13 +69,14 @@ export function cleanDrinkItems(raw: unknown): DrinkItem[] {
   const out: DrinkItem[] = [], seen = new Set<string>();
   for (const r of Array.isArray(raw) ? raw : []) {
     const o = (r ?? {}) as Record<string, unknown>;
-    const name = text(o.name, MENU_NAME_MAX), volume = cleanVolume(o.volume);
+    const name = text(o.name, MENU_NAME_MAX), volume = cleanVolume(o.volume), desc = text(o.desc, MENU_DESC_MAX);
     // 같은 술이 용량별로 여러 줄일 수 있다(잔·병) — 이름+용량이 같을 때만 겹친 것으로 본다
     const k = `${key(name)}|${key(volume)}`;
-    if (!name || seen.has(k) || hasLink(name)) continue;
+    if (!name || seen.has(k) || hasLink(name) || hasLink(desc)) continue;
     seen.add(k);
     const img = cleanMenuImage(o.img);
-    out.push({ name, volume, abv: parseAbv(o.abv), price: parsePrice(o.price), ...(img ? { img } : {}) });
+    // 설명은 양조장·리쿼샵이 술을 소개할 때 쓴다(2026-09-21) — 식당 메뉴판에서는 비어 있어도 된다
+    out.push({ name, volume, abv: parseAbv(o.abv), price: parsePrice(o.price), ...(desc ? { desc } : {}), ...(img ? { img } : {}) });
     if (out.length >= MENU_ITEMS_MAX) break;
   }
   return out;
@@ -106,10 +107,11 @@ export function mergeMenuRows(
       if (!ex.desc && it.desc) { ex.desc = it.desc; filled++; }
       if (ex.price == null && it.price != null) { ex.price = it.price; filled++; }
     } else {
-      const [it] = cleanDrinkItems([{ name: named(r.name, r.catalogName, catalog.drinks), volume: r.volume, abv: r.abv, price: r.price }]);
+      const [it] = cleanDrinkItems([{ name: named(r.name, r.catalogName, catalog.drinks), volume: r.volume, abv: r.abv, price: r.price, desc: r.desc }]);
       if (!it) continue;
       const ex = drinks.find((d) => key(d.name) === key(it.name) && (key(d.volume) === key(it.volume) || !d.volume || !it.volume));
       if (!ex) { if (drinks.length < MENU_ITEMS_MAX) { drinks.push(it); added++; } continue; }
+      if (!ex.desc && it.desc) { ex.desc = it.desc; filled++; }
       if (!ex.volume && it.volume) { ex.volume = it.volume; filled++; }
       if (ex.abv == null && it.abv != null) { ex.abv = it.abv; filled++; }
       if (ex.price == null && it.price != null) { ex.price = it.price; filled++; }

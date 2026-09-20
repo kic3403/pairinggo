@@ -32,7 +32,12 @@ function Section({ title, rows }: { title: string; rows: Row[] }) {
 export default function MenuBoard({ menu, drinks }: { menu: MenuItem[]; drinks: DrinkItem[] }) {
   if (!menu.length && !drinks.length) return null;
   const food: Row[] = menu.map((m, i) => ({ key: `m${i}-${m.name}`, name: m.name, sub: m.desc, price: m.price, img: m.img }));
-  const drink: Row[] = drinks.map((d, i) => ({ key: `d${i}-${d.name}-${d.volume}`, name: d.name, sub: [d.volume, formatAbv(d.abv)].filter(Boolean).join(" · "), price: d.price, img: d.img }));
+  // 양조장·리쿼샵이 적은 술 설명이 있으면 용량·도수 앞에 보여 준다(2026-09-21)
+  const drink: Row[] = drinks.map((d, i) => ({
+    key: `d${i}-${d.name}-${d.volume}`, name: d.name,
+    sub: [d.desc, [d.volume, formatAbv(d.abv)].filter(Boolean).join(" · ")].filter(Boolean).join(" · "),
+    price: d.price, img: d.img,
+  }));
   return (
     <div className="menu-board">
       <Section title="메뉴" rows={food} />
