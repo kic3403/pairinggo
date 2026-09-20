@@ -20,7 +20,9 @@
     "./menu-photo": "./src/menu-photo.ts",
     "./receipt-read": "./src/receipt-read.ts",
     "./password-reset": "./src/password-reset.ts",
-    "./errors": "./src/errors.ts"
+    "./errors": "./src/errors.ts",
+    "./shop": "./src/shop.ts",
+    "./shop-orders": "./src/shop-orders.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
