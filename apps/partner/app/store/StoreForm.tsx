@@ -216,8 +216,11 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
   const [photoErr, setPhotoErr] = useState("");
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
 
+  /** 양조장·리쿼샵은 콜키지·룸을 쓰지 않는다 — 화면에서 숨기고 저장에서도 비운다(2026-09-21) */
+  const amenities = drinkOnly ? { ...f, corkage: "", corkageNote: "", room: "", roomNote: "" } : f;
+
   const preview: PlaceInfo = {
-    ...f, parking: (f.parking || null) as PlaceInfo["parking"], corkage: (f.corkage || null) as PlaceInfo["corkage"], room: (f.room || null) as PlaceInfo["room"],
+    ...amenities, parking: (amenities.parking || null) as PlaceInfo["parking"], corkage: (amenities.corkage || null) as PlaceInfo["corkage"], room: (amenities.room || null) as PlaceInfo["room"],
     drinks: [], drinkNames: [], foods: [], menuNames: [], menuItems: tables.menu, drinkItems: tables.drinks, naverUrl: cleanNaverUrl(f.naverUrl), source: "partner", verifiedAt: null,
   };
   const chips = placeChips(preview, null);
@@ -226,7 +229,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
     if (f.naverUrl.trim() && !cleanNaverUrl(f.naverUrl)) { setState({ err: "네이버 지도 링크는 https://naver.me/… 또는 https://map.naver.com/… 모양만 받아요" }); return; }
     setState({ busy: true });
     const menuItems = tables.menu.filter((m) => m.name.trim()), drinkItems = tables.drinks.filter((d) => d.name.trim());
-    const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, brewery, info: { ...f, menuItems, drinkItems, photos } }) }).catch(() => null);
+    const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, brewery, info: { ...amenities, menuItems, drinkItems, photos } }) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
     setState(r?.ok ? { ok: "저장했어요 — 페어링GO 식당 목록과 예약 화면에 바로 반영돼요(목록 캐시로 최대 10분)" } : { err: j?.error ?? "저장하지 못했어요" });
   }
@@ -295,7 +298,9 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
 
       <section className="panel stack">
         <h2 style={{ margin: 0 }}>편의 정보</h2>
-        {([["parking", "주차", PARKING, "parkingNote", "예: 건물 뒤 5대"], ["corkage", "콜키지(술 가져오기)", TRI, "corkageNote", "예: 병당 1만원, 전통주 무료"], ["room", "룸", TRI, "roomNote", "예: 8인 룸 1개"]] as const).map(([k, label, opts, nk, ph]) => (
+        {([["parking", "주차", PARKING, "parkingNote", "예: 건물 뒤 5대"], ["corkage", "콜키지(술 가져오기)", TRI, "corkageNote", "예: 병당 1만원, 전통주 무료"], ["room", "룸", TRI, "roomNote", "예: 8인 룸 1개"]] as const)
+          .filter(([k]) => !drinkOnly || k === "parking")
+          .map(([k, label, opts, nk, ph]) => (
           <div key={k} style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.4fr)", gap: 8, alignItems: "end" }}>
             <label className="f">{label}
               <select value={f[k]} onChange={set(k)}>{opts.map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>
