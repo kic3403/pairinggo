@@ -106,3 +106,20 @@ describe("수상작 ↔ 카탈로그 술", () => {
     expect(matchAwardDrink({ name: "감싸주는날", brewery: "농업회사법인 주식회사 두레박" }, drinks)).toBe("d5");
   });
 });
+
+describe("이름이 같은 제품은 도수로 가린다", () => {
+  const list: AwardDrink[] = [
+    { id: "d342", name: "도한 청명주 15", alias: [], brewery: "한영석의발효연구소", abv: 15 },
+    { id: "d490", name: "도한 청명주", alias: [], brewery: "한영석의발효연구소", abv: 13.8 },
+  ];
+  it("도수가 맞는 쪽에 붙는다", () => {
+    expect(matchAwardDrink({ name: "도한 청명주", brewery: "농업회사법인(주)한영석의발효연구소", abv: 13.8 }, list)).toBe("d490");
+    expect(matchAwardDrink({ name: "도한 청명주 15", brewery: "한영석의발효연구소", abv: 15 }, list)).toBe("d342");
+  });
+  it("도수를 몰라도 이름이 완전히 같은 쪽이 먼저", () => {
+    expect(matchAwardDrink({ name: "도한 청명주", brewery: "한영석의발효연구소" }, list)).toBe("d490");
+  });
+  it("이름이 어느 쪽과도 완전히 같지 않고 도수도 모르면 붙이지 않는다", () => {
+    expect(matchAwardDrink({ name: "한영석 도한 청명주", brewery: "한영석의발효연구소" }, list)).toBeNull();
+  });
+});

@@ -101,7 +101,7 @@ const aliasList = (a: AwardDrink["alias"]) => (Array.isArray(a) ? a : a ? [a] : 
  * - 이름: 정규화해서 같거나, 한쪽이 다른 쪽을 품고 남는 부분이 양조장 이름·"도"·그 술 도수뿐일 때("중원당 청명주" = "청명주", "가무치소주 25" = "가무치소주 25도").
  *   "청명주 탁주"·"가무치소주 43도"처럼 종류·도수가 다른 변형은 붙이지 않는다.
  */
-export function matchAwardDrink(entry: { name: string; brewery?: string | null }, drinks: AwardDrink[]): string | null {
+export function matchAwardDrink(entry: { name: string; brewery?: string | null; abv?: number | null }, drinks: AwardDrink[]): string | null {
   const a = norm(entry.name);
   if (a.length < 2) return null;
   const exact: string[] = [], near: string[] = [];
@@ -126,6 +126,11 @@ export function matchAwardDrink(entry: { name: string; brewery?: string | null }
     if (ok) near.push(d.id);
   }
   const pick = exact.length ? exact : near;
-  const uniq = [...new Set(pick)];
+  let uniq = [...new Set(pick)];
+  // 이름이 같은 제품이 둘 이상이면 도수로 가린다 — "도한 청명주"(13.8%)와 "도한 청명주 15"(15%)
+  if (uniq.length > 1 && entry.abv != null) {
+    const same = uniq.filter((id) => { const a = drinks.find((d) => d.id === id)?.abv; return a != null && Math.abs(a - entry.abv!) < 0.05; });
+    if (same.length === 1) uniq = same;
+  }
   return uniq.length === 1 ? uniq[0] : null;
 }

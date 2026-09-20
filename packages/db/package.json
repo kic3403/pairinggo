@@ -32,7 +32,8 @@
     "drink-awards": "tsx src/drink-awards.ts",
     "expand-candidates": "tsx src/expand-candidates.ts",
     "buy-links": "tsx src/buy-links.ts",
-    "add-candidates": "tsx src/add-candidates.ts"
+    "add-candidates": "tsx src/add-candidates.ts",
+    "dup-check": "tsx src/dup-check.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",

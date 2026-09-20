@@ -21,6 +21,7 @@ import { loadResearch } from "./research";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const apply = process.argv.includes("--apply");
+const awardsOnly = process.argv.includes("--awards-only");   // 수상작만 (이미 넣은 뒤 남은 수상작을 채울 때)
 const limit = Number(process.argv[process.argv.indexOf("--limit") + 1]) || 0;
 
 type Pick = {
@@ -40,7 +41,10 @@ const region = (p: Pick) => {
 };
 const storeLabel = (s: Shop) => (s.kind === "스마트스토어" ? "양조장 공식 스마트스토어" : "양조장 공식몰");
 
-const picks = (JSON.parse(readFileSync(join(ROOT, "research", "expand-candidates.json"), "utf8")) as { picks: Pick[] }).picks;
+const picks = (JSON.parse(readFileSync(join(ROOT, "research", "expand-candidates.json"), "utf8")) as { picks: Pick[] }).picks
+  .filter((p) => !awardsOnly || p.awards?.length);
+/** 수상 명단에만 있어 도수를 모르는 후보 — 사람이 출처를 확인해 research/candidate-abv.json에 적은 값 */
+const abvFix: Record<string, { abv: number; source: string }> = JSON.parse(readFileSync(join(ROOT, "research", "candidate-abv.json"), "utf8"));
 const readJson = <T,>(p: string): T => (existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as T) : ({} as T));
 const shops: Record<string, Shop> = { ...readJson<Record<string, Shop>>(join(ROOT, "research", "buy-links-search.json")) };
 for (const [k, v] of Object.entries(readJson<Record<string, Shop>>(join(ROOT, "research", "buy-links.json")))) if (v.ok !== false || !shops[k]) shops[k] = v;
@@ -57,7 +61,8 @@ const skipped: { name: string; why: string }[] = [];
 for (const p of picks) {
   if (limit && drinks.length >= limit) break;
   if (!p.category) { skipped.push({ name: p.name, why: "종류 모름" }); continue; }
-  if (p.abv == null) { skipped.push({ name: p.name, why: "도수 모름 — 확인 뒤 따로 넣기" }); continue; }
+  if (p.abv == null && abvFix[p.key]) p.abv = abvFix[p.key].abv;
+  if (p.abv == null) { skipped.push({ name: p.name, why: `도수 모름 — 확인 뒤 research/candidate-abv.json에 "${p.key}"` }); continue; }
   const name = cleanName(p.name);
   if (!name || usedSlugs.has(slug(name))) { skipped.push({ name: p.name, why: "이름이 겹치는 술이 이미 있음" }); continue; }
   usedSlugs.add(slug(name));
