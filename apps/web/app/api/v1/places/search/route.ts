@@ -42,7 +42,10 @@ export async function GET(req: Request) {
     const aw = await withAwards(found);
     const lite = sp.get("lite") === "1";
     // 카카오는 메뉴명·태그까지 보고 찾는다("유록" → 이름이 다른 "오징어세상") — 이름이 맞는 곳을 먼저
-    const places = sortByNameMatch(await withReviews(await withBookable(await withInfo(lite ? aw.places : await attachRatings(aw.places)), false)), q);
+    const sorted = sortByNameMatch(await withReviews(await withBookable(await withInfo(lite ? aw.places : await attachRatings(aw.places)), false)), q);
+    // 이름이 걸린 파트너 매장은 맨 앞 — 같은 이름의 다른 가게(예: "두레박" 식당 여러 곳)에 밀리지 않게(2026-09-20)
+    const pid = new Set(partners.map((p) => p.id));
+    const places = pid.size ? [...sorted.filter((p) => pid.has(p.id)), ...sorted.filter((p) => !pid.has(p.id))] : sorted;
     return json(req, {
       query: q, center: hasLoc ? { lat, lng, radius: 20000 } : null, places, total: r.total, widened,
       source: kakaoConfigured() ? r.source : "none", awardsYear: aw.year, ratingSource: googlePlacesConfigured() ? "google" : null,
