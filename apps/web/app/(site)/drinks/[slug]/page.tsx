@@ -143,8 +143,15 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <aside>
           {bp && (
             <div className="box">
-              <h3>{drink.brewery} 방문하기</h3>
-              <p className="small">페어링GO 파트너 양조장이에요{bp.address ? ` · ${bp.address}` : ""}</p>
+              <h3 className="with-seal">
+                {drink.brewery} 방문하기
+                {/* 인증 도장처럼 — 페어링GO가 확인한 파트너 양조장(0031) */}
+                <span className="seal" title="페어링GO가 확인한 파트너 양조장">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.4 11.3 3.6 8.5l1-1 1.8 1.8 4.9-4.9 1 1z" /></svg>
+                  파트너 양조장
+                </span>
+              </h3>
+              {bp.address ? <p className="small">{bp.address}</p> : null}
               <div className="btns">
                 {bp.bookable && <Link className="btn p" href={`/reserve/${bp.kakaoId}`}>방문 시음 예약</Link>}
                 <Link className="btn" href={`/places/${bp.kakaoId}?n=${encodeURIComponent(bp.name)}`}>양조장 보기</Link>
