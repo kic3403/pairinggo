@@ -35,6 +35,7 @@ export default async function AdminHome() {
         <b>사용자가 찾았는데 없던 검색어 (최근 30일 상위)</b>
         <p className="muted">카탈로그 확장 후보입니다. 크론 집계(popular_terms) 기준.</p>
         {d.empties.length ? <div className="row">{d.empties.map((e) => <span key={e.term} className="tag w">{e.term} {e.count}</span>)}</div> : <p className="muted">아직 없음</p>}
+        <p style={{ marginTop: 8 }}><Link href="/admin/wanted">없는 술 요청 모아 보기 (메뉴판·회원픽 포함) →</Link></p>
       </div>
     </>
   );
