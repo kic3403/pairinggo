@@ -804,3 +804,32 @@ a.pd-score:hover { border-color: var(--navy); }
 .pd-brewery { list-style: none; margin: 8px 0 6px; padding: 0; display: grid; gap: 6px; }
 .pd-brewery li a { display: block; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: inherit; }
 .pd-brewery li a:hover { border-color: var(--navy); }
+
+/* ── 구매(중개, docs/22) */
+.buy.shop { border-color: var(--accent); }
+.shop-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }
+.shop-list > li { border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.shop-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.shop-price { text-align: right; white-space: nowrap; }
+.shop-price .was { display: block; font-size: 12px; color: var(--muted); text-decoration: line-through; }
+.shop-buy { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.shop-buy select { min-height: 40px; }
+.cart-seller + .cart-seller { margin-top: 12px; }
+.cart-lines { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+.cart-lines > li { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.cl-main { display: grid; gap: 2px; min-width: 0; }
+.cl-side { display: flex; gap: 10px; align-items: center; white-space: nowrap; }
+.linkbtn { background: none; border: 0; padding: 4px; font: inherit; font-size: 13px; color: var(--muted); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.cart-total p { display: flex; justify-content: space-between; margin: 6px 0; }
+.cart-total .sum { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 10px; font-size: 17px; }
+.checkout .fields { display: grid; gap: 10px; margin-top: 8px; }
+.checkout .fields label { display: grid; gap: 4px; font-size: 13.5px; color: var(--muted); }
+.checkout .fields input { min-height: 44px; }
+.co-seller + .co-seller { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.co-sum { display: flex; justify-content: space-between; margin: 6px 0; }
+.co-sum.total { border-top: 1px solid var(--line); padding-top: 10px; font-size: 17px; }
+.agree { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.6; }
+.agree input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; }
+.order-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.order-list a { display: block; border: 1px solid var(--line); border-radius: 12px; padding: 12px; text-decoration: none; color: inherit; }
+.ol-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }

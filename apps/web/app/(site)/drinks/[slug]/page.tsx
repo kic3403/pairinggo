@@ -13,6 +13,7 @@ import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, foodHref, type CardItem } from "../../_components/PairingCards";
 import ExtLink from "../../_components/ExtLink";
+import BuyBox from "../../_components/BuyBox";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
@@ -86,6 +87,9 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       )}
       <ProfileBars kind="drink" profile={drink.profile} />
       <div className="share-row"><ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} /></div>
+
+      {/* 입점 양조장이 파는 상품이 있으면 여기서 바로 산다(docs/22) — 재고·가격이 바뀌므로 화면에서 불러온다 */}
+      <BuyBox drinkId={drink.id} drinkName={drink.name} />
 
       {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
       <section className="buy">
