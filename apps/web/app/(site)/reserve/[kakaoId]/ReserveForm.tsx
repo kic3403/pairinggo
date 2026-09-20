@@ -13,7 +13,7 @@ type Day = { date: string; reason: string; slots: Slot[] };
 type Phone = { phone: string | null; verified: boolean; available: boolean; blocked?: string | null };
 type Props = {
   kakaoId: string; storeName: string; today: string;
-  settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes">;
+  settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes" | "sessionTimes" | "sessionMinutes">;
   hours: BusinessHours[]; closures: string[]; corkage: "yes" | "no" | "hide" | null; corkageNote: string; food: Named | null; drink: Named | null;
   /** 업종에 맞는 예약 이름 — "자리 예약" · "방문 시음 예약" · "방문 픽업 예약" */
   reserveLabel?: string;
@@ -133,7 +133,7 @@ export default function ReserveForm(p: Props) {
       </section>
 
       <section className="rsv-step">
-        <h2>시간 <small>{formatVisit(date, "").trim()}</small></h2>
+        <h2>{s.sessionTimes?.length ? "회차" : "시간"} <small>{formatVisit(date, "").trim()}{s.sessionMinutes ? ` · 약 ${s.sessionMinutes}분` : ""}</small></h2>
         {!day ? <p className="muted">예약 가능한 시간을 불러오는 중…</p>
           : day.reason !== "ok" ? <p className="muted">{REASON[day.reason] ?? "시간을 불러오지 못했어요"}</p>
           : !day.slots.length ? <p className="muted">오늘은 더 받을 수 있는 시간이 없어요 — 다른 날짜를 골라 주세요.</p>

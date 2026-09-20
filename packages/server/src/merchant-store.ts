@@ -87,7 +87,7 @@ export async function saveStoreInfo(m: Merchant, partner: { id: string; name: st
 /* ---------- 예약 설정 ---------- */
 export async function saveSettings(m: Merchant, partnerUserId: string, raw: Record<string, unknown>): Promise<ReservationSettings> {
   const c = need();
-  const s = cleanSettings(raw as Partial<Record<keyof ReservationSettings, unknown>>);
+  const s = cleanSettings(raw as Partial<Record<keyof ReservationSettings, unknown>>, m.kind);   // 양조장은 최소 인원 2명부터
   const [{ data: before }, { data: hours }] = await Promise.all([
     c.from("reservation_settings").select("*").eq("merchant_id", m.id).maybeSingle(),
     c.from("merchant_hours").select("closed").eq("merchant_id", m.id),

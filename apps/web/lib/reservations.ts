@@ -10,7 +10,7 @@ import { getCatalog } from "./catalog";
 
 export type ReservePageData = {
   kakaoId: string; name: string; address: string; phone: string; bookable: boolean; kind: PartnerKind;
-  settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes">;
+  settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes" | "sessionTimes" | "sessionMinutes">;
   hours: BusinessHours[]; closures: string[]; info: PlaceInfo | null;
 };
 
@@ -21,7 +21,7 @@ export async function reservePageData(kakaoId: string): Promise<ReservePageData 
   const s = ctx.settings;
   return {
     kakaoId, name: ctx.merchant.name, address: ctx.merchant.address, phone: ctx.merchant.phone, bookable: isBookable(ctx), kind: ctx.merchant.kind,
-    settings: { minParty: s.minParty, maxParty: s.maxParty, horizonDays: s.horizonDays, leadMinutes: s.leadMinutes, roomBookable: s.roomBookable, notice: s.notice, slotMinutes: s.slotMinutes },
+    settings: { minParty: s.minParty, maxParty: s.maxParty, horizonDays: s.horizonDays, leadMinutes: s.leadMinutes, roomBookable: s.roomBookable, notice: s.notice, slotMinutes: s.slotMinutes, sessionTimes: s.sessionTimes, sessionMinutes: s.sessionMinutes },
     hours: ctx.hours, closures: ctx.closures, info,
   };
 }

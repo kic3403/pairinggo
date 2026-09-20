@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { slotTimes, WEEKDAY_LABEL, type BusinessHours, type ReservationSettings } from "@pairinggo/shared";
+import { cleanSessionTimes, MIN_PARTY_BY_KIND, PARTNER_KIND_LABEL, slotTimes, WEEKDAY_LABEL, type BusinessHours, type PartnerKind, type ReservationSettings } from "@pairinggo/shared";
 
 type Msg = { busy?: boolean; ok?: string; err?: string };
 async function post(url: string, body: unknown): Promise<{ ok: boolean; j: Record<string, unknown> }> {
@@ -10,11 +10,14 @@ async function post(url: string, body: unknown): Promise<{ ok: boolean; j: Recor
 const Note = ({ m }: { m: Msg }) => (m.err ? <p className="err" role="alert">{m.err}</p> : m.ok ? <p className="okmsg" role="status">{m.ok}</p> : null);
 
 /* ---------- 예약 받기·정원 ---------- */
-export function SettingsForm({ initial, hoursSaved }: { initial: ReservationSettings; hoursSaved: boolean }) {
-  const [s, setS] = useState(initial);
+export function SettingsForm({ initial, hoursSaved, kind = "restaurant" }: { initial: ReservationSettings; hoursSaved: boolean; kind?: PartnerKind }) {
+  const [s, setS] = useState<ReservationSettings>(initial);
+  // 회차 시각 — 입력 중에는 적은 글자 그대로 두고, 칸을 떠날 때·저장할 때 정리한다
+  const [sessionText, setSessionText] = useState(initial.sessionTimes.join(", "));
+  const minFloor = MIN_PARTY_BY_KIND[kind] ?? 1;
   const [m, setM] = useState<Msg>({});
   const num = (k: keyof ReservationSettings) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setS({ ...s, [k]: Number(e.target.value) });
-  async function save(next = s) {
+  async function save(next: ReservationSettings = { ...s, sessionTimes: cleanSessionTimes(sessionText) }) {
     setM({ busy: true });
     const r = await post("/api/settings", next);
     if (r.ok) { setS(r.j.settings as ReservationSettings); setM({ ok: next.accepting ? "저장했어요 — 페어링GO 손님이 지금부터 예약할 수 있어요" : "저장했어요 — 예약 받기는 꺼져 있어요" }); }
@@ -33,13 +36,24 @@ export function SettingsForm({ initial, hoursSaved }: { initial: ReservationSett
         </button>
       </div>
       {!hoursSaved ? <p className="small" style={{ margin: 0, color: "var(--warn)" }}>아래 영업시간을 먼저 저장해야 켤 수 있어요.</p> : null}
+      {/* 회차제 — 정해진 시각에만 받는다(양조장 시음 등). 비우면 영업시간을 예약 간격으로 나눈다 */}
+      <label className="f">받는 시간 <span className="hint">{kind === "restaurant" ? "비워 두면 영업시간을 예약 간격으로 나눠서 받아요" : "회차 시각을 쉼표로 적어 주세요 — 비우면 영업시간을 나눠서 받아요"}</span>
+        <input type="text" value={sessionText} onChange={(e) => setSessionText(e.target.value)} onBlur={() => setS({ ...s, sessionTimes: cleanSessionTimes(sessionText) })}
+          placeholder="예: 11:00, 14:00, 16:00" />
+      </label>
+      {s.sessionTimes.length ? <p className="small muted" style={{ margin: "-4px 0 0" }}>회차 {s.sessionTimes.join(" · ")} — 이 시각에만 예약을 받아요(영업시간 밖·브레이크에 걸친 회차는 빠져요).</p> : null}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(128px, 1fr))", gap: 12, alignItems: "end" }}>
+        <label className="f">한 번에 걸리는 시간 <span className="hint">손님 화면 안내</span>
+          <select value={s.sessionMinutes} onChange={num("sessionMinutes")}>{[0, 30, 45, 60, 90, 120].map((v) => <option key={v} value={v}>{v === 0 ? "안내 안 함" : `약 ${v}분`}</option>)}</select>
+        </label>
         <label className="f">예약 간격
           <select value={s.slotMinutes} onChange={num("slotMinutes")}>{[15, 30, 60].map((v) => <option key={v} value={v}>{v}분마다</option>)}</select>
         </label>
-        <label className="f">한 시간대 최대 팀<input type="number" min={1} max={50} value={s.capacityParties} onChange={num("capacityParties")} /></label>
-        <label className="f">한 시간대 최대 인원 <span className="hint">0 = 제한 없음</span><input type="number" min={0} max={300} value={s.capacityPeople} onChange={num("capacityPeople")} /></label>
-        <label className="f">최소 인원<input type="number" min={1} max={20} value={s.minParty} onChange={num("minParty")} /></label>
+        <label className="f">{s.sessionTimes.length ? "회차당 최대 팀" : "한 시간대 최대 팀"}<input type="number" min={1} max={50} value={s.capacityParties} onChange={num("capacityParties")} /></label>
+        <label className="f">{s.sessionTimes.length ? "회차당 최대 인원" : "한 시간대 최대 인원"} <span className="hint">0 = 제한 없음</span><input type="number" min={0} max={300} value={s.capacityPeople} onChange={num("capacityPeople")} /></label>
+        <label className="f">최소 인원 {minFloor > 1 ? <span className="hint">{PARTNER_KIND_LABEL[kind]}은 {minFloor}명부터</span> : null}
+          <input type="number" min={minFloor} max={20} value={s.minParty} onChange={num("minParty")} />
+        </label>
         <label className="f">최대 인원<input type="number" min={1} max={50} value={s.maxParty} onChange={num("maxParty")} /></label>
         <label className="f">당일 마감 <span className="hint">방문 몇 분 전까지</span>
           <select value={s.leadMinutes} onChange={num("leadMinutes")}>{[0, 30, 60, 120, 180, 360, 1440].map((v) => <option key={v} value={v}>{v === 0 ? "바로 전까지" : v === 1440 ? "하루 전까지" : `${v >= 60 ? `${v / 60}시간` : `${v}분`} 전까지`}</option>)}</select>
@@ -59,7 +73,7 @@ export function SettingsForm({ initial, hoursSaved }: { initial: ReservationSett
 }
 
 /* ---------- 영업시간 ---------- */
-export function HoursForm({ initial, slotMinutes }: { initial: BusinessHours[]; slotMinutes: number }) {
+export function HoursForm({ initial, slotMinutes, sessionTimes = [] }: { initial: BusinessHours[]; slotMinutes: number; sessionTimes?: string[] }) {
   const [h, setH] = useState(initial);
   const [m, setM] = useState<Msg>({});
   const set = (wd: number, patch: Partial<BusinessHours>) => setH(h.map((x) => (x.weekday === wd ? { ...x, ...patch } : x)));
@@ -77,11 +91,11 @@ export function HoursForm({ initial, slotMinutes }: { initial: BusinessHours[]; 
     <section className="panel stack">
       <div>
         <h2 style={{ margin: 0 }}>영업시간</h2>
-        <p className="small muted" style={{ margin: "2px 0 0" }}>예약 시간은 여는 시각부터 {slotMinutes}분마다, 마지막 입장은 닫기 {slotMinutes}분 전이에요. 브레이크 타임엔 예약을 받지 않아요. 새벽까지 여는 날은 자정 전까지만 예약을 받아요.</p>
+        <p className="small muted" style={{ margin: "2px 0 0" }}>{sessionTimes.length ? `예약은 정한 회차(${sessionTimes.join(" · ")})에만 받아요. 영업시간 밖이거나 브레이크에 걸친 회차는 빠져요.` : ""} 예약 시간은 여는 시각부터 {slotMinutes}분마다, 마지막 입장은 닫기 {slotMinutes}분 전이에요. 브레이크 타임엔 예약을 받지 않아요. 새벽까지 여는 날은 자정 전까지만 예약을 받아요.</p>
       </div>
       {order.map((wd) => {
         const x = h.find((y) => y.weekday === wd)!;
-        const slots = slotTimes(x, slotMinutes);
+        const slots = slotTimes(x, slotMinutes, sessionTimes);
         return (
           <div key={wd} style={{ borderTop: "1px solid var(--line)", paddingTop: 12, display: "grid", gap: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>

@@ -1,5 +1,5 @@
 import { getClosures, getHours, getSettings } from "@pairinggo/server/merchant-store";
-import { kstParts } from "@pairinggo/shared";
+import { kstParts, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL } from "@pairinggo/shared";
 import { Bar, Tabs } from "../_bar";
 import { linkedProviders, requireApprovedMerchant } from "@/lib/partner";
 import { enabledProviders } from "@/lib/oauth";
@@ -19,10 +19,15 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
       <main className="stack">
         <div>
           <h1>예약 설정</h1>
-          <p className="lead" style={{ margin: 0 }}>정한 정원 안에서 들어온 예약은 사장님 확인 없이 바로 확정돼요. 받을 수 없는 날은 휴무로 막아 주세요.</p>
+          <p className="lead" style={{ margin: 0 }}>
+            정한 정원 안에서 들어온 예약은 사장님 확인 없이 바로 확정돼요. 받을 수 없는 날은 휴무로 막아 주세요.
+            {merchant.kind !== "restaurant"
+              ? ` 손님 화면에는 ${PARTNER_KIND_LABEL[merchant.kind]} ${PARTNER_RESERVATION_LABEL[merchant.kind]}으로 보여요 — 정해진 회차가 있으면 "받는 시간"에 적어 주세요.`
+              : ""}
+          </p>
         </div>
-        <SettingsForm initial={settings} hoursSaved={hours.saved && hours.hours.some((h) => !h.closed)} />
-        <HoursForm initial={hours.hours} slotMinutes={settings.slotMinutes} />
+        <SettingsForm initial={settings} hoursSaved={hours.saved && hours.hours.some((h) => !h.closed)} kind={merchant.kind} />
+        <HoursForm initial={hours.hours} slotMinutes={settings.slotMinutes} sessionTimes={settings.sessionTimes} />
         <ClosuresForm initial={closures} today={kstParts(new Date()).date} />
         <AccountSection email={user.email} hasPassword={acct.hasPassword} linked={acct.providers} enabled={enabledProviders()} result={result} />
       </main>

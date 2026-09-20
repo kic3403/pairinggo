@@ -32,11 +32,35 @@ export type ReservationSettings = {
   horizonDays: number;
   roomBookable: boolean;
   notice: string;
+  /**
+   * 회차제(2026-09-20) — 정해진 시각에만 받는다(예: 양조장 시음 11:00·14:00·16:00).
+   * 비어 있으면 지금처럼 영업시간을 slotMinutes로 나눈다. 영업시간 밖·브레이크·휴무일 회차는 빠진다.
+   */
+  sessionTimes: string[];
+  /** 한 회차에 걸리는 시간(분, 0 = 안내 안 함) — 손님 화면에 "약 60분"으로 */
+  sessionMinutes: number;
 };
 
 export const DEFAULT_SETTINGS: ReservationSettings = {
   accepting: false, slotMinutes: 30, capacityParties: 2, capacityPeople: 0, minParty: 1, maxParty: 8, leadMinutes: 60, horizonDays: 30, roomBookable: false, notice: "",
+  sessionTimes: [], sessionMinutes: 0,
 };
+/** 업종별 최소 인원 바닥값 — 양조장 시음은 혼자 받기 어려워 2명부터(2026-09-20 사용자 결정) */
+export const MIN_PARTY_BY_KIND: Record<string, number> = { brewery: 2 };
+
+/** 회차 시각 정리 — "HH:MM"만, 중복·잘못된 값은 버리고 시간순 (최대 12개) */
+export function cleanSessionTimes(raw: unknown): string[] {
+  const list = Array.isArray(raw) ? raw : String(raw ?? "").split(/[,\n]/);
+  const out = new Set<string>();
+  for (const v of list) {
+    const m = String(v ?? "").trim().match(/^(\d{1,2}):(\d{2})$/);
+    if (!m) continue;
+    const hh = Number(m[1]), mm = Number(m[2]);
+    if (hh > 23 || mm > 59) continue;
+    out.add(`${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}`);
+  }
+  return [...out].sort().slice(0, 12);
+}
 export const SLOT_MINUTE_OPTIONS = [15, 30, 60] as const;
 
 /** 한 슬롯에 이미 잡힌 예약(확정·착석만 센다) */
@@ -49,8 +73,20 @@ export type DayAvailability = { date: string; reason: "ok" | "past" | "beyond_ho
 const hoursFor = (hours: BusinessHours[], date: string) => hours.find((h) => h.weekday === weekdayOf(date));
 
 /** 그날 슬롯 시각 목록(정원·지금 시각 고려 전) */
-export function slotTimes(h: BusinessHours | undefined, slotMinutes: number): string[] {
+export function slotTimes(h: BusinessHours | undefined, slotMinutes: number, sessionTimes: string[] = []): string[] {
   if (!h || h.closed) return [];
+  // 회차제 — 정해진 시각만 받는다. 영업시간 밖이거나 브레이크에 걸린 회차는 뺀다
+  if (sessionTimes.length) {
+    const o = toMinutes(h.open), c0 = toMinutes(h.close);
+    if (!Number.isFinite(o) || !Number.isFinite(c0)) return [];
+    const c = c0 <= o ? c0 + 1440 : c0;
+    const bs = h.breakStart ? toMinutes(h.breakStart) : NaN, be = h.breakEnd ? toMinutes(h.breakEnd) : NaN;
+    return cleanSessionTimes(sessionTimes).filter((t) => {
+      const m = toMinutes(t);
+      if (!Number.isFinite(m) || m < o || m > Math.min(c, 1439)) return false;
+      return !(Number.isFinite(bs) && Number.isFinite(be) && m >= bs && m < be);
+    });
+  }
   const open = toMinutes(h.open), close0 = toMinutes(h.close);
   if (!Number.isFinite(open) || !Number.isFinite(close0) || slotMinutes <= 0) return [];
   const close = close0 <= open ? close0 + 1440 : close0;
@@ -77,7 +113,7 @@ export function availableSlots(input: {
   const earliest = now.getTime() + s.leadMinutes * 60_000;
   const byTime = new Map(booked.map((b) => [b.time, b]));
   const party = input.partySize ?? s.minParty;
-  const slots = slotTimes(h, s.slotMinutes)
+  const slots = slotTimes(h, s.slotMinutes, s.sessionTimes ?? [])
     .filter((t) => kstInstant(date, t).getTime() >= earliest)
     .map((time) => {
       const b = byTime.get(time);
@@ -89,10 +125,11 @@ export function availableSlots(input: {
 }
 
 /** 예약 설정 입력 정리 — 범위를 벗어나면 가장 가까운 허용값 */
-export function cleanSettings(raw: Partial<Record<keyof ReservationSettings, unknown>>): ReservationSettings {
+export function cleanSettings(raw: Partial<Record<keyof ReservationSettings, unknown>>, kind?: string): ReservationSettings {
   const int = (v: unknown, lo: number, hi: number, dflt: number) => { const n = Math.round(Number(v)); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : dflt; };
   const slotMinutes = (SLOT_MINUTE_OPTIONS as readonly number[]).includes(Number(raw.slotMinutes)) ? Number(raw.slotMinutes) : DEFAULT_SETTINGS.slotMinutes;
-  const minParty = int(raw.minParty, 1, 20, DEFAULT_SETTINGS.minParty);
+  const floor = MIN_PARTY_BY_KIND[String(kind ?? "")] ?? 1;                    // 양조장 시음은 2명부터
+  const minParty = Math.max(floor, int(raw.minParty, 1, 20, DEFAULT_SETTINGS.minParty));
   return {
     accepting: raw.accepting === true || raw.accepting === "true" || raw.accepting === "on",
     slotMinutes,
@@ -104,6 +141,8 @@ export function cleanSettings(raw: Partial<Record<keyof ReservationSettings, unk
     horizonDays: int(raw.horizonDays, 1, 90, DEFAULT_SETTINGS.horizonDays),
     roomBookable: raw.roomBookable === true || raw.roomBookable === "true" || raw.roomBookable === "on",
     notice: String(raw.notice ?? "").replace(/\s+/g, " ").trim().slice(0, 200),
+    sessionTimes: cleanSessionTimes(raw.sessionTimes),
+    sessionMinutes: int(raw.sessionMinutes, 0, 480, DEFAULT_SETTINGS.sessionMinutes),
   };
 }
 

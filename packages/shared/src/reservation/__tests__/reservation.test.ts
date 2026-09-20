@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  addDays, availableSlots, canTransition, cleanHours, cleanSettings, DEFAULT_SETTINGS, formatMobile, formatVisit, isDate, kstInstant, kstParts,
+  addDays, availableSlots, canTransition, cleanHours, cleanSessionTimes, cleanSettings, DEFAULT_SETTINGS, formatMobile, formatVisit, isDate, kstInstant, kstParts,
   maskMobile, normalizeMobile, otpLooksValid, pairingNoteDraft, slotTimes, storeActions, toMinutes, validateReservationRequest,
   cleanBizNo, formatBizNo, isManualPlaceId, validatePartnerSignup, reserveErrorMessage, noShowBlock, noShowMessage,
   type BusinessHours, type ReservationSettings,
@@ -192,5 +192,29 @@ describe("노쇼 제한", () => {
     expect(noShowBlock([daysAgo(60), daysAgo(40)], now).blocked).toBe(false);
     expect(noShowBlock([daysAgo(120), daysAgo(5)], now).blocked).toBe(false);
     expect(noShowMessage(noShowBlock([], now))).toBeNull();
+  });
+});
+
+describe("회차제 예약 — 양조장 시음(2026-09-20)", () => {
+  const hours = [{ weekday: 0, closed: false, open: "10:00", close: "18:00", breakStart: "12:00", breakEnd: "13:00" }];
+  it("회차 시각만 받는다 — 영업시간 밖·브레이크는 뺀다", () => {
+    expect(slotTimes(hours[0], 30, ["11:00", "12:30", "14:00", "19:00", "9:30"])).toEqual(["11:00", "14:00"]);
+  });
+  it("회차가 없으면 지금처럼 영업시간을 나눈다", () => {
+    expect(slotTimes(hours[0], 60, []).slice(0, 3)).toEqual(["10:00", "11:00", "13:00"]);
+  });
+  it("회차 시각 정리 — 형식·중복·개수", () => {
+    expect(cleanSessionTimes(["9:5", "09:05", "9:05", "25:00", "14:00", ""])).toEqual(["09:05", "14:00"]);
+    expect(cleanSessionTimes("11:00, 14:00\n16:00")).toEqual(["11:00", "14:00", "16:00"]);
+    expect(cleanSessionTimes(null)).toEqual([]);
+  });
+  it("양조장은 최소 인원이 2명부터", () => {
+    expect(cleanSettings({ minParty: 1 }, "brewery").minParty).toBe(2);
+    expect(cleanSettings({ minParty: 4 }, "brewery").minParty).toBe(4);
+    expect(cleanSettings({ minParty: 1 }, "restaurant").minParty).toBe(1);
+    expect(cleanSettings({ minParty: 1, maxParty: 1 }, "brewery")).toMatchObject({ minParty: 2, maxParty: 2 });
+  });
+  it("설정에 회차가 들어간다", () => {
+    expect(cleanSettings({ sessionTimes: ["14:00", "11:00"], sessionMinutes: 60 })).toMatchObject({ sessionTimes: ["11:00", "14:00"], sessionMinutes: 60 });
   });
 });

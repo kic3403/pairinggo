@@ -34,11 +34,13 @@ export const settingsFromRow = (r: Row | null | undefined): ReservationSettings 
   accepting: r.accepting === true, slotMinutes: Number(r.slot_minutes), capacityParties: Number(r.capacity_parties), capacityPeople: Number(r.capacity_people),
   minParty: Number(r.min_party), maxParty: Number(r.max_party), leadMinutes: Number(r.lead_minutes), horizonDays: Number(r.horizon_days),
   roomBookable: r.room_bookable === true, notice: str(r.notice),
+  sessionTimes: Array.isArray(r.session_times) ? (r.session_times as string[]).map(String) : [], sessionMinutes: Number(r.session_minutes ?? 0),
 } : { ...DEFAULT_SETTINGS });
 
 export const settingsToRow = (merchantId: string, s: ReservationSettings) => ({
   merchant_id: merchantId, accepting: s.accepting, slot_minutes: s.slotMinutes, capacity_parties: s.capacityParties, capacity_people: s.capacityPeople,
   min_party: s.minParty, max_party: s.maxParty, lead_minutes: s.leadMinutes, horizon_days: s.horizonDays, room_bookable: s.roomBookable, notice: s.notice,
+  session_times: s.sessionTimes, session_minutes: s.sessionMinutes,
   updated_at: new Date().toISOString(),
 });
 
