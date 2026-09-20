@@ -232,6 +232,12 @@ export async function transitionOrder(t: TransitionInput): Promise<OrderView | n
     } else shipPatch.delivered_at = new Date().toISOString();
   }
 
+  // 배송 정보를 **먼저** 저장한다 — 여기서 실패하면 상태는 그대로 둔다(예전엔 상태만 발송으로 넘어가고 송장이 비었다)
+  if (shipPatch) {
+    const { error } = await c.from("shipments").update(shipPatch).eq("order_id", t.orderId).eq("seller_id", t.sellerId!);
+    if (error) throw new Error(error.message);
+  }
+
   if (t.to === "cancelled") {
     const reason = cleanReason(t.reason);
     if (t.actor === "seller" && !reason) throw new Error("취소 사유를 적어 주세요");
@@ -241,11 +247,6 @@ export async function transitionOrder(t: TransitionInput): Promise<OrderView | n
     const patch: Row = { status: t.to, updated_at: new Date().toISOString() };
     if (t.to === "returned") patch.cancel_reason = cleanReason(t.reason);
     const { error } = await c.from("order_items").update(patch).in("id", movable.map((i) => i.id));
-    if (error) throw new Error(error.message);
-  }
-
-  if (shipPatch) {
-    const { error } = await c.from("shipments").update(shipPatch).eq("order_id", t.orderId).eq("seller_id", t.sellerId!);
     if (error) throw new Error(error.message);
   }
 
