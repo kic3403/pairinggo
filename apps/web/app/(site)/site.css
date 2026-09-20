@@ -714,7 +714,6 @@ p { margin: 0 0 12px; }
 .pd-title h1 { margin: 0; font-size: clamp(24px, 4vw, 32px); line-height: 1.25; text-wrap: balance; }
 .pd-title .award { display: inline-flex; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 800; background: #FFF3D6; color: #8A5A00; border: 1px solid #F0D48A; }
 .pd-title .award.bib { background: #FDECEC; color: #A93226; border-color: #F5C2C2; }
-.pd-partner { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--navy-soft); color: var(--navy-ink); }
 .pd-meta { margin: 0; color: var(--ink2); font-size: 14.5px; }
 .pd-scores { display: flex; flex-wrap: wrap; gap: 8px; }
 .pd-score { display: grid; gap: 0; padding: 8px 14px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; min-width: 150px; }
