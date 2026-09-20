@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import { PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, type PartnerKind } from "@pairinggo/shared";
+import { PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL, type PartnerKind } from "@pairinggo/shared";
 
 type Place = { id: string; name: string; category: string; address: string; phone: string | null };
 
@@ -60,7 +60,7 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
             </button>
           ))}
         </div>
-        {kind !== "restaurant" ? <p className="hint" style={{ margin: 0 }}>{PARTNER_KIND_LABEL[kind]}은 지금 자리 예약을 받지 않아요 — 매장 정보·취급 술·사진을 관리할 수 있고, 예약은 준비되는 대로 열어 드립니다.</p> : null}
+        {kind !== "restaurant" ? <p className="hint" style={{ margin: 0 }}>{PARTNER_KIND_LABEL[kind]}도 예약을 받을 수 있어요 — {PARTNER_RESERVATION_LABEL[kind]}(영업시간·정원을 정하고 켜면 손님이 예약합니다).</p> : null}
       </section>
       <section className="panel stack">
         <h2 style={{ margin: 0 }}>{kind === "restaurant" ? "매장" : PARTNER_KIND_LABEL[kind]}</h2>

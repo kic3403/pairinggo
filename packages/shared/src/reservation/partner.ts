@@ -30,14 +30,19 @@ export type PartnerKind = (typeof PARTNER_KINDS)[number];
 export const PARTNER_KIND_LABEL: Record<PartnerKind, string> = { restaurant: "식당", brewery: "양조장", liquor: "리쿼샵" };
 /** 그 종류가 무엇을 하는 곳인지 — 가입·어드민 화면 안내 */
 export const PARTNER_KIND_HINT: Record<PartnerKind, string> = {
-  restaurant: "손님이 자리를 예약하고 방문하는 곳 — 메뉴판·콜키지·예약을 씁니다",
-  brewery: "술을 빚는 곳 — 양조장 방문·시음 안내와 우리 술 정보를 관리합니다",
-  liquor: "술을 파는 가게 — 취급하는 전통주와 매장 픽업 안내를 관리합니다",
+  restaurant: "손님이 자리를 예약하고 방문하는 곳 — 메뉴판·콜키지·자리 예약",
+  brewery: "술을 빚는 곳 — 우리 술 정보와 양조장 방문·시음 예약",
+  liquor: "술을 파는 가게 — 취급하는 전통주와 방문 픽업 예약",
 };
 export const cleanPartnerKind = (raw: unknown): PartnerKind =>
   (PARTNER_KINDS as readonly string[]).includes(String(raw)) ? (String(raw) as PartnerKind) : "restaurant";
-/** 지금 자리 예약을 받는 종류 — 양조장·리쿼샵은 예약 기능을 쓰지 않는다(시음 예약은 다음 차수) */
-export const partnerTakesReservations = (kind: PartnerKind) => kind === "restaurant";
+/**
+ * 예약은 업종과 상관없이 **예약 받기를 켠 승인 매장**이면 받는다 (2026-09-20 사용자 확인:
+ * 두레박한산소곡주(양조장)가 예약을 켜 둔 것을 보고 정함 — 양조장은 방문 시음, 리쿼샵은 방문 픽업 예약).
+ */
+export const partnerTakesReservations = (_kind: PartnerKind) => true;
+/** 업종에 맞는 예약 이름 — 화면 문구 */
+export const PARTNER_RESERVATION_LABEL: Record<PartnerKind, string> = { restaurant: "자리 예약", brewery: "방문 시음 예약", liquor: "방문 픽업 예약" };
 
 /**
  * 매장 직접 입력(2026-09-19 사용자 요청) — 카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 상호·주소·전화를 직접 적어 신청한다.

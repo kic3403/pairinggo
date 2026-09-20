@@ -10,7 +10,7 @@ import PartnerActions from "./PartnerActions";
 import ChangeLog from "./ChangeLog";
 import {
   cleanPartnerKind, formatBizNo, formatMobile, isManualPlaceId, MERCHANT_STATUS_LABEL,
-  PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, partnerTakesReservations,
+  PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL,
 } from "@pairinggo/shared";
 
 export const dynamic = "force-dynamic";
@@ -40,7 +40,7 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
       <p className="muted" style={{ marginBottom: 10 }}>
         승인 전에 <b>사업자등록번호 진위·휴폐업</b>(국세청 홈택스 사업자 상태 조회)과 매장 대표 번호로 신청자가 실제 운영자인지 확인해 주세요.
         <b>직접 입력</b> 매장은 주소가 실제로 있는지 확인하고, 카카오맵에 올라와 있으면 <b>카카오맵 장소 연결</b>을 눌러 이어 주세요(연결 전에는 페어링GO 검색·예약에 나오지 않아요).
-        업종이 잘못 신청됐으면 <b>업종</b>에서 바꿀 수 있어요 — 지금 자리 예약은 <b>식당</b>만 받습니다(양조장·리쿼샵은 매장 정보·취급 술만).
+        업종이 잘못 신청됐으면 <b>업종</b>에서 바꿀 수 있어요 — 예약은 업종과 상관없이 <b>예약 받기를 켠 매장</b>이 받습니다(식당은 자리, 양조장은 방문 시음, 리쿼샵은 방문 픽업).
         승인해도 예약 받기는 꺼진 채로 시작하고, 사장님이 파트너 앱에서 영업시간·정원을 정한 뒤 켭니다. 정지하면 예약 받기가 꺼지고 새 예약이 막혀요(잡힌 예약은 그대로).
       </p>
       {rows.length === 0 ? (
@@ -51,7 +51,7 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
             <b style={{ fontSize: 16 }}>{m.name}</b>
             <span className="tag w" title={PARTNER_KIND_HINT[m.kind]}>{PARTNER_KIND_LABEL[m.kind]}</span>
             {isManualPlaceId(m.kakaoPlaceId) ? <span className="tag" title="카카오맵 검색에 안 나와 사장님이 직접 입력한 매장 — 연결 전에는 페어링GO 검색·예약에 안 나와요">직접 입력 · 카카오맵 미연결</span> : null}
-            <span className="tag">{MERCHANT_STATUS_LABEL[m.status]}{m.status === "approved" && partnerTakesReservations(m.kind) ? (m.accepting ? " · 예약 받는 중" : " · 예약 꺼짐") : ""}</span>
+            <span className="tag">{MERCHANT_STATUS_LABEL[m.status]}{m.status === "approved" ? (m.accepting ? ` · ${PARTNER_RESERVATION_LABEL[m.kind]} 받는 중` : " · 예약 꺼짐") : ""}</span>
           </div>
           <div className="muted" style={{ fontSize: 13, marginTop: 4 }}>
             {m.address || "주소 없음"}{m.phone ? ` · 매장 ${m.phone}` : ""}

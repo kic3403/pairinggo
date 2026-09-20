@@ -12,6 +12,7 @@ import { track } from "@/lib/track";
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
 type Named = { id: string; name: string; slug: string | null };
 export type PlaceView = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean; reviews?: ReviewStats; match?: PlaceMatch | null };
+/** 블루리본은 식당 가이드라 양조장·리쿼샵 파트너에는 붙이지 않는다(2026-09-20) */
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
 
 export default function PlaceList({ places, where, awardsYear, restaurants, reserveFood, reserveDrink, eventKey, savedAs, limit = 12 }: {
@@ -66,7 +67,7 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
             {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}
             {p.info?.naverUrl && <a className="lk" href={p.info.naverUrl} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "naver_map" })}>네이버 지도 ↗</a>}
             {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "tel" })}>전화</a>}
-            {restaurants && <a className="lk br" href={blueRibbonUrl(p.name)} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("external_link", { ...eventKey, place: p.name, kind: "blueribbon" })}>블루리본 확인 ↗</a>}
+            {restaurants && !/양조장|리쿼샵/.test(p.category) && <a className="lk br" href={blueRibbonUrl(p.name)} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("external_link", { ...eventKey, place: p.name, kind: "blueribbon" })}>블루리본 확인 ↗</a>}
             <Heart kind="place" id={p.id} name={p.name}
               meta={{ name: p.name, address: p.roadAddress || p.address, phone: p.phone ?? undefined, url: p.placeUrl ?? undefined, category: p.category, food: savedAs }} />
           </li>

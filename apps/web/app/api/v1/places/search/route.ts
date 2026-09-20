@@ -4,6 +4,7 @@ import { attachRatings, googlePlacesConfigured } from "@/lib/google-places";
 import { error, json, preflight } from "@/lib/http";
 import { kakaoConfigured, rateLimit, searchPlaces } from "@/lib/kakao";
 import { withAwards, withBookable, withInfo, withReviews } from "@/lib/place-enrich";
+import { partnerPlacesByName } from "@/lib/place-info";
 
 export const runtime = "nodejs";
 const CACHE = { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=1800" };
@@ -35,6 +36,9 @@ export async function GET(req: Request) {
       const named = all.places.filter((p) => key(p.name).includes(key(q)) && !found.some((x) => x.id === p.id));
       if (named.length) { found = [...named, ...found]; widened = true; }
     }
+    // 우리 파트너 매장은 카카오 분류(FD6)에 안 걸려도 이름으로 찾을 수 있어야 한다 — 양조장·리쿼샵(2026-09-20)
+    const partners = await partnerPlacesByName(q).catch(() => []);
+    if (partners.length) found = [...partners.filter((p) => !found.some((x) => x.id === p.id)), ...found];
     const aw = await withAwards(found);
     const lite = sp.get("lite") === "1";
     // 카카오는 메뉴명·태그까지 보고 찾는다("유록" → 이름이 다른 "오징어세상") — 이름이 맞는 곳을 먼저

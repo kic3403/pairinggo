@@ -91,3 +91,29 @@ export async function deletePlaceInfo(kakaoId: string): Promise<void> {
   const { error } = await need().from("place_info").delete().eq("kakao_id", kakaoId);
   if (error) throw new Error(error.message);
 }
+
+/**
+ * 이름으로 찾는 파트너 매장 (2026-09-20 사용자 제보: "두레박한산소곡주가 검색해도 안 나와요").
+ * 카카오 식당 검색(FD6)은 분류가 음식점인 곳만 주기 때문에 양조장·리쿼샵은 이름을 그대로 넣어도 나오지 않는다.
+ * 승인된 파트너 매장은 카카오와 상관없이 이름으로 찾을 수 있게 검색 결과 맨 앞에 붙인다(직접 입력 매장은 좌표가 없어 제외).
+ */
+export async function partnerPlacesByName(query: string, limit = 5): Promise<Place[]> {
+  const sb = db();
+  const q = String(query ?? "").replace(/\s+/g, " ").trim();
+  if (!sb || q.length < 2) return [];
+  const esc = q.replace(/[\%_]/g, (ch) => "\\" + ch);
+  const { data, error } = await sb.from("merchants")
+    .select("kakao_place_id, name, address, phone, lat, lng, place_url, kind")
+    .eq("status", "approved").not("kakao_place_id", "like", "manual-%")
+    .or(`name.ilike.%${esc}%,name.ilike.%${esc.replace(/ /g, "")}%`)
+    .limit(limit);
+  if (error) { console.warn("[place-info] partnerByName", error.message); return []; }
+  const label: Record<string, string> = { brewery: "양조장", liquor: "리쿼샵", restaurant: "" };
+  return ((data ?? []) as { kakao_place_id: string; name: string; address: string; phone: string; lat: number | null; lng: number | null; place_url: string | null; kind: string }[])
+    .filter((r) => Number.isFinite(Number(r.lat)) && Number.isFinite(Number(r.lng)))
+    .map((r): Place => ({
+      id: r.kakao_place_id, name: r.name, category: label[r.kind] ?? "", categoryPath: label[r.kind] ?? "",
+      address: r.address ?? "", roadAddress: r.address ?? "", phone: r.phone || null,
+      lat: Number(r.lat), lng: Number(r.lng), distanceKm: null, placeUrl: r.place_url ?? `https://place.map.kakao.com/${r.kakao_place_id}`,
+    }));
+}
