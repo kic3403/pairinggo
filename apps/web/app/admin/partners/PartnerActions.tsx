@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { PARTNER_KINDS, PARTNER_KIND_LABEL, type PartnerKind } from "@pairinggo/shared";
 
 type Status = "applied" | "approved" | "rejected" | "suspended";
 const ACTIONS: Record<Status, { action: string; label: string; reason?: boolean }[]> = {
@@ -53,8 +54,17 @@ function LinkKakao({ id, name, address }: { id: string; name: string; address: s
   );
 }
 
-export default function PartnerActions({ id, status, manual, name, address }: { id: string; status: Status; manual?: boolean; name?: string; address?: string }) {
+export default function PartnerActions({ id, status, manual, name, address, kind }: { id: string; status: Status; manual?: boolean; name?: string; address?: string; kind: PartnerKind }) {
   const [busy, setBusy] = useState(false);
+  /** 업종 바꾸기 — 사장님이 잘못 고르고 신청했을 때 */
+  async function changeKind(next: string) {
+    if (next === kind) return;
+    setBusy(true);
+    const r = await fetch("/admin/api/partners", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, action: "kind", kind: next }) });
+    const j = (await r.json().catch(() => ({}))) as { error?: string };
+    if (!r.ok) { alert(j.error ?? "바꾸지 못했어요"); setBusy(false); return; }
+    location.reload();
+  }
   async function run(action: string, needsReason?: boolean) {
     const reason = needsReason ? window.prompt("사유(사장님 화면에 보여요)") : "";
     if (needsReason && !reason?.trim()) return;
@@ -70,6 +80,12 @@ export default function PartnerActions({ id, status, manual, name, address }: { 
         <button key={a.action} className={`btn sm${a.action === "approve" || a.action === "resume" ? " p" : ""}`} disabled={busy} onClick={() => run(a.action, a.reason)}>{a.label}</button>
       ))}
       {manual ? <LinkKakao id={id} name={name ?? ""} address={address ?? ""} /> : null}
+      <label className="row" style={{ gap: 4, alignItems: "center", fontSize: 13 }}>
+        <span className="muted">업종</span>
+        <select value={kind} disabled={busy} onChange={(e) => void changeKind(e.target.value)}>
+          {PARTNER_KINDS.map((k) => <option key={k} value={k}>{PARTNER_KIND_LABEL[k]}</option>)}
+        </select>
+      </label>
     </div>
   );
 }

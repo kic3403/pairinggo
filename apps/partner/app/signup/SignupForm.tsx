@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, type PartnerKind } from "@pairinggo/shared";
 
 type Place = { id: string; name: string; category: string; address: string; phone: string | null };
 
@@ -7,6 +8,8 @@ type Place = { id: string; name: string; category: string; address: string; phon
 export type SocialSignup = { provider: "kakao" | "naver"; label: string; name: string | null; phone: string | null; email: string | null };
 
 export function SignupForm({ social }: { social?: SocialSignup | null }) {
+  // 업종 — 식당·양조장·리쿼샵 (2026-09-20). 예약 기능은 식당만 씁니다
+  const [kind, setKind] = useState<PartnerKind>("restaurant");
   const [q, setQ] = useState("");
   const [places, setPlaces] = useState<Place[] | null>(null);
   const [picked, setPicked] = useState<Place | null>(null);
@@ -38,7 +41,7 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
     const body = {
       email: f.get("email"), password: social ? "" : f.get("password"), name: f.get("name"), phone: f.get("phone"), social: !!social,
       kakaoPlaceId: manual ? "" : picked!.id, placeName: manual ? "" : picked!.name,
-      manualPlace: manual ? { name: f.get("placeName"), address: f.get("placeAddress"), phone: f.get("placePhone") } : null, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on",
+      manualPlace: manual ? { name: f.get("placeName"), address: f.get("placeAddress"), phone: f.get("placePhone") } : null, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on", kind,
     };
     const r = await fetch("/api/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
@@ -49,7 +52,18 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
   return (
     <form className="stack" onSubmit={submit}>
       <section className="panel stack">
-        <h2 style={{ margin: 0 }}>매장</h2>
+        <h2 style={{ margin: 0 }}>업종</h2>
+        <div className="kinds">
+          {PARTNER_KINDS.map((k) => (
+            <button key={k} type="button" className={`kind${k === kind ? " on" : ""}`} aria-pressed={k === kind} onClick={() => setKind(k)}>
+              <b>{PARTNER_KIND_LABEL[k]}</b><span>{PARTNER_KIND_HINT[k]}</span>
+            </button>
+          ))}
+        </div>
+        {kind !== "restaurant" ? <p className="hint" style={{ margin: 0 }}>{PARTNER_KIND_LABEL[kind]}은 지금 자리 예약을 받지 않아요 — 매장 정보·취급 술·사진을 관리할 수 있고, 예약은 준비되는 대로 열어 드립니다.</p> : null}
+      </section>
+      <section className="panel stack">
+        <h2 style={{ margin: 0 }}>{kind === "restaurant" ? "매장" : PARTNER_KIND_LABEL[kind]}</h2>
         {manual ? (
           <div className="stack manual-place">
             <p className="hint" style={{ margin: 0 }}>카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 직접 적어 신청해 주세요. 운영자가 승인할 때 확인해 카카오맵 장소와 연결하고, <b>연결 전까지는 페어링GO 식당 검색·예약에 나오지 않아요.</b> 매장 정보·영업시간은 승인되면 바로 정할 수 있어요.</p>

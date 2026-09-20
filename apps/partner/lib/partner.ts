@@ -84,7 +84,7 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick, so
   if (ue || !user) return { ok: false, problem: "가입을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   const { data: m, error: me } = await c.from("merchants").insert({
     kakao_place_id: kakaoPlaceId, name: place.name.slice(0, 80), address: place.address.slice(0, 200), phone: place.phone.slice(0, 20),
-    lat: place.lat, lng: place.lng, place_url: place.placeUrl, owner_name: s.ownerName, biz_no: s.bizNo, status: "applied",
+    lat: place.lat, lng: place.lng, place_url: place.placeUrl, owner_name: s.ownerName, biz_no: s.bizNo, status: "applied", kind: s.kind,
   }).select("id").single();
   if (me || !m) {
     await c.from("partner_users").delete().eq("id", user.id);

@@ -20,6 +20,26 @@ export const formatBizNo = (d: string) => (d.length === 10 ? `${d.slice(0, 3)}-$
 export const MERCHANT_STATUS_LABEL = { applied: "승인 대기", approved: "승인", rejected: "반려", suspended: "정지" } as const;
 
 /**
+ * 파트너 종류 (2026-09-20 사용자 결정: 어드민에서 식당·양조장·리쿼샵 세 갈래로 나눈다)
+ * - restaurant 식당: 자리 예약을 받는다(지금까지의 파트너)
+ * - brewery   양조장: 술을 만드는 곳 — 방문 시음·양조장 투어, 전통주 직접 판매·입점
+ * - liquor    리쿼샵: 술을 파는 가게 — 재고 안내·매장 픽업(docs/13 판매 구조)
+ */
+export const PARTNER_KINDS = ["restaurant", "brewery", "liquor"] as const;
+export type PartnerKind = (typeof PARTNER_KINDS)[number];
+export const PARTNER_KIND_LABEL: Record<PartnerKind, string> = { restaurant: "식당", brewery: "양조장", liquor: "리쿼샵" };
+/** 그 종류가 무엇을 하는 곳인지 — 가입·어드민 화면 안내 */
+export const PARTNER_KIND_HINT: Record<PartnerKind, string> = {
+  restaurant: "손님이 자리를 예약하고 방문하는 곳 — 메뉴판·콜키지·예약을 씁니다",
+  brewery: "술을 빚는 곳 — 양조장 방문·시음 안내와 우리 술 정보를 관리합니다",
+  liquor: "술을 파는 가게 — 취급하는 전통주와 매장 픽업 안내를 관리합니다",
+};
+export const cleanPartnerKind = (raw: unknown): PartnerKind =>
+  (PARTNER_KINDS as readonly string[]).includes(String(raw)) ? (String(raw) as PartnerKind) : "restaurant";
+/** 지금 자리 예약을 받는 종류 — 양조장·리쿼샵은 예약 기능을 쓰지 않는다(시음 예약은 다음 차수) */
+export const partnerTakesReservations = (kind: PartnerKind) => kind === "restaurant";
+
+/**
  * 매장 직접 입력(2026-09-19 사용자 요청) — 카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 상호·주소·전화를 직접 적어 신청한다.
  * 이런 매장은 카카오 장소 id 대신 "manual-…" 표시 id를 쓰고, 운영자가 카카오맵 장소를 찾아 연결하기 전까지는
  * 페어링GO 식당 검색·예약 화면(카카오 id 기준)에 나오지 않는다 — 파트너 앱 기능(매장 정보·영업시간)은 그대로 쓸 수 있다.
@@ -44,8 +64,10 @@ export type PartnerSignupInput = {
   email: string; password: string; name: string; phone: string;
   /** 카카오맵에서 고른 매장 id — 직접 입력이면 비우고 manualPlace를 채운다 */
   kakaoPlaceId: string; manualPlace?: ManualPlaceInput | null; ownerName: string; bizNo: string; agree: boolean;
+  /** 식당·양조장·리쿼샵 — 없으면 식당 */
+  kind?: PartnerKind;
 };
-export type CleanPartnerSignup = Omit<PartnerSignupInput, "agree" | "manualPlace"> & { agree: true; manualPlace: Required<ManualPlaceInput> | null };
+export type CleanPartnerSignup = Omit<PartnerSignupInput, "agree" | "manualPlace" | "kind"> & { agree: true; manualPlace: Required<ManualPlaceInput> | null; kind: PartnerKind };
 
 /** 가입 신청 입력 정리 — 비밀번호 세기는 서버의 passwordProblem이 따로 본다 */
 export function validatePartnerSignup(raw: PartnerSignupInput): { ok: true; value: CleanPartnerSignup } | { ok: false; problem: string } {
@@ -68,5 +90,5 @@ export function validatePartnerSignup(raw: PartnerSignupInput): { ok: true; valu
   const bizNo = cleanBizNo(raw.bizNo);
   if (!bizNo) return no("사업자등록번호 10자리를 확인해 주세요");
   if (raw.agree !== true) return no("파트너 이용약관과 개인정보 수집·이용에 동의해 주세요");
-  return { ok: true, value: { email, password: String(raw.password ?? ""), name, phone, kakaoPlaceId: manualPlace ? "" : kakaoPlaceId, manualPlace, ownerName, bizNo, agree: true } };
+  return { ok: true, value: { email, password: String(raw.password ?? ""), name, phone, kakaoPlaceId: manualPlace ? "" : kakaoPlaceId, manualPlace, ownerName, bizNo, agree: true, kind: cleanPartnerKind(raw.kind) } };
 }
