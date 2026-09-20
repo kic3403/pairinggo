@@ -9,7 +9,7 @@ import { searchPlaces } from "@/lib/kakao";
 
 export type AdminMerchant = {
   id: string; kakaoPlaceId: string; name: string; address: string; phone: string; placeUrl: string | null;
-  ownerName: string; bizNo: string; kind: PartnerKind; status: MerchantStatus; rejectReason: string; createdAt: string; approvedAt: string | null;
+  ownerName: string; bizNo: string; kind: PartnerKind; brewery: string; status: MerchantStatus; rejectReason: string; createdAt: string; approvedAt: string | null;
   accepting: boolean; members: { name: string; email: string; phone: string; role: string }[];
 };
 
@@ -17,7 +17,7 @@ export async function listMerchants(): Promise<AdminMerchant[]> {
   const c = db();
   if (!c) return [];
   const { data, error } = await c.from("merchants")
-    .select("id, kakao_place_id, name, address, phone, place_url, owner_name, biz_no, kind, status, reject_reason, created_at, approved_at, reservation_settings(accepting), merchant_members(role, partner_users(name, email, phone))")
+    .select("id, kakao_place_id, name, address, phone, place_url, owner_name, biz_no, kind, brewery, status, reject_reason, created_at, approved_at, reservation_settings(accepting), merchant_members(role, partner_users(name, email, phone))")
     .order("created_at", { ascending: false }).limit(300);
   if (error) throw new Error(error.message);
   return (data ?? []).map((r) => {
@@ -25,7 +25,7 @@ export async function listMerchants(): Promise<AdminMerchant[]> {
     const members = (r.merchant_members as unknown as { role: string; partner_users: { name: string; email: string; phone: string } | null }[] | null) ?? [];
     return {
       id: r.id, kakaoPlaceId: r.kakao_place_id, name: r.name, address: r.address, phone: r.phone, placeUrl: r.place_url,
-      ownerName: r.owner_name, bizNo: r.biz_no, kind: cleanPartnerKind(r.kind), status: r.status, rejectReason: r.reject_reason, createdAt: r.created_at, approvedAt: r.approved_at,
+      ownerName: r.owner_name, bizNo: r.biz_no, kind: cleanPartnerKind(r.kind), brewery: String(r.brewery ?? ""), status: r.status, rejectReason: r.reject_reason, createdAt: r.created_at, approvedAt: r.approved_at,
       accepting: Array.isArray(s) ? s[0]?.accepting === true : s?.accepting === true,
       members: members.flatMap((m) => (m.partner_users ? [{ ...m.partner_users, role: m.role }] : [])),
     };

@@ -49,7 +49,7 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
         <div className="card" key={m.id}>
           <div className="row" style={{ justifyContent: "space-between", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
             <b style={{ fontSize: 16 }}>{m.name}</b>
-            <span className="tag w" title={PARTNER_KIND_HINT[m.kind]}>{PARTNER_KIND_LABEL[m.kind]}</span>
+            <span className="tag w" title={PARTNER_KIND_HINT[m.kind]}>{PARTNER_KIND_LABEL[m.kind]}{m.brewery ? " · " + m.brewery : ""}</span>
             {isManualPlaceId(m.kakaoPlaceId) ? <span className="tag" title="카카오맵 검색에 안 나와 사장님이 직접 입력한 매장 — 연결 전에는 페어링GO 검색·예약에 안 나와요">직접 입력 · 카카오맵 미연결</span> : null}
             <span className="tag">{MERCHANT_STATUS_LABEL[m.status]}{m.status === "approved" ? (m.accepting ? ` · ${PARTNER_RESERVATION_LABEL[m.kind]} 받는 중` : " · 예약 꺼짐") : ""}</span>
           </div>

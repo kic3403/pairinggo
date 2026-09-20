@@ -17,7 +17,7 @@ export async function myMerchants(partnerUserId: string): Promise<MyMerchant[]> 
   const c = db();
   if (!c) return [];
   const { data } = await c.from("merchant_members")
-    .select("role, merchants(id, kakao_place_id, name, address, phone, lat, lng, place_url, status, reject_reason, owner_name, biz_no, created_at)")
+    .select("role, merchants(id, kakao_place_id, name, address, phone, lat, lng, place_url, status, kind, brewery, reject_reason, owner_name, biz_no, created_at)")
     .eq("partner_user_id", partnerUserId);
   return (data ?? []).flatMap((r) => {
     const m = r.merchants as unknown as Record<string, unknown> | null;
