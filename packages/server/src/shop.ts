@@ -234,3 +234,23 @@ export async function cartCount(userId: string): Promise<number> {
 
 /** 배송 설정이 비어 있는 판매자에게 쓰는 기본값 */
 export const defaultShipping = () => ({ ...DEFAULT_SHIPPING });
+
+/** 상품에 연결할 카탈로그 술 — 이름 또는 id로 찾는다(온라인 판매 불가 술은 상품으로 만들 수 없다) */
+export async function findCatalogDrink(idOrName: string): Promise<{ id: string; name: string; onlineSellable: boolean } | null> {
+  const c = db();
+  const q = String(idOrName ?? "").trim();
+  if (!c || !q) return null;
+  const { data } = await c.from("drinks").select("id, name, online_sellable").or(`id.eq.${q},name.eq.${q}`).limit(1).maybeSingle();
+  if (!data) return null;
+  const r = data as Row;
+  return { id: str(r.id), name: str(r.name), onlineSellable: r.online_sellable !== false };
+}
+
+/** 그 양조장의 카탈로그 술 목록 — 상품 등록 화면에서 고르게 */
+export async function breweryDrinkOptions(brewery: string): Promise<{ id: string; name: string; abv: number | null; onlineSellable: boolean }[]> {
+  const c = db();
+  const name = String(brewery ?? "").trim();
+  if (!c || !name) return [];
+  const { data } = await c.from("drinks").select("id, name, abv, online_sellable").eq("brewery_name", name).order("name").limit(100);
+  return ((data ?? []) as unknown as Row[]).map((r) => ({ id: str(r.id), name: str(r.name), abv: r.abv == null ? null : Number(r.abv), onlineSellable: r.online_sellable !== false }));
+}

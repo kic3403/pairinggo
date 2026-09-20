@@ -22,13 +22,16 @@ const TABS = [
   { key: "reservations", href: "/reservations", label: "예약" },
   { key: "store", href: "/store", label: "매장 정보" },
   { key: "settings", href: "/settings", label: "예약 설정" },
+  { key: "sell", href: "/sell", label: "판매" },
 ] as const;
 
 /** 아래 탭 — 승인된 매장 화면에서만 */
-export function Tabs({ active }: { active: (typeof TABS)[number]["key"] }) {
+/** 판매 탭은 양조장만 — 전통주 제조자만 통신판매할 수 있다(docs/22) */
+export function Tabs({ active, kind = "restaurant" }: { active: (typeof TABS)[number]["key"]; kind?: string }) {
+  const tabs = TABS.filter((t) => t.key !== "sell" || kind === "brewery");
   return (
     <nav className="tabs" aria-label="파트너 메뉴">
-      {TABS.map((t) => <Link key={t.key} href={t.href} aria-current={t.key === active ? "page" : undefined}>{t.label}</Link>)}
+      {tabs.map((t) => <Link key={t.key} href={t.href} aria-current={t.key === active ? "page" : undefined}>{t.label}</Link>)}
     </nav>
   );
 }
