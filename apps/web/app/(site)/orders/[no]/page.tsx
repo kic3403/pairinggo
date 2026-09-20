@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ORDER_STATUS_LABEL, cancelable } from "@pairinggo/shared";
+import { ORDER_STATUS_LABEL, cancelable, formatMobile, kstParts } from "@pairinggo/shared";
 import { auth } from "@/auth";
 import { myOrderByNo } from "@/lib/shop";
 import ExtLink from "../../_components/ExtLink";
@@ -12,11 +12,7 @@ export const metadata: Metadata = { title: "주문 상세 | 페어링GO", robots
 export const dynamic = "force-dynamic";
 
 const won = (n: number) => `${n.toLocaleString("ko-KR")}원`;
-const dateText = (iso: string | null) => {
-  if (!iso) return "";
-  const d = new Date(iso);
-  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-};
+const dateText = (iso: string | null) => (iso ? kstParts(new Date(iso)).date.replace(/-/g, ".") : "");
 
 export default async function OrderDetailPage({ params }: { params: Promise<{ no: string }> }) {
   const { no } = await params;
@@ -59,7 +55,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ no
 
       <section className="box">
         <h3>받는 분</h3>
-        <p className="small">{o.recv.name} · {o.recv.phone}</p>
+        <p className="small">{o.recv.name} · {formatMobile(o.recv.phone)}</p>
         <p className="small muted">({o.recv.zip}) {o.recv.addr1} {o.recv.addr2}</p>
         {o.recv.memo ? <p className="small muted">요청: {o.recv.memo}</p> : null}
       </section>

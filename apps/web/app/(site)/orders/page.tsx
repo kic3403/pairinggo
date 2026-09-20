@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ORDER_STATUS_LABEL } from "@pairinggo/shared";
+import { ORDER_STATUS_LABEL, kstParts } from "@pairinggo/shared";
 import { auth } from "@/auth";
 import { myOrders } from "@/lib/shop";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "내 주문 | 페어링GO", robots: {
 export const dynamic = "force-dynamic";
 
 const won = (n: number) => `${n.toLocaleString("ko-KR")}원`;
-const dateText = (iso: string) => { const d = new Date(iso); return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`; };
+const dateText = (iso: string) => kstParts(new Date(iso)).date.replace(/-/g, ".");
 
 export default async function OrdersPage() {
   const uid = (await auth())?.user?.id;

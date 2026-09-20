@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { listSellers } from "@pairinggo/server/shop";
 import { adminOrders, lateOrders, testPayEnabled } from "@pairinggo/server/shop-orders";
-import { ORDER_STATUS_LABEL, formatBizNo, shippingLabel } from "@pairinggo/shared";
+import { ORDER_STATUS_LABEL, formatBizNo, kstParts, shippingLabel } from "@pairinggo/shared";
 import { requireAdmin } from "@/lib/admin-auth";
 import SellerActions from "./SellerActions";
 
@@ -13,8 +13,8 @@ export const dynamic = "force-dynamic";
 
 const won = (n: number) => `${n.toLocaleString("ko-KR")}원`;
 const dateText = (iso: string) => {
-  const d = new Date(iso);
-  return `${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const k = kstParts(new Date(iso));
+  return `${k.date.slice(5).replace("-", ".")} ${String(Math.floor(k.minutes / 60)).padStart(2, "0")}:${String(k.minutes % 60).padStart(2, "0")}`;
 };
 const STATUS: Record<string, { label: string; tone: string }> = {
   applied: { label: "승인 대기", tone: "w" }, approved: { label: "판매중", tone: "o" }, suspended: { label: "정지", tone: "" },

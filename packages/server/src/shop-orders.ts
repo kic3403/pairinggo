@@ -219,6 +219,19 @@ export async function transitionOrder(t: TransitionInput): Promise<OrderView | n
   const movable = items.filter((i) => canOrderTransition(i.status, t.to, t.actor, { now, deliveredAt: deliveredAt.get(i.sellerId) ?? null }));
   if (!movable.length) throw new Error("지금은 그렇게 바꿀 수 없어요");
 
+  // 발송은 택배사·송장이 있어야 한다 — 상태를 바꾸기 전에 확인한다(예전엔 상태만 바뀌고 송장이 비었다)
+  let shipPatch: Row | null = null;
+  if (t.sellerId && (t.to === "shipped" || t.to === "delivered")) {
+    shipPatch = { updated_at: new Date().toISOString() };
+    if (t.to === "shipped") {
+      const courier = cleanCourier(t.courier?.code, t.courier?.name);
+      const invoice = cleanInvoice(t.invoice);
+      if (!courier.name) throw new Error("택배사를 골라 주세요(목록에 없으면 직접 적어 주세요)");
+      if (!invoice) throw new Error("송장번호를 정확히 적어 주세요 — 숫자 8자리 이상");
+      shipPatch.courier_code = courier.code; shipPatch.courier_name = courier.name; shipPatch.invoice = invoice; shipPatch.shipped_at = new Date().toISOString();
+    } else shipPatch.delivered_at = new Date().toISOString();
+  }
+
   if (t.to === "cancelled") {
     const reason = cleanReason(t.reason);
     if (t.actor === "seller" && !reason) throw new Error("취소 사유를 적어 주세요");
@@ -231,16 +244,9 @@ export async function transitionOrder(t: TransitionInput): Promise<OrderView | n
     if (error) throw new Error(error.message);
   }
 
-  if (t.sellerId && (t.to === "shipped" || t.to === "delivered")) {
-    const patch: Row = { updated_at: new Date().toISOString() };
-    if (t.to === "shipped") {
-      const courier = cleanCourier(t.courier?.code, t.courier?.name);
-      const invoice = cleanInvoice(t.invoice);
-      if (!courier.name) throw new Error("택배사를 골라 주세요(목록에 없으면 직접 적어 주세요)");
-      if (!invoice) throw new Error("송장번호를 정확히 적어 주세요");
-      patch.courier_code = courier.code; patch.courier_name = courier.name; patch.invoice = invoice; patch.shipped_at = new Date().toISOString();
-    } else patch.delivered_at = new Date().toISOString();
-    await c.from("shipments").update(patch).eq("order_id", t.orderId).eq("seller_id", t.sellerId);
+  if (shipPatch) {
+    const { error } = await c.from("shipments").update(shipPatch).eq("order_id", t.orderId).eq("seller_id", t.sellerId!);
+    if (error) throw new Error(error.message);
   }
 
   await syncOrderStatus(t.orderId);
