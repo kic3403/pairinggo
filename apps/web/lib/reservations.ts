@@ -2,14 +2,14 @@
  * 손님(페어링GO) 쪽 예약 — 예약 화면 데이터, 내 예약 목록, 취소. 저장·정원은 @pairinggo/server/reservations(DB 함수).
  * 매장 쪽 메모(store_memo)는 손님에게 내려 주지 않는다.
  */
-import { canTransition, CONSENT_VERSION, STATUS_LABEL, type BusinessHours, type PlaceInfo, type ReservationSettings, type ReservationStatus } from "@pairinggo/shared";
+import { canTransition, CONSENT_VERSION, STATUS_LABEL, type PartnerKind, type BusinessHours, type PlaceInfo, type ReservationSettings, type ReservationStatus } from "@pairinggo/shared";
 import { bookingContextByKakao, isBookable, reservationsForUser, type Reservation } from "@pairinggo/server/reservations";
 import { getStoreInfo } from "@pairinggo/server/merchant-store";
 import { db } from "./db";
 import { getCatalog } from "./catalog";
 
 export type ReservePageData = {
-  kakaoId: string; name: string; address: string; phone: string; bookable: boolean;
+  kakaoId: string; name: string; address: string; phone: string; bookable: boolean; kind: PartnerKind;
   settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes">;
   hours: BusinessHours[]; closures: string[]; info: PlaceInfo | null;
 };
@@ -20,7 +20,7 @@ export async function reservePageData(kakaoId: string): Promise<ReservePageData 
   const { info } = await getStoreInfo(ctx.merchant);
   const s = ctx.settings;
   return {
-    kakaoId, name: ctx.merchant.name, address: ctx.merchant.address, phone: ctx.merchant.phone, bookable: isBookable(ctx),
+    kakaoId, name: ctx.merchant.name, address: ctx.merchant.address, phone: ctx.merchant.phone, bookable: isBookable(ctx), kind: ctx.merchant.kind,
     settings: { minParty: s.minParty, maxParty: s.maxParty, horizonDays: s.horizonDays, leadMinutes: s.leadMinutes, roomBookable: s.roomBookable, notice: s.notice, slotMinutes: s.slotMinutes },
     hours: ctx.hours, closures: ctx.closures, info,
   };

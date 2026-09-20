@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { kstParts, placeChips, toSlug } from "@pairinggo/shared";
+import { kstParts, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL, placeChips, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { reservePageData } from "@/lib/reservations";
 import ReserveForm from "./ReserveForm";
@@ -32,8 +32,9 @@ export default async function ReservePage({ params, searchParams }: { params: Pr
   const chips = placeChips(data.info, null);
   return (
     <div className="wrap rsv">
-      <p className="crumb"><Link href="/">홈</Link>{food ? <> · <Link href={`/foods/${toSlug(food.name)}`}>{food.name}</Link></> : null} · 예약</p>
+      <p className="crumb"><Link href="/">홈</Link>{food ? <> · <Link href={`/foods/${toSlug(food.name)}`}>{food.name}</Link></> : null} · {PARTNER_RESERVATION_LABEL[data.kind]}</p>
       <h1>{data.name}</h1>
+      {data.kind !== "restaurant" ? <p className="lead" style={{ marginTop: 2 }}>{PARTNER_KIND_LABEL[data.kind]} {PARTNER_RESERVATION_LABEL[data.kind]}이에요 — 방문하실 날짜·시간과 인원을 골라 주세요.</p> : null}
       <div className="meta">
         <span>{data.address}</span>
         {data.phone ? <a href={`tel:${data.phone.replace(/[^0-9+]/g, "")}`}>{data.phone}</a> : null}
@@ -56,7 +57,8 @@ export default async function ReservePage({ params, searchParams }: { params: Pr
       ) : (
         <ReserveForm
           kakaoId={data.kakaoId} storeName={data.name} settings={data.settings} hours={data.hours} closures={data.closures}
-          today={kstParts(new Date()).date} corkage={data.info?.corkage ?? null} corkageNote={data.info?.corkageNote ?? ""}
+          today={kstParts(new Date()).date} corkage={data.kind === "restaurant" ? data.info?.corkage ?? null : "hide"} corkageNote={data.info?.corkageNote ?? ""}
+          reserveLabel={PARTNER_RESERVATION_LABEL[data.kind]}
           food={food ? { id: food.id, name: food.name } : null} drink={drink ? { id: drink.id, name: drink.name } : null}
         />
       )}

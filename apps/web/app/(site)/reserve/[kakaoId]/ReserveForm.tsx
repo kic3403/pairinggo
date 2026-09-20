@@ -14,7 +14,9 @@ type Phone = { phone: string | null; verified: boolean; available: boolean; bloc
 type Props = {
   kakaoId: string; storeName: string; today: string;
   settings: Pick<ReservationSettings, "minParty" | "maxParty" | "horizonDays" | "leadMinutes" | "roomBookable" | "notice" | "slotMinutes">;
-  hours: BusinessHours[]; closures: string[]; corkage: "yes" | "no" | null; corkageNote: string; food: Named | null; drink: Named | null;
+  hours: BusinessHours[]; closures: string[]; corkage: "yes" | "no" | "hide" | null; corkageNote: string; food: Named | null; drink: Named | null;
+  /** 업종에 맞는 예약 이름 — "자리 예약" · "방문 시음 예약" · "방문 픽업 예약" */
+  reserveLabel?: string;
 };
 
 const REASON: Record<string, string> = { closed: "쉬는 날이에요", past: "지난 날짜예요", beyond_horizon: "아직 예약을 받지 않는 날짜예요", not_accepting: "지금은 예약을 받지 않아요" };
@@ -164,7 +166,7 @@ export default function ReserveForm(p: Props) {
             <p className="small muted" style={{ margin: "0 0 10px" }}>연락처 {phone.phone} (인증됨)</p>
             <label className="field"><span>예약자 이름</span><input type="text" value={name} onChange={(e) => setName(e.target.value)} maxLength={20} autoComplete="name" placeholder="방문하실 분 이름" /></label>
             {s.roomBookable ? <label className="rsv-check"><input type="checkbox" checked={room} onChange={(e) => setRoom(e.target.checked)} /><span>룸을 원해요 <span className="muted small">(자리 사정에 따라 매장이 정해요)</span></span></label> : null}
-            {p.corkage === "no" ? <p className="small muted">이 매장은 술을 가져가는 콜키지를 받지 않아요.</p> : (
+            {p.corkage === "hide" ? null : p.corkage === "no" ? <p className="small muted">이 매장은 술을 가져가는 콜키지를 받지 않아요.</p> : (
               <label className="rsv-check"><input type="checkbox" checked={byo} onChange={(e) => setByo(e.target.checked)} />
                 <span>술을 가져갈게요(콜키지) <span className="muted small">{p.corkage === "yes" ? `콜키지 가능${p.corkageNote ? ` · ${p.corkageNote}` : ""}` : "콜키지 여부·비용은 매장에 확인해 주세요"}</span></span>
               </label>
@@ -187,7 +189,7 @@ export default function ReserveForm(p: Props) {
           </label>
           <p className="small muted" style={{ margin: "4px 0 12px" }}>정원 안이면 바로 확정돼요. 방문 1시간 전까지 앱에서 취소할 수 있고, 연락 없이 오지 않으면 다음 예약이 제한될 수 있어요.</p>
           {err ? <p className="form-error" role="alert">{err.text}{err.need === "consent" ? <> — <Link href="/profile">약관 동의하러 가기</Link></> : null}</p> : null}
-          <button type="button" className="btn f" style={{ width: "100%" }} disabled={busy || !selectedOk} onClick={submit}>{busy ? "예약하는 중…" : selectedOk ? `${time} ${party}명 예약하기` : "시간을 골라 주세요"}</button>
+          <button type="button" className="btn f" style={{ width: "100%" }} disabled={busy || !selectedOk} onClick={submit}>{busy ? "예약하는 중…" : selectedOk ? `${time} ${party}명 ${p.reserveLabel ?? "예약"}하기` : "시간을 골라 주세요"}</button>
         </section>
       ) : null}
     </div>
