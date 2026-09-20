@@ -7,6 +7,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { F, LINK_STATUS, byDrink, buyLink, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { breweryPartner } from "@/lib/place-detail";
 import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
@@ -64,6 +65,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const bl = buyLink(drink);
   const sellable = onlineSellable(drink);
   const offline = drink.offline;
+  // 이 술을 빚은 양조장이 페어링GO 파트너면 방문 시음 예약으로 잇는다(0031)
+  const bp = drink.brewery ? await breweryPartner(drink.brewery).catch(() => null) : null;
   const sameBrewery = c.dataset.drinks.filter((d) => d.id !== drink.id && d.brewery && d.brewery === drink.brewery).slice(0, 5);
   const sameRegion = c.dataset.drinks.filter((d) => d.id !== drink.id && d.region && drink.region && d.region.split(" ")[0] === drink.region.split(" ")[0]).slice(0, 6);
 
@@ -134,6 +137,16 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         </div>
 
         <aside>
+          {bp && (
+            <div className="box">
+              <h3>{drink.brewery} 방문하기</h3>
+              <p className="small">페어링GO 파트너 양조장이에요{bp.address ? ` · ${bp.address}` : ""}</p>
+              <div className="btns">
+                {bp.bookable && <Link className="btn p" href={`/reserve/${bp.kakaoId}`}>방문 시음 예약</Link>}
+                <Link className="btn" href={`/places/${bp.kakaoId}?n=${encodeURIComponent(bp.name)}`}>양조장 보기</Link>
+              </div>
+            </div>
+          )}
           {!!sameBrewery.length && (
             <div className="box">
               <h3>{drink.brewery}의 다른 술</h3>

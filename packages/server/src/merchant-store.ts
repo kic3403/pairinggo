@@ -18,12 +18,17 @@ const need = () => { const c = db(); if (!c) throw new Error("DB가 연결되지
 
 /* ---------- 카탈로그 이름(술·메뉴 연결용) — 10분 메모리 캐시 ---------- */
 type Named = { id: string; name: string };
-let catalogCache: { at: number; drinks: Named[]; foods: Named[] } | null = null;
-export async function catalogNames(): Promise<{ drinks: Named[]; foods: Named[] }> {
+let catalogCache: { at: number; drinks: Named[]; foods: Named[]; breweries: string[] } | null = null;
+export async function catalogNames(): Promise<{ drinks: Named[]; foods: Named[]; breweries: string[] }> {
   if (catalogCache && Date.now() - catalogCache.at < 600_000) return catalogCache;
   const c = need();
-  const [d, f] = await Promise.all([c.from("drinks").select("id, name").order("name").limit(2000), c.from("foods").select("id, name").order("name").limit(2000)]);
-  catalogCache = { at: Date.now(), drinks: (d.data ?? []) as Named[], foods: (f.data ?? []) as Named[] };
+  const [d, f, b] = await Promise.all([
+    c.from("drinks").select("id, name").order("name").limit(2000),
+    c.from("foods").select("id, name").order("name").limit(2000),
+    c.from("drinks").select("brewery_name").limit(2000),   // 양조장 파트너가 "우리 양조장"을 고를 목록(0031)
+  ]);
+  const breweries = [...new Set(((b.data ?? []) as { brewery_name: string | null }[]).map((r) => String(r.brewery_name ?? "").trim()).filter(Boolean))].sort((x, y) => x.localeCompare(y, "ko"));
+  catalogCache = { at: Date.now(), drinks: (d.data ?? []) as Named[], foods: (f.data ?? []) as Named[], breweries };
   return catalogCache;
 }
 
@@ -47,9 +52,25 @@ export async function getStoreInfo(m: Merchant): Promise<{ phone: string; info: 
 }
 
 /** 사장님 저장 — 대표 번호(merchants.phone)와 매장 정보(place_info, source partner). 비어 있으면 place_info 행을 지운다 */
-export async function saveStoreInfo(m: Merchant, partner: { id: string; name: string }, raw: { phone?: unknown; info?: Record<string, unknown> }): Promise<PlaceInfo | null> {
+/** 양조장 파트너가 고른 카탈로그 양조장 — 있는 이름만 저장한다(없으면 빈 값). 0031 */
+export async function saveBrewery(m: Merchant, raw: unknown): Promise<string> {
+  const c = need();
+  const want = String(raw ?? "").replace(/\s+/g, " ").trim().slice(0, 60);
+  const cat = await catalogNames();
+  const known = new Set(cat.breweries);
+  const brewery = want && known.has(want) ? want : "";
+  if (want && !brewery) throw new Error("카탈로그에 없는 양조장이에요 — 목록에서 골라 주세요(없으면 운영자에게 알려 주세요)");
+  if (brewery !== m.brewery) {
+    const { error } = await c.from("merchants").update({ brewery, updated_at: new Date().toISOString() }).eq("id", m.id);
+    if (error) throw new Error(error.message);
+  }
+  return brewery;
+}
+
+export async function saveStoreInfo(m: Merchant, partner: { id: string; name: string }, raw: { phone?: unknown; info?: Record<string, unknown>; brewery?: unknown }): Promise<PlaceInfo | null> {
   const c = need();
   const cat = await catalogNames();
+  if (raw.brewery !== undefined) await saveBrewery(m, raw.brewery);
   const info = cleanPlaceInfo({ ...(raw.info ?? {}), source: "partner", verifiedAt: kstParts(new Date()).date }, { drinks: new Set(cat.drinks.map((d) => d.id)), foods: new Set(cat.foods.map((f) => f.id)) });
   // 메뉴판 표가 있으면 식당 카드의 술·메뉴 목록(카탈로그 연결)은 표에서 뽑는다 — 표가 원본
   if (info.menuItems.length || info.drinkItems.length) {

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { STORE_PHOTOS_MAX, cleanNaverUrl, formatPrice, mergeMenuRows, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PlaceInfo } from "@pairinggo/shared";
+import { STORE_PHOTOS_MAX, cleanNaverUrl, formatPrice, mergeMenuRows, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
 import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 type Named = { id: string; name: string };
@@ -189,8 +189,9 @@ function DrinkTable({ rows, onChange, onImg, onError }: { rows: DrinkItem[]; onC
   );
 }
 
-export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId, menuReadEnabled }: { phone: string; info: PlaceInfo | null; drinks: Named[]; foods: Named[]; siteUrl: string; kakaoId: string; menuReadEnabled: boolean }) {
+export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId, menuReadEnabled, kind = "restaurant", brewery: brewery0 = "", breweries = [] }: { phone: string; info: PlaceInfo | null; drinks: Named[]; foods: Named[]; siteUrl: string; kakaoId: string; menuReadEnabled: boolean; kind?: PartnerKind; brewery?: string; breweries?: string[] }) {
   const [phone, setPhone] = useState(phone0);
+  const [brewery, setBrewery] = useState(brewery0);   // 양조장 파트너가 고른 카탈로그 양조장(0031)
   const [f, setF] = useState({
     menuNote: info?.menuNote ?? "", parking: info?.parking ?? "", parkingNote: info?.parkingNote ?? "",
     corkage: info?.corkage ?? "", corkageNote: info?.corkageNote ?? "", room: info?.room ?? "", roomNote: info?.roomNote ?? "", naverUrl: info?.naverUrl ?? "",
@@ -211,7 +212,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
     if (f.naverUrl.trim() && !cleanNaverUrl(f.naverUrl)) { setState({ err: "네이버 지도 링크는 https://naver.me/… 또는 https://map.naver.com/… 모양만 받아요" }); return; }
     setState({ busy: true });
     const menuItems = tables.menu.filter((m) => m.name.trim()), drinkItems = tables.drinks.filter((d) => d.name.trim());
-    const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, info: { ...f, menuItems, drinkItems, photos } }) }).catch(() => null);
+    const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, brewery, info: { ...f, menuItems, drinkItems, photos } }) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
     setState(r?.ok ? { ok: "저장했어요 — 페어링GO 식당 목록과 예약 화면에 바로 반영돼요(목록 캐시로 최대 10분)" } : { err: j?.error ?? "저장하지 못했어요" });
   }
@@ -222,6 +223,12 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
         <label className="f">매장 대표 번호 <span className="hint">손님 예약 화면·확정 안내에 보여요</span>
           <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" placeholder="042-000-0000" maxLength={20} />
         </label>
+        {kind !== "restaurant" ? (
+          <label className="f">우리 양조장 <span className="hint">고르면 그 양조장의 전통주가 매장 화면에 보이고, 술 화면에서 방문 예약으로 이어져요</span>
+            <input type="text" list="brewery-list" value={brewery} onChange={(e) => setBrewery(e.target.value)} placeholder="예: 한증류소" maxLength={60} />
+            <datalist id="brewery-list">{breweries.map((b) => <option key={b} value={b} />)}</datalist>
+          </label>
+        ) : null}
         <label className="f">한 줄 소개 <span className="hint">120자 — 페어링GO 식당 카드에 그대로 보여요</span>
           <textarea value={f.menuNote} onChange={set("menuNote")} maxLength={120} placeholder="예: 대전 한우 수육과 지역 막걸리를 함께 내는 한식 주점" />
         </label>

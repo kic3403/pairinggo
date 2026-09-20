@@ -102,14 +102,23 @@ export async function partnerPlacesByName(query: string, limit = 5): Promise<Pla
   const q = String(query ?? "").replace(/\s+/g, " ").trim();
   if (!sb || q.length < 2) return [];
   const esc = q.replace(/[\%_]/g, (ch) => "\\" + ch);
-  const { data, error } = await sb.from("merchants")
-    .select("kakao_place_id, name, address, phone, lat, lng, place_url, kind")
-    .eq("status", "approved").not("kakao_place_id", "like", "manual-%")
-    .or(`name.ilike.%${esc}%,name.ilike.%${esc.replace(/ /g, "")}%`)
-    .limit(limit);
+  const cols = "kakao_place_id, name, address, phone, lat, lng, place_url, kind, brewery";
+  const base = () => sb.from("merchants").select(cols).eq("status", "approved").not("kakao_place_id", "like", "manual-%");
+  // 그 술을 빚은 양조장도 찾는다 — 매장 이름이 브랜드와 달라도("농업회사법인(주) 한증류소" ← "한산소곡주") 나오게(0031)
+  const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+  const c = await getCatalog().catch(() => null);
+  const breweries = c
+    ? [...new Set(c.dataset.drinks.filter((d) => d.brewery && key(d.name).includes(key(q))).map((d) => d.brewery as string))].slice(0, 10)
+    : [];
+  const [byName, byDrink] = await Promise.all([
+    base().or(`name.ilike.%${esc}%,name.ilike.%${esc.replace(/ /g, "")}%,brewery.ilike.%${esc}%`).limit(limit),
+    breweries.length ? base().in("brewery", breweries).limit(limit) : Promise.resolve({ data: [], error: null }),
+  ]);
+  const error = byName.error ?? byDrink.error;
+  const data = [...(byName.data ?? []), ...(byDrink.data ?? [])].filter((r, i, arr) => arr.findIndex((x) => x.kakao_place_id === r.kakao_place_id) === i).slice(0, limit);
   if (error) { console.warn("[place-info] partnerByName", error.message); return []; }
   const label: Record<string, string> = { brewery: "양조장", liquor: "리쿼샵", restaurant: "" };
-  return ((data ?? []) as { kakao_place_id: string; name: string; address: string; phone: string; lat: number | null; lng: number | null; place_url: string | null; kind: string }[])
+  return ((data ?? []) as { kakao_place_id: string; name: string; address: string; phone: string; lat: number | null; lng: number | null; place_url: string | null; kind: string; brewery: string }[])
     .filter((r) => Number.isFinite(Number(r.lat)) && Number.isFinite(Number(r.lng)))
     .map((r): Place => ({
       id: r.kakao_place_id, name: r.name, category: label[r.kind] ?? "", categoryPath: label[r.kind] ?? "",

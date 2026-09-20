@@ -49,7 +49,7 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
       </div>
     );
   }
-  const { place: p, bookable, partner } = d;
+  const { place: p, bookable, partner, brewery } = d;
   const { stats, reviews } = await placeReviews(kakaoId);
   const info = p.info ?? null;
   const chips = placeChips(info, p.amenities);
@@ -103,6 +103,22 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
           {placeNoteLine(info) ? <p className="small muted">{placeNoteLine(info)}</p> : null}
           {p.infoView?.drinks.length ? <p className="pd-links"><b>술</b> {p.infoView.drinks.map((x, i) => <span key={x.id}>{i > 0 && " · "}{x.slug ? <Link href={`/drinks/${x.slug}`}>{x.name}</Link> : x.name}</span>)}</p> : null}
           {p.infoView?.foods.length && !info.menuItems?.length ? <p className="pd-links"><b>메뉴</b> {p.infoView.foods.map((x, i) => <span key={x.id}>{i > 0 && " · "}{x.slug ? <Link href={`/foods/${x.slug}`}>{x.name}</Link> : x.name}</span>)}</p> : null}
+        </section>
+      ) : null}
+
+      {brewery && brewery.drinks.length ? (
+        <section className="pd-sec">
+          <h2>{brewery.name}의 전통주 <span className="muted">{brewery.drinks.length}종</span></h2>
+          <ul className="pd-brewery">
+            {brewery.drinks.map((x) => (
+              <li key={x.id}>
+                <Link href={`/drinks/${x.slug}`}>
+                  <b>{x.name}</b> <span className="muted small">{[x.category, x.abv != null ? `${x.abv}%` : null].filter(Boolean).join(" · ")}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="muted small">술을 누르면 어울리는 안주와 구매처를 볼 수 있어요.</p>
         </section>
       ) : null}
 

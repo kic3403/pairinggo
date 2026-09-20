@@ -18,6 +18,8 @@ export type Merchant = {
   lat: number | null; lng: number | null; placeUrl: string | null; status: MerchantStatus;
   /** 식당·양조장·리쿼샵 (2026-09-20) — 예약 화면 문구·콜키지 칸을 가른다 */
   kind: PartnerKind;
+  /** 양조장 파트너가 고른 카탈로그 양조장 이름 — 그 양조장 술을 매장·술 화면에서 잇는다(0031) */
+  brewery: string;
 };
 export type BookingContext = { merchant: Merchant; settings: ReservationSettings; hours: BusinessHours[]; closures: string[] };
 
@@ -27,7 +29,7 @@ const str = (v: unknown) => (v == null ? "" : String(v));
 export const merchantFromRow = (r: Row): Merchant => ({
   id: str(r.id), kakaoPlaceId: str(r.kakao_place_id), name: str(r.name), address: str(r.address), phone: str(r.phone),
   lat: r.lat == null ? null : Number(r.lat), lng: r.lng == null ? null : Number(r.lng), placeUrl: (r.place_url as string) ?? null,
-  status: str(r.status) as MerchantStatus, kind: cleanPartnerKind(r.kind),
+  status: str(r.status) as MerchantStatus, kind: cleanPartnerKind(r.kind), brewery: str(r.brewery),
 });
 
 export const settingsFromRow = (r: Row | null | undefined): ReservationSettings => (r ? {
@@ -51,7 +53,7 @@ export const hoursFromRows = (rows: Row[]): BusinessHours[] =>
 export const hoursToRows = (merchantId: string, hours: BusinessHours[]) =>
   hours.map((h) => ({ merchant_id: merchantId, weekday: h.weekday, closed: h.closed, open: h.open, close: h.close, break_start: h.breakStart ?? null, break_end: h.breakEnd ?? null }));
 
-const MERCHANT_COLS = "id, kakao_place_id, name, address, phone, lat, lng, place_url, status, kind";
+const MERCHANT_COLS = "id, kakao_place_id, name, address, phone, lat, lng, place_url, status, kind, brewery";
 
 async function contextFor(merchantRow: Row | null): Promise<BookingContext | null> {
   const c = db();

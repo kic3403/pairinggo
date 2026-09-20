@@ -3,7 +3,8 @@
  *  ① 파트너 매장(merchants, 승인) ② 운영자·파트너 정보(place_info) ③ 링크에 붙은 이름(?n=)으로 카카오 검색해 같은 id ④ 그 식당 리뷰에 남은 이름·주소
  * 파트너 매장이면 대표 사진·메뉴판·예약까지, 아니면 기본 정보 + Google 평점(캐시) + 리뷰.
  */
-import { isManualPlaceId, type Place, type PlaceInfo } from "@pairinggo/shared";
+import { isManualPlaceId, toSlug, type PartnerKind, type Place, type PlaceInfo } from "@pairinggo/shared";
+import { getCatalog } from "./catalog";
 import { bookingContextByKakao, isBookable } from "@pairinggo/server/reservations";
 import { db } from "./db";
 import { searchPlaces } from "./kakao";
@@ -47,6 +48,10 @@ export async function placeBase(kakaoId: string, nameHint?: string | null): Prom
 export type PlaceDetail = {
   place: Place & { info?: PlaceInfo | null; infoView?: { drinks: { id: string; name: string; slug: string | null }[]; foods: { id: string; name: string; slug: string | null }[] } };
   bookable: boolean; partner: boolean; awardsYear: number | null;
+  /** 파트너 업종 — 식당·양조장·리쿼샵 (2026-09-20) */
+  kind: PartnerKind;
+  /** 양조장 파트너가 고른 카탈로그 양조장과 그 술들(0031) */
+  brewery: { name: string; drinks: { id: string; name: string; slug: string; category: string; abv: number | null }[] } | null;
 };
 
 /** 상세 화면 데이터 — 확인 정보·메뉴판·대표 사진·Google 평점(캐시, 없으면 한 번 조회)·미쉐린 배지·예약 가능 */
@@ -61,5 +66,29 @@ export async function placeDetail(kakaoId: string, nameHint?: string | null): Pr
   const aw = b.lat != null ? await withAwards([withGoogle]).catch(() => ({ places: [withGoogle], year: null })) : { places: [withGoogle], year: null };
   const [p] = await withInfo(aw.places);
   const ctx = b.merchant ? await bookingContextByKakao(kakaoId).catch(() => null) : null;
-  return { place: p, bookable: !!ctx && isBookable(ctx), partner: b.merchant, awardsYear: aw.year };
+  const kind = ctx?.merchant.kind ?? "restaurant";
+  const brewery = ctx?.merchant.brewery ? await breweryDrinks(ctx.merchant.brewery) : null;
+  return { place: p, bookable: !!ctx && isBookable(ctx), partner: b.merchant, awardsYear: aw.year, kind, brewery };
+}
+
+/** 그 양조장의 카탈로그 전통주 (양조장 파트너 화면·술 화면 연결, 0031) */
+export async function breweryDrinks(name: string): Promise<{ name: string; drinks: { id: string; name: string; slug: string; category: string; abv: number | null }[] } | null> {
+  const key = String(name ?? "").replace(/\s+/g, "").toLowerCase();
+  if (!key) return null;
+  const c = await getCatalog();
+  const drinks = c.dataset.drinks
+    .filter((x) => String(x.brewery ?? "").replace(/\s+/g, "").toLowerCase() === key)
+    .map((x) => ({ id: x.id, name: x.name, slug: toSlug(x.name), category: x.category, abv: x.abv ?? null }));
+  return { name, drinks };
+}
+
+/** 이 양조장을 운영하는 파트너 매장 — 술 화면의 "양조장 방문 시음 예약" (0031) */
+export async function breweryPartner(breweryName: string): Promise<{ kakaoId: string; name: string; address: string; bookable: boolean } | null> {
+  const c = db();
+  const name = String(breweryName ?? "").trim();
+  if (!c || !name) return null;
+  const { data } = await c.from("merchants").select("kakao_place_id, name, address, status").eq("brewery", name).eq("status", "approved").limit(1).maybeSingle();
+  if (!data) return null;
+  const ctx = await bookingContextByKakao(String(data.kakao_place_id)).catch(() => null);
+  return { kakaoId: String(data.kakao_place_id), name: String(data.name), address: String(data.address ?? ""), bookable: !!ctx && isBookable(ctx) };
 }
