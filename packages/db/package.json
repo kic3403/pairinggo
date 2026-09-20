@@ -33,7 +33,8 @@
     "expand-candidates": "tsx src/expand-candidates.ts",
     "buy-links": "tsx src/buy-links.ts",
     "add-candidates": "tsx src/add-candidates.ts",
-    "dup-check": "tsx src/dup-check.ts"
+    "dup-check": "tsx src/dup-check.ts",
+    "catalog-buy-links": "tsx src/catalog-buy-links.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
