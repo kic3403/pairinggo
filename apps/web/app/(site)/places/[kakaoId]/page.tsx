@@ -6,7 +6,7 @@
 import type { Metadata } from "next";
 import { cache } from "react";
 import Link from "next/link";
-import { PARTNER_KIND_LABEL, placeChips, placeNoteLine, ratingText, REVIEW_VERIFY_LABEL, verifiedLabel } from "@pairinggo/shared";
+import { PARTNER_KIND_LABEL, PARTNER_KIND_TONE, placeChips, placeNoteLine, ratingText, REVIEW_VERIFY_LABEL, verifiedLabel } from "@pairinggo/shared";
 import { placeDetail as loadDetail } from "@/lib/place-detail";
 import { placeReviews } from "@/lib/reviews";
 import ExtLink from "../../_components/ExtLink";
@@ -69,7 +69,7 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
           {p.award ? <span className={`award ${p.award.kind}`}>{p.award.kind === "star" ? `★ 미쉐린 ${p.award.year}` : p.award.kind === "bib" ? `빕구르망 ${p.award.year}` : p.award.label}</span> : null}
           {/* 술 상세의 "파트너 양조장"과 같은 인증 도장 — 업종에 맞춰 식당·양조장·리쿼샵 */}
           {partner ? (
-            <span className="seal" title="페어링GO가 확인한 파트너 매장">
+            <span className={`seal ${PARTNER_KIND_TONE[d.kind]}`} title="페어링GO가 확인한 파트너 매장">
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.4 11.3 3.6 8.5l1-1 1.8 1.8 4.9-4.9 1 1z" /></svg>
               파트너 {PARTNER_KIND_LABEL[d.kind]}
             </span>

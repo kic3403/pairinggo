@@ -28,6 +28,11 @@ export const MERCHANT_STATUS_LABEL = { applied: "승인 대기", approved: "승�
 export const PARTNER_KINDS = ["restaurant", "brewery", "liquor"] as const;
 export type PartnerKind = (typeof PARTNER_KINDS)[number];
 export const PARTNER_KIND_LABEL: Record<PartnerKind, string> = { restaurant: "식당", brewery: "양조장", liquor: "리쿼샵" };
+/**
+ * 파트너 인증 도장 색(2026-09-21 사용자 결정) — 로고의 두 색을 나눠 쓴다.
+ * 양조장·리쿼샵은 네이비, 식당은 주황.
+ */
+export const PARTNER_KIND_TONE: Record<PartnerKind, "navy" | "food"> = { restaurant: "food", brewery: "navy", liquor: "navy" };
 /** 그 종류가 무엇을 하는 곳인지 — 가입·어드민 화면 안내 */
 export const PARTNER_KIND_HINT: Record<PartnerKind, string> = {
   restaurant: "손님이 자리를 예약하고 방문하는 곳 — 메뉴판·콜키지·자리 예약",

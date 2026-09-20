@@ -845,4 +845,6 @@ a.pd-score:hover { border-color: var(--navy); }
   white-space: nowrap;
 }
 .seal svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
+/* 업종별 색(2026-09-21 사용자 결정) — 양조장·리쿼샵은 로고 남색, 식당은 로고 주황 */
+.seal.food { color: var(--food-ink); background: var(--food-soft); border-color: color-mix(in srgb, var(--food) 35%, transparent); }
 /* 공개 웹 site.css는 라이트 고정 — 여기만 다크 규칙을 두면 이 배지만 어두워진다 */

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  PARTNER_KINDS, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL, cleanPartnerKind, partnerTakesReservations, validatePartnerSignup,
+  PARTNER_KINDS, PARTNER_KIND_LABEL, PARTNER_KIND_TONE, PARTNER_RESERVATION_LABEL, cleanPartnerKind, partnerTakesReservations, validatePartnerSignup,
 } from "../partner";
 
 describe("파트너 종류 — 식당·양조장·리쿼샵", () => {
@@ -24,5 +24,16 @@ describe("파트너 종류 — 식당·양조장·리쿼샵", () => {
     const base = { email: "a@b.co", password: "Abcd1234!", name: "홍길동", phone: "010-1234-5678", kakaoPlaceId: "123", ownerName: "홍길동", bizNo: "1208147521", agree: true as const };
     expect(validatePartnerSignup({ ...base, kind: "brewery" })).toMatchObject({ ok: true, value: { kind: "brewery" } });
     expect(validatePartnerSignup(base)).toMatchObject({ ok: true, value: { kind: "restaurant" } });
+  });
+});
+
+describe("파트너 도장 색", () => {
+  it("양조장·리쿼샵은 네이비, 식당은 주황(로고 두 색)", () => {
+    expect(PARTNER_KIND_TONE.brewery).toBe("navy");
+    expect(PARTNER_KIND_TONE.liquor).toBe("navy");
+    expect(PARTNER_KIND_TONE.restaurant).toBe("food");
+  });
+  it("모든 업종에 색이 있다", () => {
+    expect(PARTNER_KINDS.every((k) => PARTNER_KIND_TONE[k])).toBe(true);
   });
 });
