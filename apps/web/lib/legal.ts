@@ -5,7 +5,7 @@
 export const LEGAL = {
   service: "페어링GO",
   site: "https://pairinggo.vercel.app",
-  effective: "2026년 9월 19일",
+  effective: "2026년 9월 21일",
   /** 운영자 — 사업자 등록 전에는 개인 운영자 이름으로 둔다 */
   operator: "페어링GO 운영자",
   /** 개인정보 보호책임자 */
