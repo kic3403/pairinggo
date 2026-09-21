@@ -78,6 +78,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">전통주</Link></p>
       <h1>{drink.name}</h1>
       <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
+      {/* 파는 곳이 있으면 이름 바로 아래에서 산다(2026-09-21 사용자 요청) — 재고·가격이 바뀌므로 화면에서 불러온다 */}
+      <BuyBox drinkId={drink.id} drinkName={drink.name} />
       {drink.desc && <p className="lead">{drink.desc}</p>}
       {!!drink.flavor?.length && (
         <ul className="tags">{drink.flavor.map((f) => <li key={f} className="tag">{f}</li>)}</ul>
@@ -87,9 +89,6 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       )}
       <ProfileBars kind="drink" profile={drink.profile} />
       <div className="share-row"><ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} /></div>
-
-      {/* 입점 양조장이 파는 상품이 있으면 여기서 바로 산다(docs/22) — 재고·가격이 바뀌므로 화면에서 불러온다 */}
-      <BuyBox drinkId={drink.id} drinkName={drink.name} />
 
       {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
       <section className="buy">

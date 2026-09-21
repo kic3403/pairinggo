@@ -805,7 +805,9 @@ a.pd-score:hover { border-color: var(--navy); }
 .pd-brewery li a:hover { border-color: var(--navy); }
 
 /* ── 구매(중개, docs/22) */
-.buy.shop { border-color: var(--accent); }
+/* 이름 바로 아래에 오는 구매 상자 — 로고 주황 테두리로 눈에 띄게(2026-09-21) */
+.buy.shop { margin: 0 0 16px; background: var(--surface); border: 1.5px solid var(--food); }
+.buy.shop h3 { color: var(--food-ink); font-size: 13px; }
 .shop-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }
 .shop-list > li { border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
 .shop-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
