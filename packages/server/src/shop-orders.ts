@@ -10,6 +10,7 @@ import {
 } from "@pairinggo/shared";
 import { db } from "./db";
 import { getCart } from "./shop";
+import { notifyOrder, type OrderNotifyEvent } from "./notify-order";
 
 type Row = Record<string, unknown>;
 const need = () => { const c = db(); if (!c) throw new Error("지금은 주문할 수 없어요"); return c; };
@@ -132,6 +133,8 @@ export async function placeOrder(userId: string, input: PlaceOrderInput): Promis
 
   const order = await orderById(orderId);
   if (!order) throw new Error("주문을 만들었지만 불러오지 못했어요 — 주문 내역에서 확인해 주세요");
+  // 알림은 주문을 막지 않는다 — 저장이 끝난 뒤에 부르고 실패는 기록만(docs/22 §9)
+  await notifyOrder(order.id, "paid").catch(() => null);
   return order;
 }
 
@@ -251,6 +254,12 @@ export async function transitionOrder(t: TransitionInput): Promise<OrderView | n
   }
 
   await syncOrderStatus(t.orderId);
+  // 손님·판매자에게 알린다(실패해도 상태 변경은 그대로)
+  const notice: Partial<Record<OrderStatus, OrderNotifyEvent>> = { shipped: "shipped", delivered: "delivered" };
+  const event: OrderNotifyEvent | null = t.to === "cancelled"
+    ? (t.actor === "user" ? "cancelled_by_user" : t.actor === "seller" || t.actor === "admin" ? "cancelled_by_seller" : null)
+    : notice[t.to] ?? null;
+  if (event) await notifyOrder(t.orderId, event, t.sellerId ?? null).catch(() => null);
   return orderById(t.orderId);
 }
 

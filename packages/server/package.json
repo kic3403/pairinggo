@@ -22,7 +22,8 @@
     "./password-reset": "./src/password-reset.ts",
     "./errors": "./src/errors.ts",
     "./shop": "./src/shop.ts",
-    "./shop-orders": "./src/shop-orders.ts"
+    "./shop-orders": "./src/shop-orders.ts",
+    "./notify-order": "./src/notify-order.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

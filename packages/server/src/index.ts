@@ -9,3 +9,4 @@ export * from "./push";
 export * from "./notify";
 export * from "./shop";
 export * from "./shop-orders";
+export * from "./notify-order";
