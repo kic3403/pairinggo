@@ -850,3 +850,9 @@ a.pd-score:hover { border-color: var(--navy); }
 /* 업종별 색(2026-09-21 사용자 결정) — 양조장·리쿼샵은 로고 남색, 식당은 로고 주황 */
 .seal.food { color: var(--food-ink); background: var(--food-soft); border-color: color-mix(in srgb, var(--food) 35%, transparent); }
 /* 공개 웹 site.css는 라이트 고정 — 여기만 다크 규칙을 두면 이 배지만 어두워진다 */
+/* 상품 사진 — 구매 상자·장바구니(2026-09-21) */
+.shop-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; border: 1px solid var(--line); flex: none; }
+.shop-head { gap: 12px; }
+.shop-name { min-width: 0; flex: 1; }
+.cl-img { width: 52px; height: 52px; border-radius: 9px; object-fit: cover; border: 1px solid var(--line); flex: none; }
+.cart-lines > li { gap: 10px; }

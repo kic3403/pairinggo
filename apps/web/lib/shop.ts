@@ -10,7 +10,7 @@ export type BuyOption = {
   productId: string;
   name: string; volume: string; abv: number | null;
   price: number; listPrice: number; discount: number;
-  stock: number; buyable: number; cold: boolean; shipFree: boolean; desc: string;
+  stock: number; buyable: number; cold: boolean; shipFree: boolean; desc: string; photo: string | null;
   seller: { id: string; name: string; bizName: string; ownerName: string; bizNo: string; csPhone: string; shipping: string; leadDays: number };
 };
 
@@ -21,7 +21,7 @@ export async function buyOptions(drinkId: string): Promise<BuyOption[]> {
     productId: p.id, name: p.name, volume: p.volume, abv: p.abv,
     price: p.price, listPrice: p.listPrice, discount: discountRate(p),
     stock: p.stock, buyable: p.perOrder > 0 ? Math.min(p.stock, p.perOrder) : p.stock,
-    cold: p.cold, shipFree: p.shipFree, desc: p.desc,
+    cold: p.cold, shipFree: p.shipFree, desc: p.desc, photo: p.photos[0] ?? null,
     seller: {
       id: s.id, name: s.name, bizName: s.bizName || s.name, ownerName: s.ownerName, bizNo: s.bizNo, csPhone: s.csPhone,
       shipping: p.shipFree ? "무료배송" : shippingLabel(s.shipping), leadDays: s.shipping.leadDays,

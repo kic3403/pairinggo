@@ -42,8 +42,11 @@ export async function cleanupMenuPhotos(now = Date.now()): Promise<number> {
     const merchantId = f.name;
     const { data: m } = await c.from("merchants").select("kakao_place_id").eq("id", merchantId).maybeSingle();
     const { data: p } = m ? await c.from("place_info").select("menu_items, drink_items, photos").eq("kakao_id", m.kakao_place_id).maybeSingle() : { data: null };
-    // 대표 사진(photos)도 같은 폴더에 있다 — 표·대표 사진 어디에도 없는 것만 지운다
-    const used = new Set([...menuImages(cleanMenuItems(p?.menu_items), cleanDrinkItems(p?.drink_items)), ...cleanStorePhotos(p?.photos)].map((u) => u.slice(u.lastIndexOf("/") + 1)));
+    // 판매 상품 사진(products.photos, docs/22)도 같은 폴더에 있다 — 빠뜨리면 30일 뒤 상품 사진이 사라진다
+    const { data: prods } = await c.from("products").select("photos, sellers!inner(merchant_id)").eq("sellers.merchant_id", merchantId).limit(500);
+    const productPhotos = ((prods ?? []) as unknown as { photos?: unknown }[]).flatMap((x) => (Array.isArray(x.photos) ? (x.photos as string[]).map(String) : []));
+    // 대표 사진(photos)도 같은 폴더에 있다 — 표·대표 사진·상품 사진 어디에도 없는 것만 지운다
+    const used = new Set([...menuImages(cleanMenuItems(p?.menu_items), cleanDrinkItems(p?.drink_items)), ...cleanStorePhotos(p?.photos), ...productPhotos].map((u) => u.slice(u.lastIndexOf("/") + 1)));
     const { data: files } = await c.storage.from(MENU_PHOTO_BUCKET).list(merchantId, { limit: 1000 });
     const old = (files ?? []).filter((x) => !used.has(x.name) && new Date(x.created_at ?? now).getTime() < cutoff).map((x) => `${merchantId}/${x.name}`);
     if (old.length) { await c.storage.from(MENU_PHOTO_BUCKET).remove(old); removed += old.length; }

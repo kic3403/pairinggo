@@ -47,6 +47,7 @@ export default function CartView({ initial }: { initial: CartSummary }) {
           <ul className="cart-lines">
             {g.lines.map((l) => (
               <li key={l.productId}>
+                {l.photo ? <img className="cl-img" src={l.photo} alt="" /> : null}
                 <div className="cl-main">
                   <b>{l.name}</b>
                   <span className="small muted">{[l.volume, l.cold ? "냉장" : null].filter(Boolean).join(" · ")}</span>

@@ -10,7 +10,7 @@ import { track } from "@/lib/track";
 
 type BuyOption = {
   productId: string; name: string; volume: string; abv: number | null;
-  price: number; listPrice: number; discount: number; stock: number; buyable: number; cold: boolean; shipFree: boolean; desc: string;
+  price: number; listPrice: number; discount: number; stock: number; buyable: number; cold: boolean; shipFree: boolean; desc: string; photo: string | null;
   seller: { id: string; name: string; bizName: string; ownerName: string; bizNo: string; csPhone: string; shipping: string; leadDays: number };
 };
 
@@ -58,7 +58,8 @@ export default function BuyBox({ drinkId, drinkName }: { drinkId: string; drinkN
           return (
             <li key={o.productId}>
               <div className="shop-head">
-                <div>
+                {o.photo ? <img className="shop-img" src={o.photo} alt="" /> : null}
+                <div className="shop-name">
                   <b>{o.name}</b>
                   <span className="small muted"> {[o.volume, o.abv != null ? `${o.abv}%` : null].filter(Boolean).join(" · ")}</span>
                 </div>

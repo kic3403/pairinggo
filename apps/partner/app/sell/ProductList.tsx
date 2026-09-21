@@ -1,10 +1,14 @@
 "use client";
 /**
- * 파는 술 목록(docs/22 §5) — 카탈로그 술에 연결해서 가격·재고·용량을 적는다.
+ * 파는 술 목록(docs/22 §5) — 카탈로그 술에 연결해서 가격·재고·용량·사진을 적는다.
  * 카탈로그에 있는 술만 올릴 수 있다(손님 화면의 그 술 페이지에서 바로 팔리게 하려고).
  */
 import { useState } from "react";
-import { PRODUCT_STATUS_LABEL, discountRate, formatPrice, type Product } from "@pairinggo/shared";
+import { PRODUCT_PHOTOS_MAX, PRODUCT_STATUS_LABEL, discountRate, formatPrice, type Product } from "@pairinggo/shared";
+import { shrinkToJpeg } from "@pairinggo/shared/image-client";
+
+/** 상품 사진 — 손님 화면 구매 상자·장바구니에 보인다. 매장 사진과 같은 저장소(menu-photos) */
+const PRODUCT_PHOTO_EDGE = 1280;
 
 export type DrinkOption = { id: string; name: string; abv: number | null; onlineSellable: boolean };
 
@@ -12,14 +16,61 @@ type Draft = {
   id: string | null; drinkId: string; name: string; volume: string; abv: string;
   price: string; listPrice: string; stock: string; perOrder: string;
   cold: boolean; shipFree: boolean; desc: string; status: Product["status"];
+  photos: string[];
 };
 
-const empty = (): Draft => ({ id: null, drinkId: "", name: "", volume: "", abv: "", price: "", listPrice: "", stock: "", perOrder: "", cold: false, shipFree: false, desc: "", status: "selling" });
+const empty = (): Draft => ({ id: null, drinkId: "", name: "", volume: "", abv: "", price: "", listPrice: "", stock: "", perOrder: "", cold: false, shipFree: false, desc: "", status: "selling", photos: [] });
 const toDraft = (p: Product): Draft => ({
   id: p.id, drinkId: p.drinkId, name: p.name, volume: p.volume, abv: p.abv == null ? "" : String(p.abv),
   price: String(p.price), listPrice: p.listPrice ? String(p.listPrice) : "", stock: String(p.stock), perOrder: p.perOrder ? String(p.perOrder) : "",
-  cold: p.cold, shipFree: p.shipFree, desc: p.desc, status: p.status,
+  cold: p.cold, shipFree: p.shipFree, desc: p.desc, status: p.status, photos: p.photos ?? [],
 });
+
+/** 사진 올리기 — 첫 장이 대표. 브라우저에서 긴 변 1,280px JPEG로 줄여 보낸다 */
+function ProductPhotos({ photos, onChange }: { photos: string[]; onChange: (p: string[]) => void }) {
+  const [busy, setBusy] = useState(0);
+  const [err, setErr] = useState("");
+
+  async function add(files: FileList | null) {
+    const list = [...(files ?? [])].filter((f) => f.type.startsWith("image/")).slice(0, PRODUCT_PHOTOS_MAX - photos.length - busy);
+    if (!list.length) { if (files?.length) setErr(`사진은 ${PRODUCT_PHOTOS_MAX}장까지예요`); return; }
+    setErr(""); setBusy((n) => n + list.length);
+    const added: string[] = [];
+    for (const f of list) {
+      try {
+        const { data } = await shrinkToJpeg(f, PRODUCT_PHOTO_EDGE);
+        const r = await fetch("/api/menu-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ data }) });
+        const j = (await r.json().catch(() => ({}))) as { url?: string; error?: string };
+        if (!r.ok || !j.url) throw new Error(j.error ?? "사진을 올리지 못했어요");
+        added.push(j.url);
+      } catch (e) { setErr((e as Error).message); }
+    }
+    setBusy((n) => Math.max(0, n - list.length));
+    if (added.length) onChange([...photos, ...added].slice(0, PRODUCT_PHOTOS_MAX));
+  }
+
+  return (
+    <div className="f">
+      <span>사진 <span className="hint">{photos.length}/{PRODUCT_PHOTOS_MAX} · 첫 장이 손님 화면에 보여요. 직접 찍었거나 쓸 권리가 있는 사진만 올려 주세요.</span></span>
+      <div className="pphotos">
+        {photos.map((url, i) => (
+          <div key={url} className="pphoto">
+            <img src={url} alt={`상품 사진 ${i + 1}`} />
+            {i === 0 ? <span className="pphoto-first">대표</span> : null}
+            <button type="button" aria-label={`사진 ${i + 1} 빼기`} onClick={() => onChange(photos.filter((x) => x !== url))}>×</button>
+          </div>
+        ))}
+        {photos.length + busy < PRODUCT_PHOTOS_MAX ? (
+          <label className="pphoto-add" title="사진 추가">
+            <span>{busy ? "올리는 중…" : "+ 사진"}</span>
+            <input type="file" accept="image/*" multiple hidden onChange={(e) => { void add(e.target.files); e.target.value = ""; }} />
+          </label>
+        ) : null}
+      </div>
+      {err ? <p className="err" style={{ margin: "6px 0 0" }}>{err}</p> : null}
+    </div>
+  );
+}
 
 export function ProductList({ initial, drinks, canSell, siteUrl }: { initial: Product[]; drinks: DrinkOption[]; canSell: boolean; siteUrl: string }) {
   const [items, setItems] = useState(initial);
@@ -79,6 +130,7 @@ export function ProductList({ initial, drinks, canSell, siteUrl }: { initial: Pr
           <label className="f">상품 이름 <span className="hint">손님에게 보이는 이름 — 용량·구성을 함께 적어 주세요</span>
             <input value={draft.name} onChange={(e) => set("name", e.target.value)} maxLength={60} placeholder="예: 한산소곡주 500ml" />
           </label>
+          <ProductPhotos photos={draft.photos} onChange={(photos) => set("photos", photos)} />
           <div className="grid2">
             <label className="f">용량<input value={draft.volume} onChange={(e) => set("volume", e.target.value)} maxLength={20} placeholder="500ml" /></label>
             <label className="f">도수(%)<input value={draft.abv} onChange={(e) => set("abv", e.target.value)} inputMode="decimal" maxLength={5} /></label>
@@ -119,13 +171,16 @@ export function ProductList({ initial, drinks, canSell, siteUrl }: { initial: Pr
           {items.map((p) => (
             <li key={p.id} className="panel stack" style={{ gap: 8 }}>
               <div className="row-between">
-                <b>{p.name}</b>
+                <span className="pname">
+                  {p.photos?.[0] ? <img className="pthumb" src={p.photos[0]} alt="" /> : null}
+                  <b>{p.name}</b>
+                </span>
                 <span className={`chip ${p.status === "selling" ? (p.stock > 0 ? "ok" : "warn") : "mute"}`}>
                   {p.status === "selling" && p.stock <= 0 ? "품절" : PRODUCT_STATUS_LABEL[p.status]}
                 </span>
               </div>
               <p className="small muted" style={{ margin: 0 }}>
-                {[p.volume, p.abv != null ? `${p.abv}%` : null, formatPrice(p.price), discountRate(p) ? `${discountRate(p)}% 할인` : null, p.cold ? "냉장" : null, p.shipFree ? "무료배송" : null]
+                {[p.volume, p.abv != null ? `${p.abv}%` : null, formatPrice(p.price), discountRate(p) ? `${discountRate(p)}% 할인` : null, p.cold ? "냉장" : null, p.shipFree ? "무료배송" : null, p.photos?.length ? `사진 ${p.photos.length}장` : "사진 없음"]
                   .filter(Boolean).join(" · ")}
               </p>
               <div className="row" style={{ alignItems: "center", gap: 8 }}>
