@@ -24,7 +24,7 @@ export default function SellerActions({ id, status, feeRate, hasLicense }: { id:
 
   return (
     <div className="row" style={{ marginTop: 8, gap: 8, display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-      <label className="small">수수료 %
+      <label className="small">앱 수수료 %
         <input value={rate} onChange={(e) => setRate(e.target.value)} inputMode="decimal" style={{ width: 64, marginLeft: 6 }} />
       </label>
       {status !== "approved" ? <button className="btn sm p" onClick={() => act("approved")} disabled={busy}>판매 열기</button> : null}

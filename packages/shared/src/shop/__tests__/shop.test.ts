@@ -5,6 +5,7 @@ import {
   summarizeCart, addToCartProblem, freeShipHint, type SellerInfo,
   canOrderTransition, cancelable, countsAsSale, cleanAddress, addressProblem, isIslandZip, isOrderNo, cleanReason,
   RETURN_DAYS, AUTO_DONE_DAYS,
+  APP_FEE, APP_FEE_TRIAL, feeText, totalFee, feeAmounts,
 } from "../index";
 
 const DAY = 86_400_000;
@@ -217,5 +218,22 @@ describe("배송지", () => {
   it("취소 사유에서 링크를 지운다", () => {
     expect(cleanReason("재고가 없어요")).toBe("재고가 없어요");
     expect(cleanReason("www.여기로.com 연락")).toBe("");
+  });
+});
+
+describe("수수료 — 앱·PG를 나눠 적는다", () => {
+  it("시범 기간과 그 뒤", () => {
+    expect(feeText(APP_FEE_TRIAL)).toBe("앱 수수료 0% + 결제수수료 2.5% = 2.5%");
+    expect(feeText(APP_FEE)).toBe("앱 수수료 5% + 결제수수료 2.5% = 7.5%");
+    expect(totalFee(APP_FEE)).toBe(7.5);
+    expect(totalFee(APP_FEE_TRIAL)).toBe(2.5);
+  });
+  it("판매가에서 떼는 금액을 앱·PG로 나눈다(배송비 제외)", () => {
+    const f = feeAmounts(50000, APP_FEE);
+    expect(f).toEqual({ app: 2500, pg: 1250, total: 3750, payout: 46250 });
+    expect(feeAmounts(50000, APP_FEE_TRIAL)).toEqual({ app: 0, pg: 1250, total: 1250, payout: 48750 });
+  });
+  it("이상한 값은 0으로 본다", () => {
+    expect(feeAmounts(-100, -5, -1)).toEqual({ app: 0, pg: 0, total: 0, payout: 0 });
   });
 });

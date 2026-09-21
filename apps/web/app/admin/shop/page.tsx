@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { listSellers } from "@pairinggo/server/shop";
 import { adminOrders, lateOrders, testPayEnabled } from "@pairinggo/server/shop-orders";
-import { ORDER_STATUS_LABEL, formatBizNo, kstParts, shippingLabel } from "@pairinggo/shared";
+import { ORDER_STATUS_LABEL, PG_FEE, formatBizNo, kstParts, shippingLabel } from "@pairinggo/shared";
 import { requireAdmin } from "@/lib/admin-auth";
 import SellerActions from "./SellerActions";
 
@@ -56,7 +56,7 @@ export default async function AdminShopPage() {
               </p>
               <p className="small muted">
                 {shippingLabel(s.shipping)} · {s.shipping.courier.name || "택배사 미정"} · 출고 {s.shipping.leadDays}일
-                {s.shipping.cold ? " · 냉장 가능" : ""} · 수수료 {s.feeRate}%
+                {s.shipping.cold ? " · 냉장 가능" : ""} · 앱 수수료 {s.feeRate}%(+ 결제수수료 {PG_FEE}%는 PG 몫)
               </p>
               {s.fromAddr ? <p className="small muted">출고지 {s.fromAddr}</p> : null}
               <SellerActions id={s.id} status={s.status} feeRate={s.feeRate} hasLicense={!!s.licenseNo} />
@@ -88,7 +88,7 @@ export default async function AdminShopPage() {
       )}
 
       <p className="small muted" style={{ marginTop: 16 }}>
-        설계·법 구조는 <Link href="/admin">대시보드</Link> 옆 docs/22 문서에 있습니다. 수수료는 시범 3개월 0% → 5%.
+        설계·법 구조는 <Link href="/admin">대시보드</Link> 옆 docs/22 문서에 있습니다. 앱 수수료는 시범 3개월 0% → 5%, 결제수수료 {PG_FEE}%는 결제대행사 몫입니다.
       </p>
     </>
   );

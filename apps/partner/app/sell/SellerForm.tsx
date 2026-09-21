@@ -4,7 +4,7 @@
  * 주류 통신판매 승인 번호가 있어야 운영자가 입점을 승인할 수 있다(전통주 제조자만 통신판매 가능).
  */
 import { useState } from "react";
-import { COURIERS, COURIER_ETC, cleanShippingPolicy, shippingLabel, type ShippingPolicy } from "@pairinggo/shared";
+import { APP_FEE, APP_FEE_TRIAL, COURIERS, COURIER_ETC, PG_FEE, TRIAL_MONTHS, cleanShippingPolicy, feeText, shippingLabel, type ShippingPolicy } from "@pairinggo/shared";
 
 export type SellerFormValue = {
   status: "none" | "applied" | "approved" | "suspended";
@@ -52,9 +52,13 @@ export function SellerForm({ initial }: { initial: SellerFormValue }) {
       <section className="panel stack">
         <div className="row-between">
           <h2 style={{ margin: 0 }}>입점 상태 <span className={`chip ${st.tone}`}>{st.label}</span></h2>
-          {f.status === "approved" && f.feeRate === 0 ? <span className="chip mute">수수료 0%</span> : null}
+          <span className="chip mute">{feeText(f.feeRate)}</span>
         </div>
         <p className="small muted" style={{ margin: 0 }}>{st.hint}</p>
+        <p className="small muted" style={{ margin: 0 }}>
+          판매가(배송비 제외)에서 <b>앱 수수료</b>(페어링GO 몫 — 시범 {TRIAL_MONTHS}개월 {APP_FEE_TRIAL}%, 그 뒤 {APP_FEE}%)와
+          <b> 결제수수료</b>({PG_FEE}% 내외 — 결제대행사 몫)를 나눠 뗍니다. 정산 명세에도 따로 적힙니다.
+        </p>
       </section>
 
       <section className="panel stack">
