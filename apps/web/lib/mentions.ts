@@ -108,6 +108,22 @@ export async function countGoogle(q: string): Promise<Omit<Collected, "drinkId" 
   return { count, capped: false, query: q, raw: { estimated: true } };
 }
 
+/**
+ * 채널 하나를 술 한 종으로만 시험한다(?probe=1&test=1) — 키가 진짜 통하는지 보는 용도.
+ * 할당량을 1회만 쓰므로 그날 크론을 방해하지 않는다(2026-09-22).
+ */
+export async function probeChannel(channel: MentionChannel, drink: Drink, today: string): Promise<{ ok: boolean; count?: number; query?: string; error?: string }> {
+  const q = queryOf(drink), terms = termsOf(drink);
+  try {
+    if (channel === "naver") return { ok: true, ...(await countNaverBlog(q, today, terms)), query: q };
+    if (channel === "youtube") return { ok: true, ...(await countYoutube(q, today, terms)), query: q };
+    if (channel === "google") return { ok: true, ...(await countGoogle(q)), query: q };
+    return { ok: false, error: "시험할 수 없는 채널" };
+  } catch (e) {
+    return { ok: false, query: q, error: (e as Error).message };
+  }
+}
+
 /** 동시성 제한 실행 — 채널이 할당량 오류를 내면 그 채널은 그 자리에서 멈춘다(다음 날 backfill) */
 export async function collectChannel(channel: MentionChannel, drinks: Drink[], today: string, log: string[]): Promise<Collected[]> {
   const fn = channel === "naver" ? (q: string, t: string[]) => countNaverBlog(q, today, t) : channel === "youtube" ? (q: string, t: string[]) => countYoutube(q, today, t) : channel === "google" ? (q: string) => countGoogle(q) : null;

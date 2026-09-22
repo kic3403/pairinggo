@@ -2,7 +2,7 @@
  * GET /api/cron/mentions — 매일 00:00(KST) 채널별 언급량을 세고 "많이 찾는 전통주" 순위를 다시 매긴다.
  *   Vercel Cron(vercel.json: 0 15 * * * UTC = 00:00 KST), Authorization: Bearer CRON_SECRET
  *   ?channel=naver,youtube  일부 채널만 · ?all=1  회전 무시하고 전부(첫 실행·복구용) · ?dry=1  저장하지 않고 결과만
- *   ?probe=1  밖으로 나가지 않고 키·수집 상태만(할당량 소모 없음)
+ *   ?probe=1  밖으로 나가지 않고 키·수집 상태만(할당량 소모 없음) · ?probe=1&test=1  술 한 종으로 채널당 1회만 시험
  * 흐름: 수집 → drink_mentions_daily 저장 → 최근 기록(LOOKBACK일)으로 점수·순위(shared trend.ts) → drinks.trend·catalog_meta.trend_meta 갱신
  *       → 상위 20 순서가 바뀌었으면 카탈로그 발행(앱도 다음 실행 때 받는다).
  */
@@ -11,7 +11,7 @@ import { publish } from "@/lib/admin-data";
 import { getCatalog, invalidateCatalog } from "@/lib/catalog";
 import { db } from "@/lib/db";
 import { error, json, NO_CACHE } from "@/lib/http";
-import { channelEnabled, collectChannel, todayKst, WINDOW_DAYS, type Collected } from "@/lib/mentions";
+import { channelEnabled, collectChannel, probeChannel, todayKst, WINDOW_DAYS, type Collected } from "@/lib/mentions";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;   // 네이버 최대 1,000여 회 + 유튜브·구글 50여 회. 보통 1~2분
@@ -84,7 +84,13 @@ export async function GET(req: Request) {
         roundDays: DAILY_CAP[ch] ? Math.ceil(drinks.length / DAILY_CAP[ch]!) : 1,
       }];
     }));
-    return json(req, { ok: true, probe: true, today, lookback: LOOKBACK, channels: state }, { headers: NO_CACHE });
+    // &test=1 — 키가 진짜 통하는지 술 한 종으로만 시험(채널당 호출 1회, 그날 크론에 지장 없음)
+    let test: Record<string, unknown> | undefined;
+    if (url.searchParams.get("test") === "1" && drinks.length) {
+      const which = (only ?? MENTION_CHANNELS).filter((ch) => ch !== "insta" && channelEnabled(ch));
+      test = Object.fromEntries(await Promise.all(which.map(async (ch) => [ch, await probeChannel(ch, drinks[0], today)])));
+    }
+    return json(req, { ok: true, probe: true, today, lookback: LOOKBACK, channels: state, test }, { headers: NO_CACHE });
   }
 
   // 수집 — 채널을 순서대로(각 채널 안에서는 동시 6개)
