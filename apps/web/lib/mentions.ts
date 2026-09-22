@@ -83,7 +83,7 @@ export async function countYoutube(q: string, today: string, terms: string[]): P
   for (let page = 0; page < 2; page++) {
     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&q=${encodeURIComponent(`"${q}"`)}&publishedAfter=${encodeURIComponent(after)}&relevanceLanguage=ko&regionCode=KR&key=${key}${token ? `&pageToken=${token}` : ""}`;
     const { status, body } = await getJson(url, {}, 3, false);
-    if (status === 403 || status === 429) throw new Error(`youtube ${status} (일 할당량 초과 — 태평양시 자정=한국 16~17시에 초기화)`);
+    if (status === 403 || status === 429) throw new Error(`youtube ${status} (할당량 또는 설정 문제 — 할당량은 태평양시 자정=한국 16~17시에 초기화) — ${googleReason(body)}`);
     if (status !== 200) throw new Error(`youtube ${status}`);
     const j = body as { items?: { snippet?: { title?: string; description?: string } }[]; nextPageToken?: string; pageInfo?: { totalResults?: number } };
     count += (j.items ?? []).filter((it) => isDrinkMention(`${it.snippet?.title ?? ""} ${it.snippet?.description ?? ""}`, terms)).length;
@@ -96,13 +96,23 @@ export async function countYoutube(q: string, today: string, terms: string[]): P
   return { count, capped, query: q, raw: { estimated: est } };
 }
 
+/** 구글이 준 오류 사유 한 줄 — 키 값이 섞여 들어가지 않게 가린다 */
+function googleReason(body: unknown): string {
+  const e = (body as { error?: { message?: string; status?: string; errors?: { reason?: string }[] } })?.error;
+  const reason = e?.errors?.[0]?.reason ? `[${e.errors[0].reason}] ` : "";
+  const msg = (e?.message ?? "").replace(/AIza[\w-]+/g, "(키)").slice(0, 200);
+  return `${reason}${msg}` || "사유 없음";
+}
+
 /* ---------- 구글(블로그 도메인 한정 검색엔진) ---------- */
 export async function countGoogle(q: string): Promise<Omit<Collected, "drinkId" | "channel">> {
   const key = process.env.GOOGLE_CSE_KEY, cx = process.env.GOOGLE_CSE_CX; if (!key || !cx) throw new Error("구글 키 없음");
   const url = `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${encodeURIComponent(`"${q}" (전통주 OR 막걸리 OR 소주 OR 술)`)}&dateRestrict=m1&num=1&gl=kr&lr=lang_ko`;
   const { status, body } = await getJson(url, {}, 3, false);
-  if (status === 429 || status === 403) throw new Error(`google ${status} (일 할당량 초과)`);
-  if (status !== 200) throw new Error(`google ${status}`);
+  // 403은 할당량 소진만이 아니라 "API 사용 설정 안 함"·"키 제한"·"cx 없음"일 수도 있다 — 구글이 준 사유를 그대로 보여 준다(2026-09-22).
+  // "할당량"이라는 말은 남겨 둔다(collectChannel이 이 말을 보고 그 채널을 그 자리에서 멈춘다).
+  if (status === 429 || status === 403) throw new Error(`google ${status} (할당량 또는 설정 문제) — ${googleReason(body)}`);
+  if (status !== 200) throw new Error(`google ${status} — ${googleReason(body)}`);
   const j = body as { searchInformation?: { totalResults?: string } };
   const count = parseInt(j.searchInformation?.totalResults ?? "0", 10) || 0;
   return { count, capped: false, query: q, raw: { estimated: true } };
