@@ -25,7 +25,7 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
         </div>
         <BookingBoard items={list} showDate />
       </main>
-      <Tabs active="reservations" />
+      <Tabs active="reservations" kind={merchant.kind} />
     </>
   );
 }

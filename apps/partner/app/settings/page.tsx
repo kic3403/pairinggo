@@ -31,7 +31,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
         <ClosuresForm initial={closures} today={kstParts(new Date()).date} />
         <AccountSection email={user.email} hasPassword={acct.hasPassword} linked={acct.providers} enabled={enabledProviders()} result={result} />
       </main>
-      <Tabs active="settings" />
+      <Tabs active="settings" kind={merchant.kind} />
     </>
   );
 }

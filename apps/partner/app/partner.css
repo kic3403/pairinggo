@@ -159,10 +159,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .mtable { display: grid; gap: 8px; }
 .mhead, .mrow { display: grid; gap: 6px; align-items: center; }
 .mhead { font-size: 12px; color: var(--muted); font-weight: 600; }
-.mhead.menu, .mrow.menu { grid-template-columns: 52px minmax(0, 1.2fr) minmax(0, 1.6fr) 96px 32px; }
-.mhead.drink, .mrow.drink { grid-template-columns: 52px minmax(0, 1.6fr) 84px 64px 96px 32px; }
+.mhead.menu, .mrow.menu { grid-template-columns: 52px minmax(0, 1.2fr) minmax(0, 1.6fr) 96px 92px; }
+.mhead.drink, .mrow.drink { grid-template-columns: 52px minmax(0, 1.6fr) 84px 64px 96px 92px; }
 /* 술만 파는 곳(양조장·리쿼샵)은 설명 칸이 하나 더(2026-09-21) */
-.mhead.drink.desc, .mrow.drink.desc { grid-template-columns: 52px minmax(0, 1.2fr) minmax(0, 1.5fr) 84px 64px 96px 32px; }
+.mhead.drink.desc, .mrow.drink.desc { grid-template-columns: 52px minmax(0, 1.2fr) minmax(0, 1.5fr) 84px 64px 96px 92px; }
 .mtitle-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 /* 한 줄 사진 — 비면 점선 [+ 사진], 있으면 정사각 썸네일(누르면 바꾸기) + 모서리 × */
 .mimg { position: relative; width: 52px; height: 52px; }
@@ -176,31 +176,40 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .mimg-x:hover { color: var(--bad); border-color: var(--bad); }
 .mrow input { padding: 9px 10px; font-size: 15px; }
 .mrow input.num { text-align: right; }
-.mdel { width: 32px; height: 38px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--muted); font-size: 18px; cursor: pointer; }
-.mdel:hover { color: var(--bad); border-color: var(--bad); }
+/* 줄 단추 — ↑ ↓ ×를 한 덩어리로 묶는다(따로 떨어져 있으면 사진 빼기 ×와 헷갈린다) */
+.mops { display: flex; justify-content: flex-end; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.mops button { width: 30px; height: 36px; border: 0; border-left: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 15px; line-height: 1; cursor: pointer; padding: 0; }
+.mops button:first-child { border-left: 0; }
+.mops button:hover:not(:disabled) { color: var(--navy); background: var(--navy-soft); }
+.mops button:disabled { opacity: 0.3; cursor: default; }
+.mops button.x { font-size: 18px; }
+.mops button.x:hover { color: var(--bad); background: transparent; }
 .mtable > .btn { justify-self: start; }
 @media (max-width: 560px) {
   .mhead { display: none; }
+  .mops { flex-direction: column; }
+  .mops button { width: 32px; height: 30px; border-left: 0; border-top: 1px solid var(--line); }
+  .mops button:first-child { border-top: 0; }
   .mrow { padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
   /* 메뉴: 사진(두 줄 높이) | 1줄 음식명·가격·빼기 / 2줄 설명 */
   .mrow.menu { grid-template-columns: 52px minmax(0, 1fr) 96px 32px; }
   .mrow.menu > .mimg { grid-area: 1 / 1 / 3 / 2; align-self: start; }
   .mrow.menu > :nth-child(2) { grid-area: 1 / 2; }
-  .mrow.menu > :nth-child(3) { grid-area: 2 / 2 / 3 / 5; }
+  .mrow.menu > :nth-child(3) { grid-area: 2 / 2 / 3 / 4; }
   .mrow.menu > :nth-child(4) { grid-area: 1 / 3; }
-  .mrow.menu .mdel { grid-area: 1 / 4; }
+  .mrow.menu .mops { grid-area: 1 / 4 / 3 / 5; align-self: center; }
   /* 술: 1줄 사진·이름·빼기 / 2줄 용량·도수·가격(가로 전체 — 좁은 화면에서 "750ml"이 잘리지 않게) */
-  .mrow.drink { grid-template-columns: 52px repeat(3, minmax(0, 1fr)) 32px; }
+  .mrow.drink { grid-template-columns: 52px minmax(0, 0.8fr) minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 0.9fr) 32px; }
   .mrow.drink > .mimg { grid-area: 1 / 1; }
-  .mrow.drink > :nth-child(2) { grid-area: 1 / 2 / 2 / 5; }
-  .mrow.drink .mdel { grid-area: 1 / 5; }
+  .mrow.drink > :nth-child(2) { grid-area: 1 / 2 / 2 / 6; }
+  .mrow.drink .mops { grid-area: 1 / 6 / 3 / 7; align-self: center; }
   .mrow.drink > :nth-child(3) { grid-area: 2 / 1 / 3 / 3; }
   .mrow.drink > :nth-child(4) { grid-area: 2 / 3; }
   .mrow.drink > :nth-child(5) { grid-area: 2 / 4 / 3 / 6; }
-  .mrow.drink.desc { grid-template-columns: 52px repeat(3, minmax(0, 1fr)) 32px; }
+  .mrow.drink.desc { grid-template-columns: 52px minmax(0, 0.8fr) minmax(0, 1.4fr) minmax(0, 0.9fr) minmax(0, 0.9fr) 32px; }
   .mrow.drink.desc > .mimg { grid-area: 1 / 1; }
-  .mrow.drink.desc > :nth-child(2) { grid-area: 1 / 2 / 2 / 5; }
-  .mrow.drink.desc .mdel { grid-area: 1 / 5; }
+  .mrow.drink.desc > :nth-child(2) { grid-area: 1 / 2 / 2 / 6; }
+  .mrow.drink.desc .mops { grid-area: 1 / 6 / 4 / 7; align-self: center; }
   .mrow.drink.desc > :nth-child(3) { grid-area: 2 / 1 / 3 / 6; }
   .mrow.drink.desc > :nth-child(4) { grid-area: 3 / 1 / 4 / 3; }
   .mrow.drink.desc > :nth-child(5) { grid-area: 3 / 3; }

@@ -66,7 +66,7 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
         <h2 style={{ margin: 0 }}>{kind === "restaurant" ? "매장" : PARTNER_KIND_LABEL[kind]}</h2>
         {manual ? (
           <div className="stack manual-place">
-            <p className="hint" style={{ margin: 0 }}>카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 직접 적어 신청해 주세요. 운영자가 승인할 때 확인해 카카오맵 장소와 연결하고, <b>연결 전까지는 페어링GO 식당 검색·예약에 나오지 않아요.</b> 매장 정보·영업시간은 승인되면 바로 정할 수 있어요.</p>
+            <p className="hint" style={{ margin: 0 }}>카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 직접 적어 신청해 주세요. 운영자가 승인할 때 확인해 카카오맵 장소와 연결하고, <b>연결 전까지는 페어링GO 매장 검색·예약에 나오지 않아요.</b> 매장 정보·영업시간은 승인되면 바로 정할 수 있어요.</p>
             <label className="f">매장 상호<input type="text" name="placeName" required minLength={2} maxLength={40} placeholder="예: 페어링 주점 둔산점" /></label>
             <label className="f">매장 주소 <span className="hint">도로명 주소 + 층·호수</span><input type="text" name="placeAddress" required minLength={5} maxLength={120} placeholder="예: 대전 서구 둔산로 100 1층" autoComplete="street-address" /></label>
             <label className="f">매장 전화 <span className="hint">선택</span><input type="tel" name="placePhone" inputMode="tel" maxLength={20} placeholder="042-000-0000" /></label>

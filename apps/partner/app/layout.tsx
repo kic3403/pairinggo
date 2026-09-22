@@ -4,7 +4,7 @@ import "./partner.css";
 
 export const metadata: Metadata = {
   title: { default: "페어링GO 파트너", template: "%s · 페어링GO 파트너" },
-  description: "페어링GO 제휴 식당용 예약·매장 관리",
+  description: "페어링GO 제휴 매장(식당·양조장·리쿼샵)용 예약·매장 관리",
   robots: { index: false, follow: false },
   formatDetection: { telephone: false },
   appleWebApp: { capable: true, title: "GO 파트너", statusBarStyle: "default" },

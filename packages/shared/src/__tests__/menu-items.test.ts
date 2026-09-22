@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanDrinkItems, cleanMenuImage, cleanMenuItems, cleanVolume, formatAbv, formatPrice, itemsToLists, menuImages, mergeMenuRows, parseAbv, parsePrice } from "../menu-items";
+import { cleanDrinkItems, cleanMenuImage, cleanMenuItems, cleanVolume, formatAbv, formatPrice, itemsToLists, menuImages, mergeMenuRows, moveItem, parseAbv, parsePrice } from "../menu-items";
 
 const catalog = { drinks: [{ id: "d11", name: "한산소곡주" }], foods: [{ id: "f08", name: "해물파전" }] };
 
@@ -92,5 +92,24 @@ describe("술 설명(양조장·리쿼샵)", () => {
     expect(m.drinks[0].desc).toBe("소곡주를 내린 증류주");
     expect(m.drinks[0].abv).toBe(41);
     expect(m.filled).toBe(2);
+  });
+});
+
+describe("표 차례 바꾸기", () => {
+  const rows = [{ name: "가" }, { name: "나" }, { name: "다" }];
+  it("위·아래로 한 칸씩 옮긴다", () => {
+    expect(moveItem(rows, 2, -1).map((r) => r.name)).toEqual(["가", "다", "나"]);
+    expect(moveItem(rows, 0, 1).map((r) => r.name)).toEqual(["나", "가", "다"]);
+  });
+  it("끝에서 더 가면 그대로 — 원래 배열은 건드리지 않는다", () => {
+    expect(moveItem(rows, 0, -1).map((r) => r.name)).toEqual(["가", "나", "다"]);
+    expect(moveItem(rows, 2, 1).map((r) => r.name)).toEqual(["가", "나", "다"]);
+    expect(moveItem(rows, 5, -1)).toEqual(rows);
+    expect(rows.map((r) => r.name)).toEqual(["가", "나", "다"]);
+  });
+  it("정리해도 차례가 그대로 남는다 — 손님 화면 메뉴판 순서", () => {
+    const moved = moveItem([{ name: "수육" }, { name: "파전" }], 1, -1);
+    expect(cleanMenuItems(moved).map((m) => m.name)).toEqual(["파전", "수육"]);
+    expect(cleanDrinkItems(moveItem([{ name: "한산소곡주" }, { name: "감싸주는 날" }], 0, 1)).map((d) => d.name)).toEqual(["감싸주는 날", "한산소곡주"]);
   });
 });

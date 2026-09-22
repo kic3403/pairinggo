@@ -48,6 +48,17 @@ export const cleanPartnerKind = (raw: unknown): PartnerKind =>
 export const partnerTakesReservations = (_kind: PartnerKind) => true;
 /** 업종에 맞는 예약 이름 — 화면 문구 */
 export const PARTNER_RESERVATION_LABEL: Record<PartnerKind, string> = { restaurant: "자리 예약", brewery: "방문 시음 예약", liquor: "방문 픽업 예약" };
+/**
+ * 파트너 화면에서 "페어링GO ○○ 목록/카드"라고 부를 때 쓰는 이름 (2026-09-22 사용자 요청:
+ * 양조장 사장님에게 "식당 목록"이라고 하면 자기 얘기가 아닌 것처럼 보인다).
+ */
+export const PARTNER_PLACE_LABEL: Record<PartnerKind, string> = { restaurant: "식당", brewery: "양조장", liquor: "리쿼샵" };
+/** 한 줄 소개 칸의 예시 — 업종마다 다르게 보여 준다 */
+export const PARTNER_INTRO_EXAMPLE: Record<PartnerKind, string> = {
+  restaurant: "예: 대전 한우 수육과 지역 막걸리를 함께 내는 한식 주점",
+  brewery: "예: 한산소곡주를 100일 발효로 빚는 서천 양조장 — 방문 시음·견학 가능",
+  liquor: "예: 전통주 200여 종을 갖춘 대전 리쿼샵 — 맛보고 골라 가세요",
+};
 
 /**
  * 매장 직접 입력(2026-09-19 사용자 요청) — 카카오맵 검색에 안 나오는 매장(새로 연 곳 등)은 상호·주소·전화를 직접 적어 신청한다.

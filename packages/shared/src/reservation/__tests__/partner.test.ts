@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
-  PARTNER_KINDS, PARTNER_KIND_LABEL, PARTNER_KIND_TONE, PARTNER_RESERVATION_LABEL, cleanPartnerKind, partnerTakesReservations, validatePartnerSignup,
+  PARTNER_INTRO_EXAMPLE, PARTNER_KINDS, PARTNER_KIND_LABEL, PARTNER_KIND_TONE, PARTNER_PLACE_LABEL, PARTNER_RESERVATION_LABEL,
+  cleanPartnerKind, partnerTakesReservations, validatePartnerSignup,
 } from "../partner";
 
 describe("파트너 종류 — 식당·양조장·리쿼샵", () => {
@@ -35,5 +36,23 @@ describe("파트너 도장 색", () => {
   });
   it("모든 업종에 색이 있다", () => {
     expect(PARTNER_KINDS.every((k) => PARTNER_KIND_TONE[k])).toBe(true);
+  });
+});
+
+describe("파트너 화면 문구 — 업종에 맞게", () => {
+  it("양조장 사장님에게는 '양조장 목록'이라고 부른다", () => {
+    expect(PARTNER_PLACE_LABEL.brewery).toBe("양조장");
+    expect(PARTNER_PLACE_LABEL.liquor).toBe("리쿼샵");
+    expect(PARTNER_PLACE_LABEL.restaurant).toBe("식당");
+  });
+  it("한 줄 소개 예시도 업종마다 다르다", () => {
+    expect(PARTNER_KINDS.every((k) => PARTNER_INTRO_EXAMPLE[k]?.startsWith("예: "))).toBe(true);
+    expect(PARTNER_INTRO_EXAMPLE.brewery).toContain("양조장");
+    expect(PARTNER_INTRO_EXAMPLE.liquor).toContain("리쿼샵");
+    // 식당 예시가 양조장 칸에 그대로 나오면 안 된다
+    expect(new Set(PARTNER_KINDS.map((k) => PARTNER_INTRO_EXAMPLE[k])).size).toBe(PARTNER_KINDS.length);
+  });
+  it("모든 업종에 이름표가 있다", () => {
+    expect(PARTNER_KINDS.every((k) => PARTNER_PLACE_LABEL[k])).toBe(true);
   });
 });

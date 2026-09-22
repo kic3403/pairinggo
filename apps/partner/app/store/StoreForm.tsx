@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { STORE_PHOTOS_MAX, cleanNaverUrl, formatPrice, mergeMenuRows, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
+import { PARTNER_INTRO_EXAMPLE, PARTNER_PLACE_LABEL, STORE_PHOTOS_MAX, cleanNaverUrl, formatPrice, mergeMenuRows, moveItem, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
 import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 type Named = { id: string; name: string };
@@ -150,18 +150,33 @@ function StorePhotos({ photos, onChange }: { photos: string[]; onChange: (f: (p:
 }
 const withImg = <T extends { img?: string }>(r: T, url: string | undefined): T => { const { img: _, ...rest } = r; return (url ? { ...rest, img: url } : rest) as T; };
 
+/**
+ * 줄 단추 — 순서 바꾸기(↑↓)와 빼기(×).
+ * 손님 화면 메뉴판은 여기서 정한 순서 그대로 보인다(2026-09-22 사용자 요청).
+ */
+function RowOps({ index, last, label, onMove, onRemove }: { index: number; last: boolean; label: string; onMove: (d: number) => void; onRemove: () => void }) {
+  const who = label.trim() || `${index + 1}번째 줄`;
+  return (
+    <div className="mops">
+      <button type="button" aria-label={`${who} 위로`} disabled={index === 0} onClick={() => onMove(-1)}>↑</button>
+      <button type="button" aria-label={`${who} 아래로`} disabled={last} onClick={() => onMove(1)}>↓</button>
+      <button type="button" className="x" aria-label={`${who} 빼기`} onClick={onRemove}>×</button>
+    </div>
+  );
+}
+
 function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onChange: (r: MenuItem[]) => void; onImg: (i: number, url: string | undefined) => void; onError: (m: string) => void }) {
   const set = (i: number, patch: Partial<MenuItem>) => onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
   return (
     <div className="mtable">
-      <div className="mhead menu"><span>사진</span><span>음식명</span><span>간단한 설명</span><span>가격(원)</span><span /></div>
+      <div className="mhead menu"><span>사진</span><span>음식명</span><span>간단한 설명</span><span>가격(원)</span><span>순서·빼기</span></div>
       {rows.map((r, i) => (
         <div className="mrow menu" key={i}>
           <PhotoCell img={r.img} label={r.name} onError={onError} onChange={(url) => onImg(i, url)} />
           <input type="text" aria-label="음식명" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="음식명" />
           <input type="text" aria-label="간단한 설명" value={r.desc} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="설명(없으면 비워 두세요)" />
           <NumInput value={r.price} onChange={(v) => set(i, { price: v })} parse={priceOf} unit="원" label="가격" />
-          <button type="button" className="mdel" aria-label={`${r.name || "이 줄"} 빼기`} onClick={() => onChange(rows.filter((_, j) => j !== i))}>×</button>
+          <RowOps index={i} last={i === rows.length - 1} label={r.name} onMove={(d) => onChange(moveItem(rows, i, d))} onRemove={() => onChange(rows.filter((_, j) => j !== i))} />
         </div>
       ))}
       <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null }])}>+ 메뉴 줄 추가</button>
@@ -176,7 +191,7 @@ function DrinkTable({ rows, onChange, onImg, onError, withDesc }: { rows: DrinkI
   return (
     <div className="mtable">
       <div className={`mhead ${cls}`}>
-        <span>사진</span><span>술 이름</span>{withDesc ? <span>설명</span> : null}<span>용량</span><span>도수(%)</span><span>가격(원)</span><span />
+        <span>사진</span><span>술 이름</span>{withDesc ? <span>설명</span> : null}<span>용량</span><span>도수(%)</span><span>가격(원)</span><span>순서·빼기</span>
       </div>
       {rows.map((r, i) => (
         <div className={`mrow ${cls}`} key={i}>
@@ -186,7 +201,7 @@ function DrinkTable({ rows, onChange, onImg, onError, withDesc }: { rows: DrinkI
           <input type="text" aria-label="용량" value={r.volume} maxLength={20} onChange={(e) => set(i, { volume: e.target.value })} placeholder="750ml·잔" />
           <NumInput value={r.abv} onChange={(v) => set(i, { abv: v })} parse={abvOf} unit="%" label="도수" decimal />
           <NumInput value={r.price} onChange={(v) => set(i, { price: v })} parse={priceOf} unit="원" label="가격" />
-          <button type="button" className="mdel" aria-label={`${r.name || "이 줄"} 빼기`} onClick={() => onChange(rows.filter((_, j) => j !== i))}>×</button>
+          <RowOps index={i} last={i === rows.length - 1} label={r.name} onMove={(d) => onChange(moveItem(rows, i, d))} onRemove={() => onChange(rows.filter((_, j) => j !== i))} />
         </div>
       ))}
       <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", volume: "", abv: null, price: null }])}>+ 술 줄 추가</button>
@@ -204,6 +219,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
   const [tables, setTables] = useState(() => initialTables(info, drinks, foods));
   // 양조장·리쿼샵은 음식 메뉴가 없다 — 술 표만 쓰고, 술마다 설명을 받는다
   const drinkOnly = kind !== "restaurant";
+  const placeLabel = PARTNER_PLACE_LABEL[kind];   // 화면에서 "페어링GO 양조장 목록"처럼 부른다(2026-09-22)
   /** 카탈로그에 있는 우리 양조장 술을 표에 한 번에 더한다(이미 적은 이름은 건드리지 않는다) */
   const addOurDrinks = () => setTables((t) => {
     const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
@@ -231,7 +247,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
     const menuItems = tables.menu.filter((m) => m.name.trim()), drinkItems = tables.drinks.filter((d) => d.name.trim());
     const r = await fetch("/api/store", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ phone, brewery, info: { ...amenities, menuItems, drinkItems, photos } }) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
-    setState(r?.ok ? { ok: "저장했어요 — 페어링GO 식당 목록과 예약 화면에 바로 반영돼요(목록 캐시로 최대 10분)" } : { err: j?.error ?? "저장하지 못했어요" });
+    setState(r?.ok ? { ok: `저장했어요 — 페어링GO ${placeLabel} 목록과 예약 화면에 바로 반영돼요(목록 캐시로 최대 10분)` } : { err: j?.error ?? "저장하지 못했어요" });
   }
 
   return (
@@ -246,8 +262,8 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
             <datalist id="brewery-list">{breweries.map((b) => <option key={b} value={b} />)}</datalist>
           </label>
         ) : null}
-        <label className="f">한 줄 소개 <span className="hint">120자 — 페어링GO 식당 카드에 그대로 보여요</span>
-          <textarea value={f.menuNote} onChange={set("menuNote")} maxLength={120} placeholder="예: 대전 한우 수육과 지역 막걸리를 함께 내는 한식 주점" />
+        <label className="f">한 줄 소개 <span className="hint">120자 — 페어링GO {placeLabel} 카드에 그대로 보여요</span>
+          <textarea value={f.menuNote} onChange={set("menuNote")} maxLength={120} placeholder={PARTNER_INTRO_EXAMPLE[kind]} />
         </label>
       </section>
 
@@ -314,7 +330,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
       </section>
 
       <section className="panel">
-        <p className="small muted" style={{ marginBottom: 8 }}>페어링GO 식당 카드에 이렇게 보여요</p>
+        <p className="small muted" style={{ marginBottom: 8 }}>페어링GO {placeLabel} 카드에 이렇게 보여요</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {chips.length ? chips.map((c) => <span key={c.key} className={`chip${c.tone === "no" ? " mute" : ""}`}>{c.label}</span>) : <span className="muted small">편의 정보를 고르면 칩이 생겨요</span>}
         </div>

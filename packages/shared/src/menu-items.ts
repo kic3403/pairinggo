@@ -51,6 +51,18 @@ export function cleanVolume(v: unknown): string {
 export const formatPrice = (n: number | null | undefined) => (n == null ? "" : `${n.toLocaleString("ko-KR")}원`);
 export const formatAbv = (n: number | null | undefined) => (n == null ? "" : `${n}%`);
 
+/**
+ * 표에서 한 줄을 위·아래로 한 칸 옮긴다 (2026-09-22 사용자 요청 — 파트너가 메뉴·술 차례를 정한다).
+ * 손님 화면 메뉴판은 저장된 차례 그대로 보여 준다. 끝에서 더 가면 그대로 둔다.
+ */
+export function moveItem<T>(rows: readonly T[], from: number, step: number): T[] {
+  const to = from + step;
+  if (from < 0 || from >= rows.length || to < 0 || to >= rows.length) return [...rows];
+  const out = [...rows];
+  [out[from], out[to]] = [out[to], out[from]];
+  return out;
+}
+
 export function cleanMenuItems(raw: unknown): MenuItem[] {
   const out: MenuItem[] = [], seen = new Set<string>();
   for (const r of Array.isArray(raw) ? raw : []) {

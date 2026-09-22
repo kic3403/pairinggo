@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { addDays, formatBizNo, formatVisit, isDate, isManualPlaceId, kstParts, MERCHANT_STATUS_LABEL } from "@pairinggo/shared";
+import { addDays, formatBizNo, formatVisit, isDate, isManualPlaceId, kstParts, MERCHANT_STATUS_LABEL, PARTNER_PLACE_LABEL } from "@pairinggo/shared";
 import { getSettings } from "@pairinggo/server/merchant-store";
 import { Bar, Tabs } from "./_bar";
 import { BookingBoard } from "./BookingBoard";
@@ -11,8 +11,8 @@ import { requirePartner } from "@/lib/session";
 export const dynamic = "force-dynamic";
 
 /** 직접 입력한 매장(카카오맵 미연결) 안내 — 연결 전에는 페어링GO 검색·예약 화면에 나오지 않는다 */
-function ManualNote() {
-  return <p className="manual-note">직접 입력한 매장이에요. 운영자가 카카오맵 장소를 찾아 연결하면 페어링GO 식당 검색·예약에 나와요. 카카오맵에 아직 없다면 카카오맵 앱의 <b>장소 등록 요청</b>을 해 두면 빨라져요.</p>;
+function ManualNote({ kind }: { kind: MyMerchant["kind"] }) {
+  return <p className="manual-note">직접 입력한 매장이에요. 운영자가 카카오맵 장소를 찾아 연결하면 페어링GO {PARTNER_PLACE_LABEL[kind]} 검색·예약에 나와요. 카카오맵에 아직 없다면 카카오맵 앱의 <b>장소 등록 요청</b>을 해 두면 빨라져요.</p>;
 }
 
 function StatusPanel({ m }: { m: MyMerchant }) {
@@ -23,7 +23,7 @@ function StatusPanel({ m }: { m: MyMerchant }) {
       {m.status === "applied" ? <p>신청을 받았어요. 운영자가 매장과 사업자 정보를 확인한 뒤 승인하면 이 화면에서 예약 관리가 열려요. 보통 1~2 영업일 걸려요.</p> : null}
       {m.status === "rejected" ? <p>승인되지 않았어요{m.rejectReason ? ` — ${m.rejectReason}` : ""}. 정보를 고쳐 다시 신청하려면 운영자에게 문의해 주세요.</p> : null}
       {m.status === "suspended" ? <p>이용이 잠시 멈춰 있어요{m.rejectReason ? ` — ${m.rejectReason}` : ""}. 그동안 손님이 새로 예약할 수 없어요.</p> : null}
-      {isManualPlaceId(m.kakaoPlaceId) ? <ManualNote /> : null}
+      {isManualPlaceId(m.kakaoPlaceId) ? <ManualNote kind={m.kind} /> : null}
       <dl>
         <dt>매장</dt><dd>{m.name}</dd>
         <dt>주소</dt><dd>{m.address || "—"}</dd>
@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ d
     <>
       <Bar store={m.name} signedIn />
       <main>
-        {isManualPlaceId(m.kakaoPlaceId) ? <ManualNote /> : null}
+        {isManualPlaceId(m.kakaoPlaceId) ? <ManualNote kind={m.kind} /> : null}
         <div className="day-nav">
           <Link className="btn ghost sm" href={`/?date=${addDays(date, -1)}`} aria-label="전날">‹</Link>
           <h1 style={{ margin: 0 }}>{label ? `${label} · ` : ""}{formatVisit(date, "").trim()}</h1>
@@ -77,7 +77,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ d
         <BookingBoard items={list} live={date === today} />
         <PushToggle />
       </main>
-      <Tabs active="home" />
+      <Tabs active="home" kind={m.kind} />
     </>
   );
 }
