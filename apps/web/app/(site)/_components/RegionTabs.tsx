@@ -7,7 +7,7 @@
 import { childrenOf, level2Of, RBY, REGION_TREE, regionById, regionLabel, TOP_REGIONS, topOf } from "@pairinggo/shared/regions";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRegion } from "./RegionProvider";
 
 type Props = {
@@ -16,10 +16,13 @@ type Props = {
   base: "/search" | "/drinks";
   /** 지역 말고 유지할 쿼리(검색어·종류) — 서버 컴포넌트에서 함수는 넘길 수 없어 값으로 받는다 */
   keep?: Record<string, string>;
+  /** 결과가 있는 화면에서는 칩 세 줄이 결과를 아래로 민다 — 한 줄로 접고 [바꾸기]로 편다(2026-09-23) */
+  collapsible?: boolean;
 };
 
-export default function RegionTabs({ current, base, keep = {} }: Props) {
+export default function RegionTabs({ current, base, keep = {}, collapsible = false }: Props) {
   const rg = useRegion();
+  const [open, setOpen] = useState(false);
   const href = (id: string) => { const qs = new URLSearchParams({ ...keep, ...(id !== "all" ? { region: id } : {}) }).toString(); return `${base}${qs ? `?${qs}` : ""}`; };
   const router = useRouter();
   const cur = regionById(current);
@@ -38,6 +41,17 @@ export default function RegionTabs({ current, base, keep = {} }: Props) {
   const Chip = ({ id, label, on }: { id: string; label: string; on: boolean }) => (
     <li><Link href={href(id)} className={on ? "on" : undefined} onClick={() => rg.setRegion(id)}>{label}</Link></li>
   );
+
+  if (collapsible && !open) {
+    return (
+      <nav aria-label="지역" className="region-nav">
+        <p className="region-now">
+          지역 <b>{cur ? regionLabel(cur) : "전국"}</b>
+          <button type="button" className="linklike" onClick={() => setOpen(true)}>바꾸기</button>
+        </p>
+      </nav>
+    );
+  }
 
   return (
     <nav aria-label="지역" className="region-nav">

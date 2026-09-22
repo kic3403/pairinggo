@@ -96,13 +96,13 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <div className="btns" style={{ marginTop: 6 }}>
           {sellable && !bl.fallback && (
             <>
-              <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink" }}>{bl.store}로 이동 ↗</ExtLink>
+              <ExtLink className="btn p bar-dup" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink" }}>{bl.store}로 이동 ↗</ExtLink>
               <ExtLink className="btn" href={naverShopUrl(drink.name)} event="external_link" props={{ d: drink.id, kind: "naver_shop" }}>네이버쇼핑에서 찾기 ↗</ExtLink>
             </>
           )}
-          {sellable && bl.fallback && <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_fallback" }}>네이버쇼핑에서 찾기 ↗</ExtLink>}
+          {sellable && bl.fallback && <ExtLink className="btn p bar-dup" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_fallback" }}>네이버쇼핑에서 찾기 ↗</ExtLink>}
           {!sellable && <ExtLink className="btn" href={naverShopUrl(drink.name)} event="external_link" props={{ d: drink.id, kind: "naver_shop_info" }}>네이버쇼핑에서 정보 보기 ↗</ExtLink>}
-          <Heart kind="drink" id={drink.id} name={drink.name} variant="button" />
+          <span className="bar-dup"><Heart kind="drink" id={drink.id} name={drink.name} variant="button" /></span>
         </div>
         <p className="small muted" style={{ marginTop: 8 }}>
           {!sellable && "이 술은 전통주로 분류되지 않아 온라인 직배송이 법적으로 제한됩니다. 아래에서 가까운 판매점을 찾아 주세요. "}

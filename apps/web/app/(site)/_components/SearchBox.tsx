@@ -20,12 +20,14 @@ type Item = { type: "drink" | "food" | "browse" | "place"; id: string; name: str
 type PlaceRow = { id: string; name: string; category: string; address: string; roadAddress: string; bookable?: boolean };
 const TYPE_LABEL: Record<Item["type"], string> = { drink: "전통주", food: "음식", browse: "모아보기", place: "식당" };
 
-export default function SearchBox({ initial = "", region = "", autoFocus = false, compact = false }: { initial?: string; region?: string; autoFocus?: boolean; compact?: boolean }) {
+export default function SearchBox({ initial = "", region = "", autoFocus = false, compact = false, regionPicker }: { initial?: string; region?: string; autoFocus?: boolean; compact?: boolean; regionPicker?: boolean }) {
   const rg = useRegion();
   const hydrated = useHydrated();   // 하이드레이션 중에는 서버와 같은 값(전국)
   const router = useRouter();
   const listId = useId();
   const rid = region && region !== "all" ? region : hydrated ? rg.id : "all";
+  // 지역 고르개는 기본으로 보이되, 화면에 지역 칩(RegionTabs)이 따로 있으면 끈다 — 같은 일을 두 번 시키지 않는다(2026-09-23)
+  const showRegion = regionPicker ?? !compact;
   const cur = regionById(rid);
   const known = TOP_REGIONS.some((r) => r.id === rid) || REGION_TREE.cap.some((s) => s.id === rid);
 
@@ -95,7 +97,7 @@ export default function SearchBox({ initial = "", region = "", autoFocus = false
 
   return (
     <form action="/search" method="get" role="search" className={`sbox${compact ? " compact" : ""}`} onSubmit={() => setOpen(false)}>
-      {compact
+      {!showRegion
         ? <input type="hidden" name="region" value={rid === "all" ? "" : rid} />
         : (
           <select name="region" value={rid} onChange={(e) => rg.setRegion(e.target.value)} aria-label="지역" className="region">

@@ -171,6 +171,10 @@ p { margin: 0 0 12px; }
 .region-nav .region-tabs.sub { margin-top: 0; padding-left: 12px; border-left: 3px solid var(--line); }
 .region-nav .region-tabs.sub a { padding: 6px 13px; font-size: 13px; }
 .region-nav { margin-bottom: 14px; }
+/* 접힌 지역 줄 — 결과 화면에서 지역 칩 대신 한 줄만(2026-09-23) */
+.region-now { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; color: var(--muted); }
+.region-now b { color: var(--ink); }
+.region-now .linklike { padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
 
 /* 폼 */
 .field { display: block; margin: 0 0 12px; }
@@ -526,6 +530,9 @@ p { margin: 0 0 12px; }
   .tabbar a.on { color: var(--navy); }
   .tabbar a:focus-visible { outline: 2px solid var(--navy); outline-offset: -4px; border-radius: 10px; }
   body:has(.tabbar) .site-foot { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+
+  /* 하단 고정 막대에 같은 버튼이 있으면 본문 것은 감춘다 — 한 화면에 같은 행동을 두 번 두지 않는다(2026-09-23) */
+  .bar-dup { display: none; }
 
   /* 상세 하단 고정 버튼 — ♡ 저장 | 목록 이동 · 핵심 행동 */
   .actionbar { display: flex; align-items: center; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;

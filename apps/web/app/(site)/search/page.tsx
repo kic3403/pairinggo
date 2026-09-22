@@ -60,9 +60,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   return (
     <div className="wrap">
       <h1>검색{region && <span className="muted"> · {regionLabel(region)}</span>}</h1>
-      <SearchBox initial={q} region={rid} autoFocus={!q} />
+      {/* 지역은 아래 칩(RegionTabs)에서 고른다 — 검색창의 지역 고르개는 끈다(2026-09-23) */}
+      <SearchBox initial={q} region={rid} autoFocus={!q} regionPicker={false} />
       {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} />}
-      <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} />
+      <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} collapsible={!!q} />
       {/* 같은 검색어로 식당도 — 찾은 술·음식이 없으면 맨 위, 있으면 결과 아래(상황·지역 검색에는 붙이지 않는다) */}
       {placesQ && empty && <SearchPlaces q={placesQ} region={placesRegion} empty />}
 
