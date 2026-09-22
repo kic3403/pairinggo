@@ -3,8 +3,8 @@
  *
  * 채널과 세는 방법(모두 "최근 30일에 올라온 글·영상 수"):
  *  - naver   네이버 블로그 검색(API HUB) sort=date로 넘기며 postdate가 30일 안인 글을 센다. 상한 1,000(API가 start≤1000까지만).
- *  - youtube 유튜브 Data API search.list publishedAfter=30일 전. 한 페이지 50건, 꽉 차면 한 페이지 더(상한 100). 검색 1회 = 할당량 100(일 10,000) → 하루 절반씩.
- *  - google  구글 Programmable Search(JSON API) dateRestrict=m1의 totalResults(추정치). 무료 100회/일 → 하루 절반씩. 검색엔진(cx)은 블로그 도메인으로 제한해 둔다(docs/11).
+ *  - youtube 유튜브 Data API search.list publishedAfter=30일 전. 한 페이지 50건, 꽉 차면 한 페이지 더(상한 100). 검색 1회 = 할당량 100(일 10,000) → 하루 75종씩 오래된 것부터(route.ts DAILY_CAP).
+ *  - google  구글 Programmable Search(JSON API) dateRestrict=m1의 totalResults(추정치). 무료 100회/일 → 하루 90종씩 오래된 것부터. 검색엔진(cx)은 블로그 도메인으로 제한해 둔다(docs/11).
  *  - insta   공식 API로 해시태그 게시물 수를 매일 받을 수 없다(그래프 API는 비즈니스 계정+앱 심사, 게시물 수 미제공; 크롤링은 약관 위반).
  *            → 수동 입력(`pnpm --filter @pairinggo/db mentions:insta 파일.csv`). 값이 있으면 그대로 평균에 들어간다.
  * 점수·순위 계산은 packages/shared/src/trend.ts.

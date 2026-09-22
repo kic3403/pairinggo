@@ -2,10 +2,11 @@
  * GET /api/cron/mentions — 매일 00:00(KST) 채널별 언급량을 세고 "많이 찾는 전통주" 순위를 다시 매긴다.
  *   Vercel Cron(vercel.json: 0 15 * * * UTC = 00:00 KST), Authorization: Bearer CRON_SECRET
  *   ?channel=naver,youtube  일부 채널만 · ?all=1  회전 무시하고 전부(첫 실행·복구용) · ?dry=1  저장하지 않고 결과만
- * 흐름: 수집 → drink_mentions_daily 저장 → 최근 7일 기록으로 점수·순위(shared trend.ts) → drinks.trend·catalog_meta.trend_meta 갱신
+ *   ?probe=1  밖으로 나가지 않고 키·수집 상태만(할당량 소모 없음)
+ * 흐름: 수집 → drink_mentions_daily 저장 → 최근 기록(LOOKBACK일)으로 점수·순위(shared trend.ts) → drinks.trend·catalog_meta.trend_meta 갱신
  *       → 상위 20 순서가 바뀌었으면 카탈로그 발행(앱도 다음 실행 때 받는다).
  */
-import { MENTION_CHANNELS, attachRankDelta, scoreMentions, trendNote, type Drink, type MentionChannel, type MentionRow } from "@pairinggo/shared";
+import { MENTION_CHANNELS, attachRankDelta, lastCountedDay, pickByStaleness, scoreMentions, trendNote, type Drink, type MentionChannel, type MentionRow } from "@pairinggo/shared";
 import { publish } from "@/lib/admin-data";
 import { getCatalog, invalidateCatalog } from "@/lib/catalog";
 import { db } from "@/lib/db";
@@ -15,9 +16,18 @@ import { channelEnabled, collectChannel, todayKst, WINDOW_DAYS, type Collected }
 export const runtime = "nodejs";
 export const maxDuration = 300;   // 네이버 최대 1,000여 회 + 유튜브·구글 50여 회. 보통 1~2분
 
-const LOOKBACK = 7;
-/** 유튜브·구글은 무료 할당량(검색 100회/일) 때문에 하루 절반씩 — 짝수일 앞 절반, 홀수일 뒤 절반 */
-const ROTATED: MentionChannel[] = ["youtube", "google"];
+/**
+ * 점수에 쓰는 창 — 회전 한 바퀴(518종 ÷ 하루 상한 ≈ 7일)보다 넉넉해야
+ * 술마다 "마지막으로 센 값"이 창 안에 남아 채널 평균에 들어간다(2026-09-22).
+ */
+const LOOKBACK = 12;
+/**
+ * 하루에 셀 수 있는 술 수 — 무료 할당량 안쪽으로 잡는다.
+ *  · youtube 검색 1회 = 100유닛, 하루 10,000유닛. 한 술당 1~2쪽(실측 평균 1.2쪽) → 75종이 안전선
+ *  · google  Programmable Search 무료 100회/일, 한 술당 1회 → 90종
+ *  · naver   호출 수 제한이 넉넉해 매일 전량
+ */
+const DAILY_CAP: Partial<Record<MentionChannel, number>> = { youtube: 75, google: 90 };
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
@@ -41,18 +51,41 @@ export async function GET(req: Request) {
   // 급상승 비교용으로 일주일 전 기준 창(7+LOOKBACK일)까지 받는다
   const weekAgo = new Date(Date.parse(today + "T00:00:00Z") - 7 * 86400000).toISOString().slice(0, 10);
   const since = new Date(Date.parse(today + "T00:00:00Z") - (7 + LOOKBACK) * 86400000).toISOString().slice(0, 10);
-  const prev = await sb.from("drink_mentions_daily").select("day,drink_id,channel,count").gte("day", since);
-  if (prev.error) return error(req, 500, prev.error.message);
-  const prevRows: MentionRow[] = (prev.data || []).map((r) => ({ day: String(r.day), drinkId: r.drink_id, channel: r.channel as MentionChannel, count: r.count }));
-  const hasRecent = (id: string, ch: MentionChannel, days: number) => prevRows.some((r) => r.drinkId === id && r.channel === ch && r.day > new Date(Date.parse(today + "T00:00:00Z") - days * 86400000).toISOString().slice(0, 10));
+  // 한 번에 1,000행까지만 오므로 끝까지 받아 온다 — 자르면 점수도 회전 대상도 옛 기록으로 계산된다(2026-09-22)
+  const prevRows: MentionRow[] = [];
+  for (let from = 0; ; from += 1000) {
+    const page = await sb.from("drink_mentions_daily").select("day,drink_id,channel,count").gte("day", since).order("day").order("drink_id").range(from, from + 999);
+    if (page.error) return error(req, 500, page.error.message);
+    prevRows.push(...(page.data || []).map((r) => ({ day: String(r.day), drinkId: r.drink_id, channel: r.channel as MentionChannel, count: r.count })));
+    if (!page.data || page.data.length < 1000) break;
+    if (from > 200_000) { log.push("기록이 너무 많아 일부만 읽었습니다"); break; }
+  }
 
-  const dayIndex = Math.floor(Date.parse(today + "T00:00:00Z") / 86400000);
+  /** 오늘 셀 술 — 할당량이 있는 채널은 **가장 오래 세지 않은 것부터** 상한만큼(shared pickByStaleness) */
   const targets = (ch: MentionChannel): Drink[] => {
-    if (all || !ROTATED.includes(ch)) return drinks;
-    const half = drinks.filter((_, i) => i % 2 === dayIndex % 2);
-    const backfill = drinks.filter((d) => !half.includes(d) && !hasRecent(d.id, ch, LOOKBACK));
-    return [...half, ...backfill];
+    const cap = DAILY_CAP[ch];
+    if (all || !cap) return drinks;
+    const pick = new Set(pickByStaleness(drinks.map((d) => d.id), lastCountedDay(prevRows, ch), cap));
+    return drinks.filter((d) => pick.has(d.id));
   };
+
+  // 진단(?probe=1) — 밖으로 한 번도 나가지 않고 키 설정과 최근 수집 상태만 돌려준다(할당량을 쓰지 않는다)
+  if (url.searchParams.get("probe") === "1") {
+    const state = Object.fromEntries(MENTION_CHANNELS.map((ch) => {
+      const last = lastCountedDay(prevRows, ch);
+      const days = [...last.values()].sort();
+      return [ch, {
+        key: ch === "insta" ? "수동 입력" : channelEnabled(ch) ? "있음" : "없음",
+        dailyCap: DAILY_CAP[ch] ?? null,
+        countedDrinks: last.size,
+        ofDrinks: drinks.length,
+        lastDay: days[days.length - 1] ?? null,
+        oldestDay: days[0] ?? null,
+        roundDays: DAILY_CAP[ch] ? Math.ceil(drinks.length / DAILY_CAP[ch]!) : 1,
+      }];
+    }));
+    return json(req, { ok: true, probe: true, today, lookback: LOOKBACK, channels: state }, { headers: NO_CACHE });
+  }
 
   // 수집 — 채널을 순서대로(각 채널 안에서는 동시 6개)
   const collected: Collected[] = [];
@@ -61,7 +94,9 @@ export async function GET(req: Request) {
     if (only && !only.includes(ch)) continue;
     if (ch === "insta") { summary[ch] = { drinks: 0, skipped: "수동 입력 채널" }; continue; }
     if (!channelEnabled(ch)) { summary[ch] = { drinks: 0, skipped: "키 없음" }; continue; }
-    const rows = await collectChannel(ch, targets(ch), today, log);
+    const pick = targets(ch);
+    if (DAILY_CAP[ch] && !all) log.push(`${ch}: 오래 안 센 순 ${pick.length}종 (전체 ${drinks.length}종 → ${Math.ceil(drinks.length / DAILY_CAP[ch]!)}일에 한 바퀴)`);
+    const rows = await collectChannel(ch, pick, today, log);
     collected.push(...rows);
     summary[ch] = { drinks: rows.length };
     // 상한에 걸린 술은 검색어가 일반 단어와 겹칠 가능성이 크다 — 로그로 드러내 QUERY_OVERRIDE 후보로 삼는다

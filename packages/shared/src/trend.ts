@@ -71,6 +71,34 @@ export function scoreMentions(rows: MentionRow[], opts: { today: string; lookbac
   return { trend, channels };
 }
 
+/* ---------- 회전 수집 (2026-09-22) ---------- */
+
+/**
+ * 오늘 셀 술 고르기 — 유튜브·구글은 무료 할당량(검색 100회/일)이 술 수(518종)보다 적다.
+ * 그래서 **가장 오래 세지 않은 술부터** 하루 상한만큼만 센다. 한 번도 세지 않은 술이 맨 앞.
+ * 창(lookbackDays)이 한 바퀴 도는 날수보다 길면, 점수는 술마다 "마지막으로 센 값"으로 계속 채워진다.
+ *
+ * 예전 방식(짝수일 앞 절반·홀수일 뒤 절반)은 절반(약 257종)이 할당량(100회)보다 커서
+ * 매일 같은 앞부분만 세고 뒤쪽은 영영 세지 않았다 — 실측 2026-09-22: 유튜브 값이 있는 술 196/514.
+ */
+export function pickByStaleness(ids: readonly string[], lastDay: ReadonlyMap<string, string>, cap: number): string[] {
+  if (cap <= 0) return [];
+  return [...ids]
+    .sort((a, b) => (lastDay.get(a) ?? "").localeCompare(lastDay.get(b) ?? "") || a.localeCompare(b))
+    .slice(0, cap);
+}
+
+/** 술×채널별 마지막으로 센 날 — 회전 대상을 고를 때 쓴다 */
+export function lastCountedDay(rows: readonly MentionRow[], channel: MentionChannel): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const r of rows) {
+    if (r.channel !== channel) continue;
+    const cur = out.get(r.drinkId);
+    if (!cur || cur < r.day) out.set(r.drinkId, r.day);
+  }
+  return out;
+}
+
 /* ---------- 언급 판정 ---------- */
 const DRINK_WORD = /막걸리|소주|약주|청주|탁주|증류|리큐르|와인|과실주|브랜디|미드|꿀술|생주|명주|법주|국화주|이화주|송주|배주|강주|홍로|력고|기술|리술|명주|춘$|주$/;
 export const DRINK_CONTEXT = /술|주류|막걸리|소주|약주|청주|전통주|양조|증류|리큐르|와인|한잔|한 잔|안주|시음|주점|바틀|보틀|도수|음주|마셨|마시/;
