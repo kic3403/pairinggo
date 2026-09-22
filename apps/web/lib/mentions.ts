@@ -96,6 +96,13 @@ export async function countYoutube(q: string, today: string, terms: string[]): P
   return { count, capped, query: q, raw: { estimated: est } };
 }
 
+/**
+ * 키 지문 — 앞 8자와 뒤 4자만(가운데는 가림). 운영에 어떤 키가 들어갔는지 콘솔 값과 눈으로 대조할 때만 쓴다.
+ * 이것만으로는 키를 복원할 수 없고, 크론 엔드포인트는 CRON_SECRET으로 막혀 있다(2026-09-22).
+ */
+export const keyHint = (v: string | undefined) =>
+  !v ? "없음" : v.length <= 12 ? `${v.slice(0, 2)}…${v.slice(-2)} (${v.length}자)` : `${v.slice(0, 8)}…${v.slice(-4)} (${v.length}자${/^\s|\s$/.test(v) ? ", 앞뒤 공백 있음" : ""})`;
+
 /** 구글이 준 오류 사유 한 줄 — 키 값이 섞여 들어가지 않게 가린다 */
 function googleReason(body: unknown): string {
   const e = (body as { error?: { message?: string; status?: string; errors?: { reason?: string }[] } })?.error;

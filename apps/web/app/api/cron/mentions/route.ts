@@ -11,7 +11,7 @@ import { publish } from "@/lib/admin-data";
 import { getCatalog, invalidateCatalog } from "@/lib/catalog";
 import { db } from "@/lib/db";
 import { error, json, NO_CACHE } from "@/lib/http";
-import { channelEnabled, collectChannel, probeChannel, todayKst, WINDOW_DAYS, type Collected } from "@/lib/mentions";
+import { channelEnabled, collectChannel, keyHint, probeChannel, todayKst, WINDOW_DAYS, type Collected } from "@/lib/mentions";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;   // 네이버 최대 1,000여 회 + 유튜브·구글 50여 회. 보통 1~2분
@@ -90,7 +90,9 @@ export async function GET(req: Request) {
       const which = (only ?? MENTION_CHANNELS).filter((ch) => ch !== "insta" && channelEnabled(ch));
       test = Object.fromEntries(await Promise.all(which.map(async (ch) => [ch, await probeChannel(ch, drinks[0], today)])));
     }
-    return json(req, { ok: true, probe: true, today, lookback: LOOKBACK, channels: state, test }, { headers: NO_CACHE });
+    // 어떤 키가 들어갔는지 콘솔 값과 대조할 수 있게 지문만(가운데는 가림)
+    const keys = { google: keyHint(process.env.GOOGLE_CSE_KEY), googleCx: keyHint(process.env.GOOGLE_CSE_CX), youtube: keyHint(process.env.YOUTUBE_API_KEY) };
+    return json(req, { ok: true, probe: true, today, lookback: LOOKBACK, channels: state, keys, test }, { headers: NO_CACHE });
   }
 
   // 수집 — 채널을 순서대로(각 채널 안에서는 동시 6개)
