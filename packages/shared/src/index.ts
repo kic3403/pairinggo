@@ -30,6 +30,7 @@ export * from "./pairing/affinity";
 export * from "./pairing/fit-eval";
 export * from "./place-info";
 export * from "./reservation";
+export * from "./seo/jsonld";
 export * from "./menu-items";
 export * from "./oauth-profile";
 export * from "./account-dup";

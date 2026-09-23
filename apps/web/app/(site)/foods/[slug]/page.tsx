@@ -4,8 +4,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { D, SRC_LABEL, byFood, explainOverall, findBySlug, scorePairings, toSlug } from "@pairinggo/shared";
+import { D, SRC_LABEL, breadcrumb, byFood, explainOverall, findBySlug, itemList, scorePairings, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { siteUrl } from "@/lib/site";
 import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
@@ -13,6 +14,7 @@ import { PairingCards, pickCounts, drinkHref, type CardItem } from "../../_compo
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
+import JsonLd from "../../_components/JsonLd";
 import ProfileBars from "../../_components/ProfileBars";
 import ShareButton from "../../_components/ShareButton";
 
@@ -61,8 +63,17 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
 
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);
 
+  // 구조화 데이터 — 경로와 "이 음식에 어울리는 술" 목록(docs/20 P3-4)
+  const base = siteUrl();
+  const path = `/foods/${toSlug(food.name)}`;
+  const ld = [
+    breadcrumb([{ name: "홈", path: "/" }, { name: "음식·안주", path: "/foods" }, { name: food.name, path }], base),
+    itemList(items.slice(0, 20).map((it) => ({ name: it.name, path: it.href })), { base, name: `${food.name}에 어울리는 전통주` }),
+  ];
+
   return (
     <div className="wrap">
+      <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/foods">음식·안주</Link></p>
       <h1>{food.name}</h1>
       <div className="meta">

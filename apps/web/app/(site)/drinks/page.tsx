@@ -5,10 +5,12 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buyLink, byDrink, byKoName, drinkInRegion, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
+import { buyLink, byDrink, byKoName, breadcrumb, drinkInRegion, itemList, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { siteUrl } from "@/lib/site";
 import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
+import JsonLd from "../_components/JsonLd";
 import RegionTabs from "../_components/RegionTabs";
 
 export const revalidate = 600;
@@ -74,8 +76,16 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
     return `/drinks?${q.toString()}`;
   };
 
+  // 구조화 데이터 — 지금 보이는 목록(앞 30개)과 경로
+  const base = siteUrl();
+  const ld = [
+    breadcrumb([{ name: "홈", path: "/" }, { name: "전통주", path: "/drinks" }], base),
+    itemList(shown.slice(0, 30).map((d) => ({ name: d.name, path: `/drinks/${toSlug(d.name)}` })), { base, name: "전통주" }),
+  ];
+
   return (
     <div className="wrap">
+      <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link>{active && <> · <Link href="/drinks">전통주</Link></>}</p>
       <h1>{active ? `${active} 전통주 ${list.length}종` : `전통주 ${c.counts.drinks}종`}{selected && <span className="muted"> · {selected}</span>}</h1>
       <p className="lead">{active ? "조건을 지우려면 전통주 전체로 돌아가세요." : "종류별로 나눠 모았습니다. 술을 고르면 어울리는 안주와 그 근거, 구매처를 볼 수 있습니다."}</p>

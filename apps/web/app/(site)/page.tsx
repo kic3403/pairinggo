@@ -9,8 +9,10 @@ import { loadAwards } from "@/lib/awards";
 import { listPosts } from "@/lib/member-picks";
 import PickFeed from "./_components/PickFeed";
 import { topDrinks } from "@/lib/popular";
-import { FOOD_GROUPS, homePicksMode, buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug } from "@pairinggo/shared";
+import { FOOD_GROUPS, homePicksMode, buyLink, onlineSellable, POPULAR_FOODS, byDrink, byFood, toSlug, website } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { siteUrl } from "@/lib/site";
+import JsonLd from "./_components/JsonLd";
 
 export const revalidate = 600;
 
@@ -34,6 +36,8 @@ export default async function Home() {
 
   return (
     <div className="wrap">
+      {/* 사이트 이름과 사이트 안 검색 — 구글 결과에 검색창이 붙을 수 있다(docs/20 P3-4) */}
+      <JsonLd data={website({ base: siteUrl(), name: "페어링GO" })} />
       <section className="hero">
         <h1>전통주에 뭘 곁들일까</h1>
         <p>양조장과 소믈리에, 전문 매체, 대중이 추천한 데이터를 기반으로 전통주를 검색하면 어울리는 음식을, 음식을 검색하면 어울리는 전통주를 찾아 드립니다.</p>

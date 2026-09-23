@@ -5,8 +5,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { F, LINK_STATUS, byDrink, buyLink, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
+import { F, LINK_STATUS, byDrink, breadcrumb, buyLink, drinkProduct, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { buyOptions } from "@/lib/shop";
+import { siteUrl } from "@/lib/site";
 import { breweryPartner } from "@/lib/place-detail";
 import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
@@ -17,6 +19,7 @@ import BuyBox from "../../_components/BuyBox";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
+import JsonLd from "../../_components/JsonLd";
 import ProfileBars from "../../_components/ProfileBars";
 import ShareButton from "../../_components/ShareButton";
 
@@ -73,8 +76,21 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
   const meta = [drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.region, drink.brewery].filter(Boolean);
 
+  // 구조화 데이터(docs/20 P3-4) — 검색 결과에 도수·양조장·경로가 함께 보이게. 파는 상품이 있으면 가격까지.
+  const base = siteUrl();
+  const path = `/drinks/${toSlug(drink.name)}`;
+  const opts = await buyOptions(drink.id).catch(() => []);
+  const ld = [
+    drinkProduct(
+      { name: drink.name, desc: drink.desc, category: drink.category, abv: drink.abv, brewery: drink.brewery, region: drink.region, awards: drink.awards },
+      { base, path, offers: opts.map((o) => ({ price: o.price, inStock: o.buyable > 0, sellerName: o.seller.bizName })) },
+    ),
+    breadcrumb([{ name: "홈", path: "/" }, { name: "전통주", path: "/drinks" }, { name: drink.name, path }], base),
+  ];
+
   return (
     <div className="wrap">
+      <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">전통주</Link></p>
       <h1>{drink.name}</h1>
       <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>

@@ -5,8 +5,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Heart from "../_components/Heart";
-import { FOOD_GROUPS, FOOD_GROUP_OTHER, byFood, byKoName, foodGroupOf, toSlug } from "@pairinggo/shared";
+import { FOOD_GROUPS, FOOD_GROUP_OTHER, breadcrumb, byFood, byKoName, foodGroupOf, itemList, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { siteUrl } from "@/lib/site";
+import JsonLd from "../_components/JsonLd";
 
 export const revalidate = 600;
 type Q = { group?: string; category?: string };
@@ -64,8 +66,15 @@ export default async function FoodIndex({ searchParams }: { searchParams: Promis
   const groupHref = (g: string) => `/foods?group=${encodeURIComponent(g)}`;
   const subHref = (k: string | null) => (k ? `/foods?group=${encodeURIComponent(group!)}&category=${encodeURIComponent(k)}` : groupHref(group!));
 
+  const base = siteUrl();
+  const ld = [
+    breadcrumb([{ name: "홈", path: "/" }, { name: "음식·안주", path: "/foods" }], base),
+    itemList(shown.slice(0, 30).map((f) => ({ name: f.name, path: `/foods/${toSlug(f.name)}` })), { base, name: "음식·안주" }),
+  ];
+
   return (
     <div className="wrap">
+      <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link></p>
       <h1>음식·안주 {c.counts.foods}종{group && <span className="muted"> · {group}{selectedSub ? ` · ${selectedSub}` : ""}</span>}</h1>
       <p className="lead">한식·양식·중식·일식 같은 큰 분류를 고르고, 그 안에서 세부 분류로 좁혀 보세요. 음식을 고르면 어울리는 전통주와 그 근거를 볼 수 있습니다.</p>
