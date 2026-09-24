@@ -144,7 +144,8 @@ p { margin: 0 0 12px; }
 .row:first-child { border-top: 0; }
 .row .grow { flex: 1; min-width: 0; text-decoration: none; display: flex; flex-direction: column; }
 .row .grow b { font-size: 15.5px; }
-.badge.f { background: var(--food-soft); color: var(--food-ink); }
+/* 검색 결과 표시 — 술은 로고 주황, 음식은 로고 남색(2026-09-24 사용자 결정) */
+.badge.d { background: var(--food-soft); color: var(--food-ink); }
 .badge.n { background: transparent; border: 1px solid var(--line); color: var(--muted); }
 
 /* 구매 섹션 */
@@ -706,7 +707,8 @@ p { margin: 0 0 12px; }
 .sbox-pop li.on { background: var(--navy-soft); }
 .sbox-pop li.sep { margin-top: 4px; border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; padding-top: 10px; }
 .sbox-pop .t { font-size: 11px; font-weight: 700; color: var(--muted); min-width: 44px; }
-.sbox-pop .t.t-place { color: var(--food-ink); }
+.sbox-pop .t.t-drink { color: var(--food-ink); }
+.sbox-pop .t.t-food { color: var(--navy-ink); }
 .sbox-pop .n { font-size: 14.5px; font-weight: 700; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sbox-pop .m { grid-column: 2; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sbox-pop .wait { color: var(--muted); font-size: 13px; cursor: default; display: block; }
