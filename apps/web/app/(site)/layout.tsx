@@ -34,7 +34,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </Link>
           <nav className="site-nav" aria-label="주요 메뉴">
             <Link href="/search" className="search-link">검색</Link>
-            <Link href="/drinks">술</Link>
+            <Link href="/drinks">주류</Link>
             <Link href="/foods">음식·안주</Link>
             <AuthNav />
           </nav>
@@ -50,7 +50,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <footer className="site-foot">
         <div className="wrap">
           <nav aria-label="푸터 메뉴">
-            <Link href="/drinks">술 전체</Link>
+            <Link href="/drinks">주류 전체</Link>
             <Link href="/foods">음식 전체</Link>
           </nav>
           <p className="legal-links"><Link href="/terms">이용약관</Link><Link href="/privacy"><b>개인정보처리방침</b></Link></p>

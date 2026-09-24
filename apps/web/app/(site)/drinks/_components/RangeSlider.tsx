@@ -2,7 +2,7 @@
 /**
  * 양쪽 손잡이 범위 슬라이더 + 직접 입력 — 가격·용량·도수가 같은 부품을 쓴다(2026-09-24, 요구사항 §4·§5).
  *  · 겹친 <input type=range> 둘(최소·최대) — 키보드 ←→로 조절, 손잡이 44px, 라벨은 "최소 가격"·"최대 가격"처럼 구분.
- *  · 최대 손잡이가 맨 오른쪽이면 **상한 없음**(max: null). "300,000원 이상"은 눈금의 끝 표시이지 제한이 아니다.
+ *  · 최대 손잡이가 맨 오른쪽이면 **상한 없음**(max: null). "1,000,000원 이상"은 눈금의 끝 표시이지 제한이 아니다.
  *  · 직접 입력이 눈금을 넘으면 눈금을 넓힌다(sliderMax). 375처럼 눈금 간격에 안 맞는 값도 그대로 둔다.
  *  · 최소 > 최대면 오류 문구를 내고 부모가 적용을 막는다(rangeValid).
  */
@@ -12,7 +12,7 @@ import { rangeValid, sliderMax, type Range } from "@pairinggo/shared/filter-url"
 type Props = {
   label: string;                // "가격"
   unit: string;                 // "원" · "mL" · "%"
-  base: number;                 // 기본 눈금 끝(300,000 · 3,000)
+  base: number;                 // 기본 눈금 끝(1,000,000 · 3,000)
   step: number;                 // 1,000 · 10
   value: Range;
   onChange: (r: Range) => void;

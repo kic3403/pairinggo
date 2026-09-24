@@ -3,7 +3,7 @@
  * 판정 엔진(filterDrinks·정렬)은 filter.ts — 서버에서만.
  *
  * 규칙(요구사항 §3~§6·§12):
- *  · Range { min, max } — max: null = **상한 없음**(300,000원 유한 상한과 구분). 경계는 포함.
+ *  · Range { min, max } — max: null = **상한 없음**(1,000,000원 같은 유한 상한과 구분). 경계는 포함.
  *  · 같은 그룹 안 여러 값은 OR, 그룹끼리는 AND. 세부 종류 칩은 단일 선택. '전체'는 kind null(저장값 아님).
  */
 import type { DrinkKind, DrinkSpec } from "../types";
@@ -158,7 +158,7 @@ export function filterChips(f: DrinkFilter): Chip[] {
 export const hasDetails = (f: DrinkFilter) => filterChips(f).length > 0 || !!f.region;
 
 /* ---------- 슬라이더 규칙 ---------- */
-export const PRICE_SLIDER = { max: 300_000, step: 1_000 };
+export const PRICE_SLIDER = { max: 1_000_000, step: 1_000 };   // 2026-09-25 사용자 요청: 0~1,000,000원(오른쪽 끝은 상한 없음)
 export const ML_SLIDER = { max: 3_000, step: 10 };
 /** 입력값이 기본 눈금을 넘으면 눈금 끝을 넓힌다(다음 큰 단위로) — 입력값과 슬라이더가 어긋나지 않게 */
 export function sliderMax(base: number, step: number, ...values: (number | null)[]): number {
