@@ -313,8 +313,9 @@ p { margin: 0 0 12px; }
 
 /* 홈 아이콘 메뉴(캐치테이블식) */
 .quick { margin: 22px 0 4px; }
-.quick ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 6px; margin: 0; padding: 0; list-style: none; }
-@media (min-width: 560px) { .quick ul { grid-template-columns: repeat(8, 1fr); } }
+/* 9칸(2026-09-24 수상 칸을 대회별로 나눔) — 휴대폰 3×3, 넓은 화면 한 줄 */
+.quick ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 6px; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 560px) { .quick ul { grid-template-columns: repeat(9, 1fr); } }
 .quick a { display: flex; flex-direction: column; align-items: center; gap: 7px; text-decoration: none; color: var(--ink); font-size: 12.5px; font-weight: 600; }
 .quick .ic { position: relative; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; background: var(--bg2); font-size: 26px; line-height: 1; color: var(--tone); }
 .quick .ic em { position: absolute; top: -4px; right: -4px; font-style: normal; font-size: 10px; font-weight: 800; color: #fff; background: var(--food); border-radius: 999px; padding: 2px 5px; }
@@ -327,6 +328,11 @@ p { margin: 0 0 12px; }
 .mich-group { margin-top: 10px; }
 .mich-head { font-weight: 800; font-size: 14px; margin: 6px 0 4px; }
 .mich-head.star { color: #8A5A00; } .mich-head.bib { color: #A93226; } .mich-head.green, .mich-head.selected { color: #2F6B3A; }
+/* 수상 이력 줄 — "🏆 2026 대상 · 2025 품평회 최우수상"(2026-09-24) */
+.award-hist { color: #8A5A00; font-weight: 600; }
+.rows.awards .row { flex-wrap: wrap; }
+.rows.awards .hist-line { flex-basis: 100%; margin-top: 2px; }
+.grid .s.award-hist { display: block; }
 .rows .award { display: inline-flex; align-items: center; margin-right: 8px; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; }
 .rows .award.star { background: #FFF3D6; color: #8A5A00; border: 1px solid #F0D48A; letter-spacing: -1px; }
 .rows .award.bib { background: #FDECEC; color: #A93226; border: 1px solid #F5C2C2; }

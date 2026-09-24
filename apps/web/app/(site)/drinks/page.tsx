@@ -5,7 +5,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { buyLink, byDrink, byKoName, breadcrumb, drinkInRegion, itemList, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
+import { awardLabels, buyLink, byDrink, byKoName, breadcrumb, drinkInRegion, itemList, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
 import ExtLink from "../_components/ExtLink";
@@ -116,6 +116,7 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
                   <Link href={`/drinks/${toSlug(d.name)}`}>
                     <span className="n">{d.name}</span>
                     <span className="s">{[d.abv != null ? `${d.abv}%` : null, d.region, `페어링 ${(byDrink[d.id] || []).length}`].filter(Boolean).join(" · ")}</span>
+                    {!!d.awards?.length && <span className="s award-hist">🏆 {awardLabels(d.awards).join(" · ")}</span>}
                   </Link>
                   <span className="acts">
                     {onlineSellable(d)

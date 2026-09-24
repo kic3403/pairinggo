@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CATEGORIES, D, POPULAR, POPULAR_FOODS, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, shortAward, toSlug } from "@pairinggo/shared";
+import { CATEGORIES, D, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import GradeBadge from "../_components/GradeBadge";
@@ -139,7 +139,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                     <Link href={drinkHref(r.drink.name)} className="name">{r.drink.name}</Link>
                     {r.via && <GradeBadge grade={pairingGrade(pairingScore(r.via))} title={`대표 조합 점수 ${pairingScore(r.via)} · 조건에 맞는 페어링 ${r.count}건`} />}
                   </div>
-                  <div className="small muted">{[r.drink.category, r.drink.abv != null ? `${r.drink.abv}%` : null, r.drink.region, r.drink.awards?.[0] ? shortAward(r.drink.awards[0]) : null].filter(Boolean).join(" · ")}</div>
+                  <div className="small muted">{[r.drink.category, r.drink.abv != null ? `${r.drink.abv}%` : null, r.drink.region].filter(Boolean).join(" · ")}</div>
+                  {!!r.drink.awards?.length && <div className="small award-hist">🏆 {awardLabels(r.drink.awards).join(" · ")}</div>}
                   <p className="why">{r.via ? r.via.reason : r.drink.desc}</p>
                   <div className="acts">
                     <Heart kind="drink" id={r.drink.id} name={r.drink.name} />

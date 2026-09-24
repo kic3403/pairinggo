@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  awardYearCount, awardYears, drinkAwardString, matchAwardDrink, mergeDrinkAwards, normAwardPart, parseDrinkAward, prizeRank, sameBrewery, type AwardDrink,
+  awardLabels, awardYearCount, awardYears, drinkAwardString, matchAwardDrink, mergeDrinkAwards, normAwardPart, parseDrinkAward, prizeRank, sameBrewery, type AwardDrink,
 } from "../drink-awards";
 
 describe("수상 문자열", () => {
@@ -42,10 +42,10 @@ describe("수상 문자열", () => {
     expect(awardYears([], 5)).toEqual([]);
   });
 
-  it("대회마다 다루는 연도 수 — 우리술품평회 5년, 대한민국주류대상 3년", () => {
+  it("대회마다 다루는 연도 수 — 우리술품평회 5년, 대한민국주류대상 2022년부터(2026-09-24)", () => {
     expect(awardYearCount("우리술품평회")).toBe(5);
-    expect(awardYearCount("대한민국주류대상")).toBe(3);
-    expect(awardYears([2026, 2025, 2024, 2023], awardYearCount("대한민국주류대상"))).toEqual([2026, 2025, 2024]);
+    expect(awardYearCount("대한민국주류대상")).toBe(5);
+    expect(awardYears([2026, 2025, 2024, 2023], awardYearCount("대한민국주류대상"))).toEqual([2026, 2025, 2024, 2023, 2022]);
   });
 });
 
@@ -121,5 +121,24 @@ describe("이름이 같은 제품은 도수로 가린다", () => {
   });
   it("이름이 어느 쪽과도 완전히 같지 않고 도수도 모르면 붙이지 않는다", () => {
     expect(matchAwardDrink({ name: "한영석 도한 청명주", brewery: "한영석의발효연구소" }, list)).toBeNull();
+  });
+});
+
+describe("수상 이력 한 줄 — awardLabels (2026-09-24)", () => {
+  const awards = ["2025 우리술품평회 과실주 대상", "2026 대한민국주류대상 탁주 Best of Best", "2024 대한민국주류대상 탁주 대상", "2026 대한민국주류대상 탁주 대상"];
+  it("최근 해부터, 같은 해는 높은 상부터 — 목록에서는 짧은 대회 이름을 붙인다", () => {
+    expect(awardLabels(awards)).toEqual(["2026 주류대상 Best of Best", "2026 주류대상 대상", "2025 품평회 대상", "2024 주류대상 대상"]);
+  });
+  it("대회 화면에서는 그 대회 것만 이름을 뺀다", () => {
+    expect(awardLabels(awards, "대한민국주류대상")).toEqual(["2026 Best of Best", "2026 대상", "2025 품평회 대상", "2024 대상"]);
+    expect(awardLabels(awards, "우리술품평회")).toEqual(["2026 주류대상 Best of Best", "2026 주류대상 대상", "2025 대상", "2024 주류대상 대상"]);
+  });
+  it("없거나 형식이 다른 것은 건너뛰고, 같은 글줄은 한 번만", () => {
+    expect(awardLabels(undefined)).toEqual([]);
+    expect(awardLabels(["이상한 값", "2025 우리술품평회 탁주 대상", "2025 우리술품평회 탁주 대상"])).toEqual(["2025 품평회 대상"]);
+  });
+  it("대한민국주류대상은 2022년부터 다룬다", () => {
+    expect(awardYearCount("대한민국주류대상")).toBe(5);
+    expect(awardYears([2026, 2024, 2022], awardYearCount("대한민국주류대상"))).toEqual([2026, 2025, 2024, 2023, 2022]);
   });
 });

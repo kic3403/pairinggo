@@ -8,10 +8,10 @@
 export type DrinkCompetition = "우리술품평회" | "대한민국주류대상";
 export type DrinkAward = { competition: DrinkCompetition; year: number; part: string; prize: string };
 
-/** /awards 화면 탭 순서·설명, 다루는 연도 수 (2026-09-20 사용자 결정: 우리술품평회 5년 · 대한민국주류대상 3년) */
+/** /awards 화면 탭 순서·설명, 다루는 연도 수 (우리술품평회 5년 · 대한민국주류대상 2022년부터 — 2026-09-24 사용자 결정, 전에는 3년) */
 export const DRINK_COMPETITIONS: { key: "fair" | "kla"; name: DrinkCompetition; host: string; years: number; about: string }[] = [
   { key: "fair", name: "우리술품평회", host: "농림축산식품부·aT", years: 5, about: "농림축산식품부가 해마다 여는 국내 유일의 정부 주관 전통주 경연입니다. 부문마다 대상·최우수상·우수상을 주고, 대통령상은 그해 최고의 술 한 병에만 주어집니다." },
-  { key: "kla", name: "대한민국주류대상", host: "조선비즈", years: 3, about: "조선비즈가 해마다 여는 주류 품평회로, 주류 전문가 100여 명이 주종별로 심사합니다. 우리술 부문 수상작(대상)이며, Best of Best는 그해 주종별 최고점을 받은 술입니다." },
+  { key: "kla", name: "대한민국주류대상", host: "조선비즈", years: 5, about: "조선비즈가 해마다 여는 주류 품평회로, 주류 전문가 100여 명이 주종별로 심사합니다. 우리술 부문 수상작(대상)이며, Best of Best는 그해 주종별 최고점을 받은 술입니다." },
 ];
 export const awardYearCount = (c: DrinkCompetition) => DRINK_COMPETITIONS.find((x) => x.name === c)?.years ?? 5;
 /** 기본 연도 수 */
@@ -133,4 +133,26 @@ export function matchAwardDrink(entry: { name: string; brewery?: string | null; 
     if (same.length === 1) uniq = same;
   }
   return uniq.length === 1 ? uniq[0] : null;
+}
+
+/* ---------- 수상 이력 한 줄 (2026-09-24 사용자 요청) ---------- */
+
+/** 목록·검색에서 대회 이름을 짧게 */
+export const COMPETITION_SHORT: Record<DrinkCompetition, string> = { 우리술품평회: "품평회", 대한민국주류대상: "주류대상" };
+
+/**
+ * 술 옆에 붙일 "연도 + 상" 글줄 — 여러 번 받았으면 전부(최근 해부터, 같은 해는 높은 상부터).
+ * 대회 화면(current)에서는 그 대회 것은 "2026 대상"처럼 대회 이름을 빼고, 다른 대회 것만 "2025 품평회 대상"처럼 붙인다.
+ * 대회 화면이 아니면(목록·검색) 모두 짧은 대회 이름을 붙인다. 같은 글줄은 한 번만.
+ */
+export function awardLabels(awards: readonly string[] | undefined, current?: DrinkCompetition): string[] {
+  const rows = (awards ?? []).map(parseDrinkAward).filter((a): a is DrinkAward => !!a)
+    .sort((a, b) => b.year - a.year || prizeRank(a.prize) - prizeRank(b.prize) || a.competition.localeCompare(b.competition));
+  const out: string[] = [];
+  for (const a of rows) {
+    const comp = current && a.competition === current ? "" : COMPETITION_SHORT[a.competition] + " ";
+    const s = `${a.year} ${comp}${a.prize}`;
+    if (!out.includes(s)) out.push(s);
+  }
+  return out;
 }

@@ -1,11 +1,12 @@
 /**
- * 전통주 수상작 — 우리술품평회(농식품부·aT) 최근 5년 · 대한민국주류대상(조선비즈) 우리술 부문 최근 3년(2026-09-20 사용자 결정, 연도 수는 shared DRINK_COMPETITIONS).
+ * 전통주 수상작 — 우리술품평회(농식품부·aT) 최근 5년 · 대한민국주류대상(조선비즈) 우리술 부문 2022년부터(2026-09-24 사용자 결정, 연도 수는 shared DRINK_COMPETITIONS).
+ * 홈 메뉴는 대회별로 한 칸씩(?c=fair·?c=kla)이고 두 대회의 화면 짜임은 같다. 술마다 받은 상 전부를 "연도 + 상" 줄로 보여 준다(여러 번 받았으면 모두).
  * 카탈로그 drinks.awards("2025 우리술품평회 과실주 대상", "2026 대한민국주류대상 탁주 Best of Best")를 대회·연도·등급별로 묶고 양조장·구매 링크를 붙인다.
  * 명단을 카탈로그에 붙이는 것은 `pnpm --filter @pairinggo/db drink-awards`(research/awards/). 수상 사실은 두 대회의 공개 발표.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DRINK_COMPETITIONS, awardYears, buyLink, onlineSellable, parseDrinkAward, prizeRank, toSlug, type DrinkAward, type Drink } from "@pairinggo/shared";
+import { DRINK_COMPETITIONS, awardLabels, awardYears, buyLink, onlineSellable, parseDrinkAward, prizeRank, toSlug, type DrinkAward, type Drink } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import Heart from "../_components/Heart";
@@ -36,7 +37,7 @@ export default async function AwardsPage({ searchParams }: { searchParams: Promi
   return (
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link></p>
-      <h1>{comp.name} 수상 전통주{selected ? <span className="muted"> · {selected}년</span> : null}</h1>
+      <h1>{comp.name} 수상{selected ? <span className="muted"> · {selected}년</span> : null}</h1>
       <ul className="tabs" aria-label="대회">
         {DRINK_COMPETITIONS.map((x) => (
           <li key={x.key}><Link href={href(x.key)} scroll={false} className={x.key === comp.key ? "on" : undefined} aria-current={x.key === comp.key ? "page" : undefined}>{x.name}</Link></li>
@@ -56,7 +57,7 @@ export default async function AwardsPage({ searchParams }: { searchParams: Promi
         {list.length === 0 ? (
           <p className="muted">이 해 수상작 중 페어링GO에 등록된 전통주가 아직 없습니다.</p>
         ) : (
-          <ul className="rows">
+          <ul className="rows awards">
             {list.map((r) => {
               const d = r.drink, bl = buyLink(d), top = prizeRank(r.prize) === 0;
               return (
@@ -70,6 +71,8 @@ export default async function AwardsPage({ searchParams }: { searchParams: Promi
                     ? <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, store: bl.store, from: "awards" }} className="small">구매 ↗</ExtLink>
                     : <Link href={`/drinks/${toSlug(d.name)}#places`} className="small">판매점</Link>}
                   <Heart kind="drink" id={d.id} name={d.name} />
+                  {/* 받은 상 전부 — 이 대회 것은 "2026 대상", 다른 대회 것은 "2025 품평회 대상"(2026-09-24 사용자 요청). 줄 맨 아래 가로 전체 */}
+                  <span className="small award-hist hist-line">🏆 {awardLabels(d.awards, comp.name).join(" · ")}</span>
                 </li>
               );
             })}
