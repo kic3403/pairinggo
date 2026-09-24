@@ -1,14 +1,118 @@
 {
- "_설명": "카탈로그 술의 구매 링크 — 네이버 웹 검색 결과의 주소·제목만 보고 사람이 고른 양조장 공식몰·스마트스토어(2026-09-24, 구매 링크 없는 71종 대상). 키 = 술 id. 스마트스토어가 아닌 주소는 catalog-buy-links가 첫 화면을 열어 그 술 이름이 실제로 보이는지 확인하고, 안 보이면 넣지 않는다(사용자 규칙: 들어갔는데 다른 종류 제품만 나오면 없는 것으로). 소매점(술마켓·키햐·우체국·11번가 등)은 쓰지 않는다.",
- "d125": { "url": "https://smartstore.naver.com/beodeulin", "kind": "스마트스토어", "from": "검색 — 금오도방풍막걸리 스마트스토어(전남도 보도자료에 같은 주소)" },
- "d187": { "url": "https://smartstore.naver.com/gumisan", "kind": "스마트스토어", "from": "검색 — 금이산농원 스마트스토어(세종시 농장 안내: 복숭아와인 특산)" },
- "d160": { "url": "https://smartstore.naver.com/lesdom", "kind": "스마트스토어", "from": "같은 양조장(작은알자스) 링크" },
- "d167": { "url": "http://www.seokiwon.com/", "kind": "공식몰·홈페이지", "from": "검색 — 석이원주조 홈페이지(제품구매하기)" },
- "d169": { "url": "https://daraewineshop.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — 오름주가 다래와인 공식몰" },
- "d172": { "url": "https://byeoljumak.com/shop_view/?idx=13", "kind": "공식몰·홈페이지", "from": "검색 — 별주막(별네트웍스=과천도가 운영) 관악산생막걸리 상품" },
- "d170": { "url": "https://www.solsongju.com/", "kind": "공식몰·홈페이지", "from": "검색 — 솔송주 몰(명가원 공식)" },
- "d183": { "url": "http://www.nakchun.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — (주)낙천 홈페이지" },
- "d502": { "url": "http://www.nakchun.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — (주)낙천 홈페이지" },
- "d250": { "url": "https://newvin.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — 뉴뱅 홈페이지" },
- "d261": { "url": "https://soltimaeul.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — 솔티마을 공식몰(오롯이)" }
+ "_설명": "카탈로그 술의 구매 링크 — 사람이 고른 양조장 공식몰·스마트스토어 + 소매점 상품 페이지(2026-09-24 사용자 허용: 키햐·술LOVE·술마켓·ZZANN·우체국쇼핑. 오픈마켓·가격비교·데일리샷은 안 씀). 키 = 술 id. 스마트스토어가 아닌 주소는 catalog-buy-links가 그 페이지를 열어 술 이름이 실제로 보이는지 확인하고, 안 보이면 넣지 않는다(사용자 규칙: 들어갔는데 다른 종류 제품만 나오면 없는 것으로).",
+ "d125": {
+  "url": "https://smartstore.naver.com/beodeulin",
+  "kind": "스마트스토어",
+  "from": "검색 — 금오도방풍막걸리 스마트스토어(전남도 보도자료에 같은 주소)"
+ },
+ "d187": {
+  "url": "https://smartstore.naver.com/gumisan",
+  "kind": "스마트스토어",
+  "from": "검색 — 금이산농원 스마트스토어(세종시 농장 안내: 복숭아와인 특산)"
+ },
+ "d160": {
+  "url": "https://smartstore.naver.com/lesdom",
+  "kind": "스마트스토어",
+  "from": "같은 양조장(작은알자스) 링크"
+ },
+ "d167": {
+  "url": "http://www.seokiwon.com/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — 석이원주조 홈페이지(제품구매하기)"
+ },
+ "d169": {
+  "url": "https://daraewineshop.co.kr/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — 오름주가 다래와인 공식몰"
+ },
+ "d172": {
+  "url": "https://byeoljumak.com/shop_view/?idx=13",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — 별주막(별네트웍스=과천도가 운영) 관악산생막걸리 상품"
+ },
+ "d170": {
+  "url": "https://www.solsongju.com/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — 솔송주 몰(명가원 공식)"
+ },
+ "d183": {
+  "url": "http://www.nakchun.co.kr/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — (주)낙천 홈페이지"
+ },
+ "d502": {
+  "url": "http://www.nakchun.co.kr/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — (주)낙천 홈페이지"
+ },
+ "d250": {
+  "url": "https://newvin.co.kr/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — 뉴뱅 홈페이지"
+ },
+ "d261": {
+  "url": "https://soltimaeul.co.kr/",
+  "kind": "공식몰·홈페이지",
+  "from": "검색 — 솔티마을 공식몰(오롯이)"
+ },
+ "d110": {
+  "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000018889",
+  "kind": "소매점",
+  "store": "키햐",
+  "from": "소매점 검색 — 키햐 \"40240 독도소주세트 375ml x 4병 (17도, 21도, 27도, 37도 각1병)\""
+ },
+ "d147": {
+  "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000009685",
+  "kind": "소매점",
+  "store": "키햐",
+  "from": "소매점 검색 — 키햐 \"내변산 부안참뽕 와인 13도 90ml 5병 패키지\""
+ },
+ "d150": {
+  "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000006817",
+  "kind": "소매점",
+  "store": "키햐",
+  "from": "소매점 검색 — 키햐 \"지리산 기운내린 강쇠 13도 375ml\""
+ },
+ "d396": {
+  "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000017265",
+  "kind": "소매점",
+  "store": "키햐",
+  "from": "소매점 검색 — 키햐 \"찰떡같이 9도 750ml (찹쌀막걸리) 4병\""
+ },
+ "d475": {
+  "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000007323",
+  "kind": "소매점",
+  "store": "키햐",
+  "from": "소매점 검색 — 키햐 \"희양산막걸리 9도 650ml (무감미료)\""
+ },
+ "d477": {
+  "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000008451",
+  "kind": "소매점",
+  "store": "키햐",
+  "from": "소매점 검색 — 키햐 \"희양산 막걸리 15도 650ml (무감미료 생탁주)\""
+ },
+ "d145": {
+  "url": "https://zzann.co.kr/product/%ED%99%8D%EC%82%BC%EB%AA%85%EC%A3%BC-14%EB%8F%84-375ml500ml/285/",
+  "kind": "소매점",
+  "store": "ZZANN",
+  "from": "네이버 웹 검색 — ZZANN \"홍삼명주 14도 375ml/500ml\""
+ },
+ "d162": {
+  "url": "https://sijang.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1041633&pavlnDivCd=02",
+  "kind": "소매점",
+  "store": "우체국쇼핑",
+  "from": "네이버 웹 검색 — 인터넷우체국 \"영월더덕 동강더덕주 더덕술(20%) 360ml × 3병\""
+ },
+ "d168": {
+  "url": "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1059412&pavlnDivCd=02",
+  "kind": "소매점",
+  "store": "우체국쇼핑",
+  "from": "네이버 웹 검색 — 우체국쇼핑 \"12월의양조장 14도 자색고구마막걸리 3병 375ml\""
+ },
+ "d200": {
+  "url": "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000471",
+  "kind": "소매점",
+  "store": "술마켓",
+  "from": "네이버 웹 검색 — 술마켓 \"담을술공방 주향이오 25도 375ml\""
+ }
 }

@@ -15,6 +15,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { NON_TRAD, matchAwardDrink, sameBrewery, type AwardDrink } from "@pairinggo/shared";
 import { cleanShopUrl } from "./buy-links";
+import { nameInText, squash } from "./link-check";
 import { publishCatalog } from "./catalog-write";
 import { loadResearch } from "./research";
 import { connect } from "./sql";
@@ -23,13 +24,12 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const apply = process.argv.includes("--apply");
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-const squash = (s: string) => (s || "").toLowerCase().replace(/[\s·,.\-()'"‘’]/g, "");
 /**
  * 첫 화면이 열리고 **그 술 이름이 보이는지** — 열리기만 하고 술이 없으면 found: null(사용자 규칙 2026-09-24).
- * 이름은 술 이름·별칭을 띄어쓰기 없이 견준다("방풍 막걸리" ↔ "방풍막걸리"). 403·405로 막힌 곳은 글을 못 읽어 없음으로 본다.
+ * 이름은 술 이름·별칭의 낱말이 모두 있는지로 본다(nameInText). 403·405로 막힌 곳은 글을 못 읽어 없음으로 본다.
  */
 async function showsDrink(url: string, names: string[]): Promise<{ url: string; found: string | null } | null> {
-  const keys = names.map(squash).filter((k) => k.length >= 2);
+  const keys = names.filter((n) => squash(n).length >= 2);
   const try1 = url.replace(/^http:/, "https:"), try2 = url.replace(/^https:/, "http:");
   for (const u of [try1, try2]) {
     try {
@@ -39,8 +39,7 @@ async function showsDrink(url: string, names: string[]): Promise<{ url: string; 
       if (!(r.status < 400 || r.status === 403 || r.status === 405)) continue;
       const html = r.status < 400 ? await r.text().catch(() => "") : "";
       const text = squash(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, " ").replace(/<[^>]+>/g, " "));
-      const i = keys.findIndex((k) => text.includes(k));
-      return { url: u, found: i >= 0 ? names[i] : null };
+      return { url: u, found: keys.find((k) => nameInText(k, text)) ?? null };
     } catch { /* 다음 주소 */ }
   }
   return null;
@@ -64,7 +63,7 @@ try {
     ? JSON.parse(readFileSync(join(ROOT, "research", "awards", "korea-liquor-awards.json"), "utf8")).items : [];
 
   // ④ 사람이 고른 링크(검색 결과의 주소·제목만 보고) — 그 술이 보이는지는 아래에서 똑같이 확인한다
-  const manual: Record<string, { url: string; kind: string; from: string }> = existsSync(join(ROOT, "research", "catalog-buy-manual.json"))
+  const manual: Record<string, { url: string; kind: string; from: string; store?: string }> = existsSync(join(ROOT, "research", "catalog-buy-manual.json"))
     ? JSON.parse(readFileSync(join(ROOT, "research", "catalog-buy-manual.json"), "utf8")) : {};
   delete (manual as Record<string, unknown>)._설명;
 
@@ -95,7 +94,9 @@ try {
       if (!res.found) { rejected.push({ row: r, url: best.url, why: "열리지만 이 술이 안 보임" }); continue; }
       best.url = res.url;
     }
-    found.push({ row: r, url: best.url, store: best.kind === "스마트스토어" ? "양조장 공식 스마트스토어" : "양조장 공식몰", from: best.from });
+    // 소매점(2026-09-24 사용자 허용)은 가게 이름을 그대로 — 화면 버튼이 "키햐로 이동 ↗"이 된다
+    const store = manual[r.id]?.url === best.url && manual[r.id]?.store ? manual[r.id].store! : best.kind === "스마트스토어" ? "양조장 공식 스마트스토어" : "양조장 공식몰";
+    found.push({ row: r, url: best.url, store, from: best.from });
   }
 
   // ③ 같은 양조장 다른 술의 링크 (원래 있던 것 + 이번에 찾은 것)
