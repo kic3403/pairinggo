@@ -73,7 +73,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           {regional.list.length === 0 && <p className="muted">이 지역에 등록된 전통주가 아직 없습니다.</p>}
           <ul className="rows">
             {regional.list.map((d) => (
-              <li key={d.id} className="row">
+              <li key={d.id} className="row d">
                 <span className="badge d">술</span>
                 <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.category, d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
                 <Heart kind="drink" id={d.id} name={d.name} />
@@ -110,7 +110,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             {rq.drinks.map((d) => {
               const bl = buyLink(d);
               return (
-                <li key={d.id} className="row">
+                <li key={d.id} className="row d">
                   <span className="badge d">{d.category}</span>
                   <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
                   {onlineSellable(d) && <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, store: bl.store, from: "search_region" }} className="small">구매 ↗</ExtLink>}
@@ -179,7 +179,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             {res.drinks.map((h) => {
               const d = h.doc;
               return (
-                <li key={"d" + d.id} className="row">
+                <li key={"d" + d.id} className="row d">
                   <span className="badge d">술</span>
                   <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{d.meta}</span></Link>
                   {h.kind === "fuzzy" && <span className="small muted">비슷한 이름</span>}
@@ -190,7 +190,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             {res.foods.map((h) => {
               const f = h.doc;
               return (
-                <li key={"f" + f.id} className="row">
+                <li key={"f" + f.id} className="row f">
                   <span className="badge">음식</span>
                   <Link href={foodHref(f.name)} className="grow"><b>{f.name}</b><span className="small muted">{f.meta}</span></Link>
                   {h.kind === "fuzzy" && <span className="small muted">비슷한 이름</span>}

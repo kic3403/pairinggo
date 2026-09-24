@@ -144,6 +144,11 @@ p { margin: 0 0 12px; }
 .row:first-child { border-top: 0; }
 .row .grow { flex: 1; min-width: 0; text-decoration: none; display: flex; flex-direction: column; }
 .row .grow b { font-size: 15.5px; }
+/* 검색 결과 줄 색 — 술은 로고 주황, 음식은 로고 남색. 이름은 진하게, 딸린 글자는 같은 계열로 한 톤 눌러서(2026-09-24 사용자 요청) */
+.row.d .grow b { color: var(--food-ink); }
+.row.d .small { color: color-mix(in srgb, var(--food-ink) 70%, var(--ink2)); }
+.row.f .grow b { color: var(--navy-ink); }
+.row.f .small { color: color-mix(in srgb, var(--navy-ink) 70%, var(--ink2)); }
 /* 검색 결과 표시 — 술은 로고 주황, 음식은 로고 남색(2026-09-24 사용자 결정) */
 .badge.d { background: var(--food-soft); color: var(--food-ink); }
 .badge.n { background: transparent; border: 1px solid var(--line); color: var(--muted); }
