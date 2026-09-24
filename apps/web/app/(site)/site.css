@@ -3,6 +3,8 @@
 :root {
   --navy: #22406B; --navy-ink: #1B3355; --navy-soft: #EDF1F7;
   --food: #E4572E; --food-ink: #B8431F; --food-soft: #FDF0EB;
+  /* 찜·하트 전용 빨강 — 술 주황·음식 남색과 섞이지 않게 따로 둔다(2026-09-24 사용자 결정) */
+  --like: #DC2626; --like-ink: #B91C1C; --like-soft: #FDECEC;
   --bg: #FFFFFF; --bg2: #F5F4F1; --surface: #FFFFFF; --ink: #1F1E1C; --ink2: #4A4945; --muted: #8C8C88; --line: #E5E3DE;
   --radius: 14px;
   color-scheme: light;
@@ -161,10 +163,10 @@ p { margin: 0 0 12px; }
 /* 하트(찜) — 캐치테이블·데일리샷처럼 카드 오른쪽 위에 */
 .heart { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
   border: 0; background: none; cursor: pointer; font-size: 19px; line-height: 1; color: var(--muted); border-radius: 999px; }
-.heart:hover { color: var(--food); background: var(--food-soft); }
-.heart.on { color: var(--food); }
+.heart:hover { color: var(--like); background: var(--like-soft); }
+.heart.on { color: var(--like); }
 .heart:disabled { opacity: 0.45; cursor: default; }
-.heart-btn.on { border-color: var(--food); color: var(--food-ink); background: var(--food-soft); }
+.heart-btn.on { border-color: var(--like); color: var(--like-ink); background: var(--like-soft); }
 
 /* 마이페이지 탭 */
 .tabs { display: flex; gap: 6px; margin: 18px 0 16px; padding: 0; list-style: none; flex-wrap: wrap; }
@@ -452,7 +454,7 @@ p { margin: 0 0 12px; }
 .picks-list li.mine { border-color: #C9CDEA; }
 .pk-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
 .pk-heart { min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font: inherit; font-size: 14px; cursor: pointer; color: var(--ink2); display: inline-flex; align-items: center; gap: 4px; }
-.pk-heart.on { border-color: var(--food); color: var(--food-ink); background: var(--food-soft); }
+.pk-heart.on { border-color: var(--like); color: var(--like-ink); background: var(--like-soft); }
 .pk-heart:disabled { opacity: .6; }
 .picks-list.compact li .why { font-size: 13.5px; }
 
