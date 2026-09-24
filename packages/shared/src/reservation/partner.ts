@@ -29,10 +29,11 @@ export const PARTNER_KINDS = ["restaurant", "brewery", "liquor"] as const;
 export type PartnerKind = (typeof PARTNER_KINDS)[number];
 export const PARTNER_KIND_LABEL: Record<PartnerKind, string> = { restaurant: "식당", brewery: "양조장", liquor: "리쿼샵" };
 /**
- * 파트너 인증 도장 색(2026-09-21 사용자 결정) — 로고의 두 색을 나눠 쓴다.
- * 양조장·리쿼샵은 네이비, 식당은 주황.
+ * 파트너 인증 도장 색 — 로고의 두 색을 나눠 쓴다.
+ * **술을 파는 곳(양조장·리쿼샵)은 주황, 음식을 파는 식당은 남색**(2026-09-24 사용자 결정).
+ * 검색 결과 색(술 주황·음식 남색)과 잇기 위해 뒤집었다 — 2026-09-21에는 반대였다.
  */
-export const PARTNER_KIND_TONE: Record<PartnerKind, "navy" | "food"> = { restaurant: "food", brewery: "navy", liquor: "navy" };
+export const PARTNER_KIND_TONE: Record<PartnerKind, "navy" | "food"> = { restaurant: "navy", brewery: "food", liquor: "food" };
 /** 그 종류가 무엇을 하는 곳인지 — 가입·어드민 화면 안내 */
 export const PARTNER_KIND_HINT: Record<PartnerKind, string> = {
   restaurant: "손님이 자리를 예약하고 방문하는 곳 — 메뉴판·콜키지·자리 예약",

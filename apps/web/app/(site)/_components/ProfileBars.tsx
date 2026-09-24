@@ -8,7 +8,7 @@ export default function ProfileBars({ kind, profile }: { kind: "drink" | "food";
   const axes = profileAxes(kind, profile);
   if (!axes.length) return null;
   return (
-    <section className="pbars" aria-label="맛 프로필">
+    <section className={`pbars ${kind === "drink" ? "d" : "f"}`} aria-label="맛 프로필">
       <h3>맛 프로필 <span className="muted small">1~5</span></h3>
       <dl>
         {axes.map((a) => (

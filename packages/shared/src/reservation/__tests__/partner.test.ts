@@ -29,10 +29,10 @@ describe("파트너 종류 — 식당·양조장·리쿼샵", () => {
 });
 
 describe("파트너 도장 색", () => {
-  it("양조장·리쿼샵은 네이비, 식당은 주황(로고 두 색)", () => {
-    expect(PARTNER_KIND_TONE.brewery).toBe("navy");
-    expect(PARTNER_KIND_TONE.liquor).toBe("navy");
-    expect(PARTNER_KIND_TONE.restaurant).toBe("food");
+  it("술을 파는 곳은 주황, 식당은 남색 — 검색 결과 색과 잇는다(2026-09-24)", () => {
+    expect(PARTNER_KIND_TONE.brewery).toBe("food");
+    expect(PARTNER_KIND_TONE.liquor).toBe("food");
+    expect(PARTNER_KIND_TONE.restaurant).toBe("navy");
   });
   it("모든 업종에 색이 있다", () => {
     expect(PARTNER_KINDS.every((k) => PARTNER_KIND_TONE[k])).toBe(true);

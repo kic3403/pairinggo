@@ -161,7 +161,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <h3 className="with-seal">
                 {drink.brewery} 방문하기
                 {/* 인증 도장처럼 — 페어링GO가 확인한 파트너 양조장(0031) */}
-                <span className="seal navy" title="페어링GO가 확인한 파트너 양조장">
+                <span className="seal food" title="페어링GO가 확인한 파트너 양조장">
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.4 11.3 3.6 8.5l1-1 1.8 1.8 4.9-4.9 1 1z" /></svg>
                   파트너 양조장
                 </span>
