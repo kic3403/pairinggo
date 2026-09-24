@@ -1,0 +1,14 @@
+{
+ "_설명": "카탈로그 술의 구매 링크 — 네이버 웹 검색 결과의 주소·제목만 보고 사람이 고른 양조장 공식몰·스마트스토어(2026-09-24, 구매 링크 없는 71종 대상). 키 = 술 id. 스마트스토어가 아닌 주소는 catalog-buy-links가 첫 화면을 열어 그 술 이름이 실제로 보이는지 확인하고, 안 보이면 넣지 않는다(사용자 규칙: 들어갔는데 다른 종류 제품만 나오면 없는 것으로). 소매점(술마켓·키햐·우체국·11번가 등)은 쓰지 않는다.",
+ "d125": { "url": "https://smartstore.naver.com/beodeulin", "kind": "스마트스토어", "from": "검색 — 금오도방풍막걸리 스마트스토어(전남도 보도자료에 같은 주소)" },
+ "d187": { "url": "https://smartstore.naver.com/gumisan", "kind": "스마트스토어", "from": "검색 — 금이산농원 스마트스토어(세종시 농장 안내: 복숭아와인 특산)" },
+ "d160": { "url": "https://smartstore.naver.com/lesdom", "kind": "스마트스토어", "from": "같은 양조장(작은알자스) 링크" },
+ "d167": { "url": "http://www.seokiwon.com/", "kind": "공식몰·홈페이지", "from": "검색 — 석이원주조 홈페이지(제품구매하기)" },
+ "d169": { "url": "https://daraewineshop.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — 오름주가 다래와인 공식몰" },
+ "d172": { "url": "https://byeoljumak.com/shop_view/?idx=13", "kind": "공식몰·홈페이지", "from": "검색 — 별주막(별네트웍스=과천도가 운영) 관악산생막걸리 상품" },
+ "d170": { "url": "https://www.solsongju.com/", "kind": "공식몰·홈페이지", "from": "검색 — 솔송주 몰(명가원 공식)" },
+ "d183": { "url": "http://www.nakchun.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — (주)낙천 홈페이지" },
+ "d502": { "url": "http://www.nakchun.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — (주)낙천 홈페이지" },
+ "d250": { "url": "https://newvin.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — 뉴뱅 홈페이지" },
+ "d261": { "url": "https://soltimaeul.co.kr/", "kind": "공식몰·홈페이지", "from": "검색 — 솔티마을 공식몰(오롯이)" }
+}
