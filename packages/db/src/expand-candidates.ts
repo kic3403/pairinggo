@@ -34,7 +34,7 @@ const NON_ALCOHOL = /[논무]\s*알(콜|코올)|non[-\s]?alcohol/i;
 const nameKey = (s: string) => norm(s.replace(/\d+(\.\d+)?\s*(ml|mL|ML|l|L|리터)\b/g, " "));
 const IMPORTED = /수입|외국산|호주산|미국산|중국산|베트남산|태국산|칠레산|프랑스산|독일산|이탈리아산|스페인산/;
 /** 지금 온라인 판매 불가(NON_TRAD)인 7종의 회사(국순당 횡성·경주법주·화요·하이트진로·보해양조) + 대도시 탁주 제조사·대형 소주 회사 — 국순당여주명주(려)는 지역특산주라 뺀다 */
-const BIG_MAKER = /하이트진로|롯데칠성|서울장수|서울탁주|인천탁주|부산합동양조|무학|금복주|대선주조|오비맥주|보해양조|경주법주|화요|국순당(?!\s*여주)/;
+const BIG_MAKER = /하이트진로|롯데칠성|서울장수|서울탁주|인천탁주|부산합동양조|무학|금복주|대선주조|오비맥주|보해양조|경주법주|화요|골든블루|국순당(?!\s*여주)/;   // 골든블루(위스키 회사)는 2026-09-24 추가
 
 type Cand = {
   key: string; name: string; brewery: string; category: LineupCategory | null; abv: number | null; sido: Sido; sigungu: string;

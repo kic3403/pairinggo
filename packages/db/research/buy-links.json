@@ -1,24 +1,6 @@
 {
- "보은주|중원당": {
-  "url": "http://www.xn--v42bo8x7wc.com",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
- "그랑꼬또청수화이트와인10|그린": {
-  "url": "https://smartstore.naver.com/gcwine",
-  "kind": "스마트스토어",
-  "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": null
- },
  "일월삼주이주|빛올": {
   "url": "https://smartstore.naver.com/shinybrewer",
-  "kind": "스마트스토어",
-  "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": null
- },
- "범표생막걸리|범표주조": {
-  "url": "https://smartstore.naver.com/bumpyo_brewery",
   "kind": "스마트스토어",
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
@@ -29,11 +11,77 @@
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
  },
+ "추사블루스위트|예산사과와인": {
+  "url": "https://www.xn--vf4b19u.com",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
  "구기홍주360|아리랑주조": {
   "url": "https://smartstore.naver.com/arirangjujo",
   "kind": "스마트스토어",
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": null
+ },
+ "애플아이스와인|미라실": {
+  "url": "https://thelifetwo7111.godomall.com/main/index.php",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": false
+ },
+ "주줌치2|양주골이가전통주": {
+  "url": "https://smartstore.naver.com/thtks99",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "산막와이너리라라|산막와이너리": {
+  "url": "https://smartstore.naver.com/sanmacwine",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "지란지교무화과탁주|친구들의술지란지교": {
+  "url": "https://smartstore.naver.com/limsugzu",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "냥이탁주화이트|행주산성주가": {
+  "url": "https://xn--h40bv14bv7ak6p.kr/product/list.html",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "동래아들|제이케이크래프트": {
+  "url": "https://smartstore.naver.com/gidarim34",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "동국이8도|양평맑은술도가": {
+  "url": "https://smartstore.naver.com/malgunsooldoga",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "무주구천동산머루주|덕유": {
+  "url": "https://smartstore.naver.com/deokyu-winery",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "하늘담9|순천주조": {
+  "url": "https://smartstore.naver.com/mayday82",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "혼|골든블루": {
+  "url": "https://www.goldenblue.co.kr",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 홈페이지(업체 등록)",
+  "ok": true
  },
  "한주매화|한주양조": {
   "url": "https://www.hanju.kr/hanju",
@@ -94,12 +142,6 @@
   "kind": "공식몰·홈페이지",
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": true
- },
- "콘체르토1번|민주술도가": {
-  "url": "https://smartstore.naver.com/minjusool",
-  "kind": "스마트스토어",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": null
  },
  "죽향41|죽향도가": {
   "url": "https://jhdg.co.kr",
@@ -233,12 +275,6 @@
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": true
  },
- "추사로제스위트|예산사과와인": {
-  "url": "https://www.chusawine.com",
-  "kind": "공식몰·홈페이지",
-  "from": "더술닷컴 홈페이지(양조장 등록)",
-  "ok": true
- },
  "추사47|예산사과와인": {
   "url": "https://www.chusawine.com",
   "kind": "공식몰·홈페이지",
@@ -293,20 +329,56 @@
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": null
  },
- "본|우창": {
-  "url": "https://xn--hu1b40gh1c27n9rc18a.kr/index.html",
+ "허니문배|비전레드": {
+  "url": "https://smartstore.naver.com/dancingcider",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "지평이랑이랑|지평주조": {
+  "url": "https://www.jpjujo.com",
+  "kind": "공식몰·홈페이지",
+  "from": "더술닷컴 홈페이지(양조장 등록)",
+  "ok": true
+ },
+ "예밀와인로제|예밀2리": {
+  "url": "https://smartstore.naver.com/yemilwine",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "산막와이너리초련|산막와이너리": {
+  "url": "https://smartstore.naver.com/sanmacwine",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "맑은내일발효막걸리signature|우포의아침": {
+  "url": "http://www.good-tomorrow.co.kr",
   "kind": "공식몰·홈페이지",
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": true
  },
- "오미로제연|제이엘": {
-  "url": "https://www.omynara.com",
-  "kind": "공식몰·홈페이지",
+ "라이스퐁당17|벗드림": {
+  "url": "https://smartstore.naver.com/butdream",
+  "kind": "스마트스토어",
   "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": true
+  "ok": null
  },
  "금산인삼백주|금산인삼주": {
   "url": "https://www.insamwine.com",
+  "kind": "공식몰·홈페이지",
+  "from": "더술닷컴 홈페이지(양조장 등록)",
+  "ok": true
+ },
+ "달|별빛드리운못": {
+  "url": "http://byulbit.kr",
+  "kind": "공식몰·홈페이지",
+  "from": "더술닷컴 홈페이지(양조장 등록)",
+  "ok": true
+ },
+ "딸기스파클링와인|해미읍성딸기와인": {
+  "url": "https://xn--ok0b96k0npx9a.com",
   "kind": "공식몰·홈페이지",
   "from": "더술닷컴 홈페이지(양조장 등록)",
   "ok": true
@@ -317,23 +389,11 @@
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
  },
- "도한청명주|한영석의발효연구소": {
-  "url": "https://smartstore.naver.com/hans_nuruklab",
-  "kind": "스마트스토어",
-  "from": "요즘이술 구매하러 가기(업체 등록)",
-  "ok": null
- },
  "해|리밋브루잉": {
   "url": "https://smartstore.naver.com/remeet_brewing",
   "kind": "스마트스토어",
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
- },
- "꽃|264청포도와인": {
-  "url": "http://264wine.kr/htm/main.htm",
-  "kind": "공식몰·홈페이지",
-  "from": "요즘이술 홈페이지(업체 등록)",
-  "ok": true
  },
  "달|리밋브루잉": {
   "url": "https://smartstore.naver.com/remeet_brewing",
@@ -341,10 +401,124 @@
   "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
  },
- "향미곡주|민주술도가": {
-  "url": "https://smartstore.naver.com/minjusool",
+ "너디호프|너드": {
+  "url": "https://smartstore.naver.com/nerdbrew",
   "kind": "스마트스토어",
-  "from": "같은 양조장 제품의 더술닷컴 홈페이지(양조장 등록)",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "문경바람40|제이엘": {
+  "url": "https://www.omynara.com",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "베베마루설레임로제|오드린": {
+  "url": "https://smartstore.naver.com/eaudelune",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "스윗마마|비전레드": {
+  "url": "https://smartstore.naver.com/dancingcider",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "시즌|술빚는호랑이": {
+  "url": "https://smartstore.naver.com/horangmead",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "예밀와인프리미엄드라이|예밀2리": {
+  "url": "https://smartstore.naver.com/yemilwine",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "오미로제프리미어|제이엘": {
+  "url": "https://www.omynara.com",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "우아한막걸리|우포의아침": {
+  "url": "http://www.good-tomorrow.co.kr",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "춘희25|착한농부": {
+  "url": "http://xn--2j5b27cs5d.kr",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "그랑티그르s1974|오드린": {
+  "url": "https://smartstore.naver.com/eaudelune",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "레돔화이트스파클링와인|작은알자스": {
+  "url": "https://smartstore.naver.com/lesdom",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "미르아토로제|금용농산": {
+  "url": "http://www.mirattowine.com/index.html",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 홈페이지(업체 등록)",
+  "ok": true
+ },
+ "미르아토샤인머스켓|금용농산": {
+  "url": "http://www.mirattowine.com/index.html",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 홈페이지(업체 등록)",
+  "ok": true
+ },
+ "베리와인1168rs330|블루와인컴퍼니": {
+  "url": "http://www.xn--2s2bp8gm6hx9a.kr",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "베베마루아내를위한|오드린": {
+  "url": "https://smartstore.naver.com/eaudelune",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "보라빛베리|블루와인컴퍼니": {
+  "url": "http://www.xn--2s2bp8gm6hx9a.kr",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": true
+ },
+ "블루베리레드와인클래식|미라실": {
+  "url": "https://thelifetwo7111.godomall.com/main/index.php",
+  "kind": "공식몰·홈페이지",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": false
+ },
+ "오계리화이트와인|오계리와인": {
+  "url": "https://smartstore.naver.com/ogyeri",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "풍정사계하|화양": {
+  "url": "https://smartstore.naver.com/pungjeong4season",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
+  "ok": null
+ },
+ "호호|중원당": {
+  "url": "https://smartstore.naver.com/cheongmyeongju",
+  "kind": "스마트스토어",
+  "from": "요즘이술 구매하러 가기(업체 등록)",
   "ok": null
  },
  "술공방90막걸리|아리랑주조": {

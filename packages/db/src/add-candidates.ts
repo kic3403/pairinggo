@@ -46,6 +46,10 @@ const picks = (JSON.parse(readFileSync(join(ROOT, "research", "expand-candidates
 /** 수상 명단에만 있어 도수를 모르는 후보 — 사람이 출처를 확인해 research/candidate-abv.json에 적은 값 */
 const abvFix: Record<string, { abv: number; source: string }> = JSON.parse(readFileSync(join(ROOT, "research", "candidate-abv.json"), "utf8"));
 const readJson = <T,>(p: string): T => (existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")) as T) : ({} as T));
+function readJsonSafe(p: string): Record<string, string> { const o = readJson<Record<string, string>>(p); delete o._설명; return o; }
+/** 수상 명단 표기가 화면 이름으로 어색한 후보("문경바람 (오크) 40%") — 사람이 정한 이름. 키는 expand-candidates.json의 key(2026-09-24) */
+const nameFix: Record<string, string> = readJsonSafe(join(ROOT, "research", "candidate-names.json"));
+
 const shops: Record<string, Shop> = { ...readJson<Record<string, Shop>>(join(ROOT, "research", "buy-links-search.json")) };
 for (const [k, v] of Object.entries(readJson<Record<string, Shop>>(join(ROOT, "research", "buy-links.json")))) if (v.ok !== false || !shops[k]) shops[k] = v;
 
@@ -63,7 +67,7 @@ for (const p of picks) {
   if (!p.category) { skipped.push({ name: p.name, why: "종류 모름" }); continue; }
   if (p.abv == null && abvFix[p.key]) p.abv = abvFix[p.key].abv;
   if (p.abv == null) { skipped.push({ name: p.name, why: `도수 모름 — 확인 뒤 research/candidate-abv.json에 "${p.key}"` }); continue; }
-  const name = cleanName(p.name);
+  const name = nameFix[p.key] ?? cleanName(p.name);
   if (!name || usedSlugs.has(slug(name))) { skipped.push({ name: p.name, why: "이름이 겹치는 술이 이미 있음" }); continue; }
   usedSlugs.add(slug(name));
 

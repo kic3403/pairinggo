@@ -1,5 +1,5 @@
 {
- "made": "2026-09-20T03:38:08.951Z",
+ "made": "2026-09-24T07:06:06.129Z",
  "years": [
   2026,
   2025,
@@ -9,198 +9,29 @@
  ],
  "picks": [
   {
-   "key": "감천막걸리|벗드림",
-   "name": "감천막걸리",
-   "brewery": "벗드림",
-   "category": "탁주",
-   "abv": 6,
-   "sido": "부산",
-   "sigungu": "강서구",
-   "ingredients": "정제수, 멥쌀(국내산), 누룩, 효모, 밀함유",
-   "food": "떡볶이, 치즈, 과일, 보쌈, 치킨, 피자와 궁합이 좋다.",
+   "key": "골드오서주|태령주조장",
+   "name": "골드오서주",
+   "brewery": "태령주조장",
+   "category": "약주",
+   "abv": 18,
+   "sido": "충남",
+   "sigungu": "홍성군",
+   "ingredients": "유기농 기능성쌀, 누룩, 물",
+   "food": "",
    "awards": [
-    "2022 우리술품평회 탁주 우수상"
+    "2023 대한민국주류대상 약·청주 대상",
+    "2022 대한민국주류대상 약·청주 대상"
    ],
-   "interest": 74.8,
+   "interest": null,
    "sources": [
-    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000943",
-    "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그) · 업체 확인 2026-09-20(농민신문·머니투데이 수상작 목록: 벗드림 부산)"
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2723"
    ],
-   "productId": "PR00000943",
+   "productId": null,
    "newBrewery": false,
-   "hub": false,
+   "hub": true,
    "caution": [],
    "notes": [],
-   "score": 63,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "우리첫술청설|우리첫술",
-   "name": "우리첫술 청설",
-   "brewery": "우리첫술",
-   "category": "탁주",
-   "abv": null,
-   "sido": "경기",
-   "sigungu": "",
-   "ingredients": "",
-   "food": "",
-   "awards": [
-    "2026 우리술품평회 고도탁주 대상"
-   ],
-   "interest": null,
-   "sources": [
-    "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
-   ],
-   "productId": null,
-   "newBrewery": true,
-   "hub": false,
-   "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
-   "score": 60,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "보은주|중원당",
-   "name": "보은주",
-   "brewery": "중원당",
-   "category": "탁주",
-   "abv": 10,
-   "sido": "충북",
-   "sigungu": "",
-   "ingredients": "찹쌀(국내산), 멥쌀(국내산), 누룩(국내산)",
-   "food": "자극적인 음식보다는 손맛 묻은 반찬에 곁들이가 좋으며, 특히 한식요리와 잘 어울린다. 두부김치, 단호박 감자채전과 즐기면 풍미를 높여주고 입맛을 돋운다.",
-   "awards": [
-    "2022 우리술품평회 탁주 최우수상"
-   ],
-   "interest": 3.2,
-   "sources": [
-    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000984",
-    "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그) · 업체 확인 2026-09-20(농민신문 수상작 목록: 중원당 충북 충주)"
-   ],
-   "productId": "PR00000984",
-   "newBrewery": false,
-   "hub": false,
-   "caution": [],
-   "notes": [],
-   "score": 54,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "그랑꼬또청수화이트와인10|그린",
-   "name": "그랑꼬또 청수 화이트 와인10",
-   "brewery": "그린",
-   "category": "과실주",
-   "abv": null,
-   "sido": "경기",
-   "sigungu": "",
-   "ingredients": "",
-   "food": "",
-   "awards": [
-    "2022 우리술품평회 과실주 우수상",
-    "2024 대한민국주류대상 한국와인 대상"
-   ],
-   "interest": null,
-   "sources": [
-    "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)",
-    "https://www.yosool.co.kr/search/alcohol.do?seq=6467"
-   ],
-   "productId": null,
-   "newBrewery": false,
-   "hub": false,
-   "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
-   "score": 53,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "토마토바질|팔레트브루어리",
-   "name": "토마토바질",
-   "brewery": "팔레트 브루어리",
-   "category": "탁주",
-   "abv": null,
-   "sido": "경북",
-   "sigungu": "",
-   "ingredients": "",
-   "food": "",
-   "awards": [
-    "2026 우리술품평회 저도탁주 최우수상"
-   ],
-   "interest": null,
-   "sources": [
-    "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
-   ],
-   "productId": null,
-   "newBrewery": true,
-   "hub": false,
-   "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
-   "score": 52,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "향미곡주|민주술도가",
-   "name": "향미곡주",
-   "brewery": "민주술도가",
-   "category": "탁주",
-   "abv": null,
-   "sido": "경기",
-   "sigungu": "",
-   "ingredients": "",
-   "food": "",
-   "awards": [
-    "2026 우리술품평회 고도탁주 우수상"
-   ],
-   "interest": null,
-   "sources": [
-    "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
-   ],
-   "productId": null,
-   "newBrewery": true,
-   "hub": false,
-   "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
-   "score": 52,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "복도만취6도|착한농부예천지점",
-   "name": "복도만취 6도",
-   "brewery": "착한농부 예천지점",
-   "category": "리큐르",
-   "abv": null,
-   "sido": "경북",
-   "sigungu": "",
-   "ingredients": "",
-   "food": "",
-   "awards": [
-    "2026 우리술품평회 기타주류 대상"
-   ],
-   "interest": null,
-   "sources": [
-    "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
-   ],
-   "productId": null,
-   "newBrewery": false,
-   "hub": false,
-   "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
-   "score": 48,
+   "score": 50,
    "pick": true,
    "reason": "추천 — 수상작"
   },
@@ -233,48 +64,21 @@
    "reason": "추천 — 수상작"
   },
   {
-   "key": "범표생막걸리|범표주조",
-   "name": "범표 생 막걸리(7도)",
-   "brewery": "범표주조",
-   "category": "탁주",
-   "abv": 7,
-   "sido": "경기",
-   "sigungu": "이천시",
-   "ingredients": "정제수 이천쌀 국 효모 밀함유",
+   "key": "추사블루스위트|예산사과와인",
+   "name": "추사 블루 스위트",
+   "brewery": "예산사과와인",
+   "category": "과실주",
+   "abv": 11,
+   "sido": "충남",
+   "sigungu": "예산군",
+   "ingredients": "블루베리",
    "food": "",
    "awards": [
-    "2025 대한민국주류대상 탁주 Best of Best",
-    "2024 대한민국주류대상 탁주 대상"
+    "2022 대한민국주류대상 한국와인 대상"
    ],
    "interest": null,
    "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=5782"
-   ],
-   "productId": null,
-   "newBrewery": false,
-   "hub": false,
-   "caution": [],
-   "notes": [],
-   "score": 45,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "삭|공사사양조",
-   "name": "삭",
-   "brewery": "공사사양조",
-   "category": "증류주",
-   "abv": 30,
-   "sido": "세종",
-   "sigungu": "조치원읍",
-   "ingredients": "정제수, 쌀조청(국내산), 사양벌꿀(국내산), 배(국내산),효모",
-   "food": "",
-   "awards": [
-    "2025 대한민국주류대상 증류주 대상"
-   ],
-   "interest": null,
-   "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=8373"
+    "https://www.yosool.co.kr/search/alcohol.do?seq=99"
    ],
    "productId": null,
    "newBrewery": false,
@@ -310,58 +114,321 @@
    "reason": "추천"
   },
   {
-   "key": "허니와인프로포즈|아이비",
-   "name": "허니와인 프로포즈",
-   "brewery": "아이비",
-   "category": "허니와인",
-   "abv": null,
+   "key": "디오케이막걸리|독브루어리",
+   "name": "디오케이 막걸리",
+   "brewery": "독브루어리",
+   "category": "탁주",
+   "abv": 6,
    "sido": "경기",
-   "sigungu": "",
-   "ingredients": "",
+   "sigungu": "김포시",
+   "ingredients": "쌀,누룩,효소제,효모",
    "food": "",
    "awards": [
-    "2026 우리술품평회 기타주류 우수상"
+    "2023 대한민국주류대상 탁주 대상",
+    "2022 대한민국주류대상 탁주 대상"
    ],
    "interest": null,
    "sources": [
-    "농식품부 2026.8.26 발표 (연합뉴스·식품음료신문 foodnews.co.kr 2026.9.8 수상작 목록)"
+    "https://www.yosool.co.kr/search/alcohol.do?seq=89"
+   ],
+   "productId": null,
+   "newBrewery": true,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 42,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "올빚베리|올빚찬주",
+   "name": "올빚베리",
+   "brewery": "올빚찬주",
+   "category": "탁주",
+   "abv": 6,
+   "sido": "부산",
+   "sigungu": "사하구",
+   "ingredients": "쌀,찹쌀,홍미,전통누룩,딸기",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상",
+    "2022 대한민국주류대상 탁주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2240"
+   ],
+   "productId": null,
+   "newBrewery": true,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 42,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "애플아이스와인|미라실",
+   "name": "애플아이스, 와인",
+   "brewery": "미라실",
+   "category": "과실주",
+   "abv": 16,
+   "sido": "충북",
+   "sigungu": "충주시",
+   "ingredients": "후지 사과 90% 홍옥 사과 10%",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 한국와인 Best of Best"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2989"
    ],
    "productId": null,
    "newBrewery": false,
    "hub": false,
    "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
+   "notes": [],
    "score": 40,
    "pick": true,
    "reason": "추천 — 수상작"
   },
   {
-   "key": "허니비와인|아이비",
-   "name": "허니비와인",
-   "brewery": "아이비",
-   "category": "허니와인",
-   "abv": null,
+   "key": "주줌치2|양주골이가전통주",
+   "name": "주(酒)줌치2",
+   "brewery": "양주골이가전통주",
+   "category": "약주",
+   "abv": 17,
    "sido": "경기",
-   "sigungu": "",
-   "ingredients": "",
+   "sigungu": "양주시",
+   "ingredients": "쌀(국내산), 찹쌀(국내산), 누룩(국내산,앉은뱅이밀), 정제수",
    "food": "",
    "awards": [
-    "2022 우리술품평회 기타주류 최우수상"
+    "2023 대한민국주류대상 약·청주 Best of Best"
    ],
    "interest": null,
    "sources": [
-    "https://thesool.com/file/download.do?fileId=5915 (더술닷컴 2022 입상작 카탈로그)"
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2435"
    ],
    "productId": null,
    "newBrewery": false,
    "hub": false,
    "caution": [],
-   "notes": [
-    "도수 확인"
-   ],
+   "notes": [],
    "score": 40,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "산막와이너리라라|산막와이너리",
+   "name": "산막와이너리, 라라",
+   "brewery": "산막와이너리",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "충북",
+   "sigungu": "",
+   "ingredients": "포도, 아황산칼륨, 백설탕",
+   "food": "산도가 강하므로 해산물과 좋은 조화를 이룰 듯 하다. 또는 디저트와 페어링 하는 것도 좋다.",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": 0.2,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000979",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=164"
+   ],
+   "productId": "PR00000979",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 39,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "지란지교무화과탁주|친구들의술지란지교",
+   "name": "지란지교 무화과 탁주",
+   "brewery": "친구들의술지란지교",
+   "category": "탁주",
+   "abv": 12,
+   "sido": "전북",
+   "sigungu": "순창군",
+   "ingredients": "찹쌀, 멥쌀(국내산), 전통누룩(국내산 밀), 정제수, 무화과청, 레드비트분말, 밀함유",
+   "food": "갈치조림, 고등어무조림, 무화과타르트",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
+   "interest": 5.3,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000722",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2502"
+   ],
+   "productId": "PR00000722",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 39,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "냥이탁주화이트|행주산성주가",
+   "name": "냥이탁주 화이트",
+   "brewery": "행주산성주가",
+   "category": "탁주",
+   "abv": 10.5,
+   "sido": "경기",
+   "sigungu": "고양시 덕양구",
+   "ingredients": "정제수, 쌀, 누룩, 밀함유",
+   "food": "한식과 페어링하면 좋다.",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
+   "interest": 7.7,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000893",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2729"
+   ],
+   "productId": "PR00000893",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 39,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "동래아들|제이케이크래프트",
+   "name": "동래아들",
+   "brewery": "제이케이크래프트",
+   "category": "탁주",
+   "abv": 6,
+   "sido": "부산",
+   "sigungu": "동래구",
+   "ingredients": "정제수, 찹쌀, 맵쌀, 밀누룩",
+   "food": "고소한 파전과 같은 전류와 페어링하기 좋다.",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상",
+    "2022 대한민국주류대상 탁주 대상"
+   ],
+   "interest": 0,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000128",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=113"
+   ],
+   "productId": "PR00000128",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 38,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "동국이8도|양평맑은술도가",
+   "name": "동국이 8도",
+   "brewery": "양평맑은술도가",
+   "category": "탁주",
+   "abv": 8,
+   "sido": "경기",
+   "sigungu": "양평군",
+   "ingredients": "양평쌀, 정제수, 국화꽃, 국, 효모",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2507"
+   ],
+   "productId": null,
+   "newBrewery": true,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 37,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "마크홀리오리지널60|홀리워터",
+   "name": "마크홀리 오리지널 6.0",
+   "brewery": "홀리워터",
+   "category": "탁주",
+   "abv": 6,
+   "sido": "서울",
+   "sigungu": "성동구",
+   "ingredients": "쌀,국,효모",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2226"
+   ],
+   "productId": null,
+   "newBrewery": true,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 37,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "무주구천동산머루주|덕유",
+   "name": "무주구천동산머루주",
+   "brewery": "덕유",
+   "category": "과실주",
+   "abv": 16,
+   "sido": "전북",
+   "sigungu": "무주군",
+   "ingredients": "머루",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 과실주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2870"
+   ],
+   "productId": null,
+   "newBrewery": true,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 37,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "하늘담9|순천주조",
+   "name": "하늘담9",
+   "brewery": "순천주조",
+   "category": "탁주",
+   "abv": 9,
+   "sido": "전남",
+   "sigungu": "순천시",
+   "ingredients": "국내산 맵쌀, 국내산 찹쌀",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2976"
+   ],
+   "productId": null,
+   "newBrewery": true,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 37,
    "pick": true,
    "reason": "추천 — 수상작"
   },
@@ -717,30 +784,6 @@
     "https://thesool.com/front/find/M000000082/view.do?productId=PR00000860"
    ],
    "productId": "PR00000860",
-   "newBrewery": true,
-   "hub": false,
-   "caution": [],
-   "notes": [],
-   "score": 35,
-   "pick": true,
-   "reason": "추천"
-  },
-  {
-   "key": "콘체르토1번|민주술도가",
-   "name": "콘체르토 1번",
-   "brewery": "민주술도가",
-   "category": "탁주",
-   "abv": 6,
-   "sido": "경기",
-   "sigungu": "포천시",
-   "ingredients": "찹쌀, 쌀, 쌀누룩, 효모, 정제수",
-   "food": "닭발, 족발",
-   "awards": [],
-   "interest": 53.1,
-   "sources": [
-    "https://thesool.com/front/find/M000000082/view.do?productId=PR00001237"
-   ],
-   "productId": "PR00001237",
    "newBrewery": true,
    "hub": false,
    "caution": [],
@@ -1422,30 +1465,6 @@
    "reason": "추천"
   },
   {
-   "key": "추사로제스위트|예산사과와인",
-   "name": "추사 로제 스위트",
-   "brewery": "예산사과와인",
-   "category": "과실주",
-   "abv": 12,
-   "sido": "충남",
-   "sigungu": "",
-   "ingredients": "사과",
-   "food": "목 넘김이 부드럽고 마시고 난 후에는 매우 시원하고 산뜻한 느낌을 준다. 사과가 들어간 파이, 과실 샐러드 등과 함께하면 좋다.",
-   "awards": [],
-   "interest": 3.6,
-   "sources": [
-    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000436"
-   ],
-   "productId": "PR00000436",
-   "newBrewery": false,
-   "hub": true,
-   "caution": [],
-   "notes": [],
-   "score": 34,
-   "pick": true,
-   "reason": "추천"
-  },
-  {
    "key": "공주애오디와인|사곡양조원",
    "name": "공주애 오디와인",
    "brewery": "사곡양조원",
@@ -1710,49 +1729,157 @@
    "reason": "추천"
   },
   {
-   "key": "본|우창",
-   "name": "본",
-   "brewery": "우창(두루미양조장)",
-   "category": "탁주",
-   "abv": 17,
-   "sido": "강원",
-   "sigungu": "철원군",
-   "ingredients": "",
-   "food": "",
+   "key": "허니문배|비전레드",
+   "name": "허니문배",
+   "brewery": "비전레드",
+   "category": "허니와인",
+   "abv": 4.9,
+   "sido": "충북",
+   "sigungu": "충주시",
+   "ingredients": "사과즙50.94%(사과:국산), 배즙20.79%(배:국산), 정제수, 벌꿀3.48%(국산), 홍차, 배향, 천일염, 탄산가스, 사과산(산도조절제), 구연산(산도조절제), 메타중아황산칼륨(산화방지제), 효모아황산류함유",
+   "food": "육전에 파절이를 얹어 허브와 같은 파 향이 고기와 어우러질때 허니문배 한 모금이면 깔끔피니시 그 자체! 뿐인가요, 간장양념 베이스의 불고기,갈비,불맛 나는 해물주꾸미 뽂음까지 허니문배와 함께라면 디너부터 안주까지 풀코스 가능합니다.",
    "awards": [
-    "2026 대한민국주류대상 탁주 대상"
+    "2023 대한민국주류대상 과실주 대상"
    ],
-   "interest": 1.1,
+   "interest": null,
    "sources": [
-    "https://thesool.com/front/find/M000000082/view.do?productId=PR00001476",
-    "https://www.yosool.co.kr/search/alcohol.do?seq=2429"
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00001016",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=5931"
    ],
-   "productId": "PR00001476",
+   "productId": "PR00001016",
    "newBrewery": false,
    "hub": false,
    "caution": [],
    "notes": [],
-   "score": 31,
+   "score": 33,
    "pick": true,
    "reason": "추천 — 수상작"
   },
   {
-   "key": "오미로제연|제이엘",
-   "name": "오미로제 연",
-   "brewery": "제이엘",
-   "category": "과실주",
-   "abv": 8,
-   "sido": "경북",
-   "sigungu": "문경시",
-   "ingredients": "오미자",
-   "food": "",
+   "key": "지평이랑이랑|지평주조",
+   "name": "지평 이랑이랑",
+   "brewery": "지평주조",
+   "category": "탁주",
+   "abv": 5,
+   "sido": "경기",
+   "sigungu": "양평군",
+   "ingredients": "정제수, 쌀, 자일리톨, 국, 효모, 레몬농축액, 허브류",
+   "food": "파스타, 피자, 치킨 등 파티 요리",
    "awards": [
-    "2025 대한민국주류대상 과실주 대상",
-    "2024 대한민국주류대상 과실주 대상"
+    "2022 대한민국주류대상 탁주 대상"
+   ],
+   "interest": 0,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000117",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=205"
+   ],
+   "productId": "PR00000117",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 33,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "예밀와인로제|예밀2리",
+   "name": "예밀와인 로제",
+   "brewery": "예밀2리",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "강원",
+   "sigungu": "영월군",
+   "ingredients": "포도(캠벨얼리)",
+   "food": "생일 등 축제에 사용하기 좋은 술로 달콤한 케익 등과 잘 어울립니다.",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
    ],
    "interest": null,
    "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=108"
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000363",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=189"
+   ],
+   "productId": "PR00000363",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 33,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "산막와이너리초련|산막와이너리",
+   "name": "산막와이너리, 초련",
+   "brewery": "산막 와이너리",
+   "category": "과실주",
+   "abv": 20,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "포도, 아황산칼륨, 백설탕, 증류주",
+   "food": "와인만 드시기에도 부담 없으며, 고기 등 육류와 서양음식, 한식과도 잘 어울리는 와인이다.",
+   "awards": [
+    "2023 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": 0,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000818",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=163"
+   ],
+   "productId": "PR00000818",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 33,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "맑은내일발효막걸리signature|우포의아침",
+   "name": "맑은내일 발효막걸리 Signature",
+   "brewery": "우포의아침",
+   "category": "탁주",
+   "abv": 6.5,
+   "sido": "경남",
+   "sigungu": "창녕군",
+   "ingredients": "정제수, 백미(국내산), 누룩, 정제효소, 아스파탐(합성감미료/페닐알라닌함유), 밀함유",
+   "food": "해물파전, 두부김치 또는 떡볶이, 김치전처럼 매콤한 음식과 잘 어울린다.",
+   "awards": [
+    "2022 대한민국주류대상 탁주 대상"
+   ],
+   "interest": 0,
+   "sources": [
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00000824",
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2236"
+   ],
+   "productId": "PR00000824",
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 33,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "라이스퐁당17|벗드림",
+   "name": "라이스퐁당17",
+   "brewery": "벗드림",
+   "category": "약주",
+   "abv": 17,
+   "sido": "부산",
+   "sigungu": "강서구",
+   "ingredients": "찹쌀. 누룩. 정제수(음양곽, 감초)",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 약·청주 대상",
+    "2022 대한민국주류대상 약·청주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=92"
    ],
    "productId": null,
    "newBrewery": false,
@@ -1836,108 +1963,52 @@
    "reason": "추천"
   },
   {
-   "key": "대몽재1779|경주교촌도가",
-   "name": "대몽재 1779",
-   "brewery": "경주교촌도가",
-   "category": "약주",
-   "abv": 16,
-   "sido": "경북",
-   "sigungu": "경주시",
-   "ingredients": "정제수, 찹쌀,누룩",
-   "food": "",
-   "awards": [
-    "2026 대한민국주류대상 약·청주 대상"
-   ],
-   "interest": null,
-   "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=8461"
-   ],
-   "productId": null,
-   "newBrewery": false,
-   "hub": false,
-   "caution": [],
-   "notes": [],
-   "score": 25,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "도한청명주|한영석의발효연구소",
-   "name": "도한 청명주",
-   "brewery": "한영석의발효연구소",
-   "category": "약주",
-   "abv": 13.8,
-   "sido": "전북",
-   "sigungu": "정읍시",
-   "ingredients": "찹쌀, 한영석 누룩, 정제수",
-   "food": "",
-   "awards": [
-    "2026 대한민국주류대상 약·청주 대상"
-   ],
-   "interest": null,
-   "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=9940"
-   ],
-   "productId": null,
-   "newBrewery": false,
-   "hub": false,
-   "caution": [],
-   "notes": [],
-   "score": 25,
-   "pick": true,
-   "reason": "추천 — 수상작"
-  },
-  {
-   "key": "해|리밋브루잉",
-   "name": "해",
-   "brewery": "리밋브루잉",
+   "key": "달|별빛드리운못",
+   "name": "달",
+   "brewery": "별빛드리운못",
    "category": "탁주",
-   "abv": 13,
-   "sido": "경기",
-   "sigungu": "화성시",
-   "ingredients": "멥쌀, 찹쌀, 누룩, 정제수",
-   "food": "",
-   "awards": [
-    "2025 대한민국주류대상 탁주 대상"
-   ],
-   "interest": null,
+   "abv": 12,
+   "sido": "충남",
+   "sigungu": "홍성군",
+   "ingredients": "유기농 찹쌀(충남 홍성군 홍동면), 우리밀 누룩 , 암반수 약산샘물",
+   "food": "치즈와 궁합이 너무 좋습니다.",
+   "awards": [],
+   "interest": 0,
    "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=8761"
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00001047"
    ],
-   "productId": null,
+   "productId": "PR00001047",
    "newBrewery": false,
-   "hub": false,
+   "hub": true,
    "caution": [],
    "notes": [],
-   "score": 25,
+   "score": 28,
    "pick": true,
-   "reason": "추천 — 수상작"
+   "reason": "추천"
   },
   {
-   "key": "꽃|264청포도와인",
-   "name": "꽃",
-   "brewery": "264청포도와인",
+   "key": "딸기스파클링와인|해미읍성딸기와인",
+   "name": "딸기 스파클링와인",
+   "brewery": "해미읍성딸기와인",
    "category": "과실주",
-   "abv": 11.5,
-   "sido": "경북",
-   "sigungu": "안동시",
-   "ingredients": "청수 포도",
-   "food": "",
-   "awards": [
-    "2024 대한민국주류대상 한국와인 대상"
-   ],
-   "interest": null,
+   "abv": 12,
+   "sido": "충남",
+   "sigungu": "서산시",
+   "ingredients": "선신딸기90% ,아황산염,소르빈산염,백설탕",
+   "food": "양식류 - 스테이크 등 ,간단한 안주류 - 치즈 등 ..",
+   "awards": [],
+   "interest": 0,
    "sources": [
-    "https://www.yosool.co.kr/search/alcohol.do?seq=2244"
+    "https://thesool.com/front/find/M000000082/view.do?productId=PR00001049"
    ],
-   "productId": null,
+   "productId": "PR00001049",
    "newBrewery": false,
-   "hub": false,
+   "hub": true,
    "caution": [],
    "notes": [],
-   "score": 25,
+   "score": 28,
    "pick": true,
-   "reason": "추천 — 수상작"
+   "reason": "추천"
   },
   {
    "key": "달|리밋브루잉",
@@ -1955,6 +2026,526 @@
    "interest": null,
    "sources": [
     "https://www.yosool.co.kr/search/alcohol.do?seq=6093"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "문경바람40|제이엘",
+   "name": "문경바람 (오크) 40%",
+   "brewery": "제이엘",
+   "category": "증류주",
+   "abv": 40,
+   "sido": "경북",
+   "sigungu": "문경시",
+   "ingredients": "사과",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 증류주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=112"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "베베마루설레임로제|오드린",
+   "name": "베베마루 설레임 로제",
+   "brewery": "오드린",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "캠벨얼리",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2519"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "스윗마마|비전레드",
+   "name": "스윗마마",
+   "brewery": "비전레드",
+   "category": "과실주",
+   "abv": 5.2,
+   "sido": "충북",
+   "sigungu": "충주시",
+   "ingredients": "사과, 레몬밤",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 과실주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2978"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "시즌|술빚는호랑이",
+   "name": "시즌",
+   "brewery": "술빚는호랑이",
+   "category": "허니와인",
+   "abv": 11.5,
+   "sido": "경기",
+   "sigungu": "남양주시",
+   "ingredients": "꿀(야생화꿀)",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 기타 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2352"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "예밀와인프리미엄드라이|예밀2리",
+   "name": "예밀와인 프리미엄 드라이",
+   "brewery": "예밀2리",
+   "category": "과실주",
+   "abv": 13,
+   "sido": "강원",
+   "sigungu": "영월군",
+   "ingredients": "캠벨포도,머루",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 과실주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2531"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "오미로제프리미어|제이엘",
+   "name": "오미로제 프리미어",
+   "brewery": "제이엘",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "경북",
+   "sigungu": "문경시",
+   "ingredients": "오미자",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=109"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "우아한막걸리|우포의아침",
+   "name": "우아한 막걸리",
+   "brewery": "우포의아침",
+   "category": "탁주",
+   "abv": 12,
+   "sido": "경남",
+   "sigungu": "창녕군",
+   "ingredients": "찹쌀(국내산), 맵쌀(국내산), 등",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 탁주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2237"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "춘희25|착한농부",
+   "name": "춘희25",
+   "brewery": "착한농부",
+   "category": "증류주",
+   "abv": 25,
+   "sido": "경북",
+   "sigungu": "예천군",
+   "ingredients": "사과",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 증류주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2553"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "포엠드라이|갈기산포도농원",
+   "name": "포엠 드라이",
+   "brewery": "갈기산포도농원",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "산머루",
+   "food": "",
+   "awards": [
+    "2023 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=6832"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "그랑티그르s1974|오드린",
+   "name": "그랑티그르 S1974",
+   "brewery": "오드린",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "포도",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=195"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "레돔화이트스파클링와인|작은알자스",
+   "name": "레돔화이트스파클링와인",
+   "brewery": "작은알자스",
+   "category": "과실주",
+   "abv": 9,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "청수청포도",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=197"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "미르아토로제|금용농산",
+   "name": "미르아토 로제",
+   "brewery": "금용농산",
+   "category": "과실주",
+   "abv": 12,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "포도",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=80"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "미르아토샤인머스켓|금용농산",
+   "name": "미르아토 샤인머스켓",
+   "brewery": "금용농산",
+   "category": "과실주",
+   "abv": 10,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "포도",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=82"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "베리와인1168rs330|블루와인컴퍼니",
+   "name": "베리와인1168RS330",
+   "brewery": "블루와인컴퍼니",
+   "category": "과실주",
+   "abv": 10,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "캠벨얼리",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=154"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "베베마루아내를위한|오드린",
+   "name": "베베마루 아내를위한",
+   "brewery": "오드린",
+   "category": "과실주",
+   "abv": 10,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "캠벨얼리",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=6613"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "보라빛베리|블루와인컴퍼니",
+   "name": "보라빛베리",
+   "brewery": "블루와인컴퍼니",
+   "category": "과실주",
+   "abv": 19,
+   "sido": "충북",
+   "sigungu": "영동군",
+   "ingredients": "블루베리",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=155"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "블루베리레드와인클래식|미라실",
+   "name": "블루베리 레드와인, 클래식",
+   "brewery": "미라실",
+   "category": "과실주",
+   "abv": 13,
+   "sido": "충북",
+   "sigungu": "충주시",
+   "ingredients": "블루베리95% 신고 배 5%",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 과실주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2986"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "오계리화이트와인|오계리와인",
+   "name": "오계리 화이트 와인",
+   "brewery": "오계리 와인",
+   "category": "과실주",
+   "abv": 13,
+   "sido": "경북",
+   "sigungu": "영천시",
+   "ingredients": "포도",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 한국와인 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=2382"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "풍정사계하|화양",
+   "name": "풍정사계 하",
+   "brewery": "화양",
+   "category": "약주",
+   "abv": 18,
+   "sido": "충북",
+   "sigungu": "청주시",
+   "ingredients": "찹쌀, 향온곡",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 약·청주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=106"
+   ],
+   "productId": null,
+   "newBrewery": false,
+   "hub": false,
+   "caution": [],
+   "notes": [],
+   "score": 25,
+   "pick": true,
+   "reason": "추천 — 수상작"
+  },
+  {
+   "key": "호호|중원당",
+   "name": "호호",
+   "brewery": "중원당",
+   "category": "탁주",
+   "abv": 10,
+   "sido": "충북",
+   "sigungu": "충주시",
+   "ingredients": "멥쌀, 찹쌀,호박,누룩, 정제수",
+   "food": "",
+   "awards": [
+    "2022 대한민국주류대상 탁주 대상"
+   ],
+   "interest": null,
+   "sources": [
+    "https://www.yosool.co.kr/search/alcohol.do?seq=202"
    ],
    "productId": null,
    "newBrewery": false,

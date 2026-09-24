@@ -6,10 +6,10 @@ import { estimateRegion, REGIONS, RBY, subRegions, fullLabel } from "../regions"
 import { similarDrinks, similarFoods, profileDistance } from "../similarity";
 
 describe("데이터 무결성", () => {
-  it("전통주 518 · 음식 143 · 페어링 4,528 (2026-09-20 목록 확장 +284종 — 수상작·더술닷컴 후보, docs/11 §5-8)", () => {
-    expect(DATA.drinks).toHaveLength(518);
+  it("전통주 557 · 음식 143 · 페어링 4,840 (2026-09-24 주류대상 2022~2023 수상작 +39종, docs/11 §5-9)", () => {
+    expect(DATA.drinks).toHaveLength(557);
     expect(DATA.foods).toHaveLength(143);
-    expect(DATA.pairings).toHaveLength(4528);
+    expect(DATA.pairings).toHaveLength(4840);
   });
   it("모든 페어링이 존재하는 술·음식을 가리킨다", () => {
     for (const p of DATA.pairings) { expect(D[p.d], p.d).toBeDefined(); expect(F[p.f], p.f).toBeDefined(); }
@@ -30,7 +30,7 @@ describe("데이터 무결성", () => {
     expect(PRESIDENT.length).toBeGreaterThanOrEqual(5);
     expect(POPULAR).toHaveLength(10);
     expect(POPULAR_FOODS).toHaveLength(10);
-    expect(CATEGORIES[0]).toEqual({ key: "탁주", count: 170 });
+    expect(CATEGORIES[0]).toEqual({ key: "탁주", count: 182 });
     expect(BREWERIES.length).toBeGreaterThan(50);
     const t = todayPairing(0); expect(D[t.d]).toBeDefined();
   });
