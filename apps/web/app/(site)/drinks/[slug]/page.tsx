@@ -95,13 +95,13 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       { name: drink.name, desc: drink.desc, category: kind === "trad" ? drink.category : `${KIND_LABEL[kind]} ${subtypeLabel(drink)}`, abv: drink.abv, brewery: drink.brewery, region: kind === "trad" ? drink.region : countryLabel(kind, drink.country), awards: drink.awards },
       { base, path, offers: opts.map((o) => ({ price: o.price, inStock: o.buyable > 0, sellerName: o.seller.bizName })) },
     ),
-    breadcrumb([{ name: "홈", path: "/" }, { name: "술", path: "/drinks" }, { name: KIND_LABEL[kind], path: `/drinks?kind=${kind}` }, { name: drink.name, path }], base),
+    breadcrumb([{ name: "홈", path: "/" }, { name: "주류", path: "/drinks" }, { name: KIND_LABEL[kind], path: `/drinks?kind=${kind}` }, { name: drink.name, path }], base),
   ];
 
   return (
     <div className="wrap">
       <JsonLd data={ld} />
-      <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">술</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
+      <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
       <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
       {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
       {/* 제품 사진 — 사용 허락을 받은 것만(image_credit에 출처). 없으면 아무것도 두지 않는다 */}
@@ -215,7 +215,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             <ul>
               <li>블로그 언급 {fmt(drink.blog_anju || 0)}건</li>
               <li>등록된 페어링 {items.length}건</li>
-              <li>전체 술 {c.counts.drinks}종</li>
+              <li>전체 주류 {c.counts.drinks}종</li>
             </ul>
           </div>
         </aside>

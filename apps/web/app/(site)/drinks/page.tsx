@@ -45,13 +45,13 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const c = await getCatalog();
   const f = parse(await searchParams);
   const ro = regionById(f.region);
-  const kind = f.kind ? KIND_LABEL[f.kind] : "술";
+  const kind = f.kind ? KIND_LABEL[f.kind] : "주류";
   const sub = f.kind && f.cat ? KIND_BY_ID[f.kind].subtypes.flatMap((s) => [s, ...(s.children ?? [])]).find((s) => s.id === f.cat)?.label : null;
   const parts = [ro ? regionLabel(ro) : null, sub, f.brewery].filter(Boolean).join(" ");
   const filtered = !!parts || hasDetails(f) || !!f.q;
   const title = f.kind || filtered
     ? `${[parts, kind].filter(Boolean).join(" ")} — 어울리는 음식 추천 | 페어링GO`
-    : `술 ${c.counts.drinks}종 — 전통주·위스키·사케·와인과 어울리는 음식 | 페어링GO`;
+    : `주류 ${c.counts.drinks}종 — 전통주·위스키·사케·와인과 어울리는 음식 | 페어링GO`;
   const description = `전통주 ${c.dataset.drinks.filter((d) => kindOf(d) === "trad").length}종을 비롯한 술과 어울리는 음식을 근거와 함께 정리했습니다. 가격·용량·도수·음식으로 골라 보세요.`;
   return { title, description, alternates: { canonical: "/drinks" }, openGraph: { title, description, url: "/drinks", siteName: "페어링GO" }, robots: filtered ? { index: false } : undefined };
 }
@@ -91,10 +91,10 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
   const topFoods = (id: string) => scorePairings(byDrink[id] || [], (p) => F[p.f]?.category || "").slice(0, 2).map((s) => F[s.p.f]?.name).filter((x): x is string => !!x);
   const pageHref = (n: number) => { const q = new URLSearchParams(filterHref(f).split("?")[1] || ""); if (n > 1) q.set("page", String(n)); const s = q.toString(); return `/drinks${s ? `?${s}` : ""}`; };
 
-  const heading = [regionObj && f.kind === "trad" ? regionLabel(regionObj) : null, f.brewery, f.kind ? KIND_LABEL[f.kind] : "술"].filter(Boolean).join(" ");
+  const heading = [regionObj && f.kind === "trad" ? regionLabel(regionObj) : null, f.brewery, f.kind ? KIND_LABEL[f.kind] : "주류"].filter(Boolean).join(" ");
   const base0 = siteUrl();
   const ld = [
-    breadcrumb([{ name: "홈", path: "/" }, { name: "술", path: "/drinks" }, ...(f.kind ? [{ name: KIND_LABEL[f.kind], path: `/drinks?kind=${f.kind}` }] : [])], base0),
+    breadcrumb([{ name: "홈", path: "/" }, { name: "주류", path: "/drinks" }, ...(f.kind ? [{ name: KIND_LABEL[f.kind], path: `/drinks?kind=${f.kind}` }] : [])], base0),
     itemList(shown.slice(0, 30).map((it) => ({ name: it.drink.name, path: `/drinks/${toSlug(it.drink.name)}` })), { base: base0, name: heading }),
   ];
   const noKindData = !!f.kind && !kindHas(f.kind);
@@ -103,7 +103,7 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
   return (
     <div className="wrap drinks-page">
       <JsonLd data={ld} />
-      <p className="crumb"><Link href="/">홈</Link>{f.kind && <> · <Link href="/drinks">술</Link></>}</p>
+      <p className="crumb"><Link href="/">홈</Link>{f.kind && <> · <Link href="/drinks">주류</Link></>}</p>
       <h1>{heading} <span className="muted small">{total.toLocaleString("ko-KR")}종</span></h1>
       <p className="lead">{f.kind ? KIND_LEAD[f.kind] : "전통주·위스키·사케·와인을 한 곳에서. 가격·용량·어울리는 음식으로 좁혀 보세요."}</p>
       <SearchBox initial="" regionPicker={false} placeholder="술이나 음식을 검색해보세요" />

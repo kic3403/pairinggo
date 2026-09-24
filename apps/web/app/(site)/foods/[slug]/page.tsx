@@ -112,7 +112,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
             <ul>
               <li>등록된 페어링 {items.length}건</li>
               <li>전체 음식 {c.counts.foods}종</li>
-              <li>전체 술 {c.counts.drinks}종</li>
+              <li>전체 주류 {c.counts.drinks}종</li>
             </ul>
           </div>
         </aside>

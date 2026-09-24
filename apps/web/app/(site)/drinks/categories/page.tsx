@@ -9,7 +9,7 @@ import { getCatalog } from "@/lib/catalog";
 
 export const revalidate = 600;
 type Q = Record<string, string | string[] | undefined>;
-export const metadata: Metadata = { title: "술 카테고리 — 전통주·위스키·사케·와인 | 페어링GO", alternates: { canonical: "/drinks/categories" } };
+export const metadata: Metadata = { title: "주류 카테고리 — 전통주·위스키·사케·와인 | 페어링GO", alternates: { canonical: "/drinks/categories" } };
 
 export default async function Categories({ searchParams }: { searchParams: Promise<Q> }) {
   const c = await getCatalog();
@@ -24,7 +24,7 @@ export default async function Categories({ searchParams }: { searchParams: Promi
 
   return (
     <div className="wrap">
-      <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">술</Link></p>
+      <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link></p>
       <h1>카테고리 전체 보기</h1>
       <p className="lead">주종을 고르면 오른쪽에 세부 종류가 보입니다. 고른 가격·용량·음식 조건은 그대로 이어집니다.</p>
       <div className="catv">
