@@ -248,3 +248,32 @@ export function kindSynonyms(): { word: string; kind: DrinkKind; cat?: string }[
   }
   return out;
 }
+
+/**
+ * 주종별 속성 정리(어드민·가져오기 공용) — 정의에 없는 키는 버리고, 형에 맞게 바꾼다. 빈 값은 키를 아예 두지 않는다(미확인 = 없음).
+ * bool은 true/false만(문자 "1"·"true"도 받음), int는 정수(빈칸·문자는 없음), multi·tags는 문자열 배열, select는 옵션 id만, text는 200자.
+ */
+export function cleanAttrs(kind: DrinkKind, raw: unknown): Record<string, unknown> {
+  const o = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  const out: Record<string, unknown> = {};
+  for (const a of KIND_BY_ID[kind].attrs) {
+    if (a.type === "level") continue;   // 맛 프로필(profile)에서 읽는다
+    const v = o[a.key];
+    if (v == null || v === "") continue;
+    switch (a.type) {
+      case "bool": { const b = v === true || v === "1" || v === "true" ? true : v === false || v === "0" || v === "false" ? false : null; if (b != null) out[a.key] = b; break; }
+      case "int": { const n = Math.floor(Number(v)); if (Number.isFinite(n)) out[a.key] = n; break; }
+      case "select": { const id = String(v); if (a.options?.some((x) => x.id === id)) out[a.key] = id; break; }
+      case "multi": { const arr = (Array.isArray(v) ? v : String(v).split(",")).map((x) => String(x).trim()).filter((id) => a.options?.some((x) => x.id === id)); if (arr.length) out[a.key] = [...new Set(arr)]; break; }
+      case "tags": { const arr = (Array.isArray(v) ? v : String(v).split(",")).map((x) => String(x).trim().slice(0, 40)).filter(Boolean); if (arr.length) out[a.key] = [...new Set(arr)].slice(0, 20); break; }
+      case "text": { const t = String(v).trim().slice(0, 200); if (t) out[a.key] = t; break; }
+    }
+  }
+  return out;
+}
+/** 세부 종류 id → category 저장값. 전통주는 category 문자열 그대로(기존 값 유지), 모르면 "" */
+export function categoryFromInput(kind: DrinkKind, subtypeId: string, rawCategory: string): string {
+  if (kind === "trad") { const cats = KIND_BY_ID.trad.subtypes.flatMap((s) => s.categories); return cats.includes(rawCategory) ? rawCategory : cats.includes(subtypeId) ? subtypeId : categoryForSubtype("trad", subtypeId) ?? ""; }
+  return categoryForSubtype(kind, subtypeId) ?? (KIND_BY_ID[kind].subtypes.flatMap((s) => [...s.categories, ...(s.children ?? []).flatMap((c) => c.categories)]).includes(rawCategory) ? rawCategory : "");
+}
+
