@@ -49,7 +49,7 @@ type EvidenceRow = { pairing_id: number } & Row;
 async function fromDb(): Promise<Catalog | null> {
   const sb = db();
   if (!sb) return null;
-  const [meta, drinks, foods, pairings, evidence] = await Promise.all([
+  const [meta, drinksAll, foods, pairingsAll, evidence, specs, prices] = await Promise.all([
     sb.from("catalog_meta").select("key,value").in("key", ["version", "trend_meta"]),
     selectAll<Row>("drinks", (f, t) => sb.from("drinks").select("*").order("id").range(f, t)),
     selectAll<Row>("foods", (f, t) => sb.from("foods").select("*").order("id").range(f, t)),
@@ -57,15 +57,22 @@ async function fromDb(): Promise<Catalog | null> {
     selectAll<Row>("pairings", (f, t) => sb.from("pairings").select("*").in("status", ["curated", "ai"]).order("id").range(f, t)),
     // TODO: 페어링당 첫 근거만 쓰는데 전체를 받아온다 — 뷰(distinct on pairing_id)를 만들면 전송량이 줄어든다
     selectAll<EvidenceRow>("pairing_evidence", (f, t) => sb.from("pairing_evidence").select("pairing_id,source,url,quote,who,tier").order("id").range(f, t)),
+    // 규격·참고가격(0035) — 표가 아직 없는 DB면 빈 목록(카탈로그 전체가 정적 폴백으로 떨어지지 않게)
+    selectAll<Row>("drink_specs", (f, t) => sb.from("drink_specs").select("*").order("id").range(f, t)).catch(() => [] as Row[]),
+    selectAll<Row>("drink_prices", (f, t) => sb.from("drink_prices").select("*").eq("valid", true).order("id").range(f, t)).catch(() => [] as Row[]),
   ]);
   if (meta.error) throw new Error(meta.error.message);
+  // 데모 술(is_demo)과 그 페어링은 공개 카탈로그에서 뺀다 — 로컬 검증은 SHOW_DEMO=1
+  const drinks = drinksAll.filter((r) => !r.is_demo || process.env.SHOW_DEMO === "1");
+  const ids = new Set(drinks.map((r) => r.id as string));
+  const pairings = pairingsAll.filter((p) => ids.has(p.drink_id as string));
   if (!drinks.length || !foods.length || !pairings.length) return null;
   const evByPairing = new Map<number, unknown[]>();
   for (const e of evidence) { const arr = evByPairing.get(e.pairing_id) || []; arr.push(e); evByPairing.set(e.pairing_id, arr); }
   const rows = pairings.map((p) => ({ ...p, evidence: evByPairing.get(p.id as number) || [] }));
   // 트렌드 설명(기간·채널)은 일일 크론(/api/cron/mentions)이 catalog_meta.trend_meta에 쓴다. 없으면 번들 값
   const trendMeta = (meta.data?.find((m) => m.key === "trend_meta")?.value as Dataset["trend_meta"] | undefined) ?? BUNDLED.trend_meta;
-  const dataset = loadDatasetFromRows({ drinks, foods, pairings: rows, trend_meta: trendMeta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
+  const dataset = loadDatasetFromRows({ drinks, foods, pairings: rows, specs, prices, trend_meta: trendMeta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
   const version = String(meta.data?.find((m) => m.key === "version")?.value ?? "db");
   return { version, source: "db", dataset, counts: counts(dataset) };
 }

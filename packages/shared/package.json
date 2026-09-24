@@ -16,6 +16,9 @@
     "./places": "./src/places.ts",
     "./push-client": "./src/push-client.ts",
     "./image-client": "./src/image-client.ts",
+    "./kinds": "./src/catalog/kinds.ts",
+    "./specs": "./src/catalog/specs.ts",
+    "./filter-url": "./src/catalog/filter-url.ts",
     "./data/*": "./data/*"
   },
   "scripts": {

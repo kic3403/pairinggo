@@ -110,5 +110,21 @@ wg.columns = [{ width: 100 }];
 ].forEach((t) => wg.addRow([t]));
 wg.getRow(1).font = { bold: true, size: 13 };
 
+/* ---------- 규격·가격 (2026-09-24, specs-import 입력) ---------- */
+const wsp = wb.addWorksheet("규격·가격", { views: [{ state: "frozen", ySplit: 1 }] });
+wsp.columns = [
+  { header: "술(id 또는 이름)*", key: "drink", width: 24 }, { header: "용량(mL)", key: "ml", width: 10 }, { header: "도수", key: "abv", width: 8 }, { header: "빈티지", key: "vintage", width: 10 },
+  { header: "병수(세트면 2 이상)", key: "bottles", width: 12 }, { header: "가격(원)", key: "krw", width: 12 }, { header: "가격유형(msrp|retail)", key: "type", width: 14 }, { header: "출처*", key: "source", width: 22 },
+  { header: "출처URL", key: "url", width: 40 }, { header: "확인일(YYYY-MM-DD)*", key: "checked", width: 16 }, { header: "메모", key: "note", width: 24 },
+];
+wsp.getRow(1).font = { bold: true };
+wsp.getRow(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFE6ECF5" } };
+[
+  { drink: "d01", ml: 935, abv: 6.5, vintage: "", bottles: 1, krw: 12000, type: "retail", source: "양조장 공식몰", url: "https://boksoon.com", checked: "2026-09-24", note: "예시 — 가져오기에서 건너뜁니다" },
+].forEach((r) => wsp.addRow(r));
+wsp.getRow(2).font = { italic: true, color: { argb: "FF8C8C88" } };
+for (let r = 2; r <= 500; r++) wsp.getCell(`G${r}`).dataValidation = { type: "list", allowBlank: true, formulae: ['"msrp,retail"'], showErrorMessage: true, error: "msrp(권장소비자가) / retail(판매처 가격)" };
+wsp.addRow([]); wsp.addRow(["작성법: 한 줄 = 술 × 규격(용량·빈티지·병수) × 가격 하나. 용량은 '720ml'·'1.8L'도 됩니다(0 금지, 모르면 비움). 가격은 그 규격 한 병 기준, 배송비·쿠폰 제외. 가격을 비우면 규격만 만듭니다. 같은 규격의 옛 가격은 자동으로 무효 처리되고 새 가격이 더해집니다."]);
+
 await wb.xlsx.writeFile(out);
 console.log(`템플릿 생성 → ${out} · 술 목록 ${list.length}행(앱 등록 ${inAppCount} + 양조장 추가 제품 ${list.length - inAppCount}) · 음식 ${DATA.foods.length}`);

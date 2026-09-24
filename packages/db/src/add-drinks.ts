@@ -10,22 +10,28 @@
  * - 설명(desc)은 사실로 직접 쓴 문장 — 더술닷컴 소개글 원문 금지(공공누리 4유형).
  */
 import { readFileSync } from "node:fs";
-import { DATA, categoryAffinity, planPairings, profileFit, type DrinkProfile } from "@pairinggo/shared";
+import { DATA, categoryAffinity, cleanKind, cleanSpec, planPairings, profileFit, type DrinkKind, type DrinkProfile } from "@pairinggo/shared";
 import { insertDrinks, nextDrinkNumber, slug, type DrinkInput, type EvidenceInput, type PairingInput } from "./catalog-write";
 
 type Spec = {
   brewery: string;
   buy?: { url: string; store: string };
   offline?: DrinkInput["offline"];
+  /** 주종(기본 전통주)·국가 — 파일 전체 기본값, 술마다 덮어쓸 수 있다(0035) */
+  kind?: DrinkKind; country?: string;
   drinks: {
     name: string; alias: string | null; category: string; abv: number; region: string; desc: string; flavor: string[]; profile: DrinkProfile; awards?: string[];
     evidence: { food: string; es: number; src: PairingInput["src"]; reason: string; items: EvidenceInput[] }[];
+    kind?: DrinkKind; country?: string; attrs?: Record<string, unknown>; nameOrig?: string; aliases?: string[];
+    /** 규격·참고가격 — { ml, abv?, vintage?, pack?, bottles?, prices: [{ krw, type, source, url?, checked }] } */
+    specs?: unknown[];
   }[];
 };
 
 const file = process.argv[2];
 if (!file) { console.error("사용: add-drinks <json> [--apply]"); process.exit(2); }
 const apply = process.argv.includes("--apply");
+const demo = process.argv.includes("--demo");   // 개발 데모(is_demo) — 공개 카탈로그·번들에서 빠지고 SHOW_DEMO=1일 때만 보인다
 const spec = JSON.parse(readFileSync(file, "utf8")) as Spec;
 
 const foodByName = new Map(DATA.foods.map((f) => [f.name, f]));
@@ -54,16 +60,19 @@ for (const d of spec.drinks) {
     const planned = planPairings({ profile: d.profile, abv: d.abv }, pool, [], { total: left, perCategory: 2, maxOfficial: 0 }, usage, categoryAffinity(DATA.pairings, DATA.drinks, d.category));
     for (const p of planned) pairings.push({ ...p, evidence: [] });
   }
+  const kind = cleanKind(d.kind ?? spec.kind);
+  const specs = (d.specs ?? []).map((x) => cleanSpec(x));
   out.push({
     id: `d${n++}`, name: d.name, alias: d.alias, category: d.category, abv: d.abv, region: d.region, brewery: spec.brewery, desc: d.desc, flavor: d.flavor, profile: d.profile,
     awards: d.awards ?? [], buy: spec.buy ?? null, offline: spec.offline ?? null, pairings,
+    kind, country: d.country ?? spec.country, attrs: d.attrs, nameOrig: d.nameOrig ?? null, aliases: d.aliases, specs, demo,
   });
 }
 
 const F = new Map(DATA.foods.map((f) => [f.id, f.name]));
 for (const d of out) {
-  console.log(`${d.id} ${d.name} (${d.category} ${d.abv}%) — ${d.desc}`);
+  console.log(`${d.id}${d.demo ? " [데모]" : ""} ${d.name} (${d.kind === "trad" ? "" : `${d.kind} · `}${d.category} ${d.abv}%${d.specs?.length ? ` · 규격 ${d.specs.map((s) => `${s.ml ?? "?"}mL${s.prices[0] ? ` ${s.prices[0].krw.toLocaleString()}원` : ""}`).join("/")}` : ""}) — ${d.desc}`);
   console.log(`   ${d.pairings.map((p) => `${p.src === "profile" ? "" : `[${p.src}]`}${F.get(p.f)}`).join(", ")}`);
 }
-if (apply) await insertDrinks(out, `${spec.brewery} 라인 추가 +${out.length}종`);
+if (apply) await insertDrinks(out, `${spec.brewery} 라인 추가 +${out.length}종${demo ? "(데모)" : ""}`);
 else console.log("미리보기입니다. 넣으려면 --apply");

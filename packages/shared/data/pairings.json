@@ -52,7 +52,12 @@
     "visit": true,
     "address": "울산광역시 울주군 상북면 향산동길 48"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "복순도가",
+    "복순도가"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d02",
@@ -106,7 +111,12 @@
     "visit": true,
     "address": "전남 해남군 화산면 해창길 1"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "해창막걸리",
+    "해창주조장"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d03",
@@ -163,7 +173,12 @@
     "visit": false,
     "address": "경기 양평군 지평면 지평의병로62번길 27"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지평막걸리",
+    "지평주조"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d04",
@@ -217,7 +232,8 @@
     "visit": false,
     "address": "전북 정읍시 태인면 창흥2길 17"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d05",
@@ -273,7 +289,12 @@
     "visit": true,
     "address": "서울 성동구 둘레15길 12 2층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "나루 막걸리",
+    "한강주조"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d06",
@@ -327,7 +348,12 @@
     "visit": true,
     "address": "충남 공주시 사곡면 마곡사로 49"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "밤막걸리",
+    "사곡양조원"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d07",
@@ -381,7 +407,8 @@
     "visit": true,
     "address": "서울 성동구 둘레15길 12 2층"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d08",
@@ -435,7 +462,8 @@
     "visit": true,
     "address": "서울 서초구 방배동 사당역 인근(지하 양조장)"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d09",
@@ -489,7 +517,8 @@
     "visit": true,
     "address": "경기 포천시 화현면 화동로432번길 25"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d10",
@@ -543,7 +572,12 @@
     "visit": true,
     "address": "경기 용인시 처인구 양지읍 죽양대로 2298-1 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "붉은원숭이 막걸리",
+    "술샘"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d100",
@@ -601,7 +635,12 @@
     "visit": null,
     "address": "충청북도 영동군 용산면 법화길 5-22"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미르아토 와인",
+    "금용농산"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d101",
@@ -658,7 +697,8 @@
     "visit": true,
     "address": "경상북도 김천시 증산면 금곡리3길 29"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d102",
@@ -719,7 +759,12 @@
     "visit": true,
     "address": "충청북도 영동군 영동읍 조현길 26"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "컨츄리와이너리 캠벨",
+    "컨츄리 와이너리"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d103",
@@ -775,7 +820,12 @@
     "visit": true,
     "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "가무치소주",
+    "다농바이오"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d104",
@@ -832,7 +882,12 @@
     "visit": true,
     "address": "충청남도 논산시 양촌면 매죽헌로1665번길 14-7"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "양촌양조 여유",
+    "양촌양조"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d105",
@@ -890,7 +945,8 @@
     "visit": true,
     "address": "충청남도 예산군 고덕면 대몽로 107-25"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d106",
@@ -946,7 +1002,8 @@
     "visit": null,
     "address": "강원특별자치도 양구군 동면 펀치볼로 65 101호"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d107",
@@ -1002,7 +1059,12 @@
     "visit": null,
     "address": "경기도 김포시 양촌읍 김포대로1759번길 33-23 2동"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "코아베스트 애플보쉐",
+    "코아베스트"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d108",
@@ -1042,7 +1104,13 @@
     "visit": null,
     "address": "충청남도 서천군 한산면 충절로 1154"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "감싸주는날",
+    "두레박",
+    "한증류소"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d109",
@@ -1092,7 +1160,12 @@
     "url": "https://smartstore.naver.com/j1inc",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "경탁주",
+    "제이1"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d11",
@@ -1146,7 +1219,8 @@
     "visit": true,
     "address": "충남 서천군 한산면 한산모시길 45"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d110",
@@ -1191,7 +1265,12 @@
     "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000018889",
     "store": "키햐"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "독도소주",
+    "설악프로방스배꽃마을"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d111",
@@ -1238,7 +1317,12 @@
     "url": "https://www.soolsool.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "빙탄복",
+    "배상면주가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d112",
@@ -1287,7 +1371,12 @@
     "url": "https://smartstore.naver.com/attobrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마루나약주",
+    "아토양조장"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d113",
@@ -1332,7 +1421,12 @@
     "url": "https://silobrewery.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "사일로 막걸리",
+    "사일로 브루어리"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d114",
@@ -1379,7 +1473,12 @@
     "url": "https://www.kimpo.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "김포예주",
+    "김포양조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d115",
@@ -1426,7 +1525,12 @@
     "url": "https://www.soolsool.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오매락",
+    "배상면주가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d116",
@@ -1475,7 +1579,12 @@
     "url": "https://www.chusungju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대통주",
+    "추성고을"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d117",
@@ -1522,7 +1631,12 @@
     "url": "https://www.ehondiju.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "신례명주",
+    "시트러스"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d118",
@@ -1569,7 +1683,12 @@
     "url": "https://www.omynara.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고운달 오크",
+    "오미나라"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d119",
@@ -1614,7 +1733,12 @@
     "url": "https://smartstore.naver.com/dalseongkr",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "포그막",
+    "달성주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d12",
@@ -1668,7 +1792,12 @@
     "visit": null,
     "address": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "경주법주",
+    "경주법주"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d120",
@@ -1715,7 +1844,12 @@
     "url": "https://www.soolsool.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "느린마을 증류주",
+    "배상면주가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d121",
@@ -1763,7 +1897,12 @@
     "url": "http://drink.ksdb.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "국순당 쌀막걸리",
+    "국순당 횡성양조장"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d122",
@@ -1808,7 +1947,12 @@
     "url": "https://smartstore.naver.com/milmulbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "밀물 탁주",
+    "상선주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d123",
@@ -1857,7 +2001,12 @@
     "url": "https://www.chusungju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "타미앙스",
+    "추성고을"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d124",
@@ -1908,7 +2057,12 @@
     "url": "https://www.omynara.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오미로제 연",
+    "오미나라"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d125",
@@ -1954,7 +2108,12 @@
     "url": "https://smartstore.naver.com/beodeulin",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "방풍 막걸리",
+    "금오도섬마을"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d126",
@@ -2004,7 +2163,12 @@
     "url": "https://smartstore.naver.com/ksdyeoju",
     "store": "공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "명작복분자",
+    "국순당고창명주"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d127",
@@ -2051,7 +2215,12 @@
     "url": "https://www.smartbrewery.co.kr/shopping-soju",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마한오크",
+    "스마트브루어리"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d128",
@@ -2096,7 +2265,12 @@
     "url": "https://smartstore.naver.com/naekook",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "송이주",
+    "내국양조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d129",
@@ -2145,7 +2319,12 @@
     "url": "https://jhdg.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대대포 막걸리",
+    "담양죽향도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d13",
@@ -2202,7 +2381,8 @@
     "visit": true,
     "address": "강원 횡성군 둔내면 강변로 975"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d130",
@@ -2249,7 +2429,12 @@
     "url": "https://smartstore.naver.com/dogasjib",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "도갓집 막걸리",
+    "삼호주조장"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d131",
@@ -2299,7 +2484,12 @@
     "url": "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000450",
     "store": "전통주몰(술마켓)"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "아이엠더문",
+    "조은술 세종"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d132",
@@ -2345,7 +2535,12 @@
     "url": "http://www.xn--v42bo8x7wc.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "청명탁주",
+    "중원당"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d133",
@@ -2393,7 +2588,12 @@
     "url": "https://smartstore.naver.com/sulhadam",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "설하담",
+    "리큐랩"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d134",
@@ -2443,7 +2643,12 @@
     "url": "https://smartstore.naver.com/whajeonilchwi",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "화전일취",
+    "지시울"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d135",
@@ -2488,7 +2693,12 @@
     "url": "https://smartstore.naver.com/naekook",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "능이주",
+    "내국양조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d136",
@@ -2537,7 +2747,12 @@
     "url": "https://www.koreansul.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백련 맑은술",
+    "신평양조장"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d137",
@@ -2584,7 +2799,12 @@
     "url": "https://www.dongjinwine.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "부안 참뽕주",
+    "내변산"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d138",
@@ -2629,7 +2849,12 @@
     "url": "https://www.bamsul.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "왕율주",
+    "사곡양조원"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d139",
@@ -2675,7 +2900,12 @@
     "url": "http://www.sanmeoru.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "무주구천동산머루주",
+    "산머루농원"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d14",
@@ -2729,7 +2959,8 @@
     "visit": true,
     "address": "충남 당진시 면천면 성하로 250"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d140",
@@ -2774,7 +3005,12 @@
     "url": "https://smartstore.naver.com/sooldogajejubadang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "성산포소주",
+    "술도가제주바당"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d141",
@@ -2823,7 +3059,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "장수 생막걸리",
+    "서울장수"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d142",
@@ -2869,7 +3110,12 @@
     "url": "https://smartstore.naver.com/woorisool",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소백산생막걸리",
+    "용두산조은술"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d143",
@@ -2915,7 +3161,12 @@
     "url": "https://bokbunjaju.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오디랑",
+    "국순당 고창명주"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d144",
@@ -2964,7 +3215,12 @@
     "url": "https://www.xn--399ay50bszdtxbcu.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "한산 소곡화주",
+    "원조소곡주"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d145",
@@ -3011,7 +3267,12 @@
     "url": "https://zzann.co.kr/product/%ED%99%8D%EC%82%BC%EB%AA%85%EC%A3%BC-14%EB%8F%84-375ml500ml/285/",
     "store": "ZZANN"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "홍삼명주",
+    "자연과 인삼"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d146",
@@ -3059,7 +3320,12 @@
     "url": "https://smartstore.naver.com/nerdbrew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "너디호프",
+    "상주주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d147",
@@ -3106,7 +3372,12 @@
     "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000009685",
     "store": "키햐"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "부안참뽕와인",
+    "동진주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d148",
@@ -3151,7 +3422,12 @@
     "url": "https://smartstore.naver.com/deadeokju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "단상지교",
+    "신탄진주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d149",
@@ -3198,7 +3474,12 @@
     "url": "https://smartstore.naver.com/nerdbrew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "너드 바질 스파클링",
+    "상주주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d15",
@@ -3255,7 +3536,12 @@
     "visit": null,
     "address": "충북 청주시 청원구 내수읍 풍정1길 8-2"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "풍정사계",
+    "화양양조장"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d150",
@@ -3302,7 +3588,12 @@
     "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000006817",
     "store": "키햐"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지리산 강쇠",
+    "술소리"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d151",
@@ -3350,7 +3641,12 @@
     "url": "https://xn--299as4kvof95ouob.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고도리 복숭아와인",
+    "고도리 와이너리"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d152",
@@ -3397,7 +3693,12 @@
     "url": "https://smartstore.naver.com/yangjudoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "별산막걸리",
+    "양주도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d153",
@@ -3446,7 +3747,12 @@
     "url": "https://smartstore.naver.com/dadamdoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "조오탁",
+    "다담도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d154",
@@ -3493,7 +3799,12 @@
     "url": "https://smartstore.naver.com/hjssjuga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "냥이탁주",
+    "행주산성주가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d155",
@@ -3541,7 +3852,12 @@
     "url": "https://www.hwayang.co",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "풍정사계 동",
+    "풍정사계 화양"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d156",
@@ -3588,7 +3904,12 @@
     "url": "https://www.samyangchoon.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오마이갓스파클링",
+    "송도향"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d157",
@@ -3633,7 +3954,12 @@
     "url": "https://smartstore.naver.com/dameul_service",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "주향소주",
+    "담을"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d158",
@@ -3680,7 +4006,12 @@
     "url": "https://www.ehondiju.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "혼디주",
+    "시트러스"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d159",
@@ -3725,7 +4056,12 @@
     "url": "https://smartstore.naver.com/woorisool",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "강냉이 막걸리",
+    "용두산 조은술"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d16",
@@ -3784,7 +4120,12 @@
     "visit": true,
     "address": "충북 충주시 중앙탑면 청금로 112-9"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "청명주",
+    "중원당"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d160",
@@ -3833,7 +4174,12 @@
     "url": "https://smartstore.naver.com/lesdom",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "레돔 시드르",
+    "작은알자스"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d161",
@@ -3882,7 +4228,12 @@
     "url": "https://www.hwayang.co",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "풍정사계 추",
+    "풍정사계 화양"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d162",
@@ -3931,7 +4282,12 @@
     "url": "https://sijang.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1041633&pavlnDivCd=02",
     "store": "우체국쇼핑"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "동강더덕주",
+    "영월더덕"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d163",
@@ -3976,7 +4332,12 @@
     "url": "https://smartstore.naver.com/yangjisoolgodganhttps:",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "양지백주",
+    "양지술곳간"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d164",
@@ -4021,7 +4382,12 @@
     "url": "http://www.baedoga.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우곡소주",
+    "배혜정도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d165",
@@ -4066,7 +4432,12 @@
     "url": "http://www.gimporicewine.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "김포특주",
+    "김포금쌀탁주"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d166",
@@ -4113,7 +4484,12 @@
     "url": "https://www.corevest.co.kr/shop_view/?idx=59",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "홉미드",
+    "코아베스트브루잉"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d167",
@@ -4158,7 +4534,12 @@
     "url": "http://www.seokiwon.com/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "석로주",
+    "석이원주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d168",
@@ -4204,7 +4585,12 @@
     "url": "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1059412&pavlnDivCd=02",
     "store": "우체국쇼핑"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "자색고구마 막걸리",
+    "12월의 양조장"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d169",
@@ -4252,7 +4638,12 @@
     "url": "https://daraewineshop.co.kr/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "다래와인",
+    "오름주가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d17",
@@ -4306,7 +4697,8 @@
     "visit": true,
     "address": "경남 함양군 지곡면 개평길 50-6"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d170",
@@ -4351,7 +4743,12 @@
     "url": "https://www.solsongju.com/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "녹파주",
+    "솔송주 명가원"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d171",
@@ -4397,7 +4794,12 @@
     "url": "http://www.duraean.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "두레앙와인",
+    "두레양조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d172",
@@ -4444,7 +4846,12 @@
     "url": "https://byeoljumak.com/shop_view/?idx=13",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "관악산생막걸리",
+    "별네트웍스 과천도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d173",
@@ -4489,7 +4896,12 @@
     "url": "https://andongsojumall.com/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "태사주",
+    "안동소주올소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d174",
@@ -4539,7 +4951,12 @@
     "url": "https://www.grandcoteau.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "그랑꼬또 청수",
+    "그린"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d175",
@@ -4585,7 +5002,12 @@
     "url": "http://www.e-hongju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대대로홍주",
+    "대대로"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d176",
@@ -4632,7 +5054,12 @@
     "url": "https://www.sulseam.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "술샘16",
+    "술샘"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d177",
@@ -4679,7 +5106,12 @@
     "url": "http://www.woorisool.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "가평 잣 생막걸리",
+    "우리술"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d178",
@@ -4724,7 +5156,12 @@
     "url": "https://smartstore.naver.com/shinybrewer",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "일월삼주 이주",
+    "빛올양조연구소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d179",
@@ -4769,7 +5206,12 @@
     "url": "https://smartstore.naver.com/leegasubul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이상헌 탁주",
+    "이가수불"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d18",
@@ -4823,7 +5265,8 @@
     "visit": true,
     "address": "제주시 애월읍 애원로 283"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d180",
@@ -4870,7 +5313,12 @@
     "url": "https://www.chusungju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "추성주",
+    "추성고을"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d181",
@@ -4917,7 +5365,12 @@
     "url": "https://kokao.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "서울고량주 오크",
+    "서울고량주"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d182",
@@ -4962,7 +5415,12 @@
     "url": "https://hwasimjujo.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "화심소주 군고구마",
+    "화심주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d183",
@@ -5009,7 +5467,12 @@
     "url": "http://www.nakchun.co.kr/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "까메오 막걸리",
+    "낙천"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d184",
@@ -5056,7 +5519,12 @@
     "url": "https://www.thehan.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "원매 프리미엄",
+    "더한주류"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d185",
@@ -5102,7 +5570,12 @@
     "url": "https://smartstore.naver.com/bewater_brew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이너피스 넥타",
+    "비워터 브루어리"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d186",
@@ -5149,7 +5622,12 @@
     "url": "https://smartstore.naver.com/jeonggojib",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "옛날 생동동주",
+    "남도탁주"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d187",
@@ -5195,7 +5673,12 @@
     "url": "https://smartstore.naver.com/gumisan",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "복숭아와인",
+    "금이산농원"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d188",
@@ -5243,7 +5726,12 @@
     "url": "http://www.macatto.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "밀담40",
+    "착한농부"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d189",
@@ -5290,7 +5778,12 @@
     "url": "https://smartstore.naver.com/corevest",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "사워보쉐",
+    "코아베스트"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d19",
@@ -5344,7 +5837,12 @@
     "visit": true,
     "address": "경북 안동시 풍산읍 산업단지6길 6"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "안동소주",
+    "명인안동소주"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d190",
@@ -5393,7 +5891,12 @@
     "url": "https://www.houseofheritage.kr/home",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "코리진",
+    "하우스오브헤리티지"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d191",
@@ -5438,7 +5941,12 @@
     "url": "http://chamjuga.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "참주가생막걸리",
+    "다도참주가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d192",
@@ -5487,7 +5995,12 @@
     "url": "https://smartstore.naver.com/yangjudoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "유톡자톡",
+    "양주도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d193",
@@ -5535,7 +6048,12 @@
     "url": "https://smartstore.naver.com/chuyondang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "순향주",
+    "추연당"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d194",
@@ -5582,7 +6100,12 @@
     "url": "http://www.woorisool.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "톡쏘는 알밤동동",
+    "우리술"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d195",
@@ -5628,7 +6151,12 @@
     "url": "https://omynara.com/product/%EC%98%A4%EB%AF%B8%EB%A1%9C%EC%A0%9C-%EC%8A%A4%ED%8C%8C%ED%81%B4%EB%A7%81-%EC%99%80%EC%9D%B8-750ml/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "문경바람 백자",
+    "제이엘"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d196",
@@ -5673,7 +6201,12 @@
     "url": "https://smartstore.naver.com/hanadoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "농태기",
+    "하나도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d197",
@@ -5723,7 +6256,12 @@
     "url": "https://smartstore.naver.com/naeoldarm",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "담골드",
+    "내올담 양조장"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d198",
@@ -5769,7 +6307,12 @@
     "url": "https://smartstore.naver.com/magpieyear",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "숲향벼꽃 술도깨비",
+    "까치설"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d199",
@@ -5815,7 +6358,12 @@
     "url": "https://www.vincoreewinery.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "뱅꼬레 로제와인",
+    "한국와인"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d20",
@@ -5869,7 +6417,8 @@
     "visit": null,
     "address": "경기 김포시 통진읍 검암2로15번길 27"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d200",
@@ -5914,7 +6463,12 @@
     "url": "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000471",
     "store": "술마켓"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "주향이오",
+    "담을술공방"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d201",
@@ -5959,7 +6513,12 @@
     "url": "https://www.thehan.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "명랑 스컬",
+    "더한주류"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d202",
@@ -6006,7 +6565,12 @@
     "url": "https://smartstore.naver.com/dancingcider",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "댄싱파파",
+    "댄싱사이더 컴퍼니"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d203",
@@ -6054,7 +6618,12 @@
     "url": "https://smartstore.naver.com/juyeonhyang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "주연향 화이트",
+    "주연향"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d204",
@@ -6102,7 +6671,12 @@
     "url": "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000319",
     "store": "전통주몰(술마켓)"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "구기홍주",
+    "아리랑주조"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d205",
@@ -6151,7 +6725,12 @@
     "url": "https://smartstore.naver.com/ogyeri",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오계리 아이스와인",
+    "오계리 와이너리"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d206",
@@ -6197,7 +6776,12 @@
     "url": "http://www.baedoga.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "메로니아",
+    "배혜정도가"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d207",
@@ -6242,7 +6826,12 @@
     "url": "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000450",
     "store": "전통주몰(술마켓)"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우도 땅콩 전통주",
+    "조은술 세종"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d208",
@@ -6296,7 +6885,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백경 화이트",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d209",
@@ -6350,7 +6944,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백경 골드",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d21",
@@ -6404,7 +7003,12 @@
     "visit": false,
     "address": "경기 여주시 가남읍 경충대로 848"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "화요",
+    "화요"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d210",
@@ -6458,7 +7062,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백경 블랙",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d211",
@@ -6512,7 +7121,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백경 향온",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d212",
@@ -6566,7 +7180,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "세종소주28",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d213",
@@ -6620,7 +7239,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "세종소주46",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d214",
@@ -6674,7 +7298,12 @@
     "visit": true,
     "address": "세종특별자치시 장군면 평기길 151"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백경53",
+    "백경증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d215",
@@ -6728,7 +7357,12 @@
     "visit": null,
     "address": "충청남도 서천군 한산면 충절로 1154"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "감싸주는날 붉은말",
+    "한증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d216",
@@ -6782,7 +7416,12 @@
     "visit": null,
     "address": "충청남도 서천군 한산면 충절로 1154"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "낯꽃",
+    "한증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d217",
@@ -6836,7 +7475,12 @@
     "visit": null,
     "address": "충청남도 서천군 한산면 충절로 1154"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "낯꽃 오크",
+    "한증류소"
+   ],
+   "added": "2026-09-13"
   },
   {
    "id": "d218",
@@ -6892,7 +7536,12 @@
     "visit": true,
     "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "가무치 43",
+    "다농바이오"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d219",
@@ -6946,7 +7595,12 @@
     "visit": true,
     "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "능화",
+    "다농바이오"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d22",
@@ -7000,7 +7654,12 @@
     "visit": null,
     "address": "강원 원주시 지정면 월송석화로 288 나동 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "원소주",
+    "원스피리츠"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d220",
@@ -7054,7 +7713,12 @@
     "visit": true,
     "address": "충청북도 충주시 대소원면 메가폴리스1로 117"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "수록",
+    "다농바이오"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d221",
@@ -7112,7 +7776,12 @@
     "visit": null,
     "address": "충청북도 청주시 상당구 것대로 5"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "신선주 약주",
+    "신선(청주신선주)"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d222",
@@ -7166,7 +7835,12 @@
     "visit": null,
     "address": "충청북도 청주시 상당구 것대로 5"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "신선주 소주",
+    "신선(청주신선주)"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d223",
@@ -7220,7 +7894,12 @@
     "visit": null,
     "address": "충청북도 청주시 상당구 것대로 5"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "신선주 52",
+    "신선(청주신선주)"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d224",
@@ -7276,7 +7955,12 @@
     "visit": null,
     "address": "충청북도 청주시 상당구 것대로 5"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "신선주 탁주",
+    "신선(청주신선주)"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d225",
@@ -7330,7 +8014,12 @@
     "visit": null,
     "address": "충청북도 청주시 상당구 것대로 5"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "신선막걸리",
+    "신선(청주신선주)"
+   ],
+   "added": "2026-09-14"
   },
   {
    "id": "d226",
@@ -7383,7 +8072,12 @@
     "url": "https://www.xn--vf4b19u.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "추사40",
+    "예산사과와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d227",
@@ -7432,7 +8126,12 @@
     "url": "https://smartstore.naver.com/boryengju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "만세 보령주",
+    "보령전통주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d228",
@@ -7481,7 +8180,12 @@
     "url": "https://jubangjangbrewery.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "쑥크레",
+    "주방장양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d229",
@@ -7529,7 +8233,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "병영소주",
+    "병영양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d23",
@@ -7583,7 +8292,12 @@
     "visit": null,
     "address": "충북 충주시 엄정면 웃세고개길 35-16"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "토끼소주",
+    "토끼소주"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d230",
@@ -7631,7 +8345,12 @@
     "url": "http://egaju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이화주",
+    "양주골이가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d231",
@@ -7680,7 +8399,12 @@
     "url": "https://www.xn--vf4b19u.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "추사백25",
+    "예산사과와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d232",
@@ -7729,7 +8453,12 @@
     "url": "https://smartstore.naver.com/dureang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "두레앙목통숙성주",
+    "두레양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d233",
@@ -7777,7 +8506,12 @@
     "url": "https://smartstore.naver.com/bluegreenk",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "청산녹수 딸기막걸리",
+    "청산녹수"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d234",
@@ -7827,7 +8561,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "레드 오서주",
+    "태령주조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d235",
@@ -7875,7 +8614,12 @@
     "url": "https://kegzei.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "감탄주",
+    "객제"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d236",
@@ -7923,7 +8667,12 @@
     "url": "https://smartstore.naver.com/back_streetmakgeolli",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예산사과 생막걸리",
+    "주로"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d237",
@@ -7972,7 +8721,12 @@
     "url": "https://smartstore.naver.com/eaudelune",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "월류봉",
+    "오드린"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d238",
@@ -8022,7 +8776,12 @@
     "url": "https://smartstore.naver.com/strawberrywine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "해미읍성딸기스파클링와인",
+    "해미읍성딸기와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d239",
@@ -8071,7 +8830,12 @@
     "url": "https://smartstore.naver.com/kkumuidaehwabykkumbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "꿈의 대화 약주",
+    "꿈브루어리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d24",
@@ -8125,7 +8889,8 @@
     "visit": true,
     "address": "경기도 파주시 적성면 구읍로 13"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d240",
@@ -8173,7 +8938,12 @@
     "url": "https://smartstore.naver.com/dadamdoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "조오탁",
+    "다담도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d241",
@@ -8223,7 +8993,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "유자가09",
+    "구름아양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d242",
@@ -8272,7 +9047,12 @@
     "url": "https://smartstore.naver.com/aotlfwhgkq",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "매화꽃비",
+    "순성왕매실"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d243",
@@ -8321,7 +9101,12 @@
     "url": "https://smartstore.naver.com/sak044",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "삭 블랙",
+    "공사사양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d244",
@@ -8370,7 +9155,12 @@
     "url": "https://smartstore.naver.com/dancingcider",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오크스피릿",
+    "비전레드"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d245",
@@ -8417,7 +9207,12 @@
     "url": "https://smartstore.naver.com/choosi",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "추시 결",
+    "양촌감"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d246",
@@ -8465,7 +9260,8 @@
     "url": "https://xn--399ap6v6nfgza79kktgp7y6d.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d247",
@@ -8514,7 +9310,12 @@
     "url": "https://smartstore.naver.com/oneiricbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "허니드 미스트",
+    "오나이릭"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d248",
@@ -8562,7 +9363,12 @@
     "url": "https://smartstore.naver.com/bumpyo_brewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "범표 생 막걸리",
+    "범표주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d249",
@@ -8610,7 +9416,12 @@
     "url": "https://smartstore.naver.com/oneiricbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "드림인더애플가든",
+    "오나이릭"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d25",
@@ -8664,7 +9475,8 @@
     "visit": false,
     "address": "전북 정읍시 태인면 창흥2길 17"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d250",
@@ -8711,7 +9523,12 @@
     "url": "https://newvin.co.kr/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "라이스그레이프",
+    "뉴뱅"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d251",
@@ -8758,7 +9575,12 @@
     "url": "https://smartstore.naver.com/sak044",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "삭",
+    "공사사양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d252",
@@ -8805,7 +9627,12 @@
     "url": "https://smartstore.naver.com/saekjojakju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "색조작주 흰",
+    "우쥬라익썸"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d253",
@@ -8853,7 +9680,12 @@
     "url": "https://xn--h50bx7nmc99h97t2wb.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "어미실 청수 스위트",
+    "마미"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d254",
@@ -8900,7 +9732,12 @@
     "url": "https://www.xn--399ar2xhofw9hh4o.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "한산명품소곡주",
+    "명품소곡주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d255",
@@ -8947,7 +9784,12 @@
     "url": "https://smartstore.naver.com/back_streetmakgeolli",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "골목막걸리 프리미엄",
+    "주로"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d256",
@@ -8997,7 +9839,12 @@
     "url": "https://www.3d.co.kr/shop",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "시인의 바위",
+    "밀과노닐다"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d257",
@@ -9047,7 +9894,12 @@
     "url": "https://smartstore.naver.com/woochang2016",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "일지춘",
+    "노금주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d258",
@@ -9092,7 +9944,12 @@
     "url": "https://www.insamwine.com/shop/main/index.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "금설",
+    "금산인삼주양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d259",
@@ -9138,7 +9995,12 @@
     "url": "http://www.xn--jj0bu4t8rc0w2b.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "황금보리 증류주",
+    "황금보리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d26",
@@ -9192,7 +10054,8 @@
     "visit": true,
     "address": "전북특별자치도 전주시 덕진구 매암길 28"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d260",
@@ -9237,7 +10100,8 @@
     "url": "https://www.insamwine.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d261",
@@ -9284,7 +10148,12 @@
     "url": "https://soltimaeul.co.kr/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오롯이 복숭아",
+    "솔티마을"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d262",
@@ -9329,7 +10198,12 @@
     "url": "https://smartstore.naver.com/oksoonga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마주 소곡주",
+    "옥순가 소곡주 마주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d263",
@@ -9374,7 +10248,12 @@
     "url": "http://www.xn--jj0bu4t8rc0w2b.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "황금보리 증류주",
+    "황금보리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d264",
@@ -9419,7 +10298,12 @@
     "url": "http://www.xn--jj0bu4t8rc0w2b.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "황금보리 증류주",
+    "황금보리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d265",
@@ -9466,7 +10350,12 @@
     "url": "https://hmsb.cafe24.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "해미딸기주",
+    "해미읍성 딸기와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d266",
@@ -9512,7 +10401,8 @@
     "url": "https://kingwine.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d267",
@@ -9561,7 +10451,12 @@
     "url": "https://www.ehondiju.com/main/index.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마셔블랑 스프링",
+    "시트러스"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d268",
@@ -9610,7 +10505,12 @@
     "url": "https://www.corevest.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "코아베스트 아카시아미드",
+    "코아베스트 브루잉"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d269",
@@ -9660,7 +10560,12 @@
     "url": "https://smartstore.naver.com/sdsmeru",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "크라테 자두와인",
+    "수도산와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d27",
@@ -9714,7 +10619,8 @@
     "visit": null,
     "address": "서울특별시 은평구 증산로7길 28-13"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d270",
@@ -9764,7 +10670,12 @@
     "url": "https://xn--hg3b13gpoq4muubvz4a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "샤토미소 웨딩",
+    "도란원"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d271",
@@ -9812,7 +10723,12 @@
     "url": "https://smartstore.naver.com/1779choi",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대몽재 1779 생막걸리",
+    "경주교촌도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d272",
@@ -9860,7 +10776,12 @@
     "url": "https://smartstore.naver.com/choileebrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "초이 국화",
+    "초이리브루어리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d273",
@@ -9909,7 +10830,12 @@
     "url": "https://xn--hg3b13gpoq4muubvz4a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "샤토미소 영동",
+    "도란원"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d274",
@@ -9956,7 +10882,12 @@
     "url": "https://smartstore.naver.com/ggjjj",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "장보고의 꿈 황칠약주",
+    "고금주조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d275",
@@ -10004,7 +10935,12 @@
     "url": "https://smartstore.naver.com/yeopowine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "여포의 꿈",
+    "여포와인농장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d276",
@@ -10053,7 +10989,12 @@
     "url": "https://smartstore.naver.com/ggjjj",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "완도유자막걸리",
+    "고금주조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d277",
@@ -10104,7 +11045,12 @@
     "url": "https://smartstore.naver.com/88yangjojang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "하드포션",
+    "팔팔양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d278",
@@ -10152,7 +11098,12 @@
     "url": "https://www.homesool.com/main/index.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "느린마을 약주",
+    "배상면주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d279",
@@ -10200,7 +11151,12 @@
     "url": "https://xn--hg3b13gpoq4muubvz4a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "샤토미소 캠벨 스위트 로제",
+    "도란원"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d28",
@@ -10254,7 +11210,12 @@
     "visit": true,
     "address": "경상북도 문경시 문경읍 새재로 609"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오미로제",
+    "제이엘와이너리"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d280",
@@ -10303,7 +11264,12 @@
     "url": "https://smartstore.naver.com/bamboosul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "담디오리지널",
+    "대밭고을"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d281",
@@ -10352,7 +11318,12 @@
     "url": "https://smartstore.naver.com/winelabs",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "디스틸 그레이프",
+    "와인랩스"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d282",
@@ -10404,7 +11375,12 @@
     "url": "https://smartstore.naver.com/sangmofarm",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "르보까쥬 샤르망",
+    "상모"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d283",
@@ -10453,7 +11429,12 @@
     "url": "https://smartstore.naver.com/soojack-n",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "숨은골16",
+    "공동체공간 수작"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d284",
@@ -10502,7 +11483,12 @@
     "url": "https://smartstore.naver.com/uj_brewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "운정막걸리",
+    "운정양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d285",
@@ -10551,7 +11537,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "해피보이",
+    "드렁큰팩토리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d286",
@@ -10600,7 +11591,12 @@
     "url": "https://smartstore.naver.com/baekje2012",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "매화깊은밤",
+    "백제명가주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d287",
@@ -10646,7 +11642,12 @@
     "url": "https://smartstore.naver.com/strawberrywine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "세인트하우스 모과와인",
+    "해미읍성딸기와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d288",
@@ -10693,7 +11694,12 @@
     "url": "https://smartstore.naver.com/leeis9191",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "녹천 소곡화주",
+    "녹천주조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d289",
@@ -10739,7 +11745,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대윤 가야곡 왕주",
+    "대윤가야곡주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d29",
@@ -10793,7 +11804,12 @@
     "visit": null,
     "address": "전북특별자치도 고창군 심원면 심원로 270-73"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "복분자주",
+    "고창 선운산"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d290",
@@ -10839,7 +11855,12 @@
     "url": "https://smartstore.naver.com/k_sansam",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "계룡산 산삼주 금수강산",
+    "한국산삼"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d291",
@@ -10886,7 +11907,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미담",
+    "성광주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d292",
@@ -10932,7 +11958,12 @@
     "url": "https://smartstore.naver.com/baekje2012",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "보리수헤는밤",
+    "백제명가주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d293",
@@ -10978,7 +12009,12 @@
     "url": "https://smartstore.naver.com/choosi",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "감이슬",
+    "양촌감"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d294",
@@ -11025,7 +12061,12 @@
     "url": "https://smartstore.naver.com/oksoonga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마주 소곡화주",
+    "옥순가 소곡주 마주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d295",
@@ -11072,7 +12113,12 @@
     "url": "https://www.insamwine.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "금산인삼주 수삼",
+    "금산인삼주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d296",
@@ -11117,7 +12163,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "입장탁주",
+    "입장주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d297",
@@ -11162,7 +12213,12 @@
     "url": "https://www.insamwine.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "명인 홍삼주",
+    "금산인삼주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d298",
@@ -11208,7 +12264,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "가야곡왕주",
+    "민속주왕주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d299",
@@ -11253,7 +12314,12 @@
     "url": "https://smartstore.naver.com/k_sansam",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "계룡산 산삼주 금수강산",
+    "한국산삼"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d30",
@@ -11307,7 +12373,8 @@
     "visit": true,
     "address": "제주시 애월읍 애원로 283"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d300",
@@ -11352,7 +12419,12 @@
     "url": "https://smartstore.naver.com/myeongju-doga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대천바다 금빛",
+    "명주도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d301",
@@ -11401,7 +12473,12 @@
     "url": "https://smartstore.naver.com/sanmacwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "산막와이너리, 비원퓨어",
+    "산막와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d302",
@@ -11450,7 +12527,12 @@
     "url": "https://smartstore.naver.com/durusul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "용24",
+    "두루양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d303",
@@ -11498,7 +12580,12 @@
     "url": "https://www.xn--vf4b19u.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "블루포트",
+    "예산사과와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d304",
@@ -11547,7 +12634,12 @@
     "url": "https://samyangchoon.com/product/list.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오마이갓 스파클링 봄꽃",
+    "송도향"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d305",
@@ -11594,7 +12686,12 @@
     "url": "https://smartstore.naver.com/jpjujo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "봄이",
+    "지평주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d306",
@@ -11640,7 +12737,12 @@
     "url": "https://smartstore.naver.com/naekook",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "강주",
+    "내국양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d307",
@@ -11690,7 +12792,12 @@
     "url": "https://smartstore.naver.com/juyeonhyang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "야수 R",
+    "주연향"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d308",
@@ -11738,7 +12845,12 @@
     "url": "https://xn--hu1b40gh1c27n9rc18a.kr/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "농담",
+    "우창(두루미양조장)"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d309",
@@ -11785,7 +12897,12 @@
     "url": "https://smartstore.naver.com/bluegreenk",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "편백숲산소막걸리12",
+    "청산녹수"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d31",
@@ -11842,7 +12959,8 @@
     "visit": true,
     "address": "경기 포천시 화현면 화동로432번길 25"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d310",
@@ -11889,7 +13007,12 @@
     "url": "https://www.bamsul.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "밤꽃향기",
+    "사곡양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d311",
@@ -11938,7 +13061,12 @@
     "url": "https://xn--hu1b40gh1c27n9rc18a.kr/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "본",
+    "우창(두루미양조장)"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d312",
@@ -11986,7 +13114,12 @@
     "url": "https://smartstore.naver.com/baedaridistillery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고양막걸리10",
+    "배다리도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d313",
@@ -12034,7 +13167,12 @@
     "url": "https://smartstore.naver.com/meadhouse",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "금창막걸리",
+    "꿀주당"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d314",
@@ -12084,7 +13222,12 @@
     "url": "https://smartstore.naver.com/daehyang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대향 샤인 아이스와인",
+    "대향와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d315",
@@ -12132,7 +13275,12 @@
     "url": "https://smartstore.naver.com/derdam2021",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "망상",
+    "더담"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d316",
@@ -12180,7 +13328,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "별길 청수",
+    "별길와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d317",
@@ -12228,7 +13381,12 @@
     "url": "https://smartstore.naver.com/soulspirit",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "봄의아리아주",
+    "봄내양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d318",
@@ -12278,7 +13436,12 @@
     "url": "https://smartstore.naver.com/yein-wine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "북극성",
+    "예인화원"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d319",
@@ -12327,7 +13490,12 @@
     "url": "https://smartstore.naver.com/beewaltz",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "비왈츠 보쉐",
+    "미더리봉자"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d32",
@@ -12384,7 +13552,12 @@
     "visit": true,
     "address": "강원 횡성군 둔내면 강변로 975"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "1000억 막걸리",
+    "국순당"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d320",
@@ -12433,7 +13606,12 @@
     "url": "http://www.good-tomorrow.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "사화유자",
+    "맑은내일"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d321",
@@ -12481,7 +13659,12 @@
     "url": "https://smartstore.naver.com/wryseomak",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우리막걸리",
+    "우리서막"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d322",
@@ -12530,7 +13713,12 @@
     "url": "http://264wine.kr/htm/main.htm",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "한별",
+    "264청포도와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d323",
@@ -12579,7 +13767,12 @@
     "url": "https://smartstore.naver.com/horangmead",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "호피홉",
+    "술빚는호랑이"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d324",
@@ -12628,7 +13821,12 @@
     "url": "http://www.madeinjeju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "벚꽃피는 날에 제주",
+    "백록주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d325",
@@ -12677,7 +13875,12 @@
     "url": "https://yeunmi.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "연미정 노을",
+    "연미"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d326",
@@ -12725,7 +13928,12 @@
     "url": "https://form.naver.com/response/524dbsVLbVSJEs6_hda3GQ",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "옥주",
+    "옥수주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d327",
@@ -12774,7 +13982,12 @@
     "url": "https://www.ycwine.or.kr/goods/goods_list.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우아미 화이트와인",
+    "우아미와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d328",
@@ -12823,7 +14036,12 @@
     "url": "https://www.xn--vj5boel1bm3l.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "조흔 레드 스위트 와인",
+    "조흔와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d329",
@@ -12869,7 +14087,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예화",
+    "대윤가야곡주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d33",
@@ -12925,7 +14148,8 @@
     "visit": null,
     "address": "경기도 김포시 김포대로1216번길 84-74"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d330",
@@ -12974,7 +14198,12 @@
     "url": "https://www.corevest.co.kr/Home",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "코아베스트 배럴 에이징 보쉐",
+    "코아베스트"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d331",
@@ -13019,7 +14248,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "사임주",
+    "사리원"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d332",
@@ -13066,7 +14300,8 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d333",
@@ -13115,7 +14350,12 @@
     "url": "https://smartstore.naver.com/aotlfwhgkq",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "왕매실 막걸리",
+    "순성왕매실"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d334",
@@ -13160,7 +14400,12 @@
     "url": "https://smartstore.naver.com/hansansogokju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예담은 한산소곡주",
+    "한산예담은소곡주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d335",
@@ -13206,7 +14451,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "천안연미주",
+    "입장주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d336",
@@ -13253,7 +14503,12 @@
     "url": "https://smartstore.naver.com/hansansogokju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "한산예담은 한산소곡화주",
+    "한산예담은소곡주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d337",
@@ -13299,7 +14554,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "설레온",
+    "대윤가야곡주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d338",
@@ -13344,7 +14604,12 @@
     "url": "https://smartstore.naver.com/arirangjujo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "겨울소주",
+    "두이술공방"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d339",
@@ -13389,7 +14654,12 @@
     "url": "https://smartstore.naver.com/baekje2012",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백제한산군주",
+    "백제명가주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d34",
@@ -13443,7 +14713,8 @@
     "visit": true,
     "address": "충청남도 예산군 예산읍 형제고개로 967 다동 6호"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d340",
@@ -13490,7 +14761,12 @@
     "url": "http://byulbit.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "달",
+    "별빛드리운못"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d341",
@@ -13537,7 +14813,12 @@
     "url": "http://www.xn--v42bo8x7wc.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "청명주 탁주",
+    "중원당"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d342",
@@ -13584,7 +14865,12 @@
     "url": "https://smartstore.naver.com/hans_nuruklab",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "도한 청명주",
+    "한영석의발효연구소"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d343",
@@ -13634,7 +14920,12 @@
     "url": "https://smartbrewery.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마한오크46",
+    "스마트브루어리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d344",
@@ -13682,7 +14973,12 @@
     "url": "https://smartstore.naver.com/chuyondang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소여강",
+    "추연당"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d345",
@@ -13731,7 +15027,12 @@
     "url": "https://www.xn--299as4kvof95ouob.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "징기스칸",
+    "고도리 와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d346",
@@ -13780,7 +15081,12 @@
     "url": "https://nwine.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "너브내 로제 스파클링",
+    "샤또나드리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d347",
@@ -13829,7 +15135,12 @@
     "url": "https://smartstore.naver.com/bewater_brew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이너피스 플로우",
+    "상선주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d348",
@@ -13875,7 +15186,12 @@
     "url": "https://smartstore.naver.com/8romi_ssoju_official",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "팔로미 더 화이트",
+    "팔로미"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d349",
@@ -13920,7 +15236,12 @@
     "url": "https://smartstore.naver.com/8romi_ssoju_official",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "팔로미 더 블랙",
+    "팔로미"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d35",
@@ -13974,7 +15295,12 @@
     "visit": true,
     "address": "경상북도 문경시 동로면 노은1길 49-15"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오희 막걸리",
+    "문경주조"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d350",
@@ -14023,7 +15349,12 @@
     "url": "https://xn--hu1b40gh1c27n9rc18a.kr/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오래된 노래",
+    "우창"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d351",
@@ -14070,7 +15401,12 @@
     "url": "https://xn--hu1b40gh1c27n9rc18a.kr/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "한탄강익스프레스",
+    "우창(두루미양조장)"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d352",
@@ -14119,7 +15455,12 @@
     "url": "https://xn--hu1b40gh1c27n9rc18a.kr/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대관람차",
+    "우창(두루미양조장)"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d353",
@@ -14166,7 +15507,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "강릉 구름신 막걸리",
+    "주룩주룩"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d354",
@@ -14213,7 +15559,12 @@
     "url": "http://www.whalecity.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고쥬",
+    "웨일시티"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d355",
@@ -14260,7 +15611,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "구름신 커피 막걸리",
+    "주룩주룩"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d356",
@@ -14307,7 +15663,12 @@
     "url": "https://smartstore.naver.com/heukhwa",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "군주",
+    "흑화양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d357",
@@ -14355,7 +15716,12 @@
     "url": "https://smartstore.naver.com/bbchi457",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "까치돌배주",
+    "밤바치농장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d358",
@@ -14403,7 +15769,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "남쪽에서 뜨는 달 막걸리 바질탄산",
+    "약사샘양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d359",
@@ -14450,7 +15821,8 @@
     "url": "https://smartstore.naver.com/nerdbrew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d36",
@@ -14504,7 +15876,12 @@
     "visit": null,
     "address": "경기도 양평군 옥천면 아신역1길 21 2층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "C막걸리",
+    "C막걸리"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d360",
@@ -14551,7 +15928,12 @@
     "url": "https://xn--h50bx7nmc99h97t2wb.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "눈어치 와인 스위트",
+    "마미"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d361",
@@ -14598,7 +15980,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "단심",
+    "미소주방"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d362",
@@ -14645,7 +16032,12 @@
     "url": "https://smartstore.naver.com/bamboosul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "담브리즈",
+    "대밭고을"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d363",
@@ -14692,7 +16084,12 @@
     "url": "https://smartstore.naver.com/1779choi",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대몽재",
+    "경주교촌도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d364",
@@ -14741,7 +16138,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "딜리몬 탁주",
+    "범계주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d365",
@@ -14790,7 +16192,12 @@
     "url": "https://smartstore.naver.com/ttappu-bruwery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "멧 오미자",
+    "따뜻한뿌리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d366",
@@ -14837,7 +16244,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미라실 울프, 라즈베리",
+    "미라실"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d367",
@@ -14884,7 +16296,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미홍",
+    "아리네"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d368",
@@ -14931,7 +16348,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "박봉담 쌀쌀 막걸리",
+    "박봉담양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d369",
@@ -14978,7 +16400,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "배구",
+    "배구양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d37",
@@ -15032,7 +16459,12 @@
     "visit": true,
     "address": "경기 용인시 처인구 양지읍 죽양대로 2298-1 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이화주",
+    "술샘"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d370",
@@ -15079,7 +16511,12 @@
     "url": "https://smartstore.naver.com/bumpyo_brewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "범표 생 막걸리",
+    "범표주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d371",
@@ -15127,7 +16564,12 @@
     "url": "https://www.hahnsfarm.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "봉평메밀막걸리",
+    "한스팜"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d372",
@@ -15175,7 +16617,12 @@
     "url": "https://smartstore.naver.com/bonghwangwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "봉황청수20",
+    "하늘아래푸른농장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d373",
@@ -15223,7 +16670,12 @@
     "url": "https://boonza.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "분자",
+    "도술가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d374",
@@ -15271,7 +16723,12 @@
     "url": "https://samcheok-miro.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "블랙진",
+    "삼척미로"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d375",
@@ -15318,7 +16775,12 @@
     "url": "http://www.good-tomorrow.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "비사벌주",
+    "우포의아침"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d376",
@@ -15367,7 +16829,12 @@
     "url": "https://smartstore.naver.com/eotteonharu",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "생고흥유자막걸리라이트",
+    "녹동양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d377",
@@ -15414,7 +16881,12 @@
     "url": "https://brand.naver.com/woorisulstore",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "서울역",
+    "열우물양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d378",
@@ -15462,7 +16934,12 @@
     "url": "https://koreabrew.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "수안보 복숭아막걸리",
+    "골든웨일"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d379",
@@ -15509,7 +16986,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "수울섬 홍차탁주",
+    "향기품은수울섬"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d38",
@@ -15563,7 +17045,8 @@
     "visit": true,
     "address": "부산광역시 금정구 북문로 22"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d380",
@@ -15610,7 +17093,12 @@
     "url": "https://smartstore.naver.com/soojack-n",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "숨은골12",
+    "공동체공간 수작"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d381",
@@ -15657,7 +17145,12 @@
     "url": "https://yeunmi.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "연미정 가을",
+    "연미"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d382",
@@ -15706,7 +17199,12 @@
     "url": "https://smartstore.naver.com/oakholic_meeso",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오크홀릭",
+    "미소"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d383",
@@ -15753,7 +17251,12 @@
     "url": "https://smartstore.naver.com/wryseomak",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우리 과하주",
+    "우리서막"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d384",
@@ -15802,7 +17305,12 @@
     "url": "https://www.ycwine.or.kr/goods/goods_list.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우아미레드와인",
+    "우아미와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d385",
@@ -15851,7 +17359,12 @@
     "url": "https://smartstore.naver.com/dr1111",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "유자가득 유자막걸리",
+    "다랭이팜"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d386",
@@ -15901,7 +17414,12 @@
     "url": "https://smartstore.naver.com/yul_winery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "율 레드 드라이",
+    "율 와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d387",
@@ -15948,7 +17466,12 @@
     "url": "https://smartstore.naver.com/thtks99",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이가주",
+    "양주골이가전통주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d388",
@@ -15995,7 +17518,12 @@
     "url": "https://form.naver.com/response/524dbsVLbVSJEs6_hda3GQ",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이밤에 취해",
+    "옥수주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d389",
@@ -16042,7 +17570,12 @@
     "url": "https://smartstore.naver.com/iutsachon",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이웃사촌 탁주",
+    "청주이웃사촌"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d39",
@@ -16096,7 +17629,12 @@
     "visit": true,
     "address": "충청남도 당진시 신평면 신평로 813"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백련막걸리",
+    "신평양조장"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d390",
@@ -16143,7 +17681,12 @@
     "url": "https://brand.naver.com/woorisulstore",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "인천상륙작전",
+    "열우물양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d391",
@@ -16190,7 +17733,12 @@
     "url": "https://smartstore.naver.com/ggjjj",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "장보고의꿈 비파20",
+    "고금주조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d392",
@@ -16237,7 +17785,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "장안사이",
+    "장안양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d393",
@@ -16284,7 +17837,12 @@
     "url": "https://smartstore.naver.com/meouruwinezelkova",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "젤코바 아이스와인 화이트",
+    "젤코바와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d394",
@@ -16332,7 +17890,12 @@
     "url": "https://www.xn--vj5boel1bm3l.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "조흔 레드",
+    "조흔와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d395",
@@ -16381,7 +17944,12 @@
     "url": "https://smartstore.naver.com/gingerall",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "진저고유53",
+    "안동반가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d396",
@@ -16428,7 +17996,12 @@
     "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000017265",
     "store": "키햐"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "찰떡같이",
+    "우리도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d397",
@@ -16476,7 +18049,12 @@
     "url": "https://700jujo.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "참참",
+    "칠백주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d398",
@@ -16525,7 +18103,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "탐모라 진",
+    "암퀘스트"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d399",
@@ -16572,7 +18155,12 @@
     "url": "https://smartstore.naver.com/han_sool",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "한가한주 탁",
+    "여로"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d40",
@@ -16626,7 +18214,8 @@
     "visit": true,
     "address": "경상북도 문경시 산북면 운달로 7"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d400",
@@ -16673,7 +18262,12 @@
     "url": "https://smartstore.naver.com/doodleyangjo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "홀씨10방토",
+    "두들양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d401",
@@ -16721,7 +18315,12 @@
     "url": "https://smartstore.naver.com/hoegok1",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "회곡안동국화막걸리",
+    "회곡양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d402",
@@ -16769,7 +18368,12 @@
     "url": "https://smartstore.naver.com/applepapafarm",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "N와인 포도",
+    "애플파파"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d403",
@@ -16816,7 +18420,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "가랑가랑 막걸리",
+    "가랑가랑양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d404",
@@ -16864,7 +18473,12 @@
     "url": "https://smartstore.naver.com/yd-brewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "그래, 그날",
+    "이스트디자이너스"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d405",
@@ -16911,7 +18525,12 @@
     "url": "https://smartstore.naver.com/bbchi457",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "까치돌배주",
+    "밤바치농장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d406",
@@ -16958,7 +18577,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "남다어다약주22",
+    "태인정도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d407",
@@ -17006,7 +18630,12 @@
     "url": "https://smartstore.naver.com/daehyang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대향 머루 아이스와인",
+    "대향와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d408",
@@ -17054,7 +18683,12 @@
     "url": "https://smartstore.naver.com/winelabs",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "디스틸 오크 프리미엄",
+    "와인랩스"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d409",
@@ -17101,7 +18735,12 @@
     "url": "https://smartstore.naver.com/busandongbaek1917",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "뜻밖의맑음",
+    "동백1917"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d41",
@@ -17158,7 +18797,8 @@
     "visit": true,
     "address": "경기도 여주시 점봉길 93-12"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d410",
@@ -17205,7 +18845,12 @@
     "url": "https://smartstore.naver.com/choileebrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "리 28",
+    "초이리 브루어리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d411",
@@ -17253,7 +18898,12 @@
     "url": "https://smartstore.naver.com/mungyeongsaejae",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "만복 생전통주",
+    "문경새재양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d412",
@@ -17300,7 +18950,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "목련주",
+    "술팡"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d413",
@@ -17347,7 +19002,12 @@
     "url": "https://samcheok-miro.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미로약주",
+    "삼척미로"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d414",
@@ -17395,7 +19055,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "블루베리 와인, 세미 스위트",
+    "미라실"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d415",
@@ -17443,7 +19108,12 @@
     "url": "https://smartstore.naver.com/supmaeul5432",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "비단숲애플스위트",
+    "숲마을주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d416",
@@ -17490,7 +19160,12 @@
     "url": "http://www.good-tomorrow.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "사화막걸리",
+    "우포의아침"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d417",
@@ -17538,7 +19213,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "세이레 탁주",
+    "범계주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d418",
@@ -17586,7 +19266,12 @@
     "url": "https://smartstore.naver.com/sokyeriwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소계리 청산별곡",
+    "소계리와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d419",
@@ -17634,7 +19319,12 @@
     "url": "https://smartstore.naver.com/amaroum",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "아마로움 몽유",
+    "아침마루와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d42",
@@ -17688,7 +19378,12 @@
     "visit": null,
     "address": "전남광주통합특별시 함평군 신광면 신해로 88"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "자희향",
+    "자희자양"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d420",
@@ -17736,7 +19431,12 @@
     "url": "https://smartstore.naver.com/hoegok1",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "월영안동소주",
+    "회곡양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d421",
@@ -17785,7 +19485,12 @@
     "url": "https://smartstore.naver.com/dr1111",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "유자가득 드림09",
+    "다랭이팜"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d422",
@@ -17832,7 +19537,12 @@
     "url": "https://smartstore.naver.com/yul_winery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "율 러브 블라썸",
+    "율 와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d423",
@@ -17879,7 +19589,12 @@
     "url": "https://smartstore.naver.com/thtks99",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이가주탁",
+    "양주골이가전통주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d424",
@@ -17926,7 +19641,12 @@
     "url": "https://smartstore.naver.com/isibo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이시보막걸리 오리지널",
+    "이시보"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d425",
@@ -17974,7 +19694,12 @@
     "url": "https://smartstore.naver.com/peareplay",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이제",
+    "페어리플레이"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d426",
@@ -18021,7 +19746,12 @@
     "url": "https://www.nogeumjuga.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "일지춘 과하주",
+    "노금주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d427",
@@ -18068,7 +19798,12 @@
     "url": "https://smartstore.naver.com/vinegars",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "임진강쌀막걸리",
+    "평화마을양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d428",
@@ -18117,7 +19852,12 @@
     "url": "https://smartstore.naver.com/meouruwinezelkova",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "젤코바청수드라이",
+    "젤코바와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d429",
@@ -18164,7 +19904,12 @@
     "url": "https://kokao.co.kr/Product",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "탐나고량주",
+    "한국고량주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d43",
@@ -18218,7 +19963,12 @@
     "visit": true,
     "address": "강원 횡성군 둔내면 강변로 975"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예담",
+    "국순당"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d430",
@@ -18267,7 +20017,12 @@
     "url": "https://smartstore.naver.com/bluegreenk",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "하서 오크 프리미엄 증류식 소주",
+    "청산녹수"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d431",
@@ -18314,7 +20069,12 @@
     "url": "https://smartstore.naver.com/remeet_brewing",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "해",
+    "리밋브루잉"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d432",
@@ -18361,7 +20121,12 @@
     "url": "https://smartstore.naver.com/applepapafarm",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "N와인 샤인",
+    "애플파파"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d433",
@@ -18409,7 +20174,12 @@
     "url": "https://smartstore.naver.com/1950winery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "1950 씨유엣더탑 제주 감귤와인",
+    "제주양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d434",
@@ -18459,7 +20229,12 @@
     "url": "http://264wine.kr/htm/main.htm",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "264 청포도 와인 꽃",
+    "264청포도와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d435",
@@ -18508,7 +20283,12 @@
     "url": "http://264wine.kr/htm/main.htm",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "꽃",
+    "264청포도와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d436",
@@ -18556,7 +20336,12 @@
     "url": "https://smartstore.naver.com/nerdbrew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "너디호프 드라이",
+    "너드"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d437",
@@ -18603,7 +20388,12 @@
     "url": "http://www.madeinjeju.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "달그리안 경면녹파주",
+    "백록주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d438",
@@ -18652,7 +20442,12 @@
     "url": "https://smartstore.naver.com/mungyeongsaejae",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "만복 오미자생전통주",
+    "문경새재양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d439",
@@ -18699,7 +20494,12 @@
     "url": "https://smartstore.naver.com/gidarim34",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "매료막걸리ver.2",
+    "제이케이크래프트"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d44",
@@ -18753,7 +20553,12 @@
     "visit": true,
     "address": "제주시 애월읍 애원로 283"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오메기맑은술",
+    "제주샘주"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d440",
@@ -18802,7 +20607,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미라실 울프, 애플 오크 화이트 와인",
+    "미라실"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d441",
@@ -18849,7 +20659,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미라실 울프, 오톰 쎈스 가을의 전설 '다래'",
+    "미라실"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d442",
@@ -18896,7 +20711,12 @@
     "url": "https://smartstore.naver.com/busandongbaek1917",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "범벅",
+    "동백1917"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d443",
@@ -18945,7 +20765,12 @@
     "url": "https://smartstore.naver.com/horangmead",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "벚꽃시즌 스위트",
+    "술빚는호랑이"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d444",
@@ -18992,7 +20817,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "별길 아이스",
+    "별길와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d445",
@@ -19040,7 +20870,12 @@
     "url": "https://smartstore.naver.com/vinocastle",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "비노 페스티바 로제",
+    "비노케슬"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d446",
@@ -19087,7 +20922,12 @@
     "url": "https://smartstore.naver.com/supmaeul5432",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "비단숲청미디엄",
+    "숲마을주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d447",
@@ -19134,7 +20974,12 @@
     "url": "https://smartstore.naver.com/theseonsan",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "선산 오리지널",
+    "선산"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d448",
@@ -19182,7 +21027,12 @@
     "url": "https://smartstore.naver.com/sokyeriwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소계리 애플스위트",
+    "소계리와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d449",
@@ -19231,7 +21081,12 @@
     "url": "https://smartstore.naver.com/sobaekwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소백산산향기스위트와인",
+    "산내들와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d45",
@@ -19285,7 +21140,8 @@
     "visit": true,
     "address": "충청남도 공주시 봉정길 32"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d450",
@@ -19333,7 +21189,12 @@
     "url": "https://smartstore.naver.com/eseoyangjo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "순수6%복숭아",
+    "이서양조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d451",
@@ -19380,7 +21241,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "술마녀",
+    "청슬"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d452",
@@ -19429,7 +21295,12 @@
     "url": "https://smartstore.naver.com/amaroum",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "아마로움 캠벨드라이",
+    "아침마루와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d453",
@@ -19478,7 +21349,12 @@
     "url": "https://smartstore.naver.com/winelabs",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "애플멜로 달콤사과",
+    "와인랩스"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d454",
@@ -19526,7 +21402,12 @@
     "url": "https://smartstore.naver.com/dancingcider",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "애플스피릿",
+    "비전레드"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d455",
@@ -19574,7 +21455,12 @@
     "url": "https://smartstore.naver.com/yul_winery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "율 샤인",
+    "율 와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d456",
@@ -19621,7 +21507,12 @@
     "url": "https://smartstore.naver.com/iutsachon",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이웃사촌",
+    "청주이웃사촌"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d457",
@@ -19668,7 +21559,12 @@
     "url": "https://smartstore.naver.com/meouruwinezelkova",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "젤코바호랭이눈물21",
+    "젤코바와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d458",
@@ -19715,7 +21611,12 @@
     "url": "https://smartstore.naver.com/thtks99",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "주줌치",
+    "양주골이가전통주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d459",
@@ -19765,7 +21666,12 @@
     "url": "https://smartstore.naver.com/sanmacwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "환희",
+    "산막와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d46",
@@ -19819,7 +21725,8 @@
     "visit": true,
     "address": "서울특별시 마포구 월드컵북로 109 지하1호"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d460",
@@ -19867,7 +21774,12 @@
     "url": "https://smartstore.naver.com/applepapafarm",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "N와인 사과",
+    "애플파파"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d461",
@@ -19915,7 +21827,12 @@
     "url": "https://smartstore.naver.com/whajeonilchwi",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "화전일취12",
+    "지시울"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d462",
@@ -19961,7 +21878,12 @@
     "url": "https://smartstore.naver.com/dokkaebisul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "도깨비술",
+    "도깨비양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d463",
@@ -20006,7 +21928,12 @@
     "url": "https://smartstore.naver.com/dokkaebisul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "도깨비술",
+    "도깨비양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d464",
@@ -20053,7 +21980,12 @@
     "url": "https://smartstore.naver.com/nokgo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "녹고의 눈물",
+    "토향"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d465",
@@ -20098,7 +22030,12 @@
     "url": "https://smartstore.naver.com/upo2017",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "조선주조사",
+    "우포의아침"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d466",
@@ -20143,7 +22080,12 @@
     "url": "https://smartstore.naver.com/tigercalyx",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "호랑이배꼽",
+    "밝은세상"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d467",
@@ -20189,7 +22131,8 @@
     "url": "https://smartstore.naver.com/nhsssoju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d468",
@@ -20234,7 +22177,8 @@
     "url": "https://smartstore.naver.com/nhsssoju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d469",
@@ -20281,7 +22225,12 @@
     "url": "https://smartstore.naver.com/fourmieum",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소주다움",
+    "미음넷증류소"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d47",
@@ -20335,7 +22284,8 @@
     "visit": true,
     "address": "제주시 애월읍 애원로 283"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d470",
@@ -20384,7 +22334,12 @@
     "url": "http://www.good-tomorrow.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "맑은내일 유자",
+    "맑은내일"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d471",
@@ -20429,7 +22384,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "설련주",
+    "석전상온전통주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d472",
@@ -20475,7 +22435,12 @@
     "url": "https://smartstore.naver.com/1932",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "담은",
+    "1932포천일동막걸리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d473",
@@ -20521,7 +22486,12 @@
     "url": "https://smartstore.naver.com/mogok",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "게이샤",
+    "마마스팜"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d474",
@@ -20568,7 +22538,8 @@
     "url": "https://smartstore.naver.com/boeun_songroju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-19"
   },
   {
    "id": "d475",
@@ -20613,7 +22584,12 @@
     "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000007323",
     "store": "키햐"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "희양산 막걸리",
+    "두술도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d476",
@@ -20658,7 +22634,12 @@
     "url": "https://smartstore.naver.com/dokkaebisul",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "도깨비술",
+    "도깨비양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d477",
@@ -20704,7 +22685,12 @@
     "url": "https://m.kihya.com/goods/goods_view.php?goodsNo=1000008451",
     "store": "키햐"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "희양산 막걸리",
+    "두술도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d478",
@@ -20751,7 +22737,12 @@
     "url": "https://shopping.naver.com/storehome/100077745",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "선운산 복분자주",
+    "선운산복분자주 흥진"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d479",
@@ -20798,7 +22789,12 @@
     "url": "http://www.ellyeoppyunjoo.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "일엽편주",
+    "농암종택 전통주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d48",
@@ -20852,7 +22848,8 @@
     "visit": true,
     "address": "경상북도 안동시 도산면 선성중앙길 32"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d480",
@@ -20901,7 +22898,12 @@
     "url": "https://smartstore.naver.com/misongbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "경산대추막걸리",
+    "미송주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d481",
@@ -20951,7 +22953,12 @@
     "url": "https://smartstore.naver.com/andong_soju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "문화재·명인 조옥화 안동소주",
+    "민속주 안동소주"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d482",
@@ -20999,7 +23006,12 @@
     "url": "https://smartstore.naver.com/countrywine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "컨츄리 캠벨 드라이",
+    "컨츄리와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d483",
@@ -21049,7 +23061,12 @@
     "url": "https://smartstore.naver.com/ygvino",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "달하늘꿀술 애플",
+    "양나인비노"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d484",
@@ -21097,7 +23114,12 @@
     "url": "https://www.homesool.com/main/index.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "느린마을막걸리 한번더",
+    "배상면주가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d485",
@@ -21145,7 +23167,12 @@
     "url": "https://www.xn--299as4kvof95ouob.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고도리 로제",
+    "고도리 와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d486",
@@ -21193,7 +23220,12 @@
     "url": "http://www.woorisool.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "천진난만 약주",
+    "우리술드림"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d487",
@@ -21243,7 +23275,12 @@
     "url": "https://smartstore.naver.com/hangangbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "나루",
+    "한강주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d488",
@@ -21290,7 +23327,12 @@
     "url": "https://kyungkorea.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "경탁주 로제",
+    "제이1"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d489",
@@ -21339,7 +23381,12 @@
     "url": "https://www.omynara.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고운달 오크",
+    "제이엘"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d49",
@@ -21395,7 +23442,12 @@
     "visit": true,
     "address": "경기 용인시 처인구 양지읍 죽양대로 2298-1 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미르 소주",
+    "술샘"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d490",
@@ -21442,7 +23494,12 @@
     "url": "https://smartstore.naver.com/hans_nuruklab",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "도한 청명주",
+    "한영석의발효연구소"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d491",
@@ -21490,7 +23547,12 @@
     "url": "http://www.xn--2s2bp8gm6hx9a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "베리와인1168 CD",
+    "블루와인컴퍼니"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d492",
@@ -21538,7 +23600,12 @@
     "url": "https://www.homesool.com/main/index.php",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "생산사춘",
+    "배상면주가 포천LB"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d493",
@@ -21586,7 +23653,12 @@
     "url": "https://kyungkorea.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "시에가 포도향",
+    "제이1"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d494",
@@ -21633,7 +23705,12 @@
     "url": "https://smartstore.naver.com/88yangjojang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "압구정막걸리 원",
+    "팔팔양조장"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d495",
@@ -21681,7 +23758,12 @@
     "url": "https://smartstore.naver.com/yemilwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예밀와인 스위트",
+    "예밀2리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d496",
@@ -21728,7 +23810,12 @@
     "url": "https://smartstore.naver.com/jpjujo",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지평소주",
+    "지평주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d497",
@@ -21777,7 +23864,12 @@
     "url": "https://smartstore.naver.com/yangjudoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "청사과 막끌림",
+    "양주도가"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d498",
@@ -21826,7 +23918,12 @@
     "url": "http://xn--2j5b27cs5d.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "춘희",
+    "착한농부"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d499",
@@ -21873,7 +23970,12 @@
     "url": "https://wonsoju.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "환영30",
+    "원스피리츠"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d50",
@@ -21927,7 +24029,12 @@
     "visit": true,
     "address": "강원 횡성군 둔내면 강변로 975"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "려 고구마소주",
+    "국순당"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d500",
@@ -21977,7 +24084,12 @@
     "url": "http://www.mirattowine.com/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미르아토 로제 스파클링",
+    "금용농산"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d501",
@@ -22025,7 +24137,12 @@
     "url": "https://smartstore.naver.com/chuyondang",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "소여강50",
+    "추연당"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d502",
@@ -22073,7 +24190,12 @@
     "url": "http://www.nakchun.co.kr/",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "약천골지장수생막걸리",
+    "낙천"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d503",
@@ -22120,7 +24242,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "파랑",
+    "진정브루잉"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d504",
@@ -22168,7 +24295,12 @@
     "url": "https://www.xn--299as4kvof95ouob.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "고도리 샤인머스캣와인",
+    "고도리 와이너리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d505",
@@ -22217,7 +24349,12 @@
     "url": "http://www.xn--2s2bp8gm6hx9a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "베리와인1168 RS10",
+    "블루와인컴퍼니"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d506",
@@ -22265,7 +24402,12 @@
     "url": "https://smartstore.naver.com/yemilwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예밀와인 청향 화이트",
+    "예밀2리"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d507",
@@ -22314,7 +24456,12 @@
     "url": "https://smartstore.naver.com/ogyeri",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오계리 레드 와인",
+    "오계리 와인"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d508",
@@ -22361,7 +24508,12 @@
     "url": "https://smartstore.naver.com/bewater_brew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이너피스 캄",
+    "상선주조"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d509",
@@ -22408,7 +24560,12 @@
     "url": "https://smartstore.naver.com/butdream",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "홀인원막걸리",
+    "벗드림"
+   ],
+   "added": "2026-09-19"
   },
   {
    "id": "d51",
@@ -22462,7 +24619,12 @@
     "visit": true,
     "address": "경상북도 문경시 문경읍 새재로 609"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "문경바람",
+    "제이엘크래프트"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d510",
@@ -22512,7 +24674,12 @@
     "url": "https://smartstore.naver.com/butdream",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "감천막걸리",
+    "벗드림"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d511",
@@ -22559,7 +24726,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우리첫술 청설",
+    "우리첫술"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d512",
@@ -22608,7 +24780,12 @@
     "url": "http://www.xn--v42bo8x7wc.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "보은주",
+    "중원당"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d513",
@@ -22656,7 +24833,12 @@
     "url": "https://smartstore.naver.com/gcwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "그랑꼬또 청수 화이트 와인10",
+    "그린"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d514",
@@ -22703,7 +24885,12 @@
     "url": "https://smartstore.naver.com/palettebrew",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "토마토바질",
+    "팔레트 브루어리"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d515",
@@ -22750,7 +24937,12 @@
     "url": "https://smartstore.naver.com/minjusool",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "향미곡주",
+    "민주술도가"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d516",
@@ -22797,7 +24989,12 @@
     "url": "https://smartstore.naver.com/macatto",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "복도만취",
+    "착한농부 예천지점"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d517",
@@ -22845,7 +25042,12 @@
     "url": "https://smartstore.naver.com/ibee0500",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "허니와인 프로포즈",
+    "아이비"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d518",
@@ -22893,7 +25095,12 @@
     "url": "https://smartstore.naver.com/ibee0500",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "허니비와인",
+    "아이비"
+   ],
+   "added": "2026-09-20"
   },
   {
    "id": "d519",
@@ -22924,7 +25131,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "골드오서주",
+    "태령주조장"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d52",
@@ -22978,7 +25190,8 @@
     "visit": false,
     "address": "충청북도 청주시 서원구 현도면 현도공단로 177"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d520",
@@ -23009,7 +25222,12 @@
     "url": "https://www.xn--vf4b19u.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "추사 블루 스위트",
+    "예산사과와인"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d521",
@@ -23040,7 +25258,12 @@
     "url": "https://smartstore.naver.com/dokbrewery",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "디오케이 막걸리",
+    "독브루어리"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d522",
@@ -23072,7 +25295,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "올빚베리",
+    "올빚찬주"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d523",
@@ -23103,7 +25331,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "애플아이스, 와인",
+    "미라실"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d524",
@@ -23133,7 +25366,12 @@
     "url": "https://smartstore.naver.com/thtks99",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "주줌치2",
+    "양주골이가전통주"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d525",
@@ -23164,7 +25402,12 @@
     "url": "https://smartstore.naver.com/sanmacwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "산막와이너리, 라라",
+    "산막와이너리"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d526",
@@ -23196,7 +25439,12 @@
     "url": "https://smartstore.naver.com/limsugzu",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지란지교 무화과 탁주",
+    "친구들의술지란지교"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d527",
@@ -23227,7 +25475,12 @@
     "url": "https://xn--h40bv14bv7ak6p.kr/product/list.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "냥이탁주 화이트",
+    "행주산성주가"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d528",
@@ -23260,7 +25513,12 @@
     "url": "https://smartstore.naver.com/gidarim34",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "동래아들",
+    "제이케이크래프트"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d529",
@@ -23290,7 +25548,12 @@
     "url": "https://smartstore.naver.com/malgunsooldoga",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "동국이",
+    "양평맑은술도가"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d53",
@@ -23347,7 +25610,8 @@
     "visit": true,
     "address": "경남 함양군 지곡면 개평길 50-6"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d530",
@@ -23377,7 +25641,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "마크홀리 오리지널",
+    "홀리워터"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d531",
@@ -23407,7 +25676,12 @@
     "url": "https://smartstore.naver.com/mayday82",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "하늘담9",
+    "순천주조"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d532",
@@ -23439,7 +25713,12 @@
     "url": "https://smartstore.naver.com/dancingcider",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "허니문배",
+    "비전레드"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d533",
@@ -23471,7 +25750,12 @@
     "url": "https://www.jpjujo.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지평 이랑이랑",
+    "지평주조"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d534",
@@ -23503,7 +25787,12 @@
     "url": "https://smartstore.naver.com/yemilwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예밀와인 로제",
+    "예밀2리"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d535",
@@ -23535,7 +25824,12 @@
     "url": "https://smartstore.naver.com/sanmacwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "산막와이너리, 초련",
+    "산막 와이너리"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d536",
@@ -23567,7 +25861,12 @@
     "url": "http://www.good-tomorrow.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "맑은내일 발효막걸리 Signature",
+    "우포의아침"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d537",
@@ -23598,7 +25897,12 @@
     "url": "https://smartstore.naver.com/butdream",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "라이스퐁당17",
+    "벗드림"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d538",
@@ -23630,7 +25934,12 @@
     "url": "https://www.omynara.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "문경바람 오크",
+    "제이엘"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d539",
@@ -23660,7 +25969,12 @@
     "url": "https://smartstore.naver.com/eaudelune",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "베베마루 설레임 로제",
+    "오드린"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d54",
@@ -23714,7 +26028,8 @@
     "visit": true,
     "address": "전북특별자치도 완주군 구이면 구이로 1094"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d540",
@@ -23745,7 +26060,12 @@
     "url": "https://smartstore.naver.com/dancingcider",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "스윗마마",
+    "비전레드"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d541",
@@ -23776,7 +26096,12 @@
     "url": "https://smartstore.naver.com/horangmead",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "시즌",
+    "술빚는호랑이"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d542",
@@ -23808,7 +26133,12 @@
     "url": "https://smartstore.naver.com/yemilwine",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예밀와인 프리미엄 드라이",
+    "예밀2리"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d543",
@@ -23839,7 +26169,12 @@
     "url": "https://www.omynara.com",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오미로제 프리미어",
+    "제이엘"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d544",
@@ -23869,7 +26204,12 @@
     "url": "http://www.good-tomorrow.co.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우아한 막걸리",
+    "우포의아침"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d545",
@@ -23899,7 +26239,12 @@
     "url": "http://xn--2j5b27cs5d.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "춘희25",
+    "착한농부"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d546",
@@ -23931,7 +26276,12 @@
     "url": "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000001291",
     "store": "전통주몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "포엠 드라이",
+    "갈기산포도농원"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d547",
@@ -23962,7 +26312,12 @@
     "url": "https://smartstore.naver.com/eaudelune",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "그랑티그르 S1974",
+    "오드린"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d548",
@@ -23994,7 +26349,12 @@
     "url": "https://smartstore.naver.com/lesdom",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "레돔화이트스파클링와인",
+    "작은알자스"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d549",
@@ -24025,7 +26385,12 @@
     "url": "http://www.mirattowine.com/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미르아토 로제",
+    "금용농산"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d55",
@@ -24079,7 +26444,8 @@
     "visit": false,
     "address": "전남광주통합특별시 목포시 호남로64번길 37"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d550",
@@ -24110,7 +26476,12 @@
     "url": "http://www.mirattowine.com/index.html",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "미르아토 샤인머스켓",
+    "금용농산"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d551",
@@ -24140,7 +26511,12 @@
     "url": "http://www.xn--2s2bp8gm6hx9a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "베리와인1168RS330",
+    "블루와인컴퍼니"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d552",
@@ -24170,7 +26546,12 @@
     "url": "https://smartstore.naver.com/eaudelune",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "베베마루 아내를위한",
+    "오드린"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d553",
@@ -24201,7 +26582,12 @@
     "url": "http://www.xn--2s2bp8gm6hx9a.kr",
     "store": "양조장 공식몰"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "보라빛베리",
+    "블루와인컴퍼니"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d554",
@@ -24232,7 +26618,12 @@
     "url": null,
     "store": null
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "블루베리 레드와인, 클래식",
+    "미라실"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d555",
@@ -24263,7 +26654,12 @@
     "url": "https://smartstore.naver.com/ogyeri",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "오계리 화이트 와인",
+    "오계리 와인"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d556",
@@ -24293,7 +26689,12 @@
     "url": "https://smartstore.naver.com/pungjeong4season",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "풍정사계 하",
+    "화양"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d557",
@@ -24323,7 +26724,12 @@
     "url": "https://smartstore.naver.com/cheongmyeongju",
     "store": "양조장 공식 스마트스토어"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "호호",
+    "중원당"
+   ],
+   "added": "2026-09-24"
   },
   {
    "id": "d56",
@@ -24377,7 +26783,8 @@
     "visit": true,
     "address": "경상북도 문경시 문경읍 새재로 609"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d57",
@@ -24434,7 +26841,8 @@
     "visit": true,
     "address": "충청남도 예산군 고덕면 대몽로 107-25"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d58",
@@ -24488,7 +26896,8 @@
     "visit": true,
     "address": "경상북도 청도군 화양읍 송금길 100"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d59",
@@ -24542,7 +26951,8 @@
     "visit": true,
     "address": "경기도 파주시 적성면 윗배우니길 441-25"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d60",
@@ -24596,7 +27006,8 @@
     "visit": null,
     "address": null
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d61",
@@ -24652,7 +27063,12 @@
     "visit": null,
     "address": "경기도 광주시 퇴촌면 천진암로 684-1"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "호담 막걸리",
+    "대농바이오"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d62",
@@ -24708,7 +27124,12 @@
     "visit": true,
     "address": "충청북도 청주시 청원구 내수읍 미원초정로 1275"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "세종대왕어주",
+    "장희도가"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d63",
@@ -24764,7 +27185,8 @@
     "visit": true,
     "address": "강원특별자치도 원주시 판부면 판부신촌길 84 모월양조장"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d64",
@@ -24823,7 +27245,12 @@
     "visit": true,
     "address": "경상북도 김천시 증산면 금곡리3길 29"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "크라테 와인",
+    "수도산와이너리"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d65",
@@ -24880,7 +27307,8 @@
     "visit": true,
     "address": "충청북도 청주시 청원구 사천로18번길 5-2"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d66",
@@ -24940,7 +27368,12 @@
     "visit": true,
     "address": "경기도 평택시 오성면 숙성뜰길 108 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "천비향",
+    "좋은술"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d67",
@@ -24999,7 +27432,12 @@
     "visit": true,
     "address": "충청북도 영동군 영동읍 대학로 310 유원대학교 창업보육센터 104호"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "베리와인1168",
+    "블루와인컴퍼니"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d68",
@@ -25055,7 +27493,8 @@
     "visit": true,
     "address": "전남 나주시 다도면 신촌2길 9"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d69",
@@ -25111,7 +27550,8 @@
     "visit": true,
     "address": "경기도 포천시 영북면 산정호수로 335"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d70",
@@ -25167,7 +27607,12 @@
     "visit": null,
     "address": "인천광역시 부평구 경인로1104번길 6 4층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "탁100",
+    "탁브루"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d71",
@@ -25224,7 +27669,12 @@
     "visit": true,
     "address": "경기도 용인시 기흥구 갈곡로 3 지층 1호"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "두두물물",
+    "수블가"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d72",
@@ -25280,7 +27730,12 @@
     "visit": true,
     "address": "경상북도 경산시 진량읍 대학로 967-4"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "대추약주 추",
+    "미송주가"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d73",
@@ -25343,7 +27798,12 @@
     "visit": true,
     "address": "충청북도 영동군 심천면 약목2길 26"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "시나브로 와인",
+    "불휘농장"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d74",
@@ -25399,7 +27859,12 @@
     "visit": true,
     "address": "강원특별자치도 홍천군 서면 팔봉산로 811-28"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "너브내 와인",
+    "샤또나드리"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d75",
@@ -25438,7 +27903,12 @@
     "visit": null,
     "address": "충청남도 청양군 대치면 방죽골길 46-19"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "겨울소주",
+    "아리랑주조"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d76",
@@ -25494,7 +27964,8 @@
     "visit": true,
     "address": "경기도 여주시 점봉길 93-12"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d77",
@@ -25533,7 +28004,12 @@
     "visit": true,
     "address": "경기도 평택시 오성면 숙성뜰길 108 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "좋은술 화주",
+    "좋은술"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d78",
@@ -25592,7 +28068,8 @@
     "visit": true,
     "address": "충청남도 천안시 서북구 입장면 율목길 17-6"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d79",
@@ -25649,7 +28126,8 @@
     "visit": null,
     "address": "경기도 김포시 양촌읍 김포대로1759번길 33-23 2동"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d80",
@@ -25706,7 +28184,12 @@
     "visit": true,
     "address": "충청남도 서천군 한산면 한산모시길 45"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "불소곡주",
+    "한산소곡주명인"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d81",
@@ -25762,7 +28245,8 @@
     "visit": true,
     "address": "대전광역시 대덕구 신탄진로738번길 128"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d82",
@@ -25818,7 +28302,8 @@
     "visit": true,
     "address": "강원특별자치도 강릉시 새냉이길 23-2 1층"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d83",
@@ -25876,7 +28361,12 @@
     "visit": true,
     "address": "경기도 포천시 영북면 산정호수로 335"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "동정춘막걸리",
+    "술빚는 전가네"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d84",
@@ -25932,7 +28422,12 @@
     "visit": true,
     "address": "전라남도 해남군 삼산면 고산로 583-1"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "해남 찹쌀생막걸리",
+    "삼산주조장"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d85",
@@ -25988,7 +28483,12 @@
     "visit": null,
     "address": "부산광역시 강서구 대저로 259 A동"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "볼빨간막걸리",
+    "벗드림"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d86",
@@ -26044,7 +28544,12 @@
     "visit": null,
     "address": "경상북도 포항시 북구 흥해읍 한동로 72 1층"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "이바비 막걸리",
+    "흥해라이팝"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d87",
@@ -26100,7 +28605,12 @@
     "visit": null,
     "address": "전북특별자치도 정읍시 답곡길 64"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "백수환동주",
+    "한영석의 발효연구소"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d88",
@@ -26158,7 +28668,12 @@
     "visit": true,
     "address": "전북특별자치도 순창군 순창읍 순창7길 5-1"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지란지교 약주",
+    "친구들의 술 지란지교"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d89",
@@ -26216,7 +28731,8 @@
     "visit": true,
     "address": "충청북도 영동군 학산면 모리1길 4 1층"
    },
-   "image": null
+   "image": null,
+   "added": "2026-09-10"
   },
   {
    "id": "d90",
@@ -26272,7 +28788,12 @@
     "visit": true,
     "address": "강원특별자치도 영월군 김삿갓면 예밀촌길 229-3"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "예밀와인",
+    "예밀2리영농조합"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d91",
@@ -26329,7 +28850,12 @@
     "visit": true,
     "address": "충청남도 천안시 서북구 입장면 율목길 17-6"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "두레앙 증류주",
+    "두레양조"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d92",
@@ -26388,7 +28914,12 @@
     "visit": false,
     "address": "경기도 여주시 강천면 부평로 330"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "려 증류소주",
+    "국순당여주명주"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d93",
@@ -26430,7 +28961,12 @@
     "visit": null,
     "address": "경기도 양평군 강하면 왕창부로길 110"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "허니문 꿀술",
+    "아이비영농조합"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d94",
@@ -26486,7 +29022,12 @@
     "visit": null,
     "address": "경기도 김포시 양촌읍 김포대로1759번길 33-23 2동"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "포트미드",
+    "코아베스트브루잉"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d95",
@@ -26543,7 +29084,12 @@
     "visit": true,
     "address": "제주특별자치도 제주시 우도면 우도비양길 10"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "우도땅콩 전통주",
+    "우도땅콩막걸리낙화곡주"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d96",
@@ -26599,7 +29145,12 @@
     "visit": true,
     "address": "경기도 화성시 효행구 정남면 서봉로 835"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "호랑이 유자막걸리",
+    "배혜정도가"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d97",
@@ -26655,7 +29206,12 @@
     "visit": null,
     "address": "전북특별자치도 진안군 성수면 관진로 802-5"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "딸기막걸리",
+    "성수주조장"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d98",
@@ -26711,7 +29267,12 @@
     "visit": true,
     "address": "경상북도 영양군 청기면 청기로 1244"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "별헤는밤 탁주",
+    "발효공방1991"
+   ],
+   "added": "2026-09-10"
   },
   {
    "id": "d99",
@@ -26769,7 +29330,12 @@
     "visit": true,
     "address": "전북특별자치도 순창군 순창읍 순창7길 5-1"
    },
-   "image": null
+   "image": null,
+   "aliases": [
+    "지란지교 탁주",
+    "친구들의 술 지란지교"
+   ],
+   "added": "2026-09-10"
   }
  ],
  "foods": [
