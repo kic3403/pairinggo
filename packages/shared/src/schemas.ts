@@ -13,6 +13,15 @@ export const DrinkSchema = z.object({
   trend: Trend.optional(), profile: z.object({ sweet: z.number(), acid: z.number(), body: z.number(), fizz: z.number(), aroma: z.number() }).optional(),
   buy: z.object({ url: z.string().nullable(), store: z.string().nullable() }),
   offline: z.object({ visit: z.boolean().nullable(), place: z.string().nullable(), address: z.string().nullable(), phone: z.string().nullable(), note: z.string().nullable() }).optional(),
+  // 주종 확장(2026-09-24) — 모두 선택. 규격 용량·가격은 양수만(0·미확인은 null/행 없음)
+  kind: z.enum(["trad", "whisky", "sake", "wine"]).optional(),
+  country: z.string().optional(), attrs: z.record(z.string(), z.unknown()).optional(), nameOrig: z.string().nullable().optional(),
+  aliases: z.array(z.string()).optional(), added: z.string().optional(), demo: z.boolean().optional(),
+  specs: z.array(z.object({
+    id: z.string(), ml: z.number().int().positive().nullable(), abv: z.number().nullable().optional(), vintage: z.string().nullable().optional(),
+    pack: z.enum(["bottle", "set"]), bottles: z.number().int().positive(), note: z.string().nullable().optional(),
+    prices: z.array(z.object({ krw: z.number().int().positive(), type: z.enum(["msrp", "retail"]), source: z.string(), url: z.string().nullable().optional(), checked: z.string() })),
+  })).optional(),
 }).passthrough();
 
 export const FoodSchema = z.object({
@@ -27,6 +36,7 @@ export const PairingSchema = z.object({
   src: z.enum(["official", "sommelier", "media", "blog", "profile", "ai", "user"]).optional(),
   ev: z.object({ source: z.string().nullable().optional(), url: z.string().nullable().optional(), quote: z.string().nullable().optional(), who: z.string().nullable().optional() }).optional(),
   pf: z.object({ s: z.number(), plus: z.array(z.string()), minus: z.array(z.string()) }).optional(),
+  serve: z.enum(["neat", "rocks", "highball", "warm", "cold"]).nullable().optional(), checked: z.string().nullable().optional(),
 }).passthrough();
 
 export const DatasetSchema = z.object({

@@ -3,6 +3,9 @@
  * 띄어쓰기·기호·대소문자·전각 차이를 없애고, 종류 동의어(막걸리=탁주 등)를 표준 종류로 맞춘다.
  */
 
+import { kindSynonyms } from "../catalog/kinds";
+import type { DrinkKind } from "../types";
+
 /** 공백·구두점 제거, 소문자, 전각→반각, NFC */
 export function normalize(s: string): string {
   return s
@@ -24,6 +27,17 @@ export const CATEGORY_SYNONYMS: Record<string, string> = {
   허니와인: "허니와인", 미드: "허니와인", 벌꿀술: "허니와인", 꿀술: "허니와인",
 };
 const CATEGORY_KEYS = Object.keys(CATEGORY_SYNONYMS).sort((a, b) => b.length - a.length);
+
+/**
+ * 주종·세부 종류 동의어(2026-09-24, catalog/kinds.ts) — "위스키"·"whisky"·"준마이"·"쉬라즈"처럼 새 주종 낱말은 여기서 주종/세부 종류로 푼다.
+ * 전통주 종류는 위 CATEGORY_SYNONYMS가 먼저다("와인"은 아직 과실주로도 이어진다 — 와인 데이터가 없는 동안 빈 결과를 막는다).
+ */
+const KIND_SYNONYMS: Map<string, { kind: DrinkKind; cat?: string }> = new Map();
+for (const s of kindSynonyms()) { const k = normalize(s.word); if (k && !KIND_SYNONYMS.has(k)) KIND_SYNONYMS.set(k, { kind: s.kind, cat: s.cat }); }
+/** 정규화된 검색어가 주종·세부 종류 낱말이면 { kind, cat } */
+export function kindOfQuery(norm: string): { kind: DrinkKind; cat?: string } | null {
+  return KIND_SYNONYMS.get(norm) ?? null;
+}
 
 /** 정규화된 검색어가 통째로 종류 동의어이면 표준 종류 반환 */
 export function categoryOf(norm: string): string | null {

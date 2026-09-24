@@ -3,12 +3,13 @@
  * 모듈 로드 시 한 번 만들고, applyDataset()으로 카탈로그가 바뀌면 다시 만든다 (218+α 건, 수 ms).
  */
 import { BREWERIES, CATEGORIES, DATA, onDatasetChange } from "../data";
+import { DRINK_KINDS, KIND_LABEL, countryLabel, inSubtype, kindOf, subtypeLabel } from "../catalog/kinds";
 import { choseong, toJamo } from "../hangul";
 import { REGIONS } from "../regions";
 import { normalize } from "./normalize";
 
 export type DocType = "drink" | "food" | "browse";
-export type BrowseKind = "category" | "region" | "brewery";
+export type BrowseKind = "category" | "region" | "brewery" | "kind";
 
 export type Doc = {
   type: DocType;
@@ -29,6 +30,15 @@ export type Doc = {
   trend: number;
 };
 
+/** 주종 속성에서 검색어로 쓸 낱말 — 품종·스타일·증류소·생산자·주조미 */
+function attrWords(attrs?: Record<string, unknown>): string[] {
+  if (!attrs) return [];
+  const out: string[] = [];
+  for (const k of ["grapes", "styles", "cask"]) { const v = attrs[k]; if (Array.isArray(v)) out.push(...v.map(String)); }
+  for (const k of ["distillery", "producer", "rice", "prefecture", "sub_region", "region"]) { const v = attrs[k]; if (typeof v === "string" && v) out.push(v); }
+  return out;
+}
+
 function mk(type: DocType, id: string, name: string, meta: string, extra: Partial<Doc> = {}): Doc {
   const norm = normalize(name);
   return {
@@ -42,8 +52,14 @@ function mk(type: DocType, id: string, name: string, meta: string, extra: Partia
 function build(): Doc[] {
   const out: Doc[] = [];
   for (const d of DATA.drinks) {
-    const aliases = [d.alias, ...(d.brewery ? [d.brewery] : [])].filter((a) => a && normalize(a) !== normalize(d.name)).map((a) => ({ norm: normalize(a), jamo: toJamo(normalize(a)) }));
-    out.push(mk("drink", d.id, d.name, [d.category, d.abv != null ? `${d.abv}%` : null, d.region || d.brewery].filter(Boolean).join(" · "), {
+    // 별칭 전체 + 원어명 + 품종·스타일·증류소·생산자(주종 속성) — "쉬라즈"·"Junmai"·"글렌…"으로도 찾힌다(2026-09-24)
+    const extra = [d.nameOrig ?? "", ...(d.aliases ?? []), ...attrWords(d.attrs), ...(kindOf(d) !== "trad" ? [KIND_LABEL[kindOf(d)], subtypeLabel(d)] : [])];
+    const seen = new Set<string>([normalize(d.name)]);
+    const aliases = [d.alias, ...(d.brewery ? [d.brewery] : []), ...extra].map((a) => normalize(a || "")).filter((a) => a && !seen.has(a) && seen.add(a)).map((a) => ({ norm: a, jamo: toJamo(a) }));
+    const meta = kindOf(d) === "trad"
+      ? [d.category, d.abv != null ? `${d.abv}%` : null, d.region || d.brewery]
+      : [KIND_LABEL[kindOf(d)], subtypeLabel(d), d.abv != null ? `${d.abv}%` : null, countryLabel(kindOf(d), d.country)];
+    out.push(mk("drink", d.id, d.name, meta.filter(Boolean).join(" · "), {
       aliases,
       fields: { category: normalize(d.category), tags: (d.flavor || []).map(normalize), region: normalize(d.region || ""), brewery: normalize(d.brewery || ""), awards: (d.awards || []).length },
       trend: (d.trend?.score || 0) / 100,
@@ -58,7 +74,20 @@ function build(): Doc[] {
     }));
   }
   // 둘러보기: 종류
-  for (const c of CATEGORIES) out.push(mk("browse", `category:${c.key}`, c.key, `술 종류 · ${c.count}종`, { kind: "category", key: c.key, trend: 0.5 }));
+  // (전통주 종류만 — 다른 주종의 세부 종류는 아래 주종 항목으로)
+  const tradCats = new Set(DATA.drinks.filter((d) => kindOf(d) === "trad").map((d) => d.category));
+  for (const c of CATEGORIES) if (tradCats.has(c.key)) out.push(mk("browse", `category:${c.key}`, c.key, `술 종류 · ${c.count}종`, { kind: "category", key: c.key, trend: 0.5 }));
+  // 둘러보기: 주종(전통주 외)과 그 세부 종류 — 술이 하나라도 있을 때만(2026-09-24)
+  for (const k of DRINK_KINDS) {
+    if (k.id === "trad") continue;
+    const inKind = DATA.drinks.filter((d) => kindOf(d) === k.id);
+    if (!inKind.length) continue;
+    out.push(mk("browse", `kind:${k.id}`, k.label, `주종 · ${inKind.length}종`, { kind: "kind", key: k.id, trend: 0.5 }));
+    for (const s of k.subtypes) {
+      const n = inKind.filter((d) => inSubtype(d, s.id)).length;
+      if (n) out.push(mk("browse", `kind:${k.id}:${s.id}`, s.label, `${k.label} · ${n}종`, { kind: "kind", key: `${k.id}:${s.id}`, trend: 0.4 }));
+    }
+  }
   // 둘러보기: 지역 (관심지역 라벨 + 데이터 region 첫 토큰)
   const regionNames = new Set<string>();
   for (const r of REGIONS) if (r.id !== "all" && !r.parent) r.label.split("/").forEach((l) => regionNames.add(l.trim()));

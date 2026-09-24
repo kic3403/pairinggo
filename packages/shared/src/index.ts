@@ -39,3 +39,6 @@ export * from "./place-match";
 export * from "./drink-awards";
 export * from "./wanted";
 export * from "./shop";
+export * from "./catalog/kinds";
+export * from "./catalog/specs";
+export * from "./catalog/filter";

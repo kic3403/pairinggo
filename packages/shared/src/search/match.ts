@@ -5,7 +5,9 @@
  */
 import { choseong, isChoseongOnly, toJamo } from "../hangul";
 import { DOCS, type Doc, type DocType } from "./docs";
-import { categoryOf, normalize, stripSuffix } from "./normalize";
+import { categoryOf, kindOfQuery, normalize, stripSuffix } from "./normalize";
+import { D } from "../data";
+import { inSubtype, kindOf } from "../catalog/kinds";
 
 export type MatchKind = "exact" | "prefix" | "contains" | "jamo-prefix" | "jamo-contains" | "chosung" | "fuzzy" | "field";
 export type Hit = { doc: Doc; score: number; kind: MatchKind; field: "name" | "alias" | "brewery" | "category" | "tag" | "region" };
@@ -131,6 +133,15 @@ export function search(q: string, opts: SearchOptions = {}): SearchResult {
         if (!s) break;
       }
       if (minScore > 0 && minScore !== Infinity) put(doc, minScore * 0.9, "contains", "name");
+    }
+  }
+  // 주종·세부 종류 낱말("위스키"·"준마이"·"쉬라즈") → 그 주종/세부 종류 술 전부 + 둘러보기 항목 최상단(2026-09-24)
+  const kq = !cat ? kindOfQuery(norm) || kindOfQuery(stripped) : null;
+  if (kq) {
+    for (const doc of DOCS) {
+      if (types && !types.includes(doc.type)) continue;
+      if (doc.type === "drink") { const d = D[doc.id]; if (d && kindOf(d) === kq.kind && (!kq.cat || inSubtype(d, kq.cat))) put(doc, 40, "field", "category"); }
+      if (doc.type === "browse" && doc.kind === "kind" && doc.key === (kq.cat ? `${kq.kind}:${kq.cat}` : kq.kind)) put(doc, 100, "exact", "name");
     }
   }
   // 종류 동의어는 둘러보기 항목을 최상단으로
