@@ -1,6 +1,6 @@
 "use client";
 /**
- * 휴대폰 하단 탭바 — 홈 · 검색 · 전통주 · 음식 · 마이(2026-09-14, 캐치테이블·데일리샷 앱 구조 참고, docs/19 §5).
+ * 휴대폰 하단 탭바 — 홈 · 검색 · 술 · 음식 · 마이(2026-09-14, 캐치테이블·데일리샷 앱 구조 참고, docs/19 §5).
  * 767px 이하에서만 보이고(CSS), 그때 헤더 메뉴는 숨긴다. 술·음식 상세에서는 탭바 대신 하단 고정 버튼(DetailActionBar)을 쓴다.
  */
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default function MobileTabBar() {
   const tabs = [
     { href: "/", label: "홈", icon: "home", on: path === "/" },
     { href: "/search", label: "검색", icon: "search", on: path.startsWith("/search") },
-    { href: "/drinks", label: "전통주", icon: "drink", on: path.startsWith("/drinks") },
+    { href: "/drinks", label: "술", icon: "drink", on: path.startsWith("/drinks") },
     { href: "/foods", label: "음식", icon: "food", on: path.startsWith("/foods") },
     { href: ready && !loggedIn ? "/login" : "/my", label: ready && !loggedIn ? "로그인" : "마이", icon: "me", on: /^\/(my|saved|picks)(\/|$)/.test(path) },
   ];

@@ -9,7 +9,7 @@ import GradeBadge from "./GradeBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
 import ProfileChart from "./ProfileChart";
-import { D, F, PICK_DETAIL, PICK_LABEL, cardSummary, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
+import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -42,6 +42,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
           <li key={href} className="card" data-pick={pick}>
             <div className="top">
               <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
+              {p.serve && <span className="badge n" title="음용 방식">{SERVE_LABEL[p.serve]}</span>}
               <GradeBadge grade={grade} title={explain} />
             </div>
             {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}

@@ -315,7 +315,7 @@ p { margin: 0 0 12px; }
 .quick { margin: 22px 0 4px; }
 /* 9칸(2026-09-24 수상 칸을 대회별로 나눔) — 휴대폰 3×3, 넓은 화면 한 줄 */
 .quick ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 6px; margin: 0; padding: 0; list-style: none; }
-@media (min-width: 560px) { .quick ul { grid-template-columns: repeat(9, 1fr); } }
+@media (min-width: 560px) { .quick ul { grid-template-columns: repeat(5, 1fr); } }
 .quick a { display: flex; flex-direction: column; align-items: center; gap: 7px; text-decoration: none; color: var(--ink); font-size: 12.5px; font-weight: 600; }
 .quick .ic { position: relative; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; background: var(--bg2); font-size: 26px; line-height: 1; color: var(--tone); }
 .quick .ic em { position: absolute; top: -4px; right: -4px; font-style: normal; font-size: 10px; font-weight: 800; color: #fff; background: var(--food); border-radius: 999px; padding: 2px 5px; }
@@ -1011,3 +1011,20 @@ a.pd-score:hover { border-color: var(--navy); }
 .catv-row:hover { background: var(--bg2); }
 .catv-row.strong { font-weight: 800; color: var(--navy-ink); }
 .catv-row.sub { padding-left: 34px; font-size: 15px; color: var(--ink2); }
+
+/* 술 상세 — 규격·참고가격(SpecPicker)·주종별 정보(KindFacts) (2026-09-24) */
+.name-orig { margin: -6px 0 6px; color: var(--muted); font-size: 14px; }
+.specbox { margin: 12px 0 4px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg2); }
+.specbox h3 { margin: 0 0 10px; font-size: 13px; letter-spacing: 0.04em; color: var(--navy-ink); }
+.specbox .fchip.set { border-style: dashed; }
+.spec-kv { margin: 12px 0 0; display: grid; gap: 6px; }
+.spec-kv > div { display: grid; grid-template-columns: 96px 1fr; gap: 10px; font-size: 14px; }
+.spec-kv dt { color: var(--muted); font-weight: 600; }
+.spec-kv dd { margin: 0; }
+.spec-kv dd.price { font-size: 20px; font-weight: 800; color: var(--ink); font-variant-numeric: tabular-nums; }
+.facts { margin: 16px 0 4px; }
+.facts h2 { font-size: 17px; margin-bottom: 8px; }
+.facts-kv { display: grid; gap: 6px; margin: 0; max-width: 560px; }
+.facts-kv > div { display: grid; grid-template-columns: 120px 1fr; gap: 10px; font-size: 14px; }
+.facts-kv dt { color: var(--muted); font-weight: 600; }
+.facts-kv dd { margin: 0; }

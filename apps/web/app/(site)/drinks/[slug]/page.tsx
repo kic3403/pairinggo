@@ -5,7 +5,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { F, LINK_STATUS, byDrink, breadcrumb, buyLink, drinkProduct, findBySlug, josa, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
+import { Suspense } from "react";
+import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, similarDrinks, subtypeLabel, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { buyOptions } from "@/lib/shop";
 import { siteUrl } from "@/lib/site";
@@ -22,6 +23,8 @@ import DetailActionBar from "../../_components/DetailActionBar";
 import JsonLd from "../../_components/JsonLd";
 import ProfileBars from "../../_components/ProfileBars";
 import ShareButton from "../../_components/ShareButton";
+import SpecPicker from "../../_components/SpecPicker";
+import KindFacts from "../../_components/KindFacts";
 
 export const revalidate = 600;
 /**
@@ -45,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!drink) return { title: "찾을 수 없는 전통주 | 페어링GO" };
   const n = (byDrink[drink.id] || []).length;
   const title = `${drink.name}에 어울리는 안주 ${n}가지 | 페어링GO`;
-  const description = `${josa(drink.name, "과/와")} 어울리는 음식을 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다. ${[drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean).join(" · ")}.`;
+  const description = `${josa(drink.name, "과/와")} 어울리는 음식을 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다. ${[kindOf(drink) === "trad" ? drink.category : `${KIND_LABEL[kindOf(drink)]} ${subtypeLabel(drink)}`, drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean).join(" · ")}.`;
   const url = `/drinks/${toSlug(drink.name)}`;
   return {
     title, description,
@@ -72,9 +75,16 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   // 이 술을 빚은 양조장이 페어링GO 파트너면 방문 시음 예약으로 잇는다(0031)
   const bp = drink.brewery ? await breweryPartner(drink.brewery).catch(() => null) : null;
   const sameBrewery = c.dataset.drinks.filter((d) => d.id !== drink.id && d.brewery && d.brewery === drink.brewery).slice(0, 5);
-  const sameRegion = c.dataset.drinks.filter((d) => d.id !== drink.id && d.region && drink.region && d.region.split(" ")[0] === drink.region.split(" ")[0]).slice(0, 6);
+  const kind = kindOf(drink);
+  const sameRegion = kind === "trad" ? c.dataset.drinks.filter((d) => d.id !== drink.id && d.region && drink.region && d.region.split(" ")[0] === drink.region.split(" ")[0]).slice(0, 6) : [];
+  // 유사한 술 — 같은 주종 안에서(맛 프로필·종류·도수, shared similarDrinks)
+  const similar = similarDrinks(drink, 14).filter((s) => kindOf(s.x) === kind && !sameBrewery.some((b) => b.id === s.x.id)).slice(0, 5);
+  // 근거(양조장·소믈리에·매체·후기·회원) 있는 페어링이 하나도 없으면 '준비 중'으로 알린다 — 맛 분석·AI 제안을 검증된 추천처럼 보이지 않게
+  const hasEvidence = items.some((it) => ["official", "sommelier", "media", "blog", "user"].includes(it.pairing.src ?? ""));
 
-  const meta = [drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.region, drink.brewery].filter(Boolean);
+  const meta = kind === "trad"
+    ? [drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.region, drink.brewery].filter(Boolean)
+    : [KIND_LABEL[kind], subtypeLabel(drink), countryLabel(kind, drink.country), drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean);
 
   // 구조화 데이터(docs/20 P3-4) — 검색 결과에 도수·양조장·경로가 함께 보이게. 파는 상품이 있으면 가격까지.
   const base = siteUrl();
@@ -82,18 +92,21 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const opts = await buyOptions(drink.id).catch(() => []);
   const ld = [
     drinkProduct(
-      { name: drink.name, desc: drink.desc, category: drink.category, abv: drink.abv, brewery: drink.brewery, region: drink.region, awards: drink.awards },
+      { name: drink.name, desc: drink.desc, category: kind === "trad" ? drink.category : `${KIND_LABEL[kind]} ${subtypeLabel(drink)}`, abv: drink.abv, brewery: drink.brewery, region: kind === "trad" ? drink.region : countryLabel(kind, drink.country), awards: drink.awards },
       { base, path, offers: opts.map((o) => ({ price: o.price, inStock: o.buyable > 0, sellerName: o.seller.bizName })) },
     ),
-    breadcrumb([{ name: "홈", path: "/" }, { name: "전통주", path: "/drinks" }, { name: drink.name, path }], base),
+    breadcrumb([{ name: "홈", path: "/" }, { name: "술", path: "/drinks" }, { name: KIND_LABEL[kind], path: `/drinks?kind=${kind}` }, { name: drink.name, path }], base),
   ];
 
   return (
     <div className="wrap">
       <JsonLd data={ld} />
-      <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">전통주</Link></p>
-      <h1>{drink.name}</h1>
+      <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">술</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
+      <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
+      {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
       <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
+      {/* ② 용량 선택과 그 규격의 참고가격(2026-09-24) — 규격이 등록된 술만. useSearchParams라 Suspense 경계 */}
+      {!!drink.specs?.length && <Suspense fallback={null}><SpecPicker specs={drink.specs} drinkId={drink.id} /></Suspense>}
       {/* 파는 곳이 있으면 이름 바로 아래에서 산다(2026-09-21 사용자 요청) — 재고·가격이 바뀌므로 화면에서 불러온다 */}
       <BuyBox drinkId={drink.id} drinkName={drink.name} />
       {drink.desc && <p className="lead">{drink.desc}</p>}
@@ -104,6 +117,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         <ul className="tags">{drink.awards.map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
       )}
       <ProfileBars kind="drink" profile={drink.profile} />
+      <KindFacts drink={drink} />
       <div className="share-row"><ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} /></div>
 
       {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
@@ -147,6 +161,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           <p className="small muted" style={{ marginTop: -6 }}>
             어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 전문가픽은 양조장·소믈리에 추천, 대중픽은 블로그·유튜브 후기에서 확인된 조합이고, 먹어본 회원들의 평가가 함께 쌓입니다.
           </p>
+          {!hasEvidence && <p className="box small" style={{ marginBottom: 12 }}><b>페어링 정보 준비 중</b> — 아직 양조장·소믈리에·매체가 확인한 조합이 없습니다. 아래는 맛 프로필로 추정한 조합이며 검증된 추천이 아닙니다.</p>}
           <MemberPickButton mode="drink" subjectId={drink.id} subjectName={drink.name} options={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
           <RatingsProvider subject={{ drink: drink.id }}>
             <PickTabs counts={pickCounts(items)}>
@@ -179,6 +194,12 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <ul>{sameBrewery.map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul>
             </div>
           )}
+          {!!similar.length && (
+            <div className="box">
+              <h3>비슷한 {KIND_LABEL[kind]}</h3>
+              <ul>{similar.map((s) => <li key={s.x.id}><Link href={`/drinks/${toSlug(s.x.name)}`}>{s.x.name}</Link>{s.why.length > 0 && <span className="small muted"> · {s.why.slice(0, 2).join(" · ")}</span>}</li>)}</ul>
+            </div>
+          )}
           {!!sameRegion.length && (
             <div className="box">
               <h3>{drink.region?.split(" ")[0]}의 전통주</h3>
@@ -190,7 +211,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             <ul>
               <li>블로그 언급 {fmt(drink.blog_anju || 0)}건</li>
               <li>등록된 페어링 {items.length}건</li>
-              <li>전체 전통주 {c.counts.drinks}종</li>
+              <li>전체 술 {c.counts.drinks}종</li>
             </ul>
           </div>
         </aside>

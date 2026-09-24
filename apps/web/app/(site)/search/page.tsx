@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CATEGORIES, D, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, intentSearch, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
+import { D, DRINK_KINDS, KIND_BY_ID, KIND_LABEL, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, inSubtype, intentSearch, kindOf, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import GradeBadge from "../_components/GradeBadge";
@@ -31,7 +31,13 @@ const withRegion = (q: string, id: string) => `/search?${new URLSearchParams({ .
 const drinkHref = (name: string) => `/drinks/${toSlug(name)}`;
 const foodHref = (name: string) => `/foods/${toSlug(name)}`;
 const browseHref = (kind: string | undefined, key: string | undefined) =>
-  kind === "category" ? `/drinks?category=${encodeURIComponent(key || "")}` : kind === "region" ? `/drinks?region=${encodeURIComponent(key || "")}` : `/drinks?brewery=${encodeURIComponent(key || "")}`;
+  kind === "category" ? `/drinks?category=${encodeURIComponent(key || "")}` : kind === "region" ? `/drinks?region=${encodeURIComponent(key || "")}`
+    : kind === "kind" ? (key?.includes(":") ? `/drinks?kind=${key.split(":")[0]}&cat=${key.split(":")[1]}` : `/drinks?kind=${key}`) : `/drinks?brewery=${encodeURIComponent(key || "")}`;
+/** 종류로 찾기 — 전통주 세부 종류 + 술이 있는 다른 주종(2026-09-24) */
+const kindChips = (drinks: { kind?: string; category: string; attrs?: Record<string, unknown> }[]) => [
+  ...KIND_BY_ID.trad.subtypes.map((s) => ({ key: s.id, label: s.label, href: `/drinks?kind=trad&cat=${s.id}`, n: drinks.filter((d) => kindOf(d as never) === "trad" && inSubtype(d as never, s.id)).length })),
+  ...DRINK_KINDS.filter((k) => k.id !== "trad").map((k) => ({ key: k.id, label: k.label, href: `/drinks?kind=${k.id}`, n: drinks.filter((d) => kindOf(d as never) === k.id).length })),
+].filter((x) => x.n > 0);
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;
@@ -87,7 +93,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       {!q && !regional && (
         <>
           <h2>종류로 찾기</h2>
-          <ul className="tabs">{CATEGORIES.map((c) => <li key={c.key}><Link href={`/drinks?category=${encodeURIComponent(c.key)}`}>{c.key}<span className="cnt">{c.count}</span></Link></li>)}</ul>
+          <ul className="tabs">{kindChips(c.dataset.drinks).map((x) => <li key={x.key}><Link href={x.href}>{x.label}<span className="cnt">{x.n}</span></Link></li>)}</ul>
           <h2>많이 찾는 것</h2>
           <ul className="tabs">
             {POPULAR.slice(0, 6).map((d) => <li key={d.id}><Link href={drinkHref(d.name)}>{d.alias || d.name}</Link></li>)}
@@ -181,7 +187,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               const d = h.doc;
               return (
                 <li key={"d" + d.id} className="row d">
-                  <span className="badge d">술</span>
+                  <span className="badge d">{kindOf(D[d.id] || {}) === "trad" ? "술" : KIND_LABEL[kindOf(D[d.id] || {})]}</span>
                   <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{d.meta}</span></Link>
                   {h.kind === "fuzzy" && <span className="small muted">비슷한 이름</span>}
                   <Heart kind="drink" id={d.id} name={d.name} />
@@ -201,7 +207,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             })}
             {res.browse.map((h) => (
               <li key={"b" + h.doc.id} className="row">
-                <span className="badge n">{h.doc.kind === "category" ? "종류" : h.doc.kind === "region" ? "지역" : "양조장"}</span>
+                <span className="badge n">{h.doc.kind === "category" ? "종류" : h.doc.kind === "region" ? "지역" : h.doc.kind === "kind" ? "주종" : "양조장"}</span>
                 <Link href={browseHref(h.doc.kind, h.doc.key)} className="grow"><b>{h.doc.name}</b><span className="small muted">{h.doc.meta}</span></Link>
               </li>
             ))}
@@ -222,7 +228,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             </>
           )}
           <p className="small muted" style={{ marginTop: 16 }}>종류로 찾기</p>
-          <ul className="tabs">{CATEGORIES.map((c) => <li key={c.key}><Link href={`/drinks?category=${encodeURIComponent(c.key)}`}>{c.key}</Link></li>)}</ul>
+          <ul className="tabs">{kindChips(c.dataset.drinks).map((x) => <li key={x.key}><Link href={x.href}>{x.label}</Link></li>)}</ul>
         </section>
       )}
     </div>

@@ -15,7 +15,8 @@ export const SRC_RANK: Record<SrcTier, number> = { official: 4, sommelier: 3, me
 
 /** 전통주 미분류(일반주류) — 온라인 직배송 불가, 오프라인 안내는 '주류판매점' (docs/06 주류 규제 #5) */
 export const NON_TRAD = new Set(["d12", "d13", "d21", "d32", "d43", "d52", "d55"]);
-export const onlineSellable = (d: Drink) => !NON_TRAD.has(d.id);
+/** 온라인 구매 안내를 붙일 수 있는 술 — 전통주(주류 통신판매 예외)만. 위스키·사케·와인은 온라인 직배송이 법적으로 안 되므로 판매점 안내로(2026-09-24) */
+export const onlineSellable = (d: Drink) => !NON_TRAD.has(d.id) && (!d.kind || d.kind === "trad");
 
 const DEFAULT_PROFILE_META: ProfileMeta = {
   drink_keys: { sweet: "단맛", acid: "산미", body: "바디", fizz: "탄산", aroma: "향 강도" },

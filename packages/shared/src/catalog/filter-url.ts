@@ -6,8 +6,8 @@
  *  · Range { min, max } — max: null = **상한 없음**(300,000원 유한 상한과 구분). 경계는 포함.
  *  · 같은 그룹 안 여러 값은 OR, 그룹끼리는 AND. 세부 종류 칩은 단일 선택. '전체'는 kind null(저장값 아님).
  */
-import type { DrinkKind } from "../types";
-export type { DrinkKind };
+import type { DrinkKind, DrinkSpec } from "../types";
+export type { DrinkKind, DrinkSpec };
 import { DRINK_KINDS, FOOD_FILTERS, KIND_BY_ID, KIND_IDS, KIND_LABEL, findSubtype } from "./kinds";
 import { fmtKrw, fmtMl, parseKrw, parseMl } from "./specs";
 

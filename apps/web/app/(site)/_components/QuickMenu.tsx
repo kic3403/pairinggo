@@ -12,7 +12,8 @@ export default function QuickMenu({ michelinYear }: { michelinYear: number | nul
     { href: "/awards?c=fair", label: "우리술품평회 수상", icon: "🏆", tone: "#C9880A" },   // 2026-09-24 사용자 요청: 대회별로 한 칸씩
     { href: "/awards?c=kla", label: "대한민국 주류대상", icon: "🥇", tone: "#8A5A00" },
     { href: "/hot", label: "핫한 페어링", icon: "🔥", tone: "#E4572E", badge: "N" },
-    { href: "/drinks", label: "전통주", icon: "🍶", tone: "#22406B" },
+    { href: "/drinks", label: "술 전체", icon: "🍶", tone: "#22406B" },   // 2026-09-24 주종 확장 — 전통주·위스키·사케·와인 목록
+    { href: "/drinks/categories", label: "카테고리", icon: "🗂️", tone: "#5B6B8A" },
     { href: "/foods", label: "음식·안주", icon: "🍢", tone: "#6E9B6A" },
     { href: "/search", label: "상황 검색", icon: "🔎", tone: "#5B8DB8" },
     { href: "/picks", label: "회원 추천", icon: "🙌", tone: "#3D4A9E" },   // 2026-09-13 회원 추천 페어링(사용자 결정) — '수도권 술' 칸을 대신(지역은 관심지역 줄에서)

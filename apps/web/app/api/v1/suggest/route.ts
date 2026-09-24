@@ -22,7 +22,8 @@ export async function GET(req: Request) {
   const r = search(q, { limit: 5 });
   const href = (t: string, name: string, kind?: string, key?: string) =>
     t === "drink" ? `/drinks/${toSlug(name)}` : t === "food" ? `/foods/${toSlug(name)}`
-      : kind === "category" ? `/drinks?category=${encodeURIComponent(key || "")}` : kind === "region" ? `/drinks?region=${encodeURIComponent(key || "")}` : `/drinks?brewery=${encodeURIComponent(key || "")}`;
+      : kind === "category" ? `/drinks?category=${encodeURIComponent(key || "")}` : kind === "region" ? `/drinks?region=${encodeURIComponent(key || "")}`
+      : kind === "kind" ? (key?.includes(":") ? `/drinks?kind=${key.split(":")[0]}&cat=${key.split(":")[1]}` : `/drinks?kind=${key}`) : `/drinks?brewery=${encodeURIComponent(key || "")}`;
   const pick = (hits: typeof r.drinks, n: number): SuggestItem[] =>
     hits.slice(0, n).map((h) => ({ type: h.doc.type as SuggestItem["type"], id: h.doc.id, name: h.doc.name, meta: h.doc.meta, href: href(h.doc.type, h.doc.name, h.doc.kind, h.doc.key) }));
   // 자동완성은 짧게: 술 4 · 음식 4 · 종류/양조장 2

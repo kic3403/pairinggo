@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { food } = await load((await params).slug);
   if (!food) return { title: "찾을 수 없는 음식 | 페어링GO" };
   const n = (byFood[food.id] || []).length;
-  const title = `${food.name}에 어울리는 전통주 ${n}가지 | 페어링GO`;
+  const title = `${food.name}에 어울리는 술 ${n}가지 | 페어링GO`;
   const description = `${food.name}과 잘 맞는 막걸리·약주·증류주를 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다.`;
   const url = `/foods/${toSlug(food.name)}`;
   return {
@@ -68,7 +68,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   const path = `/foods/${toSlug(food.name)}`;
   const ld = [
     breadcrumb([{ name: "홈", path: "/" }, { name: "음식·안주", path: "/foods" }, { name: food.name, path }], base),
-    itemList(items.slice(0, 20).map((it) => ({ name: it.name, path: it.href })), { base, name: `${food.name}에 어울리는 전통주` }),
+    itemList(items.slice(0, 20).map((it) => ({ name: it.name, path: it.href })), { base, name: `${food.name}에 어울리는 술` }),
   ];
 
   return (
@@ -81,14 +81,14 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         {!!food.tags?.length && <><span className="muted"> · </span><span>{food.tags.join(" · ")}</span></>}
       </div>
       <ProfileBars kind="food" profile={food.profile} />
-      <div className="share-row"><ShareButton className="btn xs" title={`${food.name}에 어울리는 전통주 ${items.length}가지`} text={`${food.name}에 어울리는 전통주를 근거와 함께 — 페어링GO`} f={food.id} /></div>
+      <div className="share-row"><ShareButton className="btn xs" title={`${food.name}에 어울리는 술 ${items.length}가지`} text={`${food.name}에 어울리는 술를 근거와 함께 — 페어링GO`} f={food.id} /></div>
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>
           {/* 맛집 찾기는 페어링 목록 위에 — 카드 수십 장 아래에 있으면 관심지역 버튼을 못 찾는다(2026-09-14 사용자 지적) */}
           {/* 저장 버튼은 맛집 칸의 버튼 줄에 같이 둔다(2026-09-14 사용자 요청 — 네이버 지도 버튼은 없앰) */}
           <NearbyPlaces mode="restaurants" food={food.name} foodId={food.id} drinkOptions={items.map((it) => ({ id: it.pairing.d, name: it.name }))} actions={<Heart kind="food" id={food.id} name={food.name} variant="button" />} />
-          <h2 id="pairings">{food.name}에 어울리는 전통주 {items.length}가지</h2>
+          <h2 id="pairings">{food.name}에 어울리는 술 {items.length}가지</h2>
           <p className="small muted" style={{ marginTop: -6 }}>
             어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 전문가픽은 양조장·소믈리에 추천, 대중픽은 블로그·유튜브 후기에서 확인된 조합이고, 먹어본 회원들의 평가가 함께 쌓입니다.
           </p>
@@ -112,13 +112,13 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
             <ul>
               <li>등록된 페어링 {items.length}건</li>
               <li>전체 음식 {c.counts.foods}종</li>
-              <li>전체 전통주 {c.counts.drinks}종</li>
+              <li>전체 술 {c.counts.drinks}종</li>
             </ul>
           </div>
         </aside>
       </div>
       <DetailActionBar save={<Heart kind="food" id={food.id} name={food.name} variant="button" />}>
-        <a className="btn" href="#pairings">어울리는 전통주 {items.length}</a>
+        <a className="btn" href="#pairings">어울리는 술 {items.length}</a>
         <a className="btn f" href="#places">맛집 찾기</a>
       </DetailActionBar>
     </div>
