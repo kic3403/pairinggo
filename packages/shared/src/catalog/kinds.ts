@@ -299,3 +299,21 @@ export function cleanExtRating(raw: unknown): ExtRating | null {
 export const extRatingOf = (d: Pick<Drink, "attrs">): ExtRating | null => cleanExtRating(d.attrs?.ext_rating);
 export const extRatingText = (r: ExtRating) => `${r.score}/${r.scale}${r.count != null ? ` (${r.count.toLocaleString("ko-KR")}명)` : ""}`;
 
+/**
+ * 술 종류 선택지(파트너 술 표, 2026-09-25) — 주종별로 묶은 category 저장값과 표시명.
+ * 전통주는 category 값 하나하나(탁주·약주·청주·증류주·과실주·리큐르·브랜디·허니와인), 다른 주종은 세부 종류(자식 포함)의 저장값.
+ */
+export type CategoryOption = { value: string; label: string };
+export function categoryOptions(): { kind: DrinkKind; label: string; options: CategoryOption[] }[] {
+  return DRINK_KINDS.map((k) => ({
+    kind: k.id, label: k.label,
+    options: k.id === "trad"
+      ? k.subtypes.flatMap((s) => s.categories.map((c) => ({ value: c, label: c })))
+      : k.subtypes.flatMap((s) => [...(s.categories[0] ? [{ value: s.categories[0], label: s.label }] : []), ...(s.children ?? []).map((c) => ({ value: c.categories[0], label: c.label }))]),
+  }));
+}
+const CATEGORY_LABEL = new Map<string, string>();
+for (const g of categoryOptions()) for (const o of g.options) if (!CATEGORY_LABEL.has(o.value)) CATEGORY_LABEL.set(o.value, o.label);
+export const isKnownCategory = (v: unknown): v is string => typeof v === "string" && CATEGORY_LABEL.has(v);
+/** 저장값 → 표시명(모르는 값은 그대로) */
+export const categoryLabelOf = (v: string | undefined | null) => (v ? CATEGORY_LABEL.get(v) ?? v : "");

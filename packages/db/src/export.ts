@@ -10,6 +10,7 @@ import { DATA } from "@pairinggo/shared";
 import { connect } from "./sql";
 import { loadDatasetFromRows } from "@pairinggo/shared";
 import { includeDrinkRow, loadSpecRows } from "./catalog-write";
+import { cleanDrinkItems, partnerImages, type PartnerPlaceItems } from "@pairinggo/shared";
 
 const sql = connect();
 const out = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "shared", "data", "pairings.json");
@@ -20,6 +21,11 @@ try {
   const pairings = (await sql`select p.*, (select json_agg(e order by e.id) from pairing_evidence e where e.pairing_id = p.id) as evidence from pairings p where p.status in ('curated', 'ai') order by p.id`).filter((p) => ids.has(p.drink_id as string));   // 공개 카탈로그(apps/web/lib/catalog.ts)와 같은 기준 — pending(근거 1개, 검수 중)은 번들에도 넣지 않는다
   const [meta] = await sql<{ value: string }[]>`select value from catalog_meta where key = 'version'`;
   const sp = await loadSpecRows(sql);
+  // 파트너가 올린 술 사진 폴백(웹 카탈로그와 같은 규칙, 2026-09-25)
+  const pl = await sql`select m.name, m.brewery, p.drink_items from place_info p join merchants m on m.kakao_place_id = p.kakao_id where p.source = 'partner' and m.status = 'approved' and p.drink_items is not null`.catch(() => []);
+  const places: PartnerPlaceItems[] = pl.map((r) => ({ name: String(r.name), brewery: (r.brewery as string | null) ?? null, items: cleanDrinkItems(r.drink_items).filter((d) => d.img) })).filter((x) => x.items.length);
+  const pimg = partnerImages(drinks as { id: string; name: string; alias?: string[]; brewery?: string | null }[], places);
+  for (const r of drinks) if (!r.image_url) { const p = pimg.get(String(r.id)); if (p) { r.image_url = p.url; r.image_credit = p.credit; } }
   const ds = loadDatasetFromRows({ drinks, foods, pairings, specs: sp.specs, prices: sp.prices, trend_meta: DATA.trend_meta, src_meta: DATA.src_meta, profile_meta: DATA.profile_meta });
   writeFileSync(out, JSON.stringify(ds, null, 1));
   console.log(`내보내기 완료 → ${out} · drinks ${ds.drinks.length} · foods ${ds.foods.length} · pairings ${ds.pairings.length} · version ${meta?.value ?? "-"}`);

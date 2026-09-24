@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { PARTNER_INTRO_EXAMPLE, PARTNER_PLACE_LABEL, STORE_PHOTOS_MAX, cleanNaverUrl, formatPrice, mergeMenuRows, moveItem, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
+import { PARTNER_INTRO_EXAMPLE, PARTNER_PLACE_LABEL, STORE_PHOTOS_MAX, categoryOptions, cleanNaverUrl, formatPrice, mergeMenuRows, moveItem, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
 import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 type Named = { id: string; name: string };
@@ -191,12 +191,17 @@ function DrinkTable({ rows, onChange, onImg, onError, withDesc }: { rows: DrinkI
   return (
     <div className="mtable">
       <div className={`mhead ${cls}`}>
-        <span>사진</span><span>술 이름</span>{withDesc ? <span>설명</span> : null}<span>용량</span><span>도수(%)</span><span>가격(원)</span><span>순서·빼기</span>
+        <span>사진</span><span>술 이름</span><span>종류</span>{withDesc ? <span>설명</span> : null}<span>용량</span><span>도수(%)</span><span>가격(원)</span><span>순서·빼기</span>
       </div>
       {rows.map((r, i) => (
         <div className={`mrow ${cls}`} key={i}>
           <PhotoCell img={r.img} label={r.name} onError={onError} onChange={(url) => onImg(i, url)} />
           <input type="text" aria-label="술 이름" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="술 이름" />
+          {/* 술 종류(2026-09-25) — 주종별 묶음. 모르면 비워 둔다 */}
+          <select aria-label="종류" value={r.category ?? ""} onChange={(e) => set(i, { category: e.target.value || undefined })}>
+            <option value="">종류</option>
+            {categoryOptions().map((g) => <optgroup key={g.kind} label={g.label}>{g.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</optgroup>)}
+          </select>
           {withDesc ? <input type="text" aria-label="설명" value={r.desc ?? ""} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="예: 백일 동안 빚는 약주" /> : null}
           <input type="text" aria-label="용량" value={r.volume} maxLength={20} onChange={(e) => set(i, { volume: e.target.value })} placeholder="750ml·잔" />
           <NumInput value={r.abv} onChange={(v) => set(i, { abv: v })} parse={abvOf} unit="%" label="도수" decimal />

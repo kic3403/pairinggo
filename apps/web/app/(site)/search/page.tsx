@@ -80,6 +80,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <ul className="rows">
             {regional.list.map((d) => (
               <li key={d.id} className="row d">
+                {d.image?.url && <img className="row-img" src={d.image.url} alt="" loading="lazy" />}
                 <span className="badge d">술</span>
                 <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.category, d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
                 <Heart kind="drink" id={d.id} name={d.name} />
@@ -117,6 +118,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               const bl = buyLink(d);
               return (
                 <li key={d.id} className="row d">
+                  {d.image?.url && <img className="row-img" src={d.image.url} alt="" loading="lazy" />}
                   <span className="badge d">{d.category}</span>
                   <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{[d.abv != null ? `${d.abv}%` : null, d.region, d.brewery].filter(Boolean).join(" · ")}</span></Link>
                   {onlineSellable(d) && <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, store: bl.store, from: "search_region" }} className="small">구매 ↗</ExtLink>}
@@ -187,6 +189,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               const d = h.doc;
               return (
                 <li key={"d" + d.id} className="row d">
+                  {D[d.id]?.image?.url && <img className="row-img" src={D[d.id].image!.url} alt="" loading="lazy" />}
                   <span className="badge d">{kindOf(D[d.id] || {}) === "trad" ? "술" : KIND_LABEL[kindOf(D[d.id] || {})]}</span>
                   <Link href={drinkHref(d.name)} className="grow"><b>{d.name}</b><span className="small muted">{d.meta}</span></Link>
                   {h.kind === "fuzzy" && <span className="small muted">비슷한 이름</span>}

@@ -2,7 +2,7 @@
  * 카탈로그 — DB(Supabase)에서 Dataset을 조립하고 5분 캐시. DB 미설정·실패 시 shared 번들 데이터로 폴백.
  * 서버 프로세스의 shared 인덱스(검색 엔진)도 같은 버전으로 맞춘다(applyDataset).
  */
-import { DATA as BUNDLED, CATALOG_VERSION, applyDataset, loadDatasetFromRows, type Dataset } from "@pairinggo/shared";
+import { DATA as BUNDLED, CATALOG_VERSION, applyDataset, cleanDrinkItems, loadDatasetFromRows, partnerImages, type Dataset, type PartnerPlaceItems } from "@pairinggo/shared";
 import { reportError } from "@pairinggo/server/errors";
 import { db } from "./db";
 
@@ -49,7 +49,7 @@ type EvidenceRow = { pairing_id: number } & Row;
 async function fromDb(): Promise<Catalog | null> {
   const sb = db();
   if (!sb) return null;
-  const [meta, drinksAll, foods, pairingsAll, evidence, specs, prices] = await Promise.all([
+  const [meta, drinksAll, foods, pairingsAll, evidence, specs, prices, partnerPlaces] = await Promise.all([
     sb.from("catalog_meta").select("key,value").in("key", ["version", "trend_meta"]),
     selectAll<Row>("drinks", (f, t) => sb.from("drinks").select("*").order("id").range(f, t)),
     selectAll<Row>("foods", (f, t) => sb.from("foods").select("*").order("id").range(f, t)),
@@ -60,10 +60,14 @@ async function fromDb(): Promise<Catalog | null> {
     // 규격·참고가격(0035) — 표가 아직 없는 DB면 빈 목록(카탈로그 전체가 정적 폴백으로 떨어지지 않게)
     selectAll<Row>("drink_specs", (f, t) => sb.from("drink_specs").select("*").order("id").range(f, t)).catch(() => [] as Row[]),
     selectAll<Row>("drink_prices", (f, t) => sb.from("drink_prices").select("*").eq("valid", true).order("id").range(f, t)).catch(() => [] as Row[]),
+    loadPartnerPlaces(sb).catch(() => [] as PartnerPlaceItems[]),
   ]);
   if (meta.error) throw new Error(meta.error.message);
   // 데모 술(is_demo)과 그 페어링은 공개 카탈로그에서 뺀다 — 로컬 검증은 SHOW_DEMO=1
   const drinks = drinksAll.filter((r) => !r.is_demo || process.env.SHOW_DEMO === "1");
+  // 파트너가 매장 술 표에 올린 사진 — 카탈로그 술에 사진이 없을 때만(2026-09-25)
+  const pimg = partnerImages(drinks as { id: string; name: string; alias?: string[]; brewery?: string | null }[], partnerPlaces);
+  for (const r of drinks as Record<string, unknown>[]) if (!r.image_url) { const p = pimg.get(String(r.id)); if (p) { r.image_url = p.url; r.image_credit = p.credit; } }
   const ids = new Set(drinks.map((r) => r.id as string));
   const pairings = pairingsAll.filter((p) => ids.has(p.drink_id as string));
   if (!drinks.length || !foods.length || !pairings.length) return null;
@@ -75,6 +79,22 @@ async function fromDb(): Promise<Catalog | null> {
   const dataset = loadDatasetFromRows({ drinks, foods, pairings: rows, specs, prices, trend_meta: trendMeta, src_meta: BUNDLED.src_meta, profile_meta: BUNDLED.profile_meta });
   const version = String(meta.data?.find((m) => m.key === "version")?.value ?? "db");
   return { version, source: "db", dataset, counts: counts(dataset) };
+}
+
+/** 승인된 파트너 매장의 술 표(사진 포함) + 그 매장이 고른 카탈로그 양조장 — 사진 폴백용 */
+async function loadPartnerPlaces(sb: NonNullable<ReturnType<typeof db>>): Promise<PartnerPlaceItems[]> {
+  const [m, p] = await Promise.all([
+    sb.from("merchants").select("kakao_place_id,name,brewery").eq("status", "approved"),
+    sb.from("place_info").select("kakao_id,name,drink_items").eq("source", "partner").not("drink_items", "is", null),
+  ]);
+  if (m.error || p.error) return [];
+  const byId = new Map((m.data ?? []).map((x) => [String(x.kakao_place_id), x]));
+  return (p.data ?? []).flatMap((row) => {
+    const mer = byId.get(String(row.kakao_id));
+    if (!mer) return [];
+    const items = cleanDrinkItems(row.drink_items).filter((d) => d.img);
+    return items.length ? [{ name: String(mer.name || row.name), brewery: (mer.brewery as string | null) ?? null, items }] : [];
+  });
 }
 
 async function versionChanged(c: { value: Catalog; checkedAt: number }): Promise<boolean> {

@@ -5,10 +5,12 @@
  * 저장은 place_info.menu_items·drink_items(0024). 카탈로그 연결 목록(food_ids·menu_names·drink_ids·drink_names)은 표에서 뽑는다.
  */
 import { addListItem } from "./place-info";
+import { isKnownCategory } from "./catalog/kinds";
 
 /** img: 사장님이 올린 사진(우리 저장소 menu-photos 공개 주소만, 없으면 속성 자체가 없음 — 2026-09-19) */
 export type MenuItem = { name: string; desc: string; price: number | null; img?: string };
-export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null; desc?: string; img?: string };
+/** category: 술 종류 저장값(catalog/kinds.ts categoryOptions — 탁주·싱글몰트·준마이…, 2026-09-25). 모르면 없음 */
+export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null; desc?: string; img?: string; category?: string };
 
 /** 메뉴 사진 저장소(Supabase Storage 공개 버킷) — 경로는 {매장 id}/{파일} */
 export const MENU_PHOTO_BUCKET = "menu-photos";
@@ -88,7 +90,8 @@ export function cleanDrinkItems(raw: unknown): DrinkItem[] {
     seen.add(k);
     const img = cleanMenuImage(o.img);
     // 설명은 양조장·리쿼샵이 술을 소개할 때 쓴다(2026-09-21) — 식당 메뉴판에서는 비어 있어도 된다
-    out.push({ name, volume, abv: parseAbv(o.abv), price: parsePrice(o.price), ...(desc ? { desc } : {}), ...(img ? { img } : {}) });
+    const category = isKnownCategory(o.category) ? o.category : "";
+    out.push({ name, volume, abv: parseAbv(o.abv), price: parsePrice(o.price), ...(desc ? { desc } : {}), ...(img ? { img } : {}), ...(category ? { category } : {}) });
     if (out.length >= MENU_ITEMS_MAX) break;
   }
   return out;

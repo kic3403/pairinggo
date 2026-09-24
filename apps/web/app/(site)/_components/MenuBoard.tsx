@@ -3,7 +3,7 @@
  * 한 줄 = [사진] 이름 / 설명(술은 "750ml · 13%") … 가격. 사진·빈칸은 적힌 것만 보인다(지어내지 않음).
  * 식당 카드의 "메뉴판 보기"와 예약 화면이 함께 쓴다.
  */
-import { formatAbv, formatPrice, type DrinkItem, type MenuItem } from "@pairinggo/shared";
+import { categoryLabelOf, formatAbv, formatPrice, type DrinkItem, type MenuItem } from "@pairinggo/shared";
 
 type Row = { key: string; name: string; sub: string; price: number | null; img?: string };
 
@@ -35,7 +35,7 @@ export default function MenuBoard({ menu, drinks }: { menu: MenuItem[]; drinks: 
   // 양조장·리쿼샵이 적은 술 설명이 있으면 용량·도수 앞에 보여 준다(2026-09-21)
   const drink: Row[] = drinks.map((d, i) => ({
     key: `d${i}-${d.name}-${d.volume}`, name: d.name,
-    sub: [d.desc, [d.volume, formatAbv(d.abv)].filter(Boolean).join(" · ")].filter(Boolean).join(" · "),
+    sub: [categoryLabelOf(d.category), d.desc, [d.volume, formatAbv(d.abv)].filter(Boolean).join(" · ")].filter(Boolean).join(" · "),
     price: d.price, img: d.img,
   }));
   return (
