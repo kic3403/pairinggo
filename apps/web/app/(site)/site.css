@@ -500,6 +500,14 @@ p { margin: 0 0 12px; }
 .card .kv > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: baseline; }
 .card .kv dt { font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.01em; }
 .card .kv dd { margin: 0; color: var(--ink2); line-height: 1.5; }
+/* 맛 프로필 그래프 — 카드 안 작은 세로 막대(2026-09-24). 글줄보다 높낮이가 먼저 보인다 */
+.card .kv > div.pline { align-items: start; }
+.pchart { display: flex; gap: 6px; align-items: flex-end; padding-top: 2px; }
+.pc-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; min-width: 0; }
+.pc-bar { width: 100%; max-width: 22px; height: 44px; border-radius: 4px; background: var(--line); display: flex; align-items: flex-end; overflow: hidden; }
+.pc-bar span { display: block; width: 100%; background: var(--navy); border-radius: 4px; min-height: 3px; }
+.pc-col b { font-size: 11.5px; color: var(--ink2); font-variant-numeric: tabular-nums; line-height: 1; }
+.pc-label { font-size: 10.5px; color: var(--muted); line-height: 1.15; text-align: center; word-break: keep-all; }
 .card .more { margin: 6px 0 0; }
 .card .more summary { font-size: 12.5px; color: var(--navy); cursor: pointer; }
 .card .more .why { margin-top: 4px; }

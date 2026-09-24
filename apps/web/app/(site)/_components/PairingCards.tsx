@@ -8,7 +8,8 @@ import ExtLink from "./ExtLink";
 import GradeBadge from "./GradeBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
-import { D, F, PICK_DETAIL, PICK_LABEL, cardSummary, pickOf, profileLine, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
+import ProfileChart from "./ProfileChart";
+import { D, F, PICK_DETAIL, PICK_LABEL, cardSummary, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -35,7 +36,8 @@ export function PairingCards({ items }: { items: CardItem[] }) {
         const pick = pickOf(p.src);
         const isDrinkCard = href.startsWith("/drinks");
         const { points, cautions } = cardSummary(p);
-        const profile = isDrinkCard ? profileLine("drink", D[p.d]?.profile) : profileLine("food", F[p.f]?.profile);
+        // 맛 프로필은 글줄 대신 작은 막대 그래프로(2026-09-24)
+        const profile = isDrinkCard ? D[p.d]?.profile : F[p.f]?.profile;
         return (
           <li key={href} className="card" data-pick={pick}>
             <div className="top">
@@ -48,7 +50,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
                 {points.length > 0 ? <div><dt>페어링 포인트</dt><dd>{points.join(" · ")}</dd></div>
                   : p.reason ? <div><dt>페어링 포인트</dt><dd>{p.reason}</dd></div> : null}   {/* 맛 궁합 포인트가 없으면 설명을 그 자리에 */}
                 {cautions.length > 0 && <div><dt>주의</dt><dd>{cautions.join(" · ")}</dd></div>}
-                {profile && <div><dt>맛 프로필</dt><dd>{profile}</dd></div>}
+                {profile && <div className="pline"><dt>맛 프로필</dt><dd><ProfileChart kind={isDrinkCard ? "drink" : "food"} profile={profile} /></dd></div>}
               </dl>
             )}
             {p.reason && points.length > 0 && <details className="more"><summary>자세히</summary><p className="why">{p.reason}</p></details>}
