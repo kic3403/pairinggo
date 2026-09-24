@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, similarDrinks, subtypeLabel, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
+import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, similarDrinks, subtypeLabel, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { buyOptions } from "@/lib/shop";
 import { siteUrl } from "@/lib/site";
@@ -104,7 +104,11 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">술</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
       <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
       {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
+      {/* 제품 사진 — 사용 허락을 받은 것만(image_credit에 출처). 없으면 아무것도 두지 않는다 */}
+      {drink.image?.url && <figure className="detail-img"><img src={drink.image.url} alt={`${drink.name} 제품 사진`} />{drink.image.credit && <figcaption className="small muted">{drink.image.credit}</figcaption>}</figure>}
       <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
+      {/* 외부 평점 — 허용된 출처(라이선스·수입사 제공)만, 출처·확인일과 함께. 페어링GO 회원 평가와 섞지 않는다 */}
+      {(() => { const r = extRatingOf(drink); return r ? <p className="ext-rating-line"><span className="ext-rating">★ {r.score}<i>{r.source}</i></span> <span className="small muted">{extRatingText(r)} · {r.checked} 확인{r.url ? <> · <ExtLink href={r.url} event="external_link" props={{ d: drink.id, kind: "ext_rating" }}>출처 보기 ↗</ExtLink></> : null}</span></p> : null; })()}
       {/* ② 용량 선택과 그 규격의 참고가격(2026-09-24) — 규격이 등록된 술만. useSearchParams라 Suspense 경계 */}
       {!!drink.specs?.length && <Suspense fallback={null}><SpecPicker specs={drink.specs} drinkId={drink.id} /></Suspense>}
       {/* 파는 곳이 있으면 이름 바로 아래에서 산다(2026-09-21 사용자 요청) — 재고·가격이 바뀌므로 화면에서 불러온다 */}

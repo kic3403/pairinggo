@@ -30,7 +30,7 @@ export type AttrBand = { id: string; label: string; min?: number; max?: number; 
 export type AttrDef = {
   key: string; label: string;
   /** select 하나 · multi 여러 개(배열) · bool · int(구간 bands) · text · tags(자유 목록) · level(맛 프로필 1~5, drink.profile[key]) */
-  type: "select" | "multi" | "bool" | "int" | "text" | "tags" | "level";
+  type: "select" | "multi" | "bool" | "int" | "text" | "tags" | "level" | "rating";
   options?: AttrOption[];
   bands?: AttrBand[];
   /** 필터 패널에 보이는 속성 */
@@ -115,6 +115,7 @@ export const DRINK_KINDS: KindDef[] = [
       { key: "single_cask", label: "싱글캐스크", type: "bool", filter: true, show: true },
       { key: "independent_bottling", label: "독립 병입", type: "bool", filter: true, show: true },
       { key: "serve", label: "음용 방식", type: "multi", filter: true, show: true, options: [{ id: "neat", label: "니트" }, { id: "rocks", label: "온더록스" }, { id: "highball", label: "하이볼" }] },
+      { key: "ext_rating", label: "외부 평점", type: "rating", show: true },
     ],
   },
   {
@@ -142,6 +143,7 @@ export const DRINK_KINDS: KindDef[] = [
       { key: "polish", label: "정미율", type: "int", filter: true, show: true, bands: [{ id: "u50", label: "50% 이하", min: 1, max: 50 }, { id: "51-60", label: "51~60%", min: 51, max: 60 }, { id: "61-70", label: "61~70%", min: 61, max: 70 }, { id: "71", label: "71% 이상", min: 71 }] },
       level("sweet", "단맛"), level("acid", "산미"), level("body", "바디감"),
       { key: "temp", label: "권장 음용 온도", type: "multi", filter: true, show: true, options: [{ id: "cold", label: "차갑게" }, { id: "room", label: "상온" }, { id: "warm", label: "따뜻하게" }, { id: "hot", label: "뜨겁게" }] },
+      { key: "ext_rating", label: "외부 평점", type: "rating", show: true },
     ],
   },
   {
@@ -182,6 +184,7 @@ export const DRINK_KINDS: KindDef[] = [
       { key: "nv", label: "NV", type: "bool", show: true },
       level("acid", "산미"), level("body", "바디감"),
       { key: "tannin", label: "타닌", type: "int", filter: true, show: true, bands: LEVEL_BANDS },
+      { key: "ext_rating", label: "외부 평점", type: "rating", show: true },
     ],
   },
 ];
@@ -267,6 +270,7 @@ export function cleanAttrs(kind: DrinkKind, raw: unknown): Record<string, unknow
       case "multi": { const arr = (Array.isArray(v) ? v : String(v).split(",")).map((x) => String(x).trim()).filter((id) => a.options?.some((x) => x.id === id)); if (arr.length) out[a.key] = [...new Set(arr)]; break; }
       case "tags": { const arr = (Array.isArray(v) ? v : String(v).split(",")).map((x) => String(x).trim().slice(0, 40)).filter(Boolean); if (arr.length) out[a.key] = [...new Set(arr)].slice(0, 20); break; }
       case "text": { const t = String(v).trim().slice(0, 200); if (t) out[a.key] = t; break; }
+      case "rating": { const r = cleanExtRating(v); if (r) out[a.key] = r; break; }
     }
   }
   return out;
@@ -276,4 +280,22 @@ export function categoryFromInput(kind: DrinkKind, subtypeId: string, rawCategor
   if (kind === "trad") { const cats = KIND_BY_ID.trad.subtypes.flatMap((s) => s.categories); return cats.includes(rawCategory) ? rawCategory : cats.includes(subtypeId) ? subtypeId : categoryForSubtype("trad", subtypeId) ?? ""; }
   return categoryForSubtype(kind, subtypeId) ?? (KIND_BY_ID[kind].subtypes.flatMap((s) => [...s.categories, ...(s.children ?? []).flatMap((c) => c.categories)]).includes(rawCategory) ? rawCategory : "");
 }
+
+/**
+ * 외부 평점(2026-09-24) — 라이선스·수입사 제공처럼 **허용된 출처**의 점수만 싣는다. Vivino 등 약관이 자동 수집·상업적 이용을 금지하는 곳의 점수는 넣지 않는다.
+ * 출처·점수·척도·확인일이 다 있어야 한다. 화면에는 출처와 확인일을 함께 보인다.
+ */
+export type ExtRating = { source: string; score: number; scale: number; count?: number | null; url?: string | null; checked: string };
+export function cleanExtRating(raw: unknown): ExtRating | null {
+  const o = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  const source = String(o.source ?? "").trim().slice(0, 60);
+  const score = Number(o.score), scale = Number(o.scale ?? 5);
+  const checked = String(o.checked ?? "").trim();
+  if (!source || !Number.isFinite(score) || !Number.isFinite(scale) || scale <= 0 || score < 0 || score > scale || !/^\d{4}-\d{2}-\d{2}$/.test(checked)) return null;
+  const count = o.count == null || o.count === "" ? null : Math.max(0, Math.floor(Number(o.count)));
+  const url = String(o.url ?? "").trim();
+  return { source, score: Math.round(score * 100) / 100, scale, count: count != null && Number.isFinite(count) ? count : null, url: /^https?:\/\//.test(url) ? url.slice(0, 500) : null, checked };
+}
+export const extRatingOf = (d: Pick<Drink, "attrs">): ExtRating | null => cleanExtRating(d.attrs?.ext_rating);
+export const extRatingText = (r: ExtRating) => `${r.score}/${r.scale}${r.count != null ? ` (${r.count.toLocaleString("ko-KR")}명)` : ""}`;
 

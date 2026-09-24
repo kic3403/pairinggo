@@ -4,7 +4,7 @@
  * 상세 링크는 그 규격(?spec=)을 들고 가서 상세가 같은 규격으로 열린다.
  */
 import Link from "next/link";
-import { KIND_LABEL, bottleSpecs, countryLabel, kindOf, specLine, subtypeLabel, toSlug, type FilterItem } from "@pairinggo/shared";
+import { KIND_LABEL, bottleSpecs, countryLabel, extRatingOf, kindOf, specLine, subtypeLabel, toSlug, type FilterItem } from "@pairinggo/shared";
 import Heart from "../../_components/Heart";
 
 const TILE: Record<string, string> = { trad: "#22406B", whisky: "#8A5A00", sake: "#3D6E9B", wine: "#7B2D4B" };
@@ -16,6 +16,7 @@ export default function DrinkCard({ item, foods, showKind }: { item: FilterItem;
   const meta = [showKind ? KIND_LABEL[kind] : null, subtypeLabel(d), where, d.abv != null ? `${d.abv}%` : null].filter(Boolean).join(" · ");
   const others = bottleSpecs(d.specs).length > 1;
   const href = `/drinks/${toSlug(d.name)}${item.spec ? `?spec=${item.spec.id}` : ""}`;
+  const rating = extRatingOf(d);   // 허용된 출처의 외부 평점만(출처 표시)
   return (
     <li className="dcard">
       <Link href={href} className="dcard-link">
@@ -23,7 +24,7 @@ export default function DrinkCard({ item, foods, showKind }: { item: FilterItem;
           ? <img className="dcard-img" src={d.image.url} alt="" loading="lazy" />
           : <span className="dcard-tile" style={{ ["--tone" as string]: TILE[kind] }} aria-hidden>{subtypeLabel(d).slice(0, 2)}</span>}
         <span className="dcard-body">
-          <span className="dcard-name">{d.name}{d.demo && <span className="badge n" style={{ marginLeft: 6 }}>데모</span>}</span>
+          <span className="dcard-name">{d.name}{d.demo && <span className="badge n" style={{ marginLeft: 6 }}>데모</span>}{rating && <span className="ext-rating" title={`${rating.source} · ${rating.checked} 확인`}>★ {rating.score}<i>{rating.source}</i></span>}</span>
           <span className="dcard-meta">{meta}</span>
           <span className={`dcard-spec${item.price == null ? " none" : ""}`}>{specLine(item.spec, item.price)}{others && <span className="dcard-more"> · 다른 용량 있음</span>}</span>
           {foods.length > 0 && <span className="dcard-foods">어울리는 음식 · {foods.join(", ")}</span>}

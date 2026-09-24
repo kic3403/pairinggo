@@ -48,6 +48,7 @@ const attrMatches = (d: Drink, def: AttrDef, wanted: string[]): boolean => {
     case "bool": return wanted.includes("1") ? raw === true : wanted.includes("0") ? raw === false : true;
     case "select": case "text": return wanted.some((w) => String(raw ?? "") === w || (def.type === "text" && String(raw ?? "").includes(w)));
     case "multi": case "tags": { const arr = Array.isArray(raw) ? raw.map(String) : []; return wanted.some((w) => arr.includes(w)); }
+    case "rating": return true;   // 외부 평점은 필터 조건이 아니다
     case "int": case "level": {
       const n = raw == null || raw === "" ? null : Number(raw);
       return wanted.some((id) => { const b = def.bands?.find((x) => x.id === id); if (!b) return false; if (b.nullOnly) return n == null || !Number.isFinite(n); return n != null && Number.isFinite(n) && (b.min == null || n >= b.min) && (b.max == null || n <= b.max); });

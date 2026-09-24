@@ -24,6 +24,23 @@ function AttrInput({ a, attrs, setAttr }: { a: AttrDef; attrs: Record<string, un
   if (a.type === "select") return <label>{a.label}<select value={String(v ?? "")} onChange={(e) => setAttr(a.key, e.target.value)}><option value="">(미확인)</option>{a.options?.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}</select></label>;
   if (a.type === "multi") { const arr = Array.isArray(v) ? (v as string[]) : []; return <div><span className="muted">{a.label}</span><div className="row">{a.options?.map((o) => <label key={o.id} className="row" style={{ gap: 4 }}><input type="checkbox" style={{ width: "auto" }} checked={arr.includes(o.id)} onChange={(e) => setAttr(a.key, e.target.checked ? [...arr, o.id] : arr.filter((x) => x !== o.id))} />{o.label}</label>)}</div></div>; }
   if (a.type === "int") return <label>{a.label}<input type="number" value={v == null ? "" : String(v)} onChange={(e) => setAttr(a.key, e.target.value === "" ? null : Number(e.target.value))} placeholder="미확인이면 비움" /></label>;
+  if (a.type === "rating") {
+    const r = (v && typeof v === "object" ? v : {}) as Record<string, unknown>;
+    const set = (k: string, val: unknown) => setAttr(a.key, { ...r, [k]: val });
+    return (
+      <div>
+        <span className="muted">{a.label} — 허용된 출처(라이선스·수입사 제공)만. 자동 수집·약관 금지 출처(Vivino 등)는 넣지 않습니다. 출처·점수·척도·확인일이 다 있어야 저장됩니다</span>
+        <div className="row">
+          <label style={{ width: 160 }}>출처<input value={String(r.source ?? "")} onChange={(e) => set("source", e.target.value)} /></label>
+          <label style={{ width: 80 }}>점수<input type="number" step="0.1" value={String(r.score ?? "")} onChange={(e) => set("score", e.target.value)} /></label>
+          <label style={{ width: 70 }}>척도<input type="number" value={String(r.scale ?? 5)} onChange={(e) => set("scale", e.target.value)} /></label>
+          <label style={{ width: 90 }}>평가 수<input type="number" value={String(r.count ?? "")} onChange={(e) => set("count", e.target.value)} /></label>
+          <label style={{ width: 130 }}>확인일<input type="date" value={String(r.checked ?? "")} onChange={(e) => set("checked", e.target.value)} /></label>
+          <label style={{ flex: 1, minWidth: 160 }}>URL<input value={String(r.url ?? "")} onChange={(e) => set("url", e.target.value)} /></label>
+        </div>
+      </div>
+    );
+  }
   if (a.type === "tags") return <label>{a.label} <span className="muted">쉼표로 구분{a.options ? ` (품종 id: ${a.options.map((o) => o.id).slice(0, 6).join(", ")}…)` : ""}</span><input value={Array.isArray(v) ? (v as string[]).join(", ") : ""} onChange={(e) => setAttr(a.key, e.target.value.split(",").map((s) => s.trim()).filter(Boolean))} /></label>;
   return <label>{a.label}<input value={String(v ?? "")} onChange={(e) => setAttr(a.key, e.target.value)} /></label>;
 }

@@ -2,7 +2,7 @@
  * 주종별 전문 정보(2026-09-24, 요구사항 §13 ⑤) — drinks.attrs를 catalog/kinds.ts 정의(show: true)의 라벨로 풀어 보여 준다.
  * 값이 없는 항목은 아예 내지 않는다(미확인을 지어내지 않는다). NAS·NV처럼 '없음'이 정보인 항목은 bool로 적혀 있을 때만.
  */
-import { KIND_BY_ID, KIND_LABEL, countryLabel, kindOf, subtypeLabel, type AttrDef, type Drink } from "@pairinggo/shared";
+import { KIND_BY_ID, KIND_LABEL, cleanExtRating, countryLabel, extRatingText, kindOf, subtypeLabel, type AttrDef, type Drink } from "@pairinggo/shared";
 
 function fmt(a: AttrDef, v: unknown): string | null {
   if (v == null || v === "" || (Array.isArray(v) && !v.length)) return null;
@@ -11,6 +11,7 @@ function fmt(a: AttrDef, v: unknown): string | null {
     case "bool": return v === true ? "예" : v === false ? "아니요" : null;
     case "multi": case "tags": return (Array.isArray(v) ? v : [v]).map(opt).join(", ");
     case "select": return opt(v);
+    case "rating": { const r = cleanExtRating(v); return r ? `${extRatingText(r)} · ${r.source} · ${r.checked} 확인` : null; }
     case "int": case "level": return a.key === "age" ? `${v}년` : a.key === "polish" ? `${v}%` : a.key === "vintage" ? String(v) : String(v);
     default: return String(v);
   }
@@ -35,7 +36,7 @@ export default function KindFacts({ drink }: { drink: Drink }) {
   return (
     <section className="facts">
       <h2>{kind === "trad" ? "제품 정보" : `${KIND_LABEL[kind]} 정보`}</h2>
-      <dl className="kv facts-kv">{rows.map((r) => <div key={r.k}><dt>{r.k}</dt><dd>{r.v}</dd></div>)}</dl>
+      <dl className="kv facts-kv">{rows.map((r, i) => <div key={`${i}-${r.k}`}><dt>{r.k}</dt><dd>{r.v}</dd></div>)}</dl>
     </section>
   );
 }
