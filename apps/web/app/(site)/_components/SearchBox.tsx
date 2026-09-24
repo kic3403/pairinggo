@@ -20,7 +20,7 @@ type Item = { type: "drink" | "food" | "browse" | "place"; id: string; name: str
 type PlaceRow = { id: string; name: string; category: string; address: string; roadAddress: string; bookable?: boolean };
 const TYPE_LABEL: Record<Item["type"], string> = { drink: "전통주", food: "음식", browse: "모아보기", place: "식당" };
 
-export default function SearchBox({ initial = "", region = "", autoFocus = false, compact = false, regionPicker }: { initial?: string; region?: string; autoFocus?: boolean; compact?: boolean; regionPicker?: boolean }) {
+export default function SearchBox({ initial = "", region = "", autoFocus = false, compact = false, regionPicker, placeholder }: { initial?: string; region?: string; autoFocus?: boolean; compact?: boolean; regionPicker?: boolean; placeholder?: string }) {
   const rg = useRegion();
   const hydrated = useHydrated();   // 하이드레이션 중에는 서버와 같은 값(전국)
   const router = useRouter();
@@ -123,7 +123,7 @@ export default function SearchBox({ initial = "", region = "", autoFocus = false
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           onKeyDown={onKeyDown}
-          placeholder={compact ? "술·음식·식당 검색" : "복순도가, 육회, 매운 안주에 어울리는 술, 식당 이름…"}
+          placeholder={placeholder ?? (compact ? "술이나 음식을 검색해보세요" : "복순도가, 육회, 매운 안주에 어울리는 술, 식당 이름…")}
           aria-label="전통주·음식·식당 검색" autoComplete="off" maxLength={80}
           role="combobox" aria-expanded={show} aria-controls={listId} aria-autocomplete="list"
           aria-activedescendant={show && active >= 0 ? `${listId}-${active}` : undefined}

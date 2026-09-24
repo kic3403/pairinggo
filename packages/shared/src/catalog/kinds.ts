@@ -194,12 +194,10 @@ export const cleanKind = (v: unknown): DrinkKind => (KIND_IDS.includes(v as Drin
 /** 술의 세부 종류(탐색 상위 분류) — category로 찾고, 없으면 속성 판정(와인 스파클링 등). 여러 개일 수 있다(로제 스파클링 = 로제 + 스파클링) */
 export function subtypesOf(d: Pick<Drink, "kind" | "category" | "attrs">): Subtype[] {
   const k = KIND_BY_ID[kindOf(d)];
-  const out: Subtype[] = [];
-  for (const s of k.subtypes) {
-    if (s.categories.includes(d.category)) out.push(s);
-    else if (s.attr && attrEquals(d.attrs?.[s.attr.key], s.attr.value)) out.push(s);
-  }
-  return out;
+  // category로 맞는 것(색상·특정명칭)이 앞, 속성으로 맞는 것(스파클링·주정강화·디저트)이 뒤 — 라벨은 첫 번째를 쓴다("로제" 스파클링)
+  const byCat = k.subtypes.filter((s) => s.categories.includes(d.category));
+  const byAttr = k.subtypes.filter((s) => !s.categories.includes(d.category) && s.attr && attrEquals(d.attrs?.[s.attr.key], s.attr.value));
+  return [...byCat, ...byAttr];
 }
 const attrEquals = (a: unknown, b: unknown) => (typeof b === "boolean" ? !!a === b : String(a ?? "") === String(b));
 /** 세부 종류 라벨(첫 번째) — 없으면 category 그대로(전통주 옛 값도 라벨과 같다), 그것도 없으면 '미확인' */

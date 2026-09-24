@@ -1,135 +1,161 @@
 /**
- * 전통주 목록 — 색인용 허브. 지역·양조장으로 거를 수 있고(검색 결과의 '둘러보기'가 여기로 온다), 카드마다 구매·하트.
- * 종류는 탭으로 나눠 한 번에 한 종류만 보여 준다(2026-09-13, 미쉐린·우리술품평회 연도 탭과 같은 방식, 사용자 결정).
- * 탭 = ?category=, 없으면 가장 많은 종류. 지역·양조장 조건은 탭을 옮겨도 유지.
+ * 술 목록(2026-09-24 주종 확장, 요구사항 §2) — 검색창 → 전체/전통주/위스키/사케/와인 탭 → 세부 종류 칩 → 필터 바로가기([가격][용량][음식][전체 필터]) → 적용 조건·결과 수 → 카드.
+ * URL이 상태다(shared parseFilter/toSearchParams): kind·cat·pmin/pmax·vmin/vmax·amin/amax·food·country·flavor·a.<속성>·region·brewery·sort·page. 옛 링크 ?category=탁주·?region=·?brewery= 도 그대로 받는다.
+ * 판정은 shared filterDrinks(전체 데이터 기준, 같은 규격에서 가격·용량 동시 충족). 지역 칩(관심지역)은 전통주 탭에서만, 다른 주종은 국가 필터.
+ * 술 종류별 한 줄 설명(CATEGORY_NOTE)은 전통주 세부 종류 아래에만 보인다.
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { awardLabels, buyLink, byDrink, byKoName, breadcrumb, drinkInRegion, itemList, josa, onlineSellable, regionById, regionLabel, toSlug } from "@pairinggo/shared";
+import {
+  F, KIND_BY_ID, KIND_LABEL, breadcrumb, byDrink, drinkInRegion, filterDrinks, filterHref, hasDetails, inSubtype, itemList, kindOf, kindTabs, parseFilter, presentVolumes,
+  rangeActive, regionById, regionLabel, scorePairings, switchKind, toSlug, type DrinkKind, type FilterItem,
+} from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
-import ExtLink from "../_components/ExtLink";
-import Heart from "../_components/Heart";
 import JsonLd from "../_components/JsonLd";
 import RegionTabs from "../_components/RegionTabs";
+import SearchBox from "../_components/SearchBox";
+import DrinkCard from "./_components/DrinkCard";
+import FilterBar from "./_components/FilterBar";
+import SubtypeChips from "./_components/SubtypeChips";
 
 export const revalidate = 600;
-type Q = { category?: string; region?: string; brewery?: string };
+type Q = Record<string, string | string[] | undefined>;
+const PER = 60;
 
-/** 종류 한 줄 설명 — 탭 아래에 보인다 */
+/** 전통주 종류 한 줄 설명 — 세부 칩 아래에 보인다 */
 const CATEGORY_NOTE: Record<string, string> = {
-  탁주: "쌀·누룩으로 빚어 거르지 않은 막걸리. 탄산·단맛이 있어 전·튀김·매운 음식과 잘 맞습니다.",
-  약주: "맑게 걸러 낸 술. 은은한 향과 산미로 한식 전반, 담백한 요리에 곁들이기 좋습니다.",
-  청주: "맑게 거른 술로, 누룩보다 쌀 입국을 주로 써 맛이 깔끔합니다. 회·해산물과 무난하게 어울립니다.",
-  증류주: "소주·고량주처럼 증류해 도수가 높은 술. 기름진 고기·진한 양념 요리와 잘 맞습니다.",
-  과실주: "포도·사과·복분자 등 과일로 빚은 술. 치즈·디저트·가벼운 고기 요리와 어울립니다.",
-  허니와인: "꿀을 발효한 벌꿀술(미드). 단맛과 꽃향이 있어 디저트·매운 음식과 맞습니다.",
-  리큐르: "술에 과일·약재·꽃 등을 넣어 향을 입힌 술. 식후주나 디저트와 곁들입니다.",
-  브랜디: "과실주를 증류해 숙성한 술. 식후에 조금씩, 초콜릿·견과류와 즐깁니다.",
+  makgeolli: "쌀·누룩으로 빚어 거르지 않은 막걸리. 탄산·단맛이 있어 전·튀김·매운 음식과 잘 맞습니다.",
+  yakju: "맑게 걸러 낸 술. 은은한 향과 산미로 한식 전반, 담백한 요리에 곁들이기 좋습니다.",
+  cheongju: "맑게 거른 술로, 누룩보다 쌀 입국을 주로 써 맛이 깔끔합니다. 회·해산물과 무난하게 어울립니다.",
+  distilled: "소주·고량주처럼 증류해 도수가 높은 술. 기름진 고기·진한 양념 요리와 잘 맞습니다.",
+  fruit: "포도·사과·복분자 등 과일로 빚은 술. 치즈·디저트·가벼운 고기 요리와 어울립니다.",
+  liqueur: "술에 과일·약재·꽃 등을 넣어 향을 입힌 리큐르, 과실주를 증류한 브랜디, 꿀을 발효한 허니와인. 식후주나 디저트와 곁들입니다.",
 };
+const KIND_LEAD: Record<DrinkKind, string> = {
+  trad: "종류별로 나눠 모았습니다. 술을 고르면 어울리는 안주와 그 근거, 구매처를 볼 수 있습니다.",
+  whisky: "종류와 생산지를 함께 고를 수 있습니다. 니트·하이볼처럼 마시는 방식별 어울림도 표시합니다.",
+  sake: "특정명칭(준마이·긴조…)과 제조 특징(나마·니고리…)을 따로 고를 수 있습니다.",
+  wine: "색상으로 먼저 고르고, 품종·산지·단맛으로 좁힙니다. 로제 스파클링은 로제와 스파클링 어디서나 보입니다.",
+};
+
+const parse = (sp: Q) => parseFilter(sp);
 
 export async function generateMetadata({ searchParams }: { searchParams: Promise<Q> }): Promise<Metadata> {
   const c = await getCatalog();
-  const sp = await searchParams;
-  const ro = regionById(sp.region);
-  const f = [ro ? regionLabel(ro) : sp.region, sp.category, sp.brewery].filter(Boolean).join(" ") || undefined;
-  const title = f ? `${f} 전통주 — 안주 추천 | 페어링GO` : `전통주 ${c.counts.drinks}종 — 막걸리·약주·증류주 안주 추천 | 페어링GO`;
-  const description = `막걸리, 약주, 증류주, 과실주까지 전통주 ${c.counts.drinks}종과 어울리는 안주를 근거와 함께 정리했습니다.`;
-  return { title, description, alternates: { canonical: "/drinks" }, openGraph: { title, description, url: "/drinks", siteName: "페어링GO" }, robots: f ? { index: false } : undefined };
+  const f = parse(await searchParams);
+  const ro = regionById(f.region);
+  const kind = f.kind ? KIND_LABEL[f.kind] : "술";
+  const sub = f.kind && f.cat ? KIND_BY_ID[f.kind].subtypes.flatMap((s) => [s, ...(s.children ?? [])]).find((s) => s.id === f.cat)?.label : null;
+  const parts = [ro ? regionLabel(ro) : null, sub, f.brewery].filter(Boolean).join(" ");
+  const filtered = !!parts || hasDetails(f) || !!f.q;
+  const title = f.kind || filtered
+    ? `${[parts, kind].filter(Boolean).join(" ")} — 어울리는 음식 추천 | 페어링GO`
+    : `술 ${c.counts.drinks}종 — 전통주·위스키·사케·와인과 어울리는 음식 | 페어링GO`;
+  const description = `전통주 ${c.dataset.drinks.filter((d) => kindOf(d) === "trad").length}종을 비롯한 술과 어울리는 음식을 근거와 함께 정리했습니다. 가격·용량·도수·음식으로 골라 보세요.`;
+  return { title, description, alternates: { canonical: "/drinks" }, openGraph: { title, description, url: "/drinks", siteName: "페어링GO" }, robots: filtered ? { index: false } : undefined };
 }
 
 export default async function DrinkIndex({ searchParams }: { searchParams: Promise<Q> }) {
   const c = await getCatalog();
   const sp = await searchParams;
-  const filt = { category: sp.category?.trim(), region: sp.region?.trim(), brewery: sp.brewery?.trim() };
-  // 지역은 두 가지 형태 — 지역 id(busan, cap…: 검색 옵션·칩)와 데이터 문자열(부산 금정: 검색 결과 '둘러보기')
-  const regionObj = regionById(filt.region);
-  const rLabel = regionObj ? regionLabel(regionObj) : filt.region;
-  const active = [rLabel, filt.brewery].filter(Boolean).join(" ") || undefined;   // 예: "강원", "배상면주가" (종류는 탭)
+  const f = parse(sp);
+  const page = Math.max(1, Math.floor(Number(Array.isArray(sp.page) ? sp.page[0] : sp.page) || 1));
+  const drinks = c.dataset.drinks;
 
-  let list = c.dataset.drinks;
+  // 지역(관심지역)은 전통주에만 — 동 단위에 양조장이 없으면 상위 지역으로 대신 보여 주고 그 사실을 적는다
+  const regionObj = regionById(f.region);
   let fallbackNote: string | null = null;
-  if (regionObj) {
-    let inRegion = list.filter((d) => drinkInRegion(d, regionObj));
-    // 강남처럼 동 단위 지역에 등록된 양조장이 없으면 상위(서울) 기준으로 보여 주고 그 사실을 적는다
-    if (!inRegion.length && regionObj.fb?.length) {
-      inRegion = list.filter((d) => regionObj.fb!.some((p) => (d.region || "").startsWith(p)));
-      if (inRegion.length) fallbackNote = `${regionLabel(regionObj)}에 등록된 양조장이 아직 없어 ${regionObj.fb[0]} 전체 기준으로 보여 드립니다.`;
-    }
-    list = inRegion;
-  } else if (filt.region) list = list.filter((d) => (d.region || "").includes(filt.region!));
-  if (filt.brewery) list = list.filter((d) => (d.brewery || "").includes(filt.brewery!));
+  let regionTest = (d: FilterItem["drink"]) => kindOf(d) !== "trad" || drinkInRegion(d, regionObj);
+  if (regionObj && regionObj.pre.length && !drinks.some((d) => kindOf(d) === "trad" && drinkInRegion(d, regionObj)) && regionObj.fb?.length) {
+    const fb = regionObj.fb;
+    regionTest = (d) => kindOf(d) !== "trad" || fb.some((p) => (d.region || "").startsWith(p));
+    fallbackNote = `${regionLabel(regionObj)}에 등록된 양조장이 아직 없어 ${fb[0]} 전체 기준으로 보여 드립니다.`;
+  }
 
-  // 지역·양조장 조건을 건 뒤 종류별로 묶고, 많은 종류부터 탭으로
-  const groups = new Map<string, typeof list>();
-  for (const d of list) { const k = d.category || "기타"; groups.set(k, [...(groups.get(k) || []), d]); }
-  const cats = [...groups.entries()].sort((a, b) => b[1].length - a[1].length).map(([k, v]) => ({ name: k, n: v.length }));
-  const selected = cats.find((x) => x.name === filt.category)?.name ?? cats[0]?.name;
-  // 이 지역에 없는 종류를 골랐을 때 — 조건에 맞는 술이 하나도 없으면(selected 없음) 안내하지 않는다(빈 값으로 조사 붙이다 오류 났음)
-  const missingCat = filt.category && selected && selected !== filt.category ? filt.category : null;   // 이 지역에 없는 종류를 골랐을 때
-  const shown = selected ? [...groups.get(selected)!].sort(byKoName) : [];   // 가나다순(2026-09-14 사용자 결정)
-  const tabHref = (cat: string) => {
-    const q = new URLSearchParams();
-    if (filt.region) q.set("region", filt.region);
-    if (filt.brewery) q.set("brewery", filt.brewery);
-    q.set("category", cat);
-    return `/drinks?${q.toString()}`;
-  };
+  // 세부 종류를 뺀 결과(칩 수·맛 태그·용량 버튼용) → 세부 종류로 거른 결과(목록)
+  const base = filterDrinks(drinks, { ...f, cat: null }, F, { regionTest });
+  const items = f.cat ? base.items.filter((it) => inSubtype(it.drink, f.cat!)) : base.items;
+  const total = items.length;
+  const kindDef = f.kind ? KIND_BY_ID[f.kind] : null;
+  const subCounts: Record<string, number> = {};
+  if (kindDef) for (const s of kindDef.subtypes) { subCounts[s.id] = base.items.filter((it) => inSubtype(it.drink, s.id)).length; for (const ch of s.children ?? []) subCounts[ch.id] = base.items.filter((it) => inSubtype(it.drink, ch.id)).length; }
+  const flavorCount = new Map<string, number>();
+  for (const it of base.items) for (const t of it.drink.flavor || []) flavorCount.set(t, (flavorCount.get(t) || 0) + 1);
+  const flavors = [...flavorCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14).map(([t]) => t);
+  const volumes = presentVolumes(base.items);
+  const kindHas = (k: DrinkKind) => drinks.some((d) => kindOf(d) === k);
+  const pages = Math.max(1, Math.ceil(total / PER));
+  const cur = Math.min(page, pages);
+  const shown = items.slice((cur - 1) * PER, cur * PER);
+  const topFoods = (id: string) => scorePairings(byDrink[id] || [], (p) => F[p.f]?.category || "").slice(0, 2).map((s) => F[s.p.f]?.name).filter((x): x is string => !!x);
+  const pageHref = (n: number) => { const q = new URLSearchParams(filterHref(f).split("?")[1] || ""); if (n > 1) q.set("page", String(n)); const s = q.toString(); return `/drinks${s ? `?${s}` : ""}`; };
 
-  // 구조화 데이터 — 지금 보이는 목록(앞 30개)과 경로
-  const base = siteUrl();
+  const heading = [regionObj && f.kind === "trad" ? regionLabel(regionObj) : null, f.brewery, f.kind ? KIND_LABEL[f.kind] : "술"].filter(Boolean).join(" ");
+  const base0 = siteUrl();
   const ld = [
-    breadcrumb([{ name: "홈", path: "/" }, { name: "전통주", path: "/drinks" }], base),
-    itemList(shown.slice(0, 30).map((d) => ({ name: d.name, path: `/drinks/${toSlug(d.name)}` })), { base, name: "전통주" }),
+    breadcrumb([{ name: "홈", path: "/" }, { name: "술", path: "/drinks" }, ...(f.kind ? [{ name: KIND_LABEL[f.kind], path: `/drinks?kind=${f.kind}` }] : [])], base0),
+    itemList(shown.slice(0, 30).map((it) => ({ name: it.drink.name, path: `/drinks/${toSlug(it.drink.name)}` })), { base: base0, name: heading }),
   ];
+  const noKindData = !!f.kind && !kindHas(f.kind);
+  const relaxed = { ...f, price: { min: null, max: null }, ml: { min: null, max: null } };
 
   return (
-    <div className="wrap">
+    <div className="wrap drinks-page">
       <JsonLd data={ld} />
-      <p className="crumb"><Link href="/">홈</Link>{active && <> · <Link href="/drinks">전통주</Link></>}</p>
-      <h1>{active ? `${active} 전통주 ${list.length}종` : `전통주 ${c.counts.drinks}종`}{selected && <span className="muted"> · {selected}</span>}</h1>
-      <p className="lead">{active ? "조건을 지우려면 전통주 전체로 돌아가세요." : "종류별로 나눠 모았습니다. 술을 고르면 어울리는 안주와 그 근거, 구매처를 볼 수 있습니다."}</p>
-      {!!cats.length && (
-        <ul className="cat-tabs" aria-label="종류">
-          {cats.map((x) => (
-            <li key={x.name}><Link href={tabHref(x.name)} scroll={false} className={x.name === selected ? "on" : undefined} aria-current={x.name === selected ? "page" : undefined}>{x.name}<span className="cnt">{x.n}</span></Link></li>
-          ))}
-        </ul>
-      )}
-      <RegionTabs current={regionObj?.id} base="/drinks" keep={selected ? { category: selected } : {}} />
+      <p className="crumb"><Link href="/">홈</Link>{f.kind && <> · <Link href="/drinks">술</Link></>}</p>
+      <h1>{heading} <span className="muted small">{total.toLocaleString("ko-KR")}종</span></h1>
+      <p className="lead">{f.kind ? KIND_LEAD[f.kind] : "전통주·위스키·사케·와인을 한 곳에서. 가격·용량·어울리는 음식으로 좁혀 보세요."}</p>
+      <SearchBox initial="" regionPicker={false} placeholder="술이나 음식을 검색해보세요" />
+
+      {/* ② 주종 탭 — '전체'는 조회 범위 */}
+      <ul className="cat-tabs kind-tabs" aria-label="주종">
+        {kindTabs(base.kindCounts, base.all).map((t) => (
+          <li key={t.id ?? "all"}><Link href={filterHref(switchKind(f, t.id))} scroll={false} className={f.kind === t.id ? "on" : undefined} aria-current={f.kind === t.id ? "page" : undefined}>{t.label}<span className="cnt">{t.n}</span></Link></li>
+        ))}
+      </ul>
+      {/* ③ 세부 종류 칩 */}
+      {f.kind && !noKindData && <SubtypeChips kind={f.kind} applied={f} counts={subCounts} />}
+      {f.kind === "trad" && f.cat && CATEGORY_NOTE[f.cat] && <p className="small muted" style={{ marginTop: -6 }}>{CATEGORY_NOTE[f.cat]}</p>}
+      {f.kind === "trad" && <RegionTabs current={regionObj?.id} base="/drinks" keep={Object.fromEntries([...new URLSearchParams(filterHref({ ...f, region: null }).split("?")[1] || "")])} collapsible />}
       {fallbackNote && <p className="small muted">{fallbackNote}</p>}
-      {active && <div className="btns"><Link className="btn" href="/drinks">전체 보기</Link></div>}
+      {/* ④·⑤ 필터 바로가기 + 적용 조건 + 결과 수 */}
+      {!noKindData && <FilterBar applied={f} total={total} flavors={flavors} volumes={volumes} />}
+      {(rangeActive(f.price) || rangeActive(f.ml)) && <p className="small muted fnote">{rangeActive(f.price) && rangeActive(f.ml) ? "가격과 용량이 같은 규격에서 모두 확인된 술만" : rangeActive(f.price) ? "참고가격이 확인된 술만" : "용량이 확인된 술만"} 보여 드립니다. 한 병 참고가격 기준, 배송비·쿠폰 제외.</p>}
 
-      {!list.length && <p className="muted">해당하는 전통주가 없습니다.</p>}
-
-      {missingCat && <p className="small muted">{rLabel ? `${rLabel}에는 ` : ""}등록된 {josa(missingCat, "이/가")} 없어 {josa(selected!, "을/를")} 보여 드립니다.</p>}
-
-      {selected && (
-        <section key={selected}>
-          <h2>{selected} <span className="muted small">{shown.length}종</span></h2>
-          {CATEGORY_NOTE[selected] && <p className="small muted" style={{ marginTop: -6 }}>{CATEGORY_NOTE[selected]}</p>}
-          <ul className="grid">
-            {shown.map((d) => {
-              const bl = buyLink(d);
-              return (
-                <li key={d.id}>
-                  <Link href={`/drinks/${toSlug(d.name)}`}>
-                    <span className="n">{d.name}</span>
-                    <span className="s">{[d.abv != null ? `${d.abv}%` : null, d.region, `페어링 ${(byDrink[d.id] || []).length}`].filter(Boolean).join(" · ")}</span>
-                    {!!d.awards?.length && <span className="s award-hist">🏆 {awardLabels(d.awards).join(" · ")}</span>}
-                  </Link>
-                  <span className="acts">
-                    {onlineSellable(d)
-                      ? <ExtLink href={bl.url} event="buy_link_click" props={{ d: d.id, store: bl.store, from: "drinks_list" }}>구매 ↗</ExtLink>
-                      : <Link href={`/drinks/${toSlug(d.name)}#places`}>판매점</Link>}
-                  </span>
-                  <Heart kind="drink" id={d.id} name={d.name} />
-                </li>
-              );
-            })}
-          </ul>
+      {noKindData && (
+        <section className="empty-kind">
+          <h2>{KIND_LABEL[f.kind!]} 준비 중</h2>
+          <p className="muted">{KIND_LABEL[f.kind!]} 목록은 확인된 제품 정보가 들어오는 대로 열립니다. 가격·용량은 확인된 값만 싣습니다.</p>
+          <div className="btns"><Link className="btn" href={filterHref(switchKind(f, "trad"))}>전통주 보기</Link><Link className="btn" href={filterHref(switchKind(f, null))}>전체 보기</Link></div>
         </section>
       )}
+      {!noKindData && total === 0 && (
+        <section className="empty-kind">
+          <h2>조건에 맞는 술이 없습니다</h2>
+          <p className="muted">조건을 하나 줄여 보세요.{(rangeActive(f.price) || rangeActive(f.ml)) && " 가격·용량은 확인된 규격이 있는 술만 걸립니다."}</p>
+          <div className="btns">
+            {(rangeActive(f.price) || rangeActive(f.ml)) && <Link className="btn" href={filterHref(relaxed)}>가격·용량 조건 지우기</Link>}
+            {f.cat && <Link className="btn" href={filterHref({ ...f, cat: null })}>{KIND_LABEL[f.kind!]} 전체 보기</Link>}
+            {hasDetails(f) && <Link className="btn" href={filterHref({ ...switchKind(f, f.kind), region: null })}>조건 모두 지우기</Link>}
+          </div>
+        </section>
+      )}
+
+      {/* ⑥ 술 목록 */}
+      {shown.length > 0 && (
+        <ul className="dgrid">
+          {shown.map((it) => <DrinkCard key={it.drink.id} item={it} foods={topFoods(it.drink.id)} showKind={!f.kind} />)}
+        </ul>
+      )}
+      {pages > 1 && (
+        <nav className="pager" aria-label="페이지">
+          {cur > 1 && <Link className="btn" href={pageHref(cur - 1)}>이전</Link>}
+          <span className="small muted">{cur} / {pages}</span>
+          {cur < pages && <Link className="btn" href={pageHref(cur + 1)}>다음 {Math.min(PER, total - cur * PER)}종</Link>}
+        </nav>
+      )}
+      <p className="small" style={{ marginTop: 20 }}><Link href={`/drinks/categories${filterHref(f).includes("?") ? "?" + filterHref(f).split("?")[1] : ""}`}>카테고리 전체 보기 →</Link></p>
     </div>
   );
 }
