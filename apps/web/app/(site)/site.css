@@ -1125,3 +1125,37 @@ a.pd-score:hover { border-color: var(--navy); }
 .tabs a.on { font-weight: 700; }
 .grid a { padding: 14px 46px 14px 14px; }
 .grid .n { font-weight: 700; }
+
+/* ---------- 상세 정리(2026-09-25): 머리 카드 · 접는 설명 · 맛/정보 나란히 · 관련 술 한 칸 ---------- */
+.dhead { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 4px 0 8px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg2); }
+.dhead:has(.detail-img) { grid-template-columns: 112px 1fr; }
+.dhead .detail-img { margin: 0; }
+.dhead .detail-img img { width: 112px; max-height: 200px; }
+.dhead-body { min-width: 0; }
+.dhead h1 { margin: 0 0 2px; font-size: 24px; }
+@media (min-width: 768px) { .dhead h1 { font-size: 30px; } .dhead { padding: 20px; gap: 20px; } .dhead:has(.detail-img) { grid-template-columns: 140px 1fr; } .dhead .detail-img img { width: 140px; max-height: 240px; } }
+.dhead .name-orig { margin: 0 0 6px; }
+.dhead .meta { margin: 0 0 8px; }
+.dhead .tags { margin: 4px 0 0; }
+.dhead .ext-rating-line { margin: 0 0 6px; }
+.dhead-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.dhead-acts .heart-btn { min-height: 36px; padding: 0 12px; font-size: 13.5px; }
+.dhead .pbars { margin: 0; align-self: center; }
+@media (min-width: 640px) { .dhead:has(.pbars) { grid-template-columns: 1fr 300px; } }
+.detail .lead { margin: 10px 0 6px; }
+.detail .buy { margin-top: 14px; }
+.fold { margin: 10px 0 0; border-top: 1px dashed var(--line); padding-top: 8px; }
+.fold > summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--navy-ink); list-style: none; display: flex; align-items: center; gap: 6px; min-height: 36px; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::before { content: "▸"; font-size: 12px; color: var(--muted); transition: transform .15s; }
+.fold[open] > summary::before { transform: rotate(90deg); }
+.fold.small { border-top: 0; padding-top: 0; margin: -4px 0 10px; }
+.fold.small > summary { font-size: 13px; font-weight: 600; color: var(--muted); min-height: 30px; }
+.fold.small > p { margin: 0 0 4px; }
+.dinfo { display: grid; gap: 8px 32px; margin: 6px 0 4px; }
+@media (min-width: 768px) { .dinfo { grid-template-columns: minmax(0, 420px) 1fr; align-items: start; } }
+.dinfo .facts { margin: 8px 0 0; }
+.box.related h4 { margin: 10px 0 2px; font-size: 13px; color: var(--ink2); font-weight: 700; }
+.box.related h4:first-of-type { margin-top: 0; }
+.box.related li { padding: 5px 0; font-size: 14px; }
+

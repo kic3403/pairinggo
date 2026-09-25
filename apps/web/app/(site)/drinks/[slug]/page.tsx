@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, similarDrinks, subtypeLabel, toSlug, fmt, explainOverall, SRC_LABEL } from "@pairinggo/shared";
+import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, similarDrinks, subtypeLabel, toSlug, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { buyOptions } from "@/lib/shop";
 import { siteUrl } from "@/lib/site";
@@ -98,35 +98,42 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
     breadcrumb([{ name: "홈", path: "/" }, { name: "주류", path: "/drinks" }, { name: KIND_LABEL[kind], path: `/drinks?kind=${kind}` }, { name: drink.name, path }], base),
   ];
 
+  const rating = extRatingOf(drink);
+  const hasRelated = sameBrewery.length > 0 || similar.length > 0 || sameRegion.length > 0;
+
   return (
-    <div className="wrap">
+    <div className="wrap detail">
       <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
-      <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
-      {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
-      {/* 제품 사진 — 사용 허락을 받은 것만(image_credit에 출처). 없으면 아무것도 두지 않는다 */}
-      {drink.image?.url && <figure className="detail-img"><img src={drink.image.url} alt={`${drink.name} 제품 사진`} />{drink.image.credit && <figcaption className="small muted">{drink.image.credit}</figcaption>}</figure>}
-      <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
-      {/* 외부 평점 — 허용된 출처(라이선스·수입사 제공)만, 출처·확인일과 함께. 페어링GO 회원 평가와 섞지 않는다 */}
-      {(() => { const r = extRatingOf(drink); return r ? <p className="ext-rating-line"><span className="ext-rating">★ {r.score}<i>{r.source}</i></span> <span className="small muted">{extRatingText(r)} · {r.checked} 확인{r.url ? <> · <ExtLink href={r.url} event="external_link" props={{ d: drink.id, kind: "ext_rating" }}>출처 보기 ↗</ExtLink></> : null}</span></p> : null; })()}
+
+      {/* ① 핵심 정보 한 카드(2026-09-25 정리) — 사진 · 이름 · 분류 · 외부 평점 · 태그 · 저장/공유 */}
+      <header className="dhead">
+        {drink.image?.url && <figure className="detail-img"><img src={drink.image.url} alt={`${drink.name} 제품 사진`} />{drink.image.credit && <figcaption className="small muted">{drink.image.credit}</figcaption>}</figure>}
+        <div className="dhead-body">
+          <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
+          {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
+          <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
+          {/* 외부 평점 — 허용된 출처(라이선스·수입사 제공)만, 출처·확인일과 함께. 페어링GO 회원 평가와 섞지 않는다 */}
+          {rating && <p className="ext-rating-line"><span className="ext-rating">★ {rating.score}<i>{rating.source}</i></span> <span className="small muted">{extRatingText(rating)} · {rating.checked} 확인{rating.url ? <> · <ExtLink href={rating.url} event="external_link" props={{ d: drink.id, kind: "ext_rating" }}>출처 보기 ↗</ExtLink></> : null}</span></p>}
+          {(!!drink.flavor?.length || !!drink.awards?.length) && (
+            <ul className="tags">{drink.flavor.map((f) => <li key={f} className="tag">{f}</li>)}{(drink.awards ?? []).map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
+          )}
+          <div className="dhead-acts">
+            <span className="bar-dup"><Heart kind="drink" id={drink.id} name={drink.name} variant="button" /></span>
+            <ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} />
+          </div>
+        </div>
+      </header>
+      {drink.desc && <p className="lead">{drink.desc}</p>}
+
       {/* ② 용량 선택과 그 규격의 참고가격(2026-09-24) — 규격이 등록된 술만. useSearchParams라 Suspense 경계 */}
       {!!drink.specs?.length && <Suspense fallback={null}><SpecPicker specs={drink.specs} drinkId={drink.id} /></Suspense>}
       {/* 파는 곳이 있으면 이름 바로 아래에서 산다(2026-09-21 사용자 요청) — 재고·가격이 바뀌므로 화면에서 불러온다 */}
       <BuyBox drinkId={drink.id} drinkName={drink.name} />
-      {drink.desc && <p className="lead">{drink.desc}</p>}
-      {!!drink.flavor?.length && (
-        <ul className="tags">{drink.flavor.map((f) => <li key={f} className="tag">{f}</li>)}</ul>
-      )}
-      {!!drink.awards?.length && (
-        <ul className="tags">{drink.awards.map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
-      )}
-      <ProfileBars kind="drink" profile={drink.profile} />
-      <KindFacts drink={drink} />
-      <div className="share-row"><ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} /></div>
 
-      {/* 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다 */}
+      {/* ③ 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다. 판매점 찾기는 접어 두고 누르면 펼친다(온라인 불가 주류는 펼쳐 둠) */}
       <section className="buy">
-        <h3>온라인 구매</h3>
+        <h3>{sellable ? "온라인 구매" : "구매 안내"}</h3>
         <div className="btns" style={{ marginTop: 6 }}>
           {sellable && !bl.fallback && (
             <>
@@ -136,16 +143,15 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           )}
           {sellable && bl.fallback && <ExtLink className="btn p bar-dup" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_fallback" }}>네이버쇼핑에서 찾기 ↗</ExtLink>}
           {!sellable && <ExtLink className="btn" href={naverShopUrl(drink.name)} event="external_link" props={{ d: drink.id, kind: "naver_shop_info" }}>네이버쇼핑에서 정보 보기 ↗</ExtLink>}
-          <span className="bar-dup"><Heart kind="drink" id={drink.id} name={drink.name} variant="button" /></span>
         </div>
-        <p className="small muted" style={{ marginTop: 8 }}>
-          {!sellable && "이 술은 전통주로 분류되지 않아 온라인 직배송이 법적으로 제한됩니다. 아래에서 가까운 판매점을 찾아 주세요. "}
-          {sellable && bl.fallback && `공식 판매 링크가 최근 점검(${LINK_STATUS.checkedAt?.slice(0, 10) || "점검"})에서 응답하지 않아 네이버쇼핑으로 안내합니다. `}
-          {sellable && bl.soldout && "최근 점검에서 품절 문구가 감지됐습니다. 재입고는 판매처에서 확인해 주세요. "}
-          {sellable && "주류는 만 19세 이상만 구매할 수 있습니다."}
+        <p className="small muted" style={{ margin: "8px 0 0" }}>
+          {!sellable ? "전통주가 아니라 온라인 직배송이 법적으로 제한됩니다 — 아래에서 가까운 판매점을 찾아 주세요. "
+            : bl.fallback ? `공식 판매 링크가 최근 점검(${LINK_STATUS.checkedAt?.slice(0, 10) || "점검"})에서 응답하지 않아 네이버쇼핑으로 안내합니다. `
+            : bl.soldout ? "최근 점검에서 품절 문구가 감지됐습니다 — 재입고는 판매처에서 확인해 주세요. " : ""}
+          주류는 만 19세 이상만 구매할 수 있습니다.
         </p>
         {offline && (offline.visit === true || offline.address) && (
-          <div className="box" style={{ marginTop: 12 }}>
+          <div className="box" style={{ margin: "12px 0 0" }}>
             <h3>{offline.place || drink.brewery} {offline.visit === true && <span className="badge o">현장 판매 확인</span>}</h3>
             {offline.address && <p className="small" style={{ margin: "0 0 4px" }}>{offline.address}</p>}
             {offline.note && <p className="small muted" style={{ margin: 0 }}>{offline.note}</p>}
@@ -155,16 +161,25 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             </div>
           </div>
         )}
+        <details className="fold" open={!sellable}>
+          <summary>내 주변 판매점 찾기</summary>
+          <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />
+        </details>
       </section>
+
+      {/* ④ 맛과 향 · 주종별 정보 — 나란히 */}
+      <div className="dinfo">
+        <ProfileBars kind="drink" profile={drink.profile} />
+        <KindFacts drink={drink} />
+      </div>
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>
-          {/* 파는 곳 찾기는 페어링 목록 위에 — 온라인 구매 바로 아래(음식 상세의 맛집 칸과 같은 자리) */}
-          <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />
           <h2 id="pairings">{josa(drink.name, "과/와")} 어울리는 음식 {items.length}가지</h2>
-          <p className="small muted" style={{ marginTop: -6 }}>
-            어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 전문가픽은 양조장·소믈리에 추천, 대중픽은 블로그·유튜브 후기에서 확인된 조합이고, 먹어본 회원들의 평가가 함께 쌓입니다.
-          </p>
+          <details className="fold small">
+            <summary>어울림 등급은 어떻게 매기나요</summary>
+            <p className="small muted">어울림 등급(찰떡 · 잘 어울림 · 시도해 볼 만)은 전문가 평가(60%)·블로그 언급량(25%)·맛 프로필(15%)에 출처 등급을 더한 점수로 매깁니다. 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다. 전문가픽은 양조장·소믈리에 추천, 대중픽은 블로그·유튜브 후기에서 확인된 조합이고, 먹어본 회원들의 평가가 함께 쌓입니다.</p>
+          </details>
           {!hasEvidence && <p className="box small" style={{ marginBottom: 12 }}><b>페어링 정보 준비 중</b> — 아직 양조장·소믈리에·매체가 확인한 조합이 없습니다. 아래는 맛 프로필로 추정한 조합이며 검증된 추천이 아닙니다.</p>}
           <MemberPickButton mode="drink" subjectId={drink.id} subjectName={drink.name} options={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
           <RatingsProvider subject={{ drink: drink.id }}>
@@ -192,32 +207,15 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               </div>
             </div>
           )}
-          {!!sameBrewery.length && (
-            <div className="box">
-              <h3>{drink.brewery}의 다른 술</h3>
-              <ul>{sameBrewery.map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul>
+          {/* ⑦ 관련 술 — 한 칸에(같은 양조장 · 비슷한 술 · 같은 지역). '데이터' 칸은 뺐다(2026-09-25) */}
+          {hasRelated && (
+            <div className="box related">
+              <h3>관련 술</h3>
+              {sameBrewery.length > 0 && <><h4>{drink.brewery}의 다른 술</h4><ul>{sameBrewery.slice(0, 4).map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul></>}
+              {similar.length > 0 && <><h4>비슷한 {KIND_LABEL[kind]}</h4><ul>{similar.slice(0, 4).map((x) => <li key={x.x.id}><Link href={`/drinks/${toSlug(x.x.name)}`}>{x.x.name}</Link>{x.why.length > 0 && <span className="small muted"> · {x.why.slice(0, 2).join(" · ")}</span>}</li>)}</ul></>}
+              {sameRegion.length > 0 && <><h4>{drink.region?.split(" ")[0]}의 전통주</h4><ul>{sameRegion.slice(0, 4).map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul></>}
             </div>
           )}
-          {!!similar.length && (
-            <div className="box">
-              <h3>비슷한 {KIND_LABEL[kind]}</h3>
-              <ul>{similar.map((s) => <li key={s.x.id}><Link href={`/drinks/${toSlug(s.x.name)}`}>{s.x.name}</Link>{s.why.length > 0 && <span className="small muted"> · {s.why.slice(0, 2).join(" · ")}</span>}</li>)}</ul>
-            </div>
-          )}
-          {!!sameRegion.length && (
-            <div className="box">
-              <h3>{drink.region?.split(" ")[0]}의 전통주</h3>
-              <ul>{sameRegion.map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul>
-            </div>
-          )}
-          <div className="box">
-            <h3>데이터</h3>
-            <ul>
-              <li>블로그 언급 {fmt(drink.blog_anju || 0)}건</li>
-              <li>등록된 페어링 {items.length}건</li>
-              <li>전체 주류 {c.counts.drinks}종</li>
-            </ul>
-          </div>
         </aside>
       </div>
       <DetailActionBar save={<Heart kind="drink" id={drink.id} name={drink.name} variant="button" />}>
