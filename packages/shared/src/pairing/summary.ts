@@ -22,10 +22,44 @@ export function tidyPoint(s: string): string {
     .replace(/(\d+(?:\.\d+)?)점/g, "$1");
 }
 
-export type CardSummary = { points: string[]; cautions: string[] };
+/**
+ * 문장형 포인트 → 짧은 라벨(2026-09-26 사용자 요청: 문장 대신 심플하고 직관적으로). 생성 규칙(lineup.ts·affinity.ts)의 문형 19가지를 2~6자로 줄인다.
+ * 모르는 문형은 숫자·조사를 걷어낸 뒤 12자에서 자른다. 원문은 툴팁으로 남긴다.
+ */
+const SHORT: [RegExp, string][] = [
+  [/^바디 \d+점 ↔ 무게 \d+점 균형$/, "무게 균형"],
+  [/^근거 조합에서 .+: 평균의 [\d.]+배 자주 짝지어짐/, "자주 짝지음"],
+  [/^근거 조합에서 .+: \d+번 짝지어짐$/, "단골 조합"],
+  [/^근거 조합에서 .+: 드물게 짝지어짐/, "드문 조합"],
+  [/^적당한 단맛·바디가 감칠맛을 받쳐줌$/, "감칠맛 살림"],
+  [/^산미 \d+·탄산 \d+점이 기름기 \d+점을 씻어냄$/, "기름기 씻김"],
+  [/^도수 [\d.]+%가 진한 기름기·무게를 정리$/, "기름기 정리"],
+  [/^술 단맛 \d+점이 달콤한 양념과 어울림$/, "단 양념 궁합"],
+  [/^술 단맛 \d+점이 디저트 단맛과 어울림$/, "디저트 궁합"],
+  [/^단맛 \d+점이 매운맛 \d+점을 감싸줌$/, "매운맛 감쌈"],
+  [/^짠맛을 단맛·산미가 중화$/, "짠맛 중화"],
+  [/^절제된 향이 재료 맛을 살림$/, "재료 맛 살림"],
+  [/^바디 \d+점과 음식 무게 \d+점 차이가 큼$/, "무게 차이 큼"],
+  [/^높은 도수가 가벼운 음식을 압도$/, "도수가 셈"],
+  [/^드라이한 술이 단 양념 옆에서 밋밋해짐$/, "단 양념에 밋밋"],
+  [/^강한 향·바디가 섬세한 맛을 가림$/, "향이 맛을 가림"],
+  [/^단 술이 담백한 맛과 겉돎$/, "담백함과 겉돎"],
+  [/^드라이한 술이 디저트 옆에서 시고 쓰게 느껴짐$/, "디저트에 씀"],
+  [/^드라이한 술이 매운맛을 더 날카롭게 함$/, "매운맛 날카로움"],
+];
+export function shortPoint(s: string): string {
+  for (const [re, label] of SHORT) if (re.test(s)) return label;
+  const t = tidyPoint(s).replace(/\d+(\.\d+)?%?/g, "").replace(/\s+/g, " ").replace(/[·:]/g, " ").trim();
+  return t.length > 12 ? `${t.slice(0, 12)}…` : t;
+}
 
+export type CardPoint = { label: string; full: string };
+export type CardSummary = { points: CardPoint[]; cautions: CardPoint[] };
+
+/** 카드 라벨 — label은 짧은 말, full은 원문(툴팁). 같은 라벨은 하나로 */
 export function cardSummary(p: Pick<Pairing, "pf" | "reason">): CardSummary {
-  return { points: (p.pf?.plus ?? []).map(tidyPoint), cautions: (p.pf?.minus ?? []).map(tidyPoint) };
+  const mk = (arr: string[]) => { const seen = new Set<string>(); return arr.map((s) => ({ label: shortPoint(s), full: tidyPoint(s) })).filter((x) => x.label && !seen.has(x.label) && seen.add(x.label)); };
+  return { points: mk(p.pf?.plus ?? []), cautions: mk(p.pf?.minus ?? []) };
 }
 
 const DRINK_AXES: [keyof DrinkProfile, string][] = [["body", "바디"], ["acid", "산미"], ["sweet", "단맛"], ["fizz", "탄산"], ["aroma", "향"]];

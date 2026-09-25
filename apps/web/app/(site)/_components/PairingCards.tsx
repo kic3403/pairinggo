@@ -46,15 +46,15 @@ export function PairingCards({ items }: { items: CardItem[] }) {
               <GradeBadge grade={grade} title={explain} />
             </div>
             {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}
-            {(points.length > 0 || cautions.length > 0 || profile) && (
-              <dl className="kv">
-                {points.length > 0 ? <div><dt>페어링 포인트</dt><dd>{points.join(" · ")}</dd></div>
-                  : p.reason ? <div><dt>페어링 포인트</dt><dd>{p.reason}</dd></div> : null}   {/* 맛 궁합 포인트가 없으면 설명을 그 자리에 */}
-                {cautions.length > 0 && <div><dt>주의</dt><dd>{cautions.join(" · ")}</dd></div>}
-                {profile && <div className="pline"><dt>맛 프로필</dt><dd><ProfileChart kind={isDrinkCard ? "drink" : "food"} profile={profile} /></dd></div>}
-              </dl>
+            {/* 포인트·주의는 짧은 칩으로(2026-09-26 사용자 요청 — 문장 대신 직관적으로). 원문은 툴팁, 긴 설명은 "자세히" */}
+            {(points.length > 0 || cautions.length > 0) && (
+              <ul className="pts" aria-label="페어링 포인트">
+                {points.map((x) => <li key={"p" + x.label} className="pt" title={x.full}>{x.label}</li>)}
+                {cautions.map((x) => <li key={"c" + x.label} className="pt warn" title={x.full}>{x.label}</li>)}
+              </ul>
             )}
-            {p.reason && points.length > 0 && <details className="more"><summary>자세히</summary><p className="why">{p.reason}</p></details>}
+            {profile && <div className="pline-solo"><ProfileChart kind={isDrinkCard ? "drink" : "food"} profile={profile} /></div>}
+            {p.reason && <details className="more"><summary>자세히</summary><p className="why">{p.reason}</p></details>}
             {p.ev?.quote && (
               <blockquote className="quote">
                 “{p.ev.quote}”

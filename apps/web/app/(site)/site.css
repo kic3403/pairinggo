@@ -1178,3 +1178,13 @@ a.pd-score:hover { border-color: var(--navy); }
 /* 같은 줄 카드는 높이를 맞춘다 */
 .dcard { display: flex; }
 .dcard-link { flex: 1; }
+
+/* 페어링 카드 포인트 칩(2026-09-26) — 문장 대신 짧은 라벨. 포인트는 남색, 주의는 주황 */
+.pts { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.pt { display: inline-flex; align-items: center; min-height: 26px; padding: 0 9px; border-radius: 7px; background: var(--navy-soft); color: var(--navy-ink); font-size: 12.5px; font-weight: 600; }
+.pt::before { content: "✓"; margin-right: 4px; font-size: 11px; opacity: .8; }
+.pt.warn { background: var(--food-soft); color: var(--food-ink); }
+.pt.warn::before { content: "!"; font-weight: 800; }
+.pline-solo { margin-top: 8px; }
+.card .more { margin-top: 6px; }
+
