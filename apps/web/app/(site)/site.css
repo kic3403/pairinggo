@@ -129,7 +129,8 @@ p { margin: 0 0 12px; }
 .sbox.compact input, .sbox.compact button { min-height: 38px; font-size: 14px; }
 .sbox.compact input { padding: 0 12px; border-radius: 10px; }
 .sbox.compact button { padding: 0 12px; border-radius: 10px; }
-@media (max-width: 640px) { .sbox.compact { display: none; } .site-nav .search-link { display: inline; } }
+/* 휴대폰에서도 헤더 검색창을 전폭으로 둔다(2026-09-25, 캐치테이블식) — 헤더 메뉴는 탭바가 대신 */
+@media (max-width: 640px) { .sbox.compact { max-width: none; margin-left: 4px; } .sbox.compact button { padding: 0 12px; } .site-nav .search-link { display: inline; } }
 .search-link { display: none; }
 
 /* 검색 결과: 순위 카드 · 이름 매칭 행 */
@@ -595,7 +596,7 @@ p { margin: 0 0 12px; }
 /* 홈 음식 종류 칩 */
 .group-chips a { font-weight: 700; }
 .m-search { display: none; }
-@media (max-width: 767px) { .m-search { display: inline-flex; margin-left: auto; padding: 8px; color: var(--ink); } }
+
 /* 홈 회원 추천 초대 카드 — 글이 3건 미만일 때(homePicksMode) */
 .picks-invite { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 26px 0 0; padding: 12px 16px; border: 1px dashed #C9CDEA; border-radius: var(--radius); background: #F5F6FC; color: var(--ink2); text-decoration: none; font-size: 14px; }
 .picks-invite .pi-k { font-weight: 800; color: var(--ink); }
@@ -1038,3 +1039,89 @@ a.pd-score:hover { border-color: var(--navy); }
 .detail-img figcaption { margin-top: 4px; }
 /* 검색 결과 줄 사진(파트너·공식 사진이 있을 때만) */
 .row-img { width: 36px; height: 48px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--bg2); flex: none; }
+
+/* ---------- 시작 화면(2026-09-25, 캐치테이블식) — 1.2초 머문 뒤 사라진다. 이미 본 탭은 <html class="no-splash">로 아예 안 그린다 ---------- */
+.splash { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: #fff; animation: splash-out 0.3s ease 1.2s forwards; }
+.no-splash .splash { display: none; }
+.splash-in { display: grid; justify-items: center; gap: 12px; animation: splash-up 0.5s ease both; }
+.splash-tag { margin: 0; font-size: 17px; font-weight: 600; color: var(--ink2); letter-spacing: -0.01em; }
+.splash-brand { display: flex; align-items: center; gap: 12px; font-size: 40px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); }
+.splash-brand .dots { display: flex; }
+.splash-brand .dots i { display: block; width: 34px; height: 34px; border-radius: 50%; background: var(--navy); }
+.splash-brand .dots i + i { background: var(--food); margin-left: -12px; opacity: 0.92; }
+.splash-brand .verm { color: var(--food); }
+@keyframes splash-out { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@keyframes splash-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .splash { animation: splash-out 0.01s linear 0.6s forwards; } .splash-in { animation: none; } }
+
+/* ---------- 홈 재구성(2026-09-25) ---------- */
+.home-h1 { font-size: 15px; font-weight: 700; margin: 8px 0 0; color: var(--ink); }
+.home-h1 .muted { font-weight: 500; font-size: 13.5px; }
+@media (min-width: 768px) { .home-h1 { font-size: 18px; } .home-h1 .muted { font-size: 15px; } }
+.home-tabs .cat-tabs { margin: 8px 0 10px; }
+/* 배너 캐러셀 */
+.banners { position: relative; margin: 4px 0 6px; }
+.bn-track { display: flex; gap: 10px; margin: 0; padding: 0 0 6px; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.bn-track::-webkit-scrollbar { display: none; }
+.bn-track > li { flex: 0 0 82%; scroll-snap-align: start; }
+@media (min-width: 640px) { .bn-track > li { flex-basis: 48%; } }
+@media (min-width: 1000px) { .bn-track > li { flex-basis: 32%; } }
+.bn { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 168px; border-radius: 16px; padding: 16px; text-decoration: none; color: #fff; overflow: hidden; background: var(--tone, var(--navy)); }
+.bn.has-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bn.has-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.05) 20%, rgba(0,0,0,.62)); }
+.bn-body { position: relative; z-index: 1; display: grid; gap: 4px; }
+.bn-badge { justify-self: start; font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.22); backdrop-filter: blur(4px); }
+.bn-title { font-size: 19px; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; text-wrap: balance; word-break: keep-all; }
+.bn-sub { font-size: 13px; opacity: .92; line-height: 1.4; }
+.bn-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 6px; font-size: 12.5px; font-weight: 700; }
+.bn-period { opacity: .85; font-weight: 600; }
+.bn.tone-navy { --tone: var(--navy); } .bn.tone-orange { --tone: var(--food); } .bn.tone-green { --tone: #2F6B3A; }
+.bn.tone-sand { --tone: #B8860B; } .bn.tone-mist { --tone: #5B8DB8; } .bn.tone-peach { --tone: #C77D5A; }
+.bn-count { position: absolute; right: 8px; bottom: 14px; z-index: 2; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; text-decoration: none; font-variant-numeric: tabular-nums; }
+.bn-count b { font-weight: 800; }
+.bn-list { display: grid; gap: 12px; margin: 12px 0 20px; padding: 0; list-style: none; }
+@media (min-width: 640px) { .bn-list { grid-template-columns: 1fr 1fr; } }
+/* 아이콘 10칸 — 5열 × 2줄(캐치테이블식) */
+.quick { margin: 14px 0 6px; }
+.quick ul { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px 4px; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 768px) { .quick ul { grid-template-columns: repeat(10, 1fr); } }
+.quick .ic { width: 54px; height: 54px; border-radius: 16px; font-size: 24px; }
+.quick a { font-size: 12px; }
+@media (max-width: 360px) { .quick .ic { width: 50px; height: 50px; } .quick a { font-size: 11.5px; } }
+/* 서비스 타일 4장(데일리샷식) */
+.flow { margin: 10px 0 4px; }
+.flow ul { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.flow-tile { display: grid; gap: 2px; justify-items: center; align-content: start; text-align: center; padding: 12px 4px 10px; border-radius: 16px; color: #fff; text-decoration: none; background: var(--tone, var(--navy)); min-height: 108px; box-sizing: border-box; }
+.flow-tile .ic { font-size: 24px; margin-bottom: 4px; }
+.flow-tile b { font-size: 12.5px; letter-spacing: -0.02em; line-height: 1.2; word-break: keep-all; }
+.flow-tile .sub { font-size: 10.5px; opacity: .9; line-height: 1.2; word-break: keep-all; }
+@media (max-width: 360px) { .flow-tile b { font-size: 12px; } .flow-tile .ic { font-size: 22px; } }
+.flow-tile.tone-orange { --tone: var(--food); } .flow-tile.tone-navy { --tone: var(--navy); } .flow-tile.tone-green { --tone: #2F6B3A; } .flow-tile.tone-sand { --tone: #8A5A00; }
+@media (min-width: 768px) { .flow-tile { min-height: 110px; } .flow-tile b { font-size: 15px; } }
+/* 파트너 줄 */
+.prow { margin-top: 18px; }
+.prow ul { display: flex; gap: 14px; margin: 8px 0 0; padding: 0 0 6px; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.prow ul::-webkit-scrollbar { display: none; }
+.prow li { flex: none; width: 76px; }
+.prow a { display: grid; justify-items: center; gap: 4px; text-decoration: none; color: var(--ink); }
+.pr-circle { display: grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; overflow: hidden; background: color-mix(in srgb, var(--tone) 14%, #fff); border: 1px solid var(--line); color: var(--tone); font-size: 11px; font-weight: 800; text-align: center; }
+.pr-circle img { width: 100%; height: 100%; object-fit: cover; }
+.pr-name { font-size: 12px; font-weight: 700; text-align: center; line-height: 1.2; word-break: keep-all; max-width: 76px; }
+.pr-kind { font-size: 10.5px; color: var(--muted); }
+/* 많이 찾는 전통주 — 정지 카드 줄 */
+.trend { margin-top: 18px; }
+.trend-note { margin: 2px 0 8px; }
+.trend-row { display: flex; gap: 10px; margin: 0; padding: 0 0 6px; list-style: none; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
+.trend-row::-webkit-scrollbar { display: none; }
+.trend-row li { flex: none; scroll-snap-align: start; }
+.trend-row .mq-tile { width: 128px; height: 184px; }
+/* 먹어봤나요 알약(캐치테이블 "작성할 리뷰" 자리) */
+.tried-pill { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 29; display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 999px; background: var(--food); color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+.tried-pill b { font-weight: 800; }
+@media (min-width: 768px) { .tried-pill { bottom: 24px; } }
+/* 부품 통일(2026-09-25): 칩 한 종류 — 높이 40, 글자 600, 선택 = 남색 채움 */
+.tabs a, .fchip, .chip-more { min-height: 40px; display: inline-flex; align-items: center; font-weight: 600; font-size: 14px; }
+.tabs a { padding: 0 15px; }
+.tabs a.on { font-weight: 700; }
+.grid a { padding: 14px 46px 14px 14px; }
+.grid .n { font-weight: 700; }

@@ -19,6 +19,7 @@
     "./kinds": "./src/catalog/kinds.ts",
     "./specs": "./src/catalog/specs.ts",
     "./filter-url": "./src/catalog/filter-url.ts",
+    "./home": "./src/home/banners.ts",
     "./data/*": "./data/*"
   },
   "scripts": {

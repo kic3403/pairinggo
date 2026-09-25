@@ -36,6 +36,7 @@ export default async function AdminHome() {
         <p className="muted">카탈로그 확장 후보입니다. 크론 집계(popular_terms) 기준.</p>
         {d.empties.length ? <div className="row">{d.empties.map((e) => <span key={e.term} className="tag w">{e.term} {e.count}</span>)}</div> : <p className="muted">아직 없음</p>}
         <p style={{ marginTop: 8 }}><Link href="/admin/wanted">없는 술 요청 모아 보기 (메뉴판·회원픽 포함) →</Link></p>
+        <p style={{ marginTop: 4 }}><Link href="/admin/banners">홈 배너 — 이벤트·이달의 파트너·상시 안내 →</Link></p>
         <p style={{ marginTop: 4 }}><Link href="/admin/drinks?missing=price">술 정보 — 주종·규격·참고가격 입력(가격 없는 술부터) →</Link></p>
       </div>
     </>

@@ -15,23 +15,24 @@ import RegionProvider from "./_components/RegionProvider";
 import RegionSheet from "./_components/RegionSheet";
 import SavedProvider from "./_components/SavedProvider";
 import SearchBox from "./_components/SearchBox";
+import Splash, { SPLASH_SCRIPT } from "./_components/Splash";
 import "./site.css";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <SavedProvider>
     <RegionProvider>
+      {/* 시작 화면(2026-09-25) — 이 탭에서 이미 봤으면 첫 그리기 전에 감춘다 */}
+      <script dangerouslySetInnerHTML={{ __html: SPLASH_SCRIPT }} />
+      <Splash />
       <header className="site-head">
         <div className="wrap">
           <Link href="/" className="brand" aria-label="페어링GO 홈">
             <span className="dots" aria-hidden><i /><i /></span>
             <span>페어링<span style={{ color: "var(--food)" }}>GO</span></span>
           </Link>
+          {/* 휴대폰에서도 전폭 검색창(캐치테이블식, 2026-09-25) — 검색 버튼은 돋보기 아이콘으로 */}
           <SearchBox compact />
-          {/* 휴대폰: 헤더 메뉴 대신 하단 탭바 — 탭바가 없는 상세 화면에서도 검색으로 갈 수 있게 돋보기만 남긴다 */}
-          <Link href="/search" className="m-search" aria-label="검색">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.2-4.2" /></svg>
-          </Link>
           <nav className="site-nav" aria-label="주요 메뉴">
             <Link href="/search" className="search-link">검색</Link>
             <Link href="/drinks">주류</Link>

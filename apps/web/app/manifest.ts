@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 근거와 함께.",
     start_url: "/?src=pwa",
     display: "standalone",
-    background_color: "#FBFAF7",
+    background_color: "#FFFFFF",
     theme_color: "#22406B",
     lang: "ko",
     icons: [
