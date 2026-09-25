@@ -11,7 +11,7 @@ import { FOOD_FILTERS } from "@pairinggo/shared/kinds";
 import { SORT_LABELS, filterChips, filterHref, mlSummary, priceSummary, rangeActive, type DrinkFilter, type DrinkSort } from "@pairinggo/shared/filter-url";
 import FilterSheet, { type FilterGroup } from "./FilterSheet";
 
-export default function FilterBar({ applied, total, flavors, volumes }: { applied: DrinkFilter; total: number; flavors: string[]; volumes: number[] }) {
+export default function FilterBar({ applied, total, flavors, volumes, note }: { applied: DrinkFilter; total: number; flavors: string[]; volumes: number[]; note?: string | null }) {
   const router = useRouter();
   const [open, setOpen] = useState<FilterGroup | null>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -33,7 +33,7 @@ export default function FilterBar({ applied, total, flavors, volumes }: { applie
         </button>
       </div>
       <div className="fbar-row">
-        <p className="fbar-total" aria-live="polite"><b>{total.toLocaleString("ko-KR")}</b>종</p>
+        <p className="fbar-total" aria-live="polite"><b>{total.toLocaleString("ko-KR")}</b>종{note && <span className="fbar-note" title="한 병 참고가격 기준, 배송비·쿠폰 제외"> · {note}</span>}</p>
         {chips.length > 0 && (
           <ul className="fchips applied" aria-label="적용한 조건">
             {chips.map((c) => <li key={c.key}><Link href={filterHref(c.remove)} className="fchip on" aria-label={`${c.label} 조건 제거`} scroll={false}>{c.label} <span aria-hidden>✕</span></Link></li>)}

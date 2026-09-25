@@ -14,7 +14,6 @@ import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
 import JsonLd from "../_components/JsonLd";
 import RegionTabs from "../_components/RegionTabs";
-import SearchBox from "../_components/SearchBox";
 import DrinkCard from "./_components/DrinkCard";
 import FilterBar from "./_components/FilterBar";
 import SubtypeChips from "./_components/SubtypeChips";
@@ -104,9 +103,8 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
     <div className="wrap drinks-page">
       <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link>{f.kind && <> · <Link href="/drinks">주류</Link></>}</p>
-      <h1>{heading} <span className="muted small">{total.toLocaleString("ko-KR")}종</span></h1>
-      <p className="lead">{f.kind ? KIND_LEAD[f.kind] : "전통주·위스키·사케·와인을 한 곳에서. 가격·용량·어울리는 음식으로 좁혀 보세요."}</p>
-      <SearchBox initial="" regionPicker={false} placeholder="술이나 음식을 검색해보세요" />
+      {/* 제목은 한 줄, 설명은 주종을 골랐을 때만 작게(2026-09-26 정리). 검색창은 헤더에 있으니 본문에 두 번 두지 않는다 */}
+      <h1 className="list-h1">{heading}{f.kind && <span className="small muted list-lead">{KIND_LEAD[f.kind]}</span>}</h1>
 
       {/* ② 주종 탭 — '전체'는 조회 범위 */}
       <ul className="cat-tabs kind-tabs" aria-label="주종">
@@ -116,12 +114,11 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
       </ul>
       {/* ③ 세부 종류 칩 */}
       {f.kind && !noKindData && <SubtypeChips kind={f.kind} applied={f} counts={subCounts} />}
-      {f.kind === "trad" && f.cat && CATEGORY_NOTE[f.cat] && <p className="small muted" style={{ marginTop: -6 }}>{CATEGORY_NOTE[f.cat]}</p>}
+      {f.kind === "trad" && f.cat && CATEGORY_NOTE[f.cat] && <p className="small muted cat-note" style={{ marginTop: -6 }}>{CATEGORY_NOTE[f.cat]}</p>}
       {f.kind === "trad" && <RegionTabs current={regionObj?.id} base="/drinks" keep={Object.fromEntries([...new URLSearchParams(filterHref({ ...f, region: null }).split("?")[1] || "")])} collapsible />}
       {fallbackNote && <p className="small muted">{fallbackNote}</p>}
       {/* ④·⑤ 필터 바로가기 + 적용 조건 + 결과 수 */}
-      {!noKindData && <FilterBar applied={f} total={total} flavors={flavors} volumes={volumes} />}
-      {(rangeActive(f.price) || rangeActive(f.ml)) && <p className="small muted fnote">{rangeActive(f.price) && rangeActive(f.ml) ? "가격과 용량이 같은 규격에서 모두 확인된 술만" : rangeActive(f.price) ? "참고가격이 확인된 술만" : "용량이 확인된 술만"} 보여 드립니다. 한 병 참고가격 기준, 배송비·쿠폰 제외.</p>}
+      {!noKindData && <FilterBar applied={f} total={total} flavors={flavors} volumes={volumes} note={rangeActive(f.price) && rangeActive(f.ml) ? "가격·용량이 같은 규격에서 확인된 술만" : rangeActive(f.price) ? "참고가격이 확인된 술만" : rangeActive(f.ml) ? "용량이 확인된 술만" : null} />}
 
       {noKindData && (
         <section className="empty-kind">

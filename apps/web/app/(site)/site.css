@@ -940,9 +940,9 @@ a.pd-score:hover { border-color: var(--navy); }
 .dcard-tile { display: grid; place-items: center; background: linear-gradient(160deg, color-mix(in srgb, var(--tone) 78%, #fff), var(--tone)); color: #fff; font-weight: 800; font-size: 15px; letter-spacing: 0.02em; }
 .dcard-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .dcard-name { font-weight: 800; font-size: 15.5px; color: var(--food-ink); }
-.dcard-meta { font-size: 12.5px; color: color-mix(in srgb, var(--food-ink) 70%, var(--ink2)); }
+.dcard-meta { font-size: 12.5px; color: var(--ink2); }
 .dcard-spec { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-top: 2px; font-variant-numeric: tabular-nums; }
-.dcard-spec.none { color: var(--muted); font-weight: 600; }
+.dcard-spec.none { color: var(--muted); font-weight: 500; font-size: 12.5px; }
 .dcard-more { font-weight: 600; color: var(--muted); }
 .dcard-foods { font-size: 12.5px; color: var(--navy-ink); }
 .dcard-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
@@ -1159,3 +1159,22 @@ a.pd-score:hover { border-color: var(--navy); }
 .box.related h4:first-of-type { margin-top: 0; }
 .box.related li { padding: 5px 0; font-size: 14px; }
 
+/* ---------- 목록 정리(2026-09-26): 제목 한 줄, 칩 한 줄 스크롤, 결과 수·정렬 한 줄, 카드 3줄(음식·태그는 넓은 화면만) ---------- */
+.list-h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 4px; }
+.list-lead { font-weight: 500; }
+.drinks-page .kind-tabs { margin-top: 6px; }
+.sub-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.sub-chips::-webkit-scrollbar { display: none; }
+.sub-chips li { flex: none; }
+.sub-chips a, .sub-chips .chip-more { white-space: nowrap; }
+.drinks-page .fbar { margin: 2px 0 10px; }
+.fbar-note { color: var(--muted); font-weight: 500; }
+@media (min-width: 768px) { .fbar { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px 14px; } .fbar-row { justify-content: flex-end; } .fbar-row .fchips.applied { order: 3; flex-basis: 100%; justify-content: flex-end; } }
+@media (max-width: 639px) { .dcard-foods, .dcard-tags { display: none; } .dcard-link { min-height: 96px; grid-template-columns: 64px 1fr; } .dcard-img, .dcard-tile { width: 64px; height: 84px; } }
+.dcard-link { padding: 12px 44px 12px 12px; }
+.dcard-name { font-size: 15px; }
+/* 휴대폰: 설명 문장은 숨기고, 결과 수와 정렬은 한 줄, 적용 칩은 그 아래 */
+@media (max-width: 767px) { .list-lead, .drinks-page .cat-note { display: none; } .fbar-row { display: grid; grid-template-columns: 1fr auto; align-items: center; } .fbar-row .fchips.applied { grid-column: 1 / -1; grid-row: 2; } .fbar-sort { margin-left: 0; grid-column: 2; grid-row: 1; justify-self: end; } .fbar-total { grid-column: 1; grid-row: 1; } }
+/* 같은 줄 카드는 높이를 맞춘다 */
+.dcard { display: flex; }
+.dcard-link { flex: 1; }

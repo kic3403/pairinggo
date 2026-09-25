@@ -22,7 +22,7 @@ export default function DrinkCard({ item, foods, showKind }: { item: FilterItem;
       <Link href={href} className="dcard-link">
         {d.image?.url
           ? <img className="dcard-img" src={d.image.url} alt="" loading="lazy" />
-          : <span className="dcard-tile" style={{ ["--tone" as string]: TILE[kind] }} aria-hidden>{subtypeLabel(d).slice(0, 2)}</span>}
+          : <span className="dcard-tile" style={{ ["--tone" as string]: TILE[kind] }} aria-hidden>{(kind === "trad" ? d.category : subtypeLabel(d)).slice(0, 2)}</span>}
         <span className="dcard-body">
           <span className="dcard-name">{d.name}{d.demo && <span className="badge n" style={{ marginLeft: 6 }}>데모</span>}{rating && <span className="ext-rating" title={`${rating.source} · ${rating.checked} 확인`}>★ {rating.score}<i>{rating.source}</i></span>}</span>
           <span className="dcard-meta">{meta}</span>
