@@ -72,6 +72,8 @@ export type Drink = {
 export type Food = {
   id: string; name: string; category: string; tags: string[];
   trend?: Trend; alias?: string[]; profile?: FoodProfile; new?: boolean;
+  /** 음식 사진(0037) — 사용 허락을 받은 것만(직접 촬영·라이선스 확인분). 없으면 상세 머리 카드는 분류 색 타일 */
+  image?: { url: string; credit?: string | null } | null;
 };
 
 /** 출처 등급: 양조장 공식 > 소믈리에·명인 > 전문 매체 > 블로그·카페 후기 > 맛 프로필 (> ai: Phase 9) */

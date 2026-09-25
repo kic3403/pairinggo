@@ -43,4 +43,5 @@ export * from "./catalog/kinds";
 export * from "./catalog/specs";
 export * from "./catalog/filter";
 export * from "./catalog/partner-images";
+export * from "./catalog/images";
 export * from "./home/banners";

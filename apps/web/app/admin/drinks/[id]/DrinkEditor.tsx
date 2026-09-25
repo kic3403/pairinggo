@@ -50,6 +50,8 @@ export default function DrinkEditor({ drink }: { drink: AdminDrink }) {
   const [subtype, setSubtype] = useState(subtypeOf(drink.kind, drink.category));
   const [country, setCountry] = useState(drink.country);
   const [nameOrig, setNameOrig] = useState(drink.nameOrig);
+  const [imageUrl, setImageUrl] = useState(drink.imageUrl);
+  const [imageCredit, setImageCredit] = useState(drink.imageCredit);
   const [aliases, setAliases] = useState(drink.aliases.join(", "));
   const [attrs, setAttrs] = useState<Record<string, unknown>>(drink.attrs);
   const [specs, setSpecs] = useState<SpecDraft[]>(drink.specs.map((s: AdminSpecRow) => ({ id: s.id, ml: s.ml == null ? "" : String(s.ml), abv: s.abv == null ? "" : String(s.abv), vintage: s.vintage ?? "", pack: s.pack, bottles: String(s.bottles), note: s.note ?? "", prices: s.prices.map((p) => ({ ...p })) })));
@@ -65,7 +67,7 @@ export default function DrinkEditor({ drink }: { drink: AdminDrink }) {
   const save = async () => {
     setBusy(true); setMsg(null);
     try {
-      const r = await fetch("/admin/api/drinks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: drink.id, kind, subtype, category: drink.category, country, nameOrig, aliases, attrs, specs }) });
+      const r = await fetch("/admin/api/drinks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: drink.id, kind, subtype, category: drink.category, country, nameOrig, aliases, attrs, specs, imageUrl, imageCredit }) });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || "저장 실패");
       setMsg(`저장·발행 완료 (버전 ${String(j.version).slice(0, 19)})${j.problems?.length ? `\n주의: ${j.problems.join(" / ")}` : ""}`);
@@ -88,6 +90,12 @@ export default function DrinkEditor({ drink }: { drink: AdminDrink }) {
         <label>국가·생산지<select value={country} onChange={(e) => setCountry(e.target.value)}>{def.countries.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}</select></label>
         <label>원어명<input value={nameOrig} onChange={(e) => setNameOrig(e.target.value)} placeholder="라벨 표기 (예: Glen Demo 12 Years)" /></label>
         <label>추가 별칭 <span className="muted">쉼표 구분 · 첫 별칭 “{drink.alias0}”은 유지</span><input value={aliases} onChange={(e) => setAliases(e.target.value)} placeholder="영문명, 줄임말, 흔한 표기" /></label>
+        {/* 공식 사진(0009) — 사용 허락을 받은 사진만. 비우면 파트너 매장 사진 폴백 → 없으면 주종 색 타일 */}
+        <div className="row" style={{ alignItems: "flex-start", gap: 10 }}>
+          {imageUrl && <img src={imageUrl} alt="" style={{ width: 56, height: 74, objectFit: "contain", border: "1px solid var(--line)", borderRadius: 8, background: "#fff" }} />}
+          <label style={{ flex: 1, minWidth: 220 }}>사진 주소 <span className="muted">https://… 또는 /… · 사용 허락을 받은 사진만(더술닷컴 사진 금지)</span><input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="비우면 파트너 매장 사진 → 주종 색 타일" /></label>
+          <label style={{ width: 200 }}>사진 출처<input value={imageCredit} onChange={(e) => setImageCredit(e.target.value)} placeholder="예: 양조장 제공" /></label>
+        </div>
       </div>
 
       {def.attrs.some((a) => a.type !== "level") && (

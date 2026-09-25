@@ -1034,9 +1034,6 @@ a.pd-score:hover { border-color: var(--navy); }
 .ext-rating { display: inline-flex; align-items: baseline; gap: 4px; margin-left: 8px; font-size: 13px; font-weight: 800; color: #B8860B; white-space: nowrap; }
 .ext-rating i { font-style: normal; font-size: 11px; font-weight: 600; color: var(--muted); }
 .ext-rating-line { margin: -4px 0 8px; }
-.detail-img { margin: 6px 0 10px; }
-.detail-img img { width: 120px; height: auto; max-height: 240px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg2); object-fit: contain; }
-.detail-img figcaption { margin-top: 4px; }
 /* 검색 결과 줄 사진(파트너·공식 사진이 있을 때만) */
 .row-img { width: 36px; height: 48px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--bg2); flex: none; }
 
@@ -1127,21 +1124,35 @@ a.pd-score:hover { border-color: var(--navy); }
 .grid .n { font-weight: 700; }
 
 /* ---------- 상세 정리(2026-09-25): 머리 카드 · 접는 설명 · 맛/정보 나란히 · 관련 술 한 칸 ---------- */
-.dhead { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 4px 0 8px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg2); }
-.dhead:has(.detail-img) { grid-template-columns: 112px 1fr; }
-.dhead .detail-img { margin: 0; }
-.dhead .detail-img img { width: 112px; max-height: 200px; }
-.dhead-body { min-width: 0; }
+.dhead { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 14px; margin: 4px 0 8px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg2); }
+.dhead-body { min-width: 0; grid-column: 1; grid-row: 1; }
 .dhead h1 { margin: 0 0 2px; font-size: 24px; }
-@media (min-width: 768px) { .dhead h1 { font-size: 30px; } .dhead { padding: 20px; gap: 20px; } .dhead:has(.detail-img) { grid-template-columns: 140px 1fr; } .dhead .detail-img img { width: 140px; max-height: 240px; } }
+@media (min-width: 768px) { .dhead h1 { font-size: 30px; } .dhead { padding: 20px; gap: 20px; } }
 .dhead .name-orig { margin: 0 0 6px; }
 .dhead .meta { margin: 0 0 8px; }
 .dhead .tags { margin: 4px 0 0; }
 .dhead .ext-rating-line { margin: 0 0 6px; }
 .dhead-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
 .dhead-acts .heart-btn { min-height: 36px; padding: 0 12px; font-size: 13.5px; }
-.dhead .pbars { margin: 0; align-self: center; }
-@media (min-width: 640px) { .dhead:has(.pbars) { grid-template-columns: 1fr 300px; } }
+.dhead .pbars { margin: 0; align-self: center; grid-column: 1 / -1; max-width: none; }
+/* 머리 카드 오른쪽 사진 칸(2026-09-26) — 휴대폰 96px, 640px부터 160px. 사진이 없어도 같은 자리에 주종·분류 색 타일이 있어 카드 모양이 늘 같다 */
+.dhead-media { grid-column: 2; grid-row: 1; align-self: start; width: 96px; margin: 0; }
+.dhead-media img { display: block; width: 100%; aspect-ratio: 3 / 4; border-radius: 12px; border: 1px solid var(--line); background: #fff; object-fit: cover; }
+.dhead-media.d img { object-fit: contain; padding: 4px; box-sizing: border-box; }
+.dhead-media figcaption { margin-top: 4px; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+.dhead-media.ph { display: grid; place-content: center; justify-items: center; gap: 4px; aspect-ratio: 3 / 4; border-radius: 12px; text-align: center; color: #fff; background: linear-gradient(160deg, color-mix(in srgb, var(--tone) 78%, #fff), var(--tone)); }
+.dhead-media.ph svg { width: 30px; height: 40px; margin-bottom: 2px; }
+.dhead-media.ph.f svg { width: 40px; height: 30px; }
+.dhead-media.ph b { font-size: 13px; font-weight: 800; letter-spacing: 0.02em; }
+.dhead-media.ph span { font-size: 10.5px; opacity: .85; }
+@media (min-width: 640px) {
+  .dhead { grid-template-columns: minmax(0, 1fr) 160px; }
+  .dhead-media { width: 160px; }
+  .dhead-media.ph svg { width: 44px; height: 58px; } .dhead-media.ph.f svg { width: 58px; height: 44px; }
+  .dhead-media.ph b { font-size: 15px; } .dhead-media.ph span { font-size: 12px; }
+}
+/* 음식: 900px부터 본문 · 맛 프로필 · 사진 셋 나란히, 그 아래 폭에서는 맛 프로필이 카드 아래 줄 전체 */
+@media (min-width: 900px) { .dhead:has(.pbars) { grid-template-columns: minmax(0, 1fr) 300px 160px; } .dhead:has(.pbars) .pbars { grid-column: 2; grid-row: 1; } .dhead:has(.pbars) .dhead-media { grid-column: 3; } }
 .detail .lead { margin: 10px 0 6px; }
 .detail .buy { margin-top: 14px; }
 .fold { margin: 10px 0 0; border-top: 1px dashed var(--line); padding-top: 8px; }

@@ -16,6 +16,7 @@ import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
 import JsonLd from "../../_components/JsonLd";
 import ProfileBars from "../../_components/ProfileBars";
+import DetailMedia from "../../_components/DetailMedia";
 import ShareButton from "../../_components/ShareButton";
 
 export const revalidate = 600;
@@ -75,7 +76,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
     <div className="wrap">
       <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/foods">음식·안주</Link></p>
-      {/* 핵심 정보 한 카드(2026-09-25 정리) — 이름 · 분류 · 태그 · 공유, 맛 프로필은 옆에 */}
+      {/* 핵심 정보 한 카드(2026-09-25 정리) — 이름 · 분류 · 태그 · 공유, 맛 프로필은 옆에, 오른쪽 끝에 사진 칸(2026-09-26, 없으면 분류 타일) */}
       <header className="dhead">
         <div className="dhead-body">
           <h1>{food.name}</h1>
@@ -84,6 +85,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
           <div className="dhead-acts"><ShareButton className="btn xs" title={`${food.name}에 어울리는 술 ${items.length}가지`} text={`${food.name}에 어울리는 술을 근거와 함께 — 페어링GO`} f={food.id} /></div>
         </div>
         <ProfileBars kind="food" profile={food.profile} />
+        <DetailMedia kind="food" image={food.image} name={food.name} label={food.category} />
       </header>
 
       <div className="cols" style={{ marginTop: 8 }}>

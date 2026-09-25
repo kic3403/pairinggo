@@ -3,7 +3,7 @@
  * 저장하면 catalog_meta.version을 올려(발행) 공개 화면·검색이 15초 안에 새 값을 본다. 규격은 통째로 맞추고(빠진 규격은 삭제),
  * 가격은 이력이라 고치지 않고 valid만 바꾼다(새 가격은 행 추가). 0원·0mL는 받지 않는다(cleanSpec).
  */
-import { KIND_BY_ID, categoryFromInput, cleanAttrs, cleanKind, cleanPrice, cleanSpec, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
+import { KIND_BY_ID, categoryFromInput, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanPrice, cleanSpec, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
 import { db } from "./db";
 import { publish } from "./admin-data";
 
@@ -38,10 +38,12 @@ export type AdminSpecRow = { id: number; ml: number | null; abv: number | null; 
 export type AdminDrink = {
   id: string; name: string; kind: DrinkKind; category: string; country: string; nameOrig: string; alias0: string; aliases: string[]; brewery: string; abv: number | null; demo: boolean;
   attrs: Record<string, unknown>; specs: AdminSpecRow[];
+  /** 공식 사진 주소·출처(0009) — 비어 있으면 파트너 매장 사진 폴백 또는 주종 색 타일 */
+  imageUrl: string; imageCredit: string;
 };
 export async function getDrinkAdmin(id: string): Promise<AdminDrink | null> {
   const sb = need();
-  const { data: r, error } = await sb.from("drinks").select("id,name,kind,category,country,name_orig,alias,brewery_name,abv,is_demo,attrs").eq("id", id).maybeSingle();
+  const { data: r, error } = await sb.from("drinks").select("id,name,kind,category,country,name_orig,alias,brewery_name,abv,is_demo,attrs,image_url,image_credit").eq("id", id).maybeSingle();
   if (error) throw new Error(error.message);
   if (!r) return null;
   const { data: specs } = await sb.from("drink_specs").select("*").eq("drink_id", id).order("sort").order("id");
@@ -52,6 +54,7 @@ export async function getDrinkAdmin(id: string): Promise<AdminDrink | null> {
     id: String(r.id), name: String(r.name), kind: cleanKind(r.kind), category: String(r.category ?? ""), country: String(r.country ?? "kr"), nameOrig: String(r.name_orig ?? ""),
     alias0: alias[0] ?? "", aliases: alias.slice(1), brewery: String(r.brewery_name ?? ""), abv: r.abv == null ? null : Number(r.abv), demo: !!r.is_demo,
     attrs: (r.attrs as Record<string, unknown> | null) ?? {},
+    imageUrl: String(r.image_url ?? ""), imageCredit: String(r.image_credit ?? ""),
     specs: (specs ?? []).map((s) => ({
       id: Number(s.id), ml: s.volume_ml == null ? null : Number(s.volume_ml), abv: s.abv == null ? null : Number(s.abv), vintage: (s.vintage as string | null) ?? null,
       pack: s.pack === "set" ? "set" : "bottle", bottles: Number(s.bottles ?? 1), note: (s.note as string | null) ?? null,
@@ -62,6 +65,7 @@ export async function getDrinkAdmin(id: string): Promise<AdminDrink | null> {
 
 export type SaveInput = {
   id: string; kind: string; subtype: string; category: string; country: string; nameOrig: string; aliases: string; attrs: Record<string, unknown>;
+  imageUrl?: unknown; imageCredit?: unknown;
   specs: { id?: number | null; ml: unknown; abv: unknown; vintage: unknown; pack: unknown; bottles: unknown; note: unknown; prices: { id?: number | null; krw?: unknown; type?: unknown; source?: unknown; url?: unknown; checked?: unknown; valid?: unknown }[] }[];
 };
 /** 저장 + 발행 — 검증에 걸리면 아무것도 쓰지 않는다 */
@@ -80,6 +84,10 @@ export async function saveDrinkAdmin(input: SaveInput): Promise<{ version: strin
   const extra = String(input.aliases ?? "").split(/[,\n]/).map((s) => s.trim().slice(0, 60)).filter(Boolean);
   const alias = [...new Set([cur.alias0 || cur.name, ...extra])];
   const problems: string[] = [];
+  // 사진 — https 절대 주소 또는 사이트 안 경로만(shared cleanCatalogImage). 잘못된 주소는 비우고 알린다
+  const imageUrl = cleanCatalogImage(input.imageUrl);
+  if (String(input.imageUrl ?? "").trim() && !imageUrl) problems.push("사진 주소는 https://… 또는 /…만 받습니다 — 비웠습니다");
+  const imageCredit = imageUrl ? cleanImageCredit(input.imageCredit) : "";
   // 규격 — 새 가격은 cleanPrice로, 기존 가격은 valid만
   const specs = (Array.isArray(input.specs) ? input.specs : []).map((s, i) => {
     const c = cleanSpec({ ml: s.ml, abv: s.abv, vintage: s.vintage, pack: s.pack, bottles: s.bottles, note: s.note, prices: [] });
@@ -92,7 +100,7 @@ export async function saveDrinkAdmin(input: SaveInput): Promise<{ version: strin
     }).filter((p): p is NonNullable<typeof p> => !!p);
     return { ...c, id: s.id ? Number(s.id) : null, prices };
   });
-  const up = await sb.from("drinks").update({ kind, category, country, attrs, name_orig: nameOrig, alias, online_sellable: kind === "trad", updated_at: new Date().toISOString() }).eq("id", id);
+  const up = await sb.from("drinks").update({ kind, category, country, attrs, name_orig: nameOrig, alias, image_url: imageUrl || null, image_credit: imageCredit || null, online_sellable: kind === "trad", updated_at: new Date().toISOString() }).eq("id", id);
   if (up.error) throw new Error(up.error.message);
   // 빠진 규격 삭제(가격은 cascade)
   const keep = new Set(specs.map((s) => s.id).filter((x): x is number => x != null));

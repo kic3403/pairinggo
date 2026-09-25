@@ -14,7 +14,7 @@ export const viewport = { width: "device-width", initialScale: 1, themeColor: "#
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>{/* 시작 화면 스크립트가 첫 그리기 전에 html에 no-splash를 붙인다(개발 모드 수화 경고 억제) */}
       {/* 색은 각 구역 CSS(site.css · admin.css)가 정한다. 여기서 고정하면 다크 모드 토큰과 충돌한다 */}
       <body style={{ margin: 0, fontFamily: '"Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif' }}>{children}</body>
     </html>

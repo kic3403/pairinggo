@@ -25,6 +25,7 @@ import ProfileBars from "../../_components/ProfileBars";
 import ShareButton from "../../_components/ShareButton";
 import SpecPicker from "../../_components/SpecPicker";
 import KindFacts from "../../_components/KindFacts";
+import DetailMedia, { KIND_TONE } from "../../_components/DetailMedia";
 
 export const revalidate = 600;
 /**
@@ -106,9 +107,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       <JsonLd data={ld} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
 
-      {/* ① 핵심 정보 한 카드(2026-09-25 정리) — 사진 · 이름 · 분류 · 외부 평점 · 태그 · 저장/공유 */}
+      {/* ① 핵심 정보 한 카드(2026-09-25 정리) — 이름 · 분류 · 외부 평점 · 태그 · 저장/공유, 오른쪽에 사진 칸(2026-09-26, 없으면 주종 색 타일) */}
       <header className="dhead">
-        {drink.image?.url && <figure className="detail-img"><img src={drink.image.url} alt={`${drink.name} 제품 사진`} />{drink.image.credit && <figcaption className="small muted">{drink.image.credit}</figcaption>}</figure>}
         <div className="dhead-body">
           <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
           {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
@@ -123,6 +123,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             <ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} />
           </div>
         </div>
+        <DetailMedia kind="drink" image={drink.image} name={drink.name} label={kind === "trad" ? drink.category : subtypeLabel(drink)} tone={KIND_TONE[kind]} />
       </header>
       {drink.desc && <p className="lead">{drink.desc}</p>}
 

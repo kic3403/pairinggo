@@ -58,6 +58,7 @@ export function foodFromRow(r: Row): Food {
   return {
     id: r.id, name: r.name, category: r.category, tags: r.tags || [],
     trend: r.trend || undefined, alias: r.alias || [], profile: r.profile || undefined, new: !!r.is_new,
+    image: r.image_url ? { url: r.image_url, credit: r.image_credit ?? null } : null,
   };
 }
 export function pairingFromRow(r: Row): Pairing {

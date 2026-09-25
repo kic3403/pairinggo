@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { D, DRINK_KINDS, KIND_BY_ID, KIND_LABEL, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, inSubtype, intentSearch, kindOf, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
+import { D, DRINK_KINDS, F, KIND_BY_ID, KIND_LABEL, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, inSubtype, intentSearch, kindOf, onlineSellable, pairingGrade, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import GradeBadge from "../_components/GradeBadge";
@@ -201,6 +201,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               const f = h.doc;
               return (
                 <li key={"f" + f.id} className="row f">
+                  {F[f.id]?.image?.url && <img className="row-img" src={F[f.id].image!.url} alt="" loading="lazy" />}
                   <span className="badge">음식</span>
                   <Link href={foodHref(f.name)} className="grow"><b>{f.name}</b><span className="small muted">{f.meta}</span></Link>
                   {h.kind === "fuzzy" && <span className="small muted">비슷한 이름</span>}

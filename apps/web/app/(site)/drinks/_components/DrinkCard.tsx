@@ -6,8 +6,7 @@
 import Link from "next/link";
 import { KIND_LABEL, bottleSpecs, countryLabel, extRatingOf, kindOf, specLine, subtypeLabel, toSlug, type FilterItem } from "@pairinggo/shared";
 import Heart from "../../_components/Heart";
-
-const TILE: Record<string, string> = { trad: "#22406B", whisky: "#8A5A00", sake: "#3D6E9B", wine: "#7B2D4B" };
+import { KIND_TONE as TILE } from "../../_components/DetailMedia";
 
 export default function DrinkCard({ item, foods, showKind }: { item: FilterItem; foods: string[]; showKind: boolean }) {
   const d = item.drink;
