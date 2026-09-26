@@ -2,15 +2,19 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { dashboard } from "@/lib/admin-data";
 import { openErrorCount } from "@pairinggo/server/errors";
+import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminHome() {
   await requireAdmin();
-  const [d, errors] = await Promise.all([dashboard(), openErrorCount()]);
+  // 카카오맵에 아직 안 이어진 직접 입력 매장 — 연결 전에는 검색·예약에 안 나온다(2026-09-27 사용자 제보: 파트너가 매장 정보를 넣었는데 검색에 없음)
+  const unlinked = async () => { const sb = db(); if (!sb) return 0; const { count } = await sb.from("merchants").select("id", { count: "exact", head: true }).eq("status", "approved").like("kakao_place_id", "manual-%"); return count ?? 0; };
+  const [d, errors, manual] = await Promise.all([dashboard(), openErrorCount(), unlinked().catch(() => 0)]);
   return (
     <>
       {errors > 0 && <div className="card" style={{ borderColor: "#c0362c", marginBottom: 12 }}><b style={{ color: "#c0362c" }}>최근 24시간 운영 오류 {errors}건</b> <Link href="/admin/errors">확인하기 →</Link></div>}
+      {manual > 0 && <div className="card" style={{ borderColor: "#B8860B", marginBottom: 12 }}><b style={{ color: "#8a6508" }}>카카오맵에 연결 안 된 직접 입력 매장 {manual}곳</b> — 연결 전에는 페어링GO 검색·예약에 나오지 않아요. <Link href="/admin/partners">카카오맵 장소 연결 →</Link></div>}
       <h2 style={{ margin: "0 0 4px" }}>대시보드</h2>
       <p className="muted">카탈로그 버전 <code>{d.version.slice(0, 19)}</code> · 페어링 {d.totalPairings} · 발행 후 승격 {d.promotedAfter}건 {d.promotedAfter > 0 && <Link href="/admin/publish">→ 발행하기</Link>}</p>
       <div className="kpi">
