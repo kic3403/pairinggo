@@ -3,7 +3,7 @@
  *  ① 파트너 매장(merchants, 승인) ② 운영자·파트너 정보(place_info) ③ 링크에 붙은 이름(?n=)으로 카카오 검색해 같은 id ④ 그 식당 리뷰에 남은 이름·주소
  * 파트너 매장이면 대표 사진·메뉴판·예약까지, 아니면 기본 정보 + Google 평점(캐시) + 리뷰.
  */
-import { isManualPlaceId, toSlug, type PartnerKind, type Place, type PlaceInfo } from "@pairinggo/shared";
+import { isManualPlaceId, isPlaceId, toSlug, type PartnerKind, type Place, type PlaceInfo } from "@pairinggo/shared";
 import { getCatalog } from "./catalog";
 import { bookingContextByKakao, isBookable } from "@pairinggo/server/reservations";
 import { db } from "./db";
@@ -16,11 +16,11 @@ export type PlaceBase = { id: string; name: string; category: string; address: s
 /** 영수증 대조용(서버 전용) — 파트너 매장이면 사업자번호까지 */
 export type PlaceForReceipt = { name: string; phone: string | null; bizNo: string | null };
 
-const validId = (id: string) => /^\d{1,20}$/.test(id);
+const validId = (id: string) => isPlaceId(id);
 
 /** 식당 기본 정보 — 못 찾으면 null */
 export async function placeBase(kakaoId: string, nameHint?: string | null): Promise<(PlaceBase & { bizNo: string | null; merchant: boolean }) | null> {
-  if (!validId(kakaoId) || isManualPlaceId(kakaoId)) return null;
+  if (!validId(kakaoId)) return null;   // 직접 입력 매장(manual-…)도 파트너면 merchants에서 찾는다(2026-09-27)
   const c = db();
   const [ctx, pi] = await Promise.all([bookingContextByKakao(kakaoId).catch(() => null), getPlaceInfo(kakaoId).catch(() => null)]);
   let bizNo: string | null = null;
@@ -31,7 +31,7 @@ export async function placeBase(kakaoId: string, nameHint?: string | null): Prom
     return { id: kakaoId, name: m.name, category: "", address: m.address, phone: m.phone || null, lat: m.lat ?? null, lng: m.lng ?? null, placeUrl: m.placeUrl ?? null, bizNo, merchant };
   }
   // 이름이 있으면 카카오에서 같은 id를 찾아 최신 값으로(분류·전화) — 없거나 못 찾으면 저장된 값
-  const hint = String(nameHint ?? "").trim().slice(0, 40) || pi?.name || "";
+  const hint = isManualPlaceId(kakaoId) ? "" : String(nameHint ?? "").trim().slice(0, 40) || pi?.name || "";   // manual id는 카카오에 없다
   if (hint) {
     const found = await searchPlaces({ query: hint, pages: 1 }).catch(() => null);
     const p = found?.places.find((x) => x.id === kakaoId);
@@ -40,7 +40,7 @@ export async function placeBase(kakaoId: string, nameHint?: string | null): Prom
   if (pi) return { id: kakaoId, name: pi.name, category: "", address: pi.address, phone: pi.phone, lat: null, lng: null, placeUrl: pi.placeUrl, bizNo, merchant };
   if (c) {
     const { data } = await c.from("place_reviews").select("place_name, place_address").eq("kakao_id", kakaoId).order("created_at", { ascending: false }).limit(1).maybeSingle();
-    if (data) return { id: kakaoId, name: String(data.place_name), category: "", address: String(data.place_address ?? ""), phone: null, lat: null, lng: null, placeUrl: `https://place.map.kakao.com/${kakaoId}`, bizNo, merchant };
+    if (data) return { id: kakaoId, name: String(data.place_name), category: "", address: String(data.place_address ?? ""), phone: null, lat: null, lng: null, placeUrl: isManualPlaceId(kakaoId) ? null : `https://place.map.kakao.com/${kakaoId}`, bizNo, merchant };
   }
   return null;
 }

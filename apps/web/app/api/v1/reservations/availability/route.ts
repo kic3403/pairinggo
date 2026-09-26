@@ -1,5 +1,5 @@
 /** 예약 가능 시간 — ?kakao=카카오장소id&date=YYYY-MM-DD&party=2. 정원이 바로 바뀌므로 캐시하지 않는다 */
-import { isDate } from "@pairinggo/shared";
+import { isDate, isPlaceId } from "@pairinggo/shared";
 import { bookingContextByKakao, dayAvailability, isBookable } from "@pairinggo/server/reservations";
 import { error, json, preflight } from "@/lib/http";
 import { rateLimit } from "@/lib/kakao";
@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   const sp = new URL(req.url).searchParams;
   const kakao = (sp.get("kakao") || "").trim(), date = sp.get("date") || "";
   const party = Math.max(1, Math.min(50, Number(sp.get("party")) || 1));
-  if (!/^\d{1,20}$/.test(kakao) || !isDate(date)) return error(req, 400, "kakao·date 파라미터가 필요합니다");
+  if (!isPlaceId(kakao) || !isDate(date)) return error(req, 400, "kakao·date 파라미터가 필요합니다");
   const ctx = await bookingContextByKakao(kakao);
   if (!ctx || !isBookable(ctx)) return json(req, { date, reason: "not_accepting", slots: [] }, { headers: NO_STORE });
   const day = await dayAvailability(ctx, date, new Date(), party);

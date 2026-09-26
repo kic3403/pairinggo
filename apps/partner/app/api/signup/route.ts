@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { rateLimit, searchPlaces } from "@pairinggo/server/kakao";
+import { autoLinkPlace, geocodeAddress, rateLimit, searchPlaces, shortAddress } from "@pairinggo/server/kakao";
 import { cleanManualPlace, type PartnerSignupInput } from "@pairinggo/shared";
 import { applyPartner, type PlacePick } from "@/lib/partner";
 import { PENDING_COOKIE, readPending } from "@/lib/oauth";
@@ -19,7 +19,16 @@ export async function POST(req: Request) {
     // 검색이 안 되는 매장 — 사장님이 적은 상호·주소·전화(좌표 없음). 운영자가 승인할 때 카카오맵 장소를 찾아 연결한다
     const mp = cleanManualPlace(b.manualPlace);
     if (!mp.ok) return Response.json({ error: mp.problem }, { status: 400 });
-    pick = { name: mp.value.name, address: mp.value.address, phone: mp.value.phone, lat: null, lng: null, placeUrl: null };
+    // ① 카카오에 같은 주소·비슷한 이름의 장소가 하나면 바로 그 장소로(자동 연결, 2026-09-27) — "명동 유록" ↔ 카카오 "유록"(같은 주소)
+    const auto = await autoLinkPlace(mp.value.name, mp.value.address).catch(() => null);
+    if (auto) {
+      b.kakaoPlaceId = auto.id; b.manualPlace = undefined;
+      pick = { name: auto.name, address: auto.roadAddress || auto.address, phone: mp.value.phone || auto.phone || "", lat: auto.lat, lng: auto.lng, placeUrl: auto.placeUrl };
+    } else {
+      // ② 카카오에 없으면 주소를 좌표로 바꿔 둔다 — 그래야 검색·내 주변·상세·예약에 우리 데이터만으로 나온다(카카오맵 링크·구글 평점만 없음)
+      const geo = await geocodeAddress(mp.value.address).catch(() => null) ?? await geocodeAddress(shortAddress(mp.value.address)).catch(() => null);
+      pick = { name: mp.value.name, address: mp.value.address, phone: mp.value.phone, lat: geo?.lat ?? null, lng: geo?.lng ?? null, placeUrl: null };
+    }
   } else {
     if (!String(b.kakaoPlaceId ?? "").trim()) return Response.json({ error: "매장을 검색해서 고르거나, 검색이 안 되면 직접 입력해 주세요" }, { status: 400 });
     const found = await searchPlaces({ query: String(b.placeName ?? "").slice(0, 40), pages: 2 }).catch(() => null);

@@ -2,6 +2,7 @@
  * 카카오 로컬 API(키워드 장소 검색) 클라이언트 — 서버 전용(KAKAO_REST_KEY).
  * 10분 메모리 캐시 + 최대 2페이지 병합(30건). 키가 없으면 빈 결과(source: none).
  */
+import { pickAutoLink } from "@pairinggo/shared";
 import type { Place } from "@pairinggo/shared";
 
 export type PlaceSearch = { query: string; lat?: number; lng?: number; radius?: number; category?: "FD6" | "CS2"; sort?: "distance" | "accuracy"; pages?: number };
@@ -57,6 +58,36 @@ export async function searchPlaces(p: PlaceSearch): Promise<PlaceResult> {
 }
 
 /** 여러 검색어 결과를 합쳐 중복 제거(id), 거리순(거리 없으면 순서 유지) */
+/** 주소 → 좌표(카카오 주소 검색). 직접 입력 매장을 '내 주변'·상세 지도에 올리려고(2026-09-27). 못 찾으면 null */
+export async function geocodeAddress(address: string): Promise<{ lat: number; lng: number; roadAddress: string; address: string } | null> {
+  const key = process.env.KAKAO_REST_KEY;
+  const q = String(address ?? "").replace(/\s+/g, " ").trim().slice(0, 100);
+  if (!key || q.length < 5) return null;
+  try {
+    const res = await fetch(`https://dapi.kakao.com/v2/local/search/address.json?${new URLSearchParams({ query: q, size: "1" })}`, { headers: { Authorization: `KakaoAK ${key}` }, signal: AbortSignal.timeout(5000) });
+    if (!res.ok) return null;
+    const j = (await res.json()) as { documents?: { x: string; y: string; address_name?: string; road_address?: { address_name?: string } | null; address?: { address_name?: string } | null }[] };
+    const d = j.documents?.[0];
+    if (!d) return null;
+    // 건물명·호수가 붙어 못 찾으면 앞쪽(도로명+번호)만으로 한 번 더
+    return { lat: Number(d.y), lng: Number(d.x), roadAddress: d.road_address?.address_name ?? "", address: d.address?.address_name ?? d.address_name ?? "" };
+  } catch { return null; }
+}
+/** 도로명+건물번호까지만("서울 중구 소공로 46") — 상가·층·호수를 뗀 주소 */
+export const shortAddress = (address: string) => { const m = String(address ?? "").match(/^(.*?\S+(?:로|길)\s*\d+(?:-\d+)?)/); return m ? m[1].trim() : String(address ?? "").trim(); };
+
+/** 직접 입력 매장에 맞는 카카오 장소 찾기 — 상호로 검색 + 주소로 검색한 결과에서 shared pickAutoLink(주소 일치 + 이름 겹침 + 하나뿐) */
+export async function autoLinkPlace(name: string, address: string): Promise<Place | null> {
+  const n = String(name ?? "").trim().slice(0, 40), a = String(address ?? "").trim();
+  if (!n || !a) return null;
+  const [byName, byAddr] = await Promise.all([
+    searchPlaces({ query: n, pages: 2 }).catch(() => null),
+    searchPlaces({ query: shortAddress(a), pages: 2 }).catch(() => null),
+  ]);
+  const pool = [...(byName?.places ?? []), ...(byAddr?.places ?? [])];
+  return pickAutoLink({ name: n, address: a }, pool);
+}
+
 export async function searchMany(queries: string[], base: Omit<PlaceSearch, "query">): Promise<PlaceResult> {
   const results = await Promise.all(queries.map((q) => searchPlaces({ ...base, query: q, pages: 1 })));
   if (results.every((r) => r.source === "none")) return { places: [], total: 0, source: "none", cached: false };

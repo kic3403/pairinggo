@@ -7,8 +7,7 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import {
   cleanReviewInput, kstParts, receiptKey, receiptProblem, reviewStats, RECEIPT_READS_PER_DAY, REVIEW_PHOTO_BUCKET, REVIEW_REPORT_HIDE, REVIEWS_PER_DAY,
-  type PublicReview, type ReviewStats, type ReviewVerifyKind,
-} from "@pairinggo/shared";
+  type PublicReview, type ReviewStats, type ReviewVerifyKind, isPlaceId } from "@pairinggo/shared";
 import { readReceipt, receiptReadConfigured, receiptReadError } from "@pairinggo/server/receipt-read";
 import { reportError } from "@pairinggo/server/errors";
 import { db } from "./db";
@@ -142,7 +141,7 @@ export type ReviewInput = { kakaoId: string; placeName: string; rating: unknown;
 export async function createReview(userId: string, input: ReviewInput): Promise<{ ok: true; id: number } | { ok: false; status: number; problem: string }> {
   const no = (status: number, problem: string) => ({ ok: false as const, status, problem });
   const kakaoId = String(input.kakaoId ?? "");
-  if (!/^\d{1,20}$/.test(kakaoId)) return no(400, "식당을 찾지 못했어요");
+  if (!isPlaceId(kakaoId)) return no(400, "식당을 찾지 못했어요");
   const v = cleanReviewInput(input);
   if (!v.ok) return no(400, v.problem);
   // 사진은 이 회원 폴더에 올린 것만(남의 사진 주소를 붙이지 못하게)

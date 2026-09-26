@@ -2,7 +2,7 @@
  * 운영자가 확인한 식당 정보(place_info, 0021) — 어드민 저장·목록, 공개 식당 검색 결과에 붙이기. service_role(db()) 사용.
  * 검증·표시 규칙은 shared place-info.ts. DB가 없으면 조용히 건너뛴다(정보 없이 목록만).
  */
-import { cleanContactPhone, cleanDrinkItems, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, haversineKm, isEmptyPlaceInfo, type Place, type PlaceInfo } from "@pairinggo/shared";
+import { cleanContactPhone, cleanDrinkItems, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, haversineKm, isEmptyPlaceInfo, isManualPlaceId, type Place, type PlaceInfo } from "@pairinggo/shared";
 import { db } from "./db";
 import { getCatalog } from "./catalog";
 
@@ -33,20 +33,20 @@ export async function attachPlaceInfo(places: Place[]): Promise<Place[]> {
 
 /**
  * 검색 중심 주변의 확인된 식당(운영자·파트너 정보가 있는 곳) — 카카오 키워드 검색에 안 걸렸어도 고른 조합을 파는 곳을 맛집 목록에 넣으려고(2026-09-19).
- * 좌표가 있는 행만, 반경 안(네모로 거른 뒤 실제 거리로 한 번 더), 가까운 순 최대 60곳. 직접 입력 매장(manual-…)은 카카오 id가 없어 뺀다.
+ * 좌표가 있는 행만, 반경 안(네모로 거른 뒤 실제 거리로 한 번 더), 가까운 순 최대 60곳. 직접 입력 매장(manual-…)도 주소 좌표가 있으면 나온다(카카오맵 링크만 없음, 2026-09-27).
  */
 export async function nearbyPlaceInfo(lat: number, lng: number, radiusM: number): Promise<Place[]> {
   const sb = db();
   if (!sb || !Number.isFinite(lat) || !Number.isFinite(lng)) return [];
   const dLat = radiusM / 111_000, dLng = radiusM / (111_000 * Math.cos((lat * Math.PI) / 180));
   const { data, error } = await sb.from("place_info").select("*")
-    .gte("lat", lat - dLat).lte("lat", lat + dLat).gte("lng", lng - dLng).lte("lng", lng + dLng).not("kakao_id", "like", "manual-%").limit(200);
+    .gte("lat", lat - dLat).lte("lat", lat + dLat).gte("lng", lng - dLng).lte("lng", lng + dLng).limit(200);
   if (error) { console.warn("[place-info] nearby", error.message); return []; }
   return ((data ?? []) as Row[])
     .map((r): Place => ({
       id: r.kakao_id, name: r.name, category: "", categoryPath: "", address: r.address ?? "", roadAddress: r.address ?? "", phone: r.phone,
       lat: Number(r.lat), lng: Number(r.lng), distanceKm: Math.round(haversineKm(lat, lng, Number(r.lat), Number(r.lng)) * 100) / 100,
-      placeUrl: r.place_url ?? `https://place.map.kakao.com/${r.kakao_id}`, info: toInfo(r),
+      placeUrl: r.place_url ?? (isManualPlaceId(r.kakao_id) ? null : `https://place.map.kakao.com/${r.kakao_id}`), info: toInfo(r),
     }))
     .filter((p) => p.distanceKm != null && p.distanceKm * 1000 <= radiusM)
     .sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0)).slice(0, 60);
@@ -103,7 +103,7 @@ export async function partnerPlacesByName(query: string, limit = 5): Promise<Pla
   if (!sb || q.length < 2) return [];
   const esc = q.replace(/[\%_]/g, (ch) => "\\" + ch);
   const cols = "kakao_place_id, name, address, phone, lat, lng, place_url, kind, brewery";
-  const base = () => sb.from("merchants").select(cols).eq("status", "approved").not("kakao_place_id", "like", "manual-%");
+  const base = () => sb.from("merchants").select(cols).eq("status", "approved");   // 직접 입력 매장도 좌표가 있으면(아래 필터) 나온다
   // 그 술을 빚은 양조장도 찾는다 — 매장 이름이 브랜드와 달라도("농업회사법인(주) 한증류소" ← "한산소곡주") 나오게(0031)
   const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
   const c = await getCatalog().catch(() => null);

@@ -69,6 +69,26 @@ export const PARTNER_INTRO_EXAMPLE: Record<PartnerKind, string> = {
 export type ManualPlaceInput = { name: string; address: string; phone?: string };
 export const MANUAL_PLACE_PREFIX = "manual-";
 export const isManualPlaceId = (id: string | null | undefined) => String(id ?? "").startsWith(MANUAL_PLACE_PREFIX);
+/** 매장 id 형식 — 카카오 장소 id(숫자) 또는 직접 입력 표시 id(manual-12자리 hex). 검색·상세·예약 라우트가 같은 검사를 쓴다(2026-09-27) */
+export const isPlaceId = (id: string | null | undefined) => /^\d{1,20}$/.test(String(id ?? "")) || /^manual-[0-9a-f]{12}$/.test(String(id ?? ""));
+
+/**
+ * 직접 입력 매장 자동 연결(2026-09-27, 사용자 결정 "직접 입력해도 바로 나오게") — 사장님이 적은 상호·주소로 카카오를 다시 검색한 결과 중
+ * ① 주소(도로명, 없으면 지번)가 사장님 주소 안에 그대로 들어 있고 ② 이름이 서로 겹치는(한쪽이 다른 쪽을 품는) 장소가 **하나뿐**이면 그것.
+ * 둘 이상이거나 없으면 null — 그때는 주소를 좌표로 바꿔 manual id로 두고 운영자가 확인한다.
+ */
+const sq = (s: string) => (s || "").toLowerCase().replace(/[\s,.\-()（）]/g, "");
+const nameOverlap = (a: string, b: string) => { const x = sq(a).replace(/(농업회사법인|주식회사|\(주\)|㈜|유한회사)/g, ""), y = sq(b).replace(/(농업회사법인|주식회사|\(주\)|㈜|유한회사)/g, ""); return x.length >= 2 && y.length >= 2 && (x.includes(y) || y.includes(x)); };
+export function pickAutoLink<T extends { id: string; name: string; roadAddress: string; address: string }>(input: { name: string; address: string }, places: T[]): T | null {
+  const addr = sq(input.address);
+  const hits = places.filter((p) => {
+    const road = sq(p.roadAddress), jibun = sq(p.address);
+    const addrOk = (road.length >= 6 && addr.includes(road)) || (!road && jibun.length >= 6 && addr.includes(jibun));
+    return addrOk && nameOverlap(input.name, p.name);
+  });
+  const ids = new Set(hits.map((h) => h.id));
+  return ids.size === 1 ? hits[0] : null;
+}
 
 /** 직접 입력한 매장 정리 — 상호 2~40자·주소 5~120자(링크 금지), 전화는 선택(숫자·하이픈, 숫자 8자리 이상·20자 이하) */
 export function cleanManualPlace(raw: Partial<ManualPlaceInput> | null | undefined): { ok: true; value: Required<ManualPlaceInput> } | { ok: false; problem: string } {

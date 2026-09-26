@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import type { MerchantStatus } from "@pairinggo/server/reservations";
 import { cleanPartnerKind, isManualPlaceId, type PartnerKind } from "@pairinggo/shared";
 import { searchPlaces } from "@/lib/kakao";
+import { autoLinkPlace } from "@pairinggo/server/kakao";
 
 export type AdminMerchant = {
   id: string; kakaoPlaceId: string; name: string; address: string; phone: string; placeUrl: string | null;
@@ -61,6 +62,14 @@ export async function actOnMerchant(id: string, action: MerchantAction, reason: 
   const now = new Date().toISOString();
   const patch: Record<string, unknown> = { status: rule.to, reject_reason: rule.needsReason ? why : "", updated_at: now };
   if (action === "approve") { patch.approved_at = now; patch.approved_by = "admin"; }
+  // 직접 입력 매장을 승인할 때 카카오 장소를 한 번 더 찾아 본다(가입 뒤 카카오맵에 올라왔을 수 있다) — 실패해도 승인은 진행
+  if (action === "approve") {
+    const { data: mm } = await c.from("merchants").select("kakao_place_id, name, address").eq("id", id).maybeSingle();
+    if (mm && isManualPlaceId(mm.kakao_place_id)) {
+      const auto = await autoLinkPlace(String(mm.name), String(mm.address)).catch(() => null);
+      if (auto) { try { await linkKakaoPlace(id, auto.id, String(mm.name)); } catch (e) { console.warn("[partners] auto-link", (e as Error).message); } }
+    }
+  }
   const { error } = await c.from("merchants").update(patch).eq("id", id);
   if (error) throw new Error(error.message);
   // 정지하면 새 예약이 들어오지 않게 예약 받기도 끈다(이미 잡힌 예약은 그대로 — 필요하면 매장이 취소)

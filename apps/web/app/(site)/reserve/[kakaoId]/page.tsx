@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { kstParts, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL, placeChips, toSlug } from "@pairinggo/shared";
+import { kstParts, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL, placeChips, toSlug, isPlaceId } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { reservePageData } from "@/lib/reservations";
 import ReserveForm from "./ReserveForm";
@@ -16,7 +16,7 @@ export const metadata: Metadata = { title: "예약하기 | 페어링GO", robots:
 export default async function ReservePage({ params, searchParams }: { params: Promise<{ kakaoId: string }>; searchParams: Promise<{ food?: string; drink?: string }> }) {
   const { kakaoId } = await params;
   const sp = await searchParams;
-  const data = /^\d{1,20}$/.test(kakaoId) ? await reservePageData(kakaoId) : null;
+  const data = isPlaceId(kakaoId) ? await reservePageData(kakaoId) : null;
   if (!data) {
     return (
       <div className="wrap">
