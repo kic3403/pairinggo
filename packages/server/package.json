@@ -23,7 +23,8 @@
     "./errors": "./src/errors.ts",
     "./shop": "./src/shop.ts",
     "./shop-orders": "./src/shop-orders.ts",
-    "./notify-order": "./src/notify-order.ts"
+    "./notify-order": "./src/notify-order.ts",
+    "./partner-pairings": "./src/partner-pairings.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

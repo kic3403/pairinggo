@@ -23,12 +23,13 @@ const TABS = [
   { key: "store", href: "/store", label: "매장 정보" },
   { key: "settings", href: "/settings", label: "예약 설정" },
   { key: "sell", href: "/sell", label: "판매" },
+  { key: "pairings", href: "/pairings", label: "페어링" },
 ] as const;
 
 /** 아래 탭 — 승인된 매장 화면에서만 */
-/** 판매 탭은 양조장만 — 전통주 제조자만 통신판매할 수 있다(docs/22) */
+/** 판매 탭은 양조장만 — 전통주 제조자만 통신판매할 수 있다(docs/22). 페어링 탭도 양조장만(우리 술의 공식 페어링, docs/25) */
 export function Tabs({ active, kind = "restaurant" }: { active: (typeof TABS)[number]["key"]; kind?: string }) {
-  const tabs = TABS.filter((t) => t.key !== "sell" || kind === "brewery");
+  const tabs = TABS.filter((t) => (t.key !== "sell" && t.key !== "pairings") || kind === "brewery");
   return (
     <nav className="tabs" aria-label="파트너 메뉴">
       {tabs.map((t) => <Link key={t.key} href={t.href} aria-current={t.key === active ? "page" : undefined}>{t.label}</Link>)}
