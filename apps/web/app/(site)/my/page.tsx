@@ -10,6 +10,8 @@ import { getProfile, referralInfo } from "@/lib/account";
 import { myRatings } from "@/lib/ratings";
 import TriedCard from "../_components/TriedCard";
 import { myPicks } from "@/lib/member-picks";
+import { myDrinkRequests } from "@/lib/drink-requests";
+import { drinkRequestStatusText } from "@pairinggo/shared";
 import { memberPickStatusText } from "@pairinggo/shared";
 import { ageBand } from "@pairinggo/shared";
 import Heart from "../_components/Heart";
@@ -26,7 +28,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
   const tab = (SAVED_KINDS as string[]).includes(sp.tab || "") ? (sp.tab as SavedKind) : "drink";
 
   await getCatalog();
-  const [rows, profile, picks, rated, referral] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => []), myRatings(uid).catch(() => new Set<string>()), referralInfo(uid).catch(() => ({ invited: 0, referred: false }))]);
+  const [rows, profile, picks, rated, referral, requests] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => []), myRatings(uid).catch(() => new Set<string>()), referralInfo(uid).catch(() => ({ invited: 0, referred: false })), myDrinkRequests(uid).catch(() => [])]);
   // 먹어봤나요? — 저장한 술·음식으로 아직 평가하지 않은 조합 3개(docs/20 P1-1). 정렬은 상세 화면과 같은 규칙
   const tried = suggestTried({
     savedDrinks: rows.filter((r) => r.kind === "drink").map((r) => r.item_id), savedFoods: rows.filter((r) => r.kind === "food").map((r) => r.item_id),
@@ -138,6 +140,24 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
             );
           })}
         </ul>
+      )}
+
+      {/* 내가 요청한 술(docs/25 §5) — 운영자가 넣으면 "등록됨 · 이름"으로 바뀌고 그 술로 이어진다 */}
+      {requests.length > 0 && (
+        <>
+          <h2 id="requests" style={{ marginTop: 26 }}>내가 요청한 술 <span className="muted small">{requests.length}건</span></h2>
+          <ul className="rows">
+            {requests.map((r) => (
+              <li key={r.id} className="row">
+                <div className="grow">
+                  <b>{r.query}</b>
+                  <span className="small muted">{drinkRequestStatusText(r)} · {r.at.slice(0, 10)}{r.memo ? ` · ${r.memo}` : ""}</span>
+                </div>
+                {r.status === "done" && r.drinkName && <Link className="btn xs" href={`/drinks/${toSlug(r.drinkName)}`}>보러 가기</Link>}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
 
       <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }} style={{ marginTop: 34 }}>

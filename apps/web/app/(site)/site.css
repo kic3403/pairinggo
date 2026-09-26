@@ -1226,3 +1226,17 @@ a.pd-score:hover { border-color: var(--navy); }
 .ri-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 14.5px; }
 .review-body { margin: 4px 0 0; font-size: 14px; }
 
+/* ---------- 못 찾는 검색 입구(2026-09-26 docs/25 §5) — 라벨 사진으로 찾기 · 추가 요청 ---------- */
+.label-search { margin: 8px 0 4px; }
+.label-search.inline { margin: 6px 0 0; }
+.label-btn { display: inline-flex; align-items: center; gap: 6px; }
+.label-hint { margin: 6px 0 0; }
+.label-result { margin-top: 10px; }
+.label-result .rows { margin: 0; }
+.empty-tools { display: grid; gap: 12px; margin-top: 16px; }
+.request-box b { font-size: 15px; }
+.request-box.done { border-color: var(--navy-soft); background: var(--navy-soft); }
+.request-box.compact { padding: 12px; margin: 8px 0 0; }
+.request-fields { display: grid; gap: 8px; }
+.request-fields input { width: 100%; box-sizing: border-box; min-height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; font: inherit; background: var(--surface); }
+@media (min-width: 640px) { .request-fields { grid-template-columns: 1fr 1.4fr auto; align-items: center; } }

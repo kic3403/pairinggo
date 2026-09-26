@@ -25,7 +25,7 @@ describe("없는 술 요청 모으기", () => {
     ];
     const [first, second] = buildWantedList(inputs, catalog, foods);
     expect(first.name).toBe("오미로제 스파클링");        // 5×1 + 1×3 = 8
-    expect(first.by).toEqual({ search: 5, menu: 1, pick: 0 });
+    expect(first.by).toEqual({ search: 5, menu: 1, pick: 0, request: 0 });
     expect(first.places).toEqual(["한밭식당"]);
     expect(first.lastAt).toBe("2026-09-18");
     expect(second.name).toBe("달빛유자");                 // 7×1 = 7

@@ -5,22 +5,25 @@
 import { buildWantedList, type WantedInput, type WantedRow } from "@pairinggo/shared";
 import { getCatalog } from "./catalog";
 import { db } from "./db";
+import { openDrinkRequests } from "./drink-requests";
 
 const DAYS = 90;
 
-export async function wantedDrinks(limit = 200): Promise<{ rows: WantedRow[]; since: string; counts: { search: number; menu: number; pick: number } }> {
+export async function wantedDrinks(limit = 200): Promise<{ rows: WantedRow[]; since: string; counts: { search: number; menu: number; pick: number; request: number } }> {
   const sb = db();
   const since = new Date(Date.now() - DAYS * 86400_000).toISOString();
   const c = await getCatalog();
-  if (!sb) return { rows: [], since, counts: { search: 0, menu: 0, pick: 0 } };
+  if (!sb) return { rows: [], since, counts: { search: 0, menu: 0, pick: 0, request: 0 } };
 
-  const [empties, places, picks] = await Promise.all([
+  const [empties, places, picks, requests] = await Promise.all([
     // ① 결과가 없던 검색어
     sb.from("search_logs").select("query_text,created_at").eq("kind", "search_empty").gte("created_at", since).limit(5000),
     // ② 식당 메뉴판·확인 정보에 적힌 술 이름 (카탈로그에 없어 이름 그대로 남은 것)
     sb.from("place_info").select("kakao_id,name,drink_names,drink_items,updated_at").limit(2000),
     // ③ 회원픽 글에 적힌, 카탈로그에 없는 술 이름(drink_raw)
     sb.from("member_picks").select("drink_raw,created_at").not("drink_raw", "is", null).gte("created_at", since).limit(2000),
+    // ④ 회원이 직접 낸 추가 요청(열린 것, docs/25 §5)
+    openDrinkRequests(since).catch(() => []),
   ]);
 
   const inputs: WantedInput[] = [];
@@ -31,8 +34,9 @@ export async function wantedDrinks(limit = 200): Promise<{ rows: WantedRow[]; si
     for (const it of ((p as { drink_items?: { name?: string }[] }).drink_items ?? [])) if (it?.name) inputs.push({ name: String(it.name), source: "menu", at: p.updated_at, where });
   }
   for (const m of picks.data ?? []) if ((m as { drink_raw?: string }).drink_raw) inputs.push({ name: String((m as { drink_raw?: string }).drink_raw), source: "pick", at: m.created_at });
+  for (const r of requests) inputs.push({ name: r.query, source: "request", at: r.at });
 
   const rows = buildWantedList(inputs, c.dataset.drinks, c.dataset.foods, { limit });
-  const counts = { search: inputs.filter((i) => i.source === "search").length, menu: inputs.filter((i) => i.source === "menu").length, pick: inputs.filter((i) => i.source === "pick").length };
+  const counts = { search: inputs.filter((i) => i.source === "search").length, menu: inputs.filter((i) => i.source === "menu").length, pick: inputs.filter((i) => i.source === "pick").length, request: requests.length };
   return { rows, since, counts };
 }

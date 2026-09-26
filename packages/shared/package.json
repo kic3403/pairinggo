@@ -13,6 +13,7 @@
     "./pick": "./src/pairing/pick.ts",
     "./member": "./src/pairing/member.ts",
     "./drink-review": "./src/pairing/drink-review.ts",
+    "./drink-request": "./src/drink-request.ts",
     "./slug": "./src/slug.ts",
     "./places": "./src/places.ts",
     "./push-client": "./src/push-client.ts",

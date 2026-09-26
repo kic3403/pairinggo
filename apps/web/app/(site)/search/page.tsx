@@ -13,6 +13,8 @@ import SearchLog from "../_components/SearchLog";
 import RegionTabs from "../_components/RegionTabs";
 import SearchBox from "../_components/SearchBox";
 import SearchPlaces from "../_components/SearchPlaces";
+import LabelSearch from "../_components/LabelSearch";
+import DrinkRequestForm from "../_components/DrinkRequestForm";
 
 export const dynamic = "force-dynamic";
 
@@ -68,6 +70,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       <h1>검색{region && <span className="muted"> · {regionLabel(region)}</span>}</h1>
       {/* 지역은 아래 칩(RegionTabs)에서 고른다 — 검색창의 지역 고르개는 끈다(2026-09-23) */}
       <SearchBox initial={q} region={rid} autoFocus={!q} regionPicker={false} />
+      {/* 라벨 사진으로 찾기(docs/25 §5) — 결과가 없을 때는 아래 빈 결과 칸에서 크게 */}
+      {!empty && <LabelSearch inline />}
       {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} />}
       <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} collapsible={!!q} />
       {/* 같은 검색어로 식당도 — 찾은 술·음식이 없으면 맨 위, 있으면 결과 아래(상황·지역 검색에는 붙이지 않는다) */}
@@ -225,6 +229,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <section>
           <h2>‘{q}’ — {region ? `${regionLabel(region)} 전통주·음식에는 없습니다` : "전통주·음식 데이터에는 아직 없습니다"}</h2>
           <p className="muted">{region ? <><Link href={withRegion(q, "all")}>전국으로 보기</Link> 또는 </> : ""}비슷한 이름이나 상황으로 다시 찾아보세요.</p>
+          {/* 못 찾은 검색 입구(docs/25 §5) — 라벨 사진으로 다시 찾기 + 추가 요청 */}
+          <div className="empty-tools">
+            <LabelSearch />
+            <DrinkRequestForm query={q} />
+          </div>
           {res.suggestions.length > 0 && (
             <>
               <p className="small muted" style={{ marginTop: 16 }}>혹시 이걸 찾으셨나요</p>

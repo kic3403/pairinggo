@@ -24,7 +24,8 @@
     "./shop": "./src/shop.ts",
     "./shop-orders": "./src/shop-orders.ts",
     "./notify-order": "./src/notify-order.ts",
-    "./partner-pairings": "./src/partner-pairings.ts"
+    "./partner-pairings": "./src/partner-pairings.ts",
+    "./label-read": "./src/label-read.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

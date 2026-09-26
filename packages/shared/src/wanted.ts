@@ -4,7 +4,7 @@
  *           (place_info.drink_names·drink_items — 카탈로그에 없어 이름 그대로 남은 것) ③ 회원픽 글의 술 이름.
  * 이름이 카탈로그에 이미 있으면 뺀다(목록을 넓히면 저절로 사라진다). 음식 이름·너무 짧은 말·지역 이름도 뺀다.
  */
-export type WantedSource = "search" | "menu" | "pick";
+export type WantedSource = "search" | "menu" | "pick" | "request";
 export type WantedInput = { name: string; source: WantedSource; count?: number; at?: string | null; where?: string | null };
 export type WantedRow = {
   name: string; total: number; score: number;
@@ -13,8 +13,8 @@ export type WantedRow = {
   lastAt: string | null;
 };
 
-/** 출처마다 무게 — 식당이 실제로 팔고 있으면 가장 확실한 신호 */
-const WEIGHT: Record<WantedSource, number> = { menu: 3, pick: 2, search: 1 };
+/** 출처마다 무게 — 회원이 직접 요청한 것(2026-09-26)이 가장 무겁고, 식당이 실제로 팔고 있는 것이 그다음 */
+const WEIGHT: Record<WantedSource, number> = { request: 4, menu: 3, pick: 2, search: 1 };
 const key = (s: string) => (s || "").toLowerCase().replace(/\s+/g, "").replace(/[^0-9a-z가-힣]/g, "");
 /** 술 이름으로 보기 어려운 말 — 검색어에서 자주 나오는 잡음 */
 const NOISE = /^(막걸리|전통주|약주|청주|소주|증류주|과실주|와인|맥주|안주|추천|선물|술|맛집|페어링|배송|무료|가격|도수|주문|구매|근처|주변)$/;
@@ -37,7 +37,7 @@ export function buildWantedList(
     if (k.length < 2 || known.has(k) || foodKeys.has(k) || NOISE.test(k)) continue;
     // 카탈로그 이름이 이 말을 품고 있으면 이미 있는 술(예: "소곡주" ⊂ "한산소곡주")
     if (k.length >= 3 && [...known].some((n) => n.includes(k))) continue;
-    const r = rows.get(k) ?? { name, total: 0, score: 0, by: { search: 0, menu: 0, pick: 0 }, places: [], lastAt: null };
+    const r = rows.get(k) ?? { name, total: 0, score: 0, by: { search: 0, menu: 0, pick: 0, request: 0 }, places: [], lastAt: null };
     const n = Math.max(1, x.count ?? 1);
     r.total += n;
     r.by[x.source] += n;
