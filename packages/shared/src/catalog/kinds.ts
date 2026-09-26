@@ -315,5 +315,9 @@ export function categoryOptions(): { kind: DrinkKind; label: string; options: Ca
 const CATEGORY_LABEL = new Map<string, string>();
 for (const g of categoryOptions()) for (const o of g.options) if (!CATEGORY_LABEL.has(o.value)) CATEGORY_LABEL.set(o.value, o.label);
 export const isKnownCategory = (v: unknown): v is string => typeof v === "string" && CATEGORY_LABEL.has(v);
+const CATEGORY_KIND = new Map<string, DrinkKind>();
+for (const g of categoryOptions()) for (const o of g.options) if (!CATEGORY_KIND.has(o.value)) CATEGORY_KIND.set(o.value, g.kind);
+/** 저장값 → 주종(메뉴판 주류 탭을 전통주·위스키·사케·와인으로 묶을 때, 2026-09-27). 모르면 null */
+export const kindOfCategory = (v: string | undefined | null): DrinkKind | null => (v ? CATEGORY_KIND.get(v) ?? null : null);
 /** 저장값 → 표시명(모르는 값은 그대로) */
 export const categoryLabelOf = (v: string | undefined | null) => (v ? CATEGORY_LABEL.get(v) ?? v : "");

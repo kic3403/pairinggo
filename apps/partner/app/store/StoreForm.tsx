@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { PARTNER_INTRO_EXAMPLE, PARTNER_PLACE_LABEL, STORE_PHOTOS_MAX, categoryOptions, cleanNaverUrl, formatPrice, mergeMenuRows, moveItem, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
+import { MENU_SECTIONS, MENU_SECTION_LABEL, PARTNER_INTRO_EXAMPLE, PARTNER_PLACE_LABEL, STORE_PHOTOS_MAX, categoryOptions, cleanNaverUrl, formatPrice, isKnownCategory, mergeMenuRows, moveItem, placeChips, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
 import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 type Named = { id: string; name: string };
@@ -169,17 +169,25 @@ function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onCha
   const set = (i: number, patch: Partial<MenuItem>) => onChange(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)));
   return (
     <div className="mtable">
-      <div className="mhead menu"><span>사진</span><span>음식명</span><span>간단한 설명</span><span>가격(원)</span><span>순서·빼기</span></div>
+      <div className="mhead menu"><span>사진</span><span>이름</span><span>간단한 설명</span><span>가격(원)</span><span>구분</span><span>순서·빼기</span></div>
       {rows.map((r, i) => (
         <div className="mrow menu" key={i}>
           <PhotoCell img={r.img} label={r.name} onError={onError} onChange={(url) => onImg(i, url)} />
           <input type="text" aria-label="음식명" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="음식명" />
           <input type="text" aria-label="간단한 설명" value={r.desc} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="설명(없으면 비워 두세요)" />
           <NumInput value={r.price} onChange={(v) => set(i, { price: v })} parse={priceOf} unit="원" label="가격" />
+          {/* 구분(2026-09-27) — 손님 메뉴판이 음식·주류·음료 탭으로 나뉜다. 술은 아래 술 표에 */}
+          <select aria-label="구분" value={r.section ?? "food"} onChange={(e) => set(i, { section: e.target.value === "beverage" ? "beverage" : undefined })}>
+            {MENU_SECTIONS.map((s) => <option key={s} value={s}>{MENU_SECTION_LABEL[s]}</option>)}
+          </select>
           <RowOps index={i} last={i === rows.length - 1} label={r.name} onMove={(d) => onChange(moveItem(rows, i, d))} onRemove={() => onChange(rows.filter((_, j) => j !== i))} />
         </div>
       ))}
-      <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null }])}>+ 메뉴 줄 추가</button>
+      <div className="row" style={{ gap: 6 }}>
+        <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null }])}>+ 음식 줄 추가</button>
+        <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null, section: "beverage" }])}>+ 음료 줄 추가</button>
+        <span className="small muted">술은 아래 술 표에 적어 주세요 — 손님 메뉴판에 음식·주류·음료로 나뉘어 보여요.</span>
+      </div>
     </div>
   );
 }
@@ -199,7 +207,7 @@ function DrinkTable({ rows, onChange, onImg, onError, withDesc }: { rows: DrinkI
           <input type="text" aria-label="술 이름" value={r.name} maxLength={40} onChange={(e) => set(i, { name: e.target.value })} placeholder="술 이름" />
           {/* 술 종류(2026-09-25) — 주종별 묶음. 모르면 비워 둔다 */}
           <select aria-label="종류" value={r.category ?? ""} onChange={(e) => set(i, { category: e.target.value || undefined })}>
-            <option value="">종류</option>
+            <option value="">종류 선택</option>
             {categoryOptions().map((g) => <optgroup key={g.kind} label={g.label}>{g.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</optgroup>)}
           </select>
           {withDesc ? <input type="text" aria-label="설명" value={r.desc ?? ""} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="예: 백일 동안 빚는 약주" /> : null}
@@ -214,7 +222,7 @@ function DrinkTable({ rows, onChange, onImg, onError, withDesc }: { rows: DrinkI
   );
 }
 
-export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId, menuReadEnabled, kind = "restaurant", brewery: brewery0 = "", breweries = [], ourDrinks = [] }: { phone: string; info: PlaceInfo | null; drinks: Named[]; foods: Named[]; siteUrl: string; kakaoId: string; menuReadEnabled: boolean; kind?: PartnerKind; brewery?: string; breweries?: string[]; ourDrinks?: { id: string; name: string; abv: number | null }[] }) {
+export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId, menuReadEnabled, kind = "restaurant", brewery: brewery0 = "", breweries = [], ourDrinks = [] }: { phone: string; info: PlaceInfo | null; drinks: Named[]; foods: Named[]; siteUrl: string; kakaoId: string; menuReadEnabled: boolean; kind?: PartnerKind; brewery?: string; breweries?: string[]; ourDrinks?: { id: string; name: string; abv: number | null; category?: string }[] }) {
   const [phone, setPhone] = useState(phone0);
   const [brewery, setBrewery] = useState(brewery0);   // 양조장 파트너가 고른 카탈로그 양조장(0031)
   const [f, setF] = useState({
@@ -229,7 +237,7 @@ export function StoreForm({ phone: phone0, info, drinks, foods, siteUrl, kakaoId
   const addOurDrinks = () => setTables((t) => {
     const key = (s: string) => s.replace(/\s+/g, "").toLowerCase();
     const have = new Set(t.drinks.map((d) => key(d.name)));
-    const add = ourDrinks.filter((d) => !have.has(key(d.name))).map((d) => ({ name: d.name, volume: "", abv: d.abv, price: null }));
+    const add = ourDrinks.filter((d) => !have.has(key(d.name))).map((d) => ({ name: d.name, volume: "", abv: d.abv, price: null, ...(isKnownCategory(d.category) ? { category: d.category } : {}) }));   // 카탈로그 종류(탁주·약주…)를 함께 채운다(2026-09-27)
     return add.length ? { ...t, drinks: [...t.drinks.filter((d) => d.name.trim()), ...add] } : t;
   });
   const [photos, setPhotos] = useState<string[]>(() => info?.photos ?? []);

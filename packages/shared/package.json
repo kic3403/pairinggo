@@ -20,6 +20,7 @@
     "./push-client": "./src/push-client.ts",
     "./image-client": "./src/image-client.ts",
     "./kinds": "./src/catalog/kinds.ts",
+    "./menu-items": "./src/menu-items.ts",
     "./specs": "./src/catalog/specs.ts",
     "./filter-url": "./src/catalog/filter-url.ts",
     "./home": "./src/home/banners.ts",

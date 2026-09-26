@@ -1277,3 +1277,11 @@ a.pd-score:hover { border-color: var(--navy); }
 .hp-foot { margin: 0; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 13px; }
 .hp-foot a { color: var(--navy-ink); font-weight: 600; text-decoration: none; }
 
+/* ---------- 메뉴판 탭(2026-09-27) — 음식 · 주류 · 음료 ---------- */
+.mb-tabs { display: flex; gap: 4px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.mb-tabs button { flex: 1; min-height: 36px; border: 0; border-radius: 9px; background: none; font: inherit; font-size: 14px; font-weight: 700; color: var(--ink2); cursor: pointer; }
+.mb-tabs button.on { background: var(--navy); color: #fff; }
+.mb-tabs button:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
+.mb-tabs .cnt { margin-left: 4px; font-size: 11.5px; font-weight: 700; opacity: .8; }
+.menu-board .mb-sec + .mb-sec { margin-top: 6px; }
+

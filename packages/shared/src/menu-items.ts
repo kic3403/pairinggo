@@ -5,10 +5,18 @@
  * 저장은 place_info.menu_items·drink_items(0024). 카탈로그 연결 목록(food_ids·menu_names·drink_ids·drink_names)은 표에서 뽑는다.
  */
 import { addListItem } from "./place-info";
-import { isKnownCategory } from "./catalog/kinds";
+import { DRINK_KINDS, KIND_LABEL, categoryLabelOf, isKnownCategory, kindOfCategory } from "./catalog/kinds";
+import type { DrinkKind } from "./types";
+export { categoryLabelOf };
 
 /** img: 사장님이 올린 사진(우리 저장소 menu-photos 공개 주소만, 없으면 속성 자체가 없음 — 2026-09-19) */
-export type MenuItem = { name: string; desc: string; price: number | null; img?: string };
+/** 메뉴 구분(2026-09-27 사용자 요청 — 손님 메뉴판을 음식·주류·음료 탭으로): 술은 DrinkItem 표, 나머지는 음식(기본)·음료 */
+export type MenuSection = "food" | "beverage";
+export const MENU_SECTIONS: MenuSection[] = ["food", "beverage"];
+export const MENU_SECTION_LABEL: Record<MenuSection, string> = { food: "음식", beverage: "음료" };
+export const cleanMenuSection = (v: unknown): MenuSection => (v === "beverage" ? "beverage" : "food");
+/** section: 없으면 음식 */
+export type MenuItem = { name: string; desc: string; price: number | null; img?: string; section?: MenuSection };
 /** category: 술 종류 저장값(catalog/kinds.ts categoryOptions — 탁주·싱글몰트·준마이…, 2026-09-25). 모르면 없음 */
 export type DrinkItem = { name: string; volume: string; abv: number | null; price: number | null; desc?: string; img?: string; category?: string };
 
@@ -73,10 +81,24 @@ export function cleanMenuItems(raw: unknown): MenuItem[] {
     if (!name || seen.has(key(name)) || hasLink(name) || hasLink(desc)) continue;
     seen.add(key(name));
     const img = cleanMenuImage(o.img);
-    out.push({ name, desc, price: parsePrice(o.price), ...(img ? { img } : {}) });
+    const section = cleanMenuSection(o.section);
+    out.push({ name, desc, price: parsePrice(o.price), ...(img ? { img } : {}), ...(section === "beverage" ? { section } : {}) });
     if (out.length >= MENU_ITEMS_MAX) break;
   }
   return out;
+}
+
+/** 손님 메뉴판 묶기 — 음식 · 주류(주종별: 전통주·위스키·사케·와인, 종류를 안 적은 술은 맨 뒤 "술") · 음료 */
+export type MenuBoardGroups = { food: MenuItem[]; beverage: MenuItem[]; drinks: { kind: DrinkKind | "other"; label: string; rows: DrinkItem[] }[] };
+export function groupMenuBoard(menu: MenuItem[], drinks: DrinkItem[]): MenuBoardGroups {
+  const food = menu.filter((m) => cleanMenuSection(m.section) === "food");
+  const beverage = menu.filter((m) => cleanMenuSection(m.section) === "beverage");
+  const by = new Map<DrinkKind | "other", DrinkItem[]>();
+  for (const d of drinks) { const k = kindOfCategory(d.category) ?? "other"; by.set(k, [...(by.get(k) ?? []), d]); }
+  const groups: MenuBoardGroups["drinks"] = [];
+  for (const k of DRINK_KINDS) if (by.get(k.id)?.length) groups.push({ kind: k.id, label: KIND_LABEL[k.id], rows: by.get(k.id)! });
+  if (by.get("other")?.length) groups.push({ kind: "other", label: "술", rows: by.get("other")! });
+  return { food, beverage, drinks: groups };
 }
 
 export function cleanDrinkItems(raw: unknown): DrinkItem[] {
@@ -98,7 +120,7 @@ export function cleanDrinkItems(raw: unknown): DrinkItem[] {
 }
 
 /** AI가 메뉴판에서 읽은 한 줄 — kind·이름·카탈로그 이름에 더해 설명·가격·용량·도수(없으면 빈값) */
-export type MenuReadRow = { kind: "drink" | "food"; name: string; catalogName: string | null; desc?: string; price?: number | null; volume?: string; abv?: number | null };
+export type MenuReadRow = { kind: "drink" | "food" | "beverage"; name: string; catalogName: string | null; desc?: string; price?: number | null; volume?: string; abv?: number | null };
 
 /**
  * 읽은 줄을 지금 표에 더한다 — 지우거나 덮지 않는다. 같은 이름(술은 이름+용량)이 이미 있으면 빈칸만 채운다.
@@ -114,8 +136,8 @@ export function mergeMenuRows(
   const named = (name: string, catalogName: string | null, list: { name: string }[]) =>
     (catalogName && list.find((c) => key(c.name) === key(catalogName))?.name) || name;
   for (const r of rows) {
-    if (r.kind === "food") {
-      const [it] = cleanMenuItems([{ name: named(r.name, r.catalogName, catalog.foods), desc: r.desc, price: r.price }]);
+    if (r.kind === "food" || r.kind === "beverage") {
+      const [it] = cleanMenuItems([{ name: named(r.name, r.catalogName, catalog.foods), desc: r.desc, price: r.price, section: r.kind === "beverage" ? "beverage" : "food" }]);
       if (!it) continue;
       const ex = menu.find((m) => key(m.name) === key(it.name));
       if (!ex) { if (menu.length < MENU_ITEMS_MAX) { menu.push(it); added++; } continue; }

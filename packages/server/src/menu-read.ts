@@ -22,7 +22,7 @@ export const MENU_IMAGES_MAX = 4;
 
 const ReadSchema = z.object({
   items: z.array(z.object({
-    kind: z.enum(["drink", "food"]),
+    kind: z.enum(["drink", "food", "beverage"]),
     name: z.string(),
     catalog_name: z.string().nullable(),
     description: z.string(),
@@ -41,9 +41,9 @@ function systemPrompt(drinks: string[], foods: string[]) {
 
 규칙
 - 사진에 실제로 적혀 있는 항목과 값만 적습니다. 보이지 않거나 흐려서 읽을 수 없는 글자는 추측하지 말고 비워 두세요.
-- kind: 술(막걸리·약주·소주·맥주·와인·사케·위스키·하이볼·칵테일 등)은 "drink", 음식·안주는 "food". 음료수·물·공깃밥·추가 사리·세트 구성품 설명은 넣지 않습니다.
+- kind: 술(막걸리·약주·소주·맥주·와인·사케·위스키·하이볼·칵테일 등)은 "drink", 음식·안주는 "food", 술이 아닌 음료(음료수·차·커피·에이드·주스·식혜·수정과)는 "beverage". 물·공깃밥·추가 사리·세트 구성품 설명은 넣지 않습니다.
 - name: 메뉴판에 적힌 이름. 가격·용량·도수는 이름에서 빼고 각 칸에 적습니다. 음식이 크기별(대/중/소)로 값이 다르면 "보쌈(대)", "보쌈(소)"처럼 크기를 이름 뒤 괄호에 붙여 줄을 나눕니다.
-- description: 음식 이름 아래나 옆에 적힌 짧은 설명(재료·조리법 등)을 60자 안으로. 적혀 있지 않으면 빈 문자열. 술은 빈 문자열.
+- description: 음식·음료 이름 아래나 옆에 적힌 짧은 설명(재료·조리법 등)을 60자 안으로. 적혀 있지 않으면 빈 문자열. 술은 빈 문자열.
 - price: 원 단위 정수(12,000원 → 12000, 1.2만 → 12000). 시가·변동·가격이 적혀 있지 않으면 null.
 - volume: 술의 용량을 적힌 대로(750ml, 1병, 잔, 500cc). 적혀 있지 않으면 빈 문자열. 음식은 빈 문자열. 같은 술이 잔·병으로 값이 다르면 줄을 나눕니다.
 - abv: 술의 도수(%)를 숫자로(13% → 13). 메뉴판에 적혀 있을 때만 — 알고 있는 제품이라도 적혀 있지 않으면 null. 음식은 null.
@@ -83,7 +83,7 @@ export async function readMenuImages(images: { type: MenuImageType; data: string
   return {
     items: out.items.map((it) => ({
       kind: it.kind, name: it.name, catalogName: it.catalog_name,
-      desc: it.kind === "food" ? it.description : "",
+      desc: it.kind !== "drink" ? it.description : "",
       price: parsePrice(it.price),
       volume: it.kind === "drink" ? cleanVolume(it.volume) : "",
       abv: it.kind === "drink" ? parseAbv(it.abv) : null,
