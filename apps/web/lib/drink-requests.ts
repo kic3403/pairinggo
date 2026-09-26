@@ -2,7 +2,8 @@
  * 없는 술 추가 요청(docs/25 §5) — 저장·내 요청·어드민 처리. 규칙은 shared drink-request.ts.
  * 열린 요청은 '없는 술' 대기열(lib/wanted.ts)에 source 'request'(무게 4)로 들어간다.
  */
-import { DRINK_REQUESTS_PER_DAY, cleanDrinkRequest, drinkRequestProblem, type DrinkRequestStatus } from "@pairinggo/shared";
+import { DRINK_REQUESTS_PER_DAY, cleanDrinkRequest, drinkRequestProblem, requestPush, toSlug, type DrinkRequestStatus } from "@pairinggo/shared";
+import { activityPush } from "./push-digest";
 import { db } from "./db";
 
 const need = () => { const sb = db(); if (!sb) throw new Error("Supabase 미설정"); return sb; };
@@ -62,12 +63,16 @@ export async function resolveDrinkRequest(id: number, input: { status: unknown; 
   if (!Number.isInteger(id) || id <= 0) throw new Error("잘못된 id");
   const status = String(input.status) as DrinkRequestStatus;
   if (!["open", "done", "rejected"].includes(status)) throw new Error("알 수 없는 상태");
-  let drinkId: string | null = null;
+  let drinkId: string | null = null, drinkName: string | null = null;
   if (status === "done") {
     drinkId = String(input.drinkId ?? "").trim();
-    const { data } = await sb.from("drinks").select("id").eq("id", drinkId).maybeSingle();
+    const { data } = await sb.from("drinks").select("id,name").eq("id", drinkId).maybeSingle();
     if (!data) throw new Error("등록됨으로 표시하려면 카탈로그 술을 골라 주세요");
+    drinkName = String(data.name);
   }
-  const { error } = await sb.from("drink_requests").update({ status, drink_id: drinkId, admin_note: String(input.note ?? "").slice(0, 200), updated_at: new Date().toISOString() }).eq("id", id);
+  const note = String(input.note ?? "").slice(0, 200);
+  const { data: row, error } = await sb.from("drink_requests").update({ status, drink_id: drinkId, admin_note: note, updated_at: new Date().toISOString() }).eq("id", id).select("user_id,query").maybeSingle();
   if (error) throw new Error(error.message);
+  // 활동 소식 푸시(docs/25 §7) — 요청한 회원에게, 설정이 켜져 있을 때만
+  if (row?.user_id && status !== "open") await activityPush(String(row.user_id), requestPush(String(row.query), status, drinkName, drinkName ? toSlug(drinkName) : null, note));
 }

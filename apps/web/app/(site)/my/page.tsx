@@ -11,6 +11,7 @@ import { myRatings } from "@/lib/ratings";
 import TriedCard from "../_components/TriedCard";
 import { myPicks } from "@/lib/member-picks";
 import { myDrinkRequests } from "@/lib/drink-requests";
+import PushSettings from "../_components/PushSettings";
 import { drinkRequestStatusText } from "@pairinggo/shared";
 import { memberPickStatusText } from "@pairinggo/shared";
 import { ageBand } from "@pairinggo/shared";
@@ -159,6 +160,9 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
           </ul>
         </>
       )}
+
+      {/* 재방문 알림(docs/25 §7) — 이 기기 켜기 + 주간·활동 소식 선택 */}
+      <div id="push" style={{ marginTop: 26 }}><PushSettings /></div>
 
       <form action={async () => { "use server"; await signOut({ redirectTo: "/" }); }} style={{ marginTop: 34 }}>
         <button type="submit" className="btn">로그아웃</button>

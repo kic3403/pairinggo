@@ -13,6 +13,7 @@ export * from "./pairing/member";
 export * from "./pairing/drink-review";
 export * from "./drink-request";
 export * from "./notifications";
+export * from "./push-digest";
 export * from "./pairing/partner-pairing";
 export * from "./pairing/summary";
 export * from "./pairing/tried-suggest";

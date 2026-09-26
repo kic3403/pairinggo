@@ -1269,3 +1269,11 @@ a.pd-score:hover { border-color: var(--navy); }
 .hp-kind.update { color: var(--navy-ink); border-color: var(--navy-soft); background: var(--navy-soft); }
 @media (max-width: 640px) { .site-head .wrap { gap: 8px; } .hicon { width: 34px; height: 34px; } .hpanel { position: fixed; top: 60px; right: 12px; } }
 
+/* ---------- 푸시 알림 설정(2026-09-26 docs/25 §7) ---------- */
+.push-settings h3 { display: flex; gap: 8px; align-items: baseline; }
+.push-prefs { display: grid; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.push-prefs label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; }
+.push-prefs input { width: 18px; height: 18px; accent-color: var(--navy); }
+.hp-foot { margin: 0; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 13px; }
+.hp-foot a { color: var(--navy-ink); font-weight: 600; text-decoration: none; }
+

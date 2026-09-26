@@ -121,6 +121,7 @@ export default function HeaderIcons() {
               {notif.activity.map((a) => <li key={a.id}><Link href={a.href} onClick={() => setOpen(null)}><b>{a.text}</b><span className="hp-time">{timeAgo(a.at)}</span></Link></li>)}
             </ul>
           )}
+          {loggedIn && <p className="hp-foot"><Link href="/my#push" onClick={() => setOpen(null)}>🔔 기기로 알림 받기 · 주간 소식 설정</Link></p>}
         </div>
       )}
     </div>

@@ -5,10 +5,11 @@
  *  - 카탈로그에 없는 술/음식은 review 상태 → 어드민이 지정하면 게시. 화면에는 닉네임(users.name)만 나간다.
  */
 import { revalidatePath } from "next/cache";
-import { D, F, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, MEMBER_PICK_DAILY, MEMBER_PICK_ES, memberPickPublishes, profileFit, type MemberPickStatus } from "@pairinggo/shared";
+import { D, F, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, MEMBER_PICK_DAILY, MEMBER_PICK_ES, likePush, memberPickPublishes, profileFit, type MemberPickStatus } from "@pairinggo/shared";
 import { countPairBlog } from "./blog-count";
 import { getCatalog, invalidateCatalog } from "./catalog";
 import { db } from "./db";
+import { activityPush } from "./push-digest";
 
 const need = () => { const sb = db(); if (!sb) throw new Error("Supabase 미설정"); return sb; };
 const key = (d: string, f: string) => `${d}|${f}`;
@@ -122,6 +123,12 @@ export async function toggleLike(userId: string, pickId: number): Promise<{ ok: 
   else { const { error } = await sb.from("member_pick_likes").insert({ pick_id: pickId, user_id: userId }); if (error && error.code !== "23505") throw new Error(error.message); liked = true; }
   const { count } = await sb.from("member_pick_likes").select("pick_id", { count: "exact", head: true }).eq("pick_id", pickId);
   const r = liked ? await syncPair(p.drink_id, p.food_id) : { created: false };
+  // 활동 소식 푸시(docs/25 §7) — 글쓴이에게 "○○님이 하트", 설정이 켜져 있을 때만
+  if (liked) {
+    const { data: liker } = await sb.from("users").select("name").eq("id", userId).maybeSingle();
+    await getCatalog();
+    await activityPush(String(p.user_id), likePush(String(liker?.name || "회원"), D[p.drink_id]?.name ?? p.drink_id, F[p.food_id]?.name ?? p.food_id));
+  }
   return { ok: true, liked, likes: count ?? 0, published: r.created };
 }
 
