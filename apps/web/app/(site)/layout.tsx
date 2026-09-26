@@ -5,6 +5,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
+import HeaderIcons from "./_components/HeaderIcons";
 import AuthNav from "./_components/AuthNav";
 import InstallPrompt from "./_components/InstallPrompt";
 import KakaoSdk from "./_components/KakaoSdk";
@@ -33,6 +34,8 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           </Link>
           {/* 휴대폰에서도 전폭 검색창(캐치테이블식, 2026-09-25) — 검색 버튼은 돋보기 아이콘으로 */}
           <SearchBox compact />
+          {/* 최근 본 · 알림(2026-09-26, 캐치테이블 참고 — docs/25 §6) */}
+          <HeaderIcons />
           <nav className="site-nav" aria-label="주요 메뉴">
             <Link href="/search" className="search-link">검색</Link>
             <Link href="/drinks">주류</Link>

@@ -12,6 +12,7 @@ import { placeReviews } from "@/lib/reviews";
 import ExtLink from "../../_components/ExtLink";
 import Heart from "../../_components/Heart";
 import MenuBoard from "../../_components/MenuBoard";
+import RecentTrack from "../../_components/RecentTrack";
 import StoreGallery from "./StoreGallery";
 import ReviewList from "./ReviewList";
 
@@ -60,6 +61,7 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
 
   return (
     <div className="wrap pd">
+      <RecentTrack kind="place" id={kakaoId} name={p.name} meta={addr} href={`/places/${kakaoId}?n=${encodeURIComponent(p.name)}`} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/places">식당 찾기</Link> · {p.name}</p>
       {photos.length ? <StoreGallery photos={photos} name={p.name} /> : null}
 

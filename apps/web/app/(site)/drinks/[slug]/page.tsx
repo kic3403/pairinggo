@@ -27,6 +27,7 @@ import SpecPicker from "../../_components/SpecPicker";
 import KindFacts from "../../_components/KindFacts";
 import DetailMedia, { KIND_TONE } from "../../_components/DetailMedia";
 import DrinkReviews from "../../_components/DrinkReviews";
+import RecentTrack from "../../_components/RecentTrack";
 import { drinkReviewSummary } from "@/lib/drink-reviews";
 
 export const revalidate = 600;
@@ -107,6 +108,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   return (
     <div className="wrap detail">
       <JsonLd data={ld} />
+      <RecentTrack kind="drink" id={drink.id} name={drink.name} meta={meta.slice(0, 3).join(" · ")} href={path} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
 
       {/* ① 핵심 정보 한 카드(2026-09-25 정리) — 이름 · 분류 · 외부 평점 · 태그 · 저장/공유, 오른쪽에 사진 칸(2026-09-26, 없으면 주종 색 타일) */}
