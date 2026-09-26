@@ -9,7 +9,7 @@ import GradeBadge from "./GradeBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
 import ProfileChart from "./ProfileChart";
-import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
+import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, confidenceOf, confidenceText, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -64,6 +64,8 @@ export function PairingCards({ items }: { items: CardItem[] }) {
             <div className="src">
               <span className={`pick ${pick}`}>{PICK_LABEL[pick]}</span>
               <span className="muted">{PICK_DETAIL[p.src ?? "profile"]}</span>
+              {/* 근거 신뢰도(2026-09-27, docs/26 §3-1) — 독립 출처 수로 센다. 추정은 PICK_DETAIL이 이미 "맛 프로필 추정"이라 칩을 달지 않는다 */}
+              {confidenceOf(p) !== "estimate" && <span className={`conf ${confidenceOf(p)}`} title="같은 매체·같은 블로그·같은 사람은 한 곳으로 셉니다">{confidenceText(p)}{p.checked ? ` · ${p.checked.slice(0, 7).replace("-", ".")} 확인` : ""}</span>}
               {p.ev?.url
                 ? <ExtLink href={p.ev.url} event="external_link" props={{ d: p.d, f: p.f, kind: "evidence" }}>{p.ev.source || "출처 보기"} ↗</ExtLink>
                 : pick !== "profile" && pick !== "member" && p.ev?.source ? <span>{p.ev.source}</span> : null}   {/* 회원픽은 아래 "회원 N명 추천" 줄이 출처 */}

@@ -6,7 +6,7 @@
  *   카드 문구(plus/minus)는 profileFit 문구를 그대로 두고, 뚜렷한 친화도가 있으면 맨 앞에 한 줄 붙인다.
  * 근거 조합이 늘어난 뒤 다시 돌리면 점수도 따라 좋아진다. 끝나면 발행(카탈로그 버전 갱신)까지 하고, 이어서 `pnpm db:export`.
  */
-import { affinityNotes, affinityRaw, affinityScore, buildAffinity, crossValidatedAuc, DATA, pairingGrade, pairingScore, profileFit, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
+import { affinityNotes, affinityRaw, affinityScore, buildAffinity, crossValidatedAuc, DATA, gradeOf, profileFit, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
 import { publishCatalog } from "./catalog-write";
 import { connect } from "./sql";
 
@@ -48,7 +48,7 @@ try {
     console.log("맛 분석 조합 중 가장 많이 내린 10개"); for (const { u, diff } of moved.slice(-10).reverse()) console.log(`  ${diff} → ${u.pf.s}  ${name(u)}  ${u.pf.minus[0] ?? ""}`);
     // 등급 변화 — 앱에 보이는 조합(번들 JSON) 기준
     const byKey = new Map(ok.map((u) => [u.r.d + "|" + u.r.f, u.pf]));
-    const tally = (next: boolean) => { const t: Record<string, number> = { best: 0, good: 0, try: 0 }; for (const p of DATA.pairings) { const pf = next ? byKey.get(p.d + "|" + p.f) ?? p.pf : p.pf; t[pairingGrade(pairingScore({ ...p, pf })).key]++; } return t; };
+    const tally = (next: boolean) => { const t: Record<string, number> = { best: 0, good: 0, try: 0 }; for (const p of DATA.pairings) { const pf = next ? byKey.get(p.d + "|" + p.f) ?? p.pf : p.pf; t[gradeOf({ ...p, pf }).key]++; } return t; };
     const before = tally(false), after = tally(true);
     console.log(`\n등급(찰떡/잘 어울림/시도해 볼 만) — 지금 ${before.best}/${before.good}/${before.try} → 적용 후 ${after.best}/${after.good}/${after.try}`);
     const probe: [string, string][] = [["복숭아와인", "불고기"], ["다래와인", "육개장"], ["크라테 드라이", "스테이크"], ["백세주", "불고기"], ["해창막걸리 12도", "해물파전"], ["두레앙 브랜디", "곶감"]];

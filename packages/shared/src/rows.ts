@@ -3,6 +3,7 @@
  * 컬럼명은 docs/04, 앱 필드명은 packages/shared/src/types.ts.
  */
 import type { Dataset, Drink, DrinkKind, DrinkSpec, Food, Pairing, PairingServe, SpecPrice, SrcTier } from "./types";
+import { evidenceStats } from "./pairing/confidence";
 
 const KIND_IDS: string[] = ["trad", "whisky", "sake", "wine"];
 const SERVES: string[] = ["neat", "rocks", "highball", "warm", "cold"];
@@ -70,6 +71,7 @@ export function pairingFromRow(r: Row): Pairing {
     pf: r.profile_score || undefined,
     ...(r.serve && SERVES.includes(r.serve) ? { serve: r.serve as PairingServe } : {}),
     ...(r.checked_on ? { checked: String(r.checked_on).slice(0, 10) } : {}),
+    ...(() => { const s = evidenceStats(Array.isArray(r.evidence) ? r.evidence : [], (r.source_tier || "profile") as SrcTier); return s.n ? { evn: s.n, evs: s.e } : {}; })(),
   };
 }
 export function loadDatasetFromRows(x: { drinks: Row[]; foods: Row[]; pairings: Row[]; specs?: Row[]; prices?: Row[]; trend_meta?: Dataset["trend_meta"]; src_meta?: Dataset["src_meta"]; profile_meta?: Dataset["profile_meta"] }): Dataset {

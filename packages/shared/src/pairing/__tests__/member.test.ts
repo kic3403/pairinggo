@@ -27,13 +27,14 @@ describe("회원 추천 규칙", () => {
     expect(pickOf("user")).toBe("member");
     expect(PICK_LABEL.member).toBe("회원픽");
   });
-  it("점수 — 블로그 후기와 같은 급(+0.5), 근거 링크 보너스 없음 → 찰떡에 닿지 않는다", () => {
+  it("점수 — 회원 한 명은 블로그 후기와 같은 무게(0.3), 여러 명이어도 두 번째부터 절반이라 근거 약함이 기본(2026-09-27)", () => {
     const mk = (over: Partial<Pairing>): Pairing => ({ d: "d01", f: "f01", es: 85, reason: "", blog: 100, src: "user", pf: { s: 61, plus: [], minus: [] }, ...over });
-    const s = scorePairings([mk({}), mk({ f: "b", src: "blog" })]);
-    expect(s[0].parts.tier).toBe(0.5);
-    expect(s[0].parts.ev).toBe(0);
+    const s = scorePairings([mk({ evn: 1, evs: 0.3 }), mk({ f: "b", src: "blog", evn: 1, evs: 0.3 })]);
+    expect(s[0].parts.e).toBe(0.3);
     expect(s[0].base).toBe(s[1].base);
-    expect(scorePairings([mk({ blog: 100000, pf: { s: 100, plus: [], minus: [] } })])[0].grade.key).not.toBe("best");
+    expect(s[0].confidence).toBe("weak");
+    expect(scorePairings([mk({ evn: 2, evs: 0.6, blog: 100000, pf: { s: 100, plus: [], minus: [] } })])[0].grade.key).not.toBe("best");
+    expect(scorePairings([mk({ evn: 4, evs: 1.2 })])[0].confidence).toBe("confirmed");
   });
 });
 

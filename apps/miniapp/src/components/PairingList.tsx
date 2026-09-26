@@ -72,7 +72,7 @@ export default function PairingList({ rows, subjectType, subjectId }: { rows: Ro
                 </p>
               )}
               {tab === "overall" && (
-                <p className="text-[10.5px] text-muted mt-1.5">종합 근거 · 전문가 {s.parts.es} · 언급 {s.parts.blog} · 프로필 {s.parts.pf}{s.parts.tier ? ` · 출처 +${s.parts.tier}` : ""}{s.adjusted ? " · 편중 보정 −5" : ""}</p>
+                <p className="text-[10.5px] text-muted mt-1.5">종합 근거 · 근거 {s.parts.ev}(출처 {s.parts.n}곳) · 언급 {s.parts.blog} · 맛 분석 {s.parts.pf}{s.adjusted ? " · 편중 보정 −5" : ""}</p>
               )}
               {tab === "public" && <div className="h-[5px] rounded bg-surface2 mt-2.5 overflow-hidden"><i className={`block h-full rounded ${r.type === "food" ? "bg-food" : "bg-drink"}`} style={{ width: `${Math.max(6, Math.round((r.blog / maxBlog) * 100))}%` }} /></div>}
               <div className="flex items-center justify-between mt-2.5 text-[11.5px]">

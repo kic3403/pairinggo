@@ -92,6 +92,8 @@ export type Pairing = {
   serve?: PairingServe | null;
   /** 근거 확인일 YYYY-MM-DD */
   checked?: string | null;
+  /** 독립 출처 수·근거 강도(2026-09-27, pairing/confidence.ts evidenceStats) — 근거가 없으면 키 없음 */
+  evn?: number; evs?: number;
 };
 export type PairingServe = "neat" | "rocks" | "highball" | "warm" | "cold";
 export const SERVE_LABEL: Record<PairingServe, string> = { neat: "니트", rocks: "온더록스", highball: "하이볼", warm: "따뜻하게", cold: "차갑게" };

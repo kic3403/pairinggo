@@ -4,7 +4,7 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SRC_LABEL, buyLink, josa, onlineSellable, pairingGrade, pairingScore, toSlug } from "@pairinggo/shared";
+import { SRC_LABEL, buyLink, confidenceText, gradeOf, josa, onlineSellable, pairingScore, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { hotPairs } from "@/lib/hot";
 import ExtLink from "../_components/ExtLink";
@@ -44,7 +44,7 @@ export default async function HotPage() {
                 <span className="name">
                   <Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link> <span className="muted">×</span> <Link href={`/foods/${toSlug(f.name)}`}>{f.name}</Link>
                 </span>
-                {h.fromLogs ? <span className="score">{h.taps + h.saves + h.buys + h.places}회</span> : <GradeBadge grade={pairingGrade(pairingScore(h.pairing))} title={`점수 ${pairingScore(h.pairing)}`} />}
+                {h.fromLogs ? <span className="score">{h.taps + h.saves + h.buys + h.places}회</span> : <GradeBadge grade={gradeOf(h.pairing)} title={`어울림 ${pairingScore(h.pairing)} · ${confidenceText(h.pairing)}`} />}
               </div>
               <div className="small muted">
                 {h.fromLogs

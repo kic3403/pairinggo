@@ -1286,3 +1286,8 @@ a.pd-score:hover { border-color: var(--navy); }
 .menu-board .mb-sec + .mb-sec { margin-top: 6px; }
 .mb-empty { margin: 0; padding: 18px 0; font-size: 13.5px; color: var(--muted); text-align: center; }
 
+/* ---------- 근거 신뢰도 칩(2026-09-27 docs/26 §3-1) — 근거 확인(초록) · 근거 약함(주황). 추정은 칩 없이 "맛 프로필 추정" ---------- */
+.conf { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 1px 7px; border-radius: 5px; }
+.conf.confirmed { background: #E9F3EA; color: #2F6B3A; }
+.conf.weak { background: #FBF1DF; color: #8A5A00; }
+

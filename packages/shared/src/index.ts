@@ -9,6 +9,7 @@ export * from "./pairing/score";
 export * from "./pairing/blog-count";
 export * from "./pairing/pick";
 export * from "./pairing/ratings";
+export * from "./pairing/confidence";
 export * from "./pairing/member";
 export * from "./pairing/drink-review";
 export * from "./drink-request";
