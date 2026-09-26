@@ -1284,4 +1284,5 @@ a.pd-score:hover { border-color: var(--navy); }
 .mb-tabs button:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
 .mb-tabs .cnt { margin-left: 4px; font-size: 11.5px; font-weight: 700; opacity: .8; }
 .menu-board .mb-sec + .mb-sec { margin-top: 6px; }
+.mb-empty { margin: 0; padding: 18px 0; font-size: 13.5px; color: var(--muted); text-align: center; }
 

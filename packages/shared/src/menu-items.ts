@@ -11,10 +11,10 @@ export { categoryLabelOf };
 
 /** img: 사장님이 올린 사진(우리 저장소 menu-photos 공개 주소만, 없으면 속성 자체가 없음 — 2026-09-19) */
 /** 메뉴 구분(2026-09-27 사용자 요청 — 손님 메뉴판을 음식·주류·음료 탭으로): 술은 DrinkItem 표, 나머지는 음식(기본)·음료 */
-export type MenuSection = "food" | "beverage";
-export const MENU_SECTIONS: MenuSection[] = ["food", "beverage"];
-export const MENU_SECTION_LABEL: Record<MenuSection, string> = { food: "음식", beverage: "음료" };
-export const cleanMenuSection = (v: unknown): MenuSection => (v === "beverage" ? "beverage" : "food");
+export type MenuSection = "food" | "beverage" | "other";
+export const MENU_SECTIONS: MenuSection[] = ["food", "beverage", "other"];
+export const MENU_SECTION_LABEL: Record<MenuSection, string> = { food: "음식", beverage: "음료", other: "기타" };
+export const cleanMenuSection = (v: unknown): MenuSection => (v === "beverage" || v === "other" ? v : "food");
 /** section: 없으면 음식 */
 export type MenuItem = { name: string; desc: string; price: number | null; img?: string; section?: MenuSection };
 /** category: 술 종류 저장값(catalog/kinds.ts categoryOptions — 탁주·싱글몰트·준마이…, 2026-09-25). 모르면 없음 */
@@ -82,23 +82,24 @@ export function cleanMenuItems(raw: unknown): MenuItem[] {
     seen.add(key(name));
     const img = cleanMenuImage(o.img);
     const section = cleanMenuSection(o.section);
-    out.push({ name, desc, price: parsePrice(o.price), ...(img ? { img } : {}), ...(section === "beverage" ? { section } : {}) });
+    out.push({ name, desc, price: parsePrice(o.price), ...(img ? { img } : {}), ...(section !== "food" ? { section } : {}) });
     if (out.length >= MENU_ITEMS_MAX) break;
   }
   return out;
 }
 
-/** 손님 메뉴판 묶기 — 음식 · 주류(주종별: 전통주·위스키·사케·와인, 종류를 안 적은 술은 맨 뒤 "술") · 음료 */
-export type MenuBoardGroups = { food: MenuItem[]; beverage: MenuItem[]; drinks: { kind: DrinkKind | "other"; label: string; rows: DrinkItem[] }[] };
+/** 손님 메뉴판 묶기 — 음식 · 주류(주종별: 전통주·위스키·사케·와인, 종류를 안 적은 술은 맨 뒤 "술") · 음료 · 기타. 탭은 비어 있어도 0으로 늘 보인다(2026-09-27 사용자 요청) */
+export type MenuBoardGroups = { food: MenuItem[]; beverage: MenuItem[]; other: MenuItem[]; drinks: { kind: DrinkKind | "other"; label: string; rows: DrinkItem[] }[] };
 export function groupMenuBoard(menu: MenuItem[], drinks: DrinkItem[]): MenuBoardGroups {
   const food = menu.filter((m) => cleanMenuSection(m.section) === "food");
   const beverage = menu.filter((m) => cleanMenuSection(m.section) === "beverage");
+  const other = menu.filter((m) => cleanMenuSection(m.section) === "other");
   const by = new Map<DrinkKind | "other", DrinkItem[]>();
   for (const d of drinks) { const k = kindOfCategory(d.category) ?? "other"; by.set(k, [...(by.get(k) ?? []), d]); }
   const groups: MenuBoardGroups["drinks"] = [];
   for (const k of DRINK_KINDS) if (by.get(k.id)?.length) groups.push({ kind: k.id, label: KIND_LABEL[k.id], rows: by.get(k.id)! });
   if (by.get("other")?.length) groups.push({ kind: "other", label: "술", rows: by.get("other")! });
-  return { food, beverage, drinks: groups };
+  return { food, beverage, other, drinks: groups };
 }
 
 export function cleanDrinkItems(raw: unknown): DrinkItem[] {

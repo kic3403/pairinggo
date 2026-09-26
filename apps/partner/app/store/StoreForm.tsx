@@ -177,7 +177,7 @@ function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onCha
           <input type="text" aria-label="간단한 설명" value={r.desc} maxLength={60} onChange={(e) => set(i, { desc: e.target.value })} placeholder="설명(없으면 비워 두세요)" />
           <NumInput value={r.price} onChange={(v) => set(i, { price: v })} parse={priceOf} unit="원" label="가격" />
           {/* 구분(2026-09-27) — 손님 메뉴판이 음식·주류·음료 탭으로 나뉜다. 술은 아래 술 표에 */}
-          <select aria-label="구분" value={r.section ?? "food"} onChange={(e) => set(i, { section: e.target.value === "beverage" ? "beverage" : undefined })}>
+          <select aria-label="구분" value={r.section ?? "food"} onChange={(e) => set(i, { section: e.target.value === "food" ? undefined : (e.target.value as MenuItem["section"]) })}>
             {MENU_SECTIONS.map((s) => <option key={s} value={s}>{MENU_SECTION_LABEL[s]}</option>)}
           </select>
           <RowOps index={i} last={i === rows.length - 1} label={r.name} onMove={(d) => onChange(moveItem(rows, i, d))} onRemove={() => onChange(rows.filter((_, j) => j !== i))} />
@@ -186,7 +186,8 @@ function MenuTable({ rows, onChange, onImg, onError }: { rows: MenuItem[]; onCha
       <div className="row" style={{ gap: 6 }}>
         <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null }])}>+ 음식 줄 추가</button>
         <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null, section: "beverage" }])}>+ 음료 줄 추가</button>
-        <span className="small muted">술은 아래 술 표에 적어 주세요 — 손님 메뉴판에 음식·주류·음료로 나뉘어 보여요.</span>
+        <button type="button" className="btn ghost sm" onClick={() => onChange([...rows, { name: "", desc: "", price: null, section: "other" }])}>+ 기타 줄 추가</button>
+        <span className="small muted">술은 아래 술 표에 적어 주세요 — 손님 메뉴판에 음식·주류·음료·기타 탭으로 보여요.</span>
       </div>
     </div>
   );
