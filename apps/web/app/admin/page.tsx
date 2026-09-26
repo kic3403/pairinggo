@@ -39,6 +39,7 @@ export default async function AdminHome() {
         <p style={{ marginTop: 4 }}><Link href="/admin/banners">홈 배너 — 이벤트·이달의 파트너·상시 안내 →</Link></p>
         <p style={{ marginTop: 4 }}><Link href="/admin/drinks?missing=price">술 정보 — 주종·규격·참고가격 입력(가격 없는 술부터) →</Link></p>
         <p style={{ marginTop: 4 }}><Link href="/admin/foods?missing=1">음식 사진 — 상세 머리 카드·검색 썸네일(사진 없는 음식부터) →</Link></p>
+        <p style={{ marginTop: 4 }}><Link href="/admin/drink-reviews">술 평가 — 회원 별점·한 줄 검토(숨김·삭제) →</Link></p>
       </div>
     </>
   );

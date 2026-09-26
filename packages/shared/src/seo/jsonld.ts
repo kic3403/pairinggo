@@ -59,7 +59,10 @@ export type OfferSeo = {
  * 술 상세 — Product. 도수는 additionalProperty로 싣는다(schema.org에 술 도수 전용 항목이 없다).
  * 파는 상품이 있으면 offers까지 붙어 검색 결과에 가격이 보일 수 있다.
  */
-export function drinkProduct(d: DrinkSeo, opts: { base: string; path: string; offers?: OfferSeo[] }): JsonLd {
+/** 회원 평가 요약(docs/25) — count가 0이거나 avg가 없으면 넣지 않는다 */
+export type RatingSeo = { avg: number | null; count: number };
+
+export function drinkProduct(d: DrinkSeo, opts: { base: string; path: string; offers?: OfferSeo[]; rating?: RatingSeo }): JsonLd {
   const url = absUrl(opts.base, opts.path);
   const props: JsonLd[] = [];
   if (d.abv != null) props.push({ "@type": "PropertyValue", name: "도수", value: `${d.abv}%`, unitText: "% ABV" });
@@ -79,6 +82,9 @@ export function drinkProduct(d: DrinkSeo, opts: { base: string; path: string; of
     brand: d.brewery ? { "@type": "Brand", name: d.brewery } : undefined,
     additionalProperty: props,
     award: d.awards?.length ? d.awards : undefined,
+    aggregateRating: opts.rating && opts.rating.avg != null && opts.rating.count > 0
+      ? { "@type": "AggregateRating", ratingValue: opts.rating.avg, reviewCount: opts.rating.count, bestRating: 5, worstRating: 1 }
+      : undefined,
     offers: best
       ? compact({
         "@type": "Offer",

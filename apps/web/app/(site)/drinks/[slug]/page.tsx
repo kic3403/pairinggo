@@ -26,6 +26,8 @@ import ShareButton from "../../_components/ShareButton";
 import SpecPicker from "../../_components/SpecPicker";
 import KindFacts from "../../_components/KindFacts";
 import DetailMedia, { KIND_TONE } from "../../_components/DetailMedia";
+import DrinkReviews from "../../_components/DrinkReviews";
+import { drinkReviewSummary } from "@/lib/drink-reviews";
 
 export const revalidate = 600;
 /**
@@ -90,11 +92,11 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   // 구조화 데이터(docs/20 P3-4) — 검색 결과에 도수·양조장·경로가 함께 보이게. 파는 상품이 있으면 가격까지.
   const base = siteUrl();
   const path = `/drinks/${toSlug(drink.name)}`;
-  const opts = await buyOptions(drink.id).catch(() => []);
+  const [opts, rv] = await Promise.all([buyOptions(drink.id).catch(() => []), drinkReviewSummary(drink.id).catch(() => ({ n: 0, avg: null, hist: [0, 0, 0, 0, 0] as [number, number, number, number, number] }))]);   // 회원 평가 요약(docs/25)
   const ld = [
     drinkProduct(
       { name: drink.name, desc: drink.desc, category: kind === "trad" ? drink.category : `${KIND_LABEL[kind]} ${subtypeLabel(drink)}`, abv: drink.abv, brewery: drink.brewery, region: kind === "trad" ? drink.region : countryLabel(kind, drink.country), awards: drink.awards },
-      { base, path, offers: opts.map((o) => ({ price: o.price, inStock: o.buyable > 0, sellerName: o.seller.bizName })) },
+      { base, path, offers: opts.map((o) => ({ price: o.price, inStock: o.buyable > 0, sellerName: o.seller.bizName })), rating: { avg: rv.avg, count: rv.n } },
     ),
     breadcrumb([{ name: "홈", path: "/" }, { name: "주류", path: "/drinks" }, { name: KIND_LABEL[kind], path: `/drinks?kind=${kind}` }, { name: drink.name, path }], base),
   ];
@@ -114,6 +116,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
           <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
           {/* 외부 평점 — 허용된 출처(라이선스·수입사 제공)만, 출처·확인일과 함께. 페어링GO 회원 평가와 섞지 않는다 */}
+          {/* 회원 평가(docs/25) — 외부 평점·근거 등급과 줄을 따로 두고 "회원" 표기. 3명부터 평균, 그 전엔 남기기 안내 */}
+          <p className="member-stars"><a href="#reviews">{rv.avg != null ? <><b>★ {rv.avg.toFixed(1)}</b> <span className="muted small">회원 평가 {rv.n}명</span></> : <span className="muted small">{rv.n > 0 ? `회원 평가 ${rv.n}명 · 평가 남기기` : "회원 평가 남기기 ★"}</span>}</a></p>
           {rating && <p className="ext-rating-line"><span className="ext-rating">★ {rating.score}<i>{rating.source}</i></span> <span className="small muted">{extRatingText(rating)} · {rating.checked} 확인{rating.url ? <> · <ExtLink href={rating.url} event="external_link" props={{ d: drink.id, kind: "ext_rating" }}>출처 보기 ↗</ExtLink></> : null}</span></p>}
           {(!!drink.flavor?.length || !!drink.awards?.length) && (
             <ul className="tags">{drink.flavor.map((f) => <li key={f} className="tag">{f}</li>)}{(drink.awards ?? []).map((a) => <li key={a} className="tag f">{a}</li>)}</ul>
@@ -188,6 +192,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <PairingCards items={items} />
             </PickTabs>
           </RatingsProvider>
+          {/* 회원 별점·한 줄(docs/25) — 조합 평가(먹어봤어요)와 별개, 술 자체의 평가 */}
+          <DrinkReviews drinkId={drink.id} drinkName={drink.name} initial={rv} />
         </div>
 
         <aside>

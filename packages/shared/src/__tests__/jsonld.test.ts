@@ -82,3 +82,14 @@ describe("구조화 데이터 — 스크립트에 안전하게", () => {
     expect(JSON.parse(s.replace(/\\u003c/g, "<").replace(/\\u003e/g, ">").replace(/\\u0026/g, "&")).name).toBe("</script><img onerror=alert(1)>");
   });
 });
+
+describe("구조화 데이터 — 회원 평가(2026-09-26)", () => {
+  it("3명 이상 평균이 있을 때만 aggregateRating", () => {
+    const d = { name: "한산소곡주" };
+    const a = drinkProduct(d, { base: BASE, path: "/drinks/x", rating: { avg: 4.3, count: 12 } }) as Record<string, any>;
+    expect(a.aggregateRating).toEqual({ "@type": "AggregateRating", ratingValue: 4.3, reviewCount: 12, bestRating: 5, worstRating: 1 });
+    expect("aggregateRating" in (drinkProduct(d, { base: BASE, path: "/drinks/x", rating: { avg: null, count: 2 } }) as Record<string, any>)).toBe(false);
+    expect("aggregateRating" in (drinkProduct(d, { base: BASE, path: "/drinks/x" }) as Record<string, any>)).toBe(false);
+  });
+});
+
