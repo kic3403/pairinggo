@@ -15,7 +15,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { NON_TRAD, matchAwardDrink, sameBrewery, type AwardDrink } from "@pairinggo/shared";
 import { cleanShopUrl } from "./buy-links";
-import { nameInText, squash } from "./link-check";
+import { showsDrink } from "./link-check";
 import { publishCatalog } from "./catalog-write";
 import { loadResearch } from "./research";
 import { connect } from "./sql";
@@ -24,26 +24,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const apply = process.argv.includes("--apply");
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-/**
- * 첫 화면이 열리고 **그 술 이름이 보이는지** — 열리기만 하고 술이 없으면 found: null(사용자 규칙 2026-09-24).
- * 이름은 술 이름·별칭의 낱말이 모두 있는지로 본다(nameInText). 403·405로 막힌 곳은 글을 못 읽어 없음으로 본다.
- */
-async function showsDrink(url: string, names: string[]): Promise<{ url: string; found: string | null } | null> {
-  const keys = names.filter((n) => squash(n).length >= 2);
-  const try1 = url.replace(/^http:/, "https:"), try2 = url.replace(/^https:/, "http:");
-  for (const u of [try1, try2]) {
-    try {
-      const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 10000);
-      const r = await fetch(u, { redirect: "follow", signal: ctl.signal, headers: { "User-Agent": "Mozilla/5.0 (pairinggo link check)" } });
-      clearTimeout(t);
-      if (!(r.status < 400 || r.status === 403 || r.status === 405)) continue;
-      const html = r.status < 400 ? await r.text().catch(() => "") : "";
-      const text = squash(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, " ").replace(/<[^>]+>/g, " "));
-      return { url: u, found: keys.find((k) => nameInText(k, text)) ?? null };
-    } catch { /* 다음 주소 */ }
-  }
-  return null;
-}
 
 const sql = connect();
 try {

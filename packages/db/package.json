@@ -36,7 +36,8 @@
     "dup-check": "tsx src/dup-check.ts",
     "catalog-buy-links": "tsx src/catalog-buy-links.ts",
     "retail-links": "tsx src/retail-links.ts",
-    "specs-import": "tsx src/specs-import.ts"
+    "specs-import": "tsx src/specs-import.ts",
+    "datago": "tsx src/datago.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
