@@ -1291,3 +1291,18 @@ a.pd-score:hover { border-color: var(--navy); }
 .conf.confirmed { background: #E9F3EA; color: #2F6B3A; }
 .conf.weak { background: #FBF1DF; color: #8A5A00; }
 
+/* ---------- 오늘의 페어링(2026-09-27) ---------- */
+.today-hero { margin: 8px 0 18px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg2); }
+.today-head { display: inline-block; margin: 0 0 12px; padding: 3px 10px; border-radius: 999px; background: var(--food-soft); color: var(--food-ink); font-size: 13px; font-weight: 800; }
+.today-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 10px; }
+.tp-side { display: grid; justify-items: center; gap: 6px; text-align: center; text-decoration: none; color: inherit; }
+.tp-side b { font-size: 18px; line-height: 1.3; }
+.tp-side .dhead-media { width: 110px; grid-column: auto; grid-row: auto; justify-self: center; }   /* 상세 머리 카드의 2열 고정 배치를 풀어 준다 */
+.tp-x { align-self: center; font-size: 26px; font-weight: 800; color: var(--muted); padding-top: 40px; }
+.today-grade { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 14px 0 0; }
+.today-hero .btns { margin-top: 14px; }
+.today-hero .quote { margin-top: 12px; }
+.today-more { display: grid; gap: 12px; }
+@media (min-width: 768px) { .today-more { grid-template-columns: 1fr 1fr; } .tp-side .dhead-media { width: 150px; } .tp-side b { font-size: 21px; } .tp-x { padding-top: 60px; } }
+.today-past .tp-date { width: 56px; flex: none; }
+

@@ -29,8 +29,9 @@ export default async function HotPage() {
       <p className="lead">
         {logged > 0
           ? `${since.slice(0, 10)}부터 지금까지 페어링GO 사용자들이 눌러 보고, 저장하고, 구매 링크로 넘어간 술+안주 조합을 세어 순위를 냈습니다.`
-          : "아직 최근 30일 기록이 충분하지 않아 양조장·소믈리에·매체·블로그 근거 점수가 높은 조합을 먼저 보여 드립니다. 사용이 쌓이면 실제 행동 기준으로 바뀝니다."}
-        {logged > 0 && logged < list.length && ` 기록이 있는 조합 ${logged}개 뒤로는 근거 점수 순으로 채웠습니다.`}
+          : "아직 최근 30일 기록이 충분하지 않아 근거가 확인된 조합을 어울림 점수 순으로 먼저 보여 드립니다. 사용이 쌓이면 실제 행동 기준으로 바뀝니다."}
+        {logged > 0 && logged < list.length && ` 기록이 있는 조합 ${logged}개 뒤로는 근거가 확인된 조합으로 채웠습니다.`}
+        {" "}날마다 하나씩 고른 추천은 <Link href="/today">오늘의 페어링</Link>에서 볼 수 있어요.
       </p>
       <ol className="rank">
         {list.map((h, i) => {

@@ -128,7 +128,7 @@ export function drinksInRegion(pre: string[], n = 12, fb?: string[]): { list: Dr
   return { list, label };
 }
 
-/** 하루 단위로 바뀌는 '오늘의 페어링' */
+/** 하루 단위로 바뀌는 조합(미니앱 홈 전용, 단순 순환) — 웹의 오늘의 페어링은 pairing/today.ts todayPick */
 export function todayPairing(now = Date.now()): Pairing {
   return BEST[Math.floor(now / 86400000) % BEST.length];
 }

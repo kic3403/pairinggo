@@ -1,9 +1,9 @@
 /**
  * 요즘 핫한 페어링 조합 — 최근 30일 우리 앱 사용자의 행동(페어링 카드 탭·저장·구매 클릭·식당 찾기)에서 술+음식 조합을 세어 순위.
  * events.props 에 d(술 id)와 f(음식 id)가 함께 있는 이벤트만 조합으로 친다(미니앱 card_tap의 from/to 형식도 받는다).
- * 아직 데이터가 적으면 전문가·블로그 점수 순으로 채우고 그 사실을 화면에 적는다.
+ * 아직 데이터가 적으면 근거가 확인된 조합을 어울림 점수 순으로 채우고(2026-09-27 새 점수식) 그 사실을 화면에 적는다.
  */
-import type { Dataset, Pairing } from "@pairinggo/shared";
+import { confidenceOf, pairingScore, type Dataset, type Pairing } from "@pairinggo/shared";
 import { db } from "./db";
 
 export type HotPair = { pairing: Pairing; score: number; taps: number; saves: number; buys: number; places: number; fromLogs: boolean };
@@ -40,8 +40,8 @@ export async function hotPairs(ds: Dataset, n = 12, days = 30): Promise<{ list: 
   const logged = list.length;
   if (list.length < n) {
     const used = new Set(list.map((h) => `${h.pairing.d}|${h.pairing.f}`));
-    const fill = [...ds.pairings].filter((p) => !used.has(`${p.d}|${p.f}`) && (p.src === "official" || p.src === "sommelier" || p.src === "media" || p.src === "blog"))
-      .sort((a, b) => (b.es + Math.min(b.blog, 50) / 5) - (a.es + Math.min(a.blog, 50) / 5)).slice(0, n - list.length);
+    const fill = [...ds.pairings].filter((p) => !used.has(`${p.d}|${p.f}`) && confidenceOf(p) === "confirmed")
+      .sort((a, b) => pairingScore(b) - pairingScore(a) || b.blog - a.blog).slice(0, n - list.length);
     for (const p of fill) list.push({ pairing: p, score: 0, taps: 0, saves: 0, buys: 0, places: 0, fromLogs: false });
   }
   return { list, logged, since };
