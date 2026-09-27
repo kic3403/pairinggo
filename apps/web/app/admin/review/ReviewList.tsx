@@ -58,7 +58,7 @@ function CardView({ c, selected, onFocus, reviewer, busy, say, remove }: { c: Ca
   const [tier, setTier] = useState(c.suggested_tier && TIERS.includes(c.suggested_tier) ? c.suggested_tier : "blog");
   const [score, setScore] = useState<number>(c.suggested_score || TIER_DEFAULT[tier]);
   const [who, setWho] = useState(c.who || "");
-  const [reason, setReason] = useState(c.suggested_reason || "");
+  const [reason, setReason] = useState(c.suggested_reason || c.ai_reason || "");
   const [rejectOpen, setRejectOpen] = useState(false);
   const [assignOpen, setAssignOpen] = useState(c.status === "needs_entity");
   const needsEntity = !c.drink_id || !c.food_id;
@@ -88,14 +88,19 @@ function CardView({ c, selected, onFocus, reviewer, busy, say, remove }: { c: Ca
           {c.gap && <span className="tag w">{c.gap === "both" ? "술·음식 첫 근거" : c.gap === "drink" ? "술 첫 근거" : "음식 첫 근거"}</span>}
           {c.mention_count > 1 && <span className="tag">언급 {c.mention_count}</span>}
           {c.siblings > 0 && <span className="tag m">같은 조합 후보 +{c.siblings}</span>}
+          {c.ai_verdict === "yes" && <span className="tag v" title={c.ai_basis === "snippet" ? "원문을 못 읽어 검색 요약으로 판정" : "원문에서 인용 확인"}>AI 확인{c.ai_basis === "snippet" ? " · 요약" : ""}</span>}
+          {c.ai_verdict === "unclear" && <span className="tag w" title={c.ai_note ?? ""}>AI 애매</span>}
           <span className="tag m">{c.source_kind || c.origin}</span>
         </div>
       </div>
       {c.existing && <p className="muted" style={{ marginTop: 4 }}>이미 페어링 있음 · 전문가 {c.existing.es} · 출처 {c.existing.src} — 승인하면 근거가 추가되고 등급이 높으면 갱신됩니다{c.sameUrl && <b style={{ color: "var(--warn)" }}> · 같은 URL 근거가 이미 등록됨 (거절 권장)</b>}</p>}
       {needsEntity && <p style={{ color: "var(--warn)", fontSize: 13, marginTop: 4 }}>술 또는 음식이 카탈로그와 매칭되지 않았어요 → 아래에서 지정</p>}
+      {c.ai_verdict === "yes" && c.ai_quote && (
+        <div className="quote"><b>원문 인용</b> — {c.ai_quote}</div>
+      )}
       {(c.quote || c.url) && (
         <div className="quote">
-          {c.quote || "(인용문 없음)"}
+          {c.ai_verdict === "yes" && c.ai_quote ? <span className="muted">검색 요약: {c.quote || "(없음)"}</span> : c.quote || "(인용문 없음)"}
           <div className="muted" style={{ marginTop: 4 }}>{c.source_name} {c.url && <a href={c.url} target="_blank" rel="noopener">원문 ↗</a>} {c.query && <span>· 검색어 “{c.query}”</span>}</div>
         </div>
       )}

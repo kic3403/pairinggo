@@ -126,3 +126,20 @@ export async function partnerPlacesByName(query: string, limit = 5): Promise<Pla
       lat: Number(r.lat), lng: Number(r.lng), distanceKm: null, placeUrl: r.place_url ?? `https://place.map.kakao.com/${r.kakao_place_id}`,
     }));
 }
+
+/**
+ * 공개해도 되는 확인 정보 전부 — 운영자 확인 + 승인된 파트너 매장(가입 대기·거절 매장은 뺀다). 이 조합을 파는 식당 색인용(2026-09-27)
+ */
+export async function publicPlaceInfos(): Promise<{ id: string; name: string; info: PlaceInfo }[]> {
+  const sb = db();
+  if (!sb) return [];
+  const [p, m] = await Promise.all([
+    sb.from("place_info").select("*").limit(2000),
+    sb.from("merchants").select("kakao_place_id,name").eq("status", "approved"),
+  ]);
+  if (p.error || m.error) { console.warn("[place-info] public", p.error?.message ?? m.error?.message); return []; }
+  const approved = new Map((m.data ?? []).map((x) => [String(x.kakao_place_id), String(x.name ?? "")]));
+  return ((p.data ?? []) as Row[])
+    .filter((r) => r.source === "operator" || approved.has(r.kakao_id))
+    .map((r) => ({ id: r.kakao_id, name: approved.get(r.kakao_id) || r.name, info: toInfo(r) }));
+}

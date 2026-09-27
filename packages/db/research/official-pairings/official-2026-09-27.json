@@ -1,0 +1,25 @@
+{
+ "at": "2026-09-27T12:41:09.232Z",
+ "tally": {
+  "found": 1,
+  "none": 13,
+  "blocked": 66,
+  "skipped": 175,
+  "inserted": 0,
+  "dup": 0,
+  "unverified": 0
+ },
+ "usage": {
+  "input": 15682,
+  "output": 518,
+  "cacheRead": 24843,
+  "cacheWrite": 1911,
+  "calls": 14
+ },
+ "found": [],
+ "unknownFoods": {
+  "파스타": [
+   "어미실 청수 스위트"
+  ]
+ }
+}

@@ -1,7 +1,7 @@
 /**
  * 어드민 데이터 접근 — 후보 목록·대시보드 집계·승격·발행. service_role(db()) 사용.
  */
-import { buildReviewQueue, evidenceGaps, SRC_RANK, type SrcTier } from "@pairinggo/shared";
+import { buildReviewQueue, confidenceOf, evidenceGaps, SRC_RANK, type SrcTier } from "@pairinggo/shared";
 import { countPairBlog } from "./blog-count";
 import { db } from "./db";
 import { getCatalog, invalidateCatalog } from "./catalog";
@@ -12,7 +12,11 @@ export type CandidateRow = {
   suggested_tier: string | null; suggested_score: number | null; suggested_reason: string | null;
   origin: string; source_kind: string | null; query: string | null; mention_count: number; batch: string | null;
   status: string; review_note: string | null; created_at: string;
+  /** AI 1차 선별(0044, docs/26 §3-5) — yes면 ai_quote가 원문에서 확인된 인용 */
+  ai_verdict?: string | null; ai_quote?: string | null; ai_reason?: string | null; ai_note?: string | null; ai_basis?: string | null;
 };
+/** AI가 '어울린다는 말 없음'(no)·'두 이름이 가까이 안 나옴'(skip)으로 본 후보는 기본 목록에서 뺀다(되돌릴 수 있게 지우지는 않는다) */
+const NOT_NOISE = "ai_verdict.is.null,ai_verdict.not.in.(no,skip)";
 
 const need = () => { const sb = db(); if (!sb) throw new Error("Supabase 미설정 — 어드민은 DB가 필요합니다"); return sb; };
 
@@ -20,6 +24,7 @@ export async function listCandidates(opts: { status?: string; tier?: string; dri
   const sb = need();
   let q = sb.from("pairing_candidates").select("*").order("mention_count", { ascending: false }).order("created_at", { ascending: true }).limit(opts.limit ?? 60);
   q = q.eq("status", opts.status || "draft");
+  if ((opts.status || "draft") === "draft") q = q.or(NOT_NOISE);
   if (opts.tier) q = q.eq("suggested_tier", opts.tier);
   if (opts.drink) q = q.eq("drink_id", opts.drink);
   const { data, error } = await q;
@@ -42,10 +47,33 @@ export async function gapQueue(page = 0) {
   for (let from = 0; ; from += 1000) {
     const { data, error } = await sb.from("pairing_candidates").select("*").eq("status", "draft").or(ors).order("id").range(from, from + 999);
     if (error) throw new Error(error.message);
-    rows.push(...((data || []) as CandidateRow[]));
+    rows.push(...((data || []) as CandidateRow[]).filter((r) => r.ai_verdict !== "no" && r.ai_verdict !== "skip"));
     if (!data || data.length < 1000 || rows.length >= 20000) break;
   }
   return { ...buildReviewQueue(rows, gaps, { page }), gapDrinks: gaps.drinks.size, gapFoods: gaps.foods.size };
+}
+
+/**
+ * AI 확인 목록(2026-09-27, docs/26 §3-5) — AI가 "어울린다"고 보고 인용문이 원문에 글자 그대로 있는 draft 후보.
+ * 순서: 양조장 공식 페이지 → 공개 카탈로그에서 아직 근거가 없는(추정) 조합 → 근거가 약한 조합 → 언급 많은 순. 50장씩.
+ */
+export async function aiQueue(page = 0) {
+  const sb = need();
+  const rows: CandidateRow[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await sb.from("pairing_candidates").select("*").eq("status", "draft").eq("ai_verdict", "yes").order("id").range(from, from + 999);
+    if (error) throw new Error(error.message);
+    rows.push(...((data || []) as CandidateRow[]));
+    if (!data || data.length < 1000) break;
+  }
+  const c = await getCatalog();
+  const conf = new Map(c.dataset.pairings.map((p) => [`${p.d}|${p.f}`, confidenceOf(p)]));
+  const rank = (r: CandidateRow) => {
+    const k = conf.get(`${r.drink_id}|${r.food_id}`);
+    return (r.source_kind === "brewery" ? 0 : 10) + (k == null || k === "estimate" ? 0 : k === "weak" ? 1 : 2);
+  };
+  rows.sort((a, b) => rank(a) - rank(b) || (b.mention_count || 0) - (a.mention_count || 0) || a.id - b.id);
+  return { items: rows.slice(page * 50, page * 50 + 50), total: rows.length };
 }
 
 export async function dashboard() {
@@ -99,7 +127,7 @@ export async function promote(input: { candidateId: number; score: number; tier:
   let duplicated = false;
   if (c.url) { const { count: same } = await sb.from("pairing_evidence").select("id", { count: "exact", head: true }).eq("pairing_id", pairingId).eq("url", c.url); duplicated = (same || 0) > 0; }
   if (!duplicated) {
-    const { error: e2 } = await sb.from("pairing_evidence").insert({ pairing_id: pairingId, source: c.source_name, url: c.url, quote: c.quote, who: input.who, tier: input.tier, source_id: c.source_id, captured_at: new Date().toISOString() });
+    const { error: e2 } = await sb.from("pairing_evidence").insert({ pairing_id: pairingId, source: c.source_name, url: c.url, quote: c.ai_verdict === "yes" && c.ai_quote ? c.ai_quote : c.quote, who: input.who, tier: input.tier, source_id: c.source_id, captured_at: new Date().toISOString() });
     if (e2) throw new Error(e2.message);
   }
   // 근거 2개 이상이면 curated 승격

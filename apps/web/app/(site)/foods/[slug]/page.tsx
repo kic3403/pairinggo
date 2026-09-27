@@ -11,6 +11,7 @@ import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, drinkHref, type CardItem } from "../../_components/PairingCards";
+import { comboPlaces } from "@/lib/combo-places";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
@@ -57,10 +58,11 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
 
   const rows = byFood[food.id] || [];
   const scored = scorePairings(rows, (p) => D[p.d]?.category || "");
+  const combos = await comboPlaces();
   const items: CardItem[] = scored.map((s) => {
     const drink = D[s.p.d];
     const sub = [drink?.category, drink?.abv != null ? `${drink.abv}%` : null, drink?.region].filter(Boolean).join(" · ");
-    return { href: drinkHref(drink?.name || s.p.d), name: drink?.name || s.p.d, sub, grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p };
+    return { href: drinkHref(drink?.name || s.p.d), name: drink?.name || s.p.d, sub, grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p, places: combos.get(`${s.p.d}|${s.p.f}`) };
   });
 
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);

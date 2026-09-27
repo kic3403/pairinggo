@@ -9,7 +9,7 @@ import GradeBadge from "./GradeBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
 import ProfileChart from "./ProfileChart";
-import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, confidenceOf, confidenceText, pickOf, toSlug, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
+import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, confidenceOf, confidenceText, pickOf, toSlug, type ComboPlace, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -19,6 +19,8 @@ export type CardItem = {
   grade: Grade;
   explain: string;
   pairing: Pairing;
+  /** 이 조합(술+음식)을 함께 파는 확인된 매장(2026-09-27, lib/combo-places.ts) — 근거가 아니라 실제 판매 맥락 */
+  places?: ComboPlace[];
 };
 
 /** 묶음(전문가픽·대중픽·맛 분석)별 카드 수 — 탭 숫자용 */
@@ -32,7 +34,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
   if (!items.length) return <p className="muted">아직 등록된 페어링이 없습니다.</p>;
   return (
     <ul className="cards">
-      {items.map(({ href, name, sub, grade, explain, pairing: p }) => {
+      {items.map(({ href, name, sub, grade, explain, pairing: p, places }) => {
         const pick = pickOf(p.src);
         const isDrinkCard = href.startsWith("/drinks");
         const { points, cautions } = cardSummary(p);
@@ -54,6 +56,13 @@ export function PairingCards({ items }: { items: CardItem[] }) {
               </ul>
             )}
             {profile && <div className="pline-solo"><ProfileChart kind={isDrinkCard ? "drink" : "food"} profile={profile} /></div>}
+            {places && places.length > 0 && (
+              <p className="sold-at">
+                <span className="sold-label">함께 파는 곳{places.length > 1 ? ` ${places.length}곳` : ""}</span>
+                {places.slice(0, 3).map((pl, i) => <span key={pl.id}>{i > 0 && " · "}<Link href={`/places/${encodeURIComponent(pl.id)}?n=${encodeURIComponent(pl.name)}`}>{pl.name}</Link></span>)}
+                {places.length > 3 && <span className="muted"> 외 {places.length - 3}곳</span>}
+              </p>
+            )}
             {p.reason && <details className="more"><summary>자세히</summary><p className="why">{p.reason}</p></details>}
             {p.ev?.quote && (
               <blockquote className="quote">

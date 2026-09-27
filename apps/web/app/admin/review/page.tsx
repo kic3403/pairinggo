@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
-import { gapQueue, listCandidates } from "@/lib/admin-data";
+import { aiQueue, gapQueue, listCandidates } from "@/lib/admin-data";
 import { getCatalog } from "@/lib/catalog";
 import ReviewList, { type Card } from "./ReviewList";
 
@@ -12,10 +12,12 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
   const sp = await searchParams;
   const status = sp.status || "draft";
   // 기본 화면 = 근거 빈칸 대기열(docs/20 P2-1). 등급·술 필터나 다른 상태를 고르면 기존 '언급 많은 순' 목록
-  const gapView = status === "draft" && !sp.tier && !sp.drink && sp.view !== "all";
+  const aiView = status === "draft" && !sp.tier && !sp.drink && sp.view === "ai";
+  const gapView = status === "draft" && !sp.tier && !sp.drink && sp.view !== "all" && !aiView;
   const page = Math.max(0, Number(sp.page) || 0);
   const queue = gapView ? await gapQueue(page) : null;
-  const rows = queue ? queue.items.map((q) => q.item) : await listCandidates({ status, tier: sp.tier, drink: sp.drink, limit: 80 });
+  const ai = aiView ? await aiQueue(page) : null;
+  const rows = queue ? queue.items.map((q) => q.item) : ai ? ai.items : await listCandidates({ status, tier: sp.tier, drink: sp.drink, limit: 80 });
   const meta = new Map(queue?.items.map((q) => [q.item.id, q]) ?? []);
   const c = await getCatalog();
   const D = new Map(c.dataset.drinks.map((d) => [d.id, d])), F = new Map(c.dataset.foods.map((f) => [f.id, f]));
@@ -31,15 +33,23 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
     gap: meta.get(r.id)?.gap ?? null,
   }));
   const link = (k: string, v: string | undefined) => { const q = new URLSearchParams({ status, ...(sp.tier ? { tier: sp.tier } : {}), ...(sp.drink ? { drink: sp.drink } : {}), ...(sp.view ? { view: sp.view } : {}) }); if (v) q.set(k, v); else q.delete(k); if (k !== "page") q.delete("page"); return `/admin/review?${q}`; };
-  const pages = queue ? Math.ceil(queue.totalPairs / 50) : 0;
+  const pages = queue ? Math.ceil(queue.totalPairs / 50) : ai ? Math.ceil(ai.total / 50) : 0;
+  const paged = queue ?? ai;
   return (
     <>
-      <h2 style={{ margin: "0 0 8px" }}>검수 {queue ? <span className="muted">근거 빈칸 우선 · {page + 1}/{Math.max(pages, 1)}쪽 · {rows.length}장</span> : <span className="muted">{rows.length}건 · 언급 많은 순</span>}</h2>
+      <h2 style={{ margin: "0 0 8px" }}>검수 {queue ? <span className="muted">근거 빈칸 우선 · {page + 1}/{Math.max(pages, 1)}쪽 · {rows.length}장</span> : ai ? <span className="muted">AI 확인 {ai.total.toLocaleString()}건 · {page + 1}/{Math.max(pages, 1)}쪽</span> : <span className="muted">{rows.length}건 · 언급 많은 순</span>}</h2>
       {status === "draft" && !sp.tier && !sp.drink && (
         <div className="filters">
           <Link href="/admin/review" className={gapView ? "on" : ""}>근거 빈칸 우선</Link>
-          <Link href="/admin/review?view=all" className={!gapView ? "on" : ""}>전체 (언급 많은 순)</Link>
+          <Link href="/admin/review?view=ai" className={aiView ? "on" : ""}>AI 확인</Link>
+          <Link href="/admin/review?view=all" className={!gapView && !aiView ? "on" : ""}>전체 (언급 많은 순)</Link>
         </div>
+      )}
+      {ai && (
+        <p className="muted" style={{ marginBottom: 8 }}>
+          Claude가 원문을 읽고 “이 술과 이 음식이 어울린다”고 말한다고 본 후보예요. 인용문은 원문(또는 검색 요약)에 글자 그대로 있는 것만 남겼고, 승인하면 그 인용이 근거로 들어갑니다.
+          양조장 공식 페이지 → 아직 근거가 없는 조합 → 근거가 약한 조합 순. 원문 링크를 열어 확인한 뒤 승인해 주세요. AI가 “말 없음”으로 본 후보는 다른 목록에서도 빠져 있어요.
+        </p>
       )}
       {queue && (
         <p className="muted" style={{ marginBottom: 8 }}>
@@ -55,7 +65,7 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
       </div>
       <p className="muted" style={{ marginBottom: 10 }}>단축키 <span className="kbd">A</span> 승인 · <span className="kbd">R</span> 거절 · <span className="kbd">S</span> 건너뛰기 · <span className="kbd">↑↓</span> 이동. 승인 규칙: official/sommelier 1개 또는 근거 2개 이상이면 바로 게시(curated), 아니면 pending.</p>
       <ReviewList cards={cards} />
-      {queue && pages > 1 && (
+      {paged && pages > 1 && (
         <div className="row" style={{ marginTop: 12, justifyContent: "center" }}>
           {page > 0 && <Link className="btn" href={link("page", String(page - 1))}>← 이전 50장</Link>}
           <Link className="btn" href={link("page", String(page))}>새로고침 (처리한 카드 빼고 다시)</Link>

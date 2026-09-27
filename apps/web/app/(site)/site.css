@@ -528,6 +528,9 @@ p { margin: 0 0 12px; }
 .pchart.f b { color: var(--navy-ink); }
 .pc-col b { font-size: 11.5px; color: var(--ink2); font-variant-numeric: tabular-nums; line-height: 1; }
 .pc-label { font-size: 10.5px; color: var(--muted); line-height: 1.15; text-align: center; word-break: keep-all; }
+.card .sold-at { margin: 6px 0 0; font-size: 12.5px; color: var(--ink2); line-height: 1.5; }
+.card .sold-at .sold-label { display: inline-block; margin-right: 6px; padding: 1px 7px; border-radius: 999px; background: var(--navy-soft, #eef1f8); color: var(--navy-ink, var(--navy)); font-weight: 600; font-size: 11.5px; }
+.card .sold-at a { color: var(--navy-ink, var(--navy)); text-decoration: underline; text-underline-offset: 2px; }
 .card .more { margin: 6px 0 0; }
 .card .more summary { font-size: 12.5px; color: var(--navy); cursor: pointer; }
 .card .more .why { margin-top: 4px; }

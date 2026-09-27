@@ -1,0 +1,25 @@
+{
+ "at": "2026-09-27T12:35:31.829Z",
+ "model": null,
+ "groups": 200,
+ "basis": {
+  "page": 147,
+  "snippet": 53
+ },
+ "tally": {
+  "yes": 0,
+  "no": 0,
+  "unclear": 86,
+  "skip": 215,
+  "unreadable": 0,
+  "error": 0
+ },
+ "usage": {
+  "input": 0,
+  "output": 0,
+  "cacheRead": 0,
+  "cacheWrite": 0,
+  "calls": 0
+ },
+ "samples": []
+}

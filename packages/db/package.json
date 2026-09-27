@@ -39,6 +39,8 @@
     "specs-import": "tsx src/specs-import.ts",
     "datago": "tsx src/datago.ts",
     "evidence-check": "tsx --env-file=../../apps/web/.env.local src/evidence-check.ts",
+    "evidence-mine": "tsx --env-file=../../apps/web/.env.local src/evidence-mine.ts",
+    "official-pairings": "tsx --env-file=../../apps/web/.env.local src/official-pairings.ts",
     "blog-lift": "tsx src/blog-lift.ts",
     "estimate-caps": "tsx src/estimate-caps.ts"
   },

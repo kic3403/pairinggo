@@ -76,7 +76,7 @@ const KIND_WORDS: Record<string, string[]> = {
 };
 
 /** 메뉴 이름에 목표 이름이 들어 있나 — "해물파전(대)"는 "해물파전", "한산소곡주 700ml"은 "한산소곡주". 두 글자 미만은 비교하지 않는다 */
-function hasName(menu: string, names: string[]): boolean {
+export function menuHasName(menu: string, names: string[]): boolean {
   const m = normMenu(menu);
   if (m.length < 2) return false;
   return names.some((n) => { const t = normMenu(n); return t.length >= 2 && (m === t || m.includes(t)); });
@@ -100,7 +100,7 @@ export function placeMatch(info: PlaceInfo | null | undefined, t: PlaceMatchTarg
   // 술
   let drink: PlaceMatch["drink"] = null, drinkName: string | null = null;
   if (t.drink) {
-    if (info.drinks?.includes(t.drink.id) || drinkTexts.some((x) => hasName(x, [t.drink!.name]))) {
+    if (info.drinks?.includes(t.drink.id) || drinkTexts.some((x) => menuHasName(x, [t.drink!.name]))) {
       drink = "exact"; drinkName = t.drink.name;
     } else {
       const sameKind = (info.drinks ?? []).map((id) => t.drinkCatalog.get(id)).find((d) => d && d.category === t.drink!.category);
@@ -113,12 +113,12 @@ export function placeMatch(info: PlaceInfo | null | undefined, t: PlaceMatchTarg
   // 음식
   let food: PlaceMatch["food"] = null, foodName: string | null = null;
   const shown = (x: string) => x.replace(/\([^)]*\)|\[[^\]]*\]/g, "").trim();
-  if ((t.food.id && info.foods?.includes(t.food.id)) || menuTexts.some((x) => hasName(x, [t.food.name]))) { food = "exact"; foodName = t.food.name; }
+  if ((t.food.id && info.foods?.includes(t.food.id)) || menuTexts.some((x) => menuHasName(x, [t.food.name]))) { food = "exact"; foodName = t.food.name; }
   else {
     const simIds = new Set(t.similarFoods.map((s) => s.id));
     const byId = (info.foods ?? []).find((id) => simIds.has(id));
     const simWords = [...t.similarFoods.map((s) => s.name), ...(t.food.alias ?? [])];
-    const byText = byId ? undefined : menuTexts.find((x) => hasName(x, simWords));
+    const byText = byId ? undefined : menuTexts.find((x) => menuHasName(x, simWords));
     if (byId || byText) { food = "similar"; foodName = byId ? t.similarFoods.find((s) => s.id === byId)?.name ?? null : shown(byText!); }
   }
 

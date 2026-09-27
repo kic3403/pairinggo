@@ -15,6 +15,7 @@ import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, foodHref, type CardItem } from "../../_components/PairingCards";
+import { comboPlaces } from "@/lib/combo-places";
 import ExtLink from "../../_components/ExtLink";
 import BuyBox from "../../_components/BuyBox";
 import Heart from "../../_components/Heart";
@@ -67,10 +68,11 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
   const rows = byDrink[drink.id] || [];
   const scored = scorePairings(rows, (p) => F[p.f]?.category || "");
+  const combos = await comboPlaces();
   const items: CardItem[] = scored.map((s) => {
     const food = F[s.p.f];
     // 음식 화면으로 넘어갈 때 이 술을 들고 간다(?d=) — 맛집 목록이 이 술과 그 음식을 함께 파는 식당을 먼저 보여 준다
-    return { href: `${foodHref(food?.name || s.p.f)}?d=${drink.id}`, name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p };
+    return { href: `${foodHref(food?.name || s.p.f)}?d=${drink.id}`, name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p, places: combos.get(`${s.p.d}|${s.p.f}`) };
   });
 
   const bl = buyLink(drink);
