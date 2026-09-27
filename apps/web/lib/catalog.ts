@@ -56,7 +56,7 @@ async function fromDb(): Promise<Catalog | null> {
     // pending(검수 중)·hidden 제외
     selectAll<Row>("pairings", (f, t) => sb.from("pairings").select("*").in("status", ["curated", "ai"]).order("id").range(f, t)),
     // TODO: 페어링당 첫 근거만 쓰는데 전체를 받아온다 — 뷰(distinct on pairing_id)를 만들면 전송량이 줄어든다
-    selectAll<EvidenceRow>("pairing_evidence", (f, t) => sb.from("pairing_evidence").select("pairing_id,source,url,quote,who,tier").order("id").range(f, t)),
+    selectAll<EvidenceRow>("pairing_evidence", (f, t) => sb.from("pairing_evidence").select("pairing_id,source,url,quote,who,tier,link_status,fail_count").order("id").range(f, t)),
     // 규격·참고가격(0035) — 표가 아직 없는 DB면 빈 목록(카탈로그 전체가 정적 폴백으로 떨어지지 않게)
     selectAll<Row>("drink_specs", (f, t) => sb.from("drink_specs").select("*").order("id").range(f, t)).catch(() => [] as Row[]),
     selectAll<Row>("drink_prices", (f, t) => sb.from("drink_prices").select("*").eq("valid", true).order("id").range(f, t)).catch(() => [] as Row[]),

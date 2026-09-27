@@ -36,3 +36,47 @@ export function pickBlogCount(totals: (number | null | undefined)[]): number | n
   const ok = totals.filter((t): t is number => typeof t === "number" && Number.isFinite(t) && t >= 0);
   return ok.length ? Math.max(...ok) : null;
 }
+
+/**
+ * 대중 언급 lift(2026-09-27, docs/26 §3-3) — "이 술 글에서 그 음식이 나오는 비율"을 "같은 종류 술 글 전체에서 그 음식이 나오는 비율"로 나눈 값의 백분위(0~1).
+ * 왜: 조합 언급 수는 두 낱말이 한 글에 같이 나온 수라 흔한 이름일수록 커지고, 네이버 API는 따옴표 구절 검색을 무시해 이름을 쪼개 읽는다
+ *   (신선막걸리 × 감자전 59,190 = '신선'+'막걸리'+'감자전' — 실측 "신선막걸리"와 신선막걸리가 같은 554,128).
+ *   술 이름 단독 수로 나누면 인기 차이가, 같은 종류 기준(막걸리 × 감자전 ÷ 막걸리)으로 나누면 "막걸리는 원래 전과 잘 붙는다"는 종류 전체의 연관이 빠져
+ *   그 술만의 연관만 남는다.
+ * 규칙: 언급 3건 미만은 0(우연). ln((언급+1)/(술 단독+100)) − ln((종류 언급+1)/(종류 단독+100)) → 언급 3건 이상 조합 전체의 백분위.
+ *   단독 수·종류 기준을 모르면 null(점수는 옛 로그 눈금으로 대신). 조합 언급이 술 단독 수의 절반을 넘으면 이름이 쪼개져 생긴 잡음으로 보고 null
+ *   (실측: 오디랑 × 라멘 199 / 오디랑 202 — '오디'·'랑'으로 읽힘).
+ */
+export const LIFT_MIN_MENTIONS = 3;
+export const LIFT_MAX_SHARE = 0.5;
+/** 종류 기준 낱말 — 술 종류마다 블로그에서 가장 흔히 쓰는 말 */
+export function blogBaseWord(d: { kind?: string | null; category?: string | null }): string {
+  const k = d.kind ?? "trad", c = d.category ?? "";
+  if (k === "whisky") return "위스키";
+  if (k === "sake") return "사케";
+  if (k === "wine") return "와인";
+  if (/탁주|막걸리|동동주/.test(c)) return "막걸리";
+  if (/약주|청주/.test(c)) return "약주";
+  if (/증류|소주/.test(c)) return "소주";
+  if (/과실|와인/.test(c)) return "와인";
+  return "전통주";
+}
+export function liftScores(rows: { id: string | number; pair: number; drinkTotal: number | null; basePair: number | null; baseTotal: number | null }[]): Map<string | number, number | null> {
+  const out = new Map<string | number, number | null>();
+  const scored: { id: string | number; v: number }[] = [];
+  for (const r of rows) {
+    if (!(r.pair >= LIFT_MIN_MENTIONS)) { out.set(r.id, 0); continue; }
+    if (r.drinkTotal == null || r.basePair == null || r.baseTotal == null || r.pair > r.drinkTotal * LIFT_MAX_SHARE) { out.set(r.id, null); continue; }
+    scored.push({ id: r.id, v: Math.log((r.pair + 1) / (r.drinkTotal + 100)) - Math.log((r.basePair + 1) / (r.baseTotal + 100)) });
+  }
+  const sorted = [...scored].sort((a, b) => a.v - b.v);
+  const n = sorted.length;
+  let i = 0;
+  while (i < n) {
+    let j = i; while (j + 1 < n && sorted[j + 1].v === sorted[i].v) j++;
+    const pct = Math.round(((j + 1) / n) * 1000) / 1000;
+    for (let k = i; k <= j; k++) out.set(sorted[k].id, pct);
+    i = j + 1;
+  }
+  return out;
+}

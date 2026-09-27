@@ -10,6 +10,8 @@ export * from "./pairing/blog-count";
 export * from "./pairing/pick";
 export * from "./pairing/ratings";
 export * from "./pairing/confidence";
+export * from "./pairing/evidence-check";
+export * from "./pairing/estimate-caps";
 export * from "./pairing/today";
 export * from "./pairing/member";
 export * from "./pairing/drink-review";

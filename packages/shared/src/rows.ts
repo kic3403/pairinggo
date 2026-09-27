@@ -4,6 +4,7 @@
  */
 import type { Dataset, Drink, DrinkKind, DrinkSpec, Food, Pairing, PairingServe, SpecPrice, SrcTier } from "./types";
 import { evidenceStats } from "./pairing/confidence";
+import { evidenceFactor } from "./pairing/evidence-check";
 
 const KIND_IDS: string[] = ["trad", "whisky", "sake", "wine"];
 const SERVES: string[] = ["neat", "rocks", "highball", "warm", "cold"];
@@ -63,7 +64,9 @@ export function foodFromRow(r: Row): Food {
   };
 }
 export function pairingFromRow(r: Row): Pairing {
-  const ev = Array.isArray(r.evidence) && r.evidence.length ? r.evidence[0] : null;
+  // 대표 근거 — 2번 연속 죽은 링크는 건너뛴다(검증 크론, 2026-09-27). 살아 있는 게 없으면 첫 줄
+  const evs = Array.isArray(r.evidence) ? r.evidence : [];
+  const ev = evs.find((e: { link_status?: string; fail_count?: number }) => evidenceFactor(e) > 0) ?? evs[0] ?? null;
   return {
     d: r.drink_id, f: r.food_id, es: r.expert_score, reason: r.reason || "", blog: r.blog_count || 0,
     src: (r.source_tier || "profile") as SrcTier,
@@ -71,6 +74,7 @@ export function pairingFromRow(r: Row): Pairing {
     pf: r.profile_score || undefined,
     ...(r.serve && SERVES.includes(r.serve) ? { serve: r.serve as PairingServe } : {}),
     ...(r.checked_on ? { checked: String(r.checked_on).slice(0, 10) } : {}),
+    ...(r.blog_lift != null ? { bl: Math.round(Number(r.blog_lift) * 1000) / 1000 } : {}),
     ...(() => { const s = evidenceStats(Array.isArray(r.evidence) ? r.evidence : [], (r.source_tier || "profile") as SrcTier); return s.n ? { evn: s.n, evs: s.e } : {}; })(),
   };
 }

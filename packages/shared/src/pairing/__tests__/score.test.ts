@@ -23,7 +23,14 @@ describe("근거 신뢰도(2026-09-27)", () => {
   it("강도 — 같은 출처 두 줄은 한 번, 등급 무게를 더한다", () => {
     expect(evidenceStats([{ url: "https://thesool.com/a", tier: "official" }, { url: "https://thesool.com/b", tier: "official" }])).toEqual({ n: 1, e: 1 });
     // 대중 출처는 가장 센 하나만 온전히, 나머지는 절반 — 매체 0.6 + 블로그 0.15 + 블로그 0.15
-    expect(evidenceStats([{ url: "https://sooldamhwa.com/x", tier: "media" }, { url: "https://blog.naver.com/a/1", tier: "blog" }, { url: "https://blog.naver.com/b/2", tier: "blog" }])).toEqual({ n: 3, e: 0.9 });
+    expect(evidenceStats([{ url: "https://news.example.com/x", tier: "media" }, { url: "https://blog.naver.com/a/1", tier: "blog" }, { url: "https://blog.naver.com/b/2", tier: "blog" }])).toEqual({ n: 3, e: 0.9 });
+    // 판매처 큐레이션(술담화 등)은 매체라도 0.4
+    expect(evidenceStats([{ url: "https://www.sooldamhwa.com/x", tier: "media" }])).toEqual({ n: 1, e: 0.4 });
+    expect(evidenceStats([{ url: "https://www.sooldamhwa.com/x", tier: "official" }])).toEqual({ n: 1, e: 1 });   // 양조장 발언으로 검수된 인용은 그대로
+    // 검증 — 2번 연속 죽은 링크는 세지 않고, 인용문이 2번 연속 없으면 절반
+    expect(evidenceStats([{ url: "https://brew.com/1", tier: "official", link_status: "dead", fail_count: 2 }])).toEqual({ n: 0, e: 0 });
+    expect(evidenceStats([{ url: "https://brew.com/1", tier: "official", link_status: "dead", fail_count: 1 }])).toEqual({ n: 1, e: 1 });
+    expect(evidenceStats([{ url: "https://brew.com/1", tier: "official", link_status: "quote_missing", fail_count: 2 }])).toEqual({ n: 1, e: 0.5 });
     // 보도자료 하나를 옮겨 쓴 매체 3곳 + 양조장 공식 1 → 1 + 0.6 + 0.3 + 0.3
     expect(evidenceStats([{ url: "https://ziksir.com/1", tier: "official" }, { url: "https://theviewers.co.kr/2", tier: "media" }, { url: "https://eroun.net/3", tier: "media" }, { url: "https://ksilbo.co.kr/4", tier: "media" }])).toEqual({ n: 4, e: 2.2 });
     expect(evidenceStats([{ url: "https://a.com/1", tier: "media" }, { url: "https://b.com/2", tier: "media" }])).toEqual({ n: 2, e: 0.9 });   // 매체 2곳은 아직 근거 약함

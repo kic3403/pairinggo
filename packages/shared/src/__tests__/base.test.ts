@@ -6,10 +6,10 @@ import { estimateRegion, REGIONS, RBY, subRegions, fullLabel } from "../regions"
 import { similarDrinks, similarFoods, profileDistance } from "../similarity";
 
 describe("데이터 무결성", () => {
-  it("전통주 557 · 음식 143 · 페어링 4,840 (2026-09-24 주류대상 2022~2023 수상작 +39종, docs/11 §5-9)", () => {
+  it("전통주 557 · 음식 143 · 페어링 4,088 (2026-09-27 추정 조합 상한으로 752건 숨김, docs/26 §3-3 — 이전 4,840)", () => {
     expect(DATA.drinks).toHaveLength(557);
     expect(DATA.foods).toHaveLength(143);
-    expect(DATA.pairings).toHaveLength(4840);
+    expect(DATA.pairings).toHaveLength(4088);
   });
   it("모든 페어링이 존재하는 술·음식을 가리킨다", () => {
     for (const p of DATA.pairings) { expect(D[p.d], p.d).toBeDefined(); expect(F[p.f], p.f).toBeDefined(); }

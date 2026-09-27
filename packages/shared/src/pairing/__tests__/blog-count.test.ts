@@ -39,3 +39,34 @@ describe("조합 언급 수는 이름 단독 언급 수를 넘지 못한다", ()
     expect(capByNameTotal(500, null)).toBe(500);   // 이름 검색이 실패하면 그대로
   });
 });
+
+describe("대중 언급 lift(2026-09-27)", () => {
+  it("종류 평균보다 유난히 같이 나오는 조합이 위 — 흔한 이름·종류 전체 연관은 빠진다", async () => {
+    const { liftScores } = await import("../blog-count");
+    const base = { basePair: 278_760, baseTotal: 5_475_212 };   // 막걸리 × 해물파전 ÷ 막걸리 ≈ 5.1%
+    const m = liftScores([
+      { id: "common", pair: 45_575, drinkTotal: 554_128, ...base },   // 신선막걸리: 8.2% — 종류 평균의 1.6배
+      { id: "specific", pair: 900, drinkTotal: 3_000, ...base },      // 이 술 글의 30%에 파전 — 종류 평균의 6배
+      { id: "below", pair: 1_734, drinkTotal: 52_741, ...base },      // 3.3% — 종류 평균보다 낮다
+      { id: "few", pair: 2, drinkTotal: 100, ...base },
+      { id: "unknown", pair: 50, drinkTotal: null, ...base },
+      { id: "split", pair: 199, drinkTotal: 202, ...base },          // 오디랑 × 라멘 — 이름이 쪼개진 잡음
+    ]);
+    expect(m.get("specific")).toBe(1);
+    expect(m.get("common")).toBeCloseTo(0.667, 3);
+    expect(m.get("below")).toBeCloseTo(0.333, 3);
+    expect(m.get("few")).toBe(0);
+    expect(m.get("unknown")).toBeNull();
+    expect(m.get("split")).toBeNull();
+  });
+  it("종류 기준 낱말", async () => {
+    const { blogBaseWord } = await import("../blog-count");
+    expect(blogBaseWord({ category: "탁주" })).toBe("막걸리");
+    expect(blogBaseWord({ category: "약주" })).toBe("약주");
+    expect(blogBaseWord({ category: "증류주" })).toBe("소주");
+    expect(blogBaseWord({ category: "과실주" })).toBe("와인");
+    expect(blogBaseWord({ kind: "whisky", category: "싱글몰트" })).toBe("위스키");
+    expect(blogBaseWord({ category: "리큐르" })).toBe("전통주");
+  });
+});
+

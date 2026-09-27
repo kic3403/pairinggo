@@ -9,28 +9,11 @@
  */
 import { blogCountNames, blogNameUsable, capByNameTotal, pickBlogCount } from "@pairinggo/shared";
 import { connect } from "./sql";
+import { naverConfigured, naverTotal } from "./naver-blog";
 
 const all = process.argv.includes("--all");
 const dry = process.argv.includes("--dry");
-const HUB_ID = process.env.NCP_API_KEY_ID, HUB_KEY = process.env.NCP_API_KEY;
-const NID = process.env.NAVER_CLIENT_ID, NSEC = process.env.NAVER_CLIENT_SECRET;
-if (!(HUB_ID && HUB_KEY) && !(NID && NSEC)) { console.error("[blog-counts] 네이버 검색 키가 없습니다 (packages/db/.env NCP_API_KEY_ID/NCP_API_KEY)."); process.exit(2); }
-
-async function naverTotal(query: string): Promise<number | null> {
-  const qs = `query=${encodeURIComponent(query)}&display=1`;
-  const url = HUB_ID && HUB_KEY ? `https://naverapihub.apigw.ntruss.com/search/v1/blog?${qs}` : `https://openapi.naver.com/v1/search/blog.json?${qs}`;
-  const headers: Record<string, string> = HUB_ID && HUB_KEY ? { "X-NCP-APIGW-API-KEY-ID": HUB_ID, "X-NCP-APIGW-API-KEY": HUB_KEY } : { "X-Naver-Client-Id": NID!, "X-Naver-Client-Secret": NSEC! };
-  for (let i = 0; i < 4; i++) {
-    try {
-      const r = await fetch(url, { headers, signal: AbortSignal.timeout(10000) });
-      if (r.status === 429 || r.status >= 500) { await new Promise((s) => setTimeout(s, 800 * (i + 1))); continue; }
-      if (!r.ok) { console.warn(`  [naver ${r.status}] ${query}`); return null; }
-      const j = (await r.json()) as { total?: number };
-      return typeof j.total === "number" ? j.total : null;
-    } catch { await new Promise((s) => setTimeout(s, 800 * (i + 1))); }
-  }
-  return null;
-}
+if (!naverConfigured()) { console.error("[blog-counts] 네이버 검색 키가 없습니다 (packages/db/.env NCP_API_KEY_ID/NCP_API_KEY)."); process.exit(2); }
 
 const sql = connect();
 try {
