@@ -1,0 +1,3226 @@
+{
+ "at": "2026-09-27T12:47:46.023Z",
+ "model": "claude-opus-5",
+ "groups": 7904,
+ "basis": {
+  "page": 6184,
+  "snippet": 1720
+ },
+ "tally": {
+  "yes": 63,
+  "no": 612,
+  "unclear": 81,
+  "skip": 4380,
+  "unreadable": 18,
+  "error": 6318
+ },
+ "usage": {
+  "input": 524990,
+  "output": 52558,
+  "cacheRead": 676035,
+  "cacheWrite": 7470,
+  "calls": 549
+ },
+ "samples": [
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://jeonjiho.tistory.com/537"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://gummyjelly.tistory.com/47"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://seoksan9.tistory.com/17959140"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://boringstella.tistory.com/326"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "순대",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://boringstella.tistory.com/326"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/e_seo105/223355594866"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/zzzisunny/223839238467"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "육전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/zzzisunny/223839238467"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/cherrypach/170469"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "대게찜",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/cherrypach/170469"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "바지락칼국수",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://parkground.tistory.com/576"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "참치회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://parkground.tistory.com/576"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/infiniteff/119835"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://dhgold88.tistory.com/208"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/hee11974/982494"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/rsmsuv/52203"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/b00k2012/1095779"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": "안주를 진짜 잘 한다구 해서 기대했는데 진짜 파전이랑 김치찌개가 식당해도 될 거 같이 넘...",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/b00k2012/1095779"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "김치찌개",
+   "quote": "안주를 진짜 잘 한다구 해서 기대했는데 진짜 파전이랑 김치찌개가 식당해도 될 거 같이 넘...",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/b00k2012/1095779"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/goodfriendfood/56943"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/fpvofeveryone/33427"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "다크초콜릿",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/fpvofeveryone/33427"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/pinkjzsvd/160958"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/daesgeoricom/170702"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/bablove/77188"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/indiacorea/17975"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://ma-ri-mo.tistory.com/1519"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": "그리고 예쁜 딸기막걸리를 주문했어요~^^ 파전엔 막걸리가 필수죠!",
+   "note": "AI: 판단 어려움",
+   "url": "https://ma-ri-mo.tistory.com/1519"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "떡볶이",
+   "quote": "매콤한 떡볶이가 너무 맛있었답니다 ㅎㅎㅎ",
+   "note": "AI: 판단 어려움",
+   "url": "https://ma-ri-mo.tistory.com/1519"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/cherrypach/170468"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "육회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/cherrypach/170468"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "대게찜",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/cherrypach/170468"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/zilioner/168019"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ggggggt/118504"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/themukja/1684243"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/makemywedding/418139"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": "막걸리 가져와야쥬~~ 큰딸래미가 아까 외출했다 사온 딸기랑",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/truecj/331360"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "후라이드치킨",
+   "quote": "솜리치킨 아세요? 안주로 먹어봐야 서너조각 먹고말지만 바삭바삭 한거 좋아해요.",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/truecj/331360"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/yunzinseok/76028"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "다크초콜릿",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/yunzinseok/76028"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/donight/420635"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "육회",
+   "quote": "두레앙 다먹고 딸기막걸리 하나더 시켯는데 저거로 입가심했습니다 심도는 그냥 육회김밥과파스타가 진리고요",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/donight/420635"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/om0322/50870"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/no1cheonan/3872016"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "두부김치",
+   "quote": "막걸리 안주 요 막걸리도 사왔고요 막걸리엔 두부김치죠",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/no1cheonan/3872016"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/urisoolschool/5165"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/miznett/3768227"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "두부김치",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/miznett/3768227"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/b00k2012/1552493"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/14541"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/susook/6653"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/altimauser/38021"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/altimauser/38021"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/021/0002740789?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.kbanker.co.kr/news/articleView.html?idxno=221235"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/recallfam/108155"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": "막걸리데이 안주는 해물파전이랑 차돌육개장칼국수였는데 칼국수는 진짜진짜 대따 제취저,,❤ 꿀막걸리 먹고 수제 딸기막걸리 먹어봤는데",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/recallfam/108155"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "바지락칼국수",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/recallfam/108155"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "육개장",
+   "quote": "막걸리데이 안주는 해물파전이랑 차돌육개장칼국수였는데 칼국수는 진짜진짜 대따 제취저,,❤",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/recallfam/108155"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.dandinews.com/news/articleView.html?idxno=14077"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.idomin.com/news/articleView.html?idxno=924985"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/008/0004984237?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://sjbnews.com/news/news.php?number=817485"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.jjn.co.kr/news/articleView.html?idxno=973447"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.jeollailbo.com/news/articleView.html?idxno=733281"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.shinailbo.co.kr/news/articleView.html?idxno=1883164"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/082/0001200362?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "보쌈",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/082/0001200362?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "문어숙회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/082/0001200362?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.gnnews.co.kr/news/articleView.html?idxno=600508"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.smartfn.co.kr/article/view/sfn202406030034"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/nong-up/223006832131"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "구운 견과",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/nong-up/223006832131"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/go9ma1253/223419249758"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/go9ma1253/223419249758"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "보쌈",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/go9ma1253/223419249758"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/janfar/223877076732"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/j_h_daily/223581536932"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/chobbi_life_is_egg/223785191958"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/solarris/223426744617"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "케이크·타르트",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/solarris/223426744617"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/shmindh/224345981796"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/misikqueen/224320169349"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/kongkong2world/46412"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/seillove/10746"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ggongjuplayground/4483"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "후라이드치킨",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ggongjuplayground/4483"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/kurung/2546"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ydpeyouth/7235"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/likewine/34557"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "한우구이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/likewine/34557"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "스테이크",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/likewine/34557"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/kurung/2977"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/unfamiliarwithwine/4325"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "한우구이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/unfamiliarwithwine/4325"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "스테이크",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/unfamiliarwithwine/4325"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "케이크·타르트",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/unfamiliarwithwine/4325"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/suzusuki/7158"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/platinumshare/1899"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/2030dudrim/14866"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/steamindiegame/21133914"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/14613"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/14613"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/7159"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "타코",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/14613"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/hakga/10226"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "구운 견과",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/hakga/10226"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/jihosoccer123/2716981"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "족발",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/jihosoccer123/2716981"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "막국수",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/jihosoccer123/2716981"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/hee11974/897765"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/hee11974/897765"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "피자",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/hee11974/897765"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/brickdictionary/25238"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/sbzmffldjzmffos/7686"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "한우구이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/sbzmffldjzmffos/7686"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/3hoursleep/1502"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/sbzmffldjzmffos/7780"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "한우구이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/sbzmffldjzmffos/7780"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/13879"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/greenfdpq6/28242"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/greenfdpq6/28242"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.elle.co.kr/article/1899752"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "호떡",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.elle.co.kr/article/1899752"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.kbanker.co.kr/news/articleView.html?idxno=219060"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/011/0004607097?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/382/0001241272?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.cstimes.com/news/articleView.html?idxno=634055"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.kbanker.co.kr/news/articleView.html?idxno=218776"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "피자",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://woman.chosun.com/news/articleView.html?idxno=118345"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "타코",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://woman.chosun.com/news/articleView.html?idxno=118345"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.gokorea.kr/news/articleView.html?idxno=837249"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.cctimes.kr/news/articleView.html?idxno=768804"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.ccdn.co.kr/news/articleView.html?idxno=937022"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.m-i.kr/news/articleView.html?idxno=1051308"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/008/0005090582?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.ccdailynews.com/news/articleView.html?idxno=2229444"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.dtnews24.com/news/articleView.html?idxno=754652"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.bzeronews.com/news/articleView.html?idxno=626085"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://daily.hankooki.com/news/articleView.html?idxno=1001848"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/simply-spl/222589736191"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.ggilbo.com/news/articleView.html?idxno=993782"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/dxssxrt/223900176681"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.joongdo.co.kr/web/view.php?key=20230920010006185"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://xparrow.tistory.com/119"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/022/0004068138?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/022/0004068138?sid=101"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "피자",
+   "quote": "딸기 막걸리는 루콜라와 리코타치즈가 듬뿍 올라간 피자 맛을 돋운다",
+   "note": "AI: 판단 어려움",
+   "url": "https://n.news.naver.com/mnews/article/022/0004068138?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://huiya-kohui.tistory.com/1790"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/aistockaz/2463"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "케이크·타르트",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/aistockaz/2463"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/veritaofficial/2973"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://penguinworld7.tistory.com/54"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://penguinworld7.tistory.com/54"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/seboming/94701"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/mingout/14030"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "약과",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/mingout/14030"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/vrecord/24027"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/rendogserver/109905"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "갈비탕",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/rendogserver/109905"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/djnoen/1036727"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/djnoen/1036727"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "후라이드치킨",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/djnoen/1036727"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/tteokbokki1004/5304"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "떡볶이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/tteokbokki1004/5304"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ofad/2926062"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ofad/2926062"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/social86/34260"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "불고기",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/social86/34260"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "만두",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/social86/34260"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/listellaofficial/19209"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "피자",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/listellaofficial/19209"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/aistockaz/3195"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "육개장",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/aistockaz/3195"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/gowinmul/47652"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ryancafe123/1407"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "치즈플래터",
+   "quote": "발효주인 막걸리에도 분명 치즈가 잘 어울릴 것이다.",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/ryancafe123/1407"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.joongboo.com/news/articleView.html?idxno=363681680"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://news.cpbc.co.kr/article/1167484?division=NAVER"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "갈비찜",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://news.cpbc.co.kr/article/1167484?division=NAVER"
+  },
+  {
+   "verdict": "no",
+   "drink": "성수주조장 딸기막걸리",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/346/0000004440?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://csmsjy.tistory.com/7093525"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/wolfin/221797744944"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/mrk2345/222835326372"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pixelpeat/223297567127"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/mrk2345/222855435038"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "추사 애플와인",
+   "food": "치즈플래터",
+   "quote": "식전주로 샐러드, 치즈와 함께 마셔도 좋구요",
+   "note": "AI: 판단 어려움",
+   "url": "https://blog.naver.com/mrk2345/222855435038"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222542137203"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/ppspr/221638327148"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/dmz1964/223076876530"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222505634274"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "육포",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222505634274"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "갈비찜",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222505634274"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": "요 추사 애플와인은 샐러드와 잘 어울릴것 같아 과일샐러드 안주로 준비했습니다",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/drinksool/6961"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/2778"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/yccungi/582114"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "다크초콜릿",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/yccungi/582114"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/urisoolschool/5923"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/urisoolschool/10561"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/taeulgikong/26002"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "다크초콜릿",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/taeulgikong/26002"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/dieselmania/46064997"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/047/0002410350?sid=102"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/kreiriceforum/1635"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/4310"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "추사 애플와인",
+   "food": "우럭찜",
+   "quote": "해산물과 잘 어울리는데 특히 생선찜을 추천한다.",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/drinksool/4310"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/kreirural/88"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/009/0004016025?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/wolfin/221951196826"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/298/0000172213?sid=123"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yeshyuni_/224361609156"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "대구탕",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/gpffhgpqls22/223896049946"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/symin67/222891922264"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/abcdeun_/223062949704"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/dnr6578/222897391332"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/msjh1012/222236737495"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/barndining_/224087794732"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/mixsun/222943512217"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/the_sool/222900117184"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/paldosoju/84311"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/036/0000048778?sid=102"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/clovers3/224125625069"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/032/0002967186?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/whiskycognac/822181"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "방어회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/whiskycognac/822181"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yongsixx_aemi/224380999181"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.cooknchefnews.com/news/newsview.php?ncode=1065567000855554"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/ppspr/221931991460"
+  },
+  {
+   "verdict": "yes",
+   "drink": "추사 애플와인",
+   "food": "치즈플래터",
+   "quote": "곁들임 음식으로는 치즈를 준비했습니다. 간단하게 집에서 치즈와 함께 준비했습니다.",
+   "note": "",
+   "url": "https://blog.naver.com/ppspr/221931991460"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yesican1/220553370037"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/happyparm/208588"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "피자",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yesican1/220553370037"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/5007"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/032/0002972323?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/p7777877/223460058841"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://p7777877.tistory.com/6984857"
+  },
+  {
+   "verdict": "no",
+   "drink": "추사 애플와인",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://kr.aving.net/news/view.php?articleId=1723472&Branch_ID=kr&rssid=naver&mn_name=news"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pinypiny08/223466020772"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/hello_mjj/222614289999"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/joy__unni/222606504819"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "케이크·타르트",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/joy__unni/222606504819"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/ajin931017/222618276250"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/bammango0106/223333331923"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "참치회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/bammango0106/223333331923"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "초밥",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/bammango0106/223333331923"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/camelbook/224182898747"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/le_bonnie/222942350619"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/achim03/222604907481"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "치즈플래터",
+   "quote": "와인에는 치즈지~ ㅎ 서너 종류의 치즈 자르며 마시며",
+   "note": "",
+   "url": "https://blog.naver.com/achim03/222604907481"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/vinine/222613035107"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "닭볶음탕",
+   "quote": "그나마 포엠 로제 와인은 비교적 매운 음식과도 나름 괜찮은 페어링을 보였고 수육, 해물찜, 해물탕, 닭볶음탕과 같은 음식과도 매칭이 괜찮을 것 같았답니다.",
+   "note": "AI: 판단 어려움",
+   "url": "https://blog.naver.com/vinine/222613035107"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "보쌈",
+   "quote": "산미보다는 단맛이 더 지배적이기 때문에 굴이나 이런 보쌈 삼합하고는 영 페어링이 별로~",
+   "note": "AI: 판단 어려움",
+   "url": "https://blog.naver.com/vinine/222613035107"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/narae8167/222618306861"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "해물찜",
+   "quote": "포엠 로제 와인 역시 디저트 와인으로 이고, 해물찜, 해물탕, 닭볶음탕과 같은 매콤한 음식과 곁들이는 걸 추천합니다.",
+   "note": "",
+   "url": "https://blog.naver.com/narae8167/222618306861"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/deepp/222615889653"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/swtty20/223295543042"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/14013"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "스테이크",
+   "quote": "빵, 수프, 샐러드, 스테이크, 파스타... 양식 코스 요리의 반주로 딱이다.",
+   "note": "",
+   "url": "https://cafe.naver.com/drinksool/14013"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "타코",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/14013"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/gupchujang/2836"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/asamade/224045473695"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "해물찜",
+   "quote": "포엠 로제는 바질파스타, 부라타치즈 샐러드, 치즈류, 해물찜 등이 잘 어울린다고 하지만 생선회도 잘 어울리는 것 같습니다.",
+   "note": "광고·협찬 표시가 있는 글",
+   "url": "https://blog.naver.com/asamade/224045473695"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "약과",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/asamade/224045473695"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "광어회",
+   "quote": "포엠 로제는 바질파스타, 부라타치즈 샐러드, 치즈류, 해물찜 등이 잘 어울린다고 하지만 생선회도 잘 어울리는 것 같습니다.",
+   "note": "광고·협찬 표시가 있는 글",
+   "url": "https://blog.naver.com/asamade/224045473695"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/savvvy/223582780745"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/8968"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "치즈플래터",
+   "quote": "뒷맛이 깔끔한 매력쟁이 포엠 로제 와인 입니다 와인에는 치즈지~ ㅎ",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/drinksool/8968"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/angela8846/223972197957"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/4rang819/224393147207"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/zzanguna/223984452830"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pinypiny08/223318681700"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "떡볶이",
+   "quote": "페어링 : 로제떡볶이 장미의 향과 장미를 닮은 우아한 색, 신선한 산미, 끝에 오는 아주 약간의 떫은 느낌이 주는 킹델라웨어 품종의 반전 매력",
+   "note": "",
+   "url": "https://blog.naver.com/pinypiny08/223318681700"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/madelin2000/222613378864"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yoni__j/223306872742"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/mansumu9an9/223600958599"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/calamary/222612168638"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/ban__di/222618314935"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "떡볶이",
+   "quote": "근데 떡볶이랑 먹어도 너무너무 잘 어울렸다.",
+   "note": "",
+   "url": "https://blog.naver.com/ban__di/222618314935"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/ban__di/222618314935"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "닭볶음탕",
+   "quote": "페어링 추천 푸드는 매콤한 해산물찜이나 닭볶음탕이라고ㅎㅎ",
+   "note": "",
+   "url": "https://blog.naver.com/ban__di/222618314935"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/berojuhwa/222615827877"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/smalltalker24/223628438958"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/8901"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/iloveran81/222617828234"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sosohappyspend/223588195645"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.nbntv.co.kr/news/articleView.html?idxno=4013622"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/277/0005465889?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.livesnews.com/news/article.html?no=42588"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.sentv.co.kr/article/view/sentv202511190040"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/009/0005357987?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.incheonilbo.com/news/articleView.html?idxno=1302154"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "삼겹살",
+   "quote": "또한 4시간 이상 항아리에서 구운 통삼겹살 바비큐로 와인과 페어링도 진행했다.",
+   "note": "AI: 판단 어려움",
+   "url": "https://www.incheonilbo.com/news/articleView.html?idxno=1302154"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": "황금향이란 과일과도 같이 먹어 보았는데 괜찮네요~",
+   "note": "",
+   "url": "https://cafe.naver.com/drinksool/9004"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "마파두부",
+   "quote": "마파두부 덮밥과 같이 먹어 보았어요~",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/drinksool/9004"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sarah7432/222568065530"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/oojineoo/224025579749"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sidvi/223981702494"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": "디저트 와인이다보니 달달한 메론과도 잘 맞았고",
+   "note": "AI: 판단 어려움",
+   "url": "https://blog.naver.com/diasial8848/222619161959"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/fha92/224032720572"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://m.entertain.naver.com/article/144/0001065179"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "삼겹살",
+   "quote": "또 갈기산포엠와이너리에서 4시간 이상 항아리에서 구운 통삼겹살 바비큐도 제공돼 와인과 페어링을 해볼 수 있었다.",
+   "note": "AI: 판단 어려움",
+   "url": "https://m.entertain.naver.com/article/144/0001065179"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/minseon3520/222618306114"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "닭볶음탕",
+   "quote": "음식은 해물탕, 닭볶음탕과 같은 매콤한 음식과 곁들여서 마셔보는 것을 추천한다.",
+   "note": "",
+   "url": "https://blog.naver.com/minseon3520/222618306114"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "포엠 로제",
+   "food": "해물찜",
+   "quote": "음식은 해물탕, 닭볶음탕과 같은 매콤한 음식과 곁들여서 마셔보는 것을 추천한다.",
+   "note": "AI: 판단 어려움",
+   "url": "https://blog.naver.com/minseon3520/222618306114"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/k-goodfood/223438763723"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://dardao.tistory.com/330"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/jdufour/222615881826"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "닭볶음탕",
+   "quote": "특히 포엠 로제 와인은 해물찜, 해물탕, 닭볶음탕과 같은 매콤한 음식과 곁들여 보시길 추천드립니다.",
+   "note": "",
+   "url": "https://blog.naver.com/jdufour/222615881826"
+  },
+  {
+   "verdict": "yes",
+   "drink": "포엠 로제",
+   "food": "해물찜",
+   "quote": "특히 포엠 로제 와인은 해물찜, 해물탕, 닭볶음탕과 같은 매콤한 음식과 곁들여 보시길 추천드립니다.",
+   "note": "",
+   "url": "https://blog.naver.com/jdufour/222615881826"
+  },
+  {
+   "verdict": "no",
+   "drink": "포엠 로제",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/l_vsoft/222914341809"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://silverline94.tistory.com/31"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://daezz.tistory.com/91"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/nakmin733212/2888"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202410121610240830606"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://dardao.tistory.com/324"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/662/0000077653?sid=103"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "문경바람 오크",
+   "food": "문어숙회",
+   "quote": "문어숙회 33,000원 배가 어느 정도 찬 상태에서 좋은 선택이었던 듯",
+   "note": "AI: 판단 어려움",
+   "url": "https://dardao.tistory.com/324"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "문경바람 오크",
+   "food": "새우튀김",
+   "quote": "짭짤하고 고소해서 계속 집어먹게 됐던 보리새우튀김 15,000원",
+   "note": "AI: 판단 어려움",
+   "url": "https://dardao.tistory.com/324"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/2myloft/308978"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/bbackpacker/110993"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/016/0002147162?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.handmk.com/news/articleView.html?idxno=25395"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.ibabynews.com/news/articleView.html?idxno=101125"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "조개구이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.ibabynews.com/news/articleView.html?idxno=101125"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/032/0002985434?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.naeil.com/news_view/?id_art=241949"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.wkorea.com/2018/09/12/%ec%84%9c%ec%9a%b8-bar-%ec%a7%80%ed%98%95%eb%8f%84/?utm_source=naver&utm_medium=partnership"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/016/0002144193?sid=101"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/353/0000025445?sid=103"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.youtube.com/watch?v=WeesM6QW3IU"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://sunday.joins.com/archives/140361"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "연어회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://sunday.joins.com/archives/140361"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "문어숙회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://sunday.joins.com/archives/140361"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.youtube.com/watch?v=CAVVz2YYTsQ"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/blk_lg_ryan/223438393464"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/jolly_o/223513847057"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.youtube.com/watch?v=9qSNPPSLe6w"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.youtube.com/watch?v=9qSNPPSLe6w"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/rla5jsm1/222788233882"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/dntlo/221595550607"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "한우구이",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/dntlo/221595550607"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sendmehome/224051085684"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yogaesa/223276835087"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/marieansu/223024686081"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/23skit/222911971189"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/barndining_/221657930853"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/semyungnaver/56618"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/urisoolschool/11625"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/wisewhisky/80466"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/urisoolschool/42534"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/gaogaiga2000/222035115701"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "해물파전",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/gaogaiga2000/222035115701"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/daegudslr0/71243"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/drinksool/8567"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/perfumelove/1133591"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/whiskylove9999/86638"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "육회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/whiskylove9999/86638"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/wisewhisky/84383"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "육회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/wisewhisky/84383"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.kyongbuk.co.kr/news/articleView.html?idxno=4055113"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.sommeliertimes.com/news/articleView.html?idxno=131249"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://n.news.naver.com/mnews/article/366/0000587895?sid=101"
+  },
+  {
+   "verdict": "yes",
+   "drink": "문경바람 오크",
+   "food": "삼겹살",
+   "quote": "문경 사과를 파크 오크통에서 숙성해 은은한 사과 향과 오크 풍미가 매력적인 전통 증류주 '문경바람 오크 25'는 삼겹살의 기름기를 완벽하게 씻어내 주며 깊은 여운을 남긴다.",
+   "note": "",
+   "url": "https://www.sommeliertimes.com/news/articleView.html?idxno=131249"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://m.entertain.naver.com/article/215/0000931156"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.gqkorea.co.kr/?p=65131&_C_=18"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://news.tongplus.com/site/data/html_dir/2019/01/08/2019010880035.html"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://www.maisonkorea.com/food/2021/09/%ec%a7%80%ea%b8%88%ec%9d%98-%ec%a0%84%ed%86%b5%ec%a3%bc/?utm_source=naver&utm_medium=partnership"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pinypiny08/223520657901"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/woan77/222090284193"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/masinger-z/223848191644"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "http://www.metroseoul.co.kr/news/newsview?newscd=2016111000044"
+  },
+  {
+   "verdict": "yes",
+   "drink": "문경바람 오크",
+   "food": "생굴",
+   "quote": "어울리는 음식으로는 11월 제철 음식인 생굴 무침이나 가리비 구이, 꾸덕꾸덕 말린 과메기를 추천한다.",
+   "note": "",
+   "url": "http://www.metroseoul.co.kr/news/newsview?newscd=2016111000044"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sandcastle44/223458410503"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222542137203"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "광어회",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222542137203"
+  },
+  {
+   "verdict": "no",
+   "drink": "문경바람 오크",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/utokens/23"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "문경바람 오크",
+   "food": "치즈플래터",
+   "quote": "저는 특히 치즈나 견과류와 함께 먹는 걸 추천드려요! 짭짤한 치즈와 고소한 견과류가 문경바람 오크의 풍미를 더욱 끌어올려",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/utokens/23"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "문경바람 오크",
+   "food": "구운 견과",
+   "quote": "저는 특히 치즈나 견과류와 함께 먹는 걸 추천드려요! 짭짤한 치즈와 고소한 견과류가 문경바람 오크의 풍미를 더욱 끌어올려",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/utokens/23"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/tigermaple/223530414641"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/vinine/223236763831"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222505634274"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "갈비찜",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/pom0505/222505634274"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/winterade/224374443711"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "구운 견과",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/winterade/224374443711"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/woochi_0611/224077494862"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/glglgirl123/222937400312"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "크라테 미디엄 드라이",
+   "food": "치즈플래터",
+   "quote": "와인이 달달할 듯 하여 안주는 치즈를 선택.",
+   "note": "AI: 판단 어려움",
+   "url": "https://blog.naver.com/glglgirl123/222937400312"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/platinaz/224394938753"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/visavisu/221707490876"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/hy_21607/224307999432"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/masinger-z/223224446069"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/masinger-z/223224446069"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sowhi/223306910044"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/nyoung2__e/223787852412"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/dlqmsdl9000/223618176802"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/asone0219/222938004520"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sowoozoo_namhae/222824492482"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "피자",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/sowoozoo_namhae/222824492482"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/tnrdus2008/222937822258"
+  },
+  {
+   "verdict": "no",
+   "drink": "크라테 미디엄 드라이",
+   "food": "제철 과일",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://blog.naver.com/yhyelin94/223256072087"
+  }
+ ]
+}
