@@ -28,7 +28,8 @@
     "./label-read": "./src/label-read.ts",
     "./evidence-check": "./src/evidence-check.ts",
     "./evidence-mine": "./src/evidence-mine.ts",
-    "./ai-guard": "./src/ai-guard.ts"
+    "./ai-guard": "./src/ai-guard.ts",
+    "./expert-reviews": "./src/expert-reviews.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
