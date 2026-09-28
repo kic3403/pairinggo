@@ -10,6 +10,9 @@
 /** 비교용 — 띄어쓰기·문장부호를 뺀 소문자 글자(한글·영문·숫자) */
 export const squashText = (s: string) => String(s ?? "").toLowerCase().replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/g, " ").replace(/[^가-힣a-z0-9]/g, "");
 
+/** 짝 잃은 서로게이트(이모지를 반으로 자른 조각) 지우기 — 그대로 보내면 API가 JSON 오류로 거절한다(2026-09-28 5건) */
+export const wellFormed = (s: string) => s.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "");
+
 export const MINE_NEAR = 400;
 export const MINE_PAD = 220;
 export const MINE_MAX_WINDOWS = 3;
@@ -89,7 +92,7 @@ export function coMentionWindows(text: string, drinkTerms: string[], foodTerms: 
     if (hit) { hit[0] = Math.min(hit[0], s); hit[1] = Math.max(hit[1], e); }
     else if (spans.length < max) spans.push([s, e]);
   }
-  return spans.sort((x, y) => x[0] - y[0]).map(([s, e]) => t.slice(s, Math.min(e, s + MINE_WINDOW_MAX)).trim());
+  return spans.sort((x, y) => x[0] - y[0]).map(([s, e]) => wellFormed(t.slice(s, Math.min(e, s + MINE_WINDOW_MAX))).trim());
 }
 
 /** 추천·어울림을 말하는 낱말 — 공식 페이지에서 볼 대목을 고를 때 */
@@ -107,7 +110,7 @@ export function pairingWordWindows(text: string, opts: { pad?: number; max?: num
     if (hit) { hit[0] = Math.min(hit[0], s); hit[1] = Math.max(hit[1], e); }
     else if (spans.length < max) spans.push([s, e]);
   }
-  return spans.map(([s, e]) => t.slice(s, Math.min(e, s + MINE_WINDOW_MAX)).trim());
+  return spans.map(([s, e]) => wellFormed(t.slice(s, Math.min(e, s + MINE_WINDOW_MAX))).trim());
 }
 
 /** 인용문이 원문 어딘가에 글자 그대로 있나(띄어쓰기·문장부호 무시, 10자 이상) */

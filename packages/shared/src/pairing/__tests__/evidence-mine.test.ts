@@ -69,3 +69,12 @@ describe("술 이름 변형", () => {
     expect(drinkTermsOf({ name: "프리미엄 막걸리 이바비", alias: [] }, ['"이바비 막걸리" 안주'])).toContain("이바비 막걸리");
   });
 });
+
+import { wellFormed } from "../evidence-mine";
+describe("wellFormed", () => {
+  it("반으로 잘린 이모지 조각을 지운다", () => {
+    const cut = "막걸리🍶".slice(0, 4);
+    expect(wellFormed(cut)).toBe("막걸리");
+    expect(wellFormed("막걸리🍶")).toBe("막걸리🍶");
+  });
+});

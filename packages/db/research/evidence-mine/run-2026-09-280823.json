@@ -1,0 +1,50 @@
+{
+ "at": "2026-09-28T08:23:01.208Z",
+ "model": "claude-opus-5",
+ "groups": 3,
+ "basis": {
+  "page": 0,
+  "snippet": 3
+ },
+ "tally": {
+  "yes": 0,
+  "no": 2,
+  "unclear": 1,
+  "skip": 0,
+  "unreadable": 0,
+  "error": 0
+ },
+ "usage": {
+  "input": 507,
+  "output": 280,
+  "cacheRead": 0,
+  "cacheWrite": 3735,
+  "calls": 3
+ },
+ "samples": [
+  {
+   "verdict": "no",
+   "drink": "감그린",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/realdslr/193640"
+  },
+  {
+   "verdict": "no",
+   "drink": "감그린",
+   "food": "치즈플래터",
+   "quote": null,
+   "note": "AI: 어울린다는 말이 없음",
+   "url": "https://cafe.naver.com/ocarinaworld/5159"
+  },
+  {
+   "verdict": "unclear",
+   "drink": "감그린",
+   "food": "치즈플래터",
+   "quote": "치즈 안주인데 5천원치고는 괘않습니다.. 감그린 스폐셀이 달지 않아서 술꾼에게는 적합 할 둣 합니다",
+   "note": "AI: 판단 어려움",
+   "url": "https://cafe.naver.com/bingocafecch/143"
+  }
+ ]
+}

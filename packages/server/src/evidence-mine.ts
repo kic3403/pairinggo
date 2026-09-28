@@ -8,6 +8,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
+import { wellFormed } from "@pairinggo/shared";
 
 export const evidenceMineConfigured = () => !!process.env.ANTHROPIC_API_KEY;
 export const MINE_MODEL_DEFAULT = "claude-opus-5";
@@ -73,7 +74,7 @@ export async function judgeCoMentions(input: JudgeInput, opts: { model?: string;
     fallbacks: "default",
     output_config: { effort: "low", format: betaZodOutputFormat(JudgeSchema) },
     system: [{ type: "text", text: JUDGE_SYSTEM, cache_control: { type: "ephemeral" } }],
-    messages: [{ role: "user", content: `${head}\n\n${body}` }],
+    messages: [{ role: "user", content: wellFormed(`${head}\n\n${body}`) }],
   });
   addUsage(opts.usage, response);
   if (response.stop_reason === "refusal") throw new Error("refusal");
@@ -122,7 +123,7 @@ export async function extractOfficialPairings(input: { drink: { name: string; br
     fallbacks: "default",
     output_config: { effort: "low", format: betaZodOutputFormat(OfficialSchema) },
     system: [{ type: "text", text: officialSystem(foods), cache_control: { type: "ephemeral" } }],
-    messages: [{ role: "user", content: `${head}\n\n${body}` }],
+    messages: [{ role: "user", content: wellFormed(`${head}\n\n${body}`) }],
   });
   addUsage(opts.usage, response);
   if (response.stop_reason === "refusal") throw new Error("refusal");
