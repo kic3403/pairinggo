@@ -7,6 +7,8 @@ import { db } from "./db";
 import { emailLooksValid, hashPassword, normalizeEmail, passwordProblem, verifyPassword } from "./password";
 import { transitionReservation } from "@pairinggo/server/reservations";
 import { notifyReservation } from "@pairinggo/server/notify";
+import { removeAllExpertReviews } from "@pairinggo/server/expert-reviews";
+import { removeExpertDocs } from "./experts";
 
 const MAX_FAILS = 10;
 const LOCK_MINUTES = 15;
@@ -221,6 +223,9 @@ export async function deleteAccount(userId: string): Promise<void> {
     if (t.ok) await notifyReservation(String(r.id), "cancelled_by_user").catch(() => null);
   }
   await sb.from("reservations").update({ guest_name: "탈퇴 회원", guest_phone: "", note: "", updated_at: new Date().toISOString() }).eq("user_id", userId);
+  // 전문가 판정(docs/27) — cascade로 사라지기 전에 근거 줄·올린 행·배지 집계를 되돌리고 증빙 사진을 지운다
+  await removeAllExpertReviews(userId).catch(() => 0);
+  await removeExpertDocs(userId).catch(() => null);
   await sb.from("push_subscriptions").delete().eq("owner_type", "user").eq("owner_id", userId);
   const { data: files } = await sb.storage.from("member-picks").list(userId, { limit: 1000 }).catch(() => ({ data: null }));
   if (files?.length) await sb.storage.from("member-picks").remove(files.map((f) => `${userId}/${f.name}`)).catch(() => null);
