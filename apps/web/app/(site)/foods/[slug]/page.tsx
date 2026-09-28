@@ -12,6 +12,8 @@ import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, drinkHref, type CardItem } from "../../_components/PairingCards";
 import { comboPlaces } from "@/lib/combo-places";
+import { recsForFood } from "@/lib/partner-recs";
+import PartnerRecs from "../../_components/PartnerRecs";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
@@ -65,6 +67,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
     return { href: drinkHref(drink?.name || s.p.d), name: drink?.name || s.p.d, sub, grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p, places: combos.get(`${s.p.d}|${s.p.f}`) };
   });
 
+  const recs = await recsForFood({ id: food.id, name: food.name, category: food.category }).catch(() => []);
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);
 
   // 구조화 데이터 — 경로와 "이 음식에 어울리는 술" 목록(docs/20 P3-4)
@@ -108,6 +111,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
               <PairingCards items={items} />
             </PickTabs>
           </RatingsProvider>
+          <PartnerRecs recs={recs} title="양조장·식당이 추천한 조합" note={`${food.name}과 같거나 비슷한 음식으로 파트너가 직접 추천한 조합이에요.`} />
         </div>
 
         <aside>

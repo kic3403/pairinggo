@@ -16,6 +16,8 @@ import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
 import { PairingCards, pickCounts, foodHref, type CardItem } from "../../_components/PairingCards";
 import { comboPlaces } from "@/lib/combo-places";
+import { recsForDrink } from "@/lib/partner-recs";
+import PartnerRecs from "../../_components/PartnerRecs";
 import ExtLink from "../../_components/ExtLink";
 import BuyBox from "../../_components/BuyBox";
 import Heart from "../../_components/Heart";
@@ -69,6 +71,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const rows = byDrink[drink.id] || [];
   const scored = scorePairings(rows, (p) => F[p.f]?.category || "");
   const combos = await comboPlaces();
+  const recs = await recsForDrink(drink.id).catch(() => []);
   const items: CardItem[] = scored.map((s) => {
     const food = F[s.p.f];
     // 음식 화면으로 넘어갈 때 이 술을 들고 간다(?d=) — 맛집 목록이 이 술과 그 음식을 함께 파는 식당을 먼저 보여 준다
@@ -196,6 +199,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <PairingCards items={items} />
             </PickTabs>
           </RatingsProvider>
+          <PartnerRecs recs={recs} title="양조장·식당이 추천한 안주" hideDrink note="파트너가 직접 추천했지만 위 목록에는 아직 없는 음식이에요." />
           {/* 회원 별점·한 줄(docs/25) — 조합 평가(먹어봤어요)와 별개, 술 자체의 평가 */}
           <DrinkReviews drinkId={drink.id} drinkName={drink.name} initial={rv} />
         </div>

@@ -3,6 +3,8 @@
  * "매운 안주에 어울리는 술"처럼 상황을 적으면 상황 검색, 이름을 적으면 이름 매칭, 없으면 비슷한 이름 제안.
  */
 import type { Metadata } from "next";
+import PartnerRecs from "../_components/PartnerRecs";
+import { recsForQuery } from "@/lib/partner-recs";
 import Link from "next/link";
 import { D, DRINK_KINDS, F, KIND_BY_ID, KIND_LABEL, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, inSubtype, intentSearch, kindOf, onlineSellable, confidenceText, gradeOf, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
@@ -55,7 +57,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const resRaw = search(q, { limit: region ? 40 : 12 });
   const res = { ...resRaw, drinks: resRaw.drinks.filter((h) => drinkInRegion(D[h.doc.id] || {}, region)).slice(0, 12) };
   const hitCount = res.drinks.length + res.foods.length + res.browse.length;
-  const empty = !!q && !intent && !rq && hitCount === 0;
+  // 양조장·식당 추천 조합(2026-09-29) — 비슷한 음식·술 이름이면 찾는다. 이것만 있어도 '결과 없음'이 아니다
+  const recs = q ? await recsForQuery(q).catch(() => []) : [];
+  const empty = !!q && !intent && !rq && hitCount === 0 && recs.length === 0;
   const regional = !q && region ? drinksInRegion(region.pre, 200, region.fb) : null;
   // 검색 로그(클라이언트 이벤트 → search_logs). pick = "drink:d01" 형식, 지역 검색은 "browse:부산"(events API가 ":"로 나누므로 두 조각만)
   const top = res.drinks[0] ?? res.foods[0] ?? res.browse[0];
@@ -222,6 +226,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           </ul>
         </section>
       )}
+
+      <PartnerRecs recs={recs} title={`양조장·식당이 추천한 조합`} note="파트너 양조장·식당이 직접 추천한 조합이에요. 비슷한 음식도 함께 보여 드려요." />
 
       {placesQ && !empty && <SearchPlaces q={placesQ} region={placesRegion} empty={false} />}
 

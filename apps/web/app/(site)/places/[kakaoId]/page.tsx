@@ -12,6 +12,8 @@ import { placeReviews } from "@/lib/reviews";
 import ExtLink from "../../_components/ExtLink";
 import Heart from "../../_components/Heart";
 import MenuBoard from "../../_components/MenuBoard";
+import PartnerRecs from "../../_components/PartnerRecs";
+import { recsForPlace } from "@/lib/partner-recs";
 import RecentTrack from "../../_components/RecentTrack";
 import StoreGallery from "./StoreGallery";
 import ReviewList from "./ReviewList";
@@ -53,6 +55,8 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
   const { place: p, bookable, partner, brewery } = d;
   const { stats, reviews } = await placeReviews(kakaoId);
   const info = p.info ?? null;
+  // 이 집 추천 페어링(2026-09-29) — 양조장·식당 파트너가 직접 짝지은 조합
+  const recs = await recsForPlace(p.id).catch(() => []);
   const chips = placeChips(info, p.amenities);
   const photos = info?.photos ?? [];
   const addr = p.roadAddress || p.address;
@@ -136,6 +140,12 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
           <MenuBoard menu={info.menuItems ?? []} drinks={info.drinkItems ?? []} />
         </section>
       ) : null}
+
+      {recs.length > 0 && (
+        <section className="pd-sec">
+          <PartnerRecs recs={recs} title="이 집 추천 페어링" hidePlace />
+        </section>
+      )}
 
       <section className="pd-sec" id="reviews">
         <div className="pd-rev-head">

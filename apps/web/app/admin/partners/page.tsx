@@ -7,6 +7,8 @@ import { requireAdmin } from "@/lib/admin-auth";
 import { listMerchants, summarizeChange } from "@/lib/partners-admin";
 import { recentChanges } from "@pairinggo/server/merchant-store";
 import PartnerActions from "./PartnerActions";
+import PartnerPairingList from "./PartnerPairingList";
+import { partnerPairingsByMerchant } from "@pairinggo/server/partner-pairings";
 import ChangeLog from "./ChangeLog";
 import {
   cleanPartnerKind, formatBizNo, formatMobile, isManualPlaceId, MERCHANT_STATUS_LABEL,
@@ -17,7 +19,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPartnersPage({ searchParams }: { searchParams: Promise<{ kind?: string }> }) {
   await requireAdmin();
-  const [all, changes] = await Promise.all([listMerchants(), recentChanges(60)]);
+  const [all, changes, pps] = await Promise.all([listMerchants(), recentChanges(60), partnerPairingsByMerchant().catch(() => new Map())]);
   const sp = await searchParams;
   const tab = sp.kind && PARTNER_KINDS.includes(sp.kind as never) ? cleanPartnerKind(sp.kind) : null;   // null = 전체
   const order = { applied: 0, suspended: 1, approved: 2, rejected: 3 } as const;
@@ -63,6 +65,7 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
           </div>
           {m.rejectReason ? <div style={{ fontSize: 13, marginTop: 4 }}>사유: {m.rejectReason}</div> : null}
           <PartnerActions id={m.id} status={m.status} manual={isManualPlaceId(m.kakaoPlaceId)} name={m.name} address={m.address} kind={m.kind} />
+          <PartnerPairingList rows={(pps.get(m.id) ?? []).map((r: { id: number; drinkText: string; foodText: string; note: string; linked: boolean }) => ({ id: r.id, drinkText: r.drinkText, foodText: r.foodText, note: r.note, linked: r.linked }))} />
         </div>
       ))}
       <h2 style={{ margin: "22px 0 8px" }}>최근 변경 <span className="muted">파트너가 고친 내용은 바로 반영돼요 — 사실과 다르면 되돌리기</span></h2>
