@@ -9,6 +9,7 @@ import { auth } from "@/auth";
 import { getCatalog } from "@/lib/catalog";
 import { getExpert } from "@/lib/experts";
 import ExpertReview from "./ExpertReview";
+import ExpertDocUpload from "./ExpertDocUpload";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "전문가 검수 | 페어링GO", robots: { index: false } };
@@ -26,6 +27,7 @@ export default async function ExpertPage() {
       <p className="crumb"><Link href="/my">마이페이지</Link></p>
       <h1>전문가 검수 <span className="muted small">{x.displayName}</span></h1>
       <p className="lead">조합마다 <b>어울림 · 보통 · 아님</b>을 골라 주세요. 어울림은 바로 소믈리에 근거로 실리고, 2명 이상 동의하면 "전문가 추천" 배지가 붙어요. 한 줄 이유는 카드에 <b>{x.displayName}</b> 이름으로 보입니다.</p>
+      <ExpertDocUpload count={x.docsCount} />
       <ExpertReview
         displayName={x.displayName}
         drinks={[...c.dataset.drinks].sort(byName).map((d) => ({ id: d.id, name: d.name }))}

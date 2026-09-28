@@ -214,6 +214,28 @@ export async function renameExpert(userId: string, displayName: string): Promise
   invalidateCatalog();
 }
 
+/**
+ * 승인된 전문가(또는 심사 중)가 자격증을 더 올린다(2026-09-29 사용자 요청) — 기존 증빙에 더하고, 3장을 넘으면 오래된 것부터 지운다.
+ * 사진은 비공개 버킷 expert-docs, 운영자만 본다.
+ */
+export async function addExpertDocs(userId: string, files: File[]): Promise<{ ok: true; count: number } | { ok: false; error: string }> {
+  const sb = need();
+  const list = files.filter((f) => f.size > 0).slice(0, EXPERT_DOCS_MAX);
+  if (!list.length) return { ok: false, error: "자격증 사진을 골라 주세요" };
+  const { data: cur } = await sb.from("experts").select("status,doc_paths").eq("user_id", userId).maybeSingle();
+  if (!cur) return { ok: false, error: "전문가 등급 요청을 먼저 해 주세요" };
+  if (cleanExpertStatus(cur.status) === "suspended") return { ok: false, error: "정지된 계정은 올릴 수 없어요 — 문의해 주세요" };
+  const added: string[] = [];
+  try { for (const f of list) added.push(await uploadExpertDoc(userId, f)); }
+  catch (e) { if (added.length) await sb.storage.from(BUCKET).remove(added).catch(() => null); return { ok: false, error: (e as Error).message }; }
+  const all = [...((cur.doc_paths as string[] | null) ?? []), ...added];
+  const keep = all.slice(-EXPERT_DOCS_MAX), drop = all.slice(0, Math.max(0, all.length - EXPERT_DOCS_MAX));
+  const { error } = await sb.from("experts").update({ doc_paths: keep, updated_at: new Date().toISOString() }).eq("user_id", userId);
+  if (error) { await sb.storage.from(BUCKET).remove(added).catch(() => null); return { ok: false, error: "저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" }; }
+  if (drop.length) await sb.storage.from(BUCKET).remove(drop).catch(() => null);
+  return { ok: true, count: keep.length };
+}
+
 /** 대시보드 — 심사 대기 수 */
 export async function pendingExpertCount(): Promise<number> {
   const sb = db();
