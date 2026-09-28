@@ -22,6 +22,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
           <Link href="/admin/picks">회원 추천</Link>
           <Link href="/admin/places">식당 정보</Link>
           <Link href="/admin/partners">파트너</Link>
+          <Link href="/admin/experts">전문가</Link>
           <Link href="/admin/place-reviews">식당 리뷰</Link>
           <Link href="/admin/drink-reviews">술 평가</Link>
           <Link href="/admin/drinks">술 정보</Link>

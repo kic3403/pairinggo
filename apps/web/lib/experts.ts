@@ -184,6 +184,19 @@ export async function actOnExpert(userId: string, action: ExpertAction, reason: 
   if (action !== "resume") await activityPush(userId, expertPush(rule.to as "approved" | "rejected" | "suspended", why));
 }
 
+/** 승인된 전문가의 표시명만 바꾸기 — 근거 줄의 이름도 함께 */
+export async function renameExpert(userId: string, displayName: string): Promise<void> {
+  const sb = need();
+  const newName = str(displayName).replace(/\s+/g, " ").trim().slice(0, 60);
+  if (newName.length < 2) throw new Error("표시명을 2자 이상 적어 주세요");
+  const { data: cur } = await sb.from("experts").select("display_name").eq("user_id", userId).maybeSingle();
+  if (!cur) throw new Error("전문가를 찾을 수 없어요");
+  const { error } = await sb.from("experts").update({ display_name: newName, updated_at: new Date().toISOString() }).eq("user_id", userId);
+  if (error) throw new Error(error.message);
+  await renameExpertEvidence(str(cur.display_name), newName);
+  invalidateCatalog();
+}
+
 /** 대시보드 — 심사 대기 수 */
 export async function pendingExpertCount(): Promise<number> {
   const sb = db();
