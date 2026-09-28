@@ -11,6 +11,7 @@ import { myRatings } from "@/lib/ratings";
 import TriedCard from "../_components/TriedCard";
 import { myPicks } from "@/lib/member-picks";
 import { myDrinkRequests } from "@/lib/drink-requests";
+import { getExpert } from "@/lib/experts";
 import PushSettings from "../_components/PushSettings";
 import { drinkRequestStatusText } from "@pairinggo/shared";
 import { memberPickStatusText } from "@pairinggo/shared";
@@ -29,7 +30,7 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
   const tab = (SAVED_KINDS as string[]).includes(sp.tab || "") ? (sp.tab as SavedKind) : "drink";
 
   await getCatalog();
-  const [rows, profile, picks, rated, referral, requests] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => []), myRatings(uid).catch(() => new Set<string>()), referralInfo(uid).catch(() => ({ invited: 0, referred: false })), myDrinkRequests(uid).catch(() => [])]);
+  const [rows, profile, picks, rated, referral, requests, expert] = await Promise.all([listSaved(uid), getProfile(uid), myPicks(uid).catch(() => []), myRatings(uid).catch(() => new Set<string>()), referralInfo(uid).catch(() => ({ invited: 0, referred: false })), myDrinkRequests(uid).catch(() => []), getExpert(uid).catch(() => null)]);
   // 먹어봤나요? — 저장한 술·음식으로 아직 평가하지 않은 조합 3개(docs/20 P1-1). 정렬은 상세 화면과 같은 규칙
   const tried = suggestTried({
     savedDrinks: rows.filter((r) => r.kind === "drink").map((r) => r.item_id), savedFoods: rows.filter((r) => r.kind === "food").map((r) => r.item_id),
@@ -54,6 +55,15 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
       {profile && !profile.complete && (
         <p className="form-error" style={{ marginTop: 10 }}>성별·생년월일·사는 곳이 아직 없습니다. <Link href="/profile">프로필 채우기 →</Link></p>
       )}
+
+      {/* 전문가 검수(docs/27) — 신청 → 심사 → 승인이면 검수 화면으로 */}
+      <p id="expert" className="small" style={{ margin: "10px 0 0", padding: "9px 12px", background: "var(--bg2)", borderRadius: 10 }}>
+        {!expert && <>소믈리에·요리연구가·양조사이신가요? <Link href="/expert/apply"><b>전문가 검수 신청 →</b></Link></>}
+        {expert?.status === "applied" && <>전문가 검수 <b>심사 중</b> · {new Date(expert.appliedAt).toLocaleDateString("ko-KR")} 신청</>}
+        {expert?.status === "approved" && <>전문가 <b>{expert.displayName}</b> · 검수 {expert.reviewsCount}건 · <Link href="/expert"><b>검수하러 가기 →</b></Link></>}
+        {expert?.status === "rejected" && <>전문가 신청이 반려됐어요{expert.rejectReason ? ` — ${expert.rejectReason}` : ""} · <Link href="/expert/apply">다시 신청</Link></>}
+        {expert?.status === "suspended" && <>전문가 활동이 정지됐어요{expert.rejectReason ? ` — ${expert.rejectReason}` : ""}</>}
+      </p>
 
       <TriedCard items={tried} />
 

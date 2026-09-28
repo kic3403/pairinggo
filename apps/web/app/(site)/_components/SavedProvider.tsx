@@ -8,7 +8,7 @@
  *     그대로 남아 예전 상태를 보여 주므로, 경로가 바뀌면 세션을 다시 확인한다.
  */
 import { usePathname, useRouter } from "next/navigation";
-import { shouldClearSession } from "@pairinggo/shared";
+import { shouldClearSession, type ExpertStatus } from "@pairinggo/shared";
 import { track } from "@/lib/track";
 import { AUTH_PENDING_KEY } from "./AuthAttempt";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
@@ -21,11 +21,13 @@ type Ctx = {
   ready: boolean;
   loggedIn: boolean;
   user: User;
+  /** 전문가 검수 상태(docs/27) — approved면 헤더에 "검수" 링크 */
+  expert: ExpertStatus | null;
   has: (kind: SavedKind, id: string) => boolean;
   toggle: (kind: SavedKind, id: string, meta?: PlaceMeta) => Promise<void>;
 };
 
-const SavedCtx = createContext<Ctx>({ ready: false, loggedIn: false, user: null, has: () => false, toggle: async () => {} });
+const SavedCtx = createContext<Ctx>({ ready: false, loggedIn: false, user: null, expert: null, has: () => false, toggle: async () => {} });
 export const useSaved = () => useContext(SavedCtx);
 const key = (k: SavedKind, id: string) => `${k}:${id}`;
 /** 이 문서에서 첫 화면 판정을 이미 했는지 — 모듈 변수라 앱 라우터 이동에는 유지되고, 새 페이지 로드에서만 초기화된다 */
@@ -38,6 +40,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState<User>(null);
+  const [expert, setExpert] = useState<ExpertStatus | null>(null);
   const [keys, setKeys] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
       if (!alive) return;
       const s = await fetch("/api/auth/session").then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (!alive) return;
-      if (!s?.user) { setUser(null); setKeys(new Set()); setReady(true); return; }
+      if (!s?.user) { setUser(null); setExpert(null); setKeys(new Set()); setReady(true); return; }
       setUser({ name: s.user.name ?? null, email: s.user.email ?? null });
       const [j, c] = await Promise.all([
         fetch("/api/saved").then((r) => (r.ok ? r.json() : null)).catch(() => null),
@@ -74,6 +77,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
       if (!alive) return;
       // 간편가입 직후·약관 변경·닉네임 없음 — 가입 마무리 화면으로(consent.ts CONSENT_VERSION, profile.ts nicknameProblem)
       if (c?.needed && !CONSENT_FREE.includes(pathname)) router.replace(`/profile?next=${encodeURIComponent(pathname)}`);
+      setExpert((c?.expert as ExpertStatus | null) ?? null);
       setKeys(new Set((j?.items || []).map((x: { kind: SavedKind; item_id: string }) => key(x.kind, x.item_id))));
       setReady(true);
     })();
@@ -98,6 +102,6 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
     }
   }, [keys]);
 
-  const value = useMemo(() => ({ ready, loggedIn: !!user, user, has, toggle }), [ready, user, has, toggle]);
+  const value = useMemo(() => ({ ready, loggedIn: !!user, user, expert, has, toggle }), [ready, user, expert, has, toggle]);
   return <SavedCtx.Provider value={value}>{children}</SavedCtx.Provider>;
 }

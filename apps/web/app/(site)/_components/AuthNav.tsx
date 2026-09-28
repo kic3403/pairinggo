@@ -7,11 +7,16 @@ import Link from "next/link";
 import { useSaved } from "./SavedProvider";
 
 export default function AuthNav() {
-  const { ready, loggedIn, user } = useSaved();
+  const { ready, loggedIn, user, expert } = useSaved();
 
   // 확인 전에는 자리만 잡아 둔다 (레이아웃이 흔들리지 않게)
   if (!ready) return <span style={{ width: 52 }} aria-hidden />;
   if (!loggedIn) return <Link href="/login">로그인</Link>;
 
-  return <Link href="/my">마이{user?.name && <span className="nick"> · {user.name}</span>}</Link>;
+  return (
+    <>
+      {expert === "approved" && <Link href="/expert" title="전문가 페어링 검수">검수</Link>}
+      <Link href="/my">마이{user?.name && <span className="nick"> · {user.name}</span>}</Link>
+    </>
+  );
 }
