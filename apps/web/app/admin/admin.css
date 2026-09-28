@@ -2,9 +2,34 @@
 body { background: var(--bg); color: var(--ink); }   /* 어드민은 라이트 고정 */
 .adm { max-width: 720px; margin: 0 auto; padding: 16px 16px 80px; font-size: 14px; line-height: 1.55; }
 .adm a { color: var(--drink); }
-.adm-nav { display: flex; gap: 14px; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 16px; font-size: 13px; }
-.adm-nav b { font-size: 16px; margin-right: auto; }
-.adm-nav a { color: var(--ink2); text-decoration: none; } .adm-nav a.on { color: var(--ink); font-weight: 700; }
+/* 어드민 셸(2026-09-29) — 넓은 화면: 왼쪽 묶음 메뉴 + 본문, 좁은 화면: 위쪽 한 줄 가로 스크롤 메뉴 */
+.adm-shell { display: grid; grid-template-columns: 196px minmax(0, 1fr); min-height: 100vh; }
+.adm-shell .adm { max-width: 820px; margin: 0; padding: 20px 28px 80px; width: 100%; box-sizing: border-box; }
+.adm-side { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; box-sizing: border-box; padding: 18px 12px; border-right: 1px solid var(--line); background: var(--surface); }
+.adm-brand { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 0 8px 14px; }
+.adm-brand > a:first-child { font-size: 16px; font-weight: 800; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.adm-logout { font-size: 12px; color: var(--muted) !important; text-decoration: none; white-space: nowrap; }
+.adm-logout:hover { color: var(--ink) !important; }
+.adm-menu { display: flex; flex-direction: column; gap: 14px; }
+.adm-group { display: flex; flex-direction: column; gap: 1px; }
+.adm-group-title { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--muted); padding: 0 8px 4px; }
+.adm-menu a { display: block; padding: 7px 10px; border-radius: 8px; font-size: 13.5px; color: var(--ink2); text-decoration: none; white-space: nowrap; }
+.adm-menu a:hover { background: var(--bg); color: var(--ink); }
+.adm-menu a.on { background: var(--drink-soft); color: var(--drink); font-weight: 700; }
+.adm-menu a:focus-visible { outline: 2px solid var(--drink); outline-offset: 1px; }
+@media (max-width: 860px) {
+  .adm-shell { display: block; }
+  .adm-shell .adm { padding: 14px 16px 80px; }
+  .adm-side { position: sticky; top: 0; z-index: 20; height: auto; overflow: visible; padding: 10px 12px 8px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .adm-brand { padding: 0 4px 8px; }
+  .adm-menu { flex-direction: row; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .adm-menu::-webkit-scrollbar { display: none; }
+  .adm-group { flex-direction: row; gap: 4px; flex: none; }
+  .adm-group + .adm-group { padding-left: 6px; border-left: 1px solid var(--line); }
+  .adm-group-title { display: none; }
+  .adm-menu a { padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
+  .adm-menu a.on { border-color: var(--drink-soft); }
+}
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
 .card.sel { border-color: var(--drink); box-shadow: 0 0 0 2px var(--drink-soft); }
 .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }

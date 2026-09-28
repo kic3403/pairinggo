@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
+import AdminNav from "./AdminNav";
 import { adminEnabled, isAdmin } from "@/lib/admin-auth";
 import "./admin.css";
 
@@ -11,31 +11,11 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     return <main className="adm"><div className="card"><b>어드민이 꺼져 있어요.</b><p className="muted">apps/web/.env.local 에 <code>ADMIN_PASSWORD</code>를 설정하고 서버를 재시작하세요.</p></div></main>;
   }
   const ok = await isAdmin();
+  if (!ok) return <main className="adm">{children}</main>;
   return (
-    <main className="adm">
-      {ok && (
-        <nav className="adm-nav">
-          <b>페어링<span style={{ color: "var(--food)" }}>GO</span> 운영</b>
-          <Link href="/admin">대시보드</Link>
-          <Link href="/admin/review">검수</Link>
-          <Link href="/admin/publish">발행</Link>
-          <Link href="/admin/picks">회원 추천</Link>
-          <Link href="/admin/places">식당 정보</Link>
-          <Link href="/admin/partners">파트너</Link>
-          <Link href="/admin/experts">전문가 등급</Link>
-          <Link href="/admin/place-reviews">식당 리뷰</Link>
-          <Link href="/admin/drink-reviews">술 평가</Link>
-          <Link href="/admin/drinks">술 정보</Link>
-          <Link href="/admin/foods">음식 사진</Link>
-          <Link href="/admin/banners">홈 배너</Link>
-          <Link href="/admin/notices">공지</Link>
-          <Link href="/admin/shop">구매</Link>
-          <Link href="/admin/wanted">없는 술</Link>
-          <Link href="/admin/errors">오류</Link>
-          <a href="/admin/api/logout">로그아웃</a>
-        </nav>
-      )}
-      {children}
-    </main>
+    <div className="adm-shell">
+      <AdminNav />
+      <main className="adm">{children}</main>
+    </div>
   );
 }
