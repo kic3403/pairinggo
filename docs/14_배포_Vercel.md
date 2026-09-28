@@ -101,3 +101,20 @@ git push -u origin main
 **미리보기 창 주의** — 클로드 앱 안의 미리보기 창은 `/_next/static/*` 자산을 `ERR_BLOCKED_BY_CLIENT`로 막아 배포 사이트가 **스타일 없이** 보인다. 서버는 자산을 200으로 정상 서빙한다(curl 확인). 배포 사이트 확인은 일반 브라우저로.
 
 미니앱 `VITE_API_BASE_URL`을 배포 주소로 바꿨다(로컬 .env.local). 이후 커밋은 `git push`만 하면 자동 배포된다.
+
+## 7. 검색엔진 등록 (2026-09-28 — 유입의 첫 단추)
+
+2026-09-28까지 구글·네이버 어디에도 사이트를 등록한 기록이 없었다. 사이트맵(718개 주소)은 있었지만 알린 적이 없다.
+코드 쪽 준비(완료): 소유 확인 태그를 환경변수로 넣는 자리(`app/layout.tsx`), RSS `/rss.xml`(오늘의 페어링 14일, 홈·오늘의 페어링에 링크), IndexNow 키 `/indexnow-key.txt` + 제출 스크립트, 사이트맵 수정 시각을 카탈로그 발행 시각으로(매번 "지금"이면 검색엔진이 믿지 않는다).
+
+| 순서 | 할 일 | 누가 |
+|---|---|---|
+| 1 | 네이버 서치어드바이저(searchadvisor.naver.com) → 웹마스터 도구 → 사이트 등록 `https://pairinggo.vercel.app` → 소유 확인 방법 **HTML 태그** → `content="…"` 값만 복사 | 사용자 |
+| 2 | 구글 서치 콘솔(search.google.com/search-console) → 속성 추가 → **URL 접두어** `https://pairinggo.vercel.app` → **HTML 태그** → `content` 값 복사 | 사용자 |
+| 3 | Vercel → 프로젝트 → Settings → Environment Variables에 `NAVER_SITE_VERIFICATION`·`GOOGLE_SITE_VERIFICATION`(Production) → 다시 배포 | 사용자 |
+| 4 | 두 곳에서 "소유 확인" 누르기 | 사용자 |
+| 5 | 네이버: 요청 → 사이트맵 제출 `https://pairinggo.vercel.app/sitemap.xml`, RSS 제출 `https://pairinggo.vercel.app/rss.xml` · 구글: Sitemaps에 `sitemap.xml` | 사용자 |
+| 6 | IndexNow 제출 `pnpm --filter @pairinggo/db indexnow`(네이버·빙에 주소 718개를 한 번에) — 카탈로그를 크게 바꾼 뒤마다 | Claude 또는 사용자 |
+
+빙은 선택(`BING_SITE_VERIFICATION`, 빙 웹마스터 도구는 구글 서치 콘솔에서 가져오기도 된다). vercel.app 주소로 등록해 두고 나중에 도메인을 사면 `SITE_URL`을 바꾸고 새 도메인을 다시 등록한다(옛 주소는 Vercel이 새 도메인으로 넘기게 설정).
+

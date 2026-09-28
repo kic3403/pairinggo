@@ -1,0 +1,24 @@
+/**
+ * IndexNow 제출(2026-09-28) — 배포된 사이트맵의 주소를 한 번에 네이버·빙 등에 알린다(api.indexnow.org가 참여 검색엔진에 나눠 준다).
+ * 키는 배포된 /indexnow-key.txt에서 읽는다(웹 app/indexnow-key.txt/route.ts가 원본). 카탈로그를 크게 바꾼 뒤·새 화면을 연 뒤에 돌린다.
+ *   pnpm --filter @pairinggo/db indexnow [--site https://pairinggo.vercel.app] [--dry]
+ */
+const arg = (k: string) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : undefined; };
+const SITE = (arg("--site") ?? process.env.SITE_URL ?? "https://pairinggo.vercel.app").replace(/\/+$/, "");
+const DRY = process.argv.includes("--dry");
+
+const keyRes = await fetch(`${SITE}/indexnow-key.txt`);
+const key = (await keyRes.text()).trim();
+if (!keyRes.ok || !/^[a-f0-9]{8,128}$/i.test(key)) { console.error(`키 파일을 읽지 못했습니다(${keyRes.status}) — 웹을 먼저 배포하세요: ${SITE}/indexnow-key.txt`); process.exit(2); }
+const xml = await (await fetch(`${SITE}/sitemap.xml`)).text();
+const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(/&amp;/g, "&")).filter((u) => u.startsWith(SITE));
+console.log(`사이트맵 주소 ${urls.length}개 · 키 ${key.slice(0, 6)}…`);
+if (DRY) process.exit(0);
+const host = new URL(SITE).host;
+for (let i = 0; i < urls.length; i += 10000) {
+  const r = await fetch("https://api.indexnow.org/indexnow", {
+    method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify({ host, key, keyLocation: `${SITE}/indexnow-key.txt`, urlList: urls.slice(i, i + 10000) }),
+  });
+  console.log(`제출 ${Math.min(urls.length, i + 10000)}/${urls.length} → HTTP ${r.status}${r.status === 200 || r.status === 202 ? " (접수)" : ` ${await r.text().catch(() => "")}`}`);
+}

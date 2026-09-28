@@ -9,6 +9,9 @@ export const revalidate = 3600;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const c = await getCatalog();
   const now = new Date();
+  // 술·음식 상세의 수정 시각 = 카탈로그를 마지막으로 발행한 시각(catalog_meta.version). 매번 "지금"이면 검색엔진이 이 값을 믿지 않는다
+  const pub = Date.parse(c.version);
+  const published = Number.isFinite(pub) && pub <= now.getTime() ? new Date(pub) : now;
   const base = siteUrl();
   return [
     { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
@@ -23,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...FOOD_GROUPS.map((g) => ({ url: `${base}/foods?group=${encodeURIComponent(g.key)}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 })),
     { url: `${base}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${base}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
-    ...c.dataset.drinks.map((d) => ({ url: `${base}/drinks/${encodeURIComponent(toSlug(d.name))}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 })),
-    ...c.dataset.foods.map((f) => ({ url: `${base}/foods/${encodeURIComponent(toSlug(f.name))}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.7 })),
+    ...c.dataset.drinks.map((d) => ({ url: `${base}/drinks/${encodeURIComponent(toSlug(d.name))}`, lastModified: published, changeFrequency: "weekly" as const, priority: 0.7 })),
+    ...c.dataset.foods.map((f) => ({ url: `${base}/foods/${encodeURIComponent(toSlug(f.name))}`, lastModified: published, changeFrequency: "weekly" as const, priority: 0.7 })),
   ];
 }

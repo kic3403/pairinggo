@@ -20,7 +20,7 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: "오늘의 페어링 — 날마다 하나, 근거가 확인된 술과 안주 | 페어링GO",
   description: "양조장·소믈리에·매체가 확인한 전통주와 안주 조합 가운데 오늘의 한 조합을 골라 드립니다. 계절 제철 음식이 들어간 조합을 먼저.",
-  alternates: { canonical: "/today" },
+  alternates: { canonical: "/today", types: { "application/rss+xml": [{ url: "/rss.xml", title: "페어링GO 오늘의 페어링" }] } },
 };
 
 const md = (date: string) => `${Number(date.slice(5, 7))}월 ${Number(date.slice(8, 10))}일`;

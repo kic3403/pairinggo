@@ -8,7 +8,16 @@ export const metadata: Metadata = {
   title: { default: "페어링GO", template: "%s" },
   description: "전통주를 검색하면 어울리는 음식을, 음식을 검색하면 어울리는 전통주를 — 근거와 함께.",
   formatDetection: { telephone: false },
+  // 검색엔진 소유 확인(2026-09-28) — 구글 서치 콘솔·네이버 서치어드바이저·빙 웹마스터에서 받은 "HTML 태그" 값만 환경변수로(공개 값, 비밀 아님)
+  verification: siteVerification(),
 };
+
+function siteVerification(): Metadata["verification"] {
+  const other: Record<string, string> = {};
+  if (process.env.NAVER_SITE_VERIFICATION) other["naver-site-verification"] = process.env.NAVER_SITE_VERIFICATION;
+  if (process.env.BING_SITE_VERIFICATION) other["msvalidate.01"] = process.env.BING_SITE_VERIFICATION;
+  return { ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}), ...(Object.keys(other).length ? { other } : {}) };
+}
 
 export const viewport = { width: "device-width", initialScale: 1, themeColor: "#22406B" };
 

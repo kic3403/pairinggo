@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   // 링크 공유(카카오톡·문자) 미리보기 문구 — 2026-09-14 사용자 결정. openGraph를 함께 둬야 카카오가 이 문구를 쓴다
   title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?",
   description: "전통주·위스키·사케·와인에 어울리는 음식 추천. 음식을 고르면 어울리는 술도 찾아 줍니다.",
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", types: { "application/rss+xml": [{ url: "/rss.xml", title: "페어링GO 오늘의 페어링" }] } },
   openGraph: { title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?", description: "술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 찾아 줍니다.", url: "/", siteName: "페어링GO", type: "website", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "페어링GO" }] },
 };
 
