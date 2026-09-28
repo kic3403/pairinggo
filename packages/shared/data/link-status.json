@@ -1,6 +1,6 @@
 {
- "checkedAt": "2026-09-21T00:26:33.039Z",
- "total": 769,
+ "checkedAt": "2026-09-28T00:28:15.473Z",
+ "total": 831,
  "links": {
   "https://smartstore.naver.com/hangangbrewery": {
    "kind": "buy",
@@ -9,7 +9,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -21,7 +21,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -33,7 +33,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -45,7 +45,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -57,19 +57,19 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/pungjeong4season": {
    "kind": "buy",
-   "ref": "d15",
+   "ref": "d556",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -81,7 +81,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -93,7 +93,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -105,7 +105,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -117,7 +117,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -129,7 +129,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -141,7 +141,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -153,7 +153,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -165,19 +165,19 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://www.solsongju.com/": {
    "kind": "buy",
-   "ref": "d17",
+   "ref": "d170",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -189,7 +189,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -201,7 +201,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -213,7 +213,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -225,7 +225,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -237,7 +237,7 @@
    "http": 200,
    "note": "구조화 데이터 availability=OutOfStock (참고용 · 수동 확인)",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -249,7 +249,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -261,7 +261,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.thehan.kr/product/seoulnight",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -273,7 +273,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -285,7 +285,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -297,7 +297,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -309,7 +309,7 @@
    "http": 403,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -321,7 +321,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -333,7 +333,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -345,7 +345,7 @@
    "http": 429,
    "note": "",
    "finalUrl": "https://smartstore.naver.com/back_streetmakgeolli/products/11459585811",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -357,7 +357,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -369,7 +369,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -381,7 +381,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -393,7 +393,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -405,7 +405,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -417,7 +417,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -429,7 +429,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -441,7 +441,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://jejusaemju.co.kr/login?back_url=L2dvc29yaTAy",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -453,7 +453,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.paegiljumall.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -465,7 +465,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -477,7 +477,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -489,7 +489,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -497,11 +497,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=22014303&pavlnDivCd=01": {
    "kind": "buy",
    "ref": "d54",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -513,7 +513,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -525,7 +525,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -537,7 +537,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -549,7 +549,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -561,7 +561,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -573,7 +573,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -585,7 +585,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -597,7 +597,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -609,7 +609,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -621,7 +621,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -633,7 +633,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -645,7 +645,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -657,7 +657,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -669,7 +669,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -681,7 +681,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -693,7 +693,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -705,7 +705,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -717,7 +717,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -725,11 +725,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1055896&pavlnDivCd=02": {
    "kind": "buy",
    "ref": "d74",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -741,7 +741,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -753,7 +753,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -765,7 +765,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -777,7 +777,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -789,7 +789,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -801,7 +801,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -813,7 +813,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -825,7 +825,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -837,7 +837,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -845,11 +845,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1081012&pavlnDivCd=02": {
    "kind": "buy",
    "ref": "d83",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -861,7 +861,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -873,7 +873,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -885,7 +885,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -897,7 +897,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://samsanjujo.co.kr/product/%ED%95%B4%EB%82%A8%EB%A7%89%EA%B1%B8%EB%A6%AC-9%EB%8F%84/11/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -909,7 +909,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -921,7 +921,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -929,11 +929,11 @@
   "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1045885&pavlnDivCd=02": {
    "kind": "buy",
    "ref": "d95",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -945,7 +945,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -957,7 +957,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -969,7 +969,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -981,7 +981,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -993,7 +993,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1005,7 +1005,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1017,7 +1017,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1029,7 +1029,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1041,7 +1041,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1053,7 +1053,7 @@
    "http": 200,
    "note": "구조화 데이터 availability=OutOfStock (참고용 · 수동 확인)",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1065,7 +1065,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1077,7 +1077,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1089,7 +1089,7 @@
    "http": 200,
    "note": "구조화 데이터 availability=OutOfStock (참고용 · 수동 확인)",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1101,7 +1101,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1113,7 +1113,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1125,7 +1125,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1149,7 +1149,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1161,7 +1161,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1173,7 +1173,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1185,7 +1185,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1197,7 +1197,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1209,7 +1209,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1221,7 +1221,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1233,7 +1233,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1245,7 +1245,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.bluer.co.kr/login?redirectUrl=%2Frestaurants%2F16251",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1257,7 +1257,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1269,7 +1269,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1281,7 +1281,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1293,7 +1293,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1305,7 +1305,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1317,7 +1317,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1329,7 +1329,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1341,7 +1341,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1353,7 +1353,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1365,7 +1365,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1377,7 +1377,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1389,7 +1389,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1401,7 +1401,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1413,7 +1413,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1425,7 +1425,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1437,7 +1437,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1449,7 +1449,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1461,7 +1461,7 @@
    "http": 403,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1473,7 +1473,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.sedaily.com/article/14123106",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1485,7 +1485,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1497,7 +1497,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1509,7 +1509,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1521,7 +1521,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1533,7 +1533,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1545,7 +1545,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1557,7 +1557,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1569,7 +1569,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1581,7 +1581,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1593,7 +1593,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1605,7 +1605,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1617,7 +1617,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1629,7 +1629,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1637,11 +1637,11 @@
   "https://www.cha.go.kr/cop/bbs/selectBoardArticle.do?nttId=30195&bbsId=BBSMSTR_1008": {
    "kind": "ev",
    "ref": "d40|f29",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1653,7 +1653,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.donga.com/news/article/all/20171122/87400072/1",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1665,7 +1665,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1677,7 +1677,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1689,7 +1689,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1701,7 +1701,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1713,7 +1713,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1725,7 +1725,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1733,11 +1733,11 @@
   "https://www.korea.kr/news/reporterView.do?newsId=148952714": {
    "kind": "ev",
    "ref": "d48|f29",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1749,7 +1749,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1761,7 +1761,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1773,7 +1773,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1785,7 +1785,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1797,7 +1797,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1809,7 +1809,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1821,7 +1821,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1833,7 +1833,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1845,7 +1845,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1853,11 +1853,11 @@
   "https://www.joongang.co.kr/article/23665041": {
    "kind": "ev",
    "ref": "d64|f07",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1869,7 +1869,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1881,7 +1881,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1893,7 +1893,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1901,11 +1901,11 @@
   "https://www.jindo.go.kr/home/sub.cs?m=216": {
    "kind": "ev",
    "ref": "d60|f34",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1917,7 +1917,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1929,7 +1929,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1941,7 +1941,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1953,7 +1953,7 @@
    "http": null,
    "note": "EAI_AGAIN",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1965,7 +1965,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1977,7 +1977,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -1989,7 +1989,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2001,7 +2001,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2013,7 +2013,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2025,7 +2025,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2037,7 +2037,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2049,7 +2049,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2061,7 +2061,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2069,11 +2069,11 @@
   "https://soollife.com/?p=46335": {
    "kind": "ev",
    "ref": "d71|f15",
-   "status": "ok",
-   "http": 200,
+   "status": "blocked",
+   "http": 403,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2085,7 +2085,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.inews365.com/news/article.html?no=641730",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2097,7 +2097,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.sportsseoul.com/news/read/708080",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2109,7 +2109,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2121,7 +2121,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2133,7 +2133,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2145,7 +2145,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2157,7 +2157,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2169,7 +2169,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2181,7 +2181,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2193,7 +2193,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2205,7 +2205,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2217,7 +2217,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2229,7 +2229,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2241,7 +2241,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2253,7 +2253,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2265,7 +2265,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2277,7 +2277,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2289,7 +2289,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2301,7 +2301,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2313,7 +2313,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2337,7 +2337,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2349,7 +2349,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2361,7 +2361,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2373,7 +2373,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2385,7 +2385,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2397,7 +2397,7 @@
    "http": null,
    "note": "UND_ERR_CONNECT_TIMEOUT",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2409,7 +2409,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.obsnews.co.kr/news/articleView.html?idxno=1142248",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2421,7 +2421,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2429,11 +2429,11 @@
   "https://www.cha.go.kr/cop/bbs/selectBoardArticle.do?nttId=59149&bbsId=BBSMSTR_1008": {
    "kind": "ev",
    "ref": "d24|f80",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2445,7 +2445,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2457,7 +2457,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2469,7 +2469,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2481,7 +2481,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2493,7 +2493,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2501,11 +2501,11 @@
   "https://www.cha.go.kr/cop/bbs/selectBoardArticle.do?nttId=30437&bbsId=BBSMSTR_1008": {
    "kind": "ev",
    "ref": "d54|f70",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2517,7 +2517,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2529,7 +2529,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2541,7 +2541,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2553,7 +2553,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2565,7 +2565,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2577,7 +2577,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2589,7 +2589,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2601,7 +2601,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2613,7 +2613,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2625,7 +2625,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2637,7 +2637,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2649,7 +2649,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2661,7 +2661,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2673,7 +2673,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2685,7 +2685,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2697,7 +2697,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2709,7 +2709,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2721,7 +2721,7 @@
    "http": null,
    "note": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2733,7 +2733,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2745,7 +2745,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2757,7 +2757,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2769,7 +2769,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://bravo.etoday.co.kr/view/atc_view/10208",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2781,7 +2781,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.maisonkorea.com/food/2024/09/%eb%8f%84%ec%a0%84-%ec%a0%84%ed%86%b5%ec%a3%bc-%ea%b3%81%eb%93%a4%ec%9e%84-%ec%95%88%ec%a3%bc-%eb%a7%8c%eb%93%a4%ea%b8%b0/?utm_source=naver&utm_medium=partnership",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2793,7 +2793,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2805,7 +2805,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2817,7 +2817,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2829,7 +2829,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2841,7 +2841,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2853,7 +2853,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2865,7 +2865,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2877,7 +2877,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2889,7 +2889,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2901,7 +2901,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2913,7 +2913,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2925,7 +2925,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2937,7 +2937,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2949,7 +2949,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2961,7 +2961,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2973,7 +2973,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2985,7 +2985,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -2997,7 +2997,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3009,7 +3009,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3021,7 +3021,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3033,7 +3033,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3045,7 +3045,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3057,7 +3057,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3069,7 +3069,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.slist.kr/news/articleView.html?idxno=39466",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3081,7 +3081,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3093,7 +3093,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3105,7 +3105,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3117,7 +3117,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3129,7 +3129,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3141,7 +3141,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3153,7 +3153,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3165,7 +3165,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3177,7 +3177,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3189,7 +3189,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3201,7 +3201,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3213,7 +3213,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3225,7 +3225,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3237,7 +3237,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3249,7 +3249,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3261,7 +3261,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3273,7 +3273,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3285,7 +3285,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3297,7 +3297,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3309,7 +3309,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3321,7 +3321,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3333,7 +3333,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3345,7 +3345,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3357,7 +3357,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3369,7 +3369,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3381,7 +3381,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3393,7 +3393,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3405,7 +3405,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3417,7 +3417,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://bravo.etoday.co.kr/view/atc_view/13592",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3429,7 +3429,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3441,7 +3441,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3453,7 +3453,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3465,7 +3465,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3477,7 +3477,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3489,7 +3489,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3501,7 +3501,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3513,7 +3513,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3525,7 +3525,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3537,7 +3537,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3549,7 +3549,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3561,7 +3561,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3573,7 +3573,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3585,7 +3585,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3597,7 +3597,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3609,7 +3609,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3621,7 +3621,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3633,7 +3633,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3645,7 +3645,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3657,7 +3657,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3669,7 +3669,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3681,7 +3681,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3693,7 +3693,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3705,7 +3705,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3717,7 +3717,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3729,7 +3729,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3741,7 +3741,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3753,7 +3753,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3765,7 +3765,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3777,7 +3777,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3789,7 +3789,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3801,7 +3801,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3813,7 +3813,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3825,7 +3825,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3837,7 +3837,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3849,7 +3849,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3861,7 +3861,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3873,7 +3873,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3885,7 +3885,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3897,7 +3897,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3909,7 +3909,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3921,7 +3921,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3933,7 +3933,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3945,7 +3945,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3957,7 +3957,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3969,7 +3969,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3981,7 +3981,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -3993,7 +3993,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4005,7 +4005,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4017,7 +4017,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4029,7 +4029,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4041,7 +4041,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4053,7 +4053,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4065,7 +4065,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4077,7 +4077,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4089,7 +4089,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4101,7 +4101,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4113,7 +4113,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4125,7 +4125,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4137,7 +4137,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4149,7 +4149,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4161,7 +4161,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4173,7 +4173,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4185,7 +4185,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4197,7 +4197,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4209,7 +4209,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4221,7 +4221,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4233,7 +4233,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4245,7 +4245,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4257,7 +4257,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4269,7 +4269,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4281,7 +4281,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4293,7 +4293,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4305,7 +4305,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4317,7 +4317,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4329,7 +4329,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4341,7 +4341,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4353,7 +4353,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4365,7 +4365,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4377,7 +4377,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4389,7 +4389,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4401,7 +4401,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4413,7 +4413,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4425,7 +4425,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4437,7 +4437,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4449,7 +4449,7 @@
    "http": null,
    "note": "UND_ERR_CONNECT_TIMEOUT",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4461,7 +4461,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4473,7 +4473,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4485,7 +4485,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.soolsool.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4497,7 +4497,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://silobrewery.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4509,7 +4509,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.kimpo.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4521,19 +4521,19 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.chusungju.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://www.omynara.com": {
    "kind": "buy",
-   "ref": "d489",
+   "ref": "d543",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": "https://www.omynara.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4545,7 +4545,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.ehondiju.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4557,7 +4557,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4569,7 +4569,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4581,7 +4581,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://drink.ksdb.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4593,7 +4593,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4605,7 +4605,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4617,7 +4617,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4629,7 +4629,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://jhdg.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4641,7 +4641,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4653,7 +4653,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.xn--v42bo8x7wc.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4665,7 +4665,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4677,7 +4677,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.dongjinwine.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4689,7 +4689,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.koreansul.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4701,7 +4701,7 @@
    "http": 403,
    "note": "",
    "finalUrl": "https://www.dotname.co.kr/customer/event/2019/20190604_landing_dotname",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4713,7 +4713,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.bamsul.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4725,7 +4725,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4737,7 +4737,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4749,7 +4749,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4761,7 +4761,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://bokbunjaju.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4773,7 +4773,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4785,7 +4785,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4797,7 +4797,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4809,7 +4809,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.xn--399ay50bszdtxbcu.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4821,7 +4821,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.hwayang.co/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4833,7 +4833,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4845,7 +4845,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://xn--299as4kvof95ouob.com/front/html/block_state.html",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4857,7 +4857,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.samyangchoon.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4869,7 +4869,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4881,7 +4881,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.gimporicewine.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4893,7 +4893,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.duraean.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4905,7 +4905,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.grandcoteau.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4917,7 +4917,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.e-hongju.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4929,7 +4929,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.sulseam.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4941,7 +4941,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4953,7 +4953,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.woorisool.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4965,7 +4965,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4973,11 +4973,11 @@
   "http://www.baedoga.co.kr": {
    "kind": "buy",
    "ref": "d206",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
-   "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": "http://www.baedoga.co.kr/",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -4989,7 +4989,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://kokao.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5001,7 +5001,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5013,7 +5013,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5025,7 +5025,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.thehan.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5037,7 +5037,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5049,7 +5049,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://hwasimjujo.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5060,8 +5060,8 @@
    "status": "ok",
    "http": 200,
    "note": "",
-   "finalUrl": "http://www.macatto.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "finalUrl": "https://godomall.cdn-nhncommerce.com/error.html",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5073,7 +5073,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5085,7 +5085,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://chamjuga.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5097,7 +5097,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5109,7 +5109,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5121,7 +5121,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5133,7 +5133,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5145,19 +5145,19 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://expireddomains.com/domain/vincoreewinery.com?utm_source=redi",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/dancingcider": {
    "kind": "buy",
-   "ref": "d454",
+   "ref": "d540",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5169,19 +5169,19 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/ogyeri": {
    "kind": "buy",
-   "ref": "d507",
+   "ref": "d555",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5193,19 +5193,19 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://www.xn--vf4b19u.com": {
    "kind": "buy",
-   "ref": "d303",
+   "ref": "d520",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": "https://www.xn--vf4b19u.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5217,7 +5217,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://egaju.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5229,7 +5229,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://jubangjangbrewery.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5241,7 +5241,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5253,7 +5253,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5265,19 +5265,19 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/eaudelune": {
    "kind": "buy",
-   "ref": "d237",
+   "ref": "d552",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5289,7 +5289,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://kegzei.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5301,7 +5301,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5313,7 +5313,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5325,7 +5325,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5337,7 +5337,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5349,7 +5349,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5361,7 +5361,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5373,7 +5373,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5385,7 +5385,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5397,7 +5397,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://xn--399ap6v6nfgza79kktgp7y6d.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5409,7 +5409,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://xn--h50bx7nmc99h97t2wb.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5421,7 +5421,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5433,7 +5433,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.xn--399ar2xhofw9hh4o.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5445,7 +5445,7 @@
    "http": null,
    "note": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5457,19 +5457,19 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.xn--jj0bu4t8rc0w2b.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://www.insamwine.com": {
    "kind": "buy",
-   "ref": "d297",
+   "ref": "d295",
    "status": "error",
    "http": null,
    "note": "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5481,7 +5481,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5493,7 +5493,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://kingwine.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5505,7 +5505,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://hmsb.cafe24.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5517,7 +5517,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5529,7 +5529,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.corevest.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5541,7 +5541,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://3d.co.kr/shop/list.php?ca_id=1010",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5553,7 +5553,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5565,7 +5565,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5577,7 +5577,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5589,7 +5589,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5601,7 +5601,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://xn--hg3b13gpoq4muubvz4a.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5613,7 +5613,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5625,7 +5625,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5637,7 +5637,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5649,7 +5649,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5661,7 +5661,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5673,7 +5673,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5685,7 +5685,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5697,7 +5697,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5709,7 +5709,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5721,19 +5721,19 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/sanmacwine": {
    "kind": "buy",
-   "ref": "d459",
+   "ref": "d535",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5745,7 +5745,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5757,7 +5757,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5769,19 +5769,19 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://xn--hu1b40gh1c27n9rc18a.kr/index.html": {
    "kind": "buy",
-   "ref": "d352",
+   "ref": "d351",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5793,7 +5793,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5805,7 +5805,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5817,7 +5817,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5829,7 +5829,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5841,7 +5841,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5853,7 +5853,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5865,7 +5865,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5877,31 +5877,31 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/horangmead": {
    "kind": "buy",
-   "ref": "d443",
+   "ref": "d541",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "http://www.good-tomorrow.co.kr": {
    "kind": "buy",
-   "ref": "d470",
+   "ref": "d544",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": "http://www.good-tomorrow.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5913,7 +5913,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.madeinjeju.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5925,7 +5925,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5937,7 +5937,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://yeunmi.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5949,7 +5949,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5961,7 +5961,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.xn--vj5boel1bm3l.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5973,7 +5973,7 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5985,7 +5985,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -5997,7 +5997,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6009,7 +6009,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://byulbit.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6017,11 +6017,11 @@
   "http://264wine.kr/htm/main.htm": {
    "kind": "buy",
    "ref": "d435",
-   "status": "error",
-   "http": null,
-   "note": "UND_ERR_CONNECT_TIMEOUT",
+   "status": "ok",
+   "http": 200,
+   "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6033,7 +6033,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.smartbrewery.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6045,7 +6045,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.xn--299as4kvof95ouob.com/front/html/block_state.html",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6057,7 +6057,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6069,7 +6069,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://nwine.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6081,7 +6081,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6093,7 +6093,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6105,7 +6105,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.whalecity.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6117,7 +6117,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6129,7 +6129,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6141,7 +6141,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.hahnsfarm.co.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6153,7 +6153,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://samcheok-miro.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6165,7 +6165,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://boonza.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6177,7 +6177,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6189,7 +6189,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6201,7 +6201,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://koreabrew.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6213,7 +6213,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6225,7 +6225,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6237,19 +6237,19 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/thtks99": {
    "kind": "buy",
-   "ref": "d458",
+   "ref": "d524",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6261,7 +6261,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6273,7 +6273,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6285,7 +6285,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6297,7 +6297,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6309,7 +6309,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6321,7 +6321,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6333,7 +6333,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://700jujo.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6345,7 +6345,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6353,11 +6353,11 @@
   "https://smartstore.naver.com/yd-brewery": {
    "kind": "buy",
    "ref": "d404",
-   "status": "blocked",
-   "http": 429,
+   "status": "ok",
+   "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6369,7 +6369,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6381,7 +6381,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6393,7 +6393,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6405,7 +6405,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6417,7 +6417,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6429,7 +6429,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6441,7 +6441,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6453,7 +6453,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6465,7 +6465,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6477,7 +6477,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://www.nogeumjuga.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6489,7 +6489,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6501,19 +6501,19 @@
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/gidarim34": {
    "kind": "buy",
-   "ref": "d439",
+   "ref": "d528",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6525,7 +6525,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6537,7 +6537,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6549,7 +6549,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6561,7 +6561,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6573,7 +6573,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6585,7 +6585,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6597,7 +6597,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6609,7 +6609,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6621,7 +6621,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6633,7 +6633,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6645,7 +6645,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6657,7 +6657,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6669,7 +6669,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6681,7 +6681,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "http://www.ellyeoppyunjoo.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6693,7 +6693,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6705,7 +6705,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6717,7 +6717,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6729,7 +6729,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6741,7 +6741,7 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://shopping.naver.com/fresh/traditionalalcohol/stores/100077745",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6753,31 +6753,31 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://kyungkorea.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "https://smartstore.naver.com/yemilwine": {
    "kind": "buy",
-   "ref": "d506",
+   "ref": "d542",
    "status": "blocked",
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "http://www.xn--2s2bp8gm6hx9a.kr": {
    "kind": "buy",
-   "ref": "d505",
+   "ref": "d551",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": "http://www.xn--2s2bp8gm6hx9a.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6789,31 +6789,31 @@
    "http": 200,
    "note": "",
    "finalUrl": "https://wonsoju.com/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "http://xn--2j5b27cs5d.kr": {
    "kind": "buy",
-   "ref": "d498",
+   "ref": "d545",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": "http://xn--2j5b27cs5d.kr/",
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
   },
   "http://www.mirattowine.com/index.html": {
    "kind": "buy",
-   "ref": "d500",
+   "ref": "d550",
    "status": "ok",
    "http": 200,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6825,7 +6825,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6837,7 +6837,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6849,7 +6849,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6861,7 +6861,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6873,7 +6873,7 @@
    "http": 429,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6885,7 +6885,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6897,7 +6897,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6909,7 +6909,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6921,7 +6921,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6933,7 +6933,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6945,7 +6945,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6957,7 +6957,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6969,7 +6969,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6981,7 +6981,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -6993,7 +6993,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7005,7 +7005,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7017,7 +7017,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7029,7 +7029,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7041,7 +7041,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7053,7 +7053,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7065,7 +7065,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7077,7 +7077,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7089,7 +7089,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7101,7 +7101,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7113,7 +7113,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7125,7 +7125,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7137,7 +7137,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7149,7 +7149,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7161,7 +7161,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7173,7 +7173,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7185,7 +7185,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7197,7 +7197,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7209,7 +7209,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7221,7 +7221,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7233,7 +7233,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7245,7 +7245,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7257,7 +7257,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7269,7 +7269,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7281,7 +7281,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7293,7 +7293,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7305,7 +7305,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7317,7 +7317,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7329,7 +7329,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7341,7 +7341,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7353,7 +7353,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7365,7 +7365,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7377,7 +7377,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7389,7 +7389,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7401,7 +7401,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7413,7 +7413,7 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
@@ -7425,7 +7425,391 @@
    "http": 400,
    "note": "",
    "finalUrl": null,
-   "checkedAt": "2026-09-21T00:26:33.039Z",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://m.kihya.com/goods/goods_view.php?goodsNo=1000018889": {
+   "kind": "buy",
+   "ref": "d110",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/beodeulin": {
+   "kind": "buy",
+   "ref": "d125",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://zzann.co.kr/product/%ED%99%8D%EC%82%BC%EB%AA%85%EC%A3%BC-14%EB%8F%84-375ml500ml/285/": {
+   "kind": "buy",
+   "ref": "d145",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://m.kihya.com/goods/goods_view.php?goodsNo=1000009685": {
+   "kind": "buy",
+   "ref": "d147",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://m.kihya.com/goods/goods_view.php?goodsNo=1000006817": {
+   "kind": "buy",
+   "ref": "d150",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/lesdom": {
+   "kind": "buy",
+   "ref": "d548",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://sijang.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1041633&pavlnDivCd=02": {
+   "kind": "buy",
+   "ref": "d162",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "http://www.seokiwon.com/": {
+   "kind": "buy",
+   "ref": "d167",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://daraewineshop.co.kr/": {
+   "kind": "buy",
+   "ref": "d169",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://mall.epost.go.kr/fo/goods/goodsDetailView.do?goodsCd=EA1059412&pavlnDivCd=02": {
+   "kind": "buy",
+   "ref": "d168",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://byeoljumak.com/shop_view/?idx=13": {
+   "kind": "buy",
+   "ref": "d172",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/gumisan": {
+   "kind": "buy",
+   "ref": "d187",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "http://www.nakchun.co.kr/": {
+   "kind": "buy",
+   "ref": "d502",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://www.soolmarket.com/goods/goods_view.php?goodsNo=1000000471": {
+   "kind": "buy",
+   "ref": "d200",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://newvin.co.kr/": {
+   "kind": "buy",
+   "ref": "d250",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://soltimaeul.co.kr/": {
+   "kind": "buy",
+   "ref": "d261",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://shopping.naver.com/fresh/traditionalalcohol/stores/100112678": {
+   "kind": "buy",
+   "ref": "d289",
+   "status": "dead",
+   "http": 404,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 1,
+   "firstBad": "2026-09-28T00:28:15.473Z",
+   "confirmedBad": false
+  },
+  "https://www.ksdb.co.kr": {
+   "kind": "buy",
+   "ref": "d32",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": "https://www.ksdb.co.kr/",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://m.kihya.com/goods/goods_view.php?goodsNo=1000017265": {
+   "kind": "buy",
+   "ref": "d396",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/sjsangon": {
+   "kind": "buy",
+   "ref": "d471",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://m.kihya.com/goods/goods_view.php?goodsNo=1000007323": {
+   "kind": "buy",
+   "ref": "d475",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://m.kihya.com/goods/goods_view.php?goodsNo=1000008451": {
+   "kind": "buy",
+   "ref": "d477",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/dokbrewery": {
+   "kind": "buy",
+   "ref": "d521",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/malgunsooldoga": {
+   "kind": "buy",
+   "ref": "d529",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/mayday82": {
+   "kind": "buy",
+   "ref": "d531",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://xn--h40bv14bv7ak6p.kr/product/list.html": {
+   "kind": "buy",
+   "ref": "d527",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://www.jpjujo.com": {
+   "kind": "buy",
+   "ref": "d533",
+   "status": "ok",
+   "http": 200,
+   "note": "",
+   "finalUrl": "https://www.jpjujo.com/",
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://smartstore.naver.com/cheongmyeongju": {
+   "kind": "buy",
+   "ref": "d557",
+   "status": "blocked",
+   "http": 429,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://thesool.com/front/find/M000000082/view.do?productId=PR00000722": {
+   "kind": "ev",
+   "ref": "d526|f67",
+   "status": "error",
+   "http": 400,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://thesool.com/front/find/M000000082/view.do?productId=PR00001016": {
+   "kind": "ev",
+   "ref": "d532|f14",
+   "status": "error",
+   "http": 400,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://thesool.com/front/find/M000000082/view.do?productId=PR00000117": {
+   "kind": "ev",
+   "ref": "d533|f53",
+   "status": "error",
+   "http": 400,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
+   "badStreak": 0,
+   "firstBad": null,
+   "confirmedBad": false
+  },
+  "https://thesool.com/front/find/M000000082/view.do?productId=PR00000824": {
+   "kind": "ev",
+   "ref": "d536|f08",
+   "status": "error",
+   "http": 400,
+   "note": "",
+   "finalUrl": null,
+   "checkedAt": "2026-09-28T00:28:15.473Z",
    "badStreak": 0,
    "firstBad": null,
    "confirmedBad": false
