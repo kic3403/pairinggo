@@ -5,6 +5,8 @@
 import type { Dataset, Drink, DrinkKind, DrinkSpec, Food, Pairing, PairingServe, SpecPrice, SrcTier } from "./types";
 import { evidenceStats } from "./pairing/confidence";
 import { evidenceFactor } from "./pairing/evidence-check";
+import { SRC_RANK } from "./data";
+import { isExpertEvidenceSource } from "./pairing/expert";
 
 const KIND_IDS: string[] = ["trad", "whisky", "sake", "wine"];
 const SERVES: string[] = ["neat", "rocks", "highball", "warm", "cold"];
@@ -64,9 +66,13 @@ export function foodFromRow(r: Row): Food {
   };
 }
 export function pairingFromRow(r: Row): Pairing {
-  // 대표 근거 — 2번 연속 죽은 링크는 건너뛴다(검증 크론, 2026-09-27). 살아 있는 게 없으면 첫 줄
+  // 대표 근거 — 출처 등급이 높은 것부터(양조장 공식 → 소믈리에·전문가 검수 → 매체 → 블로그 → 회원, 2026-09-28: 전문가 판정이 기존 블로그 근거에 가리지 않게),
+  // 같은 등급이면 먼저 들어온 줄. 2번 연속 죽은 링크는 건너뛴다(검증 크론, 2026-09-27). 살아 있는 게 없으면 첫 줄
   const evs = Array.isArray(r.evidence) ? r.evidence : [];
-  const ev = evs.find((e: { link_status?: string; fail_count?: number }) => evidenceFactor(e) > 0) ?? evs[0] ?? null;
+  const rank = (e: { tier?: string | null }) => (SRC_RANK as Record<string, number>)[String(e.tier ?? "")] ?? 0;
+  type Ev = { source?: string | null; url?: string | null; quote?: string | null; who?: string | null; tier?: string | null; link_status?: string; fail_count?: number };
+  const alive = (evs as Ev[]).map((e, i) => ({ e, i })).filter(({ e }) => evidenceFactor(e) > 0).sort((a, b) => rank(b.e) - rank(a.e) || a.i - b.i);
+  const ev: Ev | null = alive[0]?.e ?? (evs[0] as Ev | undefined) ?? null;
   return {
     d: r.drink_id, f: r.food_id, es: r.expert_score, reason: r.reason || "", blog: r.blog_count || 0,
     src: (r.source_tier || "profile") as SrcTier,
@@ -76,6 +82,7 @@ export function pairingFromRow(r: Row): Pairing {
     ...(r.checked_on ? { checked: String(r.checked_on).slice(0, 10) } : {}),
     ...(r.blog_lift != null ? { bl: Math.round(Number(r.blog_lift) * 1000) / 1000 } : {}),
     ...(Number(r.expert_yes) || Number(r.expert_no) ? { xp: { yes: Number(r.expert_yes) || 0, no: Number(r.expert_no) || 0 } } : {}),
+    ...(() => { const xe = alive.map(({ e }) => e).filter((e) => e.tier === "sommelier" && isExpertEvidenceSource(e.source) && e.who).map((e) => String(e.who)).slice(0, 5); return xe.length ? { xe } : {}; })(),
     ...(() => { const s = evidenceStats(Array.isArray(r.evidence) ? r.evidence : [], (r.source_tier || "profile") as SrcTier); return s.n ? { evn: s.n, evs: s.e } : {}; })(),
   };
 }

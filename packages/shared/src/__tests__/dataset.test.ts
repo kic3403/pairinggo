@@ -61,3 +61,19 @@ describe("zod 스키마", () => {
     expect(EventBatchSchema.safeParse({ events: [] }).success).toBe(false);
   });
 });
+
+import { pairingFromRow } from "../rows";
+describe("pairingFromRow 대표 근거", () => {
+  it("출처 등급이 높은 근거가 대표 — 전문가 검수(sommelier)가 블로그를 앞선다, 죽은 링크는 건너뛴다", () => {
+    const row = { drink_id: "d1", food_id: "f1", expert_score: 90, reason: "", blog_count: 0, source_tier: "sommelier", evidence: [
+      { source: "블로그", url: "https://blog.naver.com/a/1", quote: "b", who: null, tier: "blog" },
+      { source: "전문가 검수 · 홍길동 소믈리에", url: null, quote: "s", who: "홍길동 소믈리에", tier: "sommelier" },
+      { source: "공식", url: "https://x.com/dead", quote: "o", who: null, tier: "official", link_status: "dead", fail_count: 2 },
+    ], expert_yes: 1, expert_no: 0 };
+    const p = pairingFromRow(row as never);
+    expect(p.ev?.who).toBe("홍길동 소믈리에");
+    expect(p.xp).toEqual({ yes: 1, no: 0 });
+    expect(p.evn).toBe(2);
+    expect(p.xe).toEqual(["홍길동 소믈리에"]);
+  });
+});

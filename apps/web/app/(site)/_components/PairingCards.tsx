@@ -72,6 +72,8 @@ export function PairingCards({ items }: { items: CardItem[] }) {
                 {p.ev.who && <span className="muted"> — {p.ev.who}</span>}
               </blockquote>
             )}
+            {/* 전문가 검수(docs/27) — 어울린다고 판정한 전문가 이름. 대표 인용이 양조장 공식이면 여기로만 보인다 */}
+            {p.xe && p.xe.length > 0 && <p className="xexperts"><span className="xexperts-label">전문가 검수</span>{p.xe.slice(0, 3).join(" · ")}{p.xe.length > 3 && <span className="muted"> 외 {p.xe.length - 3}</span>}</p>}
             <div className="src">
               <span className={`pick ${pick}`}>{PICK_LABEL[pick]}</span>
               <span className="muted">{PICK_DETAIL[p.src ?? "profile"]}</span>

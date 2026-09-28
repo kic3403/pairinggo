@@ -374,6 +374,8 @@ p { margin: 0 0 12px; }
 .xbadge.rec { background: #E9F3EA; color: #2F6B3A; border: 1px solid #CBE3CF; }
 .xbadge.strong { background: #2F6B3A; color: #fff; }
 .xbadge.best { background: var(--navy); color: #fff; }
+.card .xexperts { margin: 8px 0 0; font-size: 12.5px; color: var(--ink2); }
+.card .xexperts-label { display: inline-block; margin-right: 6px; padding: 1px 7px; border-radius: 999px; background: #E9F3EA; color: #2F6B3A; font-weight: 700; font-size: 11.5px; }
 /* 전문가 검수 화면 */
 .xq .name a { color: inherit; text-decoration: none; }
 .xq .name a:hover { text-decoration: underline; }

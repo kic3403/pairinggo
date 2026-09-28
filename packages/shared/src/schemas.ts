@@ -37,7 +37,7 @@ export const PairingSchema = z.object({
   ev: z.object({ source: z.string().nullable().optional(), url: z.string().nullable().optional(), quote: z.string().nullable().optional(), who: z.string().nullable().optional() }).optional(),
   pf: z.object({ s: z.number(), plus: z.array(z.string()), minus: z.array(z.string()) }).optional(),
   serve: z.enum(["neat", "rocks", "highball", "warm", "cold"]).nullable().optional(), checked: z.string().nullable().optional(),
-  xp: z.object({ yes: z.number(), no: z.number() }).optional(),
+  xp: z.object({ yes: z.number(), no: z.number() }).optional(), xe: z.array(z.string()).optional(),
 }).passthrough();
 
 export const DatasetSchema = z.object({

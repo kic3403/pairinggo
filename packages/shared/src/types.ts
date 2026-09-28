@@ -98,6 +98,8 @@ export type Pairing = {
   bl?: number;
   /** 전문가 판정 수(2026-09-28, pairing/expert.ts — pairings.expert_yes/expert_no, 승인 전문가만). 배지는 expertBadge(xp) */
   xp?: { yes: number; no: number };
+  /** 어울린다고 검수한 전문가 표시명(살아 있는 sommelier 근거 중 "전문가 검수 · " 줄, 최대 5) — 카드에 이름을 보인다 */
+  xe?: string[];
 };
 export type PairingServe = "neat" | "rocks" | "highball" | "warm" | "cold";
 export const SERVE_LABEL: Record<PairingServe, string> = { neat: "니트", rocks: "온더록스", highball: "하이볼", warm: "따뜻하게", cold: "차갑게" };
