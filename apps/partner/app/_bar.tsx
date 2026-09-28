@@ -27,9 +27,9 @@ const TABS = [
 ] as const;
 
 /** 아래 탭 — 승인된 매장 화면에서만 */
-/** 판매 탭은 양조장만 — 전통주 제조자만 통신판매할 수 있다(docs/22). 페어링 탭도 양조장만(우리 술의 공식 페어링, docs/25) */
+/** 판매 탭은 양조장만 — 전통주 제조자만 통신판매할 수 있다(docs/22). 페어링 탭은 양조장·식당(2026-09-29 식당 추천 페어링 추가) */
 export function Tabs({ active, kind = "restaurant" }: { active: (typeof TABS)[number]["key"]; kind?: string }) {
-  const tabs = TABS.filter((t) => (t.key !== "sell" && t.key !== "pairings") || kind === "brewery");
+  const tabs = TABS.filter((t) => (t.key === "sell" ? kind === "brewery" : t.key === "pairings" ? kind === "brewery" || kind === "restaurant" : true));
   return (
     <nav className="tabs" aria-label="파트너 메뉴">
       {tabs.map((t) => <Link key={t.key} href={t.href} aria-current={t.key === active ? "page" : undefined}>{t.label}</Link>)}
