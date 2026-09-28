@@ -27,7 +27,8 @@
     "./partner-pairings": "./src/partner-pairings.ts",
     "./label-read": "./src/label-read.ts",
     "./evidence-check": "./src/evidence-check.ts",
-    "./evidence-mine": "./src/evidence-mine.ts"
+    "./evidence-mine": "./src/evidence-mine.ts",
+    "./ai-guard": "./src/ai-guard.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

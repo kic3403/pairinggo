@@ -7,6 +7,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
+import { aiGuarded } from "./ai-guard";
 import type { MenuImageType } from "./menu-read";
 
 export const labelReadConfigured = () => !!process.env.ANTHROPIC_API_KEY;
@@ -41,7 +42,7 @@ ${drinks.join(", ")}`;
 export type LabelReadResult = { names: string[]; brewery: string | null; abv: number | null; kind: string | null; catalogName: string | null; note: string; model: string };
 
 export async function readLabelImage(image: { type: MenuImageType; data: string }, drinks: string[]): Promise<LabelReadResult> {
-  const response = await anthropic().beta.messages.parse({
+  const response = await aiGuarded("label-read", () => anthropic().beta.messages.parse({
     model: "claude-opus-5",
     max_tokens: 2000,
     betas: ["server-side-fallback-2026-07-01"],
@@ -55,7 +56,7 @@ export async function readLabelImage(image: { type: MenuImageType; data: string 
         { type: "text" as const, text: "이 술 라벨 사진의 제품 이름과 정보를 읽어 주세요." },
       ],
     }],
-  });
+  }));
   if (response.stop_reason === "refusal") throw new Error("이 사진은 읽지 못했어요. 라벨이 잘 보이게 다시 찍어 주세요");
   const out = response.parsed_output;
   if (!out) throw new Error("읽은 결과를 해석하지 못했어요. 다시 시도해 주세요");

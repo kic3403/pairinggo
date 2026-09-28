@@ -10,6 +10,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
+import { AiUnavailableError, aiGuarded } from "./ai-guard";
 import { cleanVolume, parseAbv, parsePrice, type MenuReadRow } from "@pairinggo/shared";
 
 export const menuReadConfigured = () => !!process.env.ANTHROPIC_API_KEY;
@@ -61,7 +62,7 @@ export type MenuReadResult = { items: MenuReadRow[]; note: string; model: string
 
 /** catalog: 카탈로그 술·음식 이름(요청마다 같은 순서로 — 지시문이 캐시된다) */
 export async function readMenuImages(images: { type: MenuImageType; data: string }[], catalog: { drinks: string[]; foods: string[] }): Promise<MenuReadResult> {
-  const response = await anthropic().beta.messages.parse({
+  const response = await aiGuarded("menu-read", () => anthropic().beta.messages.parse({
     model: "claude-opus-5",
     max_tokens: 16000,
     betas: ["server-side-fallback-2026-07-01"],
@@ -75,7 +76,7 @@ export async function readMenuImages(images: { type: MenuImageType; data: string
         { type: "text" as const, text: images.length > 1 ? `메뉴판 사진 ${images.length}장입니다. 모든 장의 음식과 술을 한 표로 읽어 주세요.` : "이 메뉴판 사진의 음식과 술을 읽어 주세요." },
       ],
     }],
-  });
+  }));
   if (response.stop_reason === "refusal") throw new Error("이 사진은 읽지 못했어요. 메뉴판이 잘 보이게 다시 찍어 주세요");
   if (response.stop_reason === "max_tokens") throw new Error("메뉴가 너무 많아요. 사진을 나눠서 올려 주세요");
   const out = response.parsed_output;
@@ -106,6 +107,7 @@ export function checkMenuImages(raw: unknown): { ok: true; images: { type: MenuI
 
 /** API 라우트 공용 — SDK 오류를 화면 안내로 */
 export function menuReadError(e: unknown): { status: number; error: string } {
+  if (e instanceof AiUnavailableError) return { status: 503, error: "AI 사진 읽기가 잠시 멈췄어요. 직접 적거나 이름으로 검색해 주세요" };
   if (e instanceof Anthropic.RateLimitError) return { status: 429, error: "잠시 요청이 많아요. 조금 뒤 다시 시도해 주세요" };
   if (e instanceof Anthropic.AuthenticationError) return { status: 503, error: "AI 키가 올바르지 않아요 — ANTHROPIC_API_KEY를 확인해 주세요" };
   if (e instanceof Anthropic.BadRequestError) { console.warn("[menu-read]", e.message); return { status: 400, error: "사진을 읽지 못했어요. 다른 사진으로 시도해 주세요" }; }

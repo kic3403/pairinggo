@@ -7,6 +7,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
+import { AiUnavailableError, aiGuarded } from "./ai-guard";
 import type { ReceiptRead } from "@pairinggo/shared";
 
 export const receiptReadConfigured = () => !!process.env.ANTHROPIC_API_KEY;
@@ -43,7 +44,7 @@ const SYSTEM = `당신은 한국 식당 영수증(카드 전표·현금영수증
 카드번호·고객 이름·회원번호 같은 개인정보는 어떤 칸에도 옮기지 마세요.`;
 
 export async function readReceipt(image: { type: "image/jpeg"; data: string }): Promise<ReceiptRead> {
-  const response = await anthropic().beta.messages.parse({
+  const response = await aiGuarded("receipt-read", () => anthropic().beta.messages.parse({
     model: "claude-opus-5",
     max_tokens: 2000,
     betas: ["server-side-fallback-2026-07-01"],
@@ -57,7 +58,7 @@ export async function readReceipt(image: { type: "image/jpeg"; data: string }): 
         { type: "text", text: "이 영수증의 값을 읽어 주세요." },
       ],
     }],
-  });
+  }));
   if (response.stop_reason === "refusal") throw new Error("이 사진은 읽지 못했어요 — 영수증이 잘 보이게 다시 찍어 주세요");
   const o = response.parsed_output;
   if (!o) throw new Error("영수증을 읽지 못했어요 — 다시 시도해 주세요");
@@ -72,6 +73,7 @@ export async function readReceipt(image: { type: "image/jpeg"; data: string }): 
 
 /** SDK 오류 → 화면 안내 */
 export function receiptReadError(e: unknown): { status: number; error: string } {
+  if (e instanceof AiUnavailableError) return { status: 503, error: "영수증 인증이 잠시 멈췄어요. 이 매장을 예약해 방문하면 리뷰를 쓸 수 있어요" };
   if (e instanceof Anthropic.RateLimitError) return { status: 429, error: "잠시 요청이 많아요. 조금 뒤 다시 시도해 주세요" };
   if (e instanceof Anthropic.AuthenticationError) return { status: 503, error: "영수증 인증을 준비하고 있어요" };
   if (e instanceof Anthropic.BadRequestError) return { status: 400, error: "사진을 읽지 못했어요. 다른 사진으로 시도해 주세요" };

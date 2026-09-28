@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
 import { dashboard } from "@/lib/admin-data";
 import { openErrorCount } from "@pairinggo/server/errors";
+import { aiStatus } from "@pairinggo/server/ai-guard";
 import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -10,9 +11,10 @@ export default async function AdminHome() {
   await requireAdmin();
   // 카카오맵에 아직 안 이어진 직접 입력 매장 — 연결 전에는 검색·예약에 안 나온다(2026-09-27 사용자 제보: 파트너가 매장 정보를 넣었는데 검색에 없음)
   const unlinked = async () => { const sb = db(); if (!sb) return 0; const { count } = await sb.from("merchants").select("id", { count: "exact", head: true }).eq("status", "approved").like("kakao_place_id", "manual-%"); return count ?? 0; };
-  const [d, errors, manual] = await Promise.all([dashboard(), openErrorCount(), unlinked().catch(() => 0)]);
+  const [d, errors, manual, ai] = await Promise.all([dashboard(), openErrorCount(), unlinked().catch(() => 0), aiStatus(true).catch(() => ({ downAt: null, feature: null }))]);
   return (
     <>
+      {ai.downAt && <div className="card" style={{ borderColor: "#c0362c", marginBottom: 12 }}><b style={{ color: "#c0362c" }}>AI 크레딧 소진 — 메뉴판·라벨·영수증 사진 읽기가 멈췄어요</b> <span className="muted">({new Date(ai.downAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}, {ai.feature})</span><div className="muted" style={{ marginTop: 4 }}>Anthropic 콘솔(console.anthropic.com) → Settings → Billing에서 충전하세요. 충전 뒤 30분 안에 다음 사용 때 저절로 다시 시도하고, 되면 이 경고가 사라집니다.</div></div>}
       {errors > 0 && <div className="card" style={{ borderColor: "#c0362c", marginBottom: 12 }}><b style={{ color: "#c0362c" }}>최근 24시간 운영 오류 {errors}건</b> <Link href="/admin/errors">확인하기 →</Link></div>}
       {manual > 0 && <div className="card" style={{ borderColor: "#B8860B", marginBottom: 12 }}><b style={{ color: "#8a6508" }}>카카오맵에 연결 안 된 직접 입력 매장 {manual}곳</b> — 연결 전에는 페어링GO 검색·예약에 나오지 않아요. <Link href="/admin/partners">카카오맵 장소 연결 →</Link></div>}
       <h2 style={{ margin: "0 0 4px" }}>대시보드</h2>

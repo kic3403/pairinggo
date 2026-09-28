@@ -9,6 +9,7 @@ import {
   cleanReviewInput, kstParts, receiptKey, receiptProblem, reviewStats, RECEIPT_READS_PER_DAY, REVIEW_PHOTO_BUCKET, REVIEW_REPORT_HIDE, REVIEWS_PER_DAY,
   type PublicReview, type ReviewStats, type ReviewVerifyKind, isPlaceId } from "@pairinggo/shared";
 import { readReceipt, receiptReadConfigured, receiptReadError } from "@pairinggo/server/receipt-read";
+import { aiPaused, aiStatus } from "@pairinggo/server/ai-guard";
 import { reportError } from "@pairinggo/server/errors";
 import { db } from "./db";
 import { placeBase } from "./place-detail";
@@ -78,7 +79,7 @@ export async function reviewGate(userId: string, kakaoId: string): Promise<Revie
   ]);
   const used = new Set((mine.data ?? []).map((r) => String(r.reservation_id ?? "")));
   return {
-    phoneVerified: !!u?.phone_verified_at, ownerBlocked: owner, receiptAvailable: receiptReadConfigured(),
+    phoneVerified: !!u?.phone_verified_at, ownerBlocked: owner, receiptAvailable: receiptReadConfigured() && !aiPaused(await aiStatus().catch(() => ({ downAt: null, feature: null }))),
     reservations: (done.data ?? []).filter((r) => !used.has(String(r.id))).map((r) => ({ id: String(r.id), date: String(r.visit_date), time: String(r.visit_time ?? "").slice(0, 5) })),
     myReviewIds: (mine.data ?? []).map((r) => Number(r.id)),
   };
