@@ -12,6 +12,7 @@
     "./ratings": "./src/pairing/ratings.ts",
     "./pick": "./src/pairing/pick.ts",
     "./member": "./src/pairing/member.ts",
+    "./expert": "./src/pairing/expert.ts",
     "./drink-review": "./src/pairing/drink-review.ts",
     "./drink-request": "./src/drink-request.ts",
     "./notifications": "./src/notifications.ts",

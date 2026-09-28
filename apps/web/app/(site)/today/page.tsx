@@ -12,6 +12,7 @@ import { getCatalog } from "@/lib/catalog";
 import DetailMedia, { KIND_TONE } from "../_components/DetailMedia";
 import ExtLink from "../_components/ExtLink";
 import GradeBadge from "../_components/GradeBadge";
+import ExpertBadge from "../_components/ExpertBadge";
 import Heart from "../_components/Heart";
 import ShareButton from "../_components/ShareButton";
 
@@ -70,6 +71,7 @@ export default async function TodayPage() {
           </Link>
         </div>
         <div className="today-grade">
+          <ExpertBadge p={p} />
           <GradeBadge grade={gradeOf(p)} title={`어울림 ${pairingScore(p)}`} />
           {confidenceOf(p) !== "estimate" && <span className={`conf ${confidenceOf(p)}`}>{confidenceText(p)}{p.checked ? ` · ${p.checked.slice(0, 7).replace("-", ".")} 확인` : ""}</span>}
           <span className="small muted">{SRC_LABEL[p.src ?? "profile"]}</span>

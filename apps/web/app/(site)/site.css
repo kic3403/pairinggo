@@ -369,6 +369,20 @@ p { margin: 0 0 12px; }
 .grade.best { background: var(--food); color: #fff; }
 .grade.good { background: var(--navy-soft); color: var(--navy-ink); border: 1px solid #C9D4E5; }
 .grade.try { background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
+/* 전문가 검수 배지(docs/27) — 어울림 2명 추천 · 5명 적극 추천 · 10명 Best. 전문가픽 녹색 계열 → 진한 녹색 → 남색 채움 */
+.xbadge { display: inline-flex; align-items: center; flex: none; padding: 2px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 800; white-space: nowrap; cursor: help; }
+.xbadge.rec { background: #E9F3EA; color: #2F6B3A; border: 1px solid #CBE3CF; }
+.xbadge.strong { background: #2F6B3A; color: #fff; }
+.xbadge.best { background: var(--navy); color: #fff; }
+/* 전문가 검수 화면 */
+.xq .name a { color: inherit; text-decoration: none; }
+.xq .name a:hover { text-decoration: underline; }
+.xv.yes { border-color: #2F6B3A; color: #2F6B3A; }
+.xv.no { border-color: var(--food); color: var(--food-ink); }
+.xverdict { flex: none; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--bg2); color: var(--ink2); }
+.xverdict.yes { background: #E9F3EA; color: #2F6B3A; }
+.xverdict.no { background: var(--food-soft); color: var(--food-ink); }
+.toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-size: 14px; z-index: 50; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
 
 /* 페어링 묶음 — 전문가픽(양조장·소믈리에) · 대중픽(블로그·유튜브·매체) · 맛 분석(추정). 탭은 data-show로 카드를 거른다 */
 .pick-tabs { margin: 12px 0 10px; }

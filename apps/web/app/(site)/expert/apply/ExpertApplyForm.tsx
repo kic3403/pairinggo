@@ -2,7 +2,8 @@
 /** 전문가 신청 폼 — 실명·소속·직함·소개·증빙 사진(≤3) + 실명·소속 공개 동의. 표시명은 적는 대로 미리 보여 준다(shared expertDisplayName) */
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { EXPERT_DOCS_MAX, EXPERT_INTRO_MAX, EXPERT_TITLES, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, expertApplicationProblem, expertDisplayName } from "@pairinggo/shared";
+import { EXPERT_DOCS_MAX, EXPERT_INTRO_MAX, EXPERT_TITLES, expertApplicationProblem, expertDisplayName } from "@pairinggo/shared/expert";
+import { MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES } from "@pairinggo/shared/member";
 
 type Defaults = { realName: string; affiliation: string; title: string; intro: string } | null;
 

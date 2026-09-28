@@ -6,6 +6,7 @@ import Link from "next/link";
 import CardLink from "./CardLink";
 import ExtLink from "./ExtLink";
 import GradeBadge from "./GradeBadge";
+import ExpertBadge from "./ExpertBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
 import ProfileChart from "./ProfileChart";
@@ -45,6 +46,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
             <div className="top">
               <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
               {p.serve && <span className="badge n" title="음용 방식">{SERVE_LABEL[p.serve]}</span>}
+              <ExpertBadge p={p} />
               <GradeBadge grade={grade} title={explain} />
             </div>
             {sub && <div className="small muted" style={{ marginTop: 2 }}>{sub}</div>}

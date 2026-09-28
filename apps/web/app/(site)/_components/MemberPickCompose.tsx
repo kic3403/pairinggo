@@ -9,31 +9,7 @@ import { MEMBER_PICK_NOTE_MAX, validateMemberNote } from "@pairinggo/shared/memb
 import { track } from "@/lib/track";
 import { useSaved } from "./SavedProvider";
 
-type Opt = { id: string; name: string };
-
-function Picker({ label, placeholder, options, value, onChange }: { label: string; placeholder: string; options: Opt[]; value: { q: string; picked: Opt | null }; onChange: (v: { q: string; picked: Opt | null }) => void }) {
-  const matches = useMemo(() => {
-    const s = value.q.trim().toLowerCase().replace(/\s+/g, "");
-    if (!s) return [];
-    return options.filter((o) => o.name.toLowerCase().replace(/\s+/g, "").includes(s)).slice(0, 6);
-  }, [value.q, options]);
-  const exact = matches.find((o) => o.name.replace(/\s+/g, "") === value.q.trim().replace(/\s+/g, ""));
-  const chosen = value.picked ?? exact ?? null;
-  return (
-    <>
-      <label className="mp-field">
-        <span>{label}{chosen && <em className="mp-chosen"> ✓ {chosen.name}</em>}</span>
-        <input value={value.q} onChange={(e) => onChange({ q: e.target.value, picked: null })} placeholder={placeholder} autoComplete="off" />
-      </label>
-      {!chosen && matches.length > 0 && (
-        <ul className="mp-sugg" role="listbox">
-          {matches.map((o) => <li key={o.id}><button type="button" onClick={() => onChange({ q: o.name, picked: o })}>{o.name}</button></li>)}
-        </ul>
-      )}
-      {!chosen && value.q.trim() && matches.length === 0 && <p className="small muted" style={{ margin: "-2px 0 8px" }}>목록에 없는 이름이에요. 그대로 보내면 확인한 뒤 게시돼요.</p>}
-    </>
-  );
-}
+import CatalogPicker, { type Opt } from "./CatalogPicker";
 
 export default function MemberPickCompose({ drinks, foods }: { drinks: Opt[]; foods: Opt[] }) {
   const { ready, loggedIn } = useSaved();
@@ -92,8 +68,8 @@ export default function MemberPickCompose({ drinks, foods }: { drinks: Opt[]; fo
       ) : (
         <form className="mp-form" onSubmit={submit}>
           <div className="mp-head"><b>추천 남기기</b><span className="small muted">올리면 바로 회원 추천에 보여요. 닉네임만 표시돼요.</span></div>
-          <Picker label="전통주" placeholder="예: 복순도가, 화요" options={drinks} value={drink} onChange={setDrink} />
-          <Picker label="음식" placeholder="예: 육회, 감자전" options={foods} value={food} onChange={setFood} />
+          <CatalogPicker label="전통주" placeholder="예: 복순도가, 화요" options={drinks} value={drink} onChange={setDrink} />
+          <CatalogPicker label="음식" placeholder="예: 육회, 감자전" options={foods} value={food} onChange={setFood} />
           <label className="mp-field">
             <span>한 줄 이유 <em className="muted">({note.length}/{MEMBER_PICK_NOTE_MAX})</em></span>
             <textarea value={note} onChange={(e) => setNote(e.target.value.slice(0, MEMBER_PICK_NOTE_MAX))} rows={3} placeholder="어디서 어떻게 먹었는지, 왜 잘 맞았는지" />
