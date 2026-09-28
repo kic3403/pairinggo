@@ -48,7 +48,7 @@ export default function ExpertApplyForm({ defaults, nick }: { defaults: Defaults
     for (const f of files) fd.append("doc", f);
     const r = await fetch("/api/expert/apply", { method: "POST", body: fd }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
-    if (!r?.ok) { setError(j?.error ?? "신청하지 못했어요 — 잠시 뒤 다시 시도해 주세요"); setBusy(false); return; }
+    if (!r?.ok) { setError(j?.error ?? "요청하지 못했어요 — 잠시 뒤 다시 시도해 주세요"); setBusy(false); return; }
     router.refresh();
   }
 
@@ -81,7 +81,7 @@ export default function ExpertApplyForm({ defaults, nick }: { defaults: Defaults
         <span><em style={{ fontStyle: "normal", color: "var(--food-ink)", fontWeight: 600 }}>[필수]</em> {namePrivate ? "닉네임" : "실명"}과 소속(소속이 없으면 직함), 소개, 판정과 한 줄 이유를 페어링 카드와 전문가 화면에 공개하는 데 동의합니다. {namePrivate ? "실명은 운영자만 자격 확인에 보고 공개하지 않습니다. " : ""}증빙 사진과 연락처는 공개하지 않습니다.</span>
       </label>
       {error && <p className="form-error">{error}</p>}
-      <button type="submit" className="btn p" style={{ width: "100%" }} disabled={busy}>{busy ? "보내는 중…" : "신청하기"}</button>
+      <button type="submit" className="btn p" style={{ width: "100%" }} disabled={busy}>{busy ? "보내는 중…" : "전문가 등급 요청하기"}</button>
     </form>
   );
 }

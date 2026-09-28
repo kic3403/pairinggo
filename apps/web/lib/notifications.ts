@@ -55,8 +55,8 @@ export async function myActivity(uid: string): Promise<ActivityItem[]> {
   if (x) {
     const why = x.reject_reason ? ` · ${x.reject_reason}` : "";
     out.push(x.status === "approved"
-      ? { id: `expert${x.updated_at}`, kind: "expert", text: "전문가로 승인됐어요 — 페어링 검수를 시작해 보세요", href: "/expert", at: x.updated_at }
-      : { id: `expert${x.updated_at}`, kind: "expert", text: x.status === "rejected" ? `전문가 신청이 반려됐어요${why}` : `전문가 활동이 정지됐어요${why}`, href: "/my#expert", at: x.updated_at });
+      ? { id: `expert${x.updated_at}`, kind: "expert", text: "전문가 등급으로 승인됐어요 — 페어링 검수를 시작해 보세요", href: "/expert", at: x.updated_at }
+      : { id: `expert${x.updated_at}`, kind: "expert", text: x.status === "rejected" ? `전문가 등급 요청이 반려됐어요${why}` : `전문가 활동이 정지됐어요${why}`, href: "/my#expert", at: x.updated_at });
   }
   return out.sort((a, b) => (a.at < b.at ? 1 : -1)).slice(0, 30);
 }

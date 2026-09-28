@@ -54,8 +54,8 @@ export function requestPush(query: string, status: "done" | "rejected", drinkNam
 }
 /** 전문가 신청 결과(2026-09-28, pairing/expert.ts) — 승인이면 검수 화면으로, 반려·정지는 사유와 함께 마이페이지로 */
 export function expertPush(status: "approved" | "rejected" | "suspended", reason?: string | null): PushMessage {
-  if (status === "approved") return { title: "전문가로 승인됐어요", body: "페어링 검수를 시작해 보세요 — 판정은 실명과 함께 카드에 실려요", url: "/expert", tag: "expert" };
-  if (status === "rejected") return { title: "전문가 신청이 반려됐어요", body: reason ? `사유: ${reason.slice(0, 80)}` : "마이페이지에서 다시 신청할 수 있어요", url: "/my#expert", tag: "expert" };
+  if (status === "approved") return { title: "전문가 등급으로 승인됐어요", body: "페어링 검수를 시작해 보세요 — 판정은 실명과 함께 카드에 실려요", url: "/expert", tag: "expert" };
+  if (status === "rejected") return { title: "전문가 등급 요청이 반려됐어요", body: reason ? `사유: ${reason.slice(0, 80)}` : "마이페이지에서 다시 요청할 수 있어요", url: "/my#expert", tag: "expert" };
   return { title: "전문가 활동이 정지됐어요", body: reason ? `사유: ${reason.slice(0, 80)}` : "문의는 마이페이지 안내를 참고해 주세요", url: "/my#expert", tag: "expert" };
 }
 export function likePush(nick: string, drinkName: string, foodName: string): PushMessage {

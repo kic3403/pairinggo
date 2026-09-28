@@ -21,7 +21,7 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
   const fmt = (s: string | null) => (s ? new Date(s).toLocaleString("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "short", timeStyle: "short" }) : "-");
   return (
     <>
-      <h2 style={{ margin: "0 0 8px" }}>전문가 검수 <span className="muted">심사 대기 {waiting} · {tab ? `${EXPERT_STATUS_LABEL[tab]} ${rows.length}` : `전체 ${all.length}`}</span></h2>
+      <h2 style={{ margin: "0 0 8px" }}>전문가 등급 <span className="muted">등급 요청 대기 {waiting} · {tab ? `${EXPERT_STATUS_LABEL[tab]} ${rows.length}` : `전체 ${all.length}`}</span></h2>
       <div className="filters">
         <Link href="/admin/experts" className={tab === null ? "on" : ""}>전체 {all.length}</Link>
         {EXPERT_STATUSES.map((s) => <Link key={s} href={`/admin/experts?status=${s}`} className={tab === s ? "on" : ""}>{EXPERT_STATUS_LABEL[s]} {all.filter((r) => r.status === s).length}</Link>)}
@@ -31,7 +31,7 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
         전문가 한 명의 "어울림"은 바로 소믈리에 근거가 되고, 2명 이상 동의하면 "전문가 추천" 배지가 붙어요. 정지하면 그 사람 판정은 배지 집계에서 빠집니다(재개하면 되살아남).
         테스트 기간에는 보수가 없어요 — 출시 뒤 협찬·자문료를 드리면 카드에 표시합니다.
       </p>
-      {rows.length === 0 ? <div className="card muted">{tab ? `${EXPERT_STATUS_LABEL[tab]} 전문가가 없어요.` : "아직 신청이 없어요."}</div> : rows.map((x, i) => (
+      {rows.length === 0 ? <div className="card muted">{tab ? `${EXPERT_STATUS_LABEL[tab]} 전문가가 없어요.` : "아직 등급 요청이 없어요."}</div> : rows.map((x, i) => (
         <div className="card" key={x.userId}>
           <div className="row" style={{ justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
             <b style={{ fontSize: 16 }}>{x.realName}{!x.namePublic && <span className="tag m" style={{ marginLeft: 6 }} title="카드에는 닉네임으로">실명 비공개 · {x.penName}</span>} <span className="muted" style={{ fontWeight: 400 }}>{x.titles.join(" · ")}{x.affiliation ? ` · ${x.affiliation}` : ""}</span></b>
@@ -40,7 +40,7 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
           <div style={{ fontSize: 13.5, marginTop: 6 }}>카드 표시명 <b>{x.displayName}</b>{x.compensation !== "none" && <span className="tag m" style={{ marginLeft: 6 }}>{x.compensation === "paid" ? "유료 자문" : "협찬"}</span>}</div>
           {x.intro && <div style={{ fontSize: 13.5, marginTop: 4 }}>{x.intro}</div>}
           <div className="muted" style={{ marginTop: 4 }}>
-            회원 {x.nick ?? "-"}{x.email ? ` · ${x.email}` : ""} · 신청 {fmt(x.appliedAt)}{x.approvedAt ? ` · 승인 ${fmt(x.approvedAt)}` : ""} · 공개 동의 {fmt(x.publicConsentAt)} · 검수 {x.reviewsCount}건
+            회원 {x.nick ?? "-"}{x.email ? ` · ${x.email}` : ""} · 요청 {fmt(x.appliedAt)}{x.approvedAt ? ` · 승인 ${fmt(x.approvedAt)}` : ""} · 공개 동의 {fmt(x.publicConsentAt)} · 검수 {x.reviewsCount}건
             {x.rejectReason && <> · 사유 <b>{x.rejectReason}</b></>}
           </div>
           {x.docPaths.length > 0 && (

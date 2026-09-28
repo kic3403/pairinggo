@@ -11,7 +11,7 @@ import { getExpert } from "@/lib/experts";
 import ExpertApplyForm from "./ExpertApplyForm";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "전문가 검수 신청 | 페어링GO", robots: { index: false } };
+export const metadata: Metadata = { title: "전문가 등급 요청 | 페어링GO", robots: { index: false } };
 
 export default async function ExpertApplyPage() {
   const session = await auth();
@@ -22,8 +22,8 @@ export default async function ExpertApplyPage() {
   return (
     <div className="wrap" style={{ maxWidth: 520 }}>
       <p className="crumb"><Link href="/my">마이페이지</Link></p>
-      <h1>전문가 검수 신청</h1>
-      <p className="lead">소믈리에·요리연구가·양조사·셰프처럼 술과 음식을 다루는 분이 페어링을 검수해 주는 자리예요. 운영자가 자격을 확인해 승인하면 검수 화면이 열립니다.</p>
+      <h1>전문가 등급 요청</h1>
+      <p className="lead">소믈리에·요리연구가·양조사·셰프처럼 술과 음식을 다루는 분이 페어링을 검수해 주는 자리예요. 전문가 등급을 요청하면 운영자가 자격을 확인해 승인하고, 승인되면 검수 화면이 열립니다.</p>
       <div className="box">
         <h3>이렇게 쓰여요</h3>
         <ul>
@@ -33,9 +33,9 @@ export default async function ExpertApplyPage() {
           <li>테스트 기간에는 보수가 없어요. 정식 출시 뒤 협찬·건당 사례를 드릴 때는 카드에 그 사실을 표시합니다.</li>
         </ul>
       </div>
-      {x?.status === "applied" && <p className="form-ok">심사 중이에요 — {new Date(x.appliedAt).toLocaleDateString("ko-KR")} 신청. 결과는 알림과 마이페이지로 알려 드려요.</p>}
+      {x?.status === "applied" && <p className="form-ok">전문가 등급 심사 중이에요 — {new Date(x.appliedAt).toLocaleDateString("ko-KR")} 신청. 결과는 알림과 마이페이지로 알려 드려요.</p>}
       {x?.status === "suspended" && <p className="form-error">전문가 활동이 정지된 계정이에요{x.rejectReason ? ` — ${x.rejectReason}` : ""}. 문의는 마이페이지 아래 안내를 참고해 주세요.</p>}
-      {x?.status === "rejected" && <p className="form-error">지난 신청은 반려됐어요{x.rejectReason ? ` — ${x.rejectReason}` : ""}. 아래에서 다시 신청할 수 있어요.</p>}
+      {x?.status === "rejected" && <p className="form-error">지난 요청은 반려됐어요{x.rejectReason ? ` — ${x.rejectReason}` : ""}. 아래에서 다시 요청할 수 있어요.</p>}
       {(!x || x.status === "rejected") && <ExpertApplyForm defaults={x ? { realName: x.realName, affiliation: x.affiliation, titles: x.titles, intro: x.intro, namePublic: x.namePublic, penName: x.penName } : null} nick={session.user?.name ?? ""} />}
       {x && x.status !== "rejected" && <p className="small muted" style={{ marginTop: 12 }}>상태: {EXPERT_STATUS_LABEL[x.status]} · 표시명 {x.displayName}</p>}
       <p className="small muted" style={{ marginTop: 18 }}><Link href="/terms">이용약관 제8조의3(전문가 검수)</Link> · <Link href="/privacy">개인정보처리방침</Link></p>

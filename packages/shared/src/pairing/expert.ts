@@ -10,7 +10,8 @@
 import { josa } from "../hangul";
 import type { PairingSnapshot } from "./partner-pairing";
 
-export const EXPERT_TITLES = ["소믈리에", "전통주 소믈리에", "요리연구가", "셰프", "양조장 대표", "양조사", "전통주 명인", "바텐더", "푸드 칼럼니스트"] as const;
+/** 직함 보기(여러 개 고를 수 있고 직접 입력도 됨). 소믈리에는 주종별로(2026-09-28 사용자 요청) */
+export const EXPERT_TITLES = ["전통주 소믈리에", "와인 소믈리에", "사케 소믈리에", "위스키 소믈리에", "요리연구가", "셰프", "양조장 대표", "양조사", "전통주 명인", "바텐더", "푸드 칼럼니스트"] as const;
 export const EXPERT_TITLES_MAX = 4;
 export const EXPERT_PEN_MIN = 2, EXPERT_PEN_MAX = 12;
 export const EXPERT_NOTE_MAX = 120;
@@ -30,7 +31,7 @@ export type ExpertCompensation = "none" | "paid" | "sponsored";
 /** 카드 배지용 집계 — pairings.expert_yes / expert_no(승인된 전문가만) */
 export type ExpertCounts = { yes: number; no: number };
 
-export const EXPERT_STATUS_LABEL: Record<ExpertStatus, string> = { applied: "심사 중", approved: "승인", rejected: "반려", suspended: "정지" };
+export const EXPERT_STATUS_LABEL: Record<ExpertStatus, string> = { applied: "등급 심사 중", approved: "전문가 등급", rejected: "반려", suspended: "정지" };
 export const VERDICT_LABEL: Record<ExpertVerdict, string> = { yes: "어울림", neutral: "보통", no: "아님" };
 export const COMPENSATION_LABEL: Record<ExpertCompensation, string> = { none: "", paid: "유료 자문", sponsored: "협찬" };
 export const EXPERT_VERDICTS: ExpertVerdict[] = ["yes", "neutral", "no"];

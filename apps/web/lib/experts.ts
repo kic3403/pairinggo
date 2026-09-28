@@ -75,9 +75,9 @@ export async function applyExpert(userId: string, raw: Record<string, unknown>, 
   const problem = expertApplicationProblem({ ...input, docsCount: docs.length, publicConsent });
   if (problem) return { ok: false, error: problem };
   const cur = await getExpert(userId);
-  if (cur?.status === "approved") return { ok: false, error: "이미 전문가로 승인된 계정이에요" };
-  if (cur?.status === "suspended") return { ok: false, error: "정지된 계정은 다시 신청할 수 없어요 — 문의해 주세요" };
-  if (cur?.status === "applied") return { ok: false, error: "이미 심사 중이에요 — 결과를 기다려 주세요" };
+  if (cur?.status === "approved") return { ok: false, error: "이미 전문가 등급인 계정이에요" };
+  if (cur?.status === "suspended") return { ok: false, error: "정지된 계정은 다시 요청할 수 없어요 — 문의해 주세요" };
+  if (cur?.status === "applied") return { ok: false, error: "이미 전문가 등급 심사 중이에요 — 결과를 기다려 주세요" };
   const paths: string[] = [];
   try { for (const f of docs.slice(0, EXPERT_DOCS_MAX)) if (f.size > 0) paths.push(await uploadExpertDoc(userId, f)); }
   catch (e) { return { ok: false, error: (e as Error).message }; }
@@ -86,7 +86,7 @@ export async function applyExpert(userId: string, raw: Record<string, unknown>, 
     user_id: userId, status: "applied", real_name: input.realName, affiliation: input.affiliation, title: joinTitles(input.titles), titles: input.titles, name_public: input.namePublic, pen_name: input.namePublic ? "" : input.penName, display_name: expertDisplayName(input),
     intro: input.intro, doc_paths: paths, public_consent_at: now, applied_at: now, approved_at: null, reject_reason: "", updated_at: now,
   }, { onConflict: "user_id" });
-  if (error) return { ok: false, error: "신청을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
+  if (error) return { ok: false, error: "요청을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   return { ok: true };
 }
 

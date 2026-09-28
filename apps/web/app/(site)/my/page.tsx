@@ -58,10 +58,10 @@ export default async function MyPage({ searchParams }: { searchParams: Promise<{
 
       {/* 전문가 검수(docs/27) — 신청 → 심사 → 승인이면 검수 화면으로 */}
       <p id="expert" className="small" style={{ margin: "10px 0 0", padding: "9px 12px", background: "var(--bg2)", borderRadius: 10 }}>
-        {!expert && <>소믈리에·요리연구가·양조사이신가요? <Link href="/expert/apply"><b>전문가 검수 신청 →</b></Link></>}
-        {expert?.status === "applied" && <>전문가 검수 <b>심사 중</b> · {new Date(expert.appliedAt).toLocaleDateString("ko-KR")} 신청</>}
+        {!expert && <>소믈리에·요리연구가·양조사이신가요? <Link href="/expert/apply"><b>전문가 등급 요청 →</b></Link></>}
+        {expert?.status === "applied" && <>전문가 등급 <b>심사 중</b> · {new Date(expert.appliedAt).toLocaleDateString("ko-KR")} 신청</>}
         {expert?.status === "approved" && <>전문가 <b>{expert.displayName}</b> · 검수 {expert.reviewsCount}건 · <Link href="/expert"><b>검수하러 가기 →</b></Link></>}
-        {expert?.status === "rejected" && <>전문가 신청이 반려됐어요{expert.rejectReason ? ` — ${expert.rejectReason}` : ""} · <Link href="/expert/apply">다시 신청</Link></>}
+        {expert?.status === "rejected" && <>전문가 등급 요청이 반려됐어요{expert.rejectReason ? ` — ${expert.rejectReason}` : ""} · <Link href="/expert/apply">다시 요청</Link></>}
         {expert?.status === "suspended" && <>전문가 활동이 정지됐어요{expert.rejectReason ? ` — ${expert.rejectReason}` : ""}</>}
       </p>
 
