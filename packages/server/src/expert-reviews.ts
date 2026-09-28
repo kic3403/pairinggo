@@ -37,9 +37,14 @@ export async function listExpertReviews(userId: string): Promise<ExpertReviewIte
 /** 이 조합의 승인 전문가 판정 수 → pairings.expert_yes/no(행이 있을 때만) */
 export async function recountExpert(drinkId: string, foodId: string): Promise<{ yes: number; no: number }> {
   const c = need();
-  const { data } = await c.from("expert_reviews").select("verdict,experts!inner(status)").eq("drink_id", drinkId).eq("food_id", foodId).eq("experts.status", "approved");
-  const rows = (data ?? []) as { verdict: string }[];
-  const counts = { yes: rows.filter((r) => r.verdict === "yes").length, no: rows.filter((r) => r.verdict === "no").length };
+  // expert_reviews와 experts는 둘 다 users를 가리킬 뿐 서로 FK가 없어 조인 필터가 안 된다 — 두 번 읽는다
+  const { data: rows, error } = await c.from("expert_reviews").select("user_id,verdict").eq("drink_id", drinkId).eq("food_id", foodId);
+  if (error) throw new Error(error.message);
+  const ids = [...new Set((rows ?? []).map((r) => String(r.user_id)))];
+  const approved = new Set<string>();
+  if (ids.length) { const { data: ex } = await c.from("experts").select("user_id").in("user_id", ids).eq("status", "approved"); for (const e of ex ?? []) approved.add(String(e.user_id)); }
+  const live = (rows ?? []).filter((r) => approved.has(String(r.user_id)));
+  const counts = { yes: live.filter((r) => r.verdict === "yes").length, no: live.filter((r) => r.verdict === "no").length };
   await c.from("pairings").update({ expert_yes: counts.yes, expert_no: counts.no }).eq("drink_id", drinkId).eq("food_id", foodId);
   return counts;
 }
