@@ -1,5 +1,5 @@
 /**
- * 전문가 신청(docs/27) — POST multipart { realName, affiliation, title, intro, publicConsent="on", doc(≤3) } → { ok }.
+ * 전문가 신청(docs/27) — POST multipart { realName, affiliation, titles(여러 개), intro, namePrivate?="on", penName?, publicConsent="on", doc(≤3) } → { ok }.
  * 로그인 회원만. 증빙 사진은 비공개 버킷에 두고 어드민만 본다.
  */
 import { NextResponse } from "next/server";
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   if (!uid) return NextResponse.json({ error: "로그인이 필요해요" }, { status: 401, headers: NO_STORE });
   const fd = await req.formData().catch(() => null);
   if (!fd) return NextResponse.json({ error: "잘못된 요청입니다" }, { status: 400, headers: NO_STORE });
-  const raw = { realName: fd.get("realName"), affiliation: fd.get("affiliation"), title: fd.get("title"), intro: fd.get("intro") };
+  const raw = { realName: fd.get("realName"), affiliation: fd.get("affiliation"), titles: fd.getAll("titles").map(String), intro: fd.get("intro"), namePublic: fd.get("namePrivate") !== "on", penName: fd.get("penName") };
   const docs = fd.getAll("doc").filter((x): x is File => x instanceof File && x.size > 0);
   const r = await applyExpert(uid, raw, docs, fd.get("publicConsent") === "on");
   return r.ok ? NextResponse.json({ ok: true }, { headers: NO_STORE }) : NextResponse.json({ error: r.error }, { status: 400, headers: NO_STORE });

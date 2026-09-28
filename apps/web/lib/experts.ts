@@ -5,7 +5,7 @@
  */
 import { revalidatePath } from "next/cache";
 import {
-  EXPERT_DOCS_MAX, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush,
+  EXPERT_DOCS_MAX, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, cleanTitles, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush, joinTitles,
   kindOf, scorePairings, type DrinkKind, type ExpertCompensation, type ExpertStatus, type GradeKey, type Pairing,
 } from "@pairinggo/shared";
 import { recountExpertFor, renameExpertEvidence } from "@pairinggo/server/expert-reviews";
@@ -19,14 +19,14 @@ const need = () => { const sb = db(); if (!sb) throw new Error("DB가 연결되�
 const str = (v: unknown) => String(v ?? "");
 
 export type ExpertRow = {
-  userId: string; status: ExpertStatus; realName: string; affiliation: string; title: string; displayName: string; intro: string; docsCount: number; docPaths: string[];
+  userId: string; status: ExpertStatus; realName: string; affiliation: string; title: string; titles: string[]; namePublic: boolean; penName: string; displayName: string; intro: string; docsCount: number; docPaths: string[];
   compensation: ExpertCompensation; publicConsentAt: string; appliedAt: string; approvedAt: string | null; rejectReason: string; reviewsCount: number; nick: string | null; email: string | null;
 };
 type Row = Record<string, unknown>;
 const toRow = (r: Row): ExpertRow => {
   const u = (r.users as Row | null) ?? null;
   return {
-    userId: str(r.user_id), status: cleanExpertStatus(r.status), realName: str(r.real_name), affiliation: str(r.affiliation), title: str(r.title), displayName: str(r.display_name), intro: str(r.intro),
+    userId: str(r.user_id), status: cleanExpertStatus(r.status), realName: str(r.real_name), affiliation: str(r.affiliation), title: str(r.title), titles: cleanTitles(Array.isArray(r.titles) && r.titles.length ? r.titles : r.title), namePublic: r.name_public !== false, penName: str(r.pen_name), displayName: str(r.display_name), intro: str(r.intro),
     docPaths: Array.isArray(r.doc_paths) ? (r.doc_paths as string[]) : [], docsCount: Array.isArray(r.doc_paths) ? (r.doc_paths as string[]).length : 0,
     compensation: cleanCompensation(r.compensation), publicConsentAt: str(r.public_consent_at), appliedAt: str(r.applied_at), approvedAt: (r.approved_at as string | null) ?? null,
     rejectReason: str(r.reject_reason), reviewsCount: Number(r.reviews_count) || 0, nick: (u?.name as string | null) ?? null, email: (u?.email as string | null) ?? null,
@@ -83,7 +83,7 @@ export async function applyExpert(userId: string, raw: Record<string, unknown>, 
   catch (e) { return { ok: false, error: (e as Error).message }; }
   const now = new Date().toISOString();
   const { error } = await sb.from("experts").upsert({
-    user_id: userId, status: "applied", real_name: input.realName, affiliation: input.affiliation, title: input.title, display_name: expertDisplayName(input.realName, input.affiliation, input.title),
+    user_id: userId, status: "applied", real_name: input.realName, affiliation: input.affiliation, title: joinTitles(input.titles), titles: input.titles, name_public: input.namePublic, pen_name: input.namePublic ? "" : input.penName, display_name: expertDisplayName(input),
     intro: input.intro, doc_paths: paths, public_consent_at: now, applied_at: now, approved_at: null, reject_reason: "", updated_at: now,
   }, { onConflict: "user_id" });
   if (error) return { ok: false, error: "신청을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };

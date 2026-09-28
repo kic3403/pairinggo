@@ -1,24 +1,33 @@
 import { describe, expect, it } from "vitest";
-import { applyExpertReview, expertApplicationProblem, expertBadge, expertDisplayName, expertEvidence, expertReviewProblem, expertReviewSummary, isExpertEvidenceSource } from "../expert";
+import { applyExpertReview, cleanExpertApplication, cleanTitles, expertApplicationProblem, expertBadge, expertDisplayName, expertEvidence, expertReviewProblem, expertReviewSummary, isExpertEvidenceSource } from "../expert";
 import { evidenceStats } from "../confidence";
 
 describe("전문가 표시명·신청", () => {
-  it("소속이 있으면 실명 · 소속, 없으면 실명 직함, 기타면 실명만", () => {
-    expect(expertDisplayName("홍길동", "○○레스토랑", "셰프")).toBe("홍길동 · ○○레스토랑");
-    expect(expertDisplayName("홍길동", "", "소믈리에")).toBe("홍길동 소믈리에");
-    expect(expertDisplayName("홍길동", "", "기타")).toBe("홍길동");
-    expect(expertDisplayName("", "a", "b")).toBe("");
+  it("소속이 있으면 이름 · 소속, 없으면 이름 직함(여러 개는 ·로), 직함도 없으면 이름만", () => {
+    expect(expertDisplayName({ realName: "홍길동", affiliation: "○○레스토랑", titles: ["셰프"] })).toBe("홍길동 · ○○레스토랑");
+    expect(expertDisplayName({ realName: "홍길동", titles: ["소믈리에", "요리연구가"] })).toBe("홍길동 소믈리에·요리연구가");
+    expect(expertDisplayName({ realName: "홍길동", titles: [] })).toBe("홍길동");
+    expect(expertDisplayName({ realName: "", titles: ["a"] })).toBe("");
+  });
+  it("실명 비공개면 닉네임으로", () => {
+    expect(expertDisplayName({ realName: "홍길동", titles: ["소믈리에"], namePublic: false, penName: "막걸리요정" })).toBe("막걸리요정 소믈리에");
+    expect(cleanTitles("소믈리에·요리연구가, 소믈리에")).toEqual(["소믈리에", "요리연구가"]);
+    expect(cleanTitles(["a", "b", "c", "d", "e"])).toHaveLength(4);
   });
   it("신청 검사", () => {
-    const ok = { realName: "홍길동", affiliation: "", title: "소믈리에", intro: "전통주 10년", publicConsent: true };
+    const ok = { realName: "홍길동", affiliation: "", titles: ["소믈리에"], intro: "전통주 10년", namePublic: true, penName: "", publicConsent: true };
     expect(expertApplicationProblem(ok)).toBeNull();
     expect(expertApplicationProblem({ ...ok, realName: "홍" })).toContain("실명");
     expect(expertApplicationProblem({ ...ok, realName: "홍길동1" })).toContain("한글·영문");
-    expect(expertApplicationProblem({ ...ok, title: "" })).toContain("직함");
-    expect(expertApplicationProblem({ ...ok, title: "기타" })).toContain("소속");
+    expect(expertApplicationProblem({ ...ok, titles: [] })).toContain("직함");
+    expect(expertApplicationProblem({ ...ok, titles: ["주류 MD"] })).toBeNull();
     expect(expertApplicationProblem({ ...ok, intro: "블로그 http://x.com" })).toContain("링크");
     expect(expertApplicationProblem({ ...ok, docsCount: 4 })).toContain("3장");
     expect(expertApplicationProblem({ ...ok, publicConsent: false })).toContain("공개에 동의");
+    expect(expertApplicationProblem({ ...ok, namePublic: false })).toContain("닉네임");
+    expect(expertApplicationProblem({ ...ok, namePublic: false, penName: "운영자짱" })).toContain("운영자");
+    expect(expertApplicationProblem({ ...ok, namePublic: false, penName: "막걸리요정" })).toBeNull();
+    expect(cleanExpertApplication({ realName: "홍길동", title: "소믈리에·셰프", namePublic: "off", penName: "요정" })).toMatchObject({ titles: ["소믈리에", "셰프"], namePublic: false, penName: "요정" });
   });
 });
 
