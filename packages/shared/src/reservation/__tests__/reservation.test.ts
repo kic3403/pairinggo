@@ -148,7 +148,7 @@ describe("파트너 가입", () => {
     expect(cleanBizNo("123")).toBeNull();
     expect(formatBizNo("2208162517")).toBe("220-81-62517");
   });
-  const base = { email: " Owner@Shop.KR ", password: "x", name: "김 사장", phone: "010-1234-5678", kakaoPlaceId: "12345", ownerName: "김사장", bizNo: "220-81-62517", agree: true };
+  const base = { email: " Owner@Shop.KR ", password: "x", name: "김 사장", phone: "010-1234-5678", kakaoPlaceId: "12345", ownerName: "김사장", bizNo: "220-81-62517", agree: true, bizDocs: [{ data: "x" }] };
   it("신청 입력 정리·문제 안내", () => {
     const r = validatePartnerSignup(base);
     expect(r.ok && r.value).toMatchObject({ email: "owner@shop.kr", phone: "01012345678", bizNo: "2208162517" });

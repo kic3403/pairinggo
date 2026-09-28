@@ -22,9 +22,11 @@ describe("파트너 종류 — 식당·양조장·리쿼샵", () => {
     expect(PARTNER_RESERVATION_LABEL.liquor).toBe("방문 픽업 예약");
   });
   it("가입 신청에 종류가 담긴다 — 안 고르면 식당", () => {
-    const base = { email: "a@b.co", password: "Abcd1234!", name: "홍길동", phone: "010-1234-5678", kakaoPlaceId: "123", ownerName: "홍길동", bizNo: "1208147521", agree: true as const };
+    const base = { email: "a@b.co", password: "Abcd1234!", name: "홍길동", phone: "010-1234-5678", kakaoPlaceId: "123", ownerName: "홍길동", bizNo: "1208147521", agree: true as const, bizDocs: [{ data: "x" }] };
     expect(validatePartnerSignup({ ...base, kind: "brewery" })).toMatchObject({ ok: true, value: { kind: "brewery" } });
     expect(validatePartnerSignup(base)).toMatchObject({ ok: true, value: { kind: "restaurant" } });
+    expect(validatePartnerSignup({ ...base, bizDocs: [] })).toMatchObject({ ok: false, problem: expect.stringContaining("사업자등록증") });
+    expect(validatePartnerSignup({ ...base, bizDocs: [{ data: "a" }, { data: "b" }, { data: "c" }] })).toMatchObject({ ok: false });
   });
 });
 

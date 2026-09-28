@@ -2,6 +2,7 @@
  * 파트너 계정·매장 데이터 — 가입 신청, 로그인 확인(실패 5회 → 15분 잠금), 내 매장 목록.
  */
 import { db } from "@pairinggo/server/db";
+import { partnerDocProblem, removePartnerDocs, uploadPartnerDocs } from "@pairinggo/server/partner-docs";
 import { hashPassword, passwordProblem, verifyPassword } from "@pairinggo/server/password";
 import { merchantFromRow, type Merchant } from "@pairinggo/server/reservations";
 import { MANUAL_PLACE_PREFIX, cleanMethods, duplicateMessage, normalizeMobile, sameIdentity, validatePartnerSignup, type Identity, type LoginMethod, type OAuthProfile, type OAuthProvider, type PartnerSignupInput } from "@pairinggo/shared";
@@ -79,15 +80,24 @@ export async function applyPartner(raw: PartnerSignupInput, place: PlacePick, so
   if (dup) return { ok: false, problem: duplicateMessage(dup, "partner") };
   if (dupMerchant) return { ok: false, problem: "이미 파트너 신청이 된 매장이에요 — 함께 쓰려면 운영자에게 문의해 주세요" };
 
+  // 사업자등록증(2026-09-29 필수, 0048) — 비공개 버킷에 먼저 올리고, 가입 저장이 실패하면 지운다
+  const docProblem = partnerDocProblem(raw.bizDocs);
+  if (docProblem) return { ok: false, problem: docProblem };
+  let docPaths: string[];
+  try { docPaths = await uploadPartnerDocs(`signup-${randomBytes(8).toString("hex")}`, raw.bizDocs ?? []); }
+  catch (e) { return { ok: false, problem: (e as Error).message }; }
+
   const passwordHash = social ? `oauth:${randomBytes(18).toString("base64url")}` : await hashPassword(s.password);
   const { data: user, error: ue } = await c.from("partner_users").insert({ email: s.email, password_hash: passwordHash, name: s.name, phone: s.phone }).select("id").single();
-  if (ue || !user) return { ok: false, problem: "가입을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
+  if (ue || !user) { await removePartnerDocs(docPaths); return { ok: false, problem: "가입을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" }; }
   const { data: m, error: me } = await c.from("merchants").insert({
     kakao_place_id: kakaoPlaceId, name: place.name.slice(0, 80), address: place.address.slice(0, 200), phone: place.phone.slice(0, 20),
     lat: place.lat, lng: place.lng, place_url: place.placeUrl, owner_name: s.ownerName, biz_no: s.bizNo, status: "applied", kind: s.kind,
+    biz_doc_paths: docPaths, biz_doc_at: new Date().toISOString(),
   }).select("id").single();
   if (me || !m) {
     await c.from("partner_users").delete().eq("id", user.id);
+    await removePartnerDocs(docPaths);
     return { ok: false, problem: me?.code === "23505" ? "이미 파트너 신청이 된 매장이에요" : "매장을 저장하지 못했어요 — 잠시 뒤 다시 시도해 주세요" };
   }
   await c.from("merchant_members").insert({ merchant_id: m.id, partner_user_id: user.id, role: "owner" });

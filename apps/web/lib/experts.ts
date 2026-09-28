@@ -21,6 +21,8 @@ const str = (v: unknown) => String(v ?? "");
 export type ExpertRow = {
   userId: string; status: ExpertStatus; realName: string; affiliation: string; title: string; titles: string[]; namePublic: boolean; penName: string; displayName: string; intro: string; docsCount: number; docPaths: string[];
   compensation: ExpertCompensation; publicConsentAt: string; appliedAt: string; approvedAt: string | null; rejectReason: string; reviewsCount: number; nick: string | null; email: string | null;
+  /** 회원 정보(어드민 상세) — 가입 방법·가입일·휴대폰 인증 */
+  provider: string | null; joinedAt: string | null; phoneVerified: boolean; updatedAt: string;
 };
 type Row = Record<string, unknown>;
 const toRow = (r: Row): ExpertRow => {
@@ -30,6 +32,7 @@ const toRow = (r: Row): ExpertRow => {
     docPaths: Array.isArray(r.doc_paths) ? (r.doc_paths as string[]) : [], docsCount: Array.isArray(r.doc_paths) ? (r.doc_paths as string[]).length : 0,
     compensation: cleanCompensation(r.compensation), publicConsentAt: str(r.public_consent_at), appliedAt: str(r.applied_at), approvedAt: (r.approved_at as string | null) ?? null,
     rejectReason: str(r.reject_reason), reviewsCount: Number(r.reviews_count) || 0, nick: (u?.name as string | null) ?? null, email: (u?.email as string | null) ?? null,
+    provider: (u?.provider as string | null) ?? null, joinedAt: (u?.created_at as string | null) ?? null, phoneVerified: !!u?.phone_verified_at, updatedAt: str(r.updated_at),
   };
 };
 
@@ -140,10 +143,24 @@ export async function expertQueue(userId: string, opts: { kind?: string | null; 
 export async function listExperts(): Promise<ExpertRow[]> {
   const sb = db();
   if (!sb) return [];
-  const { data, error } = await sb.from("experts").select("*,users!experts_user_id_fkey(name,email)").order("applied_at", { ascending: false }).limit(500);
+  const { data, error } = await sb.from("experts").select("*,users!experts_user_id_fkey(name,email,provider,created_at,phone_verified_at)").order("applied_at", { ascending: false }).limit(500);
   if (error) throw new Error(error.message);
   const order: Record<ExpertStatus, number> = { applied: 0, suspended: 1, approved: 2, rejected: 3 };
   return ((data ?? []) as Row[]).map(toRow).sort((a, b) => order[a.status] - order[b.status]);
+}
+
+/** 어드민 상세 — 전문가마다 최근 판정 5개 */
+export async function recentExpertReviews(userIds: string[]): Promise<Map<string, { drink: string; food: string; verdict: string; note: string; at: string }[]>> {
+  const sb = db();
+  const out = new Map<string, { drink: string; food: string; verdict: string; note: string; at: string }[]>();
+  if (!sb || !userIds.length) return out;
+  const { data } = await sb.from("expert_reviews").select("user_id,verdict,note,updated_at,drinks!expert_reviews_drink_id_fkey(name),foods!expert_reviews_food_id_fkey(name)").in("user_id", userIds).order("updated_at", { ascending: false }).limit(500);
+  for (const r of (data ?? []) as unknown as { user_id: string; verdict: string; note: string; updated_at: string; drinks: { name: string } | null; foods: { name: string } | null }[]) {
+    const arr = out.get(r.user_id) ?? [];
+    if (arr.length < 5) arr.push({ drink: r.drinks?.name ?? "?", food: r.foods?.name ?? "?", verdict: r.verdict, note: r.note, at: r.updated_at });
+    out.set(r.user_id, arr);
+  }
+  return out;
 }
 
 /** 어드민만 — 증빙 사진 10분짜리 서명 주소(실패한 장은 null) */

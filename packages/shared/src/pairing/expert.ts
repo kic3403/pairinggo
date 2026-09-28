@@ -84,6 +84,7 @@ export function expertApplicationProblem(input: ExpertApplication & { docsCount?
   if (!input.titles.length) return "직함을 하나 이상 골라 주세요(직접 입력도 돼요).";
   if (input.titles.length > EXPERT_TITLES_MAX) return `직함은 ${EXPERT_TITLES_MAX}개까지예요.`;
   if (input.titles.some(hasLink) || hasLink(input.affiliation) || hasLink(input.intro) || hasLink(input.realName)) return "링크나 이메일은 넣을 수 없어요.";
+  if ((input.docsCount ?? 0) < 1) return "자격증 사진을 한 장 이상 올려 주세요 — 운영자만 봐요.";
   if ((input.docsCount ?? 0) > EXPERT_DOCS_MAX) return `증빙 사진은 ${EXPERT_DOCS_MAX}장까지예요.`;
   if (input.publicConsent !== true) return input.namePublic ? "실명·소속(또는 직함) 공개에 동의해 주세요." : "닉네임·소속(또는 직함) 공개에 동의해 주세요.";
   return null;

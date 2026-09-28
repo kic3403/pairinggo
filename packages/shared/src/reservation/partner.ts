@@ -106,10 +106,12 @@ export type PartnerSignupInput = {
   email: string; password: string; name: string; phone: string;
   /** 카카오맵에서 고른 매장 id — 직접 입력이면 비우고 manualPlace를 채운다 */
   kakaoPlaceId: string; manualPlace?: ManualPlaceInput | null; ownerName: string; bizNo: string; agree: boolean;
+  /** 사업자등록증 사진(브라우저가 줄인 JPEG base64, 1~2장) — 2026-09-29 필수. 바이트 검사는 서버(partner-docs.ts) */
+  bizDocs?: { type?: string; data: string }[];
   /** 식당·양조장·리쿼샵 — 없으면 식당 */
   kind?: PartnerKind;
 };
-export type CleanPartnerSignup = Omit<PartnerSignupInput, "agree" | "manualPlace" | "kind"> & { agree: true; manualPlace: Required<ManualPlaceInput> | null; kind: PartnerKind };
+export type CleanPartnerSignup = Omit<PartnerSignupInput, "agree" | "manualPlace" | "kind" | "bizDocs"> & { agree: true; manualPlace: Required<ManualPlaceInput> | null; kind: PartnerKind };
 
 /** 가입 신청 입력 정리 — 비밀번호 세기는 서버의 passwordProblem이 따로 본다 */
 export function validatePartnerSignup(raw: PartnerSignupInput): { ok: true; value: CleanPartnerSignup } | { ok: false; problem: string } {
@@ -131,6 +133,8 @@ export function validatePartnerSignup(raw: PartnerSignupInput): { ok: true; valu
   if (ownerName.length < 2 || ownerName.length > 20) return no("대표자 이름을 적어 주세요");
   const bizNo = cleanBizNo(raw.bizNo);
   if (!bizNo) return no("사업자등록번호 10자리를 확인해 주세요");
+  if (!Array.isArray(raw.bizDocs) || !raw.bizDocs.length) return no("사업자등록증 사진을 올려 주세요 — 승인할 때 운영자가 확인해요");
+  if (raw.bizDocs.length > 2) return no("사업자등록증 사진은 2장까지예요");
   if (raw.agree !== true) return no("파트너 이용약관과 개인정보 수집·이용에 동의해 주세요");
   return { ok: true, value: { email, password: String(raw.password ?? ""), name, phone, kakaoPlaceId: manualPlace ? "" : kakaoPlaceId, manualPlace, ownerName, bizNo, agree: true, kind: cleanPartnerKind(raw.kind) } };
 }

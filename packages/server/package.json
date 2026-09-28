@@ -29,7 +29,8 @@
     "./evidence-check": "./src/evidence-check.ts",
     "./evidence-mine": "./src/evidence-mine.ts",
     "./ai-guard": "./src/ai-guard.ts",
-    "./expert-reviews": "./src/expert-reviews.ts"
+    "./expert-reviews": "./src/expert-reviews.ts",
+    "./partner-docs": "./src/partner-docs.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

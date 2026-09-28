@@ -11,24 +11,34 @@ import { autoLinkPlace } from "@pairinggo/server/kakao";
 export type AdminMerchant = {
   id: string; kakaoPlaceId: string; name: string; address: string; phone: string; placeUrl: string | null;
   ownerName: string; bizNo: string; kind: PartnerKind; brewery: string; status: MerchantStatus; rejectReason: string; createdAt: string; approvedAt: string | null;
-  accepting: boolean; members: { name: string; email: string; phone: string; role: string }[];
+  accepting: boolean; members: { name: string; email: string; phone: string; role: string; joinedAt: string; lastLoginAt: string | null; logins: string[] }[];
+  /** 신청 내용 전부(2026-09-29 사용자 요청 — 어드민에서 다 보이게) */
+  bizDocPaths: string[]; bizDocAt: string | null; approvedBy: string | null; updatedAt: string; lat: number | null; lng: number | null;
+  settings: Record<string, unknown> | null;
+  seller: { status: string; licenseNo: string; bizName: string; approvedAt: string | null } | null;
 };
 
 export async function listMerchants(): Promise<AdminMerchant[]> {
   const c = db();
   if (!c) return [];
   const { data, error } = await c.from("merchants")
-    .select("id, kakao_place_id, name, address, phone, place_url, owner_name, biz_no, kind, brewery, status, reject_reason, created_at, approved_at, reservation_settings(accepting), merchant_members(role, partner_users(name, email, phone))")
+    .select("id, kakao_place_id, name, address, phone, place_url, owner_name, biz_no, kind, brewery, status, reject_reason, created_at, approved_at, approved_by, updated_at, lat, lng, biz_doc_paths, biz_doc_at, reservation_settings(*), merchant_members(role, created_at, partner_users(name, email, phone, last_login_at, partner_identities(provider))), sellers(status, license_no, biz_name, approved_at)")
     .order("created_at", { ascending: false }).limit(300);
   if (error) throw new Error(error.message);
   return (data ?? []).map((r) => {
-    const s = r.reservation_settings as unknown as { accepting?: boolean } | { accepting?: boolean }[] | null;
-    const members = (r.merchant_members as unknown as { role: string; partner_users: { name: string; email: string; phone: string } | null }[] | null) ?? [];
+    const s = r.reservation_settings as unknown as Record<string, unknown> | Record<string, unknown>[] | null;
+    const st = Array.isArray(s) ? s[0] ?? null : s;
+    const members = (r.merchant_members as unknown as { role: string; created_at: string; partner_users: { name: string; email: string; phone: string; last_login_at: string | null; partner_identities: { provider: string }[] | null } | null }[] | null) ?? [];
+    const sl = r.sellers as unknown as { status: string; license_no: string; biz_name: string; approved_at: string | null } | { status: string; license_no: string; biz_name: string; approved_at: string | null }[] | null;
+    const seller = Array.isArray(sl) ? sl[0] ?? null : sl;
     return {
       id: r.id, kakaoPlaceId: r.kakao_place_id, name: r.name, address: r.address, phone: r.phone, placeUrl: r.place_url,
       ownerName: r.owner_name, bizNo: r.biz_no, kind: cleanPartnerKind(r.kind), brewery: String(r.brewery ?? ""), status: r.status, rejectReason: r.reject_reason, createdAt: r.created_at, approvedAt: r.approved_at,
-      accepting: Array.isArray(s) ? s[0]?.accepting === true : s?.accepting === true,
-      members: members.flatMap((m) => (m.partner_users ? [{ ...m.partner_users, role: m.role }] : [])),
+      accepting: st?.accepting === true,
+      members: members.flatMap((m) => (m.partner_users ? [{ name: m.partner_users.name, email: m.partner_users.email, phone: m.partner_users.phone, role: m.role, joinedAt: m.created_at, lastLoginAt: m.partner_users.last_login_at, logins: (m.partner_users.partner_identities ?? []).map((i) => i.provider) }] : [])),
+      bizDocPaths: (r.biz_doc_paths as string[] | null) ?? [], bizDocAt: (r.biz_doc_at as string | null) ?? null, approvedBy: (r.approved_by as string | null) ?? null, updatedAt: String(r.updated_at ?? ""),
+      lat: r.lat == null ? null : Number(r.lat), lng: r.lng == null ? null : Number(r.lng), settings: st,
+      seller: seller ? { status: seller.status, licenseNo: seller.license_no, bizName: seller.biz_name, approvedAt: seller.approved_at } : null,
     };
   });
 }
@@ -61,7 +71,12 @@ export async function actOnMerchant(id: string, action: MerchantAction, reason: 
   if (!rule.from.includes(m.status as MerchantStatus)) throw new Error(`지금 상태(${m.status})에서는 할 수 없어요`);
   const now = new Date().toISOString();
   const patch: Record<string, unknown> = { status: rule.to, reject_reason: rule.needsReason ? why : "", updated_at: now };
-  if (action === "approve") { patch.approved_at = now; patch.approved_by = "admin"; }
+  if (action === "approve") {
+    // 사업자등록증 필수(2026-09-29) — 없으면 승인하지 않는다(파트너 앱 매장 정보에서 올리게)
+    const { data: dm } = await c.from("merchants").select("biz_doc_paths").eq("id", id).maybeSingle();
+    if (!((dm?.biz_doc_paths as string[] | null) ?? []).length) throw new Error("사업자등록증이 없어 승인할 수 없어요 — 파트너 앱 ‘매장 정보’에서 올리도록 안내해 주세요");
+    patch.approved_at = now; patch.approved_by = "admin";
+  }
   // 직접 입력 매장을 승인할 때 카카오 장소를 한 번 더 찾아 본다(가입 뒤 카카오맵에 올라왔을 수 있다) — 실패해도 승인은 진행
   if (action === "approve") {
     const { data: mm } = await c.from("merchants").select("kakao_place_id, name, address").eq("id", id).maybeSingle();

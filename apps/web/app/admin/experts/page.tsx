@@ -4,8 +4,9 @@
  */
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
-import { docSignedUrls, listExperts } from "@/lib/experts";
-import { EXPERT_STATUSES, EXPERT_STATUS_LABEL, type ExpertStatus } from "@pairinggo/shared";
+import { docSignedUrls, listExperts, recentExpertReviews } from "@/lib/experts";
+import { DocThumbs, KV, fmtTime } from "../_components/Detail";
+import { COMPENSATION_LABEL, EXPERT_STATUSES, EXPERT_STATUS_LABEL, VERDICT_LABEL, type ExpertStatus, type ExpertVerdict } from "@pairinggo/shared";
 import ExpertActions from "./ExpertActions";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +19,8 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
   const rows = tab ? all.filter((r) => r.status === tab) : all;
   const docs = await Promise.all(rows.map((r) => (r.docPaths.length ? docSignedUrls(r.docPaths) : Promise.resolve([] as (string | null)[]))));
   const waiting = all.filter((r) => r.status === "applied").length;
-  const fmt = (s: string | null) => (s ? new Date(s).toLocaleString("ko-KR", { timeZone: "Asia/Seoul", dateStyle: "short", timeStyle: "short" }) : "-");
+  const recent = await recentExpertReviews(rows.map((r) => r.userId)).catch(() => new Map());
+  const PROVIDER: Record<string, string> = { email: "이메일", kakao: "카카오", naver: "네이버", google: "구글" };
   return (
     <>
       <h2 style={{ margin: "0 0 8px" }}>전문가 등급 <span className="muted">등급 요청 대기 {waiting} · {tab ? `${EXPERT_STATUS_LABEL[tab]} ${rows.length}` : `전체 ${all.length}`}</span></h2>
@@ -27,7 +29,7 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
         {EXPERT_STATUSES.map((s) => <Link key={s} href={`/admin/experts?status=${s}`} className={tab === s ? "on" : ""}>{EXPERT_STATUS_LABEL[s]} {all.filter((r) => r.status === s).length}</Link>)}
       </div>
       <p className="muted" style={{ marginBottom: 10 }}>
-        승인 전에 증빙 사진(자격증·명함·재직 확인)과 소개를 보고 실제 전문가인지 확인해 주세요. 승인하면 <b>표시명</b>을 고칠 수 있고(기본은 이름 · 소속 / 이름 직함 — 실명 비공개를 고른 사람은 닉네임), 판정마다 그 이름이 카드에 실려요. 비공개를 고른 전문가의 실명은 표시명에 넣지 마세요.
+        승인 전에 자격증 사진(필수)과 소개를 보고 실제 전문가인지 확인해 주세요. 승인하면 <b>표시명</b>을 고칠 수 있고(기본은 이름 · 소속 / 이름 직함 — 실명 비공개를 고른 사람은 닉네임), 판정마다 그 이름이 카드에 실려요. 비공개를 고른 전문가의 실명은 표시명에 넣지 마세요.
         전문가 한 명의 "어울림"은 바로 소믈리에 근거가 되고, 2명 이상 동의하면 "전문가 추천" 배지가 붙어요. 정지하면 그 사람 판정은 배지 집계에서 빠집니다(재개하면 되살아남).
         테스트 기간에는 보수가 없어요 — 출시 뒤 협찬·자문료를 드리면 카드에 표시합니다.
       </p>
@@ -37,19 +39,24 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
             <b style={{ fontSize: 16 }}>{x.realName}{!x.namePublic && <span className="tag m" style={{ marginLeft: 6 }} title="카드에는 닉네임으로">실명 비공개 · {x.penName}</span>} <span className="muted" style={{ fontWeight: 400 }}>{x.titles.join(" · ")}{x.affiliation ? ` · ${x.affiliation}` : ""}</span></b>
             <span className={`tag${x.status === "approved" ? " g" : x.status === "applied" ? " w" : x.status === "suspended" ? " v" : " m"}`}>{EXPERT_STATUS_LABEL[x.status]}</span>
           </div>
-          <div style={{ fontSize: 13.5, marginTop: 6 }}>카드 표시명 <b>{x.displayName}</b>{x.compensation !== "none" && <span className="tag m" style={{ marginLeft: 6 }}>{x.compensation === "paid" ? "유료 자문" : "협찬"}</span>}</div>
-          {x.intro && <div style={{ fontSize: 13.5, marginTop: 4 }}>{x.intro}</div>}
-          <div className="muted" style={{ marginTop: 4 }}>
-            회원 {x.nick ?? "-"}{x.email ? ` · ${x.email}` : ""} · 요청 {fmt(x.appliedAt)}{x.approvedAt ? ` · 승인 ${fmt(x.approvedAt)}` : ""} · 공개 동의 {fmt(x.publicConsentAt)} · 검수 {x.reviewsCount}건
-            {x.rejectReason && <> · 사유 <b>{x.rejectReason}</b></>}
-          </div>
-          {x.docPaths.length > 0 && (
-            <div className="row" style={{ marginTop: 8, gap: 6 }}>
-              {docs[i].map((u, k) => u
-                ? <a key={k} href={u} target="_blank" rel="noreferrer" title="증빙 사진(10분 뒤 만료)"><img src={u} alt={`증빙 ${k + 1}`} style={{ width: 72, height: 72, objectFit: "cover", borderRadius: 6, border: "1px solid var(--line)" }} /></a>
-                : <span key={k} className="tag m">사진을 열 수 없어요</span>)}
-            </div>
-          )}
+          <KV rows={[
+            ["실명", x.realName],
+            ["실명 공개", x.namePublic ? "공개" : `비공개 — 카드에는 닉네임 ‘${x.penName}’`],
+            ["직함", x.titles.join(" · ")],
+            ["소속", x.affiliation || "없음"],
+            ["카드 표시명", <b key="n">{x.displayName}</b>],
+            ["소개", x.intro || "없음"],
+            ["보상", COMPENSATION_LABEL[x.compensation] || "없음(테스트 기간)"],
+            ["회원", `${x.nick ?? "-"}${x.email ? ` · ${x.email}` : ""} · ${PROVIDER[x.provider ?? ""] ?? x.provider ?? "-"} 가입${x.joinedAt ? ` ${fmtTime(x.joinedAt)}` : ""} · 휴대폰 ${x.phoneVerified ? "인증함" : "인증 안 함"}`],
+            ["요청", fmtTime(x.appliedAt)],
+            ["공개 동의", fmtTime(x.publicConsentAt)],
+            ["승인", fmtTime(x.approvedAt)],
+            ["마지막 변경", fmtTime(x.updatedAt)],
+            ["상태 사유", x.rejectReason],
+            ["검수", `${x.reviewsCount}건`],
+            ...((recent.get(x.userId) ?? []) as { drink: string; food: string; verdict: string; note: string; at: string }[]).map((r, k): [string, React.ReactNode] => [k === 0 ? "최근 판정" : " ", `${r.drink} × ${r.food} — ${VERDICT_LABEL[r.verdict as ExpertVerdict] ?? r.verdict}${r.note ? ` · ${r.note}` : ""} (${fmtTime(r.at)})`]),
+          ]} />
+          <DocThumbs label="자격증" urls={docs[i]} missing="없음 — 자격증 사진이 필수가 되기 전(2026-09-29) 요청" />
           <ExpertActions userId={x.userId} status={x.status} displayName={x.displayName} />
         </div>
       ))}

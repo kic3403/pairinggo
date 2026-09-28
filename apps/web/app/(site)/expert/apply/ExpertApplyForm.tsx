@@ -71,8 +71,8 @@ export default function ExpertApplyForm({ defaults, nick }: { defaults: Defaults
       </div>
       <label className="field"><span>소속 <span className="muted" style={{ fontWeight: 400 }}>선택 · 회사·매장·단체. 있으면 직함 대신 이름 옆에 보여요</span></span><input value={affiliation} onChange={(e) => setAffiliation(e.target.value)} maxLength={40} placeholder="예: ○○레스토랑, ○○양조장" /></label>
       <label className="field"><span>짧은 소개 <span className="muted" style={{ fontWeight: 400 }}>선택 · {EXPERT_INTRO_MAX}자 · 공개</span></span><textarea value={intro} onChange={(e) => setIntro(e.target.value)} maxLength={EXPERT_INTRO_MAX} rows={3} placeholder="예: 전통주 소믈리에 자격 보유, 한식 페어링 클래스 운영 5년" style={{ width: "100%", padding: "10px 13px", border: "1.5px solid var(--line)", borderRadius: 11, font: "inherit", resize: "vertical" }} /></label>
-      <label className="field"><span>자격 증빙 사진 <span className="muted" style={{ fontWeight: 400 }}>선택 · {EXPERT_DOCS_MAX}장까지 · 자격증·명함·재직 확인 등 · 운영자만 봐요</span></span>
-        <input type="file" accept={(MEMBER_IMAGE_TYPES as readonly string[]).join(",")} multiple onChange={(e) => pick(e.target.files)} style={{ minHeight: 0, padding: "10px 0", border: 0 }} />
+      <label className="field"><span>자격증 사진 <span className="muted" style={{ fontWeight: 400 }}>필수 · {EXPERT_DOCS_MAX}장까지 · 자격증·명함·재직 확인 등 · 운영자만 봐요</span></span>
+        <input type="file" accept={(MEMBER_IMAGE_TYPES as readonly string[]).join(",")} multiple required onChange={(e) => pick(e.target.files)} style={{ minHeight: 0, padding: "10px 0", border: 0 }} />
         {files.length > 0 && <span className="field-msg">{files.map((f) => f.name).join(", ")}</span>}
       </label>
       <p className="small" style={{ margin: "4px 0 12px", padding: "10px 12px", background: "var(--bg2)", borderRadius: 10 }}>카드 표시명 미리보기: <b>{preview || (namePrivate ? "닉네임을 적으면 보여요" : "실명을 적으면 보여요")}</b></p>

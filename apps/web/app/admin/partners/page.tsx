@@ -10,6 +10,10 @@ import PartnerActions from "./PartnerActions";
 import PartnerPairingList from "./PartnerPairingList";
 import { partnerPairingsByMerchant } from "@pairinggo/server/partner-pairings";
 import ChangeLog from "./ChangeLog";
+import { DocThumbs, KV, fmtTime } from "../_components/Detail";
+import { partnerDocUrls } from "@pairinggo/server/partner-docs";
+import { db } from "@/lib/db";
+import { cleanDrinkItems, cleanMenuItems, cleanStorePhotos } from "@pairinggo/shared";
 import {
   cleanPartnerKind, formatBizNo, formatMobile, isManualPlaceId, MERCHANT_STATUS_LABEL,
   PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL,
@@ -27,6 +31,12 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
   const rows = tab ? all.filter((r) => r.kind === tab) : all;
   const count = (k: (typeof PARTNER_KINDS)[number]) => all.filter((r) => r.kind === k).length;
   const waiting = rows.filter((r) => r.status === "applied").length;
+  // 신청 상세(2026-09-29) — 사업자등록증 서명 주소, 매장 정보(파트너가 적은 것) 요약
+  const docs = await Promise.all(rows.map((m) => partnerDocUrls(m.bizDocPaths).catch(() => m.bizDocPaths.map(() => null))));
+  const pi = new Map<string, Record<string, unknown>>();
+  { const sb = db(); if (sb && rows.length) { const { data } = await sb.from("place_info").select("kakao_id,parking,parking_note,corkage,corkage_note,room,room_note,menu_note,naver_url,menu_items,drink_items,photos,updated_at,source").in("kakao_id", rows.map((m) => m.kakaoPlaceId)); for (const r of data ?? []) pi.set(String(r.kakao_id), r as Record<string, unknown>); } }
+  const LOGIN: Record<string, string> = { kakao: "카카오", naver: "네이버" };
+  const YN = (v: unknown, note?: unknown) => (v == null || v === "" ? "" : `${v === "yes" || v === true ? "가능" : v === "no" || v === false ? "불가" : String(v)}${note ? ` · ${note}` : ""}`);
 
   return (
     <>
@@ -55,15 +65,30 @@ export default async function AdminPartnersPage({ searchParams }: { searchParams
             {isManualPlaceId(m.kakaoPlaceId) ? <span className="tag" title="카카오맵 검색에 안 나와 사장님이 직접 입력한 매장 — 연결 전에는 페어링GO 검색·예약에 안 나와요">직접 입력 · 카카오맵 미연결</span> : null}
             <span className="tag">{MERCHANT_STATUS_LABEL[m.status]}{m.status === "approved" ? (m.accepting ? ` · ${PARTNER_RESERVATION_LABEL[m.kind]} 받는 중` : " · 예약 꺼짐") : ""}</span>
           </div>
-          <div className="muted" style={{ fontSize: 13, marginTop: 4 }}>
-            {m.address || "주소 없음"}{m.phone ? ` · 매장 ${m.phone}` : ""}
-            {m.placeUrl ? <> · <a href={m.placeUrl} target="_blank" rel="noreferrer">카카오맵</a></> : null}
-          </div>
-          <div style={{ fontSize: 13.5, marginTop: 6 }}>
-            대표자 {m.ownerName} · 사업자 {formatBizNo(m.bizNo)} · 신청 {m.createdAt.slice(0, 10)}
-            {m.members.map((u) => <div key={u.email}>담당 {u.name}({u.role === "owner" ? "대표" : "직원"}) · {formatMobile(u.phone)} · {u.email}</div>)}
-          </div>
-          {m.rejectReason ? <div style={{ fontSize: 13, marginTop: 4 }}>사유: {m.rejectReason}</div> : null}
+          <KV rows={[
+            ["업종", `${PARTNER_KIND_LABEL[m.kind]}${m.brewery ? ` · 카탈로그 양조장 ${m.brewery}` : m.kind === "brewery" ? " · 카탈로그 양조장 아직 안 고름" : ""}`],
+            ["상호", m.name],
+            ["주소", m.address || "주소 없음"],
+            ["매장 전화", m.phone],
+            ["지도", isManualPlaceId(m.kakaoPlaceId) ? `직접 입력(카카오맵 미연결)${m.lat != null ? ` · 좌표 ${m.lat.toFixed(5)}, ${m.lng?.toFixed(5)}` : " · 좌표 없음"}` : <>{`카카오 장소 ${m.kakaoPlaceId}`}{m.placeUrl ? <> · <a href={m.placeUrl} target="_blank" rel="noreferrer">카카오맵 ↗</a></> : null}</>],
+            ["대표자", m.ownerName],
+            ["사업자등록번호", <>{formatBizNo(m.bizNo)} · <a href={`https://www.bizno.net/?query=${m.bizNo}`} target="_blank" rel="noreferrer">사업자 조회 ↗</a></>],
+            ["신청", fmtTime(m.createdAt)],
+            ["승인", m.approvedAt ? `${fmtTime(m.approvedAt)}${m.approvedBy ? ` · ${m.approvedBy}` : ""}` : ""],
+            ["마지막 변경", fmtTime(m.updatedAt)],
+            ["상태 사유", m.rejectReason],
+            ...m.members.map((u, i): [string, React.ReactNode] => [`담당자${m.members.length > 1 ? ` ${i + 1}` : ""}`, `${u.name}(${u.role === "owner" ? "대표" : "직원"}) · ${formatMobile(u.phone)} · ${u.email} · 가입 ${fmtTime(u.joinedAt)}${u.lastLoginAt ? ` · 최근 로그인 ${fmtTime(u.lastLoginAt)}` : ""}${u.logins.length ? ` · 간편로그인 ${u.logins.map((p) => LOGIN[p] ?? p).join("·")}` : ""}`]),
+            ["예약 설정", m.settings ? `${m.accepting ? "받는 중" : "꺼짐"} · 한 팀 ${m.settings.min_party ?? "-"}~${m.settings.max_party ?? "-"}명 · 시간당 ${m.settings.capacity_parties ?? "-"}팀/${m.settings.capacity_people ?? "-"}명${Array.isArray(m.settings.session_times) && (m.settings.session_times as string[]).length ? ` · 회차 ${(m.settings.session_times as string[]).join(" ")}` : ""}` : ""],
+            ["판매 입점", m.seller ? `${m.seller.status}${m.seller.licenseNo ? ` · 통신판매 승인 ${m.seller.licenseNo}` : " · 승인 번호 없음"}${m.seller.bizName ? ` · ${m.seller.bizName}` : ""}` : ""],
+            ...(() => { const p = pi.get(m.kakaoPlaceId); if (!p) return [["매장 정보", "아직 안 적음"]] as [string, React.ReactNode][];
+              return [
+                ["매장 정보", `메뉴 ${cleanMenuItems(p.menu_items).length}개 · 술 ${cleanDrinkItems(p.drink_items).length}개 · 대표 사진 ${cleanStorePhotos(p.photos).length}장 · ${p.source === "partner" ? "파트너 입력" : "운영자 입력"} ${fmtTime(p.updated_at as string)}`],
+                ["주차·콜키지·룸", [YN(p.parking, p.parking_note) && `주차 ${YN(p.parking, p.parking_note)}`, YN(p.corkage, p.corkage_note) && `콜키지 ${YN(p.corkage, p.corkage_note)}`, YN(p.room, p.room_note) && `룸 ${YN(p.room, p.room_note)}`].filter(Boolean).join(" · ")],
+                ["메뉴 메모", p.menu_note as string],
+                ["네이버 지도", p.naver_url ? <a href={String(p.naver_url)} target="_blank" rel="noreferrer">열기 ↗</a> : ""],
+              ] as [string, React.ReactNode][]; })(),
+          ]} />
+          <DocThumbs label="사업자등록증" urls={docs[rows.indexOf(m)]} missing={`없음 — ${m.status === "approved" ? "파트너 앱 ‘매장 정보’에서 올리도록 안내" : "승인할 수 없어요"}`} />
           <PartnerActions id={m.id} status={m.status} manual={isManualPlaceId(m.kakaoPlaceId)} name={m.name} address={m.address} kind={m.kind} />
           <PartnerPairingList rows={(pps.get(m.id) ?? []).map((r: { id: number; drinkText: string; foodText: string; note: string; linked: boolean }) => ({ id: r.id, drinkText: r.drinkText, foodText: r.foodText, note: r.note, linked: r.linked }))} />
         </div>

@@ -26,3 +26,11 @@ table.t { width: 100%; border-collapse: collapse; font-size: 13px; } .t th { tex
 .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; } .filters a, .filters span.chip { font-size: 12px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; text-decoration: none; color: var(--ink2); background: var(--surface); } .filters a.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 13px; z-index: 50; }
 .kbd { font-family: ui-monospace, monospace; font-size: 11px; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; color: var(--muted); }
+/* 신청 상세(2026-09-29) — 항목 표와 서류 사진 */
+.kv { display: grid; grid-template-columns: 1fr; gap: 3px; margin: 8px 0 0; font-size: 13px; }
+.kv > div { display: grid; grid-template-columns: 108px 1fr; gap: 8px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; word-break: break-all; }
+.docs { margin-top: 10px; font-size: 13px; }
+.doc-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.doc-row img { width: 180px; height: 130px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); }

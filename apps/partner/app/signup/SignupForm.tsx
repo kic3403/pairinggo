@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { PARTNER_KINDS, PARTNER_KIND_HINT, PARTNER_KIND_LABEL, PARTNER_RESERVATION_LABEL, type PartnerKind } from "@pairinggo/shared";
+import { shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 type Place = { id: string; name: string; category: string; address: string; phone: string | null };
 
@@ -18,6 +19,15 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
   const [searchErr, setSearchErr] = useState("");
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  // 사업자등록증 사진(2026-09-29 필수) — 고르면 바로 긴 변 1,600px JPEG로 줄여 둔다(운영자만 봄)
+  const [docs, setDocs] = useState<{ type: "image/jpeg"; data: string }[]>([]);
+  const [docNames, setDocNames] = useState<string[]>([]);
+  async function pickDocs(list: FileList | null) {
+    const files = Array.from(list ?? []).filter((f) => f.type.startsWith("image/")).slice(0, 2);
+    if (!files.length) { setDocs([]); setDocNames([]); return; }
+    try { setDocs(await Promise.all(files.map((f) => shrinkToJpeg(f, 1600)))); setDocNames(files.map((f) => f.name)); setErr(""); }
+    catch { setErr("사진을 읽지 못했어요 — 다른 사진으로 골라 주세요"); }
+  }
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function search(v: string) {
@@ -37,11 +47,12 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
     if (!picked && !manual) { setErr("매장을 검색해서 고르거나, 검색이 안 되면 직접 입력해 주세요"); return; }
     const f = new FormData(e.currentTarget);
     if (!social && f.get("password") !== f.get("password2")) { setErr("비밀번호 두 칸이 서로 달라요"); return; }
+    if (!docs.length) { setErr("사업자등록증 사진을 올려 주세요 — 승인할 때 운영자가 확인해요"); return; }
     setBusy(true); setErr("");
     const body = {
       email: f.get("email"), password: social ? "" : f.get("password"), name: f.get("name"), phone: f.get("phone"), social: !!social,
       kakaoPlaceId: manual ? "" : picked!.id, placeName: manual ? "" : picked!.name,
-      manualPlace: manual ? { name: f.get("placeName"), address: f.get("placeAddress"), phone: f.get("placePhone") } : null, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on", kind,
+      manualPlace: manual ? { name: f.get("placeName"), address: f.get("placeAddress"), phone: f.get("placePhone") } : null, ownerName: f.get("ownerName"), bizNo: f.get("bizNo"), agree: f.get("agree") === "on", kind, bizDocs: docs,
     };
     const r = await fetch("/api/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { error?: string } | undefined;
@@ -97,6 +108,10 @@ export function SignupForm({ social }: { social?: SocialSignup | null }) {
         ) : null}
         <label className="f">대표자 이름<input type="text" name="ownerName" required maxLength={20} /></label>
         <label className="f">사업자등록번호 <span className="hint">숫자 10자리 — 승인할 때 운영자가 확인해요</span><input type="text" name="bizNo" inputMode="numeric" required placeholder="000-00-00000" maxLength={12} /></label>
+        <label className="f">사업자등록증 사진 <span className="hint">필수 · 2장까지 · 운영자만 보고 공개하지 않아요</span>
+          <input type="file" accept="image/*" multiple required onChange={(e) => void pickDocs(e.target.files)} />
+          {docNames.length ? <span className="hint">{docNames.join(", ")} — 준비됐어요</span> : null}
+        </label>
       </section>
       <section className="panel stack">
         <h2 style={{ margin: 0 }}>로그인 계정</h2>
