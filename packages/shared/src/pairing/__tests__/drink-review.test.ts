@@ -34,12 +34,13 @@ describe("술 평가(2026-09-26)", () => {
 
 describe("파트너 페어링(2026-09-26)", () => {
   it("검사 — id·이유·상한", () => {
-    expect(partnerPairingProblem({ drinkId: "d12", foodId: "f3", note: "안주로 딱", countForDrink: 0 })).toBeNull();
-    expect(partnerPairingProblem({ drinkId: "", foodId: "f3", countForDrink: 0 })).toMatch(/술/);
-    expect(partnerPairingProblem({ drinkId: "d12", foodId: "파전", countForDrink: 0 })).toMatch(/음식/);
-    expect(partnerPairingProblem({ drinkId: "d12", foodId: "f3", note: "http://x.com", countForDrink: 0 })).toMatch(/링크/);
-    expect(partnerPairingProblem({ drinkId: "d12", foodId: "f3", countForDrink: 8 })).toMatch(/8개/);
-    expect(partnerPairingProblem({ drinkId: "d12", foodId: "f3", countForDrink: 8, editing: true })).toBeNull();
+    const b = { kind: "brewery" as const, countTotal: 0 };
+    expect(partnerPairingProblem({ ...b, drinkId: "d12", foodText: "파전", note: "안주로 딱", countForDrink: 0 })).toBeNull();
+    expect(partnerPairingProblem({ ...b, drinkId: "", foodText: "파전", countForDrink: 0 })).toMatch(/술/);
+    expect(partnerPairingProblem({ ...b, drinkId: "d12", foodText: "", countForDrink: 0 })).toMatch(/음식/);
+    expect(partnerPairingProblem({ ...b, drinkId: "d12", foodText: "파전", note: "http://x.com", countForDrink: 0 })).toMatch(/링크/);
+    expect(partnerPairingProblem({ ...b, drinkId: "d12", foodText: "파전", countForDrink: 8 })).toMatch(/8개/);
+    expect(partnerPairingProblem({ ...b, drinkId: "d12", foodText: "파전", countForDrink: 8, editing: true })).toBeNull();
   });
   it("근거 줄", () => {
     expect(partnerEvidence("한증류소", "")).toEqual({ source: "한증류소 제공", url: null, quote: null, who: "한증류소", tier: "official" });
