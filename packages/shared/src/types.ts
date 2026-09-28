@@ -96,6 +96,8 @@ export type Pairing = {
   evn?: number; evs?: number;
   /** 대중 언급 lift 백분위 0~1(2026-09-27, pairing/blog-count.ts liftScores) — 없으면 옛 로그 눈금 */
   bl?: number;
+  /** 전문가 판정 수(2026-09-28, pairing/expert.ts — pairings.expert_yes/expert_no, 승인 전문가만). 배지는 expertBadge(xp) */
+  xp?: { yes: number; no: number };
 };
 export type PairingServe = "neat" | "rocks" | "highball" | "warm" | "cold";
 export const SERVE_LABEL: Record<PairingServe, string> = { neat: "니트", rocks: "온더록스", highball: "하이볼", warm: "따뜻하게", cold: "차갑게" };

@@ -22,7 +22,8 @@ import type { Pairing } from "../types";
 import { CONFIDENCE_LABEL, CONFIDENCE_RANK, confidenceOf, strengthOf, type Confidence } from "./confidence";
 
 export type PairingTab = "overall" | "expert" | "public";
-export const TAB_LABEL: Record<PairingTab, string> = { overall: "종합", expert: "전문가 추천", public: "대중 추천" };
+// "전문가 추천"은 전문가 검수 배지 문구(pairing/expert.ts)라 탭은 전문가픽으로(2026-09-28, PICK_LABEL과 통일)
+export const TAB_LABEL: Record<PairingTab, string> = { overall: "종합", expert: "전문가픽", public: "대중픽" };
 
 export type GradeKey = "best" | "good" | "try";
 export type Grade = { key: GradeKey; label: string };

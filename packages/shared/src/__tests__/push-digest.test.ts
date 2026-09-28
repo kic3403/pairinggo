@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanPushPref, likePush, requestPush, weeklyDigest } from "../push-digest";
+import { cleanPushPref, expertPush, likePush, requestPush, weeklyDigest } from "../push-digest";
 
 describe("주간 소식(2026-09-26)", () => {
   it("내용이 없으면 보내지 않는다", () => {
@@ -30,3 +30,12 @@ describe("주간 소식(2026-09-26)", () => {
     expect(likePush("히히히힣", "이강주", "육회").body).toBe("히히히힣님이 ‘이강주 × 육회’ 추천을 좋아해요");
   });
 });
+
+describe("expertPush", () => {
+  it("승인은 검수 화면, 반려는 사유", () => {
+    expect(expertPush("approved").url).toBe("/expert");
+    expect(expertPush("rejected", "증빙 부족").body).toBe("사유: 증빙 부족");
+    expect(expertPush("suspended").tag).toBe("expert");
+  });
+});
+

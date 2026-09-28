@@ -75,6 +75,7 @@ export function pairingFromRow(r: Row): Pairing {
     ...(r.serve && SERVES.includes(r.serve) ? { serve: r.serve as PairingServe } : {}),
     ...(r.checked_on ? { checked: String(r.checked_on).slice(0, 10) } : {}),
     ...(r.blog_lift != null ? { bl: Math.round(Number(r.blog_lift) * 1000) / 1000 } : {}),
+    ...(Number(r.expert_yes) || Number(r.expert_no) ? { xp: { yes: Number(r.expert_yes) || 0, no: Number(r.expert_no) || 0 } } : {}),
     ...(() => { const s = evidenceStats(Array.isArray(r.evidence) ? r.evidence : [], (r.source_tier || "profile") as SrcTier); return s.n ? { evn: s.n, evs: s.e } : {}; })(),
   };
 }

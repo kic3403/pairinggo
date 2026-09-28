@@ -56,7 +56,7 @@ export function activeNotices(rows: NoticeRow[], today: string, limit = 20): Not
 }
 
 /* ---------- 활동 ---------- */
-export type ActivityKind = "request" | "like" | "reservation" | "order";
+export type ActivityKind = "request" | "like" | "reservation" | "order" | "expert";
 export type ActivityItem = { id: string; kind: ActivityKind; text: string; href: string; at: string };
 
 /** 읽지 않은 수 — seenAt(ISO) 뒤에 생긴 것. seenAt이 없으면 전부 */
