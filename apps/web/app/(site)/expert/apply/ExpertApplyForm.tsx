@@ -18,13 +18,22 @@ export default function ExpertApplyForm({ defaults, nick }: { defaults: Defaults
   const [penName, setPenName] = useState(defaults?.penName || nick || "");
   const [affiliation, setAffiliation] = useState(defaults?.affiliation ?? "");
   const [picked, setPicked] = useState<string[]>((defaults?.titles ?? []).filter((t) => PRESET.includes(t)));
-  const [custom, setCustom] = useState((defaults?.titles ?? []).filter((t) => !PRESET.includes(t)).join(", "));
+  // 직접 입력 직함 — 한 칸에 적고 [추가]로 하나씩 늘린다(2026-09-29 사용자 요청: 목록에 없는 직함 여러 개)
+  const [customList, setCustomList] = useState<string[]>((defaults?.titles ?? []).filter((t) => !PRESET.includes(t)));
+  const [draft, setDraft] = useState("");
   const [intro, setIntro] = useState(defaults?.intro ?? "");
   const [consent, setConsent] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const titles = useMemo(() => cleanTitles([...picked, ...custom.split(/[,·]/)]), [picked, custom]);
+  // 적어 두고 [추가]를 안 눌러도 빠지지 않게 입력 중인 글자도 함께 센다
+  const titles = useMemo(() => cleanTitles([...picked, ...customList, ...draft.split(/[,·]/)]), [picked, customList, draft]);
+  const addCustom = () => {
+    const add = cleanTitles(draft.split(/[,·]/)).filter((t) => !picked.includes(t) && !customList.includes(t));
+    const room = EXPERT_TITLES_MAX - cleanTitles([...picked, ...customList]).length;
+    if (add.length) setCustomList((l) => [...l, ...add.slice(0, Math.max(0, room))]);
+    setDraft("");
+  };
   const preview = useMemo(() => expertDisplayName({ realName, affiliation, titles, namePublic: !namePrivate, penName }), [realName, affiliation, titles, namePrivate, penName]);
   const toggleTitle = (t: string) => setPicked((p) => (p.includes(t) ? p.filter((x) => x !== t) : titles.length >= EXPERT_TITLES_MAX ? p : [...p, t]));
 
@@ -67,7 +76,20 @@ export default function ExpertApplyForm({ defaults, nick }: { defaults: Defaults
         <div className="row" style={{ gap: 6, flexWrap: "wrap", border: 0, padding: 0 }}>
           {EXPERT_TITLES.map((t) => <button key={t} type="button" className={`btn sm${picked.includes(t) ? " p" : ""}`} aria-pressed={picked.includes(t)} onClick={() => toggleTitle(t)}>{t}</button>)}
         </div>
-        <input value={custom} onChange={(e) => setCustom(e.target.value)} maxLength={60} placeholder="직접 입력 — 예: 주류 MD, 전통주 강사 (쉼표로 여러 개)" style={{ ...inputStyle, marginTop: 8 }} />
+        {customList.length > 0 && (
+          <div className="row" style={{ gap: 6, flexWrap: "wrap", border: 0, padding: 0, marginTop: 8 }}>
+            {customList.map((t) => (
+              <button key={t} type="button" className="btn sm p" onClick={() => setCustomList((l) => l.filter((x) => x !== t))} aria-label={`${t} 빼기`} title="누르면 빠져요">{t}&nbsp;×</button>
+            ))}
+          </div>
+        )}
+        <div className="row" style={{ gap: 6, flexWrap: "nowrap", border: 0, padding: 0, marginTop: 8 }}>
+          <input value={draft} onChange={(e) => setDraft(e.target.value)} maxLength={40} placeholder="목록에 없으면 직접 입력 — 예: 주류 MD"
+            onKeyDown={(e) => { if (e.key === "Enter" && !e.nativeEvent.isComposing) { e.preventDefault(); addCustom(); } }} style={{ ...inputStyle, flex: 1 }} />
+          <button type="button" className="btn" style={{ minHeight: 46, whiteSpace: "nowrap" }} onClick={addCustom}
+            disabled={!draft.trim() || cleanTitles([...picked, ...customList]).length >= EXPERT_TITLES_MAX}>+ 추가</button>
+        </div>
+        <p className="muted small" style={{ margin: "4px 0 0" }}>하나 적고 [+ 추가] — 여러 개 넣을 수 있어요. 넣은 직함을 누르면 빠져요.</p>
       </div>
       <label className="field"><span>소속 <span className="muted" style={{ fontWeight: 400 }}>선택 · 회사·매장·단체. 있으면 직함 대신 이름 옆에 보여요</span></span><input value={affiliation} onChange={(e) => setAffiliation(e.target.value)} maxLength={40} placeholder="예: ○○레스토랑, ○○양조장" /></label>
       <label className="field"><span>짧은 소개 <span className="muted" style={{ fontWeight: 400 }}>선택 · {EXPERT_INTRO_MAX}자 · 공개</span></span><textarea value={intro} onChange={(e) => setIntro(e.target.value)} maxLength={EXPERT_INTRO_MAX} rows={3} placeholder="예: 전통주 소믈리에 자격 보유, 한식 페어링 클래스 운영 5년" style={{ width: "100%", padding: "10px 13px", border: "1.5px solid var(--line)", borderRadius: 11, font: "inherit", resize: "vertical" }} /></label>
