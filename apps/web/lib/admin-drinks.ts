@@ -3,7 +3,7 @@
  * 저장하면 catalog_meta.version을 올려(발행) 공개 화면·검색이 15초 안에 새 값을 본다. 규격은 통째로 맞추고(빠진 규격은 삭제),
  * 가격은 이력이라 고치지 않고 valid만 바꾼다(새 가격은 행 추가). 0원·0mL는 받지 않는다(cleanSpec).
  */
-import { KIND_BY_ID, categoryAffinity, categoryAverageProfile, categoryFromInput, choseong, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanNewDrink, cleanPrice, cleanSpec, isSmartstoreUrl, normalize, pageShowsDrink, planPairings, toSlug, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
+import { KIND_BY_ID, PROFILE_KEYS, categoryAffinity, categoryAverageProfile, isUnknownLevel, profileUnknown, type DrinkProfile, categoryFromInput, choseong, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanNewDrink, cleanPrice, cleanSpec, isSmartstoreUrl, normalize, pageShowsDrink, planPairings, toSlug, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
 import { revalidatePath } from "next/cache";
 import { getCatalog } from "./catalog";
 /** DB slug 칸 — packages/db catalog-write.ts slug()와 같은 규칙 */
@@ -44,10 +44,12 @@ export type AdminDrink = {
   attrs: Record<string, unknown>; specs: AdminSpecRow[];
   /** 공식 사진 주소·출처(0009) — 비어 있으면 파트너 매장 사진 폴백 또는 주종 색 타일 */
   imageUrl: string; imageCredit: string;
+  /** 맛 프로필 1~5, null = 모름(attrs.profile_unknown) 또는 프로필 없음(hasProfile false) */
+  profile: Record<(typeof PROFILE_KEYS)[number], number | null>; hasProfile: boolean;
 };
 export async function getDrinkAdmin(id: string): Promise<AdminDrink | null> {
   const sb = need();
-  const { data: r, error } = await sb.from("drinks").select("id,name,kind,category,country,name_orig,alias,brewery_name,abv,is_demo,attrs,image_url,image_credit").eq("id", id).maybeSingle();
+  const { data: r, error } = await sb.from("drinks").select("id,name,kind,category,country,name_orig,alias,brewery_name,abv,is_demo,attrs,image_url,image_credit,profile").eq("id", id).maybeSingle();
   if (error) throw new Error(error.message);
   if (!r) return null;
   const { data: specs } = await sb.from("drink_specs").select("*").eq("drink_id", id).order("sort").order("id");
@@ -59,6 +61,11 @@ export async function getDrinkAdmin(id: string): Promise<AdminDrink | null> {
     alias0: alias[0] ?? "", aliases: alias.slice(1), brewery: String(r.brewery_name ?? ""), abv: r.abv == null ? null : Number(r.abv), demo: !!r.is_demo,
     attrs: (r.attrs as Record<string, unknown> | null) ?? {},
     imageUrl: String(r.image_url ?? ""), imageCredit: String(r.image_credit ?? ""),
+    ...(() => {
+      const p = (r.profile as Record<string, unknown> | null) ?? null;
+      const unk = profileUnknown(r.attrs as Record<string, unknown> | null);
+      return { hasProfile: !!p, profile: Object.fromEntries(PROFILE_KEYS.map((k) => [k, !p || unk.includes(k) || p[k] == null ? null : Number(p[k])])) as AdminDrink["profile"] };
+    })(),
     specs: (specs ?? []).map((s) => ({
       id: Number(s.id), ml: s.volume_ml == null ? null : Number(s.volume_ml), abv: s.abv == null ? null : Number(s.abv), vintage: (s.vintage as string | null) ?? null,
       pack: s.pack === "set" ? "set" : "bottle", bottles: Number(s.bottles ?? 1), note: (s.note as string | null) ?? null,
@@ -70,6 +77,8 @@ export async function getDrinkAdmin(id: string): Promise<AdminDrink | null> {
 export type SaveInput = {
   id: string; kind: string; subtype: string; category: string; country: string; nameOrig: string; aliases: string; attrs: Record<string, unknown>;
   imageUrl?: unknown; imageCredit?: unknown;
+  /** 맛 프로필 — 축마다 1~5 또는 null(모름). 보내지 않으면 그대로 */
+  profile?: Record<string, unknown>;
   specs: { id?: number | null; ml: unknown; abv: unknown; vintage: unknown; pack: unknown; bottles: unknown; note: unknown; prices: { id?: number | null; krw?: unknown; type?: unknown; source?: unknown; url?: unknown; checked?: unknown; valid?: unknown }[] }[];
 };
 /** 저장 + 발행 — 검증에 걸리면 아무것도 쓰지 않는다 */
@@ -84,6 +93,23 @@ export async function saveDrinkAdmin(input: SaveInput): Promise<{ version: strin
   if (kind === "trad" && !category) throw new Error("전통주 종류를 골라 주세요");
   const country = KIND_BY_ID[kind].countries.some((c) => c.id === input.country) ? String(input.country) : KIND_BY_ID[kind].countries[0].id;
   const attrs = cleanAttrs(kind, input.attrs);
+  // 맛 프로필(2026-09-29) — '모름' 축은 같은 종류(자기 빼고) 평균을 넣고 attrs.profile_unknown에 적는다. 프로필이 없던 술을 전부 모름으로 두면 그대로 없음
+  let profile: DrinkProfile | null | undefined;
+  delete attrs.profile_unknown;
+  if (input.profile && typeof input.profile === "object") {
+    const raw = input.profile as Record<string, unknown>;
+    const unknown = PROFILE_KEYS.filter((k) => isUnknownLevel(raw[k]));
+    if (unknown.length === PROFILE_KEYS.length && !cur.hasProfile) profile = undefined;
+    else {
+      const c = await getCatalog();
+      const avg = categoryAverageProfile(c.dataset.drinks.filter((x) => x.id !== id), category);
+      profile = Object.fromEntries(PROFILE_KEYS.map((k) => [k, Math.min(5, Math.max(1, Math.round(unknown.includes(k) ? avg[k] : Number(raw[k]) || 3)))])) as DrinkProfile;
+      if (unknown.length) attrs.profile_unknown = unknown;
+    }
+  } else if (cur.hasProfile) {
+    const keep = PROFILE_KEYS.filter((k) => cur.profile[k] == null);
+    if (keep.length) attrs.profile_unknown = keep;
+  }
   const nameOrig = String(input.nameOrig ?? "").trim().slice(0, 120) || null;
   const extra = String(input.aliases ?? "").split(/[,\n]/).map((s) => s.trim().slice(0, 60)).filter(Boolean);
   const alias = [...new Set([cur.alias0 || cur.name, ...extra])];
@@ -104,7 +130,7 @@ export async function saveDrinkAdmin(input: SaveInput): Promise<{ version: strin
     }).filter((p): p is NonNullable<typeof p> => !!p);
     return { ...c, id: s.id ? Number(s.id) : null, prices };
   });
-  const up = await sb.from("drinks").update({ kind, category, country, attrs, name_orig: nameOrig, alias, image_url: imageUrl || null, image_credit: imageCredit || null, online_sellable: kind === "trad", updated_at: new Date().toISOString() }).eq("id", id);
+  const up = await sb.from("drinks").update({ kind, category, country, attrs, name_orig: nameOrig, alias, image_url: imageUrl || null, image_credit: imageCredit || null, online_sellable: kind === "trad", ...(profile ? { profile } : {}), updated_at: new Date().toISOString() }).eq("id", id);
   if (up.error) throw new Error(up.error.message);
   // 빠진 규격 삭제(가격은 cascade)
   const keep = new Set(specs.map((s) => s.id).filter((x): x is number => x != null));

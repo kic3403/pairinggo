@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { KIND_BY_ID, KIND_LABEL, DRINK_KINDS, type AttrDef } from "@pairinggo/shared/kinds";
 import type { DrinkKind } from "@pairinggo/shared/filter-url";
+import { PROFILE_KEYS, PROFILE_LABEL } from "@pairinggo/shared";
 import type { AdminDrink, AdminSpecRow } from "@/lib/admin-drinks";
 
 type PriceDraft = { id?: number; krw?: number | string; type?: string; source?: string; url?: string | null; checked?: string; valid?: boolean; _new?: boolean };
@@ -54,6 +55,8 @@ export default function DrinkEditor({ drink }: { drink: AdminDrink }) {
   const [imageCredit, setImageCredit] = useState(drink.imageCredit);
   const [aliases, setAliases] = useState(drink.aliases.join(", "));
   const [attrs, setAttrs] = useState<Record<string, unknown>>(drink.attrs);
+  // 맛 프로필(2026-09-29 사용자 요청) — null = 모름(양조장마다 밝히는 맛 항목이 달라서)
+  const [profile, setProfile] = useState(drink.profile);
   const [specs, setSpecs] = useState<SpecDraft[]>(drink.specs.map((s: AdminSpecRow) => ({ id: s.id, ml: s.ml == null ? "" : String(s.ml), abv: s.abv == null ? "" : String(s.abv), vintage: s.vintage ?? "", pack: s.pack, bottles: String(s.bottles), note: s.note ?? "", prices: s.prices.map((p) => ({ ...p })) })));
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -67,7 +70,7 @@ export default function DrinkEditor({ drink }: { drink: AdminDrink }) {
   const save = async () => {
     setBusy(true); setMsg(null);
     try {
-      const r = await fetch("/admin/api/drinks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: drink.id, kind, subtype, category: drink.category, country, nameOrig, aliases, attrs, specs, imageUrl, imageCredit }) });
+      const r = await fetch("/admin/api/drinks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: drink.id, kind, subtype, category: drink.category, country, nameOrig, aliases, attrs, specs, imageUrl, imageCredit, profile }) });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || "저장 실패");
       setMsg(`저장·발행 완료 (버전 ${String(j.version).slice(0, 19)})${j.problems?.length ? `\n주의: ${j.problems.join(" / ")}` : ""}`);
@@ -96,6 +99,27 @@ export default function DrinkEditor({ drink }: { drink: AdminDrink }) {
           <label style={{ flex: 1, minWidth: 220 }}>사진 주소 <span className="muted">https://… 또는 /… · 사용 허락을 받은 사진만(더술닷컴 사진 금지)</span><input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="비우면 파트너 매장 사진 → 주종 색 타일" /></label>
           <label style={{ width: 200 }}>사진 출처<input value={imageCredit} onChange={(e) => setImageCredit(e.target.value)} placeholder="예: 양조장 제공" /></label>
         </div>
+      </div>
+
+      <div className="card" style={{ display: "grid", gap: 8 }}>
+        <div className="row" style={{ justifyContent: "space-between" }}>
+          <b>맛 프로필 <span className="muted">1~5 · 양조장이 밝히지 않은 항목은 모름</span></b>
+          <button type="button" className="linkish small" onClick={() => setProfile({ sweet: null, acid: null, body: null, fizz: null, aroma: null })}>모두 모름</button>
+        </div>
+        <div className="nd-prof" style={{ maxWidth: 520 }}>
+          {PROFILE_KEYS.map((k) => (
+            <div key={k}><span>{PROFILE_LABEL[k]}</span>
+              <select value={profile[k] ?? ""} onChange={(e) => setProfile((p) => ({ ...p, [k]: e.target.value === "" ? null : Number(e.target.value) }))}>
+                <option value="">모름</option>
+                {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </div>
+          ))}
+        </div>
+        <p className="muted" style={{ margin: 0 }}>
+          {drink.hasProfile ? "" : "아직 맛 프로필이 없는 술이에요 — 하나라도 점수를 넣으면 생깁니다. "}
+          모름은 사이트에 &lsquo;모름&rsquo;으로 보이고, 추천 계산에만 같은 종류 평균을 씁니다. 이미 붙은 페어링의 맛 분석 설명은 바뀌지 않아요(전체 다시 계산은 <code>pf-recalc</code>).
+        </p>
       </div>
 
       {def.attrs.some((a) => a.type !== "level") && (
