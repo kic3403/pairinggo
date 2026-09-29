@@ -6,14 +6,14 @@
  *   카드 문구(plus/minus)는 profileFit 문구를 그대로 두고, 뚜렷한 친화도가 있으면 맨 앞에 한 줄 붙인다.
  * 근거 조합이 늘어난 뒤 다시 돌리면 점수도 따라 좋아진다. 끝나면 발행(카탈로그 버전 갱신)까지 하고, 이어서 `pnpm db:export`.
  */
-import { affinityNotes, affinityRaw, affinityScore, buildAffinity, crossValidatedAuc, DATA, gradeOf, profileFit, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
+import { affinityNotes, affinityRaw, affinityScore, buildAffinity, crossValidatedAuc, DATA, gradeOf, profileFit, profileUnknown, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
 import { publishCatalog } from "./catalog-write";
 import { connect } from "./sql";
 
 const dry = process.argv.includes("--dry");
 const sql = connect();
 try {
-  const drinks = await sql<{ id: string; name: string; category: string; abv: number | null; profile: DrinkProfile | null }[]>`select id, name, category, abv, profile from drinks order by id`;
+  const drinks = await sql<{ id: string; name: string; category: string; abv: number | null; profile: DrinkProfile | null; attrs: Record<string, unknown> | null }[]>`select id, name, category, abv, profile, attrs from drinks order by id`;
   const foods = await sql<{ id: string; name: string; category: string; profile: FoodProfile | null }[]>`select id, name, category, profile from foods order by id`;
   const rows = await sql<{ id: number; d: string; f: string; src: string | null; status: string; old: { s?: number } | null }[]>`
     select id, drink_id as d, food_id as f, source_tier as src, status, profile_score as old from pairings where status <> 'hidden' order by id`;
@@ -25,7 +25,8 @@ try {
   const updates = rows.map((r) => {
     const d = D.get(r.d), f = F.get(r.f);
     if (!d?.profile || !f?.profile) { missing++; return null; }
-    const rule = profileFit(d.profile, d.abv == null ? null : Number(d.abv), f.profile);
+    // 어드민이 '모름'으로 둔 맛 축(attrs.profile_unknown)으로는 문구를 짓지 않는다(2026-09-29)
+    const rule = profileFit(d.profile, d.abv == null ? null : Number(d.abv), f.profile, profileUnknown(d.attrs));
     const notes = affinityNotes(model, d, f);
     const pf = { s: affinityScore(affinityRaw(model, d, f)), plus: [...notes.plus, ...rule.plus], minus: [...notes.minus, ...rule.minus] };
     if ((r.old?.s ?? -1) !== pf.s) changed++;
