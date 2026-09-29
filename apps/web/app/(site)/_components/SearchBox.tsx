@@ -123,7 +123,7 @@ export default function SearchBox({ initial = "", region = "", autoFocus = false
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           onKeyDown={onKeyDown}
-          placeholder={placeholder ?? (compact ? "술이나 음식을 검색해보세요" : "복순도가, 육회, 매운 안주에 어울리는 술, 식당 이름…")}
+          placeholder={placeholder ?? (compact ? "술·음식·식당을 검색해보세요" : "복순도가, 육회, 매운 안주에 어울리는 술, 식당 이름…")}
           aria-label="전통주·음식·식당 검색" autoComplete="off" maxLength={80}
           role="combobox" aria-expanded={show} aria-controls={listId} aria-autocomplete="list"
           aria-activedescendant={show && active >= 0 ? `${listId}-${active}` : undefined}
