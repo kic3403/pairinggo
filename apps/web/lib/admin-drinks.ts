@@ -3,7 +3,11 @@
  * 저장하면 catalog_meta.version을 올려(발행) 공개 화면·검색이 15초 안에 새 값을 본다. 규격은 통째로 맞추고(빠진 규격은 삭제),
  * 가격은 이력이라 고치지 않고 valid만 바꾼다(새 가격은 행 추가). 0원·0mL는 받지 않는다(cleanSpec).
  */
-import { KIND_BY_ID, categoryFromInput, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanPrice, cleanSpec, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
+import { KIND_BY_ID, categoryAffinity, categoryFromInput, choseong, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanNewDrink, cleanPrice, cleanSpec, isSmartstoreUrl, normalize, pageShowsDrink, planPairings, toSlug, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
+import { revalidatePath } from "next/cache";
+import { getCatalog } from "./catalog";
+/** DB slug 칸 — packages/db catalog-write.ts slug()와 같은 규칙 */
+const slugOf = (s: string) => normalize(s).replace(/[^a-z0-9가-힣]/g, "");
 import { db } from "./db";
 import { publish } from "./admin-data";
 
@@ -119,4 +123,56 @@ export async function saveDrinkAdmin(input: SaveInput): Promise<{ version: strin
   }
   const { version } = await publish(`어드민 술 정보 수정 ${id}`);
   return { version, problems };
+}
+
+/* ---------- 새 술 등록(2026-09-29 사용자 요청 — '없는 술' 요청을 그 자리에서 카탈로그에 넣는다) ---------- */
+
+export type NewDrinkResult = { id: string; name: string; slug: string; pairings: number; buyChecked: "none" | "smartstore" | "shown" | "forced" };
+
+/**
+ * 새 술 만들기 + 발행. 판매처는 운영자가 넣은 주소 — 스마트스토어가 아니면 첫 화면에 그 술 이름이 보여야 한다(2026-09-24 사용자 규칙).
+ * 안 보이면 오류로 멈추고, 운영자가 확인했다며 force로 다시 보내면 넣는다. 맛 분석 추정 페어링 8개를 함께 만든다(add-drinks와 같은 규칙).
+ */
+export async function createDrinkAdmin(raw: Record<string, unknown>): Promise<NewDrinkResult> {
+  const sb = need();
+  const v = cleanNewDrink(raw);
+  if (!v.ok) throw new Error(v.problem);
+  const d = v.value;
+  const key = slugOf(d.name);
+  // 같은 술 막기 — DB slug(데모·숨은 술 포함) + 카탈로그 이름·별칭(띄어쓰기 무시)
+  const { data: same } = await sb.from("drinks").select("id,name").eq("slug", key).limit(1);
+  const c = await getCatalog();
+  const hit = same?.[0] ?? c.dataset.drinks.find((x) => [x.name, ...(Array.isArray(x.alias) ? x.alias : [])].some((n) => slugOf(String(n)) === key));
+  if (hit) throw new Error(`이미 카탈로그에 있어요 — ${hit.name}(${hit.id}). '이미 있는 술이면 연결'을 써 주세요`);
+  // 판매처 확인
+  let buyChecked: NewDrinkResult["buyChecked"] = "none";
+  if (d.buyUrl) {
+    if (isSmartstoreUrl(d.buyUrl)) buyChecked = "smartstore";
+    else {
+      const html = await fetch(d.buyUrl, { redirect: "follow", signal: AbortSignal.timeout(10000), headers: { "User-Agent": "Mozilla/5.0 (pairinggo link check)" } }).then((r) => (r.ok ? r.text() : "")).catch(() => "");
+      if (pageShowsDrink(html, [d.name])) buyChecked = "shown";
+      else if (raw.force === true) buyChecked = "forced";
+      else throw new Error("판매처 첫 화면에서 이 술 이름을 찾지 못했어요 — 상품 페이지 주소가 맞는지 확인하고, 맞으면 '그래도 저장'을 눌러 주세요");
+    }
+  }
+  // 새 id — 가장 큰 번호 다음
+  const ids = await all("drinks", (f, t) => sb.from("drinks").select("id").order("id").range(f, t));
+  const next = Math.max(0, ...ids.map((r) => Number(String(r.id).replace(/^d/, "")) || 0)) + 1;
+  const id = `d${next}`;
+  const foods = c.dataset.foods.map((f) => ({ id: f.id, name: f.name, category: f.category, profile: f.profile, trend: f.trend }));
+  const planned = planPairings({ profile: d.profile, abv: d.abv }, foods, [], { total: 8, perCategory: 2, maxOfficial: 0 }, undefined, categoryAffinity(c.dataset.pairings, c.dataset.drinks, d.category));
+  const alias = [...new Set([d.name, d.brewery].filter(Boolean))];
+  const ins = await sb.from("drinks").insert({
+    id, slug: key, name: d.name, alias, chosung: choseong(d.name.replace(/\s+/g, "")), category: d.category, abv: d.abv, region: d.region, brewery_name: d.brewery,
+    description: d.desc, flavor_tags: [], profile: d.profile, awards: [], is_generic: false, online_sellable: true, buy_url: d.buyUrl, buy_store: d.buyStore,
+    offline: null, trend: null, blog_anju: 0, kind: "trad", country: "kr", attrs: {}, is_demo: false, updated_at: new Date().toISOString(),
+  });
+  if (ins.error) throw new Error(ins.error.message);
+  if (planned.length) {
+    const p = await sb.from("pairings").insert(planned.map((x) => ({ drink_id: id, food_id: x.f, expert_score: x.es, reason: x.reason, blog_count: 0, source_tier: x.src, status: "curated", profile_score: x.pf, updated_at: new Date().toISOString() })));
+    if (p.error) throw new Error(`술은 넣었지만 추정 페어링을 넣지 못했어요: ${p.error.message}`);
+  }
+  await publish(`어드민 새 술 등록 — ${d.name}(${id})`);
+  try { revalidatePath("/drinks"); revalidatePath("/drinks/[slug]", "page"); revalidatePath("/sitemap.xml"); } catch { /* */ }
+  return { id, name: d.name, slug: toSlug(d.name), pairings: planned.length, buyChecked };
 }

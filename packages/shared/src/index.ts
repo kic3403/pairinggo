@@ -57,4 +57,5 @@ export * from "./catalog/specs";
 export * from "./catalog/filter";
 export * from "./catalog/partner-images";
 export * from "./catalog/images";
+export * from "./catalog/new-drink";
 export * from "./home/banners";
