@@ -5,13 +5,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Heart from "../_components/Heart";
-import { FOOD_GROUPS, FOOD_GROUP_OTHER, breadcrumb, byFood, byKoName, foodGroupOf, itemList, toSlug } from "@pairinggo/shared";
+import { FOOD_GROUPS, FOOD_GROUP_OTHER, NAME_INDEX_KEYS, breadcrumb, byFood, byKoName, cleanNameIndex, foodGroupOf, itemList, nameIndexCounts, nameIndexOf, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
 import JsonLd from "../_components/JsonLd";
 
 export const revalidate = 600;
-type Q = { group?: string; category?: string };
+type Q = { group?: string; category?: string; ch?: string };
 
 /** 분류 한 줄 설명 — 탭 아래에 보인다 */
 const CATEGORY_NOTE: Record<string, string> = {
@@ -62,9 +62,14 @@ export default async function FoodIndex({ searchParams }: { searchParams: Promis
   const subOrder = [...(FOOD_GROUPS.find((g) => g.key === group)?.categories ?? []), ...subMap.keys()].filter((k, i, a) => subMap.has(k) && a.indexOf(k) === i);
   const subs = subOrder.map((k) => ({ name: k, n: subMap.get(k)!.length }));
   const selectedSub = subs.find((x) => x.name === wantCat)?.name ?? null;   // null = 대분류 전체
-  const shown = (selectedSub ? subMap.get(selectedSub)! : [...subMap.values()].flat()).slice().sort(byKoName);
+  const all = (selectedSub ? subMap.get(selectedSub)! : [...subMap.values()].flat()).slice().sort(byKoName);
+  // 가나다 바로가기(?ch=ㄱ, 2026-09-29 사용자 요청 — 술 목록과 같은 규칙 shared name-index) — 지금 대분류·소분류 안에서 거른다
+  const ch = cleanNameIndex(sp.ch);
+  const chCounts = nameIndexCounts(all.map((f) => f.name));
+  const shown = ch ? all.filter((f) => nameIndexOf(f.name) === ch) : all;
   const groupHref = (g: string) => `/foods?group=${encodeURIComponent(g)}`;
   const subHref = (k: string | null) => (k ? `/foods?group=${encodeURIComponent(group!)}&category=${encodeURIComponent(k)}` : groupHref(group!));
+  const chHref = (k: string | null) => `${subHref(selectedSub)}${k ? `&ch=${encodeURIComponent(k)}` : ""}`;
 
   const base = siteUrl();
   const ld = [
@@ -87,14 +92,23 @@ export default async function FoodIndex({ searchParams }: { searchParams: Promis
       )}
       {group && subs.length > 1 && (
         <ul className="tabs sub-tabs" aria-label="세부 분류" style={{ marginTop: 0 }}>
-          <li><Link href={subHref(null)} scroll={false} className={!selectedSub ? "on" : undefined}>전체<span className="cnt">{shown.length && !selectedSub ? shown.length : [...subMap.values()].flat().length}</span></Link></li>
+          <li><Link href={subHref(null)} scroll={false} className={!selectedSub ? "on" : undefined}>전체<span className="cnt">{[...subMap.values()].flat().length}</span></Link></li>
           {subs.map((x) => <li key={x.name}><Link href={subHref(x.name)} scroll={false} className={x.name === selectedSub ? "on" : undefined}>{x.name}<span className="cnt">{x.n}</span></Link></li>)}
         </ul>
       )}
 
       {group && (
         <section key={`${group}/${selectedSub ?? ""}`}>
-          <h2>{selectedSub ?? group} <span className="muted small">{shown.length}종 · 가나다순</span></h2>
+          <h2>{selectedSub ?? group} <span className="muted small">{all.length}종 · 가나다순</span></h2>
+          {all.length > 12 && (
+            <nav className="ko-index" aria-label="가나다 바로가기">
+              <Link href={chHref(null)} scroll={false} className={!ch ? "on" : undefined} aria-current={!ch ? "true" : undefined}>전체</Link>
+              {NAME_INDEX_KEYS.map((k) => chCounts[k] > 0
+                ? <Link key={k} href={chHref(k)} scroll={false} className={ch === k ? "on" : undefined} aria-current={ch === k ? "true" : undefined} title={`${k} ${chCounts[k]}종`}>{k}</Link>
+                : <span key={k} aria-disabled="true">{k}</span>)}
+            </nav>
+          )}
+          {ch && <p className="small muted" style={{ margin: "-4px 0 10px" }}>‘{ch}’로 시작하는 음식 {shown.length}종 · <Link href={chHref(null)} scroll={false}>전체 보기</Link></p>}
           {CATEGORY_NOTE[selectedSub ?? group] && <p className="small muted" style={{ marginTop: -6 }}>{CATEGORY_NOTE[selectedSub ?? group]}</p>}
           <ul className="grid">
             {shown.map((f) => (
