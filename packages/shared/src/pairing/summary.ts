@@ -65,18 +65,30 @@ export function cardSummary(p: Pick<Pairing, "pf" | "reason">): CardSummary {
 const DRINK_AXES: [keyof DrinkProfile, string][] = [["body", "바디"], ["acid", "산미"], ["sweet", "단맛"], ["fizz", "탄산"], ["aroma", "향"]];
 const FOOD_AXES: [keyof FoodProfile, string][] = [["weight", "무게"], ["fat", "기름기"], ["spice", "매운맛"], ["umami", "감칠맛"], ["salt", "짠맛"], ["sweet", "단맛"]];
 
-/** 맛 프로필 축 목록 — 상세 화면 막대(데일리샷 Tasting Notes 자리)와 카드 한 줄이 같은 순서·이름을 쓴다. 값은 1~5 */
-export function profileAxes(kind: "drink" | "food", p: DrinkProfile | FoodProfile | undefined): { key: string; label: string; value: number }[] {
+/**
+ * 모르는 맛 축(2026-09-29 사용자 요청 — 양조장마다 밝히는 맛 항목이 달라 어드민 등록 때 '모름'을 고를 수 있다).
+ * drinks.attrs.profile_unknown = ["fizz", …]. 값(profile)에는 같은 종류 평균이 들어 있어 페어링 계산은 그대로, 화면에는 '모름'.
+ */
+export const PROFILE_UNKNOWN_KEY = "profile_unknown";
+export function profileUnknown(attrs: Record<string, unknown> | undefined | null): string[] {
+  const v = attrs?.[PROFILE_UNKNOWN_KEY];
+  return Array.isArray(v) ? v.map(String).filter((k) => DRINK_AXES.some(([a]) => a === k)) : [];
+}
+
+/** 맛 프로필 축 목록 — 상세 화면 막대(데일리샷 Tasting Notes 자리)와 카드 한 줄이 같은 순서·이름을 쓴다. 값은 1~5, 모르는 축은 unknown(값 0). 전부 모르면 빈 목록 */
+export function profileAxes(kind: "drink" | "food", p: DrinkProfile | FoodProfile | undefined, unknown: string[] = []): { key: string; label: string; value: number; unknown?: boolean }[] {
   if (!p) return [];
   const axes = (kind === "drink" ? DRINK_AXES : FOOD_AXES) as [string, string][];
-  return axes.map(([key, label]) => ({ key, label, value: Math.max(0, Math.min(5, Number((p as Record<string, number>)[key]) || 0)) }));
+  const out = axes.map(([key, label]) => (unknown.includes(key) ? { key, label, value: 0, unknown: true } : { key, label, value: Math.max(0, Math.min(5, Number((p as Record<string, number>)[key]) || 0)) }));
+  return out.every((a) => a.unknown) ? [] : out;
 }
 
 /** 맛 프로필 한 줄 — "바디 3 · 산미 2 · …". 프로필이 없으면 null */
-export function profileLine(kind: "drink", p: DrinkProfile | undefined): string | null;
+export function profileLine(kind: "drink", p: DrinkProfile | undefined, unknown?: string[]): string | null;
 export function profileLine(kind: "food", p: FoodProfile | undefined): string | null;
-export function profileLine(kind: "drink" | "food", p: DrinkProfile | FoodProfile | undefined): string | null {
+export function profileLine(kind: "drink" | "food", p: DrinkProfile | FoodProfile | undefined, unknown: string[] = []): string | null {
   if (!p) return null;
   const axes = (kind === "drink" ? DRINK_AXES : FOOD_AXES) as [string, string][];
-  return axes.map(([k, label]) => `${label} ${(p as Record<string, number>)[k]}`).join(" · ");
+  if (axes.every(([k]) => unknown.includes(k))) return null;
+  return axes.map(([k, label]) => `${label} ${unknown.includes(k) ? "모름" : (p as Record<string, number>)[k]}`).join(" · ");
 }

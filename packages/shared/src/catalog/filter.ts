@@ -6,6 +6,7 @@
  *  · 정렬: 가격순은 카드 표시가격과 같은 값, 가격 없는 술은 마지막.
  * URL·요약·칩 규칙은 filter-url.ts(클라이언트 공용).
  */
+import { profileUnknown } from "../pairing/summary";
 import { byDrink, tscore } from "../data";
 import { byKoName } from "../food-groups";
 import type { Drink, DrinkKind, DrinkSpec, Food } from "../types";
@@ -43,7 +44,8 @@ export function pickSpec(d: Drink, price: Range, ml: Range): { spec: DrinkSpec |
 
 /* ---------- 속성·음식·검색어 ---------- */
 const attrMatches = (d: Drink, def: AttrDef, wanted: string[]): boolean => {
-  const raw = def.type === "level" ? d.profile?.[def.key as keyof NonNullable<Drink["profile"]>] : d.attrs?.[def.key];
+  // 맛 단계는 profile에서 — 어드민이 '모름'으로 둔 축(attrs.profile_unknown)은 평균값이 들어 있어도 미확인으로
+  const raw = def.type === "level" ? (profileUnknown(d.attrs).includes(def.key) ? undefined : d.profile?.[def.key as keyof NonNullable<Drink["profile"]>]) : d.attrs?.[def.key];
   switch (def.type) {
     case "bool": return wanted.includes("1") ? raw === true : wanted.includes("0") ? raw === false : true;
     case "select": case "text": return wanted.some((w) => String(raw ?? "") === w || (def.type === "text" && String(raw ?? "").includes(w)));

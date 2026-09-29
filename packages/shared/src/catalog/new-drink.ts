@@ -21,13 +21,17 @@ export const isSmartstoreUrl = (u: string) => /(^|\.)smartstore\.naver\.com|shop
 export type NewDrink = {
   name: string; category: string; abv: number | null; brewery: string; region: string; desc: string;
   buyUrl: string | null; buyStore: string | null; profile: DrinkProfile;
+  /** '모름'으로 둔 맛 축 — profile에는 fallback(같은 종류 평균) 값이 들어간다 */
+  profileUnknown: (typeof PROFILE_KEYS)[number][];
 };
+/** 맛 축 입력값이 '모름'인가 — 빈칸·null·"?"·"모름" */
+export const isUnknownLevel = (v: unknown) => v == null || v === "" || v === "?" || v === "모름";
 
 const hasLink = (s: string) => /https?:|www\./i.test(s);
 const line = (v: unknown, max: number) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, max);
 
-/** 입력 검사·정리 — 통과면 value, 아니면 한국어 안내 */
-export function cleanNewDrink(raw: Record<string, unknown>): { ok: true; value: NewDrink } | { ok: false; problem: string } {
+/** 입력 검사·정리 — 통과면 value, 아니면 한국어 안내. fallback = '모름' 축에 넣을 값(같은 종류 평균) */
+export function cleanNewDrink(raw: Record<string, unknown>, fallback?: DrinkProfile): { ok: true; value: NewDrink } | { ok: false; problem: string } {
   const no = (problem: string) => ({ ok: false as const, problem });
   const name = line(raw.name, 40);
   if (name.length < 2) return no("술 이름을 2자 이상 적어 주세요");
@@ -50,8 +54,9 @@ export function cleanNewDrink(raw: Record<string, unknown>): { ok: true; value: 
   }
   const buyStore = buyUrl ? line(raw.buyStore, 30) || (isSmartstoreUrl(buyUrl) ? "스마트스토어" : "판매처") : null;
   const p = (raw.profile ?? {}) as Record<string, unknown>;
-  const profile = Object.fromEntries(PROFILE_KEYS.map((k) => [k, Math.min(5, Math.max(1, Math.round(Number(p[k]) || 3)))])) as DrinkProfile;
-  return { ok: true, value: { name, category, abv, brewery, region, desc, buyUrl, buyStore, profile } };
+  const profileUnknown = PROFILE_KEYS.filter((k) => isUnknownLevel(p[k]));
+  const profile = Object.fromEntries(PROFILE_KEYS.map((k) => [k, Math.min(5, Math.max(1, Math.round(isUnknownLevel(p[k]) ? Number(fallback?.[k]) || 3 : Number(p[k]) || 3)))])) as DrinkProfile;
+  return { ok: true, value: { name, category, abv, brewery, region, desc, buyUrl, buyStore, profile, profileUnknown } };
 }
 
 /** 판매처 페이지에 그 술 이름이 보이는가(띄어쓰기·기호 무시) — 스마트스토어가 아닌 주소는 이게 참이어야 넣는다(2026-09-24 사용자 규칙) */

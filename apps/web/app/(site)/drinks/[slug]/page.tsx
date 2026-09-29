@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, scorePairings, similarDrinks, subtypeLabel, toSlug, explainOverall, SRC_LABEL } from "@pairinggo/shared";
+import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, scorePairings, similarDrinks, subtypeLabel, toSlug, explainOverall, SRC_LABEL } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { buyOptions } from "@/lib/shop";
 import { siteUrl } from "@/lib/site";
@@ -181,7 +181,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
       {/* ④ 맛과 향 · 주종별 정보 — 나란히 */}
       <div className="dinfo">
-        <ProfileBars kind="drink" profile={drink.profile} />
+        <ProfileBars kind="drink" profile={drink.profile} unknown={profileUnknown(drink.attrs)} />
         <KindFacts drink={drink} />
       </div>
 

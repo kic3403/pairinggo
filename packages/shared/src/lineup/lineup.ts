@@ -230,34 +230,36 @@ export type Fit = { s: number; plus: string[]; minus: string[] };
  * 술 프로필 × 음식 프로필 → 궁합 점수(0~100)와 이유. 기존 918개 조합의 이유 문구 16종과 그 조건(데이터에서 역추적)을 그대로 쓴다.
  * 기존 pf.s는 술마다 따로 늘린 값이라 절대값은 다르다 — 새 술의 음식 순위를 정하는 데만 쓴다.
  */
-export function profileFit(d: DrinkProfile, abv: number | null, f: FoodProfile): Fit {
+export function profileFit(d: DrinkProfile, abv: number | null, f: FoodProfile, unknown: string[] = []): Fit {
   const plus: string[] = [], minus: string[] = [];
+  // 어드민이 '모름'으로 둔 술 맛 축(평균값이 들어 있음)을 쓰는 규칙은 건너뛴다 — 모르는 값으로 이유를 지어내지 않게
+  const k = (...keys: (keyof DrinkProfile)[]) => keys.every((x) => !unknown.includes(x));
   const a = abv ?? 0;
   const dessert = f.spice <= 1 && f.umami <= 1 && f.salt <= 1 && f.sweet >= 4;
   const gap = Math.abs(d.body - f.weight);
   const fmtAbv = Number.isInteger(a) ? String(a) : a.toFixed(1);
 
-  if (gap <= 1) plus.push(`바디 ${d.body}점 ↔ 무게 ${f.weight}점 균형`);
-  if (gap >= 3) minus.push(`바디 ${d.body}점과 음식 무게 ${f.weight}점 차이가 큼`);
-  if (a >= 25 && d.fizz <= 1 && f.fat >= 3 && f.weight >= 3) plus.push(`도수 ${fmtAbv}%가 진한 기름기·무게를 정리`);
+  if (k("body") && gap <= 1) plus.push(`바디 ${d.body}점 ↔ 무게 ${f.weight}점 균형`);
+  if (k("body") && gap >= 3) minus.push(`바디 ${d.body}점과 음식 무게 ${f.weight}점 차이가 큼`);
+  if (k("fizz") && a >= 25 && d.fizz <= 1 && f.fat >= 3 && f.weight >= 3) plus.push(`도수 ${fmtAbv}%가 진한 기름기·무게를 정리`);
   if (a >= 25 && f.weight <= 2 && f.fat <= 2) minus.push("높은 도수가 가벼운 음식을 압도");
-  if (f.umami >= 4 && d.sweet >= 2 && d.sweet <= 4 && d.body >= 3) plus.push("적당한 단맛·바디가 감칠맛을 받쳐줌");
-  if (d.aroma <= 3 && f.fat <= 2 && f.spice <= 2 && f.weight <= 2) plus.push("절제된 향이 재료 맛을 살림");
-  if (d.aroma >= 5 && d.body >= 3 && f.weight <= 2 && f.fat <= 2) minus.push("강한 향·바디가 섬세한 맛을 가림");
-  if (d.acid >= 3 && d.fizz >= 2 && f.fat >= 3 && d.body <= 3) plus.push(`산미 ${d.acid}·탄산 ${d.fizz}점이 기름기 ${f.fat}점을 씻어냄`);
-  if (dessert) {
+  if (k("sweet", "body") && f.umami >= 4 && d.sweet >= 2 && d.sweet <= 4 && d.body >= 3) plus.push("적당한 단맛·바디가 감칠맛을 받쳐줌");
+  if (k("aroma") && d.aroma <= 3 && f.fat <= 2 && f.spice <= 2 && f.weight <= 2) plus.push("절제된 향이 재료 맛을 살림");
+  if (k("aroma", "body") && d.aroma >= 5 && d.body >= 3 && f.weight <= 2 && f.fat <= 2) minus.push("강한 향·바디가 섬세한 맛을 가림");
+  if (k("acid", "fizz", "body") && d.acid >= 3 && d.fizz >= 2 && f.fat >= 3 && d.body <= 3) plus.push(`산미 ${d.acid}·탄산 ${d.fizz}점이 기름기 ${f.fat}점을 씻어냄`);
+  if (!k("sweet")) { /* 단맛 모름 — 단맛 규칙 없음 */ } else if (dessert) {
     if (d.sweet >= 3) plus.push(`술 단맛 ${d.sweet}점이 디저트 단맛과 어울림`);
     if (d.sweet <= 2) minus.push("드라이한 술이 디저트 옆에서 시고 쓰게 느껴짐");
   } else if (f.sweet >= 4) {
     if (d.sweet >= 3) plus.push(`술 단맛 ${d.sweet}점이 달콤한 양념과 어울림`);
     if (d.sweet <= 2) minus.push("드라이한 술이 단 양념 옆에서 밋밋해짐");
   }
-  if (d.sweet >= 4 && f.spice >= 3) plus.push(`단맛 ${d.sweet}점이 매운맛 ${f.spice}점을 감싸줌`);
-  if (d.sweet <= 1 && f.spice >= 4) minus.push("드라이한 술이 매운맛을 더 날카롭게 함");
-  if (f.salt >= 4 && f.sweet <= 3 && d.sweet + d.acid >= 5) plus.push("짠맛을 단맛·산미가 중화");
-  if (d.sweet >= 4 && f.sweet <= 2 && f.fat <= 2 && f.weight <= 2) minus.push("단 술이 담백한 맛과 겉돎");
+  if (k("sweet") && d.sweet >= 4 && f.spice >= 3) plus.push(`단맛 ${d.sweet}점이 매운맛 ${f.spice}점을 감싸줌`);
+  if (k("sweet") && d.sweet <= 1 && f.spice >= 4) minus.push("드라이한 술이 매운맛을 더 날카롭게 함");
+  if (k("sweet", "acid") && f.salt >= 4 && f.sweet <= 3 && d.sweet + d.acid >= 5) plus.push("짠맛을 단맛·산미가 중화");
+  if (k("sweet") && d.sweet >= 4 && f.sweet <= 2 && f.fat <= 2 && f.weight <= 2) minus.push("단 술이 담백한 맛과 겉돎");
 
-  const s = Math.max(0, Math.min(100, 40 + 20 * plus.length - 25 * minus.length - 4 * Math.max(0, gap - 1)));
+  const s = Math.max(0, Math.min(100, 40 + 20 * plus.length - 25 * minus.length - (k("body") ? 4 * Math.max(0, gap - 1) : 0)));
   return { s, plus, minus };
 }
 
@@ -423,21 +425,21 @@ export type PlannedPairing = { f: string; es: number; src: "official" | "profile
  * 맛 프로필 감점 이유가 있는 음식은 뺀다. 같은 음식 분류는 `perCategory`개까지(디저트만 8개 같은 쏠림 방지).
  * es: 양조장 추천 90(검수된 공식 인용 91~97보다 한 단계 아래), 맛 분석 84~87(기존 맛 프로필 조합과 같은 범위).
  */
-export function planPairings(drink: { profile: DrinkProfile; abv: number | null }, foods: PlanFood[], officialIds: string[], opts = { total: 8, perCategory: 2, maxOfficial: 4 }, usage?: Map<string, number>, affinity?: Affinity): PlannedPairing[] {
+export function planPairings(drink: { profile: DrinkProfile; abv: number | null; unknown?: string[] }, foods: PlanFood[], officialIds: string[], opts = { total: 8, perCategory: 2, maxOfficial: 4 }, usage?: Map<string, number>, affinity?: Affinity): PlannedPairing[] {
   const byId = new Map(foods.map((f) => [f.id, f]));
   const out: PlannedPairing[] = [];
   const perCat = new Map<string, number>();
   for (const id of officialIds.slice(0, opts.maxOfficial)) {
     const f = byId.get(id);
     if (!f?.profile) continue;
-    const pf = profileFit(drink.profile, drink.abv, f.profile);
+    const pf = profileFit(drink.profile, drink.abv, f.profile, drink.unknown);
     out.push({ f: id, es: 90, src: "official", reason: `양조장이 공개 제품 정보에서 추천한 음식입니다.${pf.plus[0] ? ` 맛 프로필로 봐도 ${pf.plus[0]}.` : ""}`, pf });
     perCat.set(f.category, (perCat.get(f.category) ?? 0) + 1);
   }
   const aff = (id: string) => (affinity ? (affinity.counts.get(id) ?? 0) / affinity.max : 0);
   const ranked = foods
     .filter((f) => f.profile && !out.some((o) => o.f === f.id))
-    .map((f) => ({ f, pf: profileFit(drink.profile, drink.abv, f.profile!), a: aff(f.id) }))
+    .map((f) => ({ f, pf: profileFit(drink.profile, drink.abv, f.profile!, drink.unknown), a: aff(f.id) }))
     .filter((x) => x.pf.minus.length === 0 && (x.a > 0 || x.pf.plus.length > 0))
     .sort((x, y) => (y.a * 100 + y.pf.s / 10) - (x.a * 100 + x.pf.s / 10) || (usage?.get(x.f.id) ?? 0) - (usage?.get(y.f.id) ?? 0) || (y.f.trend?.score ?? 0) - (x.f.trend?.score ?? 0));
   // 앞 3개는 점수 순서 그대로, 나머지는 상위 20개 후보 안에서 이번 확장에 덜 쓴 음식부터 — 같은 종류 술이 모두 같은 8개가 되지 않게

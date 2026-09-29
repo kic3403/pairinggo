@@ -3,7 +3,7 @@
  * 저장하면 catalog_meta.version을 올려(발행) 공개 화면·검색이 15초 안에 새 값을 본다. 규격은 통째로 맞추고(빠진 규격은 삭제),
  * 가격은 이력이라 고치지 않고 valid만 바꾼다(새 가격은 행 추가). 0원·0mL는 받지 않는다(cleanSpec).
  */
-import { KIND_BY_ID, categoryAffinity, categoryFromInput, choseong, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanNewDrink, cleanPrice, cleanSpec, isSmartstoreUrl, normalize, pageShowsDrink, planPairings, toSlug, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
+import { KIND_BY_ID, categoryAffinity, categoryAverageProfile, categoryFromInput, choseong, cleanAttrs, cleanCatalogImage, cleanImageCredit, cleanKind, cleanNewDrink, cleanPrice, cleanSpec, isSmartstoreUrl, normalize, pageShowsDrink, planPairings, toSlug, type DrinkKind, type SpecPrice } from "@pairinggo/shared";
 import { revalidatePath } from "next/cache";
 import { getCatalog } from "./catalog";
 /** DB slug 칸 — packages/db catalog-write.ts slug()와 같은 규칙 */
@@ -135,13 +135,14 @@ export type NewDrinkResult = { id: string; name: string; slug: string; pairings:
  */
 export async function createDrinkAdmin(raw: Record<string, unknown>): Promise<NewDrinkResult> {
   const sb = need();
-  const v = cleanNewDrink(raw);
+  const c = await getCatalog();
+  // '모름'으로 둔 맛 축은 같은 종류 평균으로 계산하고(페어링), 화면에는 '모름'으로(attrs.profile_unknown)
+  const v = cleanNewDrink(raw, categoryAverageProfile(c.dataset.drinks, String(raw.category ?? "")));
   if (!v.ok) throw new Error(v.problem);
   const d = v.value;
   const key = slugOf(d.name);
   // 같은 술 막기 — DB slug(데모·숨은 술 포함) + 카탈로그 이름·별칭(띄어쓰기 무시)
   const { data: same } = await sb.from("drinks").select("id,name").eq("slug", key).limit(1);
-  const c = await getCatalog();
   const hit = same?.[0] ?? c.dataset.drinks.find((x) => [x.name, ...(Array.isArray(x.alias) ? x.alias : [])].some((n) => slugOf(String(n)) === key));
   if (hit) throw new Error(`이미 카탈로그에 있어요 — ${hit.name}(${hit.id}). '이미 있는 술이면 연결'을 써 주세요`);
   // 판매처 확인
@@ -160,12 +161,12 @@ export async function createDrinkAdmin(raw: Record<string, unknown>): Promise<Ne
   const next = Math.max(0, ...ids.map((r) => Number(String(r.id).replace(/^d/, "")) || 0)) + 1;
   const id = `d${next}`;
   const foods = c.dataset.foods.map((f) => ({ id: f.id, name: f.name, category: f.category, profile: f.profile, trend: f.trend }));
-  const planned = planPairings({ profile: d.profile, abv: d.abv }, foods, [], { total: 8, perCategory: 2, maxOfficial: 0 }, undefined, categoryAffinity(c.dataset.pairings, c.dataset.drinks, d.category));
+  const planned = planPairings({ profile: d.profile, abv: d.abv, unknown: d.profileUnknown }, foods, [], { total: 8, perCategory: 2, maxOfficial: 0 }, undefined, categoryAffinity(c.dataset.pairings, c.dataset.drinks, d.category));
   const alias = [...new Set([d.name, d.brewery].filter(Boolean))];
   const ins = await sb.from("drinks").insert({
     id, slug: key, name: d.name, alias, chosung: choseong(d.name.replace(/\s+/g, "")), category: d.category, abv: d.abv, region: d.region, brewery_name: d.brewery,
     description: d.desc, flavor_tags: [], profile: d.profile, awards: [], is_generic: false, online_sellable: true, buy_url: d.buyUrl, buy_store: d.buyStore,
-    offline: null, trend: null, blog_anju: 0, kind: "trad", country: "kr", attrs: {}, is_demo: false, updated_at: new Date().toISOString(),
+    offline: null, trend: null, blog_anju: 0, kind: "trad", country: "kr", attrs: d.profileUnknown.length ? { profile_unknown: d.profileUnknown } : {}, is_demo: false, updated_at: new Date().toISOString(),
   });
   if (ins.error) throw new Error(ins.error.message);
   if (planned.length) {

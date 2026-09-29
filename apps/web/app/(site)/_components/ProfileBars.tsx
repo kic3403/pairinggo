@@ -4,8 +4,8 @@
  */
 import { profileAxes, type DrinkProfile, type FoodProfile } from "@pairinggo/shared";
 
-export default function ProfileBars({ kind, profile }: { kind: "drink" | "food"; profile?: DrinkProfile | FoodProfile }) {
-  const axes = profileAxes(kind, profile);
+export default function ProfileBars({ kind, profile, unknown }: { kind: "drink" | "food"; profile?: DrinkProfile | FoodProfile; unknown?: string[] }) {
+  const axes = profileAxes(kind, profile, unknown);
   if (!axes.length) return null;
   return (
     <section className={`pbars ${kind === "drink" ? "d" : "f"}`} aria-label="맛 프로필">
@@ -14,9 +14,9 @@ export default function ProfileBars({ kind, profile }: { kind: "drink" | "food";
         {axes.map((a) => (
           <div key={a.key}>
             <dt>{a.label}</dt>
-            <dd aria-label={`${a.label} ${a.value}점`}>
+            <dd aria-label={a.unknown ? `${a.label} 모름` : `${a.label} ${a.value}점`} className={a.unknown ? "unk" : undefined}>
               {[1, 2, 3, 4, 5].map((i) => <i key={i} className={i <= a.value ? "on" : undefined} />)}
-              <b>{a.value}</b>
+              <b>{a.unknown ? "모름" : a.value}</b>
             </dd>
           </div>
         ))}

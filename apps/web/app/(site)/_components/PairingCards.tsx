@@ -10,7 +10,7 @@ import ExpertBadge from "./ExpertBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
 import ProfileChart from "./ProfileChart";
-import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, confidenceOf, confidenceText, pickOf, toSlug, type ComboPlace, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
+import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, profileUnknown, confidenceOf, confidenceText, pickOf, toSlug, type ComboPlace, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
   href: string;
@@ -57,7 +57,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
                 {cautions.map((x) => <li key={"c" + x.label} className="pt warn" title={x.full}>{x.label}</li>)}
               </ul>
             )}
-            {profile && <div className="pline-solo"><ProfileChart kind={isDrinkCard ? "drink" : "food"} profile={profile} /></div>}
+            {profile && <div className="pline-solo"><ProfileChart kind={isDrinkCard ? "drink" : "food"} profile={profile} unknown={isDrinkCard ? profileUnknown(D[p.d]?.attrs) : undefined} /></div>}
             {places && places.length > 0 && (
               <p className="sold-at">
                 <span className="sold-label">함께 파는 곳{places.length > 1 ? ` ${places.length}곳` : ""}</span>

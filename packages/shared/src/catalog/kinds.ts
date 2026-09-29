@@ -273,6 +273,9 @@ export function cleanAttrs(kind: DrinkKind, raw: unknown): Record<string, unknow
       case "rating": { const r = cleanExtRating(v); if (r) out[a.key] = r; break; }
     }
   }
+  // 어드민 새 술 등록에서 '모름'으로 둔 맛 축(pairing/summary.ts profileUnknown) — 주종과 무관하게 유지
+  const pu = Array.isArray(o.profile_unknown) ? [...new Set(o.profile_unknown.map(String).filter((k) => ["sweet", "acid", "body", "fizz", "aroma"].includes(k)))] : [];
+  if (pu.length) out.profile_unknown = pu;
   return out;
 }
 /** 세부 종류 id → category 저장값. 전통주는 category 문자열 그대로(기존 값 유지), 모르면 "" */

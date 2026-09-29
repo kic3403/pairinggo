@@ -12,14 +12,15 @@ type Props = { name: string; requestId?: number; avg: Record<string, DrinkProfil
 export default function NewDrinkButton({ name: initial, requestId, avg, label = "새 술로 등록" }: Props) {
   const [open, setOpen] = useState(false);
   const [f, setF] = useState({ name: initial, category: "", abv: "", brewery: "", region: "", desc: "", buyUrl: "", buyStore: "" });
-  const [profile, setProfile] = useState<DrinkProfile>({ sweet: 3, acid: 3, body: 3, fizz: 3, aroma: 3 });
+  // 맛 축 값 — null = 모름(양조장마다 밝히는 맛 항목이 달라서, 2026-09-29 사용자 요청)
+  const [profile, setProfile] = useState<Record<keyof DrinkProfile, number | null>>({ sweet: 3, acid: 3, body: 3, fizz: 3, aroma: 3 });
   const [touched, setTouched] = useState(false);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
   const set = (k: keyof typeof f) => (e: { target: { value: string } }) => setF((x) => ({ ...x, [k]: e.target.value }));
   function pickCategory(c: string) {
     setF((x) => ({ ...x, category: c }));
-    if (!touched && avg[c]) setProfile(avg[c]); // 손대지 않았으면 같은 종류 평균으로
+    if (!touched && avg[c]) setProfile({ ...avg[c] }); // 손대지 않았으면 같은 종류 평균으로
   }
   async function save(force = false): Promise<void> {
     setBusy(true); setMsg("");
@@ -58,16 +59,21 @@ export default function NewDrinkButton({ name: initial, requestId, avg, label = 
           <div className="span2"><label>설명(사실만 — 남의 글을 그대로 옮기지 않기)</label><textarea value={f.desc} onChange={set("desc")} maxLength={300} rows={3} /></div>
         </div>
         <div style={{ marginTop: 12 }}>
-          <label>맛 프로필(1~5){f.category && !touched ? ` — ${f.category} 평균으로 채움` : ""}</label>
-          <div className="nd-prof">
+          <div className="row" style={{ justifyContent: "space-between" }}>
+            <label style={{ margin: 0 }}>맛 프로필(1~5 · 모름){f.category && !touched ? ` — ${f.category} 평균으로 채움` : ""}</label>
+            <button type="button" className="linkish small" onClick={() => { setTouched(true); setProfile({ sweet: null, acid: null, body: null, fizz: null, aroma: null }); }}>모두 모름</button>
+          </div>
+          <div className="nd-prof" style={{ marginTop: 4 }}>
             {PROFILE_KEYS.map((k) => (
               <div key={k}><span>{PROFILE_LABEL[k]}</span>
-                <select value={profile[k]} onChange={(e) => { setTouched(true); setProfile((p) => ({ ...p, [k]: Number(e.target.value) })); }}>
+                <select value={profile[k] ?? ""} onChange={(e) => { setTouched(true); setProfile((p) => ({ ...p, [k]: e.target.value === "" ? null : Number(e.target.value) })); }}>
+                  <option value="">모름</option>
                   {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{n}</option>)}
                 </select>
               </div>
             ))}
           </div>
+          <p className="muted small" style={{ margin: "4px 0 0" }}>양조장이 밝히지 않은 항목은 <b>모름</b> — 사이트에는 &lsquo;모름&rsquo;으로 보이고, 페어링 추천 계산에만 같은 종류 평균을 씁니다.</p>
         </div>
         <div style={{ marginTop: 12 }}>
           <label>판매처(선택) — 찾아보기: {links.map((l, i) => <span key={l.label}>{i > 0 && " · "}<a href={l.url} target="_blank" rel="noreferrer">{l.label}</a></span>)}</label>
