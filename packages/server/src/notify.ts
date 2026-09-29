@@ -22,7 +22,7 @@ const TPL = {
   storeNew: () => process.env.SOLAPI_TPL_STORE_NEW || "",
   storeCancelled: () => process.env.SOLAPI_TPL_STORE_CANCELLED || "",
 };
-const siteUrl = () => (process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.vercel.app").replace(/\/$/, "");
+const siteUrl = () => (process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.kr").replace(/\/$/, "");
 const partnerUrl = () => (process.env.PARTNER_SITE_URL || "").replace(/\/$/, "");
 
 type Target = { type: "user" | "partner" | "merchant"; id: string | null };

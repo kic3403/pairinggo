@@ -9,7 +9,7 @@
 import { evidenceFactor, judgeFetch, nextFailCount, readableUrl, type LinkStatus } from "@pairinggo/shared";
 import { db } from "./db";
 
-const UA = "Mozilla/5.0 (compatible; PairingGO-evidence-check/1.0; +https://pairinggo.vercel.app)";
+const UA = "Mozilla/5.0 (compatible; PairingGO-evidence-check/1.0; +https://pairinggo.kr)";
 const MAX_BYTES = 2_000_000;
 
 function charsetOf(contentType: string | null, head: string): string {

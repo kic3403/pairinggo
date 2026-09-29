@@ -1,4 +1,4 @@
-/** 홈 공유 미리보기 이미지 — 카톡·문자로 pairinggo.vercel.app 링크를 보낼 때 뜬다. 글자·칩은 lib/og.tsx */
+/** 홈 공유 미리보기 이미지 — 카톡·문자로 pairinggo.kr 링크를 보낼 때 뜬다. 글자·칩은 lib/og.tsx */
 import { ogImage, OG_SIZE } from "@/lib/og";
 import { getCatalog } from "@/lib/catalog";
 

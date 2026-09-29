@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 export default async function PairingsPage() {
   const { merchant } = await requireApprovedMerchant();
   if (merchant.kind !== "brewery" && merchant.kind !== "restaurant") redirect("/");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.kr";
 
   if (merchant.kind === "restaurant") {
     const [store, rows] = await Promise.all([getStoreInfo(merchant), listPartnerPairings(merchant.id)]);

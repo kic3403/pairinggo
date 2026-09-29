@@ -1,10 +1,10 @@
 /**
  * IndexNow 제출(2026-09-28) — 배포된 사이트맵의 주소를 한 번에 네이버·빙 등에 알린다(api.indexnow.org가 참여 검색엔진에 나눠 준다).
  * 키는 배포된 /indexnow-key.txt에서 읽는다(웹 app/indexnow-key.txt/route.ts가 원본). 카탈로그를 크게 바꾼 뒤·새 화면을 연 뒤에 돌린다.
- *   pnpm --filter @pairinggo/db indexnow [--site https://pairinggo.vercel.app] [--dry]
+ *   pnpm --filter @pairinggo/db indexnow [--site https://pairinggo.kr] [--dry]
  */
 const arg = (k: string) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : undefined; };
-const SITE = (arg("--site") ?? process.env.SITE_URL ?? "https://pairinggo.vercel.app").replace(/\/+$/, "");
+const SITE = (arg("--site") ?? process.env.SITE_URL ?? "https://pairinggo.kr").replace(/\/+$/, "");
 const DRY = process.argv.includes("--dry");
 
 const keyRes = await fetch(`${SITE}/indexnow-key.txt`);

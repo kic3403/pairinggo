@@ -26,7 +26,7 @@ const TPL = {
   sellerCancelled: () => process.env.SOLAPI_TPL_SELLER_CANCELLED || "",
   sellerLate: () => process.env.SOLAPI_TPL_SELLER_LATE || "",
 };
-const siteUrl = () => (process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.vercel.app").replace(/\/$/, "");
+const siteUrl = () => (process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.kr").replace(/\/$/, "");
 const partnerUrl = () => (process.env.PARTNER_SITE_URL || "").replace(/\/$/, "");
 
 type Target = { type: "user" | "partner"; id: string | null };

@@ -1,7 +1,7 @@
 "use client";
 /**
  * 카카오 JS SDK 로드 + 초기화 — NEXT_PUBLIC_KAKAO_JS_KEY(도메인 제한 공개 키)가 있을 때만. 없으면 ShareButton이 기기 공유창·복사로 넘어간다.
- * 카카오 콘솔 [앱] → [플랫폼 키] → JavaScript 키의 "JS SDK 도메인"에 pairinggo.vercel.app(과 localhost:3000)이 등록돼 있어야 동작한다.
+ * 카카오 콘솔 [앱] → [플랫폼 키] → JavaScript 키의 "JS SDK 도메인"에 https://pairinggo.kr(대표 주소, 2026-09-30부터)과 localhost:3000이 등록돼 있어야 동작한다.
  */
 import Script from "next/script";
 

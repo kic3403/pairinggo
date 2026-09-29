@@ -26,7 +26,7 @@ export type LiquorAward = {
 export type LiquorAwardFile = { meta: { competition: "대한민국주류대상"; host: string; source: string; fetched: string; years: number[] }; items: LiquorAward[] };
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const UA = { "User-Agent": "Mozilla/5.0 (pairinggo research; +https://pairinggo.vercel.app)" };
+const UA = { "User-Agent": "Mozilla/5.0 (pairinggo research; +https://pairinggo.kr)" };
 const text = (s: string) => s.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 
 async function post(path: string, body: Record<string, string | number>, form = false) {

@@ -38,7 +38,7 @@ export default async function SellPage() {
           <p className="small muted">입점 신청을 먼저 해 주세요 — 주류 통신판매 승인 번호가 필요해요.</p>
         ) : null}
 
-        <ProductList initial={products} drinks={drinks} canSell={ready} siteUrl={process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.vercel.app"} />
+        <ProductList initial={products} drinks={drinks} canSell={ready} siteUrl={process.env.NEXT_PUBLIC_SITE_URL || "https://pairinggo.kr"} />
       </main>
       <Tabs active="sell" kind={merchant.kind} />
     </>

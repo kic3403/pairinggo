@@ -118,3 +118,12 @@ git push -u origin main
 
 빙은 선택(`BING_SITE_VERIFICATION`, 빙 웹마스터 도구는 구글 서치 콘솔에서 가져오기도 된다). vercel.app 주소로 등록해 두고 나중에 도메인을 사면 `SITE_URL`을 바꾸고 새 도메인을 다시 등록한다(옛 주소는 Vercel이 새 도메인으로 넘기게 설정).
 
+
+## 8. 대표 도메인 pairinggo.kr (2026-09-30)
+
+가비아에서 `pairinggo.kr`·`pairinggo.com` 구매(자동 연장). 대표는 **pairinggo.kr**(사용자 결정).
+- Vercel(공개 사이트 프로젝트) Domains: `pairinggo.kr` → Production · `www.pairinggo.kr` → 308 → pairinggo.kr · `pairinggo.com`·`www.pairinggo.com` → 308 → pairinggo.kr · `pairinggo.vercel.app` → 로그인 콘솔을 옮긴 뒤 308 → pairinggo.kr.
+- 가비아 DNS(pairinggo.kr): A `@` = Vercel이 보여 준 IP, CNAME `www` = Vercel이 보여 준 프로젝트 전용 주소(끝에 점). pairinggo.com도 같은 두 줄.
+- 환경변수: 공개 사이트 `SITE_URL`·`NEXT_PUBLIC_SITE_URL` = `https://pairinggo.kr`, 파트너 앱 `NEXT_PUBLIC_SITE_URL` = `https://pairinggo.kr`. 코드 기본값도 pairinggo.kr로 바꿨다.
+- 로그인(Auth.js, trustHost)은 요청 주소 기준 → 카카오·네이버·구글 콘솔에 `https://pairinggo.kr/api/auth/callback/{kakao|naver|google}` 추가, 카카오 JS SDK 도메인·플랫폼 사이트 도메인에 `https://pairinggo.kr`. 옛 주소는 옮긴 뒤 며칠 두었다 지운다.
+- 주소가 바뀌면 브라우저별 저장(최근 본·관심지역·웹 푸시 구독·로그인 쿠키)은 새 주소에서 다시 시작한다(출처가 다르다).
