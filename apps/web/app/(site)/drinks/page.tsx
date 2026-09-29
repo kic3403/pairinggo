@@ -7,6 +7,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  NAME_INDEX_KEYS, cleanNameIndex, nameIndexCounts, nameIndexOf,
   F, KIND_BY_ID, KIND_LABEL, breadcrumb, byDrink, drinkInRegion, filterDrinks, filterHref, hasDetails, inSubtype, itemList, kindOf, kindTabs, parseFilter, presentVolumes,
   rangeActive, regionById, regionLabel, scorePairings, switchKind, toSlug, type DrinkKind, type FilterItem,
 } from "@pairinggo/shared";
@@ -74,7 +75,11 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
 
   // 세부 종류를 뺀 결과(칩 수·맛 태그·용량 버튼용) → 세부 종류로 거른 결과(목록)
   const base = filterDrinks(drinks, { ...f, cat: null }, F, { regionTest });
-  const items = f.cat ? base.items.filter((it) => inSubtype(it.drink, f.cat!)) : base.items;
+  const catItems = f.cat ? base.items.filter((it) => inSubtype(it.drink, f.cat!)) : base.items;
+  // 가나다 바로가기(?ch=ㄱ, 2026-09-29 사용자 요청) — 지금 조건의 결과에서 이름 첫 글자로만 한 번 더 거른다
+  const ch = cleanNameIndex(sp.ch);
+  const chCounts = nameIndexCounts(catItems.map((it) => it.drink.name));
+  const items = ch ? catItems.filter((it) => nameIndexOf(it.drink.name) === ch) : catItems;
   const total = items.length;
   const kindDef = f.kind ? KIND_BY_ID[f.kind] : null;
   const subCounts: Record<string, number> = {};
@@ -88,7 +93,7 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
   const cur = Math.min(page, pages);
   const shown = items.slice((cur - 1) * PER, cur * PER);
   const topFoods = (id: string) => scorePairings(byDrink[id] || [], (p) => F[p.f]?.category || "").slice(0, 2).map((s) => F[s.p.f]?.name).filter((x): x is string => !!x);
-  const pageHref = (n: number) => { const q = new URLSearchParams(filterHref(f).split("?")[1] || ""); if (n > 1) q.set("page", String(n)); const s = q.toString(); return `/drinks${s ? `?${s}` : ""}`; };
+  const pageHref = (n: number, key: string | null = ch) => { const q = new URLSearchParams(filterHref(f).split("?")[1] || ""); if (key) q.set("ch", key); if (n > 1) q.set("page", String(n)); const s = q.toString(); return `/drinks${s ? `?${s}` : ""}`; };
 
   const heading = [regionObj && f.kind === "trad" ? regionLabel(regionObj) : null, f.brewery, f.kind ? KIND_LABEL[f.kind] : "주류"].filter(Boolean).join(" ");
   const base0 = siteUrl();
@@ -138,6 +143,17 @@ export default async function DrinkIndex({ searchParams }: { searchParams: Promi
           </div>
         </section>
       )}
+
+      {/* ⑤-2 가나다 바로가기 — 60종씩 넘기지 않고 첫 글자로 바로 */}
+      {!noKindData && catItems.length > PER && (
+        <nav className="ko-index" aria-label="가나다 바로가기">
+          <Link href={pageHref(1, null)} scroll={false} className={!ch ? "on" : undefined} aria-current={!ch ? "true" : undefined}>전체</Link>
+          {NAME_INDEX_KEYS.map((k) => chCounts[k] > 0
+            ? <Link key={k} href={pageHref(1, k)} scroll={false} className={ch === k ? "on" : undefined} aria-current={ch === k ? "true" : undefined} title={`${k} ${chCounts[k]}종`}>{k}</Link>
+            : <span key={k} aria-disabled="true">{k}</span>)}
+        </nav>
+      )}
+      {ch && <p className="small muted" style={{ margin: "-4px 0 10px" }}>‘{ch}’로 시작하는 술 {total}종 · <Link href={pageHref(1, null)} scroll={false}>전체 보기</Link></p>}
 
       {/* ⑥ 술 목록 */}
       {shown.length > 0 && (

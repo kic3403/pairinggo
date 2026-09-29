@@ -32,6 +32,7 @@ export * from "./trend";
 export * from "./awards";
 export * from "./place-rating";
 export * from "./food-groups";
+export * from "./name-index";
 export * from "./profile";
 export * from "./session";
 export * from "./consent";

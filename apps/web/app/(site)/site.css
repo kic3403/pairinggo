@@ -974,6 +974,13 @@ a.pd-score:hover { border-color: var(--navy); }
 .empty-kind { margin: 18px 0; padding: 18px; border: 1px dashed var(--line); border-radius: var(--radius); }
 .empty-kind h2 { margin: 0 0 6px; font-size: 18px; }
 .pager { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 18px; }
+/* 술 목록 가나다 바로가기(2026-09-29) — 넓은 화면은 한 줄로 펼치고, 휴대폰은 한 줄 가로 스크롤 */
+.ko-index { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 14px; }
+.ko-index a, .ko-index span { min-width: 34px; height: 34px; padding: 0 9px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 9px; font-size: 14px; font-weight: 600; color: var(--ink2); background: var(--surface); text-decoration: none; white-space: nowrap; }
+.ko-index a:hover { border-color: var(--navy); color: var(--navy); }
+.ko-index a.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+.ko-index span { color: var(--muted); opacity: .45; cursor: default; }
+@media (max-width: 767px) { .ko-index { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: -16px; margin-right: -16px; padding: 0 16px; } .ko-index::-webkit-scrollbar { display: none; } }
 /* 필터 시트 — RegionSheet(.rs-*) 뼈대 위에 */
 .fs { max-width: 720px; }
 .fs .rs-head { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
