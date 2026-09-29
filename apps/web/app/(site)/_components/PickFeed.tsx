@@ -62,7 +62,7 @@ export default function PickFeed({ posts, compact = false }: { posts: FeedPost[]
     <ul className={`picks-list${compact ? " compact" : ""}`}>
       {posts.map((p) => (
         <li key={p.id} className={p.mine || mineIds.has(p.id) ? "mine" : undefined}>
-          <div className="pair"><Link href={`/drinks/${toSlug(p.drink)}`}>{p.drink}</Link><span className="x">×</span><Link href={`/foods/${toSlug(p.food)}`}>{p.food}</Link></div>
+          <div className="pair">{p.d ? <Link href={`/drinks/${toSlug(p.drink)}`}>{p.drink}</Link> : <span>{p.drink}</span>}<span className="x">×</span>{p.f ? <Link href={`/foods/${toSlug(p.food)}`}>{p.food}</Link> : <span>{p.food}</span>}</div>
           {p.note && <p className="why" style={{ marginTop: 6 }}>“{p.note}”</p>}
           {!compact && p.image && <a href={p.image} target="_blank" rel="noopener noreferrer" className="mpick-photo" style={{ display: "inline-block", marginTop: 8 }}><img src={p.image} alt={`${p.nick}님의 사진`} loading="lazy" /></a>}
           <div className="pk-foot">

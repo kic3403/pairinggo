@@ -17,7 +17,7 @@ export default async function AdminPicksPage() {
   return (
     <>
       <h2 style={{ margin: "0 0 8px" }}>회원 추천 검수 <span className="muted">{items.filter((x) => x.status === "review").length}건 대기 · 숨김 {items.filter((x) => x.status === "hidden").length}</span></h2>
-      <p className="muted" style={{ marginBottom: 10 }}>회원이 직접 적은 이름을 카탈로그의 술·음식에 맞춰 <b>게시</b>하면 정상 추천으로 집계됩니다(같은 조합이 기준 인원을 넘기면 회원픽 카드가 생깁니다). 카탈로그에 없는 음식이면 먼저 음식을 만든 뒤 지정하세요. 광고·욕설은 <b>숨김</b>.</p>
+      <p className="muted" style={{ marginBottom: 10 }}>술·음식 이름을 확인하고 <b>게시</b>하세요. 카탈로그 이름이면(추천 목록에서 고르기) 정상 추천으로 집계되고, 같은 조합이 기준 인원을 넘기면 회원픽 카드가 생깁니다. <b>카탈로그에 없는 이름도 직접 적어 그대로 게시</b>할 수 있어요 — 회원 추천 목록에 적은 이름으로 보이고, 집계는 되지 않으며 ‘없는 술’ 목록에 올라가요. 광고·욕설은 <b>숨김</b>.</p>
       <AdminPicks items={items} drinks={c.dataset.drinks.map((d) => ({ id: d.id, name: d.name }))} foods={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
     </>
   );

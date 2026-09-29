@@ -5,6 +5,7 @@
  *  - 카탈로그에 없는 술/음식은 review 상태 → 어드민이 지정하면 게시. 화면에는 닉네임(users.name)만 나간다.
  */
 import { revalidatePath } from "next/cache";
+import { resolveDrinkText, resolveFoodText } from "@pairinggo/shared";
 import { D, F, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, MEMBER_PICK_DAILY, MEMBER_PICK_ES, likePush, memberPickPublishes, profileFit, type MemberPickStatus } from "@pairinggo/shared";
 import { countPairBlog } from "./blog-count";
 import { getCatalog, invalidateCatalog } from "./catalog";
@@ -37,8 +38,9 @@ async function likeCounts(ids: number[]): Promise<Map<number, number>> {
   return m;
 }
 
+// 카탈로그에 없는 이름으로 게시된 글(2026-09-29)은 d·f가 빈칸이고 적은 이름을 그대로 보인다(화면은 링크 없이)
 const toPost = (r: PickRow, likes: Map<number, number>, uid: string | null): PickPost => ({
-  id: r.id, d: r.drink_id!, f: r.food_id!, drink: D[r.drink_id!]?.name ?? r.drink_id!, food: F[r.food_id!]?.name ?? r.food_id!,
+  id: r.id, d: r.drink_id ?? "", f: r.food_id ?? "", drink: (r.drink_id && D[r.drink_id]?.name) || r.drink_raw || r.drink_id || "?", food: (r.food_id && F[r.food_id]?.name) || r.food_raw || r.food_id || "?",
   nick: nickOf(r), note: r.note, image: r.image_url, likes: likes.get(r.id) ?? 0, at: r.created_at, mine: !!uid && r.user_id === uid,
 });
 const byLikes = (a: PickPost, b: PickPost) => b.likes - a.likes || b.at.localeCompare(a.at);
@@ -48,7 +50,7 @@ export async function listPosts(limit = 60, userId: string | null = null): Promi
   const sb = db();
   if (!sb) return [];
   await getCatalog();
-  const { data, error } = await sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").eq("status", "active").not("drink_id", "is", null).not("food_id", "is", null).order("created_at", { ascending: false }).limit(2000);
+  const { data, error } = await sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").eq("status", "active").order("created_at", { ascending: false }).limit(2000);
   if (error) throw new Error(error.message);
   const rows = (data ?? []) as PickRow[];
   const likes = await likeCounts(rows.map((r) => r.id));
@@ -114,20 +116,21 @@ export async function myPostIds(userId: string): Promise<number[]> {
 /** 하트 토글 — 내 글에는 못 누른다. 결과의 likes는 토글 뒤 수 */
 export async function toggleLike(userId: string, pickId: number): Promise<{ ok: true; liked: boolean; likes: number; published: boolean } | { ok: false; error: string; code: number }> {
   const sb = need();
-  const { data: p } = await sb.from("member_picks").select("id,user_id,drink_id,food_id,status").eq("id", pickId).maybeSingle();
-  if (!p || p.status !== "active" || !p.drink_id || !p.food_id) return { ok: false, error: "글을 찾을 수 없어요", code: 404 };
+  const { data: p } = await sb.from("member_picks").select("id,user_id,drink_id,food_id,drink_raw,food_raw,status").eq("id", pickId).maybeSingle();
+  // 카탈로그에 없는 이름으로 게시된 글(2026-09-29)도 하트는 받는다 — 조합 집계(syncPair)는 둘 다 카탈로그일 때만
+  if (!p || p.status !== "active") return { ok: false, error: "글을 찾을 수 없어요", code: 404 };
   if (p.user_id === userId) return { ok: false, error: "내 글에는 하트를 누를 수 없어요", code: 400 };
   const { count: has } = await sb.from("member_pick_likes").select("pick_id", { count: "exact", head: true }).eq("pick_id", pickId).eq("user_id", userId);
   let liked: boolean;
   if (has) { await sb.from("member_pick_likes").delete().eq("pick_id", pickId).eq("user_id", userId); liked = false; }
   else { const { error } = await sb.from("member_pick_likes").insert({ pick_id: pickId, user_id: userId }); if (error && error.code !== "23505") throw new Error(error.message); liked = true; }
   const { count } = await sb.from("member_pick_likes").select("pick_id", { count: "exact", head: true }).eq("pick_id", pickId);
-  const r = liked ? await syncPair(p.drink_id, p.food_id) : { created: false };
+  const r = liked && p.drink_id && p.food_id ? await syncPair(p.drink_id, p.food_id) : { created: false };
   // 활동 소식 푸시(docs/25 §7) — 글쓴이에게 "○○님이 하트", 설정이 켜져 있을 때만
   if (liked) {
     const { data: liker } = await sb.from("users").select("name").eq("id", userId).maybeSingle();
     await getCatalog();
-    await activityPush(String(p.user_id), likePush(String(liker?.name || "회원"), D[p.drink_id]?.name ?? p.drink_id, F[p.food_id]?.name ?? p.food_id));
+    await activityPush(String(p.user_id), likePush(String(liker?.name || "회원"), (p.drink_id && D[p.drink_id]?.name) || p.drink_raw || "술", (p.food_id && F[p.food_id]?.name) || p.food_raw || "음식"));
   }
   return { ok: true, liked, likes: count ?? 0, published: r.created };
 }
@@ -232,19 +235,34 @@ export async function listReviewPicks(): Promise<PickRow[]> {
   return (data ?? []) as PickRow[];
 }
 
-/** 검수: 술·음식을 지정해 게시(active) — 둘 다 카탈로그 id여야 한다 */
-export async function resolvePick(id: number, drinkId: string, foodId: string, note: string) {
+/**
+ * 검수: 술·음식 이름을 적어 게시(active) — 2026-09-29 사용자 요청으로 **카탈로그에 없어도 적은 이름 그대로** 게시한다.
+ * 카탈로그 이름(똑같거나 shared resolve 규칙으로 이어지는 것)이면 id로 잇고, 둘 다 이어지면 조합 집계(syncPair)까지.
+ * 이어지지 않은 이름은 drink_raw·food_raw에 남아 회원 추천 목록에 그대로 보이고, '없는 술' 목록에도 올라간다.
+ */
+export async function resolvePick(id: number, drinkText: string, foodText: string, note: string): Promise<{ n: number; linkedDrink: string | null; linkedFood: string | null }> {
   const sb = need();
-  await getCatalog();
-  if (!D[drinkId] || !F[foodId]) throw new Error("없는 술 또는 음식");
+  const c = await getCatalog();
+  const dt = String(drinkText ?? "").replace(/\s+/g, " ").trim().slice(0, 40), ft = String(foodText ?? "").replace(/\s+/g, " ").trim().slice(0, 40);
+  if (!dt || !ft) throw new Error("술과 음식 이름을 모두 적어 주세요");
+  const drink = c.dataset.drinks.find((d) => d.name === dt) ?? resolveDrinkText(dt, c.dataset.drinks.map((d) => ({ id: d.id, name: d.name })));
+  const food = c.dataset.foods.find((f) => f.name === ft) ?? resolveFoodText(ft, c.dataset.foods.map((f) => ({ id: f.id, name: f.name, alias: f.alias ?? [], category: f.category })));
+  const drinkId = drink?.id ?? null, foodId = food?.id ?? null;
   const { data: r } = await sb.from("member_picks").select("user_id").eq("id", id).single();
   if (!r) throw new Error("추천을 찾을 수 없어요");
-  const { count: dup } = await sb.from("member_picks").select("id", { count: "exact", head: true }).eq("user_id", r.user_id).eq("drink_id", drinkId).eq("food_id", foodId).neq("id", id);
-  if (dup) { await sb.from("member_picks").update({ status: "hidden", review_note: "같은 회원의 같은 조합이 이미 있음" }).eq("id", id); return { n: 0 }; }
-  const { error } = await sb.from("member_picks").update({ drink_id: drinkId, food_id: foodId, status: "active", review_note: note || null, updated_at: new Date().toISOString() }).eq("id", id);
+  if (drinkId && foodId) {
+    const { count: dup } = await sb.from("member_picks").select("id", { count: "exact", head: true }).eq("user_id", r.user_id).eq("drink_id", drinkId).eq("food_id", foodId).neq("id", id);
+    if (dup) { await sb.from("member_picks").update({ status: "hidden", review_note: "같은 회원의 같은 조합이 이미 있음" }).eq("id", id); return { n: 0, linkedDrink: null, linkedFood: null }; }
+  }
+  const { error } = await sb.from("member_picks").update({
+    drink_id: drinkId, food_id: foodId, drink_raw: drinkId ? null : dt, food_raw: foodId ? null : ft,
+    status: "active", review_note: note || null, updated_at: new Date().toISOString(),
+  }).eq("id", id);
   if (error) throw new Error(error.message);
   try { revalidatePath("/"); revalidatePath("/picks"); } catch { /* */ }
-  return syncPair(drinkId, foodId);
+  const names = { linkedDrink: drinkId ? D[drinkId]?.name ?? null : null, linkedFood: foodId ? F[foodId]?.name ?? null : null };
+  if (!drinkId || !foodId) return { n: 0, ...names };
+  return { n: (await syncPair(drinkId, foodId)).n, ...names };
 }
 
 export async function hidePick(id: number, note: string) {

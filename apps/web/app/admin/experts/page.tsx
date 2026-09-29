@@ -4,17 +4,33 @@
  */
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-auth";
-import { docSignedUrls, listExperts, recentExpertReviews } from "@/lib/experts";
+import { docSignedUrls, expertActivity, listExperts, recentExpertReviews } from "@/lib/experts";
+import ExpertActivityList from "./ExpertActivityList";
 import { DocThumbs, KV, fmtTime } from "../_components/Detail";
 import { COMPENSATION_LABEL, EXPERT_STATUSES, EXPERT_STATUS_LABEL, VERDICT_LABEL, type ExpertStatus, type ExpertVerdict } from "@pairinggo/shared";
 import ExpertActions from "./ExpertActions";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminExpertsPage({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
+export default async function AdminExpertsPage({ searchParams }: { searchParams: Promise<{ status?: string; view?: string }> }) {
   await requireAdmin();
   const sp = await searchParams;
   const all = await listExperts();
+  // 활동 탭(2026-09-29) — 승인·정지된 전문가의 판정 기록
+  if (sp.view === "activity") {
+    const act = await expertActivity();
+    return (
+      <>
+        <h2 style={{ margin: "0 0 8px" }}>전문가 등급 <span className="muted">활동 · 전문가 {act.length}명 · 판정 {act.reduce((s, x) => s + x.counts.total, 0)}개</span></h2>
+        <div className="filters">
+          <Link href="/admin/experts">요청·심사</Link>
+          <Link href="/admin/experts?view=activity" className="on">활동</Link>
+        </div>
+        <p className="muted" style={{ marginBottom: 10 }}>전문가 등급 회원(승인·정지)이 남긴 판정이에요. 잘못되거나 대가성으로 보이는 판정은 <b>지우기</b>로 없앨 수 있고, 카드의 근거 줄·올라간 등급·배지 집계도 함께 되돌아가요.</p>
+        <ExpertActivityList items={act} />
+      </>
+    );
+  }
   const tab = EXPERT_STATUSES.includes(sp.status as ExpertStatus) ? (sp.status as ExpertStatus) : null;
   const rows = tab ? all.filter((r) => r.status === tab) : all;
   const docs = await Promise.all(rows.map((r) => (r.docPaths.length ? docSignedUrls(r.docPaths) : Promise.resolve([] as (string | null)[]))));
@@ -25,6 +41,8 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
     <>
       <h2 style={{ margin: "0 0 8px" }}>전문가 등급 <span className="muted">등급 요청 대기 {waiting} · {tab ? `${EXPERT_STATUS_LABEL[tab]} ${rows.length}` : `전체 ${all.length}`}</span></h2>
       <div className="filters">
+        <Link href="/admin/experts?view=activity">활동 보기 →</Link>
+        <span className="chip">|</span>
         <Link href="/admin/experts" className={tab === null ? "on" : ""}>전체 {all.length}</Link>
         {EXPERT_STATUSES.map((s) => <Link key={s} href={`/admin/experts?status=${s}`} className={tab === s ? "on" : ""}>{EXPERT_STATUS_LABEL[s]} {all.filter((r) => r.status === s).length}</Link>)}
       </div>

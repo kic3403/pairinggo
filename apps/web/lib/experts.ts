@@ -6,7 +6,7 @@
 import { revalidatePath } from "next/cache";
 import {
   EXPERT_DOCS_MAX, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, cleanTitles, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush, joinTitles,
-  kindOf, scorePairings, type DrinkKind, type ExpertCompensation, type ExpertStatus, type GradeKey, type Pairing,
+  kindOf, scorePairings, toSlug, type DrinkKind, type ExpertCompensation, type ExpertStatus, type GradeKey, type Pairing,
 } from "@pairinggo/shared";
 import { recountExpertFor, renameExpertEvidence } from "@pairinggo/server/expert-reviews";
 import { getCatalog, invalidateCatalog } from "./catalog";
@@ -147,6 +147,37 @@ export async function listExperts(): Promise<ExpertRow[]> {
   if (error) throw new Error(error.message);
   const order: Record<ExpertStatus, number> = { applied: 0, suspended: 1, approved: 2, rejected: 3 };
   return ((data ?? []) as Row[]).map(toRow).sort((a, b) => order[a.status] - order[b.status]);
+}
+
+/**
+ * 어드민 활동 탭(2026-09-29 사용자 요청) — 승인·정지된 전문가별 판정 수(어울림·보통·아님, 최근 30일)와 판정 목록.
+ */
+export type ExpertActivityReview = { id: number; drink: string; food: string; drinkHref: string | null; verdict: string; note: string; at: string };
+export type ExpertActivity = {
+  userId: string; displayName: string; status: ExpertStatus; approvedAt: string | null;
+  counts: { yes: number; neutral: number; no: number; total: number; last30: number }; firstAt: string | null; lastAt: string | null;
+  reviews: ExpertActivityReview[];
+};
+export async function expertActivity(): Promise<ExpertActivity[]> {
+  const sb = db();
+  if (!sb) return [];
+  const { data: ex } = await sb.from("experts").select("user_id,display_name,status,approved_at").in("status", ["approved", "suspended"]).order("approved_at", { ascending: false });
+  const list = (ex ?? []) as { user_id: string; display_name: string; status: string; approved_at: string | null }[];
+  if (!list.length) return [];
+  const { data } = await sb.from("expert_reviews").select("id,user_id,verdict,note,updated_at,drinks!expert_reviews_drink_id_fkey(name),foods!expert_reviews_food_id_fkey(name)")
+    .in("user_id", list.map((x) => x.user_id)).order("updated_at", { ascending: false }).limit(5000);
+  const rows = (data ?? []) as unknown as { id: number; user_id: string; verdict: string; note: string; updated_at: string; drinks: { name: string } | null; foods: { name: string } | null }[];
+  const since = Date.now() - 30 * 86400_000;
+  return list.map((x) => {
+    const mine = rows.filter((r) => r.user_id === x.user_id);
+    const c = { yes: 0, neutral: 0, no: 0, total: mine.length, last30: 0 };
+    for (const r of mine) { if (r.verdict === "yes" || r.verdict === "neutral" || r.verdict === "no") c[r.verdict]++; if (Date.parse(r.updated_at) >= since) c.last30++; }
+    return {
+      userId: x.user_id, displayName: x.display_name, status: cleanExpertStatus(x.status), approvedAt: x.approved_at, counts: c,
+      firstAt: mine.length ? mine[mine.length - 1].updated_at : null, lastAt: mine[0]?.updated_at ?? null,
+      reviews: mine.map((r) => ({ id: Number(r.id), drink: r.drinks?.name ?? "?", food: r.foods?.name ?? "?", drinkHref: r.drinks?.name ? `/drinks/${toSlug(r.drinks.name)}` : null, verdict: r.verdict, note: r.note, at: r.updated_at })),
+    };
+  }).sort((a, b) => (b.lastAt ?? "").localeCompare(a.lastAt ?? ""));
 }
 
 /** 어드민 상세 — 전문가마다 최근 판정 5개 */
