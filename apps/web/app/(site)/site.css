@@ -1329,3 +1329,8 @@ a.pd-score:hover { border-color: var(--navy); }
 @media (min-width: 768px) { .today-more { grid-template-columns: 1fr 1fr; } .tp-side .dhead-media { width: 150px; } .tp-side b { font-size: 21px; } .tp-x { padding-top: 60px; } }
 .today-past .tp-date { width: 56px; flex: none; }
 
+/* 전문가 등급 요청 — 첨부한 증빙 사진 목록(2026-09-29) */
+.xdocs { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.xdocs li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 13px; }
+.xdocs li em { font-style: normal; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.xdocs li small { white-space: nowrap; }

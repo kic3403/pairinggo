@@ -1,8 +1,9 @@
 "use client";
 /** 검수 화면 — 자격증 더 올리기(2026-09-29). 운영자만 보고 공개하지 않는다. 3장을 넘으면 오래된 것부터 바뀐다 */
 import { useState } from "react";
-import { EXPERT_DOCS_MAX } from "@pairinggo/shared/expert";
-import { MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES } from "@pairinggo/shared/member";
+import { EXPERT_DOCS_MAX, EXPERT_DOC_MAX_BYTES } from "@pairinggo/shared/expert";
+import { shrinkToJpegFile } from "@pairinggo/shared/image-client";
+import { MEMBER_IMAGE_TYPES } from "@pairinggo/shared/member";
 
 export default function ExpertDocUpload({ count }: { count: number }) {
   const [n, setN] = useState(count);
@@ -12,10 +13,12 @@ export default function ExpertDocUpload({ count }: { count: number }) {
   async function upload(list: FileList | null) {
     const files = Array.from(list ?? []).slice(0, EXPERT_DOCS_MAX);
     if (!files.length) return;
-    if (files.some((f) => !(MEMBER_IMAGE_TYPES as readonly string[]).includes(f.type) || f.size > MEMBER_IMAGE_MAX_BYTES)) { setMsg({ ok: false, text: "JPG·PNG·WebP 3MB 이하 사진만 올릴 수 있어요" }); return; }
+    if (files.some((f) => !(MEMBER_IMAGE_TYPES as readonly string[]).includes(f.type) || f.size > EXPERT_DOC_MAX_BYTES)) { setMsg({ ok: false, text: "JPG·PNG·WebP 5MB 이하 사진만 올릴 수 있어요" }); return; }
     setBusy(true); setMsg(null);
     const fd = new FormData();
-    for (const f of files) fd.append("doc", f);
+    // 긴 변 1,600px JPEG로 줄여 보낸다(서버 본문 한도 4.5MB)
+    try { for (const f of await Promise.all(files.map((f) => shrinkToJpegFile(f, 1600)))) fd.append("doc", f); }
+    catch { setMsg({ ok: false, text: "사진을 읽지 못했어요 — 다른 사진으로 바꿔 주세요" }); setBusy(false); return; }
     const r = await fetch("/api/expert/docs", { method: "POST", body: fd }).catch(() => null);
     const j = (await r?.json().catch(() => ({}))) as { count?: number; error?: string } | undefined;
     if (r?.ok) { setN(j?.count ?? n + files.length); setMsg({ ok: true, text: "자격증을 올렸어요 — 운영자가 확인해요." }); }

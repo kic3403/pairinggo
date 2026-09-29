@@ -15,3 +15,11 @@ export async function shrinkToJpeg(file: File, maxEdge = MENU_MAX_EDGE): Promise
   const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
   return { type: "image/jpeg", data: dataUrl.slice(dataUrl.indexOf(",") + 1) };
 }
+
+/** 줄인 JPEG를 File로 — multipart(FormData)로 보내는 화면용(전문가 증빙 등) */
+export async function shrinkToJpegFile(file: File, maxEdge = MENU_MAX_EDGE): Promise<File> {
+  const { data } = await shrinkToJpeg(file, maxEdge);
+  const bin = atob(data), bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new File([bytes], file.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" });
+}

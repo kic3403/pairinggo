@@ -1,5 +1,5 @@
 /**
- * 전문가 신청(docs/27) — POST multipart { realName, affiliation, titles(여러 개), intro, namePrivate?="on", penName?, publicConsent="on", doc(≤3) } → { ok }.
+ * 전문가 신청(docs/27) — POST multipart { realName, affiliation, titles(여러 개), intro, namePrivate?="on", penName?, publicConsent="on", doc(≤5, 한 장 5MB — 브라우저가 줄여 보냄) } → { ok }.
  * 로그인 회원만. 증빙 사진은 비공개 버킷에 두고 어드민만 본다.
  */
 import { NextResponse } from "next/server";

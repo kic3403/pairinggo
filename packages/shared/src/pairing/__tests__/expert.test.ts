@@ -22,7 +22,8 @@ describe("전문가 표시명·신청", () => {
     expect(expertApplicationProblem({ ...ok, titles: [] })).toContain("직함");
     expect(expertApplicationProblem({ ...ok, titles: ["주류 MD"] })).toBeNull();
     expect(expertApplicationProblem({ ...ok, intro: "블로그 http://x.com" })).toContain("링크");
-    expect(expertApplicationProblem({ ...ok, docsCount: 4 })).toContain("3장");
+    expect(expertApplicationProblem({ ...ok, docsCount: 6 })).toContain("5장");
+    expect(expertApplicationProblem({ ...ok, docsCount: 5 })).toBeNull();
     expect(expertApplicationProblem({ ...ok, docsCount: 0 })).toContain("자격증");
     expect(expertApplicationProblem({ ...ok, publicConsent: false })).toContain("공개에 동의");
     expect(expertApplicationProblem({ ...ok, namePublic: false })).toContain("닉네임");

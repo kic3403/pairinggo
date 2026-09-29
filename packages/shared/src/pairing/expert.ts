@@ -16,7 +16,9 @@ export const EXPERT_TITLES_MAX = 4;
 export const EXPERT_PEN_MIN = 2, EXPERT_PEN_MAX = 12;
 export const EXPERT_NOTE_MAX = 120;
 export const EXPERT_INTRO_MAX = 200;
-export const EXPERT_DOCS_MAX = 3;
+export const EXPERT_DOCS_MAX = 5;   // 2026-09-29 사용자 요청 3 → 5
+/** 증빙 사진 원본 한 장 한도(5MB) — 브라우저가 긴 변 1,600px JPEG로 줄여 보낸다(5장이어도 서버 본문 4.5MB 안쪽) */
+export const EXPERT_DOC_MAX_BYTES = 5 * 1024 * 1024;
 export const EXPERT_REVIEWS_PER_DAY = 100;
 /** 소믈리에 근거의 바닥 점수 — 카탈로그 sommelier 행 범위(90~95)에 맞춤 */
 export const EXPERT_ES = 93;

@@ -5,7 +5,7 @@
  */
 import { revalidatePath } from "next/cache";
 import {
-  EXPERT_DOCS_MAX, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, cleanTitles, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush, joinTitles,
+  EXPERT_DOCS_MAX, EXPERT_DOC_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, cleanTitles, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush, joinTitles,
   kindOf, scorePairings, toSlug, type DrinkKind, type ExpertCompensation, type ExpertStatus, type GradeKey, type Pairing,
 } from "@pairinggo/shared";
 import { recountExpertFor, renameExpertEvidence } from "@pairinggo/server/expert-reviews";
@@ -57,14 +57,14 @@ export async function expertStatusOf(userId: string): Promise<ExpertStatus | nul
 async function uploadExpertDoc(userId: string, file: File): Promise<string> {
   const sb = need();
   if (!(MEMBER_IMAGE_TYPES as readonly string[]).includes(file.type)) throw new Error("증빙은 JPG·PNG·WebP 사진만 올릴 수 있어요");
-  if (file.size > MEMBER_IMAGE_MAX_BYTES) throw new Error("사진은 3MB까지예요");
+  if (file.size > EXPERT_DOC_MAX_BYTES) throw new Error("사진은 한 장에 5MB까지예요");
   const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
   const path = `${userId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const buf = Buffer.from(await file.arrayBuffer());
   const put = () => sb.storage.from(BUCKET).upload(path, buf, { contentType: file.type, upsert: false });
   let { error } = await put();
   if (error && /not found|bucket/i.test(error.message)) {
-    await sb.storage.createBucket(BUCKET, { public: false, fileSizeLimit: MEMBER_IMAGE_MAX_BYTES, allowedMimeTypes: [...MEMBER_IMAGE_TYPES] }).catch(() => null);
+    await sb.storage.createBucket(BUCKET, { public: false, fileSizeLimit: EXPERT_DOC_MAX_BYTES, allowedMimeTypes: [...MEMBER_IMAGE_TYPES] }).catch(() => null);
     ({ error } = await put());
   }
   if (error) throw new Error("증빙 사진을 올리지 못했어요 — 잠시 뒤 다시 시도해 주세요");
