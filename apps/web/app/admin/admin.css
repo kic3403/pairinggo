@@ -12,11 +12,18 @@ body { background: var(--bg); color: var(--ink); }   /* 어드민은 라이트 �
 .adm-logout:hover { color: var(--ink) !important; }
 .adm-menu { display: flex; flex-direction: column; gap: 14px; }
 .adm-group { display: flex; flex-direction: column; gap: 1px; }
-.adm-group-title { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--muted); padding: 0 8px 4px; }
-.adm-menu a { display: block; padding: 7px 10px; border-radius: 8px; font-size: 13.5px; color: var(--ink2); text-decoration: none; white-space: nowrap; }
+/* 대메뉴(묶음 제목·대시보드)는 크고 진하게, 소메뉴는 한 단계 작고 연하게(2026-09-29 사용자 요청) */
+.adm-group-title { display: flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 800; color: var(--ink); padding: 2px 10px 4px; letter-spacing: -0.01em; }
+.adm-menu a { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-radius: 8px; text-decoration: none; white-space: nowrap; }
+.adm-menu a.top { padding: 8px 10px; font-size: 15px; font-weight: 800; color: var(--ink); }
+.adm-menu a.sub { padding: 6px 10px 6px 18px; font-size: 13px; font-weight: 500; color: var(--ink2); }
 .adm-menu a:hover { background: var(--bg); color: var(--ink); }
 .adm-menu a.on { background: var(--drink-soft); color: var(--drink); font-weight: 700; }
+.adm-menu a.top.on { font-weight: 800; }
 .adm-menu a:focus-visible { outline: 2px solid var(--drink); outline-offset: 1px; }
+/* 알림 — 처리할 일이 있으면 빨간 숫자, 묶음 제목엔 작은 점 */
+.adm-badge { flex: none; min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box; border-radius: 999px; background: #D93025; color: #fff; font-size: 11px; font-weight: 800; line-height: 18px; text-align: center; font-variant-numeric: tabular-nums; }
+.adm-dot { width: 7px; height: 7px; border-radius: 50%; background: #D93025; font-style: normal; }
 @media (max-width: 860px) {
   .adm-shell { display: block; }
   .adm-shell .adm { padding: 14px 16px 80px; }
@@ -27,7 +34,8 @@ body { background: var(--bg); color: var(--ink); }   /* 어드민은 라이트 �
   .adm-group { flex-direction: row; gap: 4px; flex: none; }
   .adm-group + .adm-group { padding-left: 6px; border-left: 1px solid var(--line); }
   .adm-group-title { display: none; }
-  .adm-menu a { padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
+  .adm-menu a.top, .adm-menu a.sub { padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; }
+  .adm-menu a.top { font-weight: 800; }
   .adm-menu a.on { border-color: var(--drink-soft); }
 }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin-bottom: 12px; }

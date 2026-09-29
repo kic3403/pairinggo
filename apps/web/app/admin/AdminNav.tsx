@@ -5,6 +5,7 @@
  */
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { AdminBadges } from "@/lib/admin-badges";
 
 const GROUPS: { title: string; items: { href: string; label: string }[] }[] = [
   { title: "", items: [{ href: "/admin", label: "대시보드" }] },
@@ -19,7 +20,7 @@ const GROUPS: { title: string; items: { href: string; label: string }[] }[] = [
   { title: "사이트", items: [{ href: "/admin/banners", label: "홈 배너" }, { href: "/admin/notices", label: "공지" }, { href: "/admin/errors", label: "오류" }] },
 ];
 
-export default function AdminNav() {
+export default function AdminNav({ badges = {} }: { badges?: AdminBadges }) {
   const path = usePathname() || "/admin";
   const on = (href: string) => (href === "/admin" ? path === "/admin" : path === href || path.startsWith(href + "/"));
   return (
@@ -31,8 +32,22 @@ export default function AdminNav() {
       <nav className="adm-menu" aria-label="운영 메뉴">
         {GROUPS.map((g) => (
           <div key={g.title || "home"} className="adm-group">
-            {g.title && <span className="adm-group-title">{g.title}</span>}
-            {g.items.map((it) => <Link key={it.href} href={it.href} className={on(it.href) ? "on" : undefined} aria-current={on(it.href) ? "page" : undefined}>{it.label}</Link>)}
+            {g.title && (
+              <span className="adm-group-title">
+                {g.title}
+                {/* 묶음 안 알림 합계 — 좁은 화면에서는 묶음 제목이 숨으므로 항목 숫자만 */}
+                {(() => { const n = g.items.reduce((s, it) => s + (badges[it.href]?.n ?? 0), 0); return n ? <i className="adm-dot" aria-hidden /> : null; })()}
+              </span>
+            )}
+            {g.items.map((it) => {
+              const b = badges[it.href];
+              return (
+                <Link key={it.href} href={it.href} className={`${g.title ? "sub" : "top"}${on(it.href) ? " on" : ""}`} aria-current={on(it.href) ? "page" : undefined} title={b?.title}>
+                  <span>{it.label}</span>
+                  {b && <span className="adm-badge" aria-label={b.title}>{b.n > 99 ? "99+" : b.n}</span>}
+                </Link>
+              );
+            })}
           </div>
         ))}
       </nav>

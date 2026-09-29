@@ -37,7 +37,7 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
   const paged = queue ?? ai;
   return (
     <>
-      <h2 style={{ margin: "0 0 8px" }}>검수 {queue ? <span className="muted">근거 빈칸 우선 · {page + 1}/{Math.max(pages, 1)}쪽 · {rows.length}장</span> : ai ? <span className="muted">AI 확인 {ai.total.toLocaleString()}건 · {page + 1}/{Math.max(pages, 1)}쪽</span> : <span className="muted">{rows.length}건 · 언급 많은 순</span>}</h2>
+      <h2 style={{ margin: "0 0 8px" }}>근거 검수 {queue ? <span className="muted">근거 빈칸 우선 · {page + 1}/{Math.max(pages, 1)}쪽 · {rows.length}장</span> : ai ? <span className="muted">AI 확인 {ai.total.toLocaleString()}건 · {page + 1}/{Math.max(pages, 1)}쪽</span> : <span className="muted">{rows.length}건 · 언급 많은 순</span>}</h2>
       {status === "draft" && !sp.tier && !sp.drink && (
         <div className="filters">
           <Link href="/admin/review" className={gapView ? "on" : ""}>근거 빈칸 우선</Link>

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import AdminNav from "./AdminNav";
+import { adminBadges } from "@/lib/admin-badges";
 import { adminEnabled, isAdmin } from "@/lib/admin-auth";
 import "./admin.css";
 
@@ -12,9 +13,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   }
   const ok = await isAdmin();
   if (!ok) return <main className="adm">{children}</main>;
+  const badges = await adminBadges().catch(() => ({}));
   return (
     <div className="adm-shell">
-      <AdminNav />
+      <AdminNav badges={badges} />
       <main className="adm">{children}</main>
     </div>
   );
