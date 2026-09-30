@@ -76,10 +76,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       <SearchBox initial={q} region={rid} autoFocus={!q} regionPicker={false} />
       {/* 라벨 사진으로 찾기(docs/25 §5) — 결과가 없을 때는 아래 빈 결과 칸에서 크게 */}
       {!empty && <LabelSearch inline />}
-      {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} />}
+      {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} waitPlaces={logKind === "search_empty" && !!placesQ} />}
       <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} collapsible={!!q} />
       {/* 같은 검색어로 식당도 — 찾은 술·음식이 없으면 맨 위, 있으면 결과 아래(상황·지역 검색에는 붙이지 않는다) */}
-      {placesQ && empty && <SearchPlaces q={placesQ} region={placesRegion} empty />}
+      {placesQ && empty && <SearchPlaces q={placesQ} region={placesRegion} empty logRegion={rid === "all" ? null : rid} />}
 
       {regional && (
         <section>

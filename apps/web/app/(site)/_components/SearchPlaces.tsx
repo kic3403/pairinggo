@@ -9,11 +9,13 @@ import Link from "next/link";
 import PlaceList, { type PlaceView } from "./PlaceList";
 import { useHydrated, useRegion } from "./RegionProvider";
 import { track } from "@/lib/track";
+import { logSearch } from "./SearchLog";
 
 type Res = { places: PlaceView[]; source: string; awardsYear?: number | null; widened?: boolean };
 const SHOW = 5;
 
-export default function SearchPlaces({ q, region, empty }: { q: string; region: { id: string; label: string } | null; empty: boolean }) {
+/** logRegion — empty일 때만: 술·음식이 없던 검색을 식당 결과로 기록(식당이 나오면 search · matched place, 없으면 search_empty) */
+export default function SearchPlaces({ q, region, empty, logRegion }: { q: string; region: { id: string; label: string } | null; empty: boolean; logRegion?: string | null }) {
   const rg = useRegion();
   const hydrated = useHydrated();
   const [res, setRes] = useState<Res | null>(null);
@@ -35,9 +37,10 @@ export default function SearchPlaces({ q, region, empty }: { q: string; region: 
       .then((j: Res) => {
         if (!alive) return;
         setLabel(j.widened ? `${lbl} + 전국` : lbl); setRes(j);
+        if (empty) logSearch(q, j.places.length ? "search" : "search_empty", { pick: j.places.length ? `place:${j.places[0].id}` : null, region: logRegion ?? null, hits: j.places.length });
         track("restaurant_list", { mode: "search_page", n: j.places.length, source: j.source, basis: region?.id ?? (rg.region ? rg.id : "all") });
       })
-      .catch(() => alive && setRes({ places: [], source: "none" }));
+      .catch(() => { if (!alive) return; setRes({ places: [], source: "none" }); if (empty) logSearch(q, "search_empty", { region: logRegion ?? null, hits: 0 }); });
     return () => { alive = false; };
   }, [q, region?.id, hydrated, rg.id, rg.gps, rg.region]); // eslint-disable-line react-hooks/exhaustive-deps
 
