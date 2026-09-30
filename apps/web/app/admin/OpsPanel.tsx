@@ -3,7 +3,7 @@
  * 2026-10-01 사용자 요청: 1일·7일·30일 탭 + 날짜 직접 선택(?p= 또는 ?from=&to=, 규칙은 shared ops-metrics opsPeriod).
  */
 import Link from "next/link";
-import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, OPS_PRESETS, deltaText, kstToday, pct, type Demographics, type OpsPeriod, type WeeklyMetrics } from "@pairinggo/shared";
+import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, OPS_PRESETS, deltaText, josa, kstToday, pct, type Demographics, type OpsPeriod, type WeeklyMetrics } from "@pairinggo/shared";
 
 const tone = (cur: number, prev: number) => (cur > prev ? "up" : cur < prev ? "down" : "");
 const kstDay = (iso: string) => new Date(Date.parse(iso) + 9 * 3600_000).toISOString().slice(0, 10);
@@ -27,7 +27,7 @@ export default function OpsPanel({ metrics: m, demo: d, period }: { metrics: Wee
     <>
       <div className="card">
         <div className="ops-head">
-          <b>{period.label} <span className="muted" style={{ fontWeight: 400 }}>{period.key === "custom" ? `${period.days}일` : `${kstDay(period.since).slice(5).replace("-", ".")} ~ ${kstDay(period.until).slice(5).replace("-", ".")}`} · {prevName}와 비교</span></b>
+          <b>{period.label} <span className="muted" style={{ fontWeight: 400 }}>{period.key === "custom" ? `${period.days}일` : `${kstDay(period.since).slice(5).replace("-", ".")} ~ ${kstDay(period.until).slice(5).replace("-", ".")}`} · {josa(prevName, "과/와")} 비교</span></b>
           <div className="ops-period">
             <nav className="seg" aria-label="기간">
               {OPS_PRESETS.map((p) => <Link key={p.key} href={`/admin?p=${p.key}`} className={period.key === p.key ? "on" : undefined} aria-current={period.key === p.key ? "true" : undefined}>{p.label}</Link>)}
