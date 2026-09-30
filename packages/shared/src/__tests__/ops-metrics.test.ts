@@ -40,3 +40,25 @@ describe("운영 지표 규칙", () => {
     expect(t).toContain("회원 3명 — 남 1 · 여 1 · 미입력 1");
   });
 });
+
+describe("대시보드 기간", async () => {
+  const { opsPeriod, prevPeriod } = await import("../ops-metrics");
+  const now = new Date("2026-10-01T03:00:00Z");   // 한국 12:00
+  it("탭 1·7·30, 기본 7", () => {
+    expect(opsPeriod({}, now)).toMatchObject({ key: "7", days: 7, label: "최근 7일", until: now.toISOString() });
+    expect(opsPeriod({ p: "30" }, now).since).toBe("2026-09-01T03:00:00.000Z");
+    expect(opsPeriod({ p: "1" }, now).days).toBe(1);
+    expect(opsPeriod({ p: "9" }, now).key).toBe("7");
+  });
+  it("직접 선택 — 한국 날짜 00시 기준, 둘 다 포함, 뒤바뀐 순서·미래 바로잡기", () => {
+    const p = opsPeriod({ from: "2026-09-20", to: "2026-09-22" }, now);
+    expect(p).toMatchObject({ key: "custom", days: 3, since: "2026-09-19T15:00:00.000Z", until: "2026-09-22T15:00:00.000Z", label: "09.20 ~ 09.22" });
+    expect(opsPeriod({ from: "2026-09-22", to: "2026-09-20" }, now).from).toBe("2026-09-20");
+    expect(opsPeriod({ from: "2026-09-30", to: "2026-12-31" }, now)).toMatchObject({ to: "2026-10-01", until: now.toISOString() });
+    expect(opsPeriod({ from: "2020-01-01", to: "2026-10-01" }, now).days).toBe(366);
+    expect(opsPeriod({ from: "x", to: "2026-09-20" }, now).key).toBe("7");
+  });
+  it("앞 기간은 같은 길이", () => {
+    expect(prevPeriod({ since: "2026-09-24T00:00:00.000Z", until: "2026-10-01T00:00:00.000Z" })).toEqual({ since: "2026-09-17T00:00:00.000Z", until: "2026-09-24T00:00:00.000Z" });
+  });
+});

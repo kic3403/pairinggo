@@ -91,3 +91,39 @@ export function reportText(m: WeeklyMetrics, d: Demographics): string {
   lines.push(`사는 곳 — ${d.sido.slice(0, 6).map((s) => `${s.name} ${s.n}`).join(" · ")}${d.sido.length > 6 ? " 외" : ""}`);
   return lines.join("\n");
 }
+
+/* ---------- 기간 고르기(2026-10-01 사용자 요청 — 1일·7일·30일 탭 + 직접 선택) ---------- */
+export type OpsPeriod = { key: "1" | "7" | "30" | "custom"; since: string; until: string; label: string; days: number; from?: string; to?: string };
+export const OPS_PRESETS = [{ key: "1", label: "1일" }, { key: "7", label: "7일" }, { key: "30", label: "30일" }] as const;
+export const OPS_MAX_DAYS = 366;
+const DAY_MS = 86400_000;
+const isYmd = (s: unknown): s is string => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));
+/** 한국 날짜 YYYY-MM-DD의 00:00(KST)을 UTC ISO로 */
+const kstStart = (ymd: string) => new Date(Date.parse(`${ymd}T00:00:00Z`) - 9 * 3600_000).toISOString();
+/** 지금의 한국 날짜 */
+export const kstToday = (now = new Date()) => new Date(now.getTime() + 9 * 3600_000).toISOString().slice(0, 10);
+
+/**
+ * 주소 값 → 기간. ?from=&to=(한국 날짜, 둘 다 포함)가 맞으면 직접 선택, 아니면 ?p=1|7|30(지금부터 거꾸로 24시간 단위), 기본 7일.
+ * 직접 선택은 앞뒤를 바로잡고(from > to면 바꿈) 미래는 오늘까지, 길이는 366일까지.
+ */
+export function opsPeriod(sp: { p?: unknown; from?: unknown; to?: unknown }, now = new Date()): OpsPeriod {
+  const today = kstToday(now);
+  if (isYmd(sp.from) && isYmd(sp.to)) {
+    let [a, b] = [sp.from, sp.to].sort();
+    if (b > today) b = today;
+    if (a > b) a = b;
+    let days = Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / DAY_MS) + 1;
+    if (days > OPS_MAX_DAYS) { a = new Date(Date.parse(`${b}T00:00:00Z`) - (OPS_MAX_DAYS - 1) * DAY_MS).toISOString().slice(0, 10); days = OPS_MAX_DAYS; }
+    const until = b === today ? now.toISOString() : kstStart(new Date(Date.parse(`${b}T00:00:00Z`) + DAY_MS).toISOString().slice(0, 10));
+    return { key: "custom", since: kstStart(a), until, label: `${a.slice(5).replace("-", ".")} ~ ${b.slice(5).replace("-", ".")}`, days, from: a, to: b };
+  }
+  const key = sp.p === "1" || sp.p === "30" ? sp.p : "7";
+  const days = Number(key);
+  return { key, since: new Date(now.getTime() - days * DAY_MS).toISOString(), until: now.toISOString(), label: `최근 ${days}일`, days };
+}
+/** 비교할 앞 기간(같은 길이, 바로 앞) */
+export const prevPeriod = (p: Pick<OpsPeriod, "since" | "until">) => {
+  const len = Date.parse(p.until) - Date.parse(p.since);
+  return { since: new Date(Date.parse(p.since) - len).toISOString(), until: p.since };
+};

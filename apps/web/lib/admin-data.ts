@@ -78,21 +78,21 @@ export async function aiQueue(page = 0) {
 
 export async function dashboard() {
   const sb = need();
-  const [cands, pairCounts, empties, lastPub] = await Promise.all([
+  const [cands, empties, lastPub] = await Promise.all([
     Promise.all(["draft", "needs_entity", "promoted", "rejected"].map((st) => sb.from("pairing_candidates").select("id", { count: "exact", head: true }).eq("status", st).then((r) => [st, r.count || 0] as const))),
-    sb.from("pairings").select("drink_id"),
     sb.from("popular_terms").select("term,type,count").eq("type", "empty").order("count", { ascending: false }).limit(20),
     sb.from("catalog_meta").select("value,updated_at").eq("key", "version").maybeSingle(),
   ]);
   const byStatus: Record<string, number> = {};
   for (const [st, n] of cands) byStatus[st] = n;
-  const perDrink = new Map<string, number>();
-  for (const p of pairCounts.data || []) perDrink.set(p.drink_id, (perDrink.get(p.drink_id) || 0) + 1);
+  // 술마다 페어링 수는 공개 카탈로그 기준(2026-10-01 — DB에서 행을 받으면 1,000행에서 잘려 "페어링 1000"·잘못된 부족 목록이 나왔다)
   const c = await getCatalog();
+  const perDrink = new Map<string, number>();
+  for (const p of c.dataset.pairings) perDrink.set(p.d, (perDrink.get(p.d) || 0) + 1);
   const low = c.dataset.drinks.map((d) => ({ id: d.id, name: d.name, n: perDrink.get(d.id) || 0 })).filter((x) => x.n < 5).sort((a, b) => a.n - b.n);
   const noPair = c.dataset.foods.filter((f) => !c.dataset.pairings.some((p) => p.f === f.id)).map((f) => f.name);
   const promotedAfter = lastPub.data?.updated_at ? (await sb.from("pairing_candidates").select("id", { count: "exact", head: true }).eq("status", "promoted").gt("reviewed_at", lastPub.data.updated_at)).count || 0 : 0;
-  return { byStatus, low, noPair, empties: empties.data || [], version: String(lastPub.data?.value ?? "-"), publishedAt: lastPub.data?.updated_at ?? null, promotedAfter, totalPairings: (pairCounts.data || []).length };
+  return { byStatus, low, noPair, empties: empties.data || [], version: String(lastPub.data?.value ?? "-"), publishedAt: lastPub.data?.updated_at ?? null, promotedAfter, totalPairings: c.dataset.pairings.length };
 }
 
 const TIER_RANK = (t: string) => (SRC_RANK as Record<string, number>)[t] ?? 0;
