@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
+import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, evidenceNeighbors, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { expertTiersByName } from "@/lib/experts";
 import { buyOptions } from "@/lib/shop";
@@ -86,6 +86,16 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const similar = similarDrinks(drink, 14).filter((s) => kindOf(s.x) === kind && !sameBrewery.some((b) => b.id === s.x.id)).slice(0, 5);
   // 근거(양조장·소믈리에·매체·후기·회원) 있는 페어링이 하나도 없으면 '준비 중'으로 알린다 — 맛 분석·AI 제안을 검증된 추천처럼 보이지 않게
   const hasEvidence = items.some((it) => ["official", "sommelier", "media", "blog", "user"].includes(it.pairing.src ?? ""));
+  // 근거가 없으면 같은 양조장 술·비슷한 술 가운데 근거가 확인된 것을 본문 위로(2026-10-01, shared pairing/neighbors.ts) — 이 술 등급에는 넣지 않는다
+  const foodById = new Map(c.dataset.foods.map((f) => [f.id, f]));
+  const neighbors = hasEvidence ? [] : evidenceNeighbors(
+    [
+      ...c.dataset.drinks.filter((d) => d.id !== drink.id && d.brewery && d.brewery === drink.brewery).map((d) => ({ drink: d, rel: "brewery" as const })),
+      ...similarDrinks(drink, 20).filter((s) => kindOf(s.x) === kind).map((s) => ({ drink: s.x, rel: "similar" as const, why: s.why.slice(0, 2) })),
+    ],
+    (id) => byDrink[id], (id) => foodById.get(id), 4, 2,
+  );
+  const shown = new Set(neighbors.map((x) => x.drink.id));
 
   const meta = kind === "trad"
     ? [drink.category, drink.abv != null ? `${drink.abv}%` : null, drink.region, drink.brewery].filter(Boolean)
@@ -104,7 +114,9 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   ];
 
   const rating = extRatingOf(drink);
-  const hasRelated = sameBrewery.length > 0 || similar.length > 0 || sameRegion.length > 0;
+  // 본문 '가까운 술'에 나온 술은 옆 칸에서 뺀다(한 화면에 두 번 두지 않기)
+  const asideBrewery = sameBrewery.filter((d) => !shown.has(d.id)), asideSimilar = similar.filter((x) => !shown.has(x.x.id));
+  const hasRelated = asideBrewery.length > 0 || asideSimilar.length > 0 || sameRegion.length > 0;
 
   return (
     <div className="wrap detail">
@@ -188,7 +200,26 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             <summary>어울림 등급은 어떻게 매기나요</summary>
             <p className="small muted">어울림 등급은 <b>근거가 먼저</b>입니다. 양조장·소믈리에 추천이 있거나 서로 다른 출처가 여럿 확인한 조합만 ‘근거 확인’이 되고, 그중 어울림 점수(근거 강도 60% · 맛 분석 25% · 블로그 언급 15%)가 높은 조합이 <b>찰떡</b>, 나머지가 <b>잘 어울림</b>입니다. 블로그·매체 한 곳뿐인 조합은 ‘근거 약함’, 근거 글 없이 맛 프로필로 계산한 조합은 ‘추정’이라 늘 <b>시도해 볼 만</b>으로 둡니다. 같은 매체·같은 블로그·같은 사람은 한 곳으로 세고, 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다.</p>
           </details>
-          {!hasEvidence && <p className="box small" style={{ marginBottom: 12 }}><b>페어링 정보 준비 중</b> — 아직 양조장·소믈리에·매체가 확인한 조합이 없습니다. 아래는 맛 프로필로 추정한 조합이며 검증된 추천이 아닙니다.</p>}
+          {!hasEvidence && <p className="box small" style={{ marginBottom: 12 }}><b>페어링 정보 준비 중</b> — 아직 양조장·소믈리에·매체가 확인한 조합이 없습니다. 아래 카드는 맛 프로필로 추정한 조합이며 검증된 추천이 아닙니다.</p>}
+          {neighbors.length > 0 && (
+            <section className="box neighbors" aria-labelledby="neighbors-h">
+              <h3 id="neighbors-h">근거가 확인된 가까운 술</h3>
+              <p className="small muted">{drink.brewery && neighbors.some((x) => x.rel === "brewery") ? `${drink.brewery}의 다른 술과 ` : ""}맛이 비슷한 {josa(KIND_LABEL[kind], "은/는")} 이런 음식과 확인됐어요. 이 술에도 참고해 보세요.</p>
+              <ul>
+                {neighbors.map((x) => (
+                  <li key={x.drink.id}>
+                    <div className="nb-top">
+                      <Link href={`/drinks/${toSlug(x.drink.name)}`}><b>{x.drink.name}</b></Link>
+                      <span className="small muted">{x.rel === "brewery" ? "같은 양조장" : ["비슷한 술", ...x.why].join(" · ")}</span>
+                    </div>
+                    <div className="nb-foods">
+                      {x.foods.map((f) => <Link key={f.food.id} className="nb-chip" href={`/foods/${toSlug(f.food.name)}?d=${x.drink.id}`}>{f.food.name}<span className="small muted"> · {f.conf === "confirmed" ? "근거 확인" : "근거 약함"}</span></Link>)}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           <MemberPickButton mode="drink" subjectId={drink.id} subjectName={drink.name} options={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
           <RatingsProvider subject={{ drink: drink.id }}>
             <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/drinks/${toSlug(drink.name)}/all`}>
@@ -222,8 +253,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           {hasRelated && (
             <div className="box related">
               <h3>관련 술</h3>
-              {sameBrewery.length > 0 && <><h4>{drink.brewery}의 다른 술</h4><ul>{sameBrewery.slice(0, 4).map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul></>}
-              {similar.length > 0 && <><h4>비슷한 {KIND_LABEL[kind]}</h4><ul>{similar.slice(0, 4).map((x) => <li key={x.x.id}><Link href={`/drinks/${toSlug(x.x.name)}`}>{x.x.name}</Link>{x.why.length > 0 && <span className="small muted"> · {x.why.slice(0, 2).join(" · ")}</span>}</li>)}</ul></>}
+              {asideBrewery.length > 0 && <><h4>{drink.brewery}의 다른 술</h4><ul>{asideBrewery.slice(0, 4).map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul></>}
+              {asideSimilar.length > 0 && <><h4>비슷한 {KIND_LABEL[kind]}</h4><ul>{asideSimilar.slice(0, 4).map((x) => <li key={x.x.id}><Link href={`/drinks/${toSlug(x.x.name)}`}>{x.x.name}</Link>{x.why.length > 0 && <span className="small muted"> · {x.why.slice(0, 2).join(" · ")}</span>}</li>)}</ul></>}
               {sameRegion.length > 0 && <><h4>{drink.region?.split(" ")[0]}의 전통주</h4><ul>{sameRegion.slice(0, 4).map((d) => <li key={d.id}><Link href={`/drinks/${toSlug(d.name)}`}>{d.name}</Link></li>)}</ul></>}
             </div>
           )}

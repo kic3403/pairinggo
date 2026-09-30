@@ -384,7 +384,8 @@ p { margin: 0 0 12px; }
 .xverdict { flex: none; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--bg2); color: var(--ink2); }
 .xverdict.yes { background: #E9F3EA; color: #2F6B3A; }
 .xverdict.no { background: var(--food-soft); color: var(--food-ink); }
-.toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-size: 14px; z-index: 50; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 18px; font-size: 14px; z-index: 50; box-shadow: 0 4px 14px rgba(0,0,0,.18); width: max-content; max-width: calc(100vw - 32px); text-align: center; }
+.toast-link { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
 /* 페어링 묶음 — 전문가픽(양조장·소믈리에) · 대중픽(블로그·유튜브·매체) · 맛 분석(추정). 탭은 data-show로 카드를 거른다 */
 .pick-tabs { margin: 12px 0 10px; }
@@ -1203,6 +1204,17 @@ a.pd-score:hover { border-color: var(--navy); }
 .box.related h4 { margin: 10px 0 2px; font-size: 13px; color: var(--ink2); font-weight: 700; }
 .box.related h4:first-of-type { margin-top: 0; }
 .box.related li { padding: 5px 0; font-size: 14px; }
+/* 근거 없는 술의 "근거가 확인된 가까운 술"(2026-10-01) — 술 이름은 주황 계열, 음식 칩은 남색 계열(검색 결과 색과 같은 규칙) */
+.box.neighbors { margin-bottom: 12px; }
+.box.neighbors h3 { margin: 0 0 4px; color: var(--ink); }
+.box.neighbors > p { margin: 0 0 8px; }
+.box.neighbors ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.box.neighbors li { display: grid; gap: 6px; }
+.nb-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.nb-top a { color: var(--food-ink); }
+.nb-foods { display: flex; flex-wrap: wrap; gap: 6px; }
+.nb-chip { display: inline-block; line-height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--navy-ink); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+.nb-chip:hover { border-color: var(--navy); }
 
 /* ---------- 목록 정리(2026-09-26): 제목 한 줄, 칩 한 줄 스크롤, 결과 수·정렬 한 줄, 카드 3줄(음식·태그는 넓은 화면만) ---------- */
 .list-h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 4px; }
