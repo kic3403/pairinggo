@@ -4,13 +4,16 @@
  * 칩(운영자·파트너 확인 = 남색, 구글 = 회색) · 구글 평점 · 확인 정보 상자 · 메뉴판 · [예약하기](파트너 매장) · 지도·전화·저장.
  */
 import Link from "next/link";
-import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceMatch, type PlaceRating, type ReviewStats } from "@pairinggo/shared";
+import { placeChips, placeNoteLine, ratingText, verifiedLabel, type PlaceAmenities, type PlaceInfo, type PlaceMatch, type PlaceRating, type ReviewStats, kakaoMapUrl, naverMapUrl } from "@pairinggo/shared";
 import Heart from "./Heart";
 import MenuBoard, { MenuThumbs } from "./MenuBoard";
 import { track } from "@/lib/track";
 
 type Award = { guide: string; year: number; kind: "star" | "bib" | "green" | "selected"; level: number; label: string; url?: string | null };
 type Named = { id: string; name: string; slug: string | null };
+/** 지도 검색어 — 이름 + 주소 앞 두 토큰(시·구) */
+const mapQuery = (p: { name: string; address: string; roadAddress: string }) => `${p.name} ${(p.roadAddress || p.address || "").split(" ").slice(0, 2).join(" ")}`.trim();
+
 export type PlaceView = { id: string; name: string; category: string; address: string; roadAddress: string; phone: string | null; distanceKm: number | null; placeUrl: string | null; award?: Award | null; rating?: PlaceRating | null; amenities?: PlaceAmenities | null; info?: PlaceInfo | null; infoView?: { drinks: Named[]; foods: Named[] }; bookable?: boolean; reviews?: ReviewStats; match?: PlaceMatch | null };
 /** 블루리본은 식당 가이드라 양조장·리쿼샵 파트너에는 붙이지 않는다(2026-09-20) */
 const blueRibbonUrl = (name: string) => `https://www.bluer.co.kr/search?query=${encodeURIComponent(name)}`;
@@ -64,8 +67,9 @@ export default function PlaceList({ places, where, awardsYear, restaurants, rese
                 <span className="small muted" style={{ marginLeft: 8 }}>바로 확정 · 페어링GO 파트너</span>
               </div>
             )}
-            {p.placeUrl && <a className="lk" href={p.placeUrl} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>}
-            {p.info?.naverUrl && <a className="lk" href={p.info.naverUrl} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "naver_map" })}>네이버 지도 ↗</a>}
+            {/* 두 지도 다(2026-10-01 사용자 요청) — 등록된 주소가 없으면 이름+지역 검색 링크로 */}
+            <a className="lk" href={p.placeUrl || kakaoMapUrl(mapQuery(p))} target="_blank" rel="noopener nofollow" onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "kakao_map" })}>카카오맵 ↗</a>
+            <a className="lk" href={p.info?.naverUrl || naverMapUrl(mapQuery(p))} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "naver_map" })}>네이버 지도 ↗</a>
             {p.phone && <a className="lk" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`} style={{ marginLeft: 12 }} onClick={() => track("restaurant_link_click", { ...eventKey, place: p.name, kind: "tel" })}>전화</a>}
             {restaurants && !/양조장|리쿼샵/.test(p.category) && <a className="lk br" href={blueRibbonUrl(p.name)} target="_blank" rel="noopener nofollow" style={{ marginLeft: 12 }} onClick={() => track("external_link", { ...eventKey, place: p.name, kind: "blueribbon" })}>블루리본 확인 ↗</a>}
             <Heart kind="place" id={p.id} name={p.name}

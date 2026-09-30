@@ -5,7 +5,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ExtLink from "../_components/ExtLink";
-import { naverMapUrl } from "@pairinggo/shared";
+import { kakaoMapUrl, naverMapUrl } from "@pairinggo/shared";
 import { loadAwardYears, type AwardRow } from "@/lib/awards";
 
 export const dynamic = "force-dynamic";   // ?year= 탭 (명단 자체는 lib/awards 메모리 캐시 1시간)
@@ -64,6 +64,7 @@ export default async function MichelinPage({ searchParams }: { searchParams: Pro
                               <b>{r.name}</b>
                               <span className="small muted">{r.cuisine || "—"}</span>
                             </span>
+                            <ExtLink href={kakaoMapUrl(`${r.name} ${r.city}`)} event="external_link" props={{ kind: "kakao_map", place: r.name, year: r.year }} className="small">카카오맵 ↗</ExtLink>
                             <ExtLink href={naverMapUrl(`${r.name} ${r.city}`)} event="external_link" props={{ kind: "naver_map", place: r.name, year: r.year }} className="small">네이버 지도 ↗</ExtLink>
                             {r.url
                               ? <ExtLink href={r.url} event="external_link" props={{ kind: "michelin_guide", place: r.name, year: r.year }} className="small">가이드에서 보기 ↗</ExtLink>

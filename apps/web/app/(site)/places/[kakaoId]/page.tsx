@@ -6,7 +6,7 @@
 import type { Metadata } from "next";
 import { cache } from "react";
 import Link from "next/link";
-import { PARTNER_KIND_LABEL, PARTNER_KIND_TONE, placeChips, placeNoteLine, ratingText, REVIEW_VERIFY_LABEL, verifiedLabel } from "@pairinggo/shared";
+import { PARTNER_KIND_LABEL, PARTNER_KIND_TONE, kakaoMapUrl, naverMapUrl, placeChips, placeNoteLine, ratingText, REVIEW_VERIFY_LABEL, verifiedLabel } from "@pairinggo/shared";
 import { placeDetail as loadDetail } from "@/lib/place-detail";
 import { placeReviews } from "@/lib/reviews";
 import ExtLink from "../../_components/ExtLink";
@@ -100,8 +100,8 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
           {bookable ? <Link className="btn f" href={`/reserve/${kakaoId}`}>예약하기</Link> : null}
           <Link className={`btn${bookable ? "" : " p"}`} href={writeHref}>리뷰 쓰기</Link>
           {p.phone ? <a className="btn" href={`tel:${p.phone.replace(/[^0-9+]/g, "")}`}>전화</a> : null}
-          {p.placeUrl ? <ExtLink className="btn" href={p.placeUrl} event="restaurant_link_click" props={{ ...ev, kind: "kakao_map" }}>카카오맵 ↗</ExtLink> : null}
-          {info?.naverUrl ? <ExtLink className="btn" href={info.naverUrl} event="restaurant_link_click" props={{ ...ev, kind: "naver_map" }}>네이버 지도 ↗</ExtLink> : null}
+          <ExtLink className="btn" href={p.placeUrl || kakaoMapUrl(`${p.name} ${addr.split(" ").slice(0, 2).join(" ")}`)} event="restaurant_link_click" props={{ ...ev, kind: "kakao_map" }}>카카오맵 ↗</ExtLink>
+          <ExtLink className="btn" href={info?.naverUrl || naverMapUrl(`${p.name} ${addr.split(" ").slice(0, 2).join(" ")}`)} event="restaurant_link_click" props={{ ...ev, kind: "naver_map" }}>네이버 지도 ↗</ExtLink>
           <Heart kind="place" id={kakaoId} name={p.name} meta={{ name: p.name, address: addr, phone: p.phone ?? undefined, url: p.placeUrl ?? undefined, category: p.category }} />
         </div>
       </header>

@@ -105,6 +105,8 @@ export function fmt(n: number) {
   return n.toLocaleString("ko-KR");
 }
 export const naverMapUrl = (q: string) => "https://map.naver.com/p/search/" + encodeURIComponent(q);
+/** 카카오맵 검색 링크(공식 링크 형식) — 장소 id가 없는 곳(미쉐린 목록·직접 입력 매장)에 */
+export const kakaoMapUrl = (q: string) => "https://map.kakao.com/link/search/" + encodeURIComponent(q);
 export const naverShopUrl = (q: string) => "https://search.shopping.naver.com/search/all?query=" + encodeURIComponent(q);
 export const shortAward = (a: string) => a.replace("우리술품평회 ", "");
 
