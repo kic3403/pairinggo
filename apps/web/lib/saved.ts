@@ -46,3 +46,12 @@ export async function toggleSaved(userId: string, kind: SavedKind, itemId: strin
   if (error) throw new Error(error.message);
   return true;
 }
+
+/** 기기에 담아 둔 저장(비로그인 하트)을 계정으로 — 이미 있는 것은 그대로 두고 없는 것만 더한다. 더한 개수 */
+export async function mergeSaved(userId: string, items: { kind: SavedKind; id: string; meta?: PlaceMeta | null }[]): Promise<number> {
+  if (!items.length) return 0;
+  const rows = items.map((x) => ({ user_id: userId, kind: x.kind, item_id: x.id, meta: x.kind === "place" ? x.meta ?? null : null }));
+  const { data, error } = await need().from("saved_items").upsert(rows, { onConflict: "user_id,kind,item_id", ignoreDuplicates: true }).select("item_id");
+  if (error) throw new Error(error.message);
+  return data?.length ?? 0;
+}
