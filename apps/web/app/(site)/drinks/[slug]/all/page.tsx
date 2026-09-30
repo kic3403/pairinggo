@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { findBySlug, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { expertTiersByName } from "@/lib/experts";
 import { drinkItems } from "@/lib/detail-items";
 import PickTabs from "../../../_components/PickTabs";
 import { PairingCards, pickCounts } from "../../../_components/PairingCards";
@@ -24,13 +25,14 @@ export default async function DrinkAllPage({ params }: { params: Promise<{ slug:
   const drink = findBySlug(c.dataset.drinks, (await params).slug, (d) => d.name);
   if (!drink) notFound();
   const items = await drinkItems(drink);
+  const tiers = await expertTiersByName();
   const back = `/drinks/${toSlug(drink.name)}`;
   return (
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link> · <Link href={back}>{drink.name}</Link></p>
       <h1>{drink.name}에 어울리는 안주 <span className="muted small">{items.length}개 전부</span></h1>
       <PickTabs counts={pickCounts(items)} loaded={items.length}>
-        <PairingCards items={items} />
+        <PairingCards items={items} tiers={tiers} />
       </PickTabs>
       <p style={{ marginTop: 16 }}><Link className="btn" href={back}>← {drink.name} 화면으로</Link></p>
     </div>

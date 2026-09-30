@@ -5,8 +5,8 @@
  */
 import { revalidatePath } from "next/cache";
 import {
-  EXPERT_DOCS_MAX, EXPERT_DOC_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, cleanTitles, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush, joinTitles,
-  kindOf, scorePairings, toSlug, type DrinkKind, type ExpertCompensation, type ExpertStatus, type GradeKey, type Pairing,
+  EXPERT_DOCS_MAX, EXPERT_DOC_MAX_BYTES, MEMBER_IMAGE_TYPES, cleanCompensation, cleanExpertApplication, cleanExpertStatus, cleanExpertTier, cleanTitles, confidenceOf, expertApplicationProblem, expertDisplayName, expertPush, joinTitles,
+  kindOf, scorePairings, toSlug, type DrinkKind, type ExpertCompensation, type ExpertStatus, type ExpertTier, type GradeKey, type Pairing,
 } from "@pairinggo/shared";
 import { recountExpertFor, renameExpertEvidence } from "@pairinggo/server/expert-reviews";
 import { getCatalog, invalidateCatalog } from "./catalog";
@@ -20,6 +20,8 @@ const str = (v: unknown) => String(v ?? "");
 
 export type ExpertRow = {
   userId: string; status: ExpertStatus; realName: string; affiliation: string; title: string; titles: string[]; namePublic: boolean; penName: string; displayName: string; intro: string; docsCount: number; docPaths: string[];
+  /** 배지 수(1 인증 · 2 시니어 · 3 마스터, 2026-09-30) */
+  tier: ExpertTier;
   compensation: ExpertCompensation; publicConsentAt: string; appliedAt: string; approvedAt: string | null; rejectReason: string; reviewsCount: number; nick: string | null; email: string | null;
   /** 회원 정보(어드민 상세) — 가입 방법·가입일·휴대폰 인증 */
   provider: string | null; joinedAt: string | null; phoneVerified: boolean; updatedAt: string;
@@ -28,7 +30,7 @@ type Row = Record<string, unknown>;
 const toRow = (r: Row): ExpertRow => {
   const u = (r.users as Row | null) ?? null;
   return {
-    userId: str(r.user_id), status: cleanExpertStatus(r.status), realName: str(r.real_name), affiliation: str(r.affiliation), title: str(r.title), titles: cleanTitles(Array.isArray(r.titles) && r.titles.length ? r.titles : r.title), namePublic: r.name_public !== false, penName: str(r.pen_name), displayName: str(r.display_name), intro: str(r.intro),
+    userId: str(r.user_id), status: cleanExpertStatus(r.status), tier: cleanExpertTier(r.tier), realName: str(r.real_name), affiliation: str(r.affiliation), title: str(r.title), titles: cleanTitles(Array.isArray(r.titles) && r.titles.length ? r.titles : r.title), namePublic: r.name_public !== false, penName: str(r.pen_name), displayName: str(r.display_name), intro: str(r.intro),
     docPaths: Array.isArray(r.doc_paths) ? (r.doc_paths as string[]) : [], docsCount: Array.isArray(r.doc_paths) ? (r.doc_paths as string[]).length : 0,
     compensation: cleanCompensation(r.compensation), publicConsentAt: str(r.public_consent_at), appliedAt: str(r.applied_at), approvedAt: (r.approved_at as string | null) ?? null,
     rejectReason: str(r.reject_reason), reviewsCount: Number(r.reviews_count) || 0, nick: (u?.name as string | null) ?? null, email: (u?.email as string | null) ?? null,
@@ -281,4 +283,44 @@ export async function removeExpertDocs(userId: string): Promise<void> {
   if (!sb) return;
   const { data: files } = await sb.storage.from(BUCKET).list(userId, { limit: 100 }).catch(() => ({ data: null }));
   if (files?.length) await sb.storage.from(BUCKET).remove(files.map((f) => `${userId}/${f.name}`)).catch(() => null);
+}
+
+/* ---------- 전문가 3단계 배지(2026-09-30) ---------- */
+type TierMemo = { at: number; byId: Map<string, ExpertTier>; byName: Map<string, ExpertTier> } | null;
+let tierMemo: TierMemo = null;
+const TIER_MS = 5 * 60 * 1000;
+/** 승인된 전문가의 단계 — 회원 id·카드 표시명 두 갈래로. 5분 기억(배지는 자주 안 바뀐다) */
+async function tierMaps(): Promise<NonNullable<TierMemo>> {
+  if (tierMemo && Date.now() - tierMemo.at < TIER_MS) return tierMemo;
+  const byId = new Map<string, ExpertTier>(), byName = new Map<string, ExpertTier>();
+  const sb = db();
+  if (sb) {
+    const { data } = await sb.from("experts").select("user_id,display_name,tier").eq("status", "approved").limit(5000);
+    for (const r of (data ?? []) as { user_id: string; display_name: string | null; tier: unknown }[]) {
+      const t = cleanExpertTier(r.tier);
+      byId.set(String(r.user_id), t);
+      if (r.display_name) byName.set(String(r.display_name), t);
+    }
+  }
+  tierMemo = { at: Date.now(), byId, byName };
+  return tierMemo;
+}
+/** 회원 id → 배지 수(전문가가 아니면 없음) — 회원 추천·술 평가·식당 리뷰 목록에 */
+export async function expertTiersFor(userIds: string[]): Promise<Map<string, ExpertTier>> {
+  const m = await tierMaps().catch(() => null);
+  const out = new Map<string, ExpertTier>();
+  if (m) for (const id of userIds) { const t = m.byId.get(id); if (t) out.set(id, t); }
+  return out;
+}
+/** 카드 표시명 → 배지 수 — 페어링 카드의 전문가 이름 줄에 */
+export async function expertTiersByName(): Promise<Record<string, ExpertTier>> {
+  const m = await tierMaps().catch(() => null);
+  return m ? Object.fromEntries(m.byName) : {};
+}
+/** 운영자가 단계를 정한다(1~3) */
+export async function setExpertTier(userId: string, tier: unknown): Promise<void> {
+  const sb = need();
+  const { error } = await sb.from("experts").update({ tier: cleanExpertTier(tier), updated_at: new Date().toISOString() }).eq("user_id", userId);
+  if (error) throw new Error(error.message);
+  tierMemo = null;
 }

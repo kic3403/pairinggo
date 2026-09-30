@@ -1359,3 +1359,8 @@ a.pd-score:hover { border-color: var(--navy); }
 @media (min-width: 640px) { .sk-grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 900px) { .sk-grid { grid-template-columns: 1fr 1fr 1fr; } }
 @media (prefers-reduced-motion: reduce) { .sk::after { animation: none; } }
+
+/* 전문가 인증 배지(ExpertSeal, 2026-09-30) — 이름 바로 뒤, 겹치는 톱니 원 1~3개 */
+.xseal { display: inline-flex; align-items: center; vertical-align: -3px; margin-left: 3px; cursor: help; }
+.xseal .xseal-i + .xseal-i { margin-left: -4px; }
+.xseal .xseal-i { filter: drop-shadow(0 0 0.5px rgba(255,255,255,.9)); }

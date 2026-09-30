@@ -18,6 +18,8 @@ export const REVIEW_VERIFY_LABEL: Record<ReviewVerifyKind, string> = { reservati
 export type PublicReview = {
   id: number; rating: number; body: string; photos: string[]; nickname: string;
   verify: ReviewVerifyKind; visitDate: string; createdAt: string;
+  /** 작성자가 전문가 등급이면 배지 수(1~3) — 승인된 전문가만 */
+  tier?: 1 | 2 | 3;
 };
 export type ReviewStats = { count: number; avg: number | null };
 

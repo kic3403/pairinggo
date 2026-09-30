@@ -1,5 +1,6 @@
 "use client";
 /** 페어링 카드의 "회원 N명 추천" 줄 — 공개 기준을 넘긴 조합만. 닉네임·한 줄 글·사진 1장 */
+import ExpertSeal from "./ExpertSeal";
 import { memberPickSummary } from "@pairinggo/shared/member";
 import { useRatings } from "./RatingsProvider";
 
@@ -12,7 +13,7 @@ export default function MemberPickLine({ d, f, hideNotes = false }: { d: string;
   return (
     <div className="mpick">
       <span className="pick member">{memberPickSummary(p.n, p.likes)}</span>
-      {!hideNotes && p.notes.filter((n) => n.note).slice(0, 2).map((n, i) => <span key={i} className="mpick-note">“{n.note}” <span className="muted">— {n.nick}</span></span>)}
+      {!hideNotes && p.notes.filter((n) => n.note).slice(0, 2).map((n, i) => <span key={i} className="mpick-note">“{n.note}” <span className="muted">— {n.nick}<ExpertSeal tier={n.tier} size={13} /></span></span>)}
       {photo?.image && <a href={photo.image} target="_blank" rel="noopener noreferrer" className="mpick-photo"><img src={photo.image} alt={`${photo.nick}님의 사진`} loading="lazy" /></a>}
     </div>
   );

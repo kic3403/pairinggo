@@ -75,7 +75,7 @@ export default async function AdminExpertsPage({ searchParams }: { searchParams:
             ...((recent.get(x.userId) ?? []) as { drink: string; food: string; verdict: string; note: string; at: string }[]).map((r, k): [string, React.ReactNode] => [k === 0 ? "최근 판정" : " ", `${r.drink} × ${r.food} — ${VERDICT_LABEL[r.verdict as ExpertVerdict] ?? r.verdict}${r.note ? ` · ${r.note}` : ""} (${fmtTime(r.at)})`]),
           ]} />
           <DocThumbs label="자격증" urls={docs[i]} missing="없음 — 자격증 사진이 필수가 되기 전(2026-09-29) 요청" />
-          <ExpertActions userId={x.userId} status={x.status} displayName={x.displayName} />
+          <ExpertActions userId={x.userId} status={x.status} displayName={x.displayName} tier={x.tier} />
         </div>
       ))}
     </>

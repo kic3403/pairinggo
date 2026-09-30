@@ -134,3 +134,12 @@ export function expertReviewSummary(xp: ExpertCounts | null | undefined): string
   if (!yes && !no) return "";
   return [yes ? `전문가 ${yes}명 어울림` : "", no ? `${yes ? "" : "전문가 "}${no}명 아님` : ""].filter(Boolean).join(" · ");
 }
+
+/* ---------- 전문가 3단계 배지(2026-09-30 사용자 결정) ---------- */
+/** 인증 배지 수 = 단계. 처음엔 운영자가 정하고(승인 때 1), 검수 실적으로 올릴 수 있다 */
+export type ExpertTier = 1 | 2 | 3;
+export const EXPERT_TIERS: ExpertTier[] = [1, 2, 3];
+export const EXPERT_TIER_LABEL: Record<ExpertTier, string> = { 1: "인증 전문가", 2: "시니어 전문가", 3: "마스터 전문가" };
+export const cleanExpertTier = (v: unknown): ExpertTier => (v === 3 || v === "3" ? 3 : v === 2 || v === "2" ? 2 : 1);
+/** 배지에 마우스를 올리면 보이는 설명 */
+export const expertTierTitle = (t: ExpertTier) => `${EXPERT_TIER_LABEL[t]} · 페어링GO가 자격을 확인한 전문가입니다`;

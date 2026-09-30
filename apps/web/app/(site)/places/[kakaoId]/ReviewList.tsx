@@ -3,6 +3,7 @@
  * 방문 인증 리뷰 목록 — 별점·닉네임·인증 배지·방문 달·글·사진. 누구나 볼 수 있고, 로그인 회원은 신고(한 번), 내 리뷰는 삭제.
  * 회원 id는 목록에 없다 — 내 리뷰인지는 /api/reviews?kakao= 가 돌려주는 myReviewIds로 안다.
  */
+import ExpertSeal from "../../_components/ExpertSeal";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { REVIEW_VERIFY_LABEL, type PublicReview } from "@pairinggo/shared";
@@ -56,7 +57,7 @@ export default function ReviewList({ kakaoId, reviews, writeHref }: { kakaoId: s
           <li key={r.id} className="rv">
             <div className="rv-top">
               <span className="rv-stars" aria-label={`별점 ${r.rating}점`}>{stars(r.rating)}</span>
-              <b className="rv-nick">{r.nickname}</b>
+              <b className="rv-nick">{r.nickname}<ExpertSeal tier={r.tier} size={14} /></b>
               <span className={`rv-badge ${r.verify}`}>{REVIEW_VERIFY_LABEL[r.verify]}</span>
             </div>
             <p className="rv-body">{r.body}</p>

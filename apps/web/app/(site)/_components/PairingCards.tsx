@@ -10,6 +10,7 @@ import ExpertBadge from "./ExpertBadge";
 import TriedRating from "./TriedRating";
 import MemberPickLine from "./MemberPickLine";
 import ProfileChart from "./ProfileChart";
+import ExpertSeal from "./ExpertSeal";
 import { D, F, PICK_DETAIL, PICK_LABEL, SERVE_LABEL, cardSummary, profileUnknown, confidenceOf, confidenceText, pickOf, toSlug, type ComboPlace, type Grade, type Pairing, type PickKey } from "@pairinggo/shared";
 
 export type CardItem = {
@@ -31,7 +32,8 @@ export function pickCounts(items: CardItem[]): Record<PickKey, number> {
   return c;
 }
 
-export function PairingCards({ items }: { items: CardItem[] }) {
+/** tiers = 카드 표시명 → 배지 수(lib/experts expertTiersByName) — 전문가 이름 줄에 인증 배지 */
+export function PairingCards({ items, tiers = {} }: { items: CardItem[]; tiers?: Record<string, number> }) {
   if (!items.length) return <p className="muted">아직 등록된 페어링이 없습니다.</p>;
   return (
     <ul className="cards">
@@ -73,7 +75,7 @@ export function PairingCards({ items }: { items: CardItem[] }) {
               </blockquote>
             )}
             {/* 전문가 검수(docs/27) — 어울린다고 판정한 전문가 이름. 대표 인용이 양조장 공식이면 여기로만 보인다 */}
-            {p.xe && p.xe.length > 0 && <p className="xexperts"><span className="xexperts-label">전문가 검수</span>{p.xe.slice(0, 3).join(" · ")}{p.xe.length > 3 && <span className="muted"> 외 {p.xe.length - 3}</span>}</p>}
+            {p.xe && p.xe.length > 0 && <p className="xexperts"><span className="xexperts-label">전문가 검수</span>{p.xe.slice(0, 3).map((n, i) => <span key={n}>{i > 0 && " · "}{n}<ExpertSeal tier={tiers[n]} size={13} /></span>)}{p.xe.length > 3 && <span className="muted"> 외 {p.xe.length - 3}</span>}</p>}
             <div className="src">
               <span className={`pick ${pick}`}>{PICK_LABEL[pick]}</span>
               <span className="muted">{PICK_DETAIL[p.src ?? "profile"]}</span>

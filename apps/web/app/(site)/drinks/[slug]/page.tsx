@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { expertTiersByName } from "@/lib/experts";
 import { buyOptions } from "@/lib/shop";
 import { siteUrl } from "@/lib/site";
 import { breweryPartner } from "@/lib/place-detail";
@@ -71,6 +72,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   // 카드는 앞쪽 40장만 싣고 나머지는 /drinks/[slug]/all(2026-09-30, lib/detail-items.ts)
   const [allItems, recs] = await Promise.all([drinkItems(drink), recsForDrink(drink.id).catch(() => [])]);
   const { items } = capItems(allItems);
+  const tiers = await expertTiersByName();
 
   const bl = buyLink(drink);
   const sellable = onlineSellable(drink);
@@ -190,7 +192,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           <MemberPickButton mode="drink" subjectId={drink.id} subjectName={drink.name} options={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
           <RatingsProvider subject={{ drink: drink.id }}>
             <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/drinks/${toSlug(drink.name)}/all`}>
-              <PairingCards items={items} />
+              <PairingCards items={items} tiers={tiers} />
             </PickTabs>
           </RatingsProvider>
           <PartnerRecs recs={recs} title="양조장·식당이 추천한 안주" hideDrink note="파트너가 직접 추천했지만 위 목록에는 아직 없는 음식이에요." />

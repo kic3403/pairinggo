@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { breadcrumb, byFood, findBySlug, itemList, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { expertTiersByName } from "@/lib/experts";
 import { siteUrl } from "@/lib/site";
 import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
@@ -61,6 +62,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   // 카드는 앞쪽 40장만 싣고 나머지는 /foods/[slug]/all — 171장을 다 실으면 1.1MB(2026-09-30, lib/detail-items.ts)
   const allItems = await foodItems(food);
   const { items } = capItems(allItems);
+  const tiers = await expertTiersByName();
 
   const recs = await recsForFood({ id: food.id, name: food.name, category: food.category }).catch(() => []);
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);
@@ -103,7 +105,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
           <MemberPickButton mode="food" subjectId={food.id} subjectName={food.name} options={c.dataset.drinks.map((d) => ({ id: d.id, name: d.name }))} />
           <RatingsProvider subject={{ food: food.id }}>
             <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/foods/${toSlug(food.name)}/all`}>
-              <PairingCards items={items} />
+              <PairingCards items={items} tiers={tiers} />
             </PickTabs>
           </RatingsProvider>
           <PartnerRecs recs={recs} title="양조장·식당이 추천한 조합" note={`${food.name}과 같거나 비슷한 음식으로 파트너가 직접 추천한 조합이에요.`} />

@@ -10,6 +10,7 @@ import { D, F, MEMBER_IMAGE_MAX_BYTES, MEMBER_IMAGE_TYPES, MEMBER_PICK_DAILY, ME
 import { countPairBlog } from "./blog-count";
 import { getCatalog, invalidateCatalog } from "./catalog";
 import { db } from "./db";
+import { expertTiersFor } from "./experts";
 import { activityPush } from "./push-digest";
 
 const need = () => { const sb = db(); if (!sb) throw new Error("Supabase 미설정"); return sb; };
@@ -21,9 +22,9 @@ export type PickRow = {
   users?: { name: string | null } | null;
 };
 /** 화면용 글 — 닉네임·하트 수만 나간다 */
-export type PickPost = { id: number; d: string; f: string; drink: string; food: string; nick: string; note: string; image: string | null; likes: number; at: string; mine: boolean };
+export type PickPost = { id: number; d: string; f: string; drink: string; food: string; nick: string; note: string; image: string | null; likes: number; at: string; mine: boolean; /** 전문가 배지 수(1~3), 전문가가 아니면 없음 */ tier?: number };
 /** 조합별 집계(카드 줄용) */
-export type PublicPick = { d: string; f: string; n: number; likes: number; notes: { nick: string; note: string; image: string | null; at: string }[]; latest: string };
+export type PublicPick = { d: string; f: string; n: number; likes: number; notes: { nick: string; note: string; image: string | null; at: string; tier?: number }[]; latest: string };
 
 // users 조인은 FK 이름을 지정한다 — member_pick_likes(→users)가 생긴 뒤 관계가 둘이라 PostgREST가 고르지 못한다(실측 2026-09-14)
 const nickOf = (r: PickRow) => (r.users?.name || "회원").slice(0, 20);
@@ -39,11 +40,13 @@ async function likeCounts(ids: number[]): Promise<Map<number, number>> {
 }
 
 // 카탈로그에 없는 이름으로 게시된 글(2026-09-29)은 d·f가 빈칸이고 적은 이름을 그대로 보인다(화면은 링크 없이)
-const toPost = (r: PickRow, likes: Map<number, number>, uid: string | null): PickPost => ({
+const toPost = (r: PickRow, likes: Map<number, number>, uid: string | null, tiers?: Map<string, number>): PickPost => ({
   id: r.id, d: r.drink_id ?? "", f: r.food_id ?? "", drink: (r.drink_id && D[r.drink_id]?.name) || r.drink_raw || r.drink_id || "?", food: (r.food_id && F[r.food_id]?.name) || r.food_raw || r.food_id || "?",
   nick: nickOf(r), note: r.note, image: r.image_url, likes: likes.get(r.id) ?? 0, at: r.created_at, mine: !!uid && r.user_id === uid,
+  ...(tiers?.get(r.user_id) ? { tier: tiers.get(r.user_id) } : {}),
 });
-const byLikes = (a: PickPost, b: PickPost) => b.likes - a.likes || b.at.localeCompare(a.at);
+// 하트 수가 같으면 전문가 글을 앞에(2026-09-30 사용자 결정) — 전문가라고 무조건 맨 위는 아니다
+const byLikes = (a: PickPost, b: PickPost) => b.likes - a.likes || (b.tier ?? 0) - (a.tier ?? 0) || b.at.localeCompare(a.at);
 
 /** 회원 추천 목록·홈 — 게시된 글 전부, 하트 많은 순 */
 export async function listPosts(limit = 60, userId: string | null = null): Promise<PickPost[]> {
@@ -53,8 +56,8 @@ export async function listPosts(limit = 60, userId: string | null = null): Promi
   const { data, error } = await sb.from("member_picks").select("*,users!member_picks_user_id_fkey(name)").eq("status", "active").order("created_at", { ascending: false }).limit(2000);
   if (error) throw new Error(error.message);
   const rows = (data ?? []) as PickRow[];
-  const likes = await likeCounts(rows.map((r) => r.id));
-  return rows.map((r) => toPost(r, likes, userId)).sort(byLikes).slice(0, limit);
+  const [likes, tiers] = await Promise.all([likeCounts(rows.map((r) => r.id)), expertTiersFor([...new Set(rows.map((r) => r.user_id))])]);
+  return rows.map((r) => toPost(r, likes, userId, tiers)).sort(byLikes).slice(0, limit);
 }
 
 /** 한 술(또는 음식) 화면 — 조합별 집계(글 수·하트 합·대표 글) + 내 글 키 */
@@ -67,12 +70,13 @@ export async function picksFor(subject: { drink?: string; food?: string }, userI
   if (error) throw new Error(error.message);
   const rows = ((data ?? []) as PickRow[]).filter((r) => r.drink_id && r.food_id);
   const likes = await likeCounts(rows.map((r) => r.id));
+  const tiers = await expertTiersFor([...new Set(rows.map((r) => r.user_id))]);
   const by = new Map<string, PickRow[]>();
   for (const r of rows) { const k = key(r.drink_id!, r.food_id!); by.set(k, [...(by.get(k) ?? []), r]); }
   const picks: Record<string, PublicPick> = {};
   for (const [k, rs] of by) {
     rs.sort((a, b) => (likes.get(b.id) ?? 0) - (likes.get(a.id) ?? 0) || b.created_at.localeCompare(a.created_at));
-    picks[k] = { d: rs[0].drink_id!, f: rs[0].food_id!, n: rs.length, likes: rs.reduce((s, r) => s + (likes.get(r.id) ?? 0), 0), notes: rs.filter((r) => r.note || r.image_url).slice(0, 3).map((r) => ({ nick: nickOf(r), note: r.note, image: r.image_url, at: r.created_at })), latest: rs.map((r) => r.created_at).sort().at(-1)! };
+    picks[k] = { d: rs[0].drink_id!, f: rs[0].food_id!, n: rs.length, likes: rs.reduce((s, r) => s + (likes.get(r.id) ?? 0), 0), notes: rs.filter((r) => r.note || r.image_url).slice(0, 3).map((r) => ({ nick: nickOf(r), note: r.note, image: r.image_url, at: r.created_at, ...(tiers.get(r.user_id) ? { tier: tiers.get(r.user_id) } : {}) })), latest: rs.map((r) => r.created_at).sort().at(-1)! };
   }
   return { picks, mine: userId ? rows.filter((r) => r.user_id === userId).map((r) => key(r.drink_id!, r.food_id!)) : [] };
 }

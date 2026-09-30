@@ -8,9 +8,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DRINK_REVIEW_BODY_MAX, DRINK_REVIEW_MIN_N, starGlyphs, type StarSummary } from "@pairinggo/shared/drink-review";
 import { useSaved } from "./SavedProvider";
+import ExpertSeal from "./ExpertSeal";
 import { track } from "@/lib/track";
 
-type Item = { id: number; nick: string; stars: number; body: string; at: string; mine: boolean };
+type Item = { id: number; nick: string; stars: number; body: string; at: string; mine: boolean; tier?: number };
 type View = { summary: StarSummary; list: Item[]; mine: { stars: number; body: string } | null; loggedIn: boolean };
 const LABEL = ["", "별로", "그저 그래요", "괜찮아요", "좋아요", "최고예요"];
 const day = (iso: string) => new Date(new Date(iso).getTime() + 9 * 3600_000).toISOString().slice(0, 10).replace(/-/g, ".");
@@ -106,7 +107,7 @@ export default function DrinkReviews({ drinkId, drinkName, initial }: { drinkId:
         <ul className="review-list">
           {list.map((r) => (
             <li key={r.id} className="review-item">
-              <div className="ri-head"><b className="stars" aria-label={`${r.stars}점`}>{starGlyphs(r.stars)}</b> <b>{r.nick}</b>{r.mine && <span className="small muted">(내 평가)</span>}<span className="small muted">· {day(r.at)}</span></div>
+              <div className="ri-head"><b className="stars" aria-label={`${r.stars}점`}>{starGlyphs(r.stars)}</b> <b>{r.nick}<ExpertSeal tier={r.tier} size={14} /></b>{r.mine && <span className="small muted">(내 평가)</span>}<span className="small muted">· {day(r.at)}</span></div>
               {r.body && <p className="review-body">{r.body}</p>}
             </li>
           ))}

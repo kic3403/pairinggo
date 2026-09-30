@@ -78,3 +78,12 @@ describe("전문가 배지", () => {
     expect(expertReviewSummary({ yes: 0, no: 0 })).toBe("");
   });
 });
+
+describe("전문가 3단계 배지", () => {
+  it("단계 정리·이름", async () => {
+    const { cleanExpertTier, EXPERT_TIER_LABEL, expertTierTitle } = await import("../expert");
+    expect(cleanExpertTier(3)).toBe(3); expect(cleanExpertTier("2")).toBe(2); expect(cleanExpertTier(9)).toBe(1); expect(cleanExpertTier(undefined)).toBe(1);
+    expect(EXPERT_TIER_LABEL[2]).toBe("시니어 전문가");
+    expect(expertTierTitle(3)).toContain("마스터 전문가");
+  });
+});

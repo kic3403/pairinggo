@@ -4,12 +4,13 @@
  */
 import { DRINK_REVIEWS_PER_DAY, DRINK_REVIEW_LIST_MAX, cleanReviewBody, drinkReviewProblem, summarizeStars, type StarSummary } from "@pairinggo/shared";
 import { db } from "./db";
+import { expertTiersFor } from "./experts";
 
 const need = () => { const sb = db(); if (!sb) throw new Error("Supabase 미설정"); return sb; };
 type Row = { id: number; drink_id: string; user_id: string; stars: number; body: string; status: "active" | "hidden"; hidden_reason: string | null; created_at: string; updated_at: string; users?: { name: string | null } | null; drinks?: { name: string | null } | null };
 const nickOf = (r: Row) => (r.users?.name || "회원").slice(0, 20);
 
-export type DrinkReviewItem = { id: number; nick: string; stars: number; body: string; at: string; mine: boolean };
+export type DrinkReviewItem = { id: number; nick: string; stars: number; body: string; at: string; mine: boolean; tier?: number };
 export type DrinkReviewView = { summary: StarSummary; list: DrinkReviewItem[]; mine: { stars: number; body: string } | null };
 
 /** 상세 머리 카드용 요약(인원·평균) — DB가 없으면 0명 */
@@ -30,9 +31,10 @@ export async function drinkReviewsFor(drinkId: string, userId: string | null): P
   ]);
   const rows = (all ?? []) as Pick<Row, "stars" | "user_id" | "body">[];
   const my = userId ? rows.find((r) => r.user_id === userId) : null;
+  const tiers = await expertTiersFor([...new Set(((recent ?? []) as Row[]).map((r) => r.user_id))]);
   return {
     summary: summarizeStars(rows.map((r) => r.stars)),
-    list: ((recent ?? []) as Row[]).map((r) => ({ id: r.id, nick: nickOf(r), stars: r.stars, body: r.body, at: r.updated_at, mine: !!userId && r.user_id === userId })),
+    list: ((recent ?? []) as Row[]).map((r) => ({ id: r.id, nick: nickOf(r), stars: r.stars, body: r.body, at: r.updated_at, mine: !!userId && r.user_id === userId, ...(tiers.get(r.user_id) ? { tier: tiers.get(r.user_id) } : {}) })),
     mine: my ? { stars: my.stars, body: my.body } : null,
   };
 }

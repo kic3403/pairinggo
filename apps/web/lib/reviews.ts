@@ -12,6 +12,7 @@ import { readReceipt, receiptReadConfigured, receiptReadError } from "@pairinggo
 import { aiPaused, aiStatus } from "@pairinggo/server/ai-guard";
 import { reportError } from "@pairinggo/server/errors";
 import { db } from "./db";
+import { expertTiersFor } from "./experts";
 import { placeBase } from "./place-detail";
 
 const need = () => { const c = db(); if (!c) throw new Error("지금은 리뷰를 쓸 수 없어요"); return c; };
@@ -20,21 +21,24 @@ const since24h = () => new Date(Date.now() - 86400_000).toISOString();
 
 /* ---------- 공개 목록 ---------- */
 
-type Row = { id: number; rating: number; body: string; photos: unknown; verify_kind: ReviewVerifyKind; visit_date: string; created_at: string; users?: { name: string | null } | null };
-const toPublic = (r: Row): PublicReview => ({
+type Row = { id: number; user_id?: string; rating: number; body: string; photos: unknown; verify_kind: ReviewVerifyKind; visit_date: string; created_at: string; users?: { name: string | null } | null };
+const toPublic = (r: Row, tiers?: Map<string, number>): PublicReview => ({
   id: Number(r.id), rating: Number(r.rating), body: String(r.body), photos: Array.isArray(r.photos) ? (r.photos as string[]) : [],
   nickname: r.users?.name || "회원", verify: r.verify_kind, visitDate: String(r.visit_date), createdAt: String(r.created_at),
+  ...(r.user_id && tiers?.get(r.user_id) ? { tier: tiers.get(r.user_id) as 1 | 2 | 3 } : {}),
 });
 
 export async function placeReviews(kakaoId: string, limit = 50): Promise<{ stats: ReviewStats; reviews: PublicReview[] }> {
   const c = db();
   if (!c) return { stats: { count: 0, avg: null }, reviews: [] };
   const [list, all] = await Promise.all([
-    c.from("place_reviews").select("id, rating, body, photos, verify_kind, visit_date, created_at, users!place_reviews_user_id_fkey(name)")
+    c.from("place_reviews").select("id, user_id, rating, body, photos, verify_kind, visit_date, created_at, users!place_reviews_user_id_fkey(name)")
       .eq("kakao_id", kakaoId).eq("status", "active").order("created_at", { ascending: false }).limit(limit),
     c.from("place_reviews").select("rating").eq("kakao_id", kakaoId).eq("status", "active").limit(5000),
   ]);
-  return { stats: reviewStats((all.data ?? []).map((r) => Number(r.rating))), reviews: ((list.data ?? []) as unknown as Row[]).map(toPublic) };
+  const rows = (list.data ?? []) as unknown as Row[];
+  const tiers = await expertTiersFor([...new Set(rows.map((r) => String(r.user_id ?? "")).filter(Boolean))]);
+  return { stats: reviewStats((all.data ?? []).map((r) => Number(r.rating))), reviews: rows.map((r) => toPublic(r, tiers)) };
 }
 
 /** 식당 카드용 — 여러 식당의 평균 별점·개수 */
