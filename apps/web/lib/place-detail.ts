@@ -5,7 +5,7 @@
  */
 import { isManualPlaceId, isPlaceId, toSlug, type PartnerKind, type Place, type PlaceInfo } from "@pairinggo/shared";
 import { getCatalog } from "./catalog";
-import { bookingContextByKakao, isBookable } from "@pairinggo/server/reservations";
+import { bookingContextByKakao, isBookable, type BookingContext } from "@pairinggo/server/reservations";
 import { db } from "./db";
 import { searchPlaces } from "./kakao";
 import { getPlaceInfo } from "./place-info";
@@ -19,7 +19,7 @@ export type PlaceForReceipt = { name: string; phone: string | null; bizNo: strin
 const validId = (id: string) => isPlaceId(id);
 
 /** 식당 기본 정보 — 못 찾으면 null */
-export async function placeBase(kakaoId: string, nameHint?: string | null): Promise<(PlaceBase & { bizNo: string | null; merchant: boolean }) | null> {
+export async function placeBase(kakaoId: string, nameHint?: string | null): Promise<(PlaceBase & { bizNo: string | null; merchant: boolean; ctx: BookingContext | null }) | null> {
   if (!validId(kakaoId)) return null;   // 직접 입력 매장(manual-…)도 파트너면 merchants에서 찾는다(2026-09-27)
   const c = db();
   const [ctx, pi] = await Promise.all([bookingContextByKakao(kakaoId).catch(() => null), getPlaceInfo(kakaoId).catch(() => null)]);
@@ -28,19 +28,19 @@ export async function placeBase(kakaoId: string, nameHint?: string | null): Prom
   const merchant = !!ctx && ctx.merchant.status === "approved";
   if (merchant) {
     const m = ctx!.merchant;
-    return { id: kakaoId, name: m.name, category: "", address: m.address, phone: m.phone || null, lat: m.lat ?? null, lng: m.lng ?? null, placeUrl: m.placeUrl ?? null, bizNo, merchant };
+    return { id: kakaoId, name: m.name, category: "", address: m.address, phone: m.phone || null, lat: m.lat ?? null, lng: m.lng ?? null, placeUrl: m.placeUrl ?? null, bizNo, merchant, ctx };
   }
   // 이름이 있으면 카카오에서 같은 id를 찾아 최신 값으로(분류·전화) — 없거나 못 찾으면 저장된 값
   const hint = isManualPlaceId(kakaoId) ? "" : String(nameHint ?? "").trim().slice(0, 40) || pi?.name || "";   // manual id는 카카오에 없다
   if (hint) {
     const found = await searchPlaces({ query: hint, pages: 1 }).catch(() => null);
     const p = found?.places.find((x) => x.id === kakaoId);
-    if (p) return { id: kakaoId, name: p.name, category: p.category, address: p.roadAddress || p.address, phone: p.phone, lat: p.lat, lng: p.lng, placeUrl: p.placeUrl, bizNo, merchant };
+    if (p) return { id: kakaoId, name: p.name, category: p.category, address: p.roadAddress || p.address, phone: p.phone, lat: p.lat, lng: p.lng, placeUrl: p.placeUrl, bizNo, merchant, ctx };
   }
-  if (pi) return { id: kakaoId, name: pi.name, category: "", address: pi.address, phone: pi.phone, lat: null, lng: null, placeUrl: pi.placeUrl, bizNo, merchant };
+  if (pi) return { id: kakaoId, name: pi.name, category: "", address: pi.address, phone: pi.phone, lat: null, lng: null, placeUrl: pi.placeUrl, bizNo, merchant, ctx };
   if (c) {
     const { data } = await c.from("place_reviews").select("place_name, place_address").eq("kakao_id", kakaoId).order("created_at", { ascending: false }).limit(1).maybeSingle();
-    if (data) return { id: kakaoId, name: String(data.place_name), category: "", address: String(data.place_address ?? ""), phone: null, lat: null, lng: null, placeUrl: isManualPlaceId(kakaoId) ? null : `https://place.map.kakao.com/${kakaoId}`, bizNo, merchant };
+    if (data) return { id: kakaoId, name: String(data.place_name), category: "", address: String(data.place_address ?? ""), phone: null, lat: null, lng: null, placeUrl: isManualPlaceId(kakaoId) ? null : `https://place.map.kakao.com/${kakaoId}`, bizNo, merchant, ctx };
   }
   return null;
 }
@@ -62,12 +62,17 @@ export async function placeDetail(kakaoId: string, nameHint?: string | null): Pr
     id: b.id, name: b.name, category: b.category, categoryPath: b.category, address: b.address, roadAddress: b.address, phone: b.phone,
     lat: b.lat ?? 0, lng: b.lng ?? 0, distanceKm: null, placeUrl: b.placeUrl ?? `https://place.map.kakao.com/${kakaoId}`,
   };
-  const withGoogle = b.lat != null ? (await attachRatings([base]).catch(() => [base]))[0] : base;
-  const aw = b.lat != null ? await withAwards([withGoogle]).catch(() => ({ places: [withGoogle], year: null })) : { places: [withGoogle], year: null };
-  const [p] = await withInfo(aw.places);
-  const ctx = b.merchant ? await bookingContextByKakao(kakaoId).catch(() => null) : null;
+  // Google 평점·미쉐린 · 확인 정보(메뉴판·사진) · 양조장 술 목록은 서로 무관 — 동시에 부른다(2026-09-30, 전에는 차례로 불러 3초)
+  const ctx = b.merchant ? b.ctx : null;
+  const [aw, [infoP], brewery] = await Promise.all([
+    b.lat != null
+      ? attachRatings([base]).catch(() => [base]).then(([g]) => withAwards([g]).catch(() => ({ places: [g], year: null as number | null })))
+      : Promise.resolve({ places: [base], year: null as number | null }),
+    withInfo([base]),
+    ctx?.merchant.brewery ? breweryDrinks(ctx.merchant.brewery) : Promise.resolve(null),
+  ]);
+  const p = { ...aw.places[0], ...(infoP.info ? { info: infoP.info, infoView: infoP.infoView } : {}) };
   const kind = ctx?.merchant.kind ?? "restaurant";
-  const brewery = ctx?.merchant.brewery ? await breweryDrinks(ctx.merchant.brewery) : null;
   return { place: p, bookable: !!ctx && isBookable(ctx), partner: b.merchant, awardsYear: aw.year, kind, brewery };
 }
 

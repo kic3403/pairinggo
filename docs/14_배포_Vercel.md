@@ -127,3 +127,9 @@ git push -u origin main
 - 환경변수: 공개 사이트 `SITE_URL`·`NEXT_PUBLIC_SITE_URL` = `https://pairinggo.kr`, 파트너 앱 `NEXT_PUBLIC_SITE_URL` = `https://pairinggo.kr`. 코드 기본값도 pairinggo.kr로 바꿨다.
 - 로그인(Auth.js, trustHost)은 요청 주소 기준 → 카카오·네이버·구글 콘솔에 `https://pairinggo.kr/api/auth/callback/{kakao|naver|google}` 추가, 카카오 JS SDK 도메인·플랫폼 사이트 도메인에 `https://pairinggo.kr`. 옛 주소는 옮긴 뒤 며칠 두었다 지운다.
 - 주소가 바뀌면 브라우저별 저장(최근 본·관심지역·웹 푸시 구독·로그인 쿠키)은 새 주소에서 다시 시작한다(출처가 다르다).
+
+## 9. 속도 (2026-09-30 실측 → 개선)
+
+실측(서울, curl): 홈·오늘의 페어링 0.2s(정적) · 술/음식 목록·검색·수상 0.5~1.2s · 핫한 페어링 0.9~1.5s · 매장 상세 2.5~3.4s · 자동완성 API 첫 호출 4.6s(콜드) · 음식 상세(해물파전) 1.1MB.
+원인: ① 함수가 미국 동부(iad1)에서 돌고 DB는 서울 — 화면마다 태평양 왕복 ② 목록·검색은 searchParams를 읽어 매번 렌더 ③ 로딩 표시가 없어 체감이 더 나쁨 ④ 카드 171장을 한 번에.
+손본 것: `regions: ["icn1"]`(두 앱) · `(site)/loading.tsx` 뼈대 · 자동완성 브라우저 계산(`suggest-index` + `search/core.ts`) · 상세 카드 40장 + `/all` · 핫 페어링 10분 메모 · 매장 상세 병렬화. 목록 캐시(`unstable_cache`)는 icn1 이동 뒤 재측정해 필요하면.

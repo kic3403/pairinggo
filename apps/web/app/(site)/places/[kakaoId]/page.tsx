@@ -42,7 +42,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 export default async function PlaceDetailPage({ params, searchParams }: Props) {
   const { kakaoId } = await params;
   const n = (await searchParams).n;
-  const d = await placeDetail(kakaoId, n);
+  // 매장 정보·리뷰·이 집 추천 페어링은 서로 무관 — 동시에(2026-09-30)
+  const [d, { stats, reviews }, recs] = await Promise.all([placeDetail(kakaoId, n), placeReviews(kakaoId), recsForPlace(kakaoId).catch(() => [])]);
   if (!d) {
     return (
       <div className="wrap">
@@ -53,10 +54,7 @@ export default async function PlaceDetailPage({ params, searchParams }: Props) {
     );
   }
   const { place: p, bookable, partner, brewery } = d;
-  const { stats, reviews } = await placeReviews(kakaoId);
   const info = p.info ?? null;
-  // 이 집 추천 페어링(2026-09-29) — 양조장·식당 파트너가 직접 짝지은 조합
-  const recs = await recsForPlace(p.id).catch(() => []);
   const chips = placeChips(info, p.amenities);
   const photos = info?.photos ?? [];
   const addr = p.roadAddress || p.address;

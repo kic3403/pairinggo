@@ -4,14 +4,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { D, SRC_LABEL, breadcrumb, byFood, explainOverall, findBySlug, itemList, scorePairings, toSlug } from "@pairinggo/shared";
+import { breadcrumb, byFood, findBySlug, itemList, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
 import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
-import { PairingCards, pickCounts, drinkHref, type CardItem } from "../../_components/PairingCards";
-import { comboPlaces } from "@/lib/combo-places";
+import { PairingCards, pickCounts } from "../../_components/PairingCards";
+import { capItems, foodItems } from "@/lib/detail-items";
 import { recsForFood } from "@/lib/partner-recs";
 import PartnerRecs from "../../_components/PartnerRecs";
 import Heart from "../../_components/Heart";
@@ -58,14 +58,9 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   const { c, food } = await load((await params).slug);
   if (!food) notFound();
 
-  const rows = byFood[food.id] || [];
-  const scored = scorePairings(rows, (p) => D[p.d]?.category || "");
-  const combos = await comboPlaces();
-  const items: CardItem[] = scored.map((s) => {
-    const drink = D[s.p.d];
-    const sub = [drink?.category, drink?.abv != null ? `${drink.abv}%` : null, drink?.region].filter(Boolean).join(" · ");
-    return { href: drinkHref(drink?.name || s.p.d), name: drink?.name || s.p.d, sub, grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p, places: combos.get(`${s.p.d}|${s.p.f}`) };
-  });
+  // 카드는 앞쪽 40장만 싣고 나머지는 /foods/[slug]/all — 171장을 다 실으면 1.1MB(2026-09-30, lib/detail-items.ts)
+  const allItems = await foodItems(food);
+  const { items } = capItems(allItems);
 
   const recs = await recsForFood({ id: food.id, name: food.name, category: food.category }).catch(() => []);
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);
@@ -107,7 +102,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
           </details>
           <MemberPickButton mode="food" subjectId={food.id} subjectName={food.name} options={c.dataset.drinks.map((d) => ({ id: d.id, name: d.name }))} />
           <RatingsProvider subject={{ food: food.id }}>
-            <PickTabs counts={pickCounts(items)}>
+            <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/foods/${toSlug(food.name)}/all`}>
               <PairingCards items={items} />
             </PickTabs>
           </RatingsProvider>

@@ -5,7 +5,8 @@
  * URL에 지역이 있으면 그것, 없으면 관심지역(RegionProvider).
  *
  * 자동완성(2026-09-19 사용자 요청) — 치는 동안 아래에 후보가 뜬다.
- *  · 술·음식·종류/양조장: /api/v1/suggest(카탈로그만, 부분 일치·입력 중인 한글·초성). 0.12초 멈추면 부른다
+ *  · 술·음식·종류/양조장: 검색 문서 목록(/api/v1/suggest-index, 약 700건)을 처음 한 번 받아 두고 **브라우저에서** shared search-core로 즉시 계산(2026-09-30 —
+ *    전에는 글자마다 /api/v1/suggest를 불러 첫 호출이 4초였다). 목록을 받는 동안만 예전 API로 한 번 부른다
  *  · 식당: /api/v1/places/search?lite=1(카카오) — 두 글자 이상, 0.4초 멈췄을 때만, 이름이 맞는 곳 3곳(없으면 키워드로 찾은 곳)
  *  · ↑↓ Enter로 고르고, 고르지 않고 Enter를 치면 지금처럼 검색 결과 화면으로 간다. Esc로 닫는다
  */
@@ -13,10 +14,21 @@ import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { REGION_TREE, regionById, regionLabel, TOP_REGIONS } from "@pairinggo/shared/regions";
 import { nameMatchedOrAll } from "@pairinggo/shared/places";
+import { suggestItems, type Doc } from "@pairinggo/shared/search-core";
+import { toSlug } from "@pairinggo/shared/slug";
 import { useHydrated, useRegion } from "./RegionProvider";
 import { track } from "@/lib/track";
 
 type Item = { type: "drink" | "food" | "browse" | "place"; id: string; name: string; meta: string; href: string };
+
+// 검색 문서 목록 — 탭(문서)당 한 번만 받는다. 실패하면 다음 입력 때 다시 시도
+let INDEX: Doc[] | null = null;
+let INDEX_P: Promise<Doc[]> | null = null;
+function loadIndex(): Promise<Doc[]> {
+  if (INDEX) return Promise.resolve(INDEX);
+  if (!INDEX_P) INDEX_P = fetch("/api/v1/suggest-index").then((r) => (r.ok ? r.json() : { docs: [] })).then((j: { docs?: Doc[] }) => { if (j.docs?.length) INDEX = j.docs; return INDEX ?? []; }).catch(() => { INDEX_P = null; return []; });
+  return INDEX_P;
+}
 type PlaceRow = { id: string; name: string; category: string; address: string; roadAddress: string; bookable?: boolean };
 const TYPE_LABEL: Record<Item["type"], string> = { drink: "전통주", food: "음식", browse: "모아보기", place: "식당" };
 
@@ -40,17 +52,24 @@ export default function SearchBox({ initial = "", region = "", autoFocus = false
 
   const q = value.trim();
 
-  // 술·음식 후보 — 짧게 멈추면
+  // 검색창을 열면 문서 목록을 미리 받아 둔다(첫 글자를 치기 전에)
+  useEffect(() => { if (open) void loadIndex(); }, [open]);
+
+  // 술·음식 후보 — 문서 목록이 있으면 서버 없이 바로, 아직 없으면(첫 방문 직후) 받아지는 대로·그동안은 예전 API로 한 번
   useEffect(() => {
     if (!open || !q) { setItems([]); return; }
+    if (INDEX) { setItems(suggestItems(INDEX, q, toSlug)); setActive(-1); return; }
+    let alive = true;
+    void loadIndex().then((docs) => { if (alive && docs.length) { setItems(suggestItems(docs, q, toSlug)); setActive(-1); } });
     const ctl = new AbortController();
     const t = setTimeout(() => {
+      if (INDEX) return;
       fetch(`/api/v1/suggest?q=${encodeURIComponent(q)}`, { signal: ctl.signal })
         .then((r) => (r.ok ? r.json() : { items: [] }))
-        .then((j: { items: Item[] }) => { setItems(j.items ?? []); setActive(-1); })
+        .then((j: { items: Item[] }) => { if (alive && !INDEX) { setItems(j.items ?? []); setActive(-1); } })
         .catch(() => {});
     }, 120);
-    return () => { clearTimeout(t); ctl.abort(); };
+    return () => { alive = false; clearTimeout(t); ctl.abort(); };
   }, [q, open]);
 
   // 식당 후보 — 두 글자 이상, 조금 더 멈추면(카카오 호출을 줄이려고)

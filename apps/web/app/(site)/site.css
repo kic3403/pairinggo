@@ -1341,3 +1341,21 @@ a.pd-score:hover { border-color: var(--navy); }
 .xdocs li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 13px; }
 .xdocs li em { font-style: normal; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .xdocs li small { white-space: nowrap; }
+
+/* 화면 사이 로딩 뼈대(loading.tsx, 2026-09-30) — 눌렀을 때 바로 반응이 보이게 */
+.skel { padding-top: 14px; }
+.sk { background: color-mix(in srgb, var(--line) 70%, var(--bg2)); border-radius: 8px; position: relative; overflow: hidden; }
+.sk::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: sk-shine 1.1s infinite; }
+.sk-crumb { width: 120px; height: 12px; margin-bottom: 14px; }
+.sk-h1 { width: 220px; height: 28px; margin-bottom: 14px; }
+.sk-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.sk-chip { width: 84px; height: 34px; border-radius: 999px; }
+.sk-grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+.sk-card { display: grid; grid-template-columns: 76px 1fr; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg2); }
+.sk-tile { width: 76px; height: 96px; border-radius: 10px; }
+.sk-lines { display: grid; gap: 10px; align-content: center; }
+.sk-line { height: 13px; } .sk-line.w60 { width: 60%; } .sk-line.w40 { width: 40%; } .sk-line.w80 { width: 80%; }
+@keyframes sk-shine { to { transform: translateX(100%); } }
+@media (min-width: 640px) { .sk-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .sk-grid { grid-template-columns: 1fr 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { .sk::after { animation: none; } }

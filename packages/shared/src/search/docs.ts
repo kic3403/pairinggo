@@ -7,6 +7,7 @@ import { DRINK_KINDS, KIND_LABEL, countryLabel, inSubtype, kindOf, subtypeLabel 
 import { choseong, toJamo } from "../hangul";
 import { REGIONS } from "../regions";
 import { normalize } from "./normalize";
+import type { DrinkKind } from "../types";
 
 export type DocType = "drink" | "food" | "browse";
 export type BrowseKind = "category" | "region" | "brewery" | "kind";
@@ -28,6 +29,8 @@ export type Doc = {
   fields: { category: string; tags: string[]; region: string; brewery: string; awards: number };
   /** 트렌드 0~1 */
   trend: number;
+  /** 술 문서만: 주종·분류·세부 종류 판정용 속성 — 카탈로그 객체 없이(브라우저) 주종 검색어를 판정한다(core.ts) */
+  dk?: DrinkKind; dc?: string; da?: Record<string, unknown>;
 };
 
 /** 주종 속성에서 검색어로 쓸 낱말 — 품종·스타일·증류소·생산자·주조미 */
@@ -63,6 +66,7 @@ function build(): Doc[] {
       aliases,
       fields: { category: normalize(d.category), tags: (d.flavor || []).map(normalize), region: normalize(d.region || ""), brewery: normalize(d.brewery || ""), awards: (d.awards || []).length },
       trend: (d.trend?.score || 0) / 100,
+      dk: kindOf(d), dc: d.category, ...(d.attrs && Object.keys(d.attrs).length ? { da: d.attrs } : {}),
     }));
   }
   for (const f of DATA.foods) {

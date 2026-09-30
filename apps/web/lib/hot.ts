@@ -17,7 +17,19 @@ function pairOf(name: string, p: Record<string, unknown>): { d: string; f: strin
   return d && f ? { d, f } : null;
 }
 
+// 최근 30일 이벤트(최대 5,000행)를 매번 읽으면 화면이 1초 넘게 걸려 10분 동안 기억한다(2026-09-30). 카탈로그가 바뀌면 새로 센다
+let memo: { key: string; at: number; val: { list: HotPair[]; logged: number; since: string } } | null = null;
+const MEMO_MS = 10 * 60 * 1000;
+
 export async function hotPairs(ds: Dataset, n = 12, days = 30): Promise<{ list: HotPair[]; logged: number; since: string }> {
+  const key = `${n}|${days}|${ds.pairings.length}|${ds.drinks.length}`;
+  if (memo && memo.key === key && Date.now() - memo.at < MEMO_MS) return memo.val;
+  const val = await computeHot(ds, n, days);
+  memo = { key, at: Date.now(), val };
+  return val;
+}
+
+async function computeHot(ds: Dataset, n: number, days: number): Promise<{ list: HotPair[]; logged: number; since: string }> {
   const since = new Date(Date.now() - days * 86400000).toISOString();
   const byKey = new Map<string, HotPair>();
   const pairMap = new Map(ds.pairings.map((p) => [`${p.d}|${p.f}`, p]));

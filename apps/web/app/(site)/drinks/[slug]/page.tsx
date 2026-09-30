@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { F, KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, scorePairings, similarDrinks, subtypeLabel, toSlug, explainOverall, SRC_LABEL } from "@pairinggo/shared";
+import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { buyOptions } from "@/lib/shop";
 import { siteUrl } from "@/lib/site";
@@ -14,8 +14,8 @@ import { breweryPartner } from "@/lib/place-detail";
 import RatingsProvider from "../../_components/RatingsProvider";
 import MemberPickButton from "../../_components/MemberPickButton";
 import PickTabs from "../../_components/PickTabs";
-import { PairingCards, pickCounts, foodHref, type CardItem } from "../../_components/PairingCards";
-import { comboPlaces } from "@/lib/combo-places";
+import { PairingCards, pickCounts } from "../../_components/PairingCards";
+import { capItems, drinkItems } from "@/lib/detail-items";
 import { recsForDrink } from "@/lib/partner-recs";
 import PartnerRecs from "../../_components/PartnerRecs";
 import ExtLink from "../../_components/ExtLink";
@@ -68,15 +68,9 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   const { c, drink } = await load((await params).slug);
   if (!drink) notFound();
 
-  const rows = byDrink[drink.id] || [];
-  const scored = scorePairings(rows, (p) => F[p.f]?.category || "");
-  const combos = await comboPlaces();
-  const recs = await recsForDrink(drink.id).catch(() => []);
-  const items: CardItem[] = scored.map((s) => {
-    const food = F[s.p.f];
-    // 음식 화면으로 넘어갈 때 이 술을 들고 간다(?d=) — 맛집 목록이 이 술과 그 음식을 함께 파는 식당을 먼저 보여 준다
-    return { href: `${foodHref(food?.name || s.p.f)}?d=${drink.id}`, name: food?.name || s.p.f, sub: food?.tags?.slice(0, 3).join(" · "), grade: s.grade, explain: explainOverall(s, SRC_LABEL[s.p.src ?? "profile"]), pairing: s.p, places: combos.get(`${s.p.d}|${s.p.f}`) };
-  });
+  // 카드는 앞쪽 40장만 싣고 나머지는 /drinks/[slug]/all(2026-09-30, lib/detail-items.ts)
+  const [allItems, recs] = await Promise.all([drinkItems(drink), recsForDrink(drink.id).catch(() => [])]);
+  const { items } = capItems(allItems);
 
   const bl = buyLink(drink);
   const sellable = onlineSellable(drink);
@@ -195,7 +189,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           {!hasEvidence && <p className="box small" style={{ marginBottom: 12 }}><b>페어링 정보 준비 중</b> — 아직 양조장·소믈리에·매체가 확인한 조합이 없습니다. 아래는 맛 프로필로 추정한 조합이며 검증된 추천이 아닙니다.</p>}
           <MemberPickButton mode="drink" subjectId={drink.id} subjectName={drink.name} options={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
           <RatingsProvider subject={{ drink: drink.id }}>
-            <PickTabs counts={pickCounts(items)}>
+            <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/drinks/${toSlug(drink.name)}/all`}>
               <PairingCards items={items} />
             </PickTabs>
           </RatingsProvider>

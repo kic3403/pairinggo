@@ -5,6 +5,7 @@
  * "전체" 탭은 처음 COLLAPSE_AT장만 보이고 "나머지 N개 더 보기"로 편다(2026-09-14 — 휴대폰에서 카드 34장이 세로 15,000px, 데일리샷·캐치테이블처럼 목록은 접는다).
  */
 import { useState, type ReactNode } from "react";
+import Link from "next/link";
 import type { PickKey } from "@pairinggo/shared/pick";
 
 type Tab = "all" | PickKey;
@@ -18,13 +19,18 @@ const HINT: Record<Tab, string> = {
   profile: "근거 글 없이 술과 음식의 맛 프로필로 계산한 추정입니다.",
 };
 
-export default function PickTabs({ counts, children }: { counts: Record<PickKey, number>; children: ReactNode }) {
+/**
+ * counts = 전체 조합 수(탭 숫자), loaded = 이 화면에 실제로 실린 카드 수(기본 = 전체), moreHref = 나머지를 보는 화면(상세가 앞쪽 40장만 실을 때, 2026-09-30).
+ */
+export default function PickTabs({ counts, children, loaded, moreHref }: { counts: Record<PickKey, number>; children: ReactNode; loaded?: number; moreHref?: string }) {
   const [tab, setTab] = useState<Tab>("all");
   const [open, setOpen] = useState(false);
   const total = counts.expert + counts.public + counts.member + counts.profile;
+  const shown = loaded ?? total;
+  const hidden = Math.max(0, total - shown);
   const tabs: Tab[] = (["all", "expert", "public", "member", "profile"] as Tab[]).filter((t) => t !== "member" || counts.member > 0);   // 회원픽은 있을 때만 탭을 보인다
   return (
-    <div className="pick-wrap" data-show={tab} data-collapsed={tab === "all" && !open && total > COLLAPSE_AT ? "1" : undefined}>
+    <div className="pick-wrap" data-show={tab} data-collapsed={tab === "all" && !open && shown > COLLAPSE_AT ? "1" : undefined}>
       <ul className="tabs pick-tabs" role="tablist" aria-label="추천 묶음">
         {tabs.map((t) => {
           const n = t === "all" ? total : counts[t];
@@ -39,8 +45,11 @@ export default function PickTabs({ counts, children }: { counts: Record<PickKey,
       </ul>
       {HINT[tab] && <p className="small muted pick-hint">{HINT[tab]}</p>}
       {children}
-      {tab === "all" && !open && total > COLLAPSE_AT && (
+      {tab === "all" && !open && shown > COLLAPSE_AT && (
         <div className="btns more-row"><button type="button" className="btn" onClick={() => setOpen(true)}>나머지 {total - COLLAPSE_AT}개 더 보기</button></div>
+      )}
+      {hidden > 0 && moreHref && (tab !== "all" || open || shown <= COLLAPSE_AT) && (
+        <div className="btns more-row"><Link className="btn" href={moreHref}>페어링 {total}개 모두 보기 →</Link></div>
       )}
     </div>
   );

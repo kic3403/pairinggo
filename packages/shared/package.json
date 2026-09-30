@@ -25,7 +25,9 @@
     "./specs": "./src/catalog/specs.ts",
     "./filter-url": "./src/catalog/filter-url.ts",
     "./home": "./src/home/banners.ts",
-    "./data/*": "./data/*"
+    "./data/*": "./data/*",
+    "./search-core": "./src/search/core.ts",
+    "./hangul": "./src/hangul.ts"
   },
   "scripts": {
     "test": "vitest run",
