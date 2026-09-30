@@ -15,10 +15,21 @@ const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(/
 console.log(`사이트맵 주소 ${urls.length}개 · 키 ${key.slice(0, 6)}…`);
 if (DRY) process.exit(0);
 const host = new URL(SITE).host;
-for (let i = 0; i < urls.length; i += 10000) {
-  const r = await fetch("https://api.indexnow.org/indexnow", {
-    method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify({ host, key, keyLocation: `${SITE}/indexnow-key.txt`, urlList: urls.slice(i, i + 10000) }),
-  });
-  console.log(`제출 ${Math.min(urls.length, i + 10000)}/${urls.length} → HTTP ${r.status}${r.status === 200 || r.status === 202 ? " (접수)" : ` ${await r.text().catch(() => "")}`}`);
+// 공용 창구(api.indexnow.org)가 막히는 망이 있어(2026-09-30 이 PC에서 연결 끊김) 네이버·빙 창구로도 직접 보낸다 — 한 곳만 받아도 참여 엔진끼리 나눈다
+const ENDPOINTS = ["https://searchadvisor.naver.com/indexnow", "https://www.bing.com/indexnow", "https://api.indexnow.org/indexnow"];
+let ok = 0;
+for (const ep of ENDPOINTS) {
+  for (let i = 0; i < urls.length; i += 10000) {
+    try {
+      const r = await fetch(ep, {
+        method: "POST", headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({ host, key, keyLocation: `${SITE}/indexnow-key.txt`, urlList: urls.slice(i, i + 10000) }),
+        signal: AbortSignal.timeout(30000),
+      });
+      const good = r.status === 200 || r.status === 202;
+      if (good) ok++;
+      console.log(`${new URL(ep).host} 제출 ${Math.min(urls.length, i + 10000)}/${urls.length} → HTTP ${r.status}${good ? " (접수)" : ` ${(await r.text().catch(() => "")).slice(0, 200)}`}`);
+    } catch (e) { console.log(`${new URL(ep).host} 연결 실패 — ${(e as Error).message}`); }
+  }
 }
+if (!ok) process.exit(1);
