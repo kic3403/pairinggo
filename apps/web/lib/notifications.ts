@@ -25,13 +25,15 @@ export async function myActivity(uid: string): Promise<ActivityItem[]> {
   if (!sb) return [];
   await getCatalog();
   const since = new Date(Date.now() - DAYS * 86400_000).toISOString();
-  const [req, likes, resv, orders, expert] = await Promise.all([
+  const [req, likes, resv, orders, expert, replies] = await Promise.all([
     sb.from("drink_requests").select("id,query,status,drink_id,admin_note,updated_at").eq("user_id", uid).neq("status", "open").gte("updated_at", since).order("updated_at", { ascending: false }).limit(20),
     sb.from("member_pick_likes").select("pick_id,created_at,users!member_pick_likes_user_id_fkey(name),member_picks!inner(user_id,drink_id,food_id,drink_raw,food_raw)").eq("member_picks.user_id", uid).neq("user_id", uid).gte("created_at", since).order("created_at", { ascending: false }).limit(30),
     sb.from("reservations").select("id,status,visit_date,visit_time,updated_at,merchants!reservations_merchant_id_fkey(name)").eq("user_id", uid).gte("updated_at", since).order("updated_at", { ascending: false }).limit(20),
     sb.from("orders").select("id,order_no,status,updated_at").eq("user_id", uid).gte("updated_at", since).order("updated_at", { ascending: false }).limit(20),
     // 전문가 신청 결과(docs/27) — 심사 중이 아닌 상태로 바뀐 것
     sb.from("experts").select("status,reject_reason,updated_at").eq("user_id", uid).neq("status", "applied").gte("updated_at", since).maybeSingle(),
+    // 내 리뷰에 사장님 답글(2026-10-01)
+    sb.from("place_reviews").select("id,kakao_id,place_name,owner_reply_at").eq("user_id", uid).eq("status", "active").not("owner_reply", "is", null).gte("owner_reply_at", since).order("owner_reply_at", { ascending: false }).limit(20),
   ]);
   const out: ActivityItem[] = [];
   for (const r of (req.data ?? []) as { id: number; query: string; status: string; drink_id: string | null; admin_note: string; updated_at: string }[]) {
@@ -57,6 +59,9 @@ export async function myActivity(uid: string): Promise<ActivityItem[]> {
     out.push(x.status === "approved"
       ? { id: `expert${x.updated_at}`, kind: "expert", text: "전문가 등급으로 승인됐어요 — 페어링 검수를 시작해 보세요", href: "/expert", at: x.updated_at }
       : { id: `expert${x.updated_at}`, kind: "expert", text: x.status === "rejected" ? `전문가 등급 요청이 반려됐어요${why}` : `전문가 활동이 정지됐어요${why}`, href: "/my#expert", at: x.updated_at });
+  }
+  for (const r of (replies.data ?? []) as { id: number; kakao_id: string; place_name: string; owner_reply_at: string }[]) {
+    out.push({ id: `reply${r.id}`, kind: "reply", text: `${r.place_name} 사장님이 내 리뷰에 답글을 남겼어요`, href: `/places/${r.kakao_id}?n=${encodeURIComponent(r.place_name)}#reviews`, at: r.owner_reply_at });
   }
   return out.sort((a, b) => (a.at < b.at ? 1 : -1)).slice(0, 30);
 }

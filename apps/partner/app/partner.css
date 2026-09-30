@@ -280,3 +280,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .pphoto-add:hover { border-color: var(--navy); color: var(--navy); }
 .pname { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 .pthumb { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; border: 1px solid var(--line); flex: none; }
+
+/* 홈 할 일 패널(2026-10-01) */
+.todo { margin-bottom: 12px; border-color: var(--warn); background: var(--warn-soft); }
+.todo > b { display: block; font-size: 14px; margin-bottom: 6px; color: var(--warn); }
+.todo ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+.todo a { font-weight: 700; color: var(--ink); }

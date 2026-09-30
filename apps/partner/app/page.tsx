@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { addDays, formatBizNo, formatVisit, isDate, isManualPlaceId, kstParts, MERCHANT_STATUS_LABEL, PARTNER_PLACE_LABEL } from "@pairinggo/shared";
-import { getSettings } from "@pairinggo/server/merchant-store";
+import { getSettings, getStoreInfo } from "@pairinggo/server/merchant-store";
+import { listMerchantReviews } from "@pairinggo/server/review-replies";
+import { listPartnerPairings } from "@pairinggo/server/partner-pairings";
+import { db } from "@pairinggo/server/db";
 import { Bar, Tabs } from "./_bar";
 import { BookingBoard } from "./BookingBoard";
 import { PushToggle } from "./PushToggle";
@@ -53,7 +56,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ d
   const today = kstParts(new Date()).date;
   const sp = await searchParams;
   const date = sp.date && isDate(sp.date) ? sp.date : today;
-  const [list, settings] = await Promise.all([bookings(m.id, date, date), getSettings(m.id)]);
+  const [list, settings, todos] = await Promise.all([bookings(m.id, date, date), getSettings(m.id), todoItems(m)]);
   const s = summarize(list);
   const label = date === today ? "오늘" : date === addDays(today, 1) ? "내일" : date === addDays(today, -1) ? "어제" : "";
   return (
@@ -61,6 +64,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ d
       <Bar store={m.name} signedIn />
       <main>
         {isManualPlaceId(m.kakaoPlaceId) ? <ManualNote kind={m.kind} /> : null}
+        {todos.length > 0 && (
+          <section className="panel todo" aria-label="할 일">
+            <b>챙길 일 {todos.length}</b>
+            <ul>{todos.map((t) => <li key={t.href + t.text}><Link href={t.href}>{t.text}</Link>{t.why ? <span className="muted"> — {t.why}</span> : null}</li>)}</ul>
+          </section>
+        )}
         <div className="day-nav">
           <Link className="btn ghost sm" href={`/?date=${addDays(date, -1)}`} aria-label="전날">‹</Link>
           <h1 style={{ margin: 0 }}>{label ? `${label} · ` : ""}{formatVisit(date, "").trim()}</h1>
@@ -80,4 +89,29 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ d
       <Tabs active="home" kind={m.kind} />
     </>
   );
+}
+
+/**
+ * 사장님이 놓치기 쉬운 일(2026-10-01) — 사업자등록증 없음 · 답글 안 단 리뷰 · 페어링 없음 · 메뉴판/술 표·대표 사진 비어 있음.
+ * 하나도 없으면 패널을 보이지 않는다. 각 조회가 실패해도 홈이 깨지지 않게 개별로 삼킨다.
+ */
+async function todoItems(m: MyMerchant): Promise<{ text: string; why?: string; href: string }[]> {
+  const out: { text: string; why?: string; href: string }[] = [];
+  const [doc, reviews, pairings, store] = await Promise.all([
+    Promise.resolve(db()?.from("merchants").select("biz_doc_paths").eq("id", m.id).maybeSingle()).then((r) => ((r?.data?.biz_doc_paths as string[] | null) ?? []).length).catch(() => 1),
+    listMerchantReviews(m).catch(() => []),
+    m.kind === "brewery" || m.kind === "restaurant" ? listPartnerPairings(m.id).catch(() => null) : Promise.resolve(null),
+    getStoreInfo(m).then((r) => r.info).catch(() => null),
+  ]);
+  if (doc === 0) out.push({ text: "사업자등록증 올리기", why: "운영 확인용, 손님에게는 안 보여요", href: "/store" });
+  const unanswered = reviews.filter((r) => !r.reply).length;
+  if (unanswered > 0) out.push({ text: `답글 안 단 리뷰 ${unanswered}개`, why: "답글은 손님 화면에 “사장님 답글”로 보여요", href: "/reviews" });
+  if (pairings && pairings.length === 0) out.push({ text: "추천 페어링 넣기", why: m.kind === "brewery" ? "우리 술에 어울리는 음식을 적으면 술 화면에 공식 추천으로" : "우리 가게 술 × 메뉴를 짝지으면 검색·매장 화면에 추천으로", href: "/pairings" });
+  if (store) {
+    const drinks = store.drinkItems?.length ?? 0, menu = store.menuItems?.length ?? 0, photos = store.photos?.length ?? 0;
+    if (m.kind === "restaurant" && menu === 0) out.push({ text: "메뉴판 채우기", why: "사진 한 장이면 표로 읽어 줘요", href: "/store" });
+    if (drinks === 0) out.push({ text: m.kind === "restaurant" ? "취급하는 술 적기" : "우리 술 목록 채우기", why: "손님이 그 술로 검색하면 우리 매장이 나와요", href: "/store" });
+    if (photos === 0) out.push({ text: "대표 사진 올리기", why: "매장 화면 맨 위에 보여요", href: "/store" });
+  }
+  return out;
 }
