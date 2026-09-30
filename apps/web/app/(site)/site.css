@@ -475,6 +475,7 @@ p { margin: 0 0 12px; }
 
 /* 회원 추천 글 목록 — 하트 */
 .picks-list li.mine { border-color: #C9CDEA; }
+.pk-filter { display: flex; gap: 6px; margin: 0 0 10px; } .pk-filter button { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; } .pk-filter button.on { background: var(--navy); border-color: var(--navy); color: #fff; }
 .pk-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
 .pk-heart { min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font: inherit; font-size: 14px; cursor: pointer; color: var(--ink2); display: inline-flex; align-items: center; gap: 4px; }
 .pk-heart.on { border-color: var(--like); color: var(--like-ink); background: var(--like-soft); }
@@ -812,6 +813,8 @@ a.pd-score:hover { border-color: var(--navy); }
 .rv-badge.reservation { background: var(--food-soft); color: var(--food-ink); }
 .rv-badge.receipt { background: var(--navy-soft); color: var(--navy-ink); }
 .rv-body { margin: 8px 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; }
+.rv-reply { margin: 8px 0 4px; padding: 10px 12px; border-left: 3px solid var(--navy); background: var(--navy-soft); border-radius: 0 8px 8px 0; font-size: 14px; }
+.rv-reply b { font-size: 12.5px; color: var(--navy-ink); } .rv-reply p { margin: 4px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .rv-photos { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
 .rv-photos button { flex: 0 0 auto; padding: 0; border: 0; background: var(--bg2); border-radius: 9px; overflow: hidden; width: 96px; height: 96px; cursor: zoom-in; }
 .rv-photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1365,3 +1368,7 @@ a.pd-score:hover { border-color: var(--navy); }
 .xseal { display: inline-flex; align-items: center; vertical-align: -3px; margin-left: 3px; cursor: help; }
 .xseal .xseal-i + .xseal-i { margin-left: -4px; }
 .xseal .xseal-i { filter: drop-shadow(0 0 0.5px rgba(255,255,255,.9)); }
+
+/* 전문가 검수 머리 줄(2026-10-01) — 배지 · 오늘 판정 · 대기열 */
+.xstats { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg2); font-size: 14px; }
+.xstats span { display: inline-flex; align-items: center; gap: 5px; } .xstats b { font-weight: 800; }

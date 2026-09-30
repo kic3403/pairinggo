@@ -30,7 +30,8 @@
     "./evidence-mine": "./src/evidence-mine.ts",
     "./ai-guard": "./src/ai-guard.ts",
     "./expert-reviews": "./src/expert-reviews.ts",
-    "./partner-docs": "./src/partner-docs.ts"
+    "./partner-docs": "./src/partner-docs.ts",
+    "./review-replies": "./src/review-replies.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

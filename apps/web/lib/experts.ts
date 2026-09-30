@@ -324,3 +324,13 @@ export async function setExpertTier(userId: string, tier: unknown): Promise<void
   if (error) throw new Error(error.message);
   tierMemo = null;
 }
+
+/** 오늘(한국 시간) 이 전문가가 남긴 판정 수 — 검수 화면 머리 줄에 */
+export async function expertTodayCount(userId: string): Promise<number> {
+  const sb = db();
+  if (!sb) return 0;
+  const kst = new Date(Date.now() + 9 * 3600 * 1000);
+  const dayStart = new Date(Date.UTC(kst.getUTCFullYear(), kst.getUTCMonth(), kst.getUTCDate()) - 9 * 3600 * 1000).toISOString();
+  const { count } = await sb.from("expert_reviews").select("id", { count: "exact", head: true }).eq("user_id", userId).gte("created_at", dayStart);
+  return count ?? 0;
+}

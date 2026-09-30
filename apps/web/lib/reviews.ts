@@ -21,18 +21,19 @@ const since24h = () => new Date(Date.now() - 86400_000).toISOString();
 
 /* ---------- 공개 목록 ---------- */
 
-type Row = { id: number; user_id?: string; rating: number; body: string; photos: unknown; verify_kind: ReviewVerifyKind; visit_date: string; created_at: string; users?: { name: string | null } | null };
+type Row = { id: number; user_id?: string; rating: number; body: string; photos: unknown; verify_kind: ReviewVerifyKind; visit_date: string; created_at: string; owner_reply?: string | null; owner_reply_at?: string | null; users?: { name: string | null } | null };
 const toPublic = (r: Row, tiers?: Map<string, number>): PublicReview => ({
   id: Number(r.id), rating: Number(r.rating), body: String(r.body), photos: Array.isArray(r.photos) ? (r.photos as string[]) : [],
   nickname: r.users?.name || "회원", verify: r.verify_kind, visitDate: String(r.visit_date), createdAt: String(r.created_at),
   ...(r.user_id && tiers?.get(r.user_id) ? { tier: tiers.get(r.user_id) as 1 | 2 | 3 } : {}),
+  ...(r.owner_reply ? { reply: { body: String(r.owner_reply), at: String(r.owner_reply_at ?? r.created_at) } } : {}),
 });
 
 export async function placeReviews(kakaoId: string, limit = 50): Promise<{ stats: ReviewStats; reviews: PublicReview[] }> {
   const c = db();
   if (!c) return { stats: { count: 0, avg: null }, reviews: [] };
   const [list, all] = await Promise.all([
-    c.from("place_reviews").select("id, user_id, rating, body, photos, verify_kind, visit_date, created_at, users!place_reviews_user_id_fkey(name)")
+    c.from("place_reviews").select("id, user_id, rating, body, photos, verify_kind, visit_date, created_at, owner_reply, owner_reply_at, users!place_reviews_user_id_fkey(name)")
       .eq("kakao_id", kakaoId).eq("status", "active").order("created_at", { ascending: false }).limit(limit),
     c.from("place_reviews").select("rating").eq("kakao_id", kakaoId).eq("status", "active").limit(5000),
   ]);

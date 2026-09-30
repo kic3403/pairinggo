@@ -20,6 +20,8 @@ export type PublicReview = {
   verify: ReviewVerifyKind; visitDate: string; createdAt: string;
   /** 작성자가 전문가 등급이면 배지 수(1~3) — 승인된 전문가만 */
   tier?: 1 | 2 | 3;
+  /** 사장님 답글(2026-10-01) — 파트너가 남긴 것, 없으면 없음 */
+  reply?: { body: string; at: string };
 };
 export type ReviewStats = { count: number; avg: number | null };
 
@@ -40,6 +42,17 @@ export function cleanReviewInput(raw: { rating?: unknown; body?: unknown; photos
   const photos = [...new Set((Array.isArray(raw.photos) ? raw.photos : []).map(cleanReviewImage).filter(Boolean))];
   if (photos.length > REVIEW_PHOTOS_MAX) return { ok: false, problem: `사진은 ${REVIEW_PHOTOS_MAX}장까지예요` };
   return { ok: true, value: { rating, body, photos } };
+}
+
+/* ---------- 사장님 답글(2026-10-01) ---------- */
+export const OWNER_REPLY_MAX = 300;
+/** 답글 정리 — 빈 글이면 삭제(value ""), 300자·링크 금지 */
+export function cleanOwnerReply(raw: unknown): { ok: true; value: string } | { ok: false; problem: string } {
+  const body = String(raw ?? "").replace(/\r\n?/g, "\n").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+  if (!body) return { ok: true, value: "" };
+  if (body.length > OWNER_REPLY_MAX) return { ok: false, problem: `답글은 ${OWNER_REPLY_MAX}자까지예요` };
+  if (hasLink(body)) return { ok: false, problem: "답글에는 링크를 넣을 수 없어요" };
+  return { ok: true, value: body };
 }
 
 /** 매장 대표 사진 — 우리 저장소 주소만, 겹친 것 빼고 10장까지 */

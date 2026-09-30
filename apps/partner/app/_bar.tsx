@@ -24,6 +24,7 @@ const TABS = [
   { key: "settings", href: "/settings", label: "예약 설정" },
   { key: "sell", href: "/sell", label: "판매" },
   { key: "pairings", href: "/pairings", label: "페어링" },
+  { key: "reviews", href: "/reviews", label: "리뷰" },
 ] as const;
 
 /** 아래 탭 — 승인된 매장 화면에서만 */

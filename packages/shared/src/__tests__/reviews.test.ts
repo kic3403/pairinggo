@@ -61,3 +61,13 @@ describe("영수증 인증", () => {
     expect(receiptKey(R())).not.toBe(receiptKey(R({ total: 58001 })));
   });
 });
+
+describe("사장님 답글", () => {
+  it("정리·제한", async () => {
+    const { cleanOwnerReply } = await import("../reviews");
+    expect(cleanOwnerReply("  고맙습니다.\r\n\r\n\r\n또 오세요  ")).toEqual({ ok: true, value: "고맙습니다.\n\n또 오세요" });
+    expect(cleanOwnerReply("")).toEqual({ ok: true, value: "" });
+    expect(cleanOwnerReply("x".repeat(301))).toMatchObject({ ok: false });
+    expect(cleanOwnerReply("예약은 www.example.com")).toMatchObject({ ok: false });
+  });
+});

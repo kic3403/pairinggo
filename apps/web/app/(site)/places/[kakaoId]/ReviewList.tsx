@@ -66,6 +66,12 @@ export default function ReviewList({ kakaoId, reviews, writeHref }: { kakaoId: s
                 {r.photos.map((u, i) => <button key={u} type="button" onClick={() => setZoom(u)} aria-label={`사진 ${i + 1} 크게 보기`}><img src={u} alt="" loading="lazy" decoding="async" /></button>)}
               </div>
             ) : null}
+            {r.reply && (
+              <div className="rv-reply">
+                <b>사장님 답글 <span className="muted">{ymd(r.reply.at)}</span></b>
+                <p>{r.reply.body}</p>
+              </div>
+            )}
             <div className="rv-foot">
               <span>{ym(r.visitDate)} · {ymd(r.createdAt)} 작성</span>
               {mine.includes(r.id)

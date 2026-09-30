@@ -10,7 +10,7 @@ import { toSlug } from "@pairinggo/shared/slug";
 import { track } from "@/lib/track";
 import { useSaved } from "./SavedProvider";
 import ShareButton from "./ShareButton";
-import ExpertSeal from "./ExpertSeal";
+import ExpertSeal, { SealIcon } from "./ExpertSeal";
 
 export type FeedPost = { id: number; d: string; f: string; drink: string; food: string; nick: string; note: string; image: string | null; likes: number; at: string; mine: boolean; tier?: number };
 
@@ -19,6 +19,7 @@ export default function PickFeed({ posts, compact = false }: { posts: FeedPost[]
   const router = useRouter();
   const pathname = usePathname();
   const [liked, setLiked] = useState<Set<number>>(new Set());
+  const [onlyExpert, setOnlyExpert] = useState(false);
   const [likes, setLikes] = useState<Record<number, number>>(() => Object.fromEntries(posts.map((p) => [p.id, p.likes])));
   const [me, setMe] = useState<boolean | null>(null);
   const [mineIds, setMineIds] = useState<Set<number>>(new Set());
@@ -59,9 +60,19 @@ export default function PickFeed({ posts, compact = false }: { posts: FeedPost[]
   };
 
   if (!posts.length) return null;
+  // 전문가 글만 모아 보기(2026-10-01) — 전문가 글이 하나라도 있을 때만 칩을 보인다
+  const hasExpert = posts.some((p) => p.tier);
+  const shown = onlyExpert ? posts.filter((p) => p.tier) : posts;
   return (
+    <>
+    {!compact && hasExpert && (
+      <div className="pk-filter" role="group" aria-label="추천 글 거르기">
+        <button type="button" className={!onlyExpert ? "on" : undefined} onClick={() => setOnlyExpert(false)}>전체 {posts.length}</button>
+        <button type="button" className={onlyExpert ? "on" : undefined} onClick={() => setOnlyExpert(true)}><SealIcon size={14} /> 전문가 글만 {posts.filter((p) => p.tier).length}</button>
+      </div>
+    )}
     <ul className={`picks-list${compact ? " compact" : ""}`}>
-      {posts.map((p) => (
+      {shown.map((p) => (
         <li key={p.id} className={p.mine || mineIds.has(p.id) ? "mine" : undefined}>
           <div className="pair">{p.d ? <Link href={`/drinks/${toSlug(p.drink)}`}>{p.drink}</Link> : <span>{p.drink}</span>}<span className="x">×</span>{p.f ? <Link href={`/foods/${toSlug(p.food)}`}>{p.food}</Link> : <span>{p.food}</span>}</div>
           {p.note && <p className="why" style={{ marginTop: 6 }}>“{p.note}”</p>}
@@ -77,5 +88,6 @@ export default function PickFeed({ posts, compact = false }: { posts: FeedPost[]
         </li>
       ))}
     </ul>
+    </>
   );
 }

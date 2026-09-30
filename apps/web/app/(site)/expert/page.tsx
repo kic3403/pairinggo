@@ -7,7 +7,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { getCatalog } from "@/lib/catalog";
-import { getExpert } from "@/lib/experts";
+import { expertQueue, expertTodayCount, getExpert } from "@/lib/experts";
+import { EXPERT_TIER_LABEL } from "@pairinggo/shared/expert";
+import ExpertSeal from "../_components/ExpertSeal";
 import ExpertReview from "./ExpertReview";
 import ExpertDocUpload from "./ExpertDocUpload";
 
@@ -20,13 +22,19 @@ export default async function ExpertPage() {
   if (!uid) redirect("/login?next=%2Fexpert");
   const x = await getExpert(uid).catch(() => null);
   if (!x || x.status !== "approved") redirect("/expert/apply");
-  const c = await getCatalog();
+  // 머리 줄(2026-10-01) — 내 배지 단계 · 오늘 판정 수 · 남은 대기열
+  const [c, today, { total: waiting }] = await Promise.all([getCatalog(), expertTodayCount(uid), expertQueue(uid, { limit: 1 })]);
   const byName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name, "ko");
   return (
     <div className="wrap" style={{ maxWidth: 720 }}>
       <p className="crumb"><Link href="/my">마이페이지</Link></p>
       <h1>전문가 검수 <span className="muted small">{x.displayName}</span></h1>
       <p className="lead">조합마다 <b>어울림 · 보통 · 아님</b>을 골라 주세요. 어울림은 바로 소믈리에 근거로 실리고, 2명 이상 동의하면 "전문가 추천" 배지가 붙어요. 한 줄 이유는 카드에 <b>{x.displayName}</b> 이름으로 보입니다.</p>
+      <div className="xstats" aria-label="내 검수 현황">
+        <span><ExpertSeal tier={x.tier} size={16} /> {EXPERT_TIER_LABEL[x.tier]}</span>
+        <span>오늘 판정 <b>{today}</b></span>
+        <span>검수 대기 <b>{waiting.toLocaleString("ko-KR")}</b></span>
+      </div>
       <ExpertDocUpload count={x.docsCount} />
       <ExpertReview
         displayName={x.displayName}
