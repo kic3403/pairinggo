@@ -93,8 +93,9 @@ export function reportText(m: WeeklyMetrics, d: Demographics): string {
 }
 
 /* ---------- 기간 고르기(2026-10-01 사용자 요청 — 1일·7일·30일 탭 + 직접 선택) ---------- */
-export type OpsPeriod = { key: "1" | "7" | "30" | "custom"; since: string; until: string; label: string; days: number; from?: string; to?: string };
-export const OPS_PRESETS = [{ key: "1", label: "1일" }, { key: "7", label: "7일" }, { key: "30", label: "30일" }] as const;
+/** 2026-10-01 사용자 요청으로 오늘·어제·7일·30일 + 날짜 범위. prevName = 비교 대상 이름 */
+export type OpsPeriod = { key: "today" | "yesterday" | "7" | "30" | "custom"; since: string; until: string; label: string; days: number; prevName: string; from?: string; to?: string };
+export const OPS_PRESETS = [{ key: "today", label: "오늘" }, { key: "yesterday", label: "어제" }, { key: "7", label: "7일" }, { key: "30", label: "30일" }] as const;
 export const OPS_MAX_DAYS = 366;
 const DAY_MS = 86400_000;
 const isYmd = (s: unknown): s is string => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));
@@ -116,14 +117,19 @@ export function opsPeriod(sp: { p?: unknown; from?: unknown; to?: unknown }, now
     let days = Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / DAY_MS) + 1;
     if (days > OPS_MAX_DAYS) { a = new Date(Date.parse(`${b}T00:00:00Z`) - (OPS_MAX_DAYS - 1) * DAY_MS).toISOString().slice(0, 10); days = OPS_MAX_DAYS; }
     const until = b === today ? now.toISOString() : kstStart(new Date(Date.parse(`${b}T00:00:00Z`) + DAY_MS).toISOString().slice(0, 10));
-    return { key: "custom", since: kstStart(a), until, label: `${a.slice(5).replace("-", ".")} ~ ${b.slice(5).replace("-", ".")}`, days, from: a, to: b };
+    return { key: "custom", since: kstStart(a), until, label: `${a.slice(5).replace("-", ".")} ~ ${b.slice(5).replace("-", ".")}`, days, prevName: `앞 ${days}일`, from: a, to: b };
   }
-  const key = sp.p === "1" || sp.p === "30" ? sp.p : "7";
+  // 오늘 = 한국 00시부터 지금까지(어제 같은 시간대와 비교) · 어제 = 어제 하루(그저께와 비교) · 7·30일 = 지금부터 거꾸로(옛 ?p=1은 오늘로)
+  if (sp.p === "today" || sp.p === "1") return { key: "today", since: kstStart(today), until: now.toISOString(), label: "오늘", days: 1, prevName: "어제 같은 시간" };
+  if (sp.p === "yesterday") return { key: "yesterday", since: kstStart(new Date(Date.parse(`${today}T00:00:00Z`) - DAY_MS).toISOString().slice(0, 10)), until: kstStart(today), label: "어제", days: 1, prevName: "그저께" };
+  const key = sp.p === "30" ? "30" : "7";
   const days = Number(key);
-  return { key, since: new Date(now.getTime() - days * DAY_MS).toISOString(), until: now.toISOString(), label: `최근 ${days}일`, days };
+  return { key, since: new Date(now.getTime() - days * DAY_MS).toISOString(), until: now.toISOString(), label: `최근 ${days}일`, days, prevName: key === "7" ? "전주" : "전달" };
 }
 /** 비교할 앞 기간(같은 길이, 바로 앞) */
-export const prevPeriod = (p: Pick<OpsPeriod, "since" | "until">) => {
-  const len = Date.parse(p.until) - Date.parse(p.since);
+export const prevPeriod = (p: Pick<OpsPeriod, "since" | "until"> & { days?: number }) => {
+  // 기간 날수만큼 앞으로 민다 — 오늘(00시~지금)은 어제 같은 시간대, 나머지는 바로 앞 같은 길이
+  const len = p.days ? p.days * DAY_MS : Date.parse(p.until) - Date.parse(p.since);
+  if (p.days) return { since: new Date(Date.parse(p.since) - len).toISOString(), until: new Date(Date.parse(p.until) - len).toISOString() };
   return { since: new Date(Date.parse(p.since) - len).toISOString(), until: p.since };
 };

@@ -19,25 +19,29 @@ function Bars({ rows, total }: { rows: { label: string; n: number }[]; total: nu
 }
 
 export default function OpsPanel({ metrics: m, demo: d, period }: { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod }) {
-  const prevName = period.key === "custom" ? `앞 ${period.days}일` : period.key === "1" ? "전날" : period.key === "7" ? "전주" : "전달";
+  const prevName = period.prevName;
   const today = kstToday();
   // 직접 선택 칸 기본값 — 지금 보고 있는 기간
-  const fromVal = period.from ?? kstDay(period.since), toVal = period.to ?? kstDay(period.until);
+  const fromVal = period.from ?? kstDay(period.since), toVal = period.to ?? (period.key === "yesterday" ? kstDay(period.since) : today);
   return (
     <>
       <div className="card">
         <div className="ops-head">
-          <b>{period.label} <span className="muted" style={{ fontWeight: 400 }}>{period.key === "custom" ? `${period.days}일` : `${kstDay(period.since).slice(5).replace("-", ".")} ~ ${kstDay(period.until).slice(5).replace("-", ".")}`} · {josa(prevName, "과/와")} 비교</span></b>
+          <b>{period.label} <span className="muted" style={{ fontWeight: 400 }}>{period.key === "custom" ? `${period.days}일` : period.key === "today" || period.key === "yesterday" ? kstDay(period.since).slice(5).replace("-", ".") : `${kstDay(period.since).slice(5).replace("-", ".")} ~ ${kstDay(period.until).slice(5).replace("-", ".")}`} · {josa(prevName, "과/와")} 비교</span></b>
           <div className="ops-period">
             <nav className="seg" aria-label="기간">
               {OPS_PRESETS.map((p) => <Link key={p.key} href={`/admin?p=${p.key}`} className={period.key === p.key ? "on" : undefined} aria-current={period.key === p.key ? "true" : undefined}>{p.label}</Link>)}
             </nav>
-            <form method="get" action="/admin" className="range" aria-label="기간 직접 선택">
-              <input type="date" name="from" defaultValue={fromVal} max={today} aria-label="시작일" required />
-              <span className="muted">~</span>
-              <input type="date" name="to" defaultValue={toVal} max={today} aria-label="종료일" required />
-              <button className={`btn sm${period.key === "custom" ? " p" : ""}`} type="submit">보기</button>
-            </form>
+            {/* 날짜 범위 — 누르면 달력 두 칸이 펼쳐진다(2026-10-01 사용자 요청). 지금 직접 고른 기간이면 펼친 채로 */}
+            <details className="range-pick" open={period.key === "custom" || undefined}>
+              <summary className={period.key === "custom" ? "on" : undefined}>📅 날짜 범위{period.key === "custom" ? ` · ${period.label}` : ""}</summary>
+              <form method="get" action="/admin" className="range" aria-label="기간 직접 선택">
+                <input type="date" name="from" defaultValue={fromVal} max={today} aria-label="시작일" required />
+                <span className="muted">~</span>
+                <input type="date" name="to" defaultValue={toVal} max={today} aria-label="종료일" required />
+                <button className="btn sm p" type="submit">적용</button>
+              </form>
+            </details>
           </div>
         </div>
         <div className="kpi kpi4" style={{ marginBottom: 0 }}>

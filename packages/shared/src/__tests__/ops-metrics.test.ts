@@ -44,11 +44,17 @@ describe("운영 지표 규칙", () => {
 describe("대시보드 기간", async () => {
   const { opsPeriod, prevPeriod } = await import("../ops-metrics");
   const now = new Date("2026-10-01T03:00:00Z");   // 한국 12:00
-  it("탭 1·7·30, 기본 7", () => {
-    expect(opsPeriod({}, now)).toMatchObject({ key: "7", days: 7, label: "최근 7일", until: now.toISOString() });
-    expect(opsPeriod({ p: "30" }, now).since).toBe("2026-09-01T03:00:00.000Z");
-    expect(opsPeriod({ p: "1" }, now).days).toBe(1);
+  it("탭 오늘·어제·7·30, 기본 7", () => {
+    expect(opsPeriod({}, now)).toMatchObject({ key: "7", days: 7, label: "최근 7일", until: now.toISOString(), prevName: "전주" });
+    expect(opsPeriod({ p: "30" }, now)).toMatchObject({ since: "2026-09-01T03:00:00.000Z", prevName: "전달" });
+    expect(opsPeriod({ p: "today" }, now)).toMatchObject({ key: "today", since: "2026-09-30T15:00:00.000Z", until: now.toISOString(), prevName: "어제 같은 시간" });
+    expect(opsPeriod({ p: "yesterday" }, now)).toMatchObject({ key: "yesterday", since: "2026-09-29T15:00:00.000Z", until: "2026-09-30T15:00:00.000Z", prevName: "그저께" });
+    expect(opsPeriod({ p: "1" }, now).key).toBe("today");
     expect(opsPeriod({ p: "9" }, now).key).toBe("7");
+  });
+  it("오늘은 어제 같은 시간대와 비교", () => {
+    expect(prevPeriod(opsPeriod({ p: "today" }, now))).toEqual({ since: "2026-09-29T15:00:00.000Z", until: "2026-09-30T03:00:00.000Z" });
+    expect(prevPeriod(opsPeriod({ p: "yesterday" }, now))).toEqual({ since: "2026-09-28T15:00:00.000Z", until: "2026-09-29T15:00:00.000Z" });
   });
   it("직접 선택 — 한국 날짜 00시 기준, 둘 다 포함, 뒤바뀐 순서·미래 바로잡기", () => {
     const p = opsPeriod({ from: "2026-09-20", to: "2026-09-22" }, now);
