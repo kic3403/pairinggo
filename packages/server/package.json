@@ -31,7 +31,8 @@
     "./ai-guard": "./src/ai-guard.ts",
     "./expert-reviews": "./src/expert-reviews.ts",
     "./partner-docs": "./src/partner-docs.ts",
-    "./review-replies": "./src/review-replies.ts"
+    "./review-replies": "./src/review-replies.ts",
+    "./email": "./src/email.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

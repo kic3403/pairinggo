@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Heart from "./_components/Heart";
 import HomeTabs from "./_components/HomeTabs";
+import HomeExamples from "./_components/HomeExamples";
 import HomeBanners from "./_components/HomeBanners";
 import FlowTiles from "./_components/FlowTiles";
 import PartnerRow from "./_components/PartnerRow";
@@ -46,7 +47,8 @@ export default async function Home() {
     <div className="wrap home">
       {/* 사이트 이름과 사이트 안 검색 — 구글 결과에 검색창이 붙을 수 있다(docs/20 P3-4) */}
       <JsonLd data={website({ base: siteUrl(), name: "페어링GO" })} />
-      <h1 className="home-h1">맛있는 술엔 맛있는 음식 <span className="muted">— 전통주·위스키·사케·와인에 어울리는 음식 추천</span></h1>
+      <h1 className="home-h1">맛있는 술엔 맛있는 음식 <span className="muted">— 술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 근거와 함께</span></h1>
+      <HomeExamples />
       <HomeTabs />
       <HomeBanners cards={home.cards} />
       <QuickMenu michelinYear={awards.year} />

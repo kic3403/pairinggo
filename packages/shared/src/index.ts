@@ -33,6 +33,7 @@ export * from "./awards";
 export * from "./place-rating";
 export * from "./food-groups";
 export * from "./name-index";
+export * from "./ops-metrics";
 export * from "./profile";
 export * from "./session";
 export * from "./consent";

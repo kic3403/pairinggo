@@ -1372,3 +1372,10 @@ a.pd-score:hover { border-color: var(--navy); }
 /* 전문가 검수 머리 줄(2026-10-01) — 배지 · 오늘 판정 · 대기열 */
 .xstats { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg2); font-size: 14px; }
 .xstats span { display: inline-flex; align-items: center; gap: 5px; } .xstats b { font-weight: 800; }
+
+/* 홈 검색 예시(2026-10-01) — 첫 줄 아래 한 줄, 휴대폰은 가로 스크롤 */
+.home-ex { display: flex; align-items: center; gap: 6px; margin: 6px 0 0; font-size: 13px; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+.home-ex::-webkit-scrollbar { display: none; }
+.home-ex .muted { margin-right: 2px; }
+.home-ex a { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink2); text-decoration: none; font-weight: 600; }
+.home-ex a:hover { border-color: var(--navy); color: var(--navy); }
