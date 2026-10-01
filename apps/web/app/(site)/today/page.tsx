@@ -6,9 +6,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   SRC_LABEL, buyLink, cardSummary, confidenceOf, confidenceText, gradeOf, josa, kindOf, kstParts, onlineSellable, pairingScore,
-  recentTodayPicks, subtypeLabel, toSlug, todayPick, type Pairing,
+  recentTodayPicks, subtypeLabel, toSlug, todayCaption, todayPick, type Pairing,
 } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
+import { siteUrl } from "@/lib/site";
+import CardDownload from "../_components/CardDownload";
+import CopyButton from "../_components/CopyButton";
 import DetailMedia, { KIND_TONE } from "../_components/DetailMedia";
 import ExtLink from "../_components/ExtLink";
 import GradeBadge from "../_components/GradeBadge";
@@ -38,6 +41,12 @@ export default async function TodayPage() {
   const { points, cautions } = cardSummary(p);
   const bl = buyLink(d);
   const recent = recentTodayPicks(c.dataset, date, 6);
+  // SNS에 올릴 글(2026-10-01) — 그림 카드(/today/card.png)와 짝. 규칙은 shared seo/share-card.ts
+  const caption = todayCaption({
+    dateLabel: `${md(date)} (${t.weekday})`, headline: t.headline, drink: d.name, food: f.name, category: kind === "trad" ? d.category : subtypeLabel(d),
+    drinkMeta: [kind === "trad" ? d.category : subtypeLabel(d), d.abv != null ? `${d.abv}%` : null, d.brewery].filter(Boolean).join(" · "),
+    confidence: confidenceText(p), quote: p.ev?.quote || undefined, who: p.ev?.quote ? (p.ev.who || p.ev.source || undefined) : undefined, reason: p.reason || undefined, base: siteUrl(),
+  });
   const row = (x: Pairing, show: "food" | "drink") => {
     const other = show === "food" ? F.get(x.f) : D.get(x.d);
     if (!other) return null;
@@ -93,6 +102,16 @@ export default async function TodayPage() {
           <ShareButton className="btn" title={`오늘의 페어링 — ${josa(d.name, "과/와")} ${f.name}`} text={`${t.headline}: ${d.name} × ${f.name} — 페어링GO`} path="/today" d={d.id} f={f.id} />
         </div>
       </article>
+
+      {/* 인스타·블로그용 — 그림 한 장과 붙여 넣을 글 */}
+      <section className="box sns-kit">
+        <h3>SNS에 올리기</h3>
+        <p className="small muted">오늘의 조합을 그림 한 장(1080×1350)과 글로 받아 인스타·블로그에 바로 올릴 수 있어요.</p>
+        <div className="btns">
+          <CardDownload href="/today/card.png" filename={`pairinggo-today-${date}.png`} from="today" className="btn p" />
+          <CopyButton text={caption} label="글 복사" />
+        </div>
+      </section>
 
       <div className="today-more">
         {t.alsoFoods.length > 0 && <section className="box"><h3>{josa(d.name, "은/는")} 이것과도</h3><ul className="rows">{t.alsoFoods.map((x) => row(x, "food"))}</ul></section>}

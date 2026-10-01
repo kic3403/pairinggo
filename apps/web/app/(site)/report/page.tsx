@@ -5,6 +5,7 @@ import { toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { buildReport, reportText } from "@/lib/report";
 import CopyButton from "../_components/CopyButton";
+import CardDownload from "../_components/CardDownload";
 
 export const revalidate = 3600;
 export const metadata: Metadata = { title: "월간 전통주 트렌드 리포트 | 페어링GO", description: "요즘 많이 찾는 전통주, 핫한 페어링, 회원 평가와 검색어를 한 장으로 정리한 월간 리포트입니다." };
@@ -25,7 +26,7 @@ export default async function ReportPage() {
         <span><b>{r.activity.members}</b>회원</span><span><b>{r.activity.screens.toLocaleString("ko-KR")}</b>화면 조회</span><span><b>{r.activity.searches}</b>검색</span>
         <span><b>{r.activity.buyClicks}</b>구매 링크</span><span><b>{r.activity.restaurantClicks}</b>식당 링크</span><span><b>{r.activity.saves}</b>저장</span><span><b>{r.ratingsTotal}</b>먹어봤어요</span>
       </div>
-      <div className="btns" style={{ marginTop: 6 }}><CopyButton text={text} label="글로 복사 (블로그·인스타용)" /></div>
+      <div className="btns" style={{ marginTop: 6 }}><CardDownload href="/report/card.png" filename={`pairinggo-report-${r.to}.png`} from="report" className="btn p" /><CopyButton text={text} label="글로 복사 (블로그·인스타용)" /></div>
 
       <div className="rp-grid">
         <section className="rp-sec">

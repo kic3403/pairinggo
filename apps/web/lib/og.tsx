@@ -88,3 +88,90 @@ export async function ogImage(card: OgCard) {
     { ...OG_SIZE, fonts: font ? [{ name: "NotoSansKR", data: font, weight: 700, style: "normal" }] : [] },
   );
 }
+
+/** 공유용 그림 카드(2026-10-01) — 인스타 4:5. 오늘의 페어링·월간 리포트가 쓴다(`/today/card.png`·`/report/card.png`). 글 규칙은 shared seo/share-card.ts */
+export const CARD_SIZE = { width: 1080, height: 1350 };
+export type ShareCard = {
+  /** 맨 위 작은 줄 — "오늘의 페어링 · 10월 1일 (목)" */
+  kicker: string;
+  /** 머리 한 줄 — "가을 제철 대하구이와 함께" */
+  headline?: string;
+  /** 큰 글자 조합 — 술(주황) × 음식(남색). 리포트처럼 조합이 없으면 title만 */
+  pair?: { drink: string; drinkMeta?: string; food: string; foodMeta?: string };
+  title?: string;
+  /** 칩 — 등급·신뢰도 */
+  chips?: string[];
+  /** 인용문 한 줄(따옴표는 여기서 붙인다)과 출처 — 근거 글에서 따온 것만. 우리 설명은 note(따옴표 없음) */
+  quote?: string; who?: string; note?: string;
+  /** 번호 목록 묶음 — 리포트용 */
+  lists?: { title: string; rows: string[] }[];
+  /** 맨 아래 — 주소 */
+  footer: string;
+};
+
+export async function shareCardImage(card: ShareCard) {
+  const text = [card.kicker, card.headline, card.pair?.drink, card.pair?.drinkMeta, card.pair?.food, card.pair?.foodMeta, card.title, ...(card.chips ?? []), card.quote, card.who, card.note, ...(card.lists ?? []).flatMap((l) => [l.title, ...l.rows]), card.footer].filter(Boolean).join("") + "×“”—…만세이상지나친음주는건강에해롭습니다";
+  const font = await loadKoreanFont(text);
+  const big = (s: string) => (s.length > 11 ? 68 : s.length > 7 ? 86 : 104);
+  return new ImageResponse(
+    (
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: BG, padding: "72px 76px 60px", fontFamily: "NotoSansKR", color: INK }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex" }}>
+            <div style={{ width: 40, height: 40, borderRadius: 20, background: NAVY }} />
+            <div style={{ width: 40, height: 40, borderRadius: 20, background: FOOD, marginLeft: -14, opacity: 0.92 }} />
+          </div>
+          <div style={{ display: "flex", fontSize: 40, fontWeight: 700, letterSpacing: -1 }}><span>페어링</span><span style={{ color: FOOD }}>GO</span></div>
+        </div>
+        <div style={{ display: "flex", fontSize: 32, color: MUTED, marginTop: 52 }}>{card.kicker}</div>
+        {card.headline && <div style={{ display: "flex", fontSize: 44, fontWeight: 700, marginTop: 10, letterSpacing: -1 }}>{card.headline}</div>}
+        {card.title && <div style={{ display: "flex", fontSize: 76, fontWeight: 700, letterSpacing: -2, marginTop: 14, lineHeight: 1.15 }}>{card.title}</div>}
+
+        {card.pair && (
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 56 }}>
+            <div style={{ display: "flex", fontSize: big(card.pair.drink), fontWeight: 700, letterSpacing: -3, lineHeight: 1.1, color: FOOD }}>{card.pair.drink}</div>
+            {card.pair.drinkMeta && <div style={{ display: "flex", fontSize: 30, color: MUTED, marginTop: 10 }}>{card.pair.drinkMeta}</div>}
+            <div style={{ display: "flex", fontSize: 64, color: MUTED, margin: "18px 0 10px" }}>×</div>
+            <div style={{ display: "flex", fontSize: big(card.pair.food), fontWeight: 700, letterSpacing: -3, lineHeight: 1.1, color: NAVY }}>{card.pair.food}</div>
+            {card.pair.foodMeta && <div style={{ display: "flex", fontSize: 30, color: MUTED, marginTop: 10 }}>{card.pair.foodMeta}</div>}
+          </div>
+        )}
+
+        {!!card.chips?.length && (
+          <div style={{ display: "flex", gap: 14, marginTop: 44, flexWrap: "wrap" }}>
+            {card.chips.map((c, i) => (
+              <div key={c} style={{ display: "flex", padding: "12px 26px", borderRadius: 999, background: i === 0 ? NAVY : "#EDF1F7", color: i === 0 ? "#fff" : "#1B3355", fontSize: 30, fontWeight: 700 }}>{c}</div>
+            ))}
+          </div>
+        )}
+
+        {card.quote && (
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 40, paddingLeft: 26, borderLeft: `8px solid ${FOOD}` }}>
+            <div style={{ display: "flex", fontSize: 36, lineHeight: 1.45 }}>“{card.quote}”</div>
+            {card.who && <div style={{ display: "flex", fontSize: 28, color: MUTED, marginTop: 10 }}>— {card.who}</div>}
+          </div>
+        )}
+
+        {!card.quote && card.note && <div style={{ display: "flex", fontSize: 34, lineHeight: 1.45, marginTop: 40, color: "#3B3A37" }}>{card.note}</div>}
+
+        {(card.lists ?? []).map((l) => (
+          <div key={l.title} style={{ display: "flex", flexDirection: "column", marginTop: 40 }}>
+            <div style={{ display: "flex", fontSize: 32, fontWeight: 700, color: NAVY, paddingBottom: 12, borderBottom: "3px solid #E6E3DC" }}>{l.title}</div>
+            {l.rows.map((r, i) => (
+              <div key={r + i} style={{ display: "flex", alignItems: "center", fontSize: 38, marginTop: 16 }}>
+                <div style={{ display: "flex", width: 56, color: FOOD, fontWeight: 700 }}>{i + 1}</div>
+                <div style={{ display: "flex" }}>{r}</div>
+              </div>
+            ))}
+          </div>
+        ))}
+
+        <div style={{ display: "flex", flexDirection: "column", marginTop: "auto" }}>
+          <div style={{ display: "flex", fontSize: 34, fontWeight: 700, color: NAVY }}>{card.footer}</div>
+          <div style={{ display: "flex", fontSize: 22, color: MUTED, marginTop: 10 }}>만 19세 이상 · 지나친 음주는 건강에 해롭습니다</div>
+        </div>
+      </div>
+    ),
+    { ...CARD_SIZE, fonts: font ? [{ name: "NotoSansKR", data: font, weight: 700, style: "normal" }] : [] },
+  );
+}
