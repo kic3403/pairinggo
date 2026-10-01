@@ -4,7 +4,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { breadcrumb, byFood, findBySlug, itemList, toSlug } from "@pairinggo/shared";
+import { breadcrumb, byFood, findBySlug, foodEvidenceNeighbors, guideList, itemList, similarFoods, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { expertTiersByName } from "@/lib/experts";
 import { siteUrl } from "@/lib/site";
@@ -65,7 +65,14 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   const tiers = await expertTiersByName();
 
   const recs = await recsForFood({ id: food.id, name: food.name, category: food.category }).catch(() => []);
-  const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category).slice(0, 8);
+  // 근거 있는 페어링이 하나도 없으면 '준비 중'으로 알리고, 비슷한 음식의 확인된 술을 위로(2026-10-01, 술 상세와 같은 방식 — shared pairing/neighbors.ts)
+  const hasEvidence = items.some((it) => ["official", "sommelier", "media", "blog", "user"].includes(it.pairing.src ?? ""));
+  const drinkById = new Map(c.dataset.drinks.map((d) => [d.id, d]));
+  const neighbors = hasEvidence ? [] : foodEvidenceNeighbors(similarFoods(food, 16).map((s) => ({ food: s.x, why: s.why.slice(0, 2) })), (id) => byFood[id], (id) => drinkById.get(id), 4, 2);
+  const shown = new Set(neighbors.map((x) => x.food.id));
+  const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category && !shown.has(f.id)).slice(0, 8);
+
+  const guide = guideList(c.dataset).find((g) => g.side === "food" && g.category === food.category);
 
   // 구조화 데이터 — 경로와 "이 음식에 어울리는 술" 목록(docs/20 P3-4)
   const base = siteUrl();
@@ -102,6 +109,26 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
             <summary>어울림 등급은 어떻게 매기나요</summary>
             <p className="small muted">어울림 등급은 <b>근거가 먼저</b>입니다. 양조장·소믈리에 추천이 있거나 서로 다른 출처가 여럿 확인한 조합만 ‘근거 확인’이 되고, 그중 어울림 점수(근거 강도 60% · 맛 분석 25% · 블로그 언급 15%)가 높은 조합이 <b>찰떡</b>, 나머지가 <b>잘 어울림</b>입니다. 블로그·매체 한 곳뿐인 조합은 ‘근거 약함’, 근거 글 없이 맛 프로필로 계산한 조합은 ‘추정’이라 늘 <b>시도해 볼 만</b>으로 둡니다. 같은 매체·같은 블로그·같은 사람은 한 곳으로 세고, 같은 조합은 술 화면과 음식 화면에서 같은 등급입니다.</p>
           </details>
+          {!hasEvidence && <p className="box small" style={{ marginBottom: 12 }}><b>페어링 정보 준비 중</b> — 아직 양조장·소믈리에·매체가 확인한 조합이 없습니다. 아래 카드는 맛 프로필로 추정한 조합이며 검증된 추천이 아닙니다.</p>}
+          {neighbors.length > 0 && (
+            <section className="box neighbors f" aria-labelledby="neighbors-h">
+              <h3 id="neighbors-h">근거가 확인된 비슷한 음식</h3>
+              <p className="small muted">비슷한 음식은 이런 술과 확인됐어요. {food.name}에도 참고해 보세요.</p>
+              <ul>
+                {neighbors.map((x) => (
+                  <li key={x.food.id}>
+                    <div className="nb-top">
+                      <Link href={`/foods/${toSlug(x.food.name)}`}><b>{x.food.name}</b></Link>
+                      <span className="small muted">{x.why.join(" · ")}</span>
+                    </div>
+                    <div className="nb-foods">
+                      {x.drinks.map((d) => <Link key={d.drink.id} className="nb-chip" href={`/drinks/${toSlug(d.drink.name)}`}>{d.drink.name}<span className="small muted"> · {d.conf === "confirmed" ? "근거 확인" : "근거 약함"}</span></Link>)}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           <MemberPickButton mode="food" subjectId={food.id} subjectName={food.name} options={c.dataset.drinks.map((d) => ({ id: d.id, name: d.name }))} />
           <RatingsProvider subject={{ food: food.id }}>
             <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/foods/${toSlug(food.name)}/all`}>
@@ -112,6 +139,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
         </div>
 
         <aside>
+          {guide && <p className="guide-go"><Link href={`/guide/${guide.slug}`}>{guide.h1} 모음 →</Link></p>}
           {!!sameCategory.length && (
             <div className="box">
               <h3>{food.category} 다른 메뉴</h3>

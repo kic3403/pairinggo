@@ -175,6 +175,32 @@ p { margin: 0 0 12px; }
   background: var(--surface); text-decoration: none; font-size: 14px; font-weight: 600; color: var(--ink2); min-height: 40px; line-height: 22px; }
 .tabs a.on { background: var(--navy); border-color: var(--navy); color: #fff; }
 .tabs .cnt { font-variant-numeric: tabular-nums; opacity: 0.75; margin-left: 5px; }
+/* 기기 저장 목록(/saved)의 탭은 화면 이동이 아니라 버튼 — 모양은 링크 탭과 같게 */
+.tabs button { display: inline-flex; align-items: center; min-height: 40px; padding: 0 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.tabs button.on { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 700; }
+/* 모음 화면(/guide) — 순위 줄: 번호 · 이름 · 짝 칩. 술 화면은 음식 이름 남색·술 칩 주황, 음식 화면은 반대 */
+.guide-mix { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 14px; }
+.guide-mix b { margin-right: 4px; }
+.guide-list { list-style: none; margin: 0; padding: 0; }
+.guide-list > li { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.guide-list .rank { flex: 0 0 28px; font-weight: 800; font-size: 18px; color: var(--ink2); font-variant-numeric: tabular-nums; text-align: center; line-height: 26px; }
+.guide-list .grow { min-width: 0; flex: 1; }
+.guide-list .nb-foods { margin-top: 8px; }
+.g-name { font-size: 17px; text-decoration: none; }
+.g-name.f { color: var(--navy-ink); }
+.g-name.d { color: var(--food-ink); }
+.nb-chip.d { color: var(--food-ink); }
+.nb-chip.d:hover { border-color: var(--food); }
+.guide-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.guide-links a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+.guide-links a:hover { border-color: var(--navy); }
+.guide-go { margin: 0 0 12px; font-size: 14px; font-weight: 700; }
+.sns-kit { margin: 16px 0; }
+.sns-kit h3 { margin: 0 0 4px; color: var(--ink); }
+.sns-kit p { margin: 0 0 10px; }
+.guest-note p { margin: 0 0 6px; }
+.guest-note .btns { margin-top: 10px; }
+.auth-saved .cnt { font-variant-numeric: tabular-nums; color: var(--like-ink); margin-left: 3px; }
 /* 지역 칩 2단 — 2단(서울·인천·경기도)은 1단에 바짝 붙이고 작게, 왼쪽 선으로 "하위"임을 보인다 */
 .region-nav .region-tabs { margin-bottom: 8px; }
 .region-nav .region-tabs.sub { margin-top: 0; padding-left: 12px; border-left: 3px solid var(--line); }
@@ -1215,6 +1241,10 @@ a.pd-score:hover { border-color: var(--navy); }
 .nb-foods { display: flex; flex-wrap: wrap; gap: 6px; }
 .nb-chip { display: inline-block; line-height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--navy-ink); font-size: 13.5px; font-weight: 600; text-decoration: none; }
 .nb-chip:hover { border-color: var(--navy); }
+/* 음식 상세에서는 색이 뒤집힌다 — 음식 이름 남색, 술 칩 주황 */
+.box.neighbors.f .nb-top a { color: var(--navy-ink); }
+.box.neighbors.f .nb-chip { color: var(--food-ink); }
+.box.neighbors.f .nb-chip:hover { border-color: var(--food); }
 
 /* ---------- 목록 정리(2026-09-26): 제목 한 줄, 칩 한 줄 스크롤, 결과 수·정렬 한 줄, 카드 3줄(음식·태그는 넓은 화면만) ---------- */
 .list-h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 4px; }

@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, evidenceNeighbors, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
+import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, evidenceNeighbors, guideList, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { expertTiersByName } from "@/lib/experts";
 import { buyOptions } from "@/lib/shop";
@@ -114,6 +114,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   ];
 
   const rating = extRatingOf(drink);
+  // 이 술 종류의 모음 화면(막걸리 안주 추천 등, shared seo/guides.ts) — 있으면 옆 칸에서 잇는다
+  const guide = guideList(c.dataset).find((g) => g.side === "drink" && g.category === drink.category);
   // 본문 '가까운 술'에 나온 술은 옆 칸에서 뺀다(한 화면에 두 번 두지 않기)
   const asideBrewery = sameBrewery.filter((d) => !shown.has(d.id)), asideSimilar = similar.filter((x) => !shown.has(x.x.id));
   const hasRelated = asideBrewery.length > 0 || asideSimilar.length > 0 || sameRegion.length > 0;
@@ -249,6 +251,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               </div>
             </div>
           )}
+          {guide && <p className="guide-go"><Link href={`/guide/${guide.slug}`}>{guide.h1} 모음 →</Link></p>}
           {/* ⑦ 관련 술 — 한 칸에(같은 양조장 · 비슷한 술 · 같은 지역). '데이터' 칸은 뺐다(2026-09-25) */}
           {hasRelated && (
             <div className="box related">

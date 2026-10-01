@@ -47,6 +47,8 @@ export * from "./place-info";
 export * from "./reservation";
 export * from "./seo/jsonld";
 export * from "./seo/rss";
+export * from "./seo/share-card";
+export * from "./seo/guides";
 export * from "./menu-items";
 export * from "./oauth-profile";
 export * from "./account-dup";

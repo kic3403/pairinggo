@@ -56,6 +56,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
           <nav aria-label="푸터 메뉴">
             <Link href="/drinks">주류 전체</Link>
             <Link href="/foods">음식 전체</Link>
+            <Link href="/guide">페어링 모음</Link>
           </nav>
           <p className="legal-links"><Link href="/terms">이용약관</Link><Link href="/privacy"><b>개인정보처리방침</b></Link></p>
           <p>페어링GO는 전통주와 음식의 어울림을 양조장·소믈리에·전문 매체의 근거와 함께 제안합니다. 술을 직접 판매하지 않으며, 구매는 각 양조장·판매처 페이지에서 이루어집니다.</p>
