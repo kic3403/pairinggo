@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clipText, firstSentence, hashtags, todayCaption } from "../seo/share-card";
+import { clipText, detailCaption, firstSentence, hashtags, todayCaption } from "../seo/share-card";
 
 describe("공유 카드 글", () => {
   it("자르기", () => {
@@ -23,6 +23,19 @@ describe("공유 카드 글", () => {
     expect(r).toContain("양조장이 추천한 음식입니다.");
     expect(r).not.toContain("“");
     expect(r).not.toContain("맛 프로필로");
+  });
+  it("상세 글 — 등급과 근거 표시를 줄마다", () => {
+    const t = detailCaption({ side: "drink", name: "복순도가 손막걸리", meta: "탁주 · 6.5% · 복순도가", total: 29, base: "https://pairinggo.kr", path: "/drinks/복순도가-손막걸리",
+      items: [{ name: "해물파전", grade: "찰떡", conf: "근거 확인 · 출처 3곳" }, { name: "두부김치", grade: "시도해 볼 만", conf: "추정" }] });
+    expect(t.split("\n")[0]).toBe("복순도가 손막걸리엔 이 음식");
+    expect(t).toContain("1. 해물파전 — 찰떡 (근거 확인 · 출처 3곳)");
+    expect(t).toContain("2. 두부김치 — 시도해 볼 만 (추정)");
+    expect(t).toContain("어울리는 음식 29가지를 근거와 함께 → https://pairinggo.kr/drinks/복순도가-손막걸리?utm_source=sns");
+    expect(t).toContain("#복순도가손막걸리 #해물파전 #두부김치 #안주추천");
+    const f = detailCaption({ side: "food", name: "해물파전", total: 171, base: "u", path: "/foods/해물파전", items: [] });
+    expect(f.split("\n")[0]).toBe("해물파전엔 이 술");
+    expect(f).toContain("어울리는 술 171가지");
+    expect(f).toContain("#술추천");
   });
   it("첫 문장 — 화살표 기호는 가운뎃점", () => {
     expect(firstSentence("추천한 음식입니다. 바디 3점 \u2194 무게 4점 균형.")).toBe("추천한 음식입니다.");

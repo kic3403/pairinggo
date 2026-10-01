@@ -62,3 +62,25 @@ export function todayCaption(x: TodayCaptionInput): string {
   ];
   return rows.filter((r) => r !== null).join("\n").replace(/\n{3,}/g, "\n\n");
 }
+
+/** 상세 카드·글의 한 줄 — 짝 이름, 등급("찰떡"·"잘 어울림"·"시도해 볼 만"), 근거 표시("근거 확인 · 출처 2곳"·"추정") */
+export type DetailShareItem = { name: string; grade: string; conf: string };
+
+/**
+ * 술·음식 상세의 SNS 글(2026-10-02) — "이 술엔 이 음식 3가지". 줄마다 등급과 근거 표시를 붙인다(추정 조합을 확인된 추천처럼 쓰지 않게).
+ * side = 이 화면의 주인공이 술인지 음식인지. url은 utm_source=sns를 붙인 상세 주소.
+ */
+export function detailCaption(x: { side: "drink" | "food"; name: string; meta?: string; items: DetailShareItem[]; total: number; base: string; path: string }): string {
+  const other = x.side === "drink" ? "음식" : "술";
+  return [
+    x.side === "drink" ? `${x.name}엔 이 음식` : `${x.name}엔 이 술`,
+    x.meta || null,
+    "",
+    ...x.items.map((it, i) => `${i + 1}. ${it.name} — ${it.grade} (${it.conf})`),
+    "",
+    `어울리는 ${other} ${x.total}가지를 근거와 함께 → ${x.base}${x.path}?utm_source=sns`,
+    "",
+    hashtags(["페어링GO", x.name, ...x.items.map((it) => it.name), x.side === "drink" ? "안주추천" : "술추천", "전통주", "페어링"]),
+    "주류는 만 19세 이상만. 지나친 음주는 건강에 해롭습니다.",
+  ].filter((r) => r !== null).join("\n");
+}

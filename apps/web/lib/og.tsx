@@ -99,6 +99,8 @@ export type ShareCard = {
   /** 큰 글자 조합 — 술(주황) × 음식(남색). 리포트처럼 조합이 없으면 title만 */
   pair?: { drink: string; drinkMeta?: string; food: string; foodMeta?: string };
   title?: string;
+  /** 큰 제목 색 — 술 이름이면 주황, 음식 이름이면 남색(검색 결과 색 규칙). 없으면 검정 */
+  titleTone?: "drink" | "food";
   /** 칩 — 등급·신뢰도 */
   chips?: string[];
   /** 인용문 한 줄(따옴표는 여기서 붙인다)과 출처 — 근거 글에서 따온 것만. 우리 설명은 note(따옴표 없음) */
@@ -125,7 +127,7 @@ export async function shareCardImage(card: ShareCard) {
         </div>
         <div style={{ display: "flex", fontSize: 32, color: MUTED, marginTop: 52 }}>{card.kicker}</div>
         {card.headline && <div style={{ display: "flex", fontSize: 44, fontWeight: 700, marginTop: 10, letterSpacing: -1 }}>{card.headline}</div>}
-        {card.title && <div style={{ display: "flex", fontSize: 76, fontWeight: 700, letterSpacing: -2, marginTop: 14, lineHeight: 1.15 }}>{card.title}</div>}
+        {card.title && <div style={{ display: "flex", fontSize: card.title.length > 16 ? 54 : card.title.length > 11 ? 64 : 76, fontWeight: 700, letterSpacing: -2, marginTop: 14, lineHeight: 1.15, color: card.titleTone === "drink" ? FOOD : card.titleTone === "food" ? NAVY : INK }}>{card.title}</div>}
 
         {card.pair && (
           <div style={{ display: "flex", flexDirection: "column", marginTop: 56 }}>
@@ -163,7 +165,7 @@ export async function shareCardImage(card: ShareCard) {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", alignItems: "baseline", gap: 18 }}>
                     <div style={{ display: "flex" }}>{r}</div>
-                    {l.tags?.[i] && <div style={{ display: "flex", fontSize: 26, fontWeight: 700, color: l.tags[i]!.includes("하락") ? "#3D4A9E" : l.tags[i]!.includes("상승") ? "#B3261E" : "#2F6B3A" }}>{l.tags[i]}</div>}
+                    {l.tags?.[i] && <div style={{ display: "flex", fontSize: 26, fontWeight: 700, color: l.tags[i]!.includes("하락") ? "#3D4A9E" : l.tags[i]!.includes("상승") ? "#B3261E" : l.tags[i]!.includes("진입") ? "#2F6B3A" : NAVY }}>{l.tags[i]}</div>}
                   </div>
                   {l.sub?.[i] && <div style={{ display: "flex", fontSize: 27, color: MUTED, marginTop: 6 }}>{l.sub[i]}</div>}
                 </div>
