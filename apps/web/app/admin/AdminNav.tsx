@@ -17,7 +17,7 @@ const GROUPS: { title: string; items: { href: string; label: string }[] }[] = [
   { title: "매장", items: [
     { href: "/admin/partners", label: "파트너" }, { href: "/admin/places", label: "식당 정보" }, { href: "/admin/place-reviews", label: "식당 리뷰" }, { href: "/admin/shop", label: "구매" },
   ] },
-  { title: "사이트", items: [{ href: "/admin/banners", label: "홈 배너" }, { href: "/admin/notices", label: "공지" }, { href: "/admin/errors", label: "오류" }] },
+  { title: "사이트", items: [{ href: "/admin/banners", label: "홈 배너" }, { href: "/admin/posts", label: "글 초안" }, { href: "/admin/notices", label: "공지" }, { href: "/admin/errors", label: "오류" }] },
 ];
 
 export default function AdminNav({ badges = {} }: { badges?: AdminBadges }) {

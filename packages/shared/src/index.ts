@@ -51,6 +51,7 @@ export * from "./seo/jsonld";
 export * from "./seo/rss";
 export * from "./seo/share-card";
 export * from "./seo/guides";
+export * from "./seo/blog-draft";
 export * from "./seo/weekly";
 export * from "./menu-items";
 export * from "./oauth-profile";
