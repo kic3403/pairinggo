@@ -51,5 +51,6 @@ describe("모음 화면(가이드)", () => {
     expect(new Set(list.map((g) => g.slug)).size).toBe(list.length);
     for (const g of list) expect(g.slug).toMatch(/^[0-9A-Za-z가-힣-]+$/);
     expect(list.some((g) => g.slug === "막걸리-안주")).toBe(true);
+    expect(list.find((g) => g.side === "food" && g.category === "안주")).toMatchObject({ slug: "안주-어울리는-술", h1: "안주류와 어울리는 술" });
   });
 });

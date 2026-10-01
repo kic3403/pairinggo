@@ -23,6 +23,9 @@ export const DRINK_GUIDE_WORD: Record<string, { word: string; slug: string; note
   청주: { word: "청주", slug: "청주" },
 };
 
+/** 음식 종류 이름이 제목에서 어색한 것만 바꿔 읽는다 — "안주와 어울리는 술"은 말이 겹친다 */
+export const FOOD_GUIDE_WORD: Record<string, string> = { 안주: "안주류" };
+
 export type GuideDef = {
   slug: string; side: "drink" | "food";
   /** 카탈로그 종류(술 category 또는 음식 category) */
@@ -64,11 +67,12 @@ export function guideList(ds: DS): GuideDef[] {
   }
   for (const [category, n] of fn) {
     if (n < GUIDE_MIN || !category) continue;
+    const word = FOOD_GUIDE_WORD[category] ?? category;   // 주소는 종류 이름 그대로, 제목만 읽기 좋게
     out.push({
       slug: `${category.replace(/[^0-9A-Za-z가-힣]/g, "")}-어울리는-술`, side: "food", category, n,
-      h1: `${josa(category, "과/와")} 어울리는 술`,
-      title: `${josa(category, "과/와")} 어울리는 술 추천 — 근거로 고른 전통주`,
-      description: `${category} 요리에 어울리는 전통주를 양조장·소믈리에·매체가 확인한 조합 ${n}개에서 골랐습니다. 술마다 어울리는 ${category} 메뉴와 근거를 함께 봅니다.`,
+      h1: `${josa(word, "과/와")} 어울리는 술`,
+      title: `${josa(word, "과/와")} 어울리는 술 추천 — 근거로 고른 전통주`,
+      description: `${word}에 어울리는 전통주를 양조장·소믈리에·매체가 확인한 조합 ${n}개에서 골랐습니다. 술마다 어울리는 ${category} 메뉴와 근거를 함께 봅니다.`,
     });
   }
   return out.sort((a, b) => (a.side === b.side ? b.n - a.n : a.side === "drink" ? -1 : 1));

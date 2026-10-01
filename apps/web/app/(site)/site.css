@@ -194,6 +194,9 @@ p { margin: 0 0 12px; }
 .guide-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .guide-links a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
 .guide-links a:hover { border-color: var(--navy); }
+/* 홈 입구 — 술 종류 모음은 주황, 음식 종류 모음은 남색(검색 결과 색 규칙) */
+.guide-links a.d { color: var(--food-ink); } .guide-links a.d:hover { border-color: var(--food); }
+.guide-links a.f { color: var(--navy-ink); }
 .guide-go { margin: 0 0 12px; font-size: 14px; font-weight: 700; }
 .sns-kit { margin: 16px 0; }
 .sns-kit h3 { margin: 0 0 4px; color: var(--ink); }

@@ -23,7 +23,7 @@ import { listPosts } from "@/lib/member-picks";
 import { topDrinks } from "@/lib/popular";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
-import { FOOD_GROUPS, POPULAR_FOODS, byFood, homePicksMode, toSlug, website } from "@pairinggo/shared";
+import { FOOD_GROUPS, POPULAR_FOODS, byFood, homePicksMode, toSlug, website, guideList } from "@pairinggo/shared";
 
 export const revalidate = 600;
 
@@ -42,6 +42,9 @@ export default async function Home() {
   ]);
   const picksMode = homePicksMode(picks.length);   // 글이 3건 미만이면 큰 칸 대신 작은 초대 카드(docs/20 P0-5)
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
+  // 모음 화면 입구 — 근거 조합이 많은 순으로 술 종류 4개 + 음식 종류 4개(shared seo/guides.ts)
+  const allGuides = guideList(c.dataset);
+  const guides = [...allGuides.filter((g) => g.side === "drink").slice(0, 4), ...allGuides.filter((g) => g.side === "food").slice(0, 4)];
 
   return (
     <div className="wrap home">
@@ -55,6 +58,16 @@ export default async function Home() {
       <FlowTiles />
       <PartnerRow items={home.partners.slice(0, 8)} />
       <TrendRow drinks={top.list} note={top.note} compared={top.compared} />
+
+      {/* 종류별 모음(2026-10-02) — "막걸리 안주 추천"·"전과 어울리는 술" 같은 모음 화면(/guide)으로 가는 입구. 술 종류 4 + 음식 종류 4 */}
+      {guides.length > 0 && (
+        <section>
+          <div className="section-head"><h2>종류별 페어링 모음</h2><Link href="/guide">전체 보기</Link></div>
+          <ul className="guide-links">
+            {guides.map((g) => <li key={g.slug}><Link href={`/guide/${g.slug}`} className={g.side === "drink" ? "d" : "f"}>{g.h1}</Link></li>)}
+          </ul>
+        </section>
+      )}
 
       {/* 음식 종류별로 찾기 — 캐치테이블 홈의 "음식종류별 BEST" 칩 줄(docs/19 §5). 대분류는 shared food-groups.ts */}
       <section>
