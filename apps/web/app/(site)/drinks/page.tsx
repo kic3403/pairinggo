@@ -53,7 +53,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     ? `${[parts, kind].filter(Boolean).join(" ")} — 어울리는 음식 추천 | 페어링GO`
     : `주류 ${c.counts.drinks}종 — 전통주·위스키·사케·와인과 어울리는 음식 | 페어링GO`;
   const description = `전통주 ${c.dataset.drinks.filter((d) => kindOf(d) === "trad").length}종을 비롯한 술과 어울리는 음식을 근거와 함께 정리했습니다. 가격·용량·도수·음식으로 골라 보세요.`;
-  return { title, description, alternates: { canonical: "/drinks" }, openGraph: { title, description, url: "/drinks", siteName: "페어링GO" }, robots: filtered ? { index: false } : undefined };
+  return { title, description, alternates: { canonical: "/drinks" }, openGraph: { title, description, url: "/drinks", siteName: "페어링GO", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "페어링GO" }] }, robots: filtered ? { index: false } : undefined };
 }
 
 export default async function DrinkIndex({ searchParams }: { searchParams: Promise<Q> }) {

@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { def } = await load((await params).slug);
   if (!def) return { title: "페어링GO" };
   const url = `/guide/${def.slug}`;
-  return { title: `${def.title} | 페어링GO`, description: def.description, alternates: { canonical: url }, openGraph: { title: def.title, description: def.description, url, type: "article", siteName: "페어링GO" } };
+  return { title: `${def.title} | 페어링GO`, description: def.description, alternates: { canonical: url }, openGraph: { title: def.title, description: def.description, url, type: "article", siteName: "페어링GO", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "페어링GO" }] } };
 }
 
 const confLabel = (c: "confirmed" | "weak") => (c === "confirmed" ? "근거 확인" : "근거 약함");

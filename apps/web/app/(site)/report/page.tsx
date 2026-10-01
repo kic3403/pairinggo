@@ -8,7 +8,7 @@ import CopyButton from "../_components/CopyButton";
 import CardDownload from "../_components/CardDownload";
 
 export const revalidate = 3600;
-export const metadata: Metadata = { title: "월간 전통주 트렌드 리포트 | 페어링GO", description: "요즘 많이 찾는 전통주, 핫한 페어링, 회원 평가와 검색어를 한 장으로 정리한 월간 리포트입니다." };
+export const metadata: Metadata = { alternates: { canonical: "/report" }, title: "월간 전통주 트렌드 리포트 | 페어링GO", description: "요즘 많이 찾는 전통주, 핫한 페어링, 회원 평가와 검색어를 한 장으로 정리한 월간 리포트입니다." };
 
 const fmt = (s: string) => s.slice(5).replace("-", "/");
 

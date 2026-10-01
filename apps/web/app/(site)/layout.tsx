@@ -10,6 +10,8 @@ import AuthNav from "./_components/AuthNav";
 import InstallPrompt from "./_components/InstallPrompt";
 import KakaoSdk from "./_components/KakaoSdk";
 import MobileTabBar from "./_components/MobileTabBar";
+import NavPending from "./_components/NavPending";
+import NavSkeleton from "./_components/NavSkeleton";
 import PageView from "./_components/PageView";
 import RegionBar from "./_components/RegionBar";
 import RegionProvider from "./_components/RegionProvider";
@@ -49,7 +51,8 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <Suspense fallback={null}><RegionSheet /></Suspense>
       <PageView />
 
-      <main>{children}</main>
+      {/* 화면 사이 뼈대는 링크를 누른 뒤에만 브라우저에서 띄운다 — 서버가 내려 주는 HTML에는 본문이 제자리에(검색봇, 2026-10-02) */}
+      <main><NavPending skeleton={<NavSkeleton />}>{children}</NavPending></main>
 
       <footer className="site-foot">
         <div className="wrap">

@@ -1,8 +1,9 @@
 /**
- * 화면 사이 로딩 뼈대(2026-09-30 속도 개선) — 앱 라우터가 다음 화면을 서버에서 만드는 동안 이전 화면에 멈춰 있지 않고
- * 곧바로 이 뼈대로 바뀐다. 헤더·탭바는 layout에 있어 그대로 남는다. 목록·상세·검색 어느 화면이든 같은 뼈대.
+ * 화면 사이 뼈대 그림(2026-09-30 속도 개선, 2026-10-02 옮김) — 사이트 안 링크를 누른 뒤 다음 화면이 올 때까지 `NavPending`이 띄운다.
+ * 전에는 `(site)/loading.tsx`였는데 처음 내려가는 HTML에도 뼈대가 들어가 검색봇이 본문 대신 뼈대를 봤다(NavPending.tsx 설명 참고).
+ * 헤더·탭바는 layout에 있어 그대로 남는다. 목록·상세·검색 어느 화면이든 같은 뼈대.
  */
-export default function Loading() {
+export default function NavSkeleton() {
   return (
     <div className="wrap skel" aria-busy="true" aria-live="polite" aria-label="불러오는 중">
       <div className="sk sk-crumb" />

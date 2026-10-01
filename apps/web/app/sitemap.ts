@@ -1,6 +1,6 @@
 /** 사이트맵 — 술·음식 상세를 전부 실어 네이버·구글이 색인하게 한다. 기획 화면·회원 추천·리포트·음식 대분류·약관도(docs/20 P3-3). */
 import type { MetadataRoute } from "next";
-import { FOOD_GROUPS, guideList, toSlug } from "@pairinggo/shared";
+import { guideList, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
 
@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 종류별 모음 화면(2026-10-01) — "막걸리 안주 추천" 같은 종류 검색을 받는다
     { url: `${base}/guide`, lastModified: published, changeFrequency: "weekly", priority: 0.6 },
     ...guideList(c.dataset).map((g) => ({ url: `${base}/guide/${encodeURIComponent(g.slug)}`, lastModified: published, changeFrequency: "weekly" as const, priority: 0.7 })),
-    ...FOOD_GROUPS.map((g) => ({ url: `${base}/foods?group=${encodeURIComponent(g.key)}`, lastModified: now, changeFrequency: "weekly" as const, priority: 0.6 })),
+    // 음식 대분류(/foods?group=) 주소는 뺐다(2026-10-02 점검) — 그 화면은 색인 제외(noindex)에 대표 주소가 /foods라, 사이트맵에 실으면 검색엔진에 엇갈린 신호가 된다. 종류별 유입은 모음 화면(/guide)이 받는다
     { url: `${base}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${base}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     ...c.dataset.drinks.map((d) => ({ url: `${base}/drinks/${encodeURIComponent(toSlug(d.name))}`, lastModified: published, changeFrequency: "weekly" as const, priority: 0.7 })),
