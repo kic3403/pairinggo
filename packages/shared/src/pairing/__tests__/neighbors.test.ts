@@ -25,3 +25,14 @@ describe("근거 없는 술의 이웃", () => {
     expect(r[0].foods).toHaveLength(1);
   });
 });
+
+describe("근거 없는 음식의 이웃", async () => {
+  const { foodEvidenceNeighbors } = await import("../neighbors");
+  const P: Record<string, Pairing[]> = { f1: [pair("d1", "f1", 0.3), pair("d2", "f1", 1), pair("d3", "f1", 0)], f2: [pair("d1", "f2", 0)], f3: [pair("dx", "f3", 1)] };
+  const drinks: Record<string, Drink> = { d1: drink("d1"), d2: drink("d2"), d3: drink("d3") };
+  it("근거 있는 음식만, 확인 먼저, 없는 술은 건너뜀", () => {
+    const r = foodEvidenceNeighbors([{ food: food("f1"), why: ["전"] }, { food: food("f2") }, { food: food("f3") }], (id) => P[id], (id) => drinks[id]);
+    expect(r).toHaveLength(1);
+    expect(r[0]).toMatchObject({ why: ["전"], drinks: [{ drink: drinks.d2, conf: "confirmed" }, { drink: drinks.d1, conf: "weak" }] });
+  });
+});

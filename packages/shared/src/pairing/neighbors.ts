@@ -36,3 +36,33 @@ export function evidenceNeighbors(
   }
   return out;
 }
+
+export type FoodEvidenceNeighbor = { food: Food; why: string[]; drinks: { drink: Drink; conf: Exclude<Confidence, "estimate"> }[] };
+
+/**
+ * 음식 쪽 짝(2026-10-01) — 근거 없는 음식에 "비슷한 음식은 이런 술과 확인됐어요".
+ * candidates는 보여 줄 차례대로(shared similarFoods). 음식마다 술은 근거 확인 → 근거 강도 순으로 perFood개.
+ */
+export function foodEvidenceNeighbors(
+  candidates: { food: Food; why?: string[] }[],
+  pairingsOf: (foodId: string) => readonly Pairing[] | undefined,
+  drinkOf: (drinkId: string) => Drink | undefined,
+  n = 4, perFood = 2,
+): FoodEvidenceNeighbor[] {
+  const out: FoodEvidenceNeighbor[] = [];
+  const seen = new Set<string>();
+  for (const c of candidates) {
+    if (out.length >= n) break;
+    if (seen.has(c.food.id)) continue;
+    seen.add(c.food.id);
+    const drinks = (pairingsOf(c.food.id) ?? [])
+      .map((p) => ({ p, conf: confidenceOf(p), e: strengthOf(p).e }))
+      .filter((x): x is typeof x & { conf: Exclude<Confidence, "estimate"> } => x.conf !== "estimate")
+      .sort((a, b) => CONFIDENCE_RANK[b.conf] - CONFIDENCE_RANK[a.conf] || b.e - a.e)
+      .map((x) => ({ drink: drinkOf(x.p.d), conf: x.conf }))
+      .filter((x): x is { drink: Drink; conf: Exclude<Confidence, "estimate"> } => !!x.drink)
+      .slice(0, perFood);
+    if (drinks.length) out.push({ food: c.food, why: c.why ?? [], drinks });
+  }
+  return out;
+}
