@@ -78,6 +78,13 @@ table.t { width: 100%; border-collapse: collapse; font-size: 13px; } .t th { tex
 /* 대시보드 지표·회원 구성(2026-10-01) */
 .kpi.kpi4 { grid-template-columns: repeat(4, 1fr); } .kpi4 span { display: block; line-height: 1.4; }
 .delta { font-style: normal; font-weight: 700; color: var(--muted); } .delta.up { color: var(--ok); } .delta.down { color: #B8431F; }
+.funnel { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; font-size: 13px; }
+.funnel li { display: grid; grid-template-columns: 150px 1fr 220px; align-items: center; gap: 10px; }
+.funnel .fl { color: var(--ink2); }
+.funnel .bar { height: 10px; border-radius: 5px; background: var(--bg2, #eee); overflow: hidden; }
+.funnel .bar i { display: block; height: 100%; min-width: 2px; background: var(--navy, #22406B); border-radius: 5px; }
+.funnel .fn { font-variant-numeric: tabular-nums; } .funnel small { color: var(--ink2); }
+@media (max-width: 700px) { .funnel li { grid-template-columns: 1fr; gap: 2px; } }
 .dist { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 12.5px; }
 .dist li { display: grid; grid-template-columns: 64px 1fr 68px; align-items: center; gap: 8px; }
 .dist .dl { color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

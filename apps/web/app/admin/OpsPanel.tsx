@@ -3,7 +3,7 @@
  * 2026-10-01 사용자 요청: 1일·7일·30일 탭 + 날짜 직접 선택(?p= 또는 ?from=&to=, 규칙은 shared ops-metrics opsPeriod).
  */
 import Link from "next/link";
-import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, OPS_PRESETS, deltaText, josa, kstToday, pct, type Demographics, type OpsPeriod, type WeeklyMetrics } from "@pairinggo/shared";
+import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, OPS_PRESETS, deltaText, josa, kstToday, pct, stepRate, type Demographics, type OpsFunnel, type OpsPeriod, type WeeklyMetrics } from "@pairinggo/shared";
 
 const tone = (cur: number, prev: number) => (cur > prev ? "up" : cur < prev ? "down" : "");
 const kstDay = (iso: string) => new Date(Date.parse(iso) + 9 * 3600_000).toISOString().slice(0, 10);
@@ -18,7 +18,7 @@ function Bars({ rows, total }: { rows: { label: string; n: number }[]; total: nu
   );
 }
 
-export default function OpsPanel({ metrics: m, demo: d, period }: { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod }) {
+export default function OpsPanel({ metrics: m, demo: d, period, funnel: f }: { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod; funnel: OpsFunnel }) {
   const prevName = period.prevName;
   const today = kstToday();
   // 직접 선택 칸 기본값 — 지금 보고 있는 기간
@@ -50,6 +50,27 @@ export default function OpsPanel({ metrics: m, demo: d, period }: { metrics: Wee
           ))}
         </div>
         <p className="muted" style={{ margin: "8px 0 0" }}>방문(세션)은 브라우저 탭마다 하나. 날짜는 한국 시간, 직접 선택은 시작일·종료일을 모두 포함(최대 366일). 10분마다 갱신. 월요일 09:30에 최근 7일 내용이 운영 리포트 이메일로 갑니다.</p>
+      </div>
+      {/* 방문 흐름(2026-10-02) — 방문 → 상세 → 행동을 세션 수로. 유입용 기능(비로그인 저장·그림 카드·모음 화면)의 효과를 본다 */}
+      <div className="card">
+        <b>방문 흐름 <span className="muted" style={{ fontWeight: 400 }}>{period.label} · 세션(브라우저 탭) 기준 — 한 사람이 여러 번 눌러도 한 번</span></b>
+        <ol className="funnel">
+          <li><span className="fl">방문</span><span className="bar"><i style={{ width: "100%" }} /></span><span className="fn"><b>{f.sessions.toLocaleString("ko-KR")}</b></span></li>
+          <li><span className="fl">술·음식 상세를 봄</span><span className="bar"><i style={{ width: `${pct(f.detailSessions, f.sessions)}%` }} /></span><span className="fn"><b>{f.detailSessions.toLocaleString("ko-KR")}</b> <small>방문의 {stepRate(f.detailSessions, f.sessions)}</small></span></li>
+          <li><span className="fl">저장·구매·식당·공유</span><span className="bar"><i style={{ width: `${pct(f.actionSessions, f.sessions)}%` }} /></span><span className="fn"><b>{f.actionSessions.toLocaleString("ko-KR")}</b> <small>상세 본 세션의 {stepRate(f.actionSessions, f.detailSessions)}</small></span></li>
+        </ol>
+        <div className="kpi kpi4" style={{ margin: "10px 0 0" }}>
+          <div><b>{f.saves}</b><span>저장 · 그중 비로그인(기기) <em>{f.guestSaves}</em></span></div>
+          <div><b>{f.buyClicks}</b><span>구매 링크 클릭</span></div>
+          <div><b>{f.restaurantClicks}</b><span>식당 링크 클릭</span></div>
+          <div><b>{f.shares}</b><span>공유 · 그중 그림 카드 저장 <em>{f.cardSaves}</em></span></div>
+          <div><b>{f.guideViews}</b><span>모음 화면(/guide) 조회</span></div>
+          <div><b>{f.todayViews}</b><span>오늘의 페어링 조회</span></div>
+        </div>
+        {f.topDetails.length > 0 && (
+          <p className="muted" style={{ margin: "10px 0 0" }}>많이 본 상세 — {f.topDetails.map((t, i) => <span key={t.path}>{i > 0 && " · "}<Link href={t.path}>{t.path.replace(/^\/(drinks|foods)\//, "").replace(/-/g, " ")}</Link> {t.n}</span>)}</p>
+        )}
+        <p className="muted" style={{ margin: "8px 0 0" }}>행동 단계의 비율은 '상세를 본 세션' 대비입니다(목록·검색에서 바로 저장한 세션도 행동에 들어가 100%를 넘을 수 있어요).</p>
       </div>
       <div className="card">
         <b>회원 구성 <span className="muted" style={{ fontWeight: 400 }}>{d.total}명 · 가입 때 적은 성별·생년월일·시도 · 기간과 무관한 전체</span></b>
