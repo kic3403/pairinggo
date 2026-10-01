@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_CARDS, activeBanners, bannerCards, cleanBanner, periodText, reportCard, type BannerRow } from "../home/banners";
+import { DEFAULT_CARDS, activeBanners, bannerCards, cleanBanner, monthlyPartnerPick, periodText, reportCard, type BannerRow, type PartnerForBanner } from "../home/banners";
 
 const row = (over: Partial<BannerRow>): BannerRow => ({ id: "1", kind: "event", title: "추석 특집", subtitle: "", badge: "", cta: "보기", href: "/hot", tone: "navy", imageUrl: null, merchantId: null, startsOn: null, endsOn: null, sort: 0, active: true, ...over });
 
@@ -35,5 +35,45 @@ describe("홈 배너 규칙", () => {
     expect(cards[1]).toMatchObject({ kind: "partner", title: "한증류소", badge: "이달의 파트너 양조장", cta: "방문 시음 예약", href: "/places/123?n=%ED%95%9C%EC%A6%9D%EB%A5%98%EC%86%8C" });
     expect(cards.length).toBe(3); expect(cards[2].id).toBe(DEFAULT_CARDS[0].id);
     expect(reportCard("2026-12-03").title).toBe("12월 트렌드 리포트");
+  });
+});
+
+describe("이달의 파트너 — 등록한 카드가 없으면 달마다 한 곳 자동", () => {
+  const photo = "https://abc.supabase.co/storage/v1/object/public/menu-photos/x/a.jpg";
+  const P = (id: string, kind: PartnerForBanner["kind"], withPhoto = true): PartnerForBanner => ({ id, name: `매장${id}`, kind, kakaoId: `10${id.length}${id.charCodeAt(0)}`, photo: withPhoto ? photo : null });
+  const list = [P("a", "brewery"), P("b", "brewery"), P("c", "brewery"), P("d", "restaurant"), P("e", "restaurant"), P("f", "restaurant"), P("g", "liquor")];
+  const byId = Object.fromEntries(list.map((p) => [p.id, p]));
+
+  it("같은 달이면 같은 매장, 목록 순서와 무관", () => {
+    const a = monthlyPartnerPick(list, "restaurant", "2026-10");
+    expect(a?.kind).toBe("restaurant");
+    expect(monthlyPartnerPick([...list].reverse(), "restaurant", "2026-10")?.id).toBe(a?.id);
+    expect(monthlyPartnerPick(list, "liquor", "2026-10")?.id).toBe("g");
+    expect(monthlyPartnerPick([], "brewery", "2026-10")).toBeNull();
+  });
+  it("달이 바뀌면 바뀐다 — 열두 달 동안 한 곳만 나오지 않는다", () => {
+    const months = Array.from({ length: 12 }, (_, i) => `2026-${String(i + 1).padStart(2, "0")}`);
+    expect(new Set(months.map((m) => monthlyPartnerPick(list, "brewery", m)?.id)).size).toBeGreaterThan(1);
+    expect(new Set(months.map((m) => monthlyPartnerPick(list, "restaurant", m)?.id)).size).toBeGreaterThan(1);
+  });
+  it("사진이 없는 매장도 뽑힌다", () => {
+    const some = [P("a", "brewery", false), P("b", "brewery", true), P("c", "brewery", false)];
+    const months = Array.from({ length: 24 }, (_, i) => `${2026 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, "0")}`);
+    expect(months.some((m) => !monthlyPartnerPick(some, "brewery", m)?.photo)).toBe(true);
+  });
+  it("카드: 등록이 없으면 양조장·식당 자동 카드, 리쿼샵은 자동 없음", () => {
+    const cards = bannerCards([], "2026-10-01", byId);
+    expect(cards.map((c) => c.id)).toEqual(["report", "auto-brewery", "auto-restaurant"]);
+    expect(cards[1]).toMatchObject({ kind: "partner", badge: "이달의 파트너 양조장", tone: "sand", period: null });
+    expect(cards[2]).toMatchObject({ badge: "이달의 파트너 식당", cta: "매장 보기", tone: "mist" });
+    expect(cards[1].title).toBe(monthlyPartnerPick(list, "brewery", "2026-10")?.name);
+    expect(bannerCards([], "2026-10-31", byId)[2].title).toBe(cards[2].title);   // 그 달 내내 같다
+  });
+  it("카드: 이벤트·협업으로 등록한 업종은 등록한 매장만(자동은 다른 업종에만)", () => {
+    const cards = bannerCards([row({ id: "p", kind: "partner", merchantId: "e", title: "", href: "", startsOn: "2026-10-01", endsOn: "2026-10-15" })], "2026-10-05", byId);
+    expect(cards.map((c) => c.id)).toEqual(["report", "p", "auto-brewery"]);
+    expect(cards[1]).toMatchObject({ title: "매장e", badge: "이달의 파트너 식당", period: "10/1(목) ~ 10/15(목)" });
+    // 기간이 끝나면 다시 자동
+    expect(bannerCards([row({ id: "p", kind: "partner", merchantId: "e", title: "", href: "", endsOn: "2026-10-15" })], "2026-10-16", byId).map((c) => c.id)).toEqual(["report", "auto-brewery", "auto-restaurant"]);
   });
 });

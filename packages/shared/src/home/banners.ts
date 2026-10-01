@@ -1,6 +1,8 @@
 /**
  * 홈 배너(2026-09-25, 캐치테이블·데일리샷식 카드 캐러셀) — 운영자가 어드민에서 만드는 카드 + 자동 카드(트렌드 리포트).
  *  · kind: event(시즌·월별·계절 이벤트, 기간 있음) · partner(이달의 파트너 양조장/매장 — merchant를 골라 그 매장 사진·이름으로) · report(자동) · custom(상시 안내)
+ *  · **이달의 파트너**(2026-10-01 사용자 결정): 이벤트·협업이 있으면 어드민에서 partner 카드를 등록해 띄우고, 등록한 카드가 없는 업종(양조장·식당)은
+ *    승인 파트너 가운데 **매월 1일(한국 날짜) 바뀌는 한 곳**을 자동으로 고른다(`monthlyPartnerPick` — 같은 달에는 누구에게나 같은 매장).
  *  · 기간 밖·꺼진 카드는 `activeBanners`가 뺀다(한국 날짜 기준 — 오늘 날짜는 부르는 쪽이 넘긴다).
  *  · 링크는 사이트 안 주소(/…)만. 사진은 우리 저장소 공개 주소만(파트너 사진 재사용).
  *  · 참고 앱의 사진·문구는 쓰지 않는다 — 구조만 참고.
@@ -83,19 +85,61 @@ const PARTNER_LINE: Record<PartnerForBanner["kind"], { badge: string; cta: strin
   liquor: { badge: "이달의 파트너 리쿼샵", cta: "매장 보기", subtitle: "취급하는 술과 방문 픽업" },
 };
 
-/** 행 + 매장 정보 → 화면 카드. partner 행은 매장이 없으면 빠진다. 앞에 리포트 카드, 어드민 카드가 2장 미만이면 상시 카드를 덧붙인다 */
+/** 달마다 자동으로 고르는 업종과 카드 색 — 리쿼샵은 아직 자동으로 띄우지 않는다 */
+export const MONTHLY_PARTNER_KINDS: { kind: PartnerForBanner["kind"]; tone: BannerTone }[] = [{ kind: "brewery", tone: "sand" }, { kind: "restaurant", tone: "mist" }];
+
+/** 글자 → 고른 32비트 수(FNV-1a + 마무리 섞기) — 달·매장 id로 순서를 섞는 데만 쓴다 */
+function hash32(s: string): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+  h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b); h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35); h ^= h >>> 16;
+  return h >>> 0;
+}
+
+/**
+ * 이달의 파트너 자동 고르기 — 그 업종 승인 파트너 가운데 한 곳. month는 한국 날짜의 "YYYY-MM"이라 매월 1일에 바뀐다.
+ * 사진 유무로 가리지 않는다(사진 없는 매장이 영영 안 뽑히면 '랜덤'이 아니다 — 사진이 없으면 색 카드로 보인다).
+ * 매장마다 '달+id' 값을 매겨 가장 작은 곳 — 파트너가 새로 들어오거나 빠져도 나머지 매장의 값은 그대로라 달 중간에 결과가 덜 흔들린다.
+ */
+export function monthlyPartnerPick(partners: PartnerForBanner[], kind: PartnerForBanner["kind"], month: string): PartnerForBanner | null {
+  const pool = partners.filter((p) => p.kind === kind);
+  let best: PartnerForBanner | null = null, bestH = Infinity;
+  for (const p of pool) {
+    const h = hash32(`${month}|${kind}|${p.id}`);
+    if (h < bestH || (h === bestH && best && p.id < best.id)) { best = p; bestH = h; }
+  }
+  return best;
+}
+
+const partnerCard = (id: string, p: PartnerForBanner, r: Partial<BannerRow> & { tone: BannerTone }): BannerCard => {
+  const line = PARTNER_LINE[p.kind];
+  return { id, kind: "partner", title: r.title || p.name, subtitle: r.subtitle || p.intro || line.subtitle, badge: r.badge || line.badge, cta: r.cta && r.cta !== "보기" ? r.cta : line.cta, href: r.href || `/places/${p.kakaoId}?n=${encodeURIComponent(p.name)}`, tone: r.tone, imageUrl: r.imageUrl || p.photo, period: periodText(r.startsOn ?? null, r.endsOn ?? null) };
+};
+
+/**
+ * 행 + 매장 정보 → 화면 카드. partner 행은 매장이 없으면 빠진다. 앞에 리포트 카드, 어드민 카드가 2장 미만이면 상시 카드를 덧붙인다.
+ * 어드민이 등록한 partner 카드가 없는 업종(양조장·식당)은 이달의 자동 카드를 붙인다.
+ */
 export function bannerCards(rows: BannerRow[], today: string, partners: Record<string, PartnerForBanner>): BannerCard[] {
   const out: BannerCard[] = [reportCard(today)];
+  const featured = new Set<PartnerForBanner["kind"]>();
   for (const r of activeBanners(rows, today)) {
     if (r.kind === "report") continue;   // 자동 카드가 이미 있다
     if (r.kind === "partner") {
       const p = r.merchantId ? partners[r.merchantId] : null;
       if (!p) continue;
-      const line = PARTNER_LINE[p.kind];
-      out.push({ id: r.id, kind: "partner", title: r.title || p.name, subtitle: r.subtitle || p.intro || line.subtitle, badge: r.badge || line.badge, cta: r.cta && r.cta !== "보기" ? r.cta : line.cta, href: r.href || `/places/${p.kakaoId}?n=${encodeURIComponent(p.name)}`, tone: r.tone, imageUrl: r.imageUrl || p.photo, period: periodText(r.startsOn, r.endsOn) });
+      out.push(partnerCard(r.id, p, r));
+      featured.add(p.kind);
       continue;
     }
     out.push({ id: r.id, kind: r.kind, title: r.title, subtitle: r.subtitle, badge: r.badge || null, cta: r.cta, href: r.href, tone: r.tone, imageUrl: r.imageUrl, period: periodText(r.startsOn, r.endsOn) });
+  }
+  // 이벤트·협업으로 등록한 카드가 없는 업종은 이달의 한 곳을 자동으로
+  const list = Object.values(partners);
+  for (const { kind, tone } of MONTHLY_PARTNER_KINDS) {
+    if (featured.has(kind)) continue;
+    const p = monthlyPartnerPick(list, kind, today.slice(0, 7));
+    if (p) out.push(partnerCard(`auto-${kind}`, p, { tone }));
   }
   if (out.length < 3) for (const c of DEFAULT_CARDS) if (out.length < 3) out.push(c);
   return out;

@@ -43,9 +43,10 @@ export async function listBanners(): Promise<BannerRow[]> {
 export async function homeCards(): Promise<{ cards: BannerCard[]; partners: PartnerForBanner[] }> {
   const today = kstToday();
   try {
-    const [rows, partners] = await Promise.all([listBanners(), partnerList()]);
-    const byId = Object.fromEntries(partners.map((p) => [p.id, p]));
-    return { cards: bannerCards(rows, today, byId), partners };
+    // 이달의 파트너 자동 고르기는 승인 파트너 전부에서(60곳까지), 홈의 파트너 줄은 앞 12곳만
+    const [rows, all] = await Promise.all([listBanners(), partnerList(60)]);
+    const byId = Object.fromEntries(all.map((p) => [p.id, p]));
+    return { cards: bannerCards(rows, today, byId), partners: all.slice(0, 12) };
   } catch { return { cards: [reportCard(today), ...DEFAULT_CARDS], partners: [] }; }
 }
 /** 소식 전체(/events) — 오늘 보이는 카드 + 곧 시작할 이벤트 */
