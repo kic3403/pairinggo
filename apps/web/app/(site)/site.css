@@ -1141,10 +1141,12 @@ a.pd-score:hover { border-color: var(--navy); }
 /* 양쪽 넘김 버튼(2026-10-02) — 카드 높이 가운데, 흰 동그라미. 휴대폰은 손가락으로 넘기므로 조금 작게 */
 .bn-nav { position: absolute; top: calc(50% - 3px); transform: translateY(-50%); z-index: 2; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.94); color: var(--ink); font-size: 22px; line-height: 1; padding: 0 0 3px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.16); }
 /* 카드 글자를 가리지 않게 가장자리에 반쯤 걸친다 */
-.bn-nav.prev { left: -18px; } .bn-nav.next { right: -18px; }
+/* 본문 옆 여백(16px) 밖으로 나가면 가로 스크롤이 생긴다 — 화면이 본문 폭보다 넉넉할 때만 더 바깥으로 */
+.bn-nav.prev { left: -16px; } .bn-nav.next { right: -16px; }
+@media (min-width: 1140px) { .bn-nav.prev { left: -24px; } .bn-nav.next { right: -24px; } }
 .bn-nav:hover { background: #fff; border-color: var(--navy); }
 .bn-nav:focus-visible, .bn-play:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
-@media (max-width: 767px) { .bn-nav { width: 30px; height: 30px; font-size: 19px; } .bn-nav.prev { left: -13px; } .bn-nav.next { right: -13px; } }
+@media (max-width: 767px) { .bn-nav { width: 30px; height: 30px; font-size: 19px; } .bn-nav.prev { left: -16px; } .bn-nav.next { right: -16px; } }
 .bn-count b { font-weight: 800; }
 .bn-list { display: grid; gap: 12px; margin: 12px 0 20px; padding: 0; list-style: none; }
 @media (min-width: 640px) { .bn-list { grid-template-columns: 1fr 1fr; } }
