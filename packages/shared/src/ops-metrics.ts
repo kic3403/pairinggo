@@ -3,6 +3,8 @@
  * 숫자 세기는 웹 lib/ops-metrics.ts(DB), 여기는 나이대·시도 줄임·증감 표시 같은 순수 규칙.
  */
 
+import { stepRate, type OpsFunnel } from "./ops-funnel";
+
 export type WeeklyCounts = {
   visits: number;        // 화면 조회(events screen)
   visitors: number;      // 방문 세션 수(session_id 고유)
@@ -82,10 +84,24 @@ export function demographics(users: { gender?: string | null; birth_date?: strin
 
 export const pct = (n: number, total: number) => (total ? Math.round((n / total) * 100) : 0);
 
-/** 리포트 글(이메일 본문·복사용) — 한국어 줄글 */
-export function reportText(m: WeeklyMetrics, d: Demographics): string {
+/** 방문 흐름 줄글 — 이메일·복사용. 대시보드 '방문 흐름' 칸과 같은 숫자 */
+export function funnelLines(f: OpsFunnel): string[] {
+  const out = [
+    "방문 흐름 (세션 기준)",
+    `· 방문 ${f.sessions.toLocaleString("ko-KR")} → 술·음식 상세를 봄 ${f.detailSessions.toLocaleString("ko-KR")} (방문의 ${stepRate(f.detailSessions, f.sessions)})`,
+    `· 저장·구매·식당·공유 중 하나라도 ${f.actionSessions.toLocaleString("ko-KR")} (상세 본 세션의 ${stepRate(f.actionSessions, f.detailSessions)})`,
+    `· 저장 ${f.saves}(비로그인 ${f.guestSaves}) · 구매 링크 ${f.buyClicks} · 식당 링크 ${f.restaurantClicks} · 공유 ${f.shares}(그림 카드 ${f.cardSaves})`,
+    `· 모음 화면 조회 ${f.guideViews} · 오늘의 페어링 조회 ${f.todayViews}`,
+  ];
+  if (f.topDetails.length) out.push(`· 많이 본 상세 — ${f.topDetails.map((t) => `${t.path.replace(/^\/(drinks|foods)\//, "").replace(/-/g, " ")} ${t.n}`).join(" · ")}`);
+  return out;
+}
+
+/** 리포트 글(이메일 본문·복사용) — 한국어 줄글. funnel을 주면 회원 구성 앞에 방문 흐름을 넣는다(2026-10-02) */
+export function reportText(m: WeeklyMetrics, d: Demographics, funnel?: OpsFunnel): string {
   const lines = [`페어링GO 주간 운영 리포트 (${m.since.slice(0, 10)} ~ ${m.until.slice(0, 10)})`, ""];
   for (const k of METRIC_ORDER) lines.push(`· ${METRIC_LABEL[k]} ${m.cur[k].toLocaleString("ko-KR")} (전주 ${m.prev[k].toLocaleString("ko-KR")}, ${deltaText(m.cur[k], m.prev[k])})`);
+  if (funnel) lines.push("", ...funnelLines(funnel));
   lines.push("", `회원 ${d.total}명 — 남 ${d.gender.m} · 여 ${d.gender.f} · 미입력 ${d.gender["?"]}`);
   lines.push(`나이대 — ${AGE_BANDS.map((b) => `${b} ${d.age[b] ?? 0}`).join(" · ")}`);
   lines.push(`사는 곳 — ${d.sido.slice(0, 6).map((s) => `${s.name} ${s.n}`).join(" · ")}${d.sido.length > 6 ? " 외" : ""}`);

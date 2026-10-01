@@ -1,16 +1,18 @@
 /**
  * 주간 운영 리포트 이메일(2026-10-01) — 월요일 09:30 KST 크론(/api/cron/ops-report)이 최근 7일 지표와 회원 구성을 REPORT_EMAIL_TO로 보낸다.
- * 본문 규칙은 shared ops-metrics reportText. 키(RESEND_API_KEY)나 받는 주소가 없으면 보내지 않고 건너뛴 사실만 돌려준다.
+ * 본문 규칙은 shared ops-metrics reportText(지표 → 방문 흐름 → 회원 구성). 키(RESEND_API_KEY)나 받는 주소가 없으면 보내지 않고 건너뛴 사실만 돌려준다.
  */
-import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, deltaText, reportText } from "@pairinggo/shared";
+import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, deltaText, funnelLines, reportText } from "@pairinggo/shared";
 import { emailConfigured, sendEmail } from "@pairinggo/server/email";
 import { opsMetrics } from "./ops-metrics";
 
 const esc = (s: string) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c] as string));
 
 export async function weeklyOpsReport(opts: { dry?: boolean } = {}): Promise<{ sent: boolean; to: string; reason?: string; text: string }> {
-  const { metrics: m, demo: d } = await opsMetrics();
-  const text = reportText(m, d);
+  const { metrics: m, demo: d, funnel: f } = await opsMetrics();
+  const text = reportText(m, d, f);
+  // 방문 흐름(2026-10-02) — 대시보드 칸과 같은 숫자를 메일에도. 첫 줄은 제목이라 빼고 줄마다 한 문단
+  const flow = funnelLines(f).slice(1).map((l) => `<p style="margin:0 0 4px;font-size:14px">${esc(l.replace(/^· /, ""))}</p>`).join("");
   const to = (process.env.REPORT_EMAIL_TO || "").trim();
   if (opts.dry) return { sent: false, to, reason: "미리보기", text };
   if (!to) return { sent: false, to, reason: "REPORT_EMAIL_TO 없음", text };
@@ -20,6 +22,8 @@ export async function weeklyOpsReport(opts: { dry?: boolean } = {}): Promise<{ s
 <h2 style="margin:0 0 4px">페어링GO 주간 운영 리포트</h2>
 <p style="margin:0 0 14px;color:#666">${m.since.slice(0, 10)} ~ ${m.until.slice(0, 10)} · 전주와 비교</p>
 <table style="border-collapse:collapse;width:100%;font-size:14px"><tr><th style="text-align:left;padding:6px 10px;color:#888;font-size:12px">항목</th><th style="text-align:right;padding:6px 10px;color:#888;font-size:12px">이번 주</th><th style="text-align:right;padding:6px 10px;color:#888;font-size:12px">전주</th><th style="text-align:right;padding:6px 10px;color:#888;font-size:12px">증감</th></tr>${rows}</table>
+<h3 style="margin:18px 0 6px;font-size:15px">방문 흐름 <span style="font-weight:400;color:#888;font-size:12px">세션 기준</span></h3>
+${flow}
 <h3 style="margin:18px 0 6px;font-size:15px">회원 ${d.total}명</h3>
 <p style="margin:0 0 4px;font-size:14px">남 ${d.gender.m} · 여 ${d.gender.f} · 미입력 ${d.gender["?"]}</p>
 <p style="margin:0 0 4px;font-size:14px">${AGE_BANDS.map((b) => `${b} ${d.age[b] ?? 0}`).join(" · ")}</p>
