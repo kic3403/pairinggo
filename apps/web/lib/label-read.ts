@@ -7,6 +7,7 @@ import type { MenuImageType } from "@pairinggo/server/menu-read";
 import { normalize, search, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "./catalog";
 import { db } from "./db";
+import { statsOn } from "./stats-on";
 
 export { labelReadConfigured } from "@pairinggo/server/label-read";
 /** 하루 전체 상한 — Claude 호출 비용 보호(사진 한 장 = 호출 한 번) */
@@ -40,7 +41,7 @@ export async function labelSearch(image: { type: MenuImageType; data: string }, 
   }
   const query = read.names[0] ?? read.catalogName ?? "";
   // 기록 — 못 찾은 이름은 '없는 술' 대기열로(search_empty), 찾은 것은 label-hit
-  const sb = db();
+  const sb = statsOn() ? db() : null;   // 로컬 개발 서버의 시험은 '없는 술' 대기열·통계에 넣지 않는다
   if (sb && query) {
     await sb.from("search_logs").insert({
       query_text: query, query_norm: normalize(query), kind: matches.length ? "search" : "search_empty",

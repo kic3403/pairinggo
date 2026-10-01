@@ -2,6 +2,7 @@ import { intentSearch, normalize, search } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { db } from "@/lib/db";
 import { error, json, preflight, NO_CACHE } from "@/lib/http";
+import { statsOn } from "@/lib/stats-on";
 
 export const runtime = "nodejs";
 
@@ -23,7 +24,7 @@ export async function GET(req: Request) {
     drinks: r.drinks.map(summary), foods: r.foods.map(summary), browse: r.browse.map(summary),
     suggestions: r.suggestions.map((s) => ({ type: s.type, id: s.id, name: s.name })),
   };
-  const sb = db();
+  const sb = statsOn() ? db() : null;   // 로컬 개발 서버의 검색은 기록하지 않는다
   if (sb) {
     const top = r.hits[0];
     void sb.from("search_logs").insert({

@@ -2,12 +2,13 @@ import { EventBatchSchema, normalize } from "@pairinggo/shared";
 import { getToken } from "next-auth/jwt";
 import { db } from "@/lib/db";
 import { error, json, preflight, NO_CACHE } from "@/lib/http";
+import { statsOn } from "@/lib/stats-on";
 
 export const runtime = "nodejs";
 const MAX_BYTES = 32 * 1024;
 const SEARCH_KINDS = new Set(["search", "search_intent", "search_empty"]);
 
-/** POST /api/v1/events — 미니앱 퍼널 이벤트 배치(≤100). DB 미설정이면 202로 받고 버린다 */
+/** POST /api/v1/events — 미니앱 퍼널 이벤트 배치(≤100). DB 미설정·로컬 개발 서버면 202로 받고 버린다 */
 export async function POST(req: Request) {
   const len = Number(req.headers.get("content-length") || 0);
   if (len > MAX_BYTES) return error(req, 413, "본문이 너무 큽니다");
@@ -16,7 +17,8 @@ export async function POST(req: Request) {
   const parsed = EventBatchSchema.safeParse(body);
   if (!parsed.success) return error(req, 400, "이벤트 형식 오류", { issues: parsed.error.issues.slice(0, 5).map((i) => i.message) });
 
-  const sb = db();
+  // 로컬 개발 서버의 기록은 운영 통계에 넣지 않는다(lib/stats-on.ts) — 형식 검사까지만 하고 받은 것으로 답한다
+  const sb = statsOn() ? db() : null;
   if (!sb) return json(req, { accepted: parsed.data.events.length, stored: false }, { status: 202, headers: NO_CACHE });
 
   // 로그인한 회원이면 회원 id를 함께 남긴다(성별·연령대·지역별 집계용). 세션이 없으면 null.
