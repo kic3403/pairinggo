@@ -44,7 +44,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     breadcrumb([{ name: "홈", path: "/" }, { name: "페어링 모음", path: "/guide" }, { name: def.h1, path }], base),
     itemList(rows.map((r) => ({ name: r.item.name, path: `/${isDrink ? "foods" : "drinks"}/${toSlug(r.item.name)}` })), { base, name: def.h1 }),
   ];
-  const listHref = isDrink ? "/drinks?kind=trad" : `/foods?category=${encodeURIComponent(def.category)}`;
+  // 목록으로 가는 길 — 음식 종류 모음만 그 종류 목록으로, 지역·맛 모음은 전체 목록으로(그 기준의 목록 화면이 따로 없다)
+  const listHref = isDrink ? "/drinks?kind=trad" : def.by === "category" ? `/foods?category=${encodeURIComponent(def.category)}` : "/foods";
 
   return (
     <div className="wrap guide">
@@ -53,8 +54,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       <h1>{def.h1}</h1>
       <p className="lead">
         {isDrink
-          ? <>양조장·소믈리에·매체·후기가 확인한 조합 <b>{def.n}개</b>에서 뽑은, {josa(def.h1.replace(" 안주 추천", ""), "과/와")} 자주 짝지어진 음식 순서입니다. 추정 조합은 넣지 않았어요.</>
-          : <>양조장·소믈리에·매체·후기가 확인한 조합 <b>{def.n}개</b>에서 뽑은, {def.category} 메뉴와 자주 짝지어진 전통주 순서입니다. 추정 조합은 넣지 않았어요.</>}
+          ? <>양조장·소믈리에·매체·후기가 확인한 조합 <b>{def.n}개</b>에서 뽑은, {josa(def.word, "과/와")} 자주 짝지어진 음식 순서입니다. 추정 조합은 넣지 않았어요.</>
+          : <>양조장·소믈리에·매체·후기가 확인한 조합 <b>{def.n}개</b>에서 뽑은, {josa(def.word, "과/와")} 자주 짝지어진 전통주 순서입니다. 추정 조합은 넣지 않았어요.</>}
       </p>
 
       {g.mix.length > 1 && (
@@ -85,7 +86,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       </ol>
 
       <div className="btns" style={{ marginTop: 16 }}>
-        <Link className="btn p" href={listHref}>{isDrink ? "전통주 전체 보기" : `${def.category} 메뉴 전체 보기`}</Link>
+        <Link className="btn p" href={listHref}>{isDrink ? "전통주 전체 보기" : def.by === "category" ? `${def.category} 메뉴 전체 보기` : "음식 전체 보기"}</Link>
         <Link className="btn" href="/today">오늘의 페어링</Link>
       </div>
 

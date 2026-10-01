@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, drinkProduct, evidenceNeighbors, guideList, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
+import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, detailCaption, drinkProduct, evidenceNeighbors, guideList, guideRegionOf, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { expertTiersByName } from "@/lib/experts";
 import { buyOptions } from "@/lib/shop";
@@ -21,6 +21,9 @@ import { recsForDrink } from "@/lib/partner-recs";
 import PartnerRecs from "../../_components/PartnerRecs";
 import ExtLink from "../../_components/ExtLink";
 import BuyBox from "../../_components/BuyBox";
+import CardDownload from "../../_components/CardDownload";
+import CopyButton from "../../_components/CopyButton";
+import { drinkShare } from "@/lib/detail-share";
 import Heart from "../../_components/Heart";
 import NearbyPlaces from "../../_components/NearbyPlaces";
 import DetailActionBar from "../../_components/DetailActionBar";
@@ -114,8 +117,9 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
   ];
 
   const rating = extRatingOf(drink);
+  const share = drinkShare(drink);
   // 이 술 종류의 모음 화면(막걸리 안주 추천 등, shared seo/guides.ts) — 있으면 옆 칸에서 잇는다
-  const guide = guideList(c.dataset).find((g) => g.side === "drink" && g.category === drink.category);
+  const guides = guideList(c.dataset).filter((g) => g.side === "drink" && ((g.by === "category" && g.category === drink.category) || (g.by === "region" && g.category === guideRegionOf(drink))));
   // 본문 '가까운 술'에 나온 술은 옆 칸에서 뺀다(한 화면에 두 번 두지 않기)
   const asideBrewery = sameBrewery.filter((d) => !shown.has(d.id)), asideSimilar = similar.filter((x) => !shown.has(x.x.id));
   const hasRelated = asideBrewery.length > 0 || asideSimilar.length > 0 || sameRegion.length > 0;
@@ -229,6 +233,15 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             </PickTabs>
           </RatingsProvider>
           <PartnerRecs recs={recs} title="양조장·식당이 추천한 안주" hideDrink note="파트너가 직접 추천했지만 위 목록에는 아직 없는 음식이에요." />
+          {/* SNS에 올리기(2026-10-02) — 이 술의 그림 카드(1080×1350)와 붙여 넣을 글. lib/detail-share.ts */}
+          <section className="box sns-kit">
+            <h3>SNS에 올리기</h3>
+            <p className="small muted">이 술에 어울리는 음식 3가지를 그림 한 장과 글로 받아 인스타·블로그에 올릴 수 있어요.</p>
+            <div className="btns">
+              <CardDownload href={`${path}/card.png`} filename={`pairinggo-${toSlug(drink.name)}.png`} from="drink" className="btn" />
+              <CopyButton text={detailCaption({ side: "drink", ...share, base })} label="글 복사" />
+            </div>
+          </section>
           {/* 회원 별점·한 줄(docs/25) — 조합 평가(먹어봤어요)와 별개, 술 자체의 평가 */}
           <DrinkReviews drinkId={drink.id} drinkName={drink.name} initial={rv} />
         </div>
@@ -251,7 +264,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               </div>
             </div>
           )}
-          {guide && <p className="guide-go"><Link href={`/guide/${guide.slug}`}>{guide.h1} 모음 →</Link></p>}
+          {guides.map((g) => <p key={g.slug} className="guide-go"><Link href={`/guide/${g.slug}`}>{g.h1} 모음 →</Link></p>)}
           {/* ⑦ 관련 술 — 한 칸에(같은 양조장 · 비슷한 술 · 같은 지역). '데이터' 칸은 뺐다(2026-09-25) */}
           {hasRelated && (
             <div className="box related">

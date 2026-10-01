@@ -43,9 +43,9 @@ export default async function Home() {
   ]);
   const picksMode = homePicksMode(picks.length);   // 글이 3건 미만이면 큰 칸 대신 작은 초대 카드(docs/20 P0-5)
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
-  // 모음 화면 입구 — 근거 조합이 많은 순으로 술 종류 4개 + 음식 종류 4개(shared seo/guides.ts)
+  // 모음 화면 입구 — 근거 조합이 많은 순으로 술 종류 4 + 음식 종류 3 + 맛 1(shared seo/guides.ts)
   const allGuides = guideList(c.dataset);
-  const guides = [...allGuides.filter((g) => g.side === "drink").slice(0, 4), ...allGuides.filter((g) => g.side === "food").slice(0, 4)];
+  const guides = [...allGuides.filter((g) => g.side === "drink" && g.by === "category").slice(0, 4), ...allGuides.filter((g) => g.side === "food" && g.by === "category").slice(0, 3), ...allGuides.filter((g) => g.by === "tag").slice(0, 1)];
 
   return (
     <div className="wrap home">
@@ -64,7 +64,7 @@ export default async function Home() {
       <PartnerRow items={home.partners.slice(0, 8)} />
       <TrendRow drinks={top.list} note={top.note} compared={top.compared} />
 
-      {/* 종류별 모음(2026-10-02) — "막걸리 안주 추천"·"전과 어울리는 술" 같은 모음 화면(/guide)으로 가는 입구. 술 종류 4 + 음식 종류 4 */}
+      {/* 종류별 모음(2026-10-02) — "막걸리 안주 추천"·"전과 어울리는 술" 같은 모음 화면(/guide)으로 가는 입구. 술 종류 4 + 음식 종류 3 + 맛 1(지역별은 '전체 보기'에서) */}
       {guides.length > 0 && (
         <section>
           <div className="section-head"><h2>종류별 페어링 모음</h2><Link href="/guide">전체 보기</Link></div>

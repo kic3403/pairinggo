@@ -4,7 +4,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { breadcrumb, byFood, findBySlug, foodEvidenceNeighbors, guideList, itemList, similarFoods, toSlug } from "@pairinggo/shared";
+import { breadcrumb, byFood, detailCaption, findBySlug, foodEvidenceNeighbors, guideList, itemList, similarFoods, toSlug } from "@pairinggo/shared";
+import CardDownload from "../../_components/CardDownload";
+import CopyButton from "../../_components/CopyButton";
+import { foodShare } from "@/lib/detail-share";
 import { getCatalog } from "@/lib/catalog";
 import { expertTiersByName } from "@/lib/experts";
 import { siteUrl } from "@/lib/site";
@@ -72,7 +75,9 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
   const shown = new Set(neighbors.map((x) => x.food.id));
   const sameCategory = c.dataset.foods.filter((f) => f.id !== food.id && f.category === food.category && !shown.has(f.id)).slice(0, 8);
 
-  const guide = guideList(c.dataset).find((g) => g.side === "food" && g.category === food.category);
+  const guides = guideList(c.dataset).filter((g) => g.side === "food" && ((g.by === "category" && g.category === food.category) || (g.by === "tag" && (food.tags ?? []).includes(g.category)))).slice(0, 3);
+
+  const share = foodShare(food);
 
   // 구조화 데이터 — 경로와 "이 음식에 어울리는 술" 목록(docs/20 P3-4)
   const base = siteUrl();
@@ -135,11 +140,20 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
               <PairingCards items={items} tiers={tiers} />
             </PickTabs>
           </RatingsProvider>
+          {/* SNS에 올리기(2026-10-02) — 이 음식의 그림 카드(1080×1350)와 붙여 넣을 글. lib/detail-share.ts */}
+          <section className="box sns-kit">
+            <h3>SNS에 올리기</h3>
+            <p className="small muted">이 음식에 어울리는 술 3가지를 그림 한 장과 글로 받아 인스타·블로그에 올릴 수 있어요.</p>
+            <div className="btns">
+              <CardDownload href={`${path}/card.png`} filename={`pairinggo-${toSlug(food.name)}.png`} from="food" className="btn" />
+              <CopyButton text={detailCaption({ side: "food", ...share, base })} label="글 복사" />
+            </div>
+          </section>
           <PartnerRecs recs={recs} title="양조장·식당이 추천한 조합" note={`${food.name}과 같거나 비슷한 음식으로 파트너가 직접 추천한 조합이에요.`} />
         </div>
 
         <aside>
-          {guide && <p className="guide-go"><Link href={`/guide/${guide.slug}`}>{guide.h1} 모음 →</Link></p>}
+          {guides.map((g) => <p key={g.slug} className="guide-go"><Link href={`/guide/${g.slug}`}>{g.h1} 모음 →</Link></p>)}
           {!!sameCategory.length && (
             <div className="box">
               <h3>{food.category} 다른 메뉴</h3>
