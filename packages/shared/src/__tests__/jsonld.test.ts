@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { absUrl, breadcrumb, drinkProduct, itemList, jsonLdScript, website } from "../seo/jsonld";
+import { BRAND_ALT_NAMES, absUrl, breadcrumb, drinkProduct, itemList, jsonLdScript, organization, website } from "../seo/jsonld";
 
 const BASE = "https://pairinggo.vercel.app";
 
@@ -69,6 +69,16 @@ describe("구조화 데이터 — 경로·목록·사이트", () => {
     const ld = website({ base: BASE, name: "페어링GO" }) as Record<string, any>;
     expect(ld["@type"]).toBe("WebSite");
     expect(ld.potentialAction.target.urlTemplate).toContain("{search_term_string}");
+    expect("alternateName" in ld).toBe(false);   // 안 주면 키가 없다
+  });
+  it("다른 표기(페어링고)와 서비스 소개 정보", () => {
+    expect(BRAND_ALT_NAMES).toContain("페어링고");
+    const w = website({ base: BASE, name: "페어링GO", alternateName: BRAND_ALT_NAMES }) as Record<string, any>;
+    expect(w.alternateName).toEqual(["페어링고", "PairingGO", "pairinggo"]);
+    const o = organization({ base: BASE, name: "페어링GO", alternateName: BRAND_ALT_NAMES, logoPath: "/icon-512.png", description: "소개", sameAs: ["https://instagram.com/x", "http://insecure.example", "javascript:alert(1)"] }) as Record<string, any>;
+    expect(o).toMatchObject({ "@type": "Organization", name: "페어링GO", url: `${BASE}/`, logo: `${BASE}/icon-512.png`, description: "소개", sameAs: ["https://instagram.com/x"] });
+    const bare = organization({ base: BASE, name: "페어링GO" }) as Record<string, any>;
+    for (const k of ["alternateName", "logo", "description", "sameAs"]) expect(k in bare).toBe(false);
   });
 });
 

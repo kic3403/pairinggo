@@ -62,7 +62,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <Link href="/guide">페어링 모음</Link>
           </nav>
           <p className="legal-links"><Link href="/terms">이용약관</Link><Link href="/privacy"><b>개인정보처리방침</b></Link></p>
-          <p>페어링GO는 전통주와 음식의 어울림을 양조장·소믈리에·전문 매체의 근거와 함께 제안합니다. 술을 직접 판매하지 않으며, 구매는 각 양조장·판매처 페이지에서 이루어집니다.</p>
+          <p>페어링GO(페어링고)는 전통주와 음식의 어울림을 양조장·소믈리에·전문 매체의 근거와 함께 제안합니다. 술을 직접 판매하지 않으며, 구매는 각 양조장·판매처 페이지에서 이루어집니다.</p>
           <p className="warn">
             주류는 만 19세 이상만 구매할 수 있습니다. 지나친 음주는 뇌졸중, 기억력 손상이나 치매를 유발합니다.
             임신 중 음주는 기형아 출생 위험을 높입니다.

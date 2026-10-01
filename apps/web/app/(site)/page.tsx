@@ -23,14 +23,15 @@ import { listPosts } from "@/lib/member-picks";
 import { topDrinks } from "@/lib/popular";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
-import { FOOD_GROUPS, POPULAR_FOODS, byFood, homePicksMode, toSlug, website, guideList } from "@pairinggo/shared";
+import { BRAND_ALT_NAMES, BRAND_NAME, FOOD_GROUPS, POPULAR_FOODS, byFood, homePicksMode, organization, toSlug, website, guideList } from "@pairinggo/shared";
 
 export const revalidate = 600;
 
 export const metadata: Metadata = {
   // 링크 공유(카카오톡·문자) 미리보기 문구 — 2026-09-14 사용자 결정. openGraph를 함께 둬야 카카오가 이 문구를 쓴다
-  title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?",
-  description: "전통주·위스키·사케·와인에 어울리는 음식 추천. 음식을 고르면 어울리는 술도 찾아 줍니다.",
+  // 검색 결과 제목·설명에는 한글 표기 "페어링고"를 함께 적는다(2026-10-02 — 사람들은 한글로 검색한다). 공유 미리보기(openGraph)는 그대로
+  title: "페어링GO(페어링고) — 맛있는 술과 어울리는 맛있는 음식은?",
+  description: "페어링고(페어링GO)는 전통주·위스키·사케·와인에 어울리는 음식을 근거와 함께 추천합니다. 음식을 고르면 어울리는 술도 찾아 줍니다.",
   alternates: { canonical: "/", types: { "application/rss+xml": [{ url: "/rss.xml", title: "페어링GO 오늘의 페어링" }] } },
   openGraph: { title: "페어링GO — 맛있는 술과 어울리는 맛있는 음식은?", description: "술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 찾아 줍니다.", url: "/", siteName: "페어링GO", type: "website", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "페어링GO" }] },
 };
@@ -49,7 +50,11 @@ export default async function Home() {
   return (
     <div className="wrap home">
       {/* 사이트 이름과 사이트 안 검색 — 구글 결과에 검색창이 붙을 수 있다(docs/20 P3-4) */}
-      <JsonLd data={website({ base: siteUrl(), name: "페어링GO" })} />
+      {/* 이름의 다른 표기(페어링고·pairinggo)와 서비스 소개 정보 — 한글 "페어링고"로 검색해도 같은 곳으로 알게(2026-10-02) */}
+      <JsonLd data={[
+        website({ base: siteUrl(), name: BRAND_NAME, alternateName: BRAND_ALT_NAMES }),
+        organization({ base: siteUrl(), name: BRAND_NAME, alternateName: BRAND_ALT_NAMES, logoPath: "/icon-512.png", description: "술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 근거와 함께 찾아 주는 페어링 추천 서비스" }),
+      ]} />
       <h1 className="home-h1">맛있는 술엔 맛있는 음식 <span className="muted">— 술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 근거와 함께</span></h1>
       <HomeExamples />
       <HomeTabs />

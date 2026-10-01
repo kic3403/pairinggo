@@ -118,18 +118,44 @@ export function itemList(items: { name: string; path: string }[], opts: { base: 
   });
 }
 
-/** 홈 — 사이트 이름과 사이트 안 검색(검색 결과의 검색창) */
-export function website(opts: { base: string; name: string; searchPath?: string }): JsonLd {
+/**
+ * 서비스 이름의 다른 표기(2026-10-02) — 화면과 로고는 "페어링GO"인데 사람들은 한글 "페어링고"나 영문 "pairinggo"로 검색한다.
+ * 검색엔진이 같은 이름으로 알도록 홈의 구조화 데이터(alternateName)·제목·설명·푸터에 함께 적는다.
+ */
+export const BRAND_NAME = "페어링GO";
+export const BRAND_ALT_NAMES = ["페어링고", "PairingGO", "pairinggo"];
+
+/** 홈 — 사이트 이름(+ 다른 표기)과 사이트 안 검색(검색 결과의 검색창) */
+export function website(opts: { base: string; name: string; alternateName?: string[]; searchPath?: string }): JsonLd {
   const search = opts.searchPath ?? "/search?q={search_term_string}";
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: opts.name,
+    ...(opts.alternateName?.length ? { alternateName: opts.alternateName } : {}),
     url: absUrl(opts.base, "/"),
     potentialAction: {
       "@type": "SearchAction",
       target: { "@type": "EntryPoint", urlTemplate: absUrl(opts.base, search) },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+/**
+ * 홈 — 서비스 소개 정보(Organization). 브랜드 이름으로 검색했을 때 이름·로고·주소가 정리돼 보이는 데 쓰인다.
+ * 값이 없는 항목은 키를 넣지 않는다. sameAs는 우리 공식 계정 주소(인스타·블로그 등) — https만.
+ */
+export function organization(opts: { base: string; name: string; alternateName?: string[]; logoPath?: string; description?: string; sameAs?: string[] }): JsonLd {
+  const sameAs = (opts.sameAs ?? []).filter((u) => /^https:\/\//.test(u));
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: opts.name,
+    ...(opts.alternateName?.length ? { alternateName: opts.alternateName } : {}),
+    url: absUrl(opts.base, "/"),
+    ...(opts.logoPath ? { logo: absUrl(opts.base, opts.logoPath) } : {}),
+    ...(opts.description ? { description: opts.description } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
   };
 }
