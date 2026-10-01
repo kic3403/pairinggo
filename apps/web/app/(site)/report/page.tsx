@@ -21,7 +21,7 @@ export default async function ReportPage() {
     <div className="wrap">
       <p className="crumb"><Link href="/">홈</Link></p>
       <h1>{r.month}월 전통주 트렌드 리포트 <span className="muted">· {fmt(r.from)}~{fmt(r.to)}</span></h1>
-      <p className="lead">페어링GO에 쌓인 언급량·검색·회원 활동으로 매달 만드는 한 장입니다. 매시간 새로 계산합니다.</p>
+      <p className="lead">페어링GO에 쌓인 언급량·검색·회원 활동으로 매달 만드는 한 장입니다. 매시간 새로 계산합니다. 술 종류별 주간 순위는 <Link href="/weekly">이번 주 많이 찾는 술</Link>에서 볼 수 있어요.</p>
       <div className="rp-kpi">
         <span><b>{r.activity.members}</b>회원</span><span><b>{r.activity.screens.toLocaleString("ko-KR")}</b>화면 조회</span><span><b>{r.activity.searches}</b>검색</span>
         <span><b>{r.activity.buyClicks}</b>구매 링크</span><span><b>{r.activity.restaurantClicks}</b>식당 링크</span><span><b>{r.activity.saves}</b>저장</span><span><b>{r.ratingsTotal}</b>먹어봤어요</span>

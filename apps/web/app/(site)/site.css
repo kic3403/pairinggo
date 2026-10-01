@@ -198,6 +198,15 @@ p { margin: 0 0 12px; }
 .guide-links a.d { color: var(--food-ink); } .guide-links a.d:hover { border-color: var(--food); }
 .guide-links a.f { color: var(--navy-ink); }
 .guide-go { margin: 0 0 12px; font-size: 14px; font-weight: 700; }
+/* 주간 많이 찾는 술(/weekly) — 종류별 칸, 순위 줄: 번호 · 이름(술 = 주황) · 변동 배지 */
+.weekly-kind { margin: 14px 0; }
+.weekly-kind h2 { margin: 0 0 6px; font-size: 18px; }
+.weekly-list { list-style: none; margin: 0 0 12px; padding: 0; }
+.weekly-list > li { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.weekly-list .rank { flex: 0 0 26px; text-align: center; font-weight: 800; font-size: 18px; color: var(--food-ink); font-variant-numeric: tabular-nums; }
+.weekly-list a.grow { flex: 1; min-width: 0; display: grid; gap: 2px; text-decoration: none; color: var(--food-ink); }
+.weekly-list a.grow b { font-size: 16px; }
+.weekly-list .dl { font-size: 12px; font-weight: 800; white-space: nowrap; } .weekly-list .dl.up { color: #B3261E; } .weekly-list .dl.down { color: #3D4A9E; } .weekly-list .dl.new { color: #2F6B3A; }
 .sns-kit { margin: 16px 0; }
 .sns-kit h3 { margin: 0 0 4px; color: var(--ink); }
 .sns-kit p { margin: 0 0 10px; }

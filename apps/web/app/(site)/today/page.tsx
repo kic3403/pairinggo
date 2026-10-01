@@ -106,7 +106,7 @@ export default async function TodayPage() {
       {/* 인스타·블로그용 — 그림 한 장과 붙여 넣을 글 */}
       <section className="box sns-kit">
         <h3>SNS에 올리기</h3>
-        <p className="small muted">오늘의 조합을 그림 한 장(1080×1350)과 글로 받아 인스타·블로그에 바로 올릴 수 있어요.</p>
+        <p className="small muted">오늘의 조합을 그림 한 장(1080×1350)과 글로 받아 인스타·블로그에 바로 올릴 수 있어요. 주간 인기 순위 카드는 <Link href="/weekly">이번 주 많이 찾는 술</Link>에 있습니다.</p>
         <div className="btns">
           <CardDownload href="/today/card.png" filename={`pairinggo-today-${date}.png`} from="today" className="btn p" />
           <CopyButton text={caption} label="글 복사" />
