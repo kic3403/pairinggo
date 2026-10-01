@@ -1149,7 +1149,8 @@ a.pd-score:hover { border-color: var(--navy); }
 @media (min-width: 1140px) { .bn-nav.prev { left: -24px; } .bn-nav.next { right: -24px; } }
 .bn-nav:hover { background: #fff; border-color: var(--navy); }
 .bn-nav:focus-visible, .bn-play:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
-@media (max-width: 767px) { .bn-nav { width: 30px; height: 30px; font-size: 19px; } .bn-nav.prev { left: -16px; } .bn-nav.next { right: -16px; } }
+/* 본문 폭보다 좁은 화면은 버튼이 카드 안으로 14px만 들어오게(카드 안쪽 여백 16px) 작게 */
+@media (max-width: 1139px) { .bn-nav { width: 30px; height: 30px; font-size: 19px; } }
 .bn-count b { font-weight: 800; }
 .bn-list { display: grid; gap: 12px; margin: 12px 0 20px; padding: 0; list-style: none; }
 @media (min-width: 640px) { .bn-list { grid-template-columns: 1fr 1fr; } }
