@@ -7,11 +7,12 @@ import Link from "next/link";
 import { useSaved } from "./SavedProvider";
 
 export default function AuthNav() {
-  const { ready, loggedIn, user, expert } = useSaved();
+  const { ready, loggedIn, user, expert, guest } = useSaved();
 
   // 확인 전에는 자리만 잡아 둔다 (레이아웃이 흔들리지 않게)
   if (!ready) return <span style={{ width: 52 }} aria-hidden />;
-  if (!loggedIn) return <Link href="/login">로그인</Link>;
+  // 비로그인으로 하트를 눌러 둔 게 있으면 기기 저장 목록(/saved)으로 가는 길을 함께 보여 준다(2026-10-01)
+  if (!loggedIn) return <>{guest.length > 0 && <Link href="/saved" className="auth-saved">저장<span className="cnt">{guest.length}</span></Link>}<Link href="/login">로그인</Link></>;
 
   return (
     <>

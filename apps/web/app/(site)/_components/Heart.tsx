@@ -10,7 +10,7 @@ export default function Heart({ kind, id, name, meta, variant = "icon" }: {
 
   const click = (e: React.MouseEvent) => {
     e.preventDefault(); e.stopPropagation();
-    void toggle(kind, id, meta);
+    void toggle(kind, id, meta, name);
   };
 
   const label = `${name} ${on ? "저장 해제" : "저장"}`;

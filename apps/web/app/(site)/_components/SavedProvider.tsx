@@ -10,7 +10,8 @@
  *     옮기고 기기 목록을 비운다(규칙 shared guest-saved.ts, API /api/saved/merge). 첫 화면 로그아웃 판정과는 무관.
  */
 import { usePathname, useRouter } from "next/navigation";
-import { GUEST_SAVED_KEY, guestToMerge, parseGuestSaved, shouldClearSession, toggleGuestSaved, type ExpertStatus, type GuestSavedItem } from "@pairinggo/shared";
+import { shouldClearSession, type ExpertStatus } from "@pairinggo/shared";
+import { GUEST_SAVED_KEY, guestToMerge, parseGuestSaved, toggleGuestSaved, type GuestSavedItem } from "@pairinggo/shared/guest-saved";
 import { track } from "@/lib/track";
 import { AUTH_PENDING_KEY } from "./AuthAttempt";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
@@ -26,7 +27,10 @@ type Ctx = {
   /** 전문가 검수 상태(docs/27) — approved면 헤더에 "검수" 링크 */
   expert: ExpertStatus | null;
   has: (kind: SavedKind, id: string) => boolean;
-  toggle: (kind: SavedKind, id: string, meta?: PlaceMeta) => Promise<void>;
+  /** name은 비로그인 기기 목록(/saved)에 보여 줄 이름 */
+  toggle: (kind: SavedKind, id: string, meta?: PlaceMeta, name?: string) => Promise<void>;
+  /** 비로그인 때 이 기기에 담아 둔 것(로그인하면 계정으로 옮겨져 빈다) */
+  guest: GuestSavedItem[];
 };
 
 /** 기기에 담은 저장 — 사설 모드 등으로 저장소를 못 쓰면 빈 목록 */
@@ -36,7 +40,7 @@ const guestKeys = (list: GuestSavedItem[]) => new Set(list.map((x) => key(x.kind
 /** 이 탭에서 기기 저장 안내를 길게 보여 줬는지 */
 const HINT_KEY = "pg_guest_hint";
 
-const SavedCtx = createContext<Ctx>({ ready: false, loggedIn: false, user: null, expert: null, has: () => false, toggle: async () => {} });
+const SavedCtx = createContext<Ctx>({ ready: false, loggedIn: false, user: null, expert: null, has: () => false, toggle: async () => {}, guest: [] });
 export const useSaved = () => useContext(SavedCtx);
 const key = (k: SavedKind, id: string) => `${k}:${id}`;
 /** 이 문서에서 첫 화면 판정을 이미 했는지 — 모듈 변수라 앱 라우터 이동에는 유지되고, 새 페이지 로드에서만 초기화된다 */
@@ -51,6 +55,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>(null);
   const [expert, setExpert] = useState<ExpertStatus | null>(null);
   const [keys, setKeys] = useState<Set<string>>(new Set());
+  const [guest, setGuest] = useState<GuestSavedItem[]>([]);
   const [toast, setToast] = useState<{ text: string; login?: boolean } | null>(null);
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(null), toast.login ? 4500 : 2500); return () => clearTimeout(t); }, [toast]);
 
@@ -79,7 +84,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
       if (!alive) return;
       const s = await fetch("/api/auth/session").then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (!alive) return;
-      if (!s?.user) { setUser(null); setExpert(null); setKeys(guestKeys(readGuest())); setReady(true); return; }
+      if (!s?.user) { const g = readGuest(); setUser(null); setExpert(null); setGuest(g); setKeys(guestKeys(g)); setReady(true); return; }
       setUser({ name: s.user.name ?? null, email: s.user.email ?? null });
       const [j, c] = await Promise.all([
         fetch("/api/saved").then((r) => (r.ok ? r.json() : null)).catch(() => null),
@@ -98,6 +103,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
         if (!alive) return;
         if (ok) {
           writeGuest([]);
+          setGuest([]);
           for (const x of todo) account.add(key(x.kind, x.id));
           if (todo.length) setToast({ text: `기기에 저장한 ${todo.length}개를 계정으로 옮겼어요` });
         }
@@ -110,18 +116,19 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
 
   const has = useCallback((k: SavedKind, id: string) => keys.has(key(k, id)), [keys]);
 
-  const toggle = useCallback(async (k: SavedKind, id: string, meta?: PlaceMeta) => {
+  const toggle = useCallback(async (k: SavedKind, id: string, meta?: PlaceMeta, name?: string) => {
     const kk = key(k, id);
     if (!user) {
       // 비로그인 — 기기에 담는다. 저장 이벤트는 guest 표시를 달아 남긴다(대시보드 저장 수에 들어감)
-      const { list, saved } = toggleGuestSaved(readGuest(), k, id, meta, Date.now());
+      const { list, saved } = toggleGuestSaved(readGuest(), k, id, meta, Date.now(), name);
       writeGuest(list);
+      setGuest(list);
       setKeys(guestKeys(list));
       if (saved) {
         track("save", { ...(k === "drink" ? { d: id } : k === "food" ? { f: id } : { place: id }), kind: k, food: meta?.food ?? null, guest: true });
         let first = true;
         try { first = !window.sessionStorage.getItem(HINT_KEY); window.sessionStorage.setItem(HINT_KEY, "1"); } catch { /* 저장소 없음 */ }
-        setToast(first ? { text: "이 기기에 저장했어요 · 로그인하면 계정으로 옮겨요", login: true } : { text: "이 기기에 저장했어요", login: true });
+        setToast(first ? { text: "이 기기에 저장했어요 · 로그인하면 계정으로 옮겨요", login: true } : { text: "이 기기에 저장했어요", login: true });   // 링크는 저장 목록(/saved) — 거기서 로그인
       } else setToast({ text: "저장을 해제했어요" });
       return;
     }
@@ -139,14 +146,14 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
     }
   }, [keys, user]);
 
-  const value = useMemo(() => ({ ready, loggedIn: !!user, user, expert, has, toggle }), [ready, user, expert, has, toggle]);
+  const value = useMemo(() => ({ ready, loggedIn: !!user, user, expert, has, toggle, guest }), [ready, user, expert, has, toggle, guest]);
   return (
     <SavedCtx.Provider value={value}>
       {children}
       {toast && (
         <div className="toast" role="status">
           {toast.text}
-          {toast.login && !user && <> · <a className="toast-link" href={`/login?next=${encodeURIComponent(pathname)}`}>로그인</a></>}
+          {toast.login && !user && pathname !== "/saved" && <> · <a className="toast-link" href="/saved">저장 목록</a></>}
         </div>
       )}
     </SavedCtx.Provider>

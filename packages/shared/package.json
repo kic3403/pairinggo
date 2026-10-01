@@ -17,6 +17,7 @@
     "./drink-request": "./src/drink-request.ts",
     "./notifications": "./src/notifications.ts",
     "./slug": "./src/slug.ts",
+    "./guest-saved": "./src/guest-saved.ts",
     "./places": "./src/places.ts",
     "./push-client": "./src/push-client.ts",
     "./image-client": "./src/image-client.ts",

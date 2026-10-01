@@ -42,4 +42,13 @@ describe("비로그인 저장", () => {
     const list = toggleGuestSaved(toggleGuestSaved([], "drink", "d1", undefined, 1).list, "food", "f1", undefined, 2).list;
     expect(guestToMerge(list, new Set(["drink:d1"])).map((x) => x.id)).toEqual(["f1"]);
   });
+  it("이름 — 목록 화면용", async () => {
+    const { guestSavedName } = await import("../guest-saved");
+    const a = toggleGuestSaved([], "drink", "d1", undefined, 1, " 한산소곡주 ").list;
+    expect(a[0]).toEqual({ kind: "drink", id: "d1", name: "한산소곡주", at: 1 });
+    expect(parseGuestSaved(JSON.stringify(a))).toEqual(a);
+    expect(guestSavedName(a[0])).toBe("한산소곡주");
+    expect(guestSavedName({ kind: "place", id: "1", meta: { name: "유록" }, at: 1 })).toBe("유록");
+    expect(guestSavedName({ kind: "food", id: "f1", at: 1 })).toBe("");
+  });
 });

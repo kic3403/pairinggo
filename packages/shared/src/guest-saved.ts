@@ -5,7 +5,8 @@
  */
 export type GuestSavedKind = "drink" | "food" | "place";
 export type GuestSavedMeta = { name?: string; address?: string; phone?: string; url?: string; category?: string; food?: string };
-export type GuestSavedItem = { kind: GuestSavedKind; id: string; meta?: GuestSavedMeta; at: number };
+/** name은 기기 목록 화면(/saved)에 보여 줄 이름 — 술·음식은 하트가 넘겨 주고, 음식점은 meta.name */
+export type GuestSavedItem = { kind: GuestSavedKind; id: string; name?: string; meta?: GuestSavedMeta; at: number };
 
 export const GUEST_SAVED_KEY = "pg_guest_saved";
 /** 기기에 담아 두는 최대 개수 — 넘치면 오래된 것부터 뺀다 */
@@ -25,6 +26,8 @@ function cleanMeta(m: unknown): GuestSavedMeta | undefined {
   return Object.keys(out).length ? out : undefined;
 }
 
+const cleanName = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim().slice(0, 120) : undefined);
+
 /** 기기에 남은 글자 → 목록. 형식이 틀린 줄은 버리고, 같은 항목은 하나만, 최근 것부터 GUEST_SAVED_MAX개 */
 export function parseGuestSaved(raw: string | null | undefined): GuestSavedItem[] {
   if (!raw) return [];
@@ -42,20 +45,25 @@ export function parseGuestSaved(raw: string | null | undefined): GuestSavedItem[
     if (seen.has(k)) continue;
     seen.add(k);
     const meta = kind === "place" ? cleanMeta((x as Record<string, unknown>).meta) : undefined;
-    out.push({ kind: kind as GuestSavedKind, id, ...(meta ? { meta } : {}), at: typeof at === "number" && Number.isFinite(at) ? at : 0 });
+    const name = cleanName((x as Record<string, unknown>).name);
+    out.push({ kind: kind as GuestSavedKind, id, ...(name ? { name } : {}), ...(meta ? { meta } : {}), at: typeof at === "number" && Number.isFinite(at) ? at : 0 });
   }
   return out.sort((a, b) => b.at - a.at).slice(0, GUEST_SAVED_MAX);
 }
 
 /** 누른 항목을 넣거나 뺀다 — 새 목록과 바뀐 뒤 상태 */
-export function toggleGuestSaved(list: GuestSavedItem[], kind: GuestSavedKind, id: string, meta: GuestSavedMeta | undefined, now: number): { list: GuestSavedItem[]; saved: boolean } {
+export function toggleGuestSaved(list: GuestSavedItem[], kind: GuestSavedKind, id: string, meta: GuestSavedMeta | undefined, now: number, name?: string): { list: GuestSavedItem[]; saved: boolean } {
   const rest = list.filter((x) => !(x.kind === kind && x.id === id));
   if (rest.length < list.length) return { list: rest, saved: false };
   const m = kind === "place" ? cleanMeta(meta) : undefined;
-  return { list: [{ kind, id, ...(m ? { meta: m } : {}), at: now }, ...rest].slice(0, GUEST_SAVED_MAX), saved: true };
+  const nm = cleanName(name);
+  return { list: [{ kind, id, ...(nm ? { name: nm } : {}), ...(m ? { meta: m } : {}), at: now }, ...rest].slice(0, GUEST_SAVED_MAX), saved: true };
 }
 
 /** 계정으로 옮길 것 — 계정에 이미 있는 항목은 뺀다(`has`는 "kind:id") */
 export function guestToMerge(list: GuestSavedItem[], accountKeys: Set<string>): GuestSavedItem[] {
   return list.filter((x) => !accountKeys.has(`${x.kind}:${x.id}`));
 }
+
+/** 기기 목록 화면에 보일 이름 — 없으면(옛 기록) 빈 글자 */
+export const guestSavedName = (x: GuestSavedItem) => x.name || x.meta?.name || "";

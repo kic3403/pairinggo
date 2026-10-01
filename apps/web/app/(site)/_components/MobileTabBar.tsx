@@ -20,14 +20,15 @@ export const hidesTabBar = (path: string) => /^\/(drinks|foods)\/[^/]+/.test(pat
 
 export default function MobileTabBar() {
   const path = usePathname() || "/";
-  const { ready, loggedIn } = useSaved();
+  const { ready, loggedIn, guest } = useSaved();
   if (hidesTabBar(path)) return null;
   const tabs = [
     { href: "/", label: "홈", icon: "home", on: path === "/" },
     { href: "/search", label: "검색", icon: "search", on: path.startsWith("/search") },
     { href: "/drinks", label: "주류", icon: "drink", on: path.startsWith("/drinks") },
     { href: "/foods", label: "음식", icon: "food", on: path.startsWith("/foods") },
-    { href: ready && !loggedIn ? "/login" : "/my", label: ready && !loggedIn ? "로그인" : "마이", icon: "me", on: /^\/(my|saved|picks)(\/|$)/.test(path) },
+    // 비로그인 — 기기에 저장한 게 있으면 "저장"(기기 목록, 거기서 로그인), 없으면 "로그인"
+    { href: ready && !loggedIn ? (guest.length ? "/saved" : "/login") : "/my", label: ready && !loggedIn ? (guest.length ? "저장" : "로그인") : "마이", icon: "me", on: /^\/(my|saved|picks)(\/|$)/.test(path) },
   ];
   return (
     <nav className="tabbar" aria-label="하단 메뉴">
