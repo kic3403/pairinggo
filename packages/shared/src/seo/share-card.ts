@@ -55,7 +55,7 @@ export function todayCaption(x: TodayCaptionInput): string {
     x.quote ? `“${clipText(x.quote, 90)}”${x.who ? ` — ${x.who}` : ""}` : x.reason ? firstSentence(x.reason) : null,
     `${x.headline} · ${x.confidence}`,
     "",
-    `근거와 함께 보기 → ${x.base}/today`,
+    `근거와 함께 보기 → ${x.base}/today?utm_source=sns`,
     "",
     hashtags(["페어링GO", "오늘의페어링", x.drink, x.food, x.category, "전통주", "안주추천", "술안주"]),
     "주류는 만 19세 이상만. 지나친 음주는 건강에 해롭습니다.",

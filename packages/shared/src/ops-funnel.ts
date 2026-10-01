@@ -4,6 +4,8 @@
  * 숫자 세기(DB에서 이벤트 받기)는 웹 lib/ops-metrics.ts, 여기는 이벤트 줄 → 흐름 계산만.
  */
 
+import { TRAFFIC_GROUP_LABEL, trafficSource, type TrafficGroup } from "./traffic-source";
+
 /** 흐름 계산에 쓰는 이벤트 이름 — 웹이 이 이름들만 받아 온다 */
 export const FUNNEL_EVENTS = ["screen", "save", "buy_link_click", "restaurant_link_click", "share"] as const;
 export type FunnelEventRow = { name: string; session_id: string | null; props: Record<string, unknown> | null };
@@ -21,6 +23,8 @@ export type OpsFunnel = {
   guideViews: number; todayViews: number;
   /** 많이 본 상세 5개(조회 수) — 주소는 디코드한 값 */
   topDetails: { path: string; n: number }[];
+  /** 유입 경로(2026-10-02) — 세션마다 하나: 그 세션의 화면 기록 가운데 처음 나온 바깥 유입(검색·SNS·공유·다른 사이트), 없으면 직접. 많은 순 */
+  sources: { group: TrafficGroup; label: string; n: number }[];
 };
 
 const ACTIONS = new Set(["save", "buy_link_click", "restaurant_link_click", "share"]);
@@ -33,13 +37,15 @@ export const isDetailPath = (path: string) => /^\/(drinks|foods)\/[^/]+$/.test(p
 
 export function opsFunnel(rows: FunnelEventRow[]): OpsFunnel {
   const all = new Set<string>(), detail = new Set<string>(), action = new Set<string>();
-  const f: OpsFunnel = { sessions: 0, detailSessions: 0, actionSessions: 0, saves: 0, guestSaves: 0, buyClicks: 0, restaurantClicks: 0, shares: 0, cardSaves: 0, guideViews: 0, todayViews: 0, topDetails: [] };
+  const f: OpsFunnel = { sessions: 0, detailSessions: 0, actionSessions: 0, saves: 0, guestSaves: 0, buyClicks: 0, restaurantClicks: 0, shares: 0, cardSaves: 0, guideViews: 0, todayViews: 0, topDetails: [], sources: [] };
   const views = new Map<string, number>();
+  const srcOf = new Map<string, { group: TrafficGroup; label: string }>();   // 세션 → 바깥 유입(처음 것)
   for (const r of rows) {
     const sid = r.session_id || "";
     const path = pathOf(r.props);
     if (r.name === "screen") {
       if (sid) all.add(sid);
+      if (sid && !srcOf.has(sid)) { const s = trafficSource(r.props ?? {}); if (s.group !== "internal" && s.group !== "direct") srcOf.set(sid, s); }
       if (isDetailPath(path)) { if (sid) detail.add(sid); views.set(path, (views.get(path) ?? 0) + 1); }
       else if (path === "/guide" || path.startsWith("/guide/")) f.guideViews++;
       else if (path === "/today") f.todayViews++;
@@ -53,6 +59,14 @@ export function opsFunnel(rows: FunnelEventRow[]): OpsFunnel {
     else if (r.name === "share") { f.shares++; if (r.props?.channel === "card") f.cardSaves++; }
   }
   f.sessions = all.size; f.detailSessions = detail.size; f.actionSessions = action.size;
+  const tally = new Map<string, { group: TrafficGroup; label: string; n: number }>();
+  for (const sid of all) {
+    const s = srcOf.get(sid) ?? { group: "direct" as const, label: TRAFFIC_GROUP_LABEL.direct };
+    const k = `${s.group}|${s.label}`;
+    const cur = tally.get(k) ?? { ...s, n: 0 };
+    cur.n++; tally.set(k, cur);
+  }
+  f.sources = [...tally.values()].sort((a, b) => b.n - a.n || a.label.localeCompare(b.label, "ko"));
   f.topDetails = [...views].map(([path, n]) => ({ path, n })).sort((a, b) => b.n - a.n || a.path.localeCompare(b.path, "ko")).slice(0, 5);
   return f;
 }

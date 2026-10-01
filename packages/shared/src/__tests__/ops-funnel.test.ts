@@ -25,8 +25,25 @@ describe("방문 흐름", () => {
     expect(f).toMatchObject({ sessions: 4, detailSessions: 2, actionSessions: 3, saves: 2, guestSaves: 1, buyClicks: 1, restaurantClicks: 1, shares: 2, cardSaves: 1, guideViews: 1, todayViews: 1 });
     expect(f.topDetails).toEqual([{ path: "/drinks/백세주", n: 2 }, { path: "/foods/해물파전", n: 1 }]);
   });
+  it("유입 경로 — 세션마다 하나, 처음 나온 바깥 유입", () => {
+    const f = opsFunnel([
+      ev("screen", "a", { path: "/", ref: "https://search.naver.com/x" }), ev("screen", "a", { path: "/drinks", ref: "https://pairinggo.kr/" }),
+      ev("screen", "b", { path: "/", ref: "" }), ev("screen", "b", { path: "/my", ref: "https://nid.naver.com/x" }),            // 로그인 왕복은 유입이 아님 → 직접
+      ev("screen", "c", { path: "/today", ref: "", q: "?utm_source=sns" }),
+      ev("screen", "d", { path: "/", ref: "", via: "kakaotalk" }),
+      ev("screen", "e", { path: "/", ref: "https://m.search.naver.com/" }),
+      ev("screen", "g", { path: "/", ref: "https://pairinggo.kr/x" }), ev("screen", "g", { path: "/", ref: "https://www.google.com/" }),   // 나중에라도 바깥 유입이 있으면 그것
+      ev("screen", "h", { path: "/" }),
+    ]);
+    expect(f.sessions).toBe(7);
+    expect(f.sources).toEqual([
+      { group: "direct", label: "직접·알 수 없음", n: 2 }, { group: "search", label: "네이버", n: 2 },
+      { group: "sns", label: "SNS 글(우리 글 복사)", n: 1 }, { group: "sns", label: "카카오톡 앱 안", n: 1 }, { group: "search", label: "구글", n: 1 },
+    ].sort((x, y) => y.n - x.n || x.label.localeCompare(y.label, "ko")));
+    expect(f.sources.reduce((s, x) => s + x.n, 0)).toBe(f.sessions);
+  });
   it("빈 기간·비율 문구", () => {
-    expect(opsFunnel([])).toMatchObject({ sessions: 0, detailSessions: 0, actionSessions: 0, topDetails: [] });
+    expect(opsFunnel([])).toMatchObject({ sessions: 0, detailSessions: 0, actionSessions: 0, topDetails: [], sources: [] });
     expect(stepRate(3, 25)).toBe("12% (3/25)");
     expect(stepRate(0, 0)).toBe("—");
   });

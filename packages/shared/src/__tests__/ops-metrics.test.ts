@@ -40,12 +40,13 @@ describe("운영 지표 규칙", () => {
     expect(t).toContain("회원 3명 — 남 1 · 여 1 · 미입력 1");
     expect(t).not.toContain("방문 흐름");
     // 방문 흐름을 주면 회원 구성 앞에 들어간다
-    const f = { sessions: 150, detailSessions: 26, actionSessions: 2, saves: 3, guestSaves: 1, buyClicks: 2, restaurantClicks: 1, shares: 4, cardSaves: 2, guideViews: 5, todayViews: 13, topDetails: [{ path: "/drinks/복순도가-손막걸리", n: 22 }, { path: "/foods/해물파전", n: 16 }] };
+    const f = { sessions: 150, detailSessions: 26, actionSessions: 2, saves: 3, guestSaves: 1, buyClicks: 2, restaurantClicks: 1, shares: 4, cardSaves: 2, guideViews: 5, todayViews: 13, topDetails: [{ path: "/drinks/복순도가-손막걸리", n: 22 }, { path: "/foods/해물파전", n: 16 }], sources: [{ group: "direct" as const, label: "직접·알 수 없음", n: 140 }, { group: "search" as const, label: "네이버", n: 10 }] };
     const t2 = reportText(m, d, f);
     expect(t2).toContain("· 방문 150 → 술·음식 상세를 봄 26 (방문의 17% (26/150))");
     expect(t2).toContain("· 저장·구매·식당·공유 중 하나라도 2 (상세 본 세션의 8% (2/26))");
     expect(t2).toContain("· 저장 3(비로그인 1) · 구매 링크 2 · 식당 링크 1 · 공유 4(그림 카드 2)");
     expect(t2).toContain("· 많이 본 상세 — 복순도가 손막걸리 22 · 해물파전 16");
+    expect(t2).toContain("· 유입 경로 — 직접·알 수 없음 140 · 네이버 10");
     expect(t2.indexOf("방문 흐름")).toBeLessThan(t2.indexOf("회원 3명"));
   });
 });

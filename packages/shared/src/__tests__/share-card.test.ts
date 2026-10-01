@@ -15,7 +15,7 @@ describe("공유 카드 글", () => {
     const t = todayCaption({ dateLabel: "10월 1일 (목)", headline: "가을 제철 대하구이와 함께", drink: "한산소곡주", drinkMeta: "약주 · 18% · 한산소곡주", food: "대하구이", confidence: "근거 확인 · 출처 2곳", quote: "달큰한 소곡주가 대하의 단맛을 받쳐 준다", who: "양조장", category: "약주", base: "https://pairinggo.kr" });
     expect(t).toContain("한산소곡주 × 대하구이");
     expect(t).toContain("“달큰한 소곡주가 대하의 단맛을 받쳐 준다” — 양조장");
-    expect(t).toContain("https://pairinggo.kr/today");
+    expect(t).toContain("https://pairinggo.kr/today?utm_source=sns");
     expect(t).toContain("#한산소곡주 #대하구이 #약주");
     expect(t).toContain("만 19세");
     expect(todayCaption({ dateLabel: "x", headline: "h", drink: "a", food: "b", confidence: "c", base: "u" })).not.toContain("“");

@@ -25,13 +25,15 @@ type Props = { title: string; text: string; path?: string; d?: string; f?: strin
 export default function ShareButton({ title, text, path, d, f, pick, className = "btn", label = "공유" }: Props) {
   const [msg, setMsg] = useState<string | null>(null);
   const share = async () => {
-    const url = new URL(path ?? window.location.pathname, window.location.origin).toString();
+    // 공유된 링크로 들어온 방문을 대시보드 '유입 경로'에서 가려 보려고 utm_source를 붙인다(카카오톡 = kakao, 그 밖 = share). 대표 주소(canonical)는 그대로라 검색에는 영향 없음
+    const link = (src: string) => { const u = new URL(path ?? window.location.pathname, window.location.origin); u.searchParams.set("utm_source", src); return u.toString(); };
+    const url = link("share"), kakaoUrl = link("kakao");
     const image = document.querySelector('meta[property="og:image"]')?.getAttribute("content") ?? undefined;
     const done = (method: string) => { track("share", { method, d: d ?? null, f: f ?? null, pick: pick ?? null }); };
     const K = window.Kakao;
     if (K?.isInitialized?.()) {
       try {
-        K.Share.sendDefault({ objectType: "feed", content: { title, description: text, imageUrl: image ?? `${window.location.origin}/opengraph-image`, link: { mobileWebUrl: url, webUrl: url } }, buttons: [{ title: "페어링 보기", link: { mobileWebUrl: url, webUrl: url } }] });
+        K.Share.sendDefault({ objectType: "feed", content: { title, description: text, imageUrl: image ?? `${window.location.origin}/opengraph-image`, link: { mobileWebUrl: kakaoUrl, webUrl: kakaoUrl } }, buttons: [{ title: "페어링 보기", link: { mobileWebUrl: kakaoUrl, webUrl: kakaoUrl } }] });
         done("kakao"); return;
       } catch { /* SDK 오류 — 다음 방법 */ }
     }

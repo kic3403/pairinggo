@@ -70,7 +70,14 @@ export default function OpsPanel({ metrics: m, demo: d, period, funnel: f }: { m
         {f.topDetails.length > 0 && (
           <p className="muted" style={{ margin: "10px 0 0" }}>많이 본 상세 — {f.topDetails.map((t, i) => <span key={t.path}>{i > 0 && " · "}<Link href={t.path}>{t.path.replace(/^\/(drinks|foods)\//, "").replace(/-/g, " ")}</Link> {t.n}</span>)}</p>
         )}
-        <p className="muted" style={{ margin: "8px 0 0" }}>행동 단계의 비율은 '상세를 본 세션' 대비입니다(목록·검색에서 바로 저장한 세션도 행동에 들어가 100%를 넘을 수 있어요).</p>
+        {f.sources.length > 0 && (
+          <div style={{ marginTop: 12 }}>
+            <div className="muted" style={{ marginBottom: 4 }}>유입 경로 <small>— 방문 세션이 어디서 들어왔나(직전 주소·공유 링크 표시·앱 안 브라우저로 판정)</small></div>
+            <Bars total={f.sessions} rows={f.sources.slice(0, 8).map((s) => ({ label: s.label, n: s.n }))} />
+            {f.sources.length > 8 && <div className="muted small">외 {f.sources.length - 8}곳</div>}
+          </div>
+        )}
+        <p className="muted" style={{ margin: "8px 0 0" }}>'직접·알 수 없음'은 주소를 직접 치거나 즐겨찾기·앱에서 연 방문, 그리고 직전 주소를 안 넘겨 주는 앱(문자·일부 메신저)에서 온 방문입니다. 행동 단계의 비율은 '상세를 본 세션' 대비입니다(목록·검색에서 바로 저장한 세션도 행동에 들어가 100%를 넘을 수 있어요).</p>
       </div>
       <div className="card">
         <b>회원 구성 <span className="muted" style={{ fontWeight: 400 }}>{d.total}명 · 가입 때 적은 성별·생년월일·시도 · 기간과 무관한 전체</span></b>
