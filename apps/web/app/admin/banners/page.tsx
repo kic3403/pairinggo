@@ -24,11 +24,11 @@ export default async function AdminBanners() {
         <ul style={{ margin: "6px 0 0", paddingLeft: 18 }}>
           {monthly.map((m) => (
             <li key={m.kind}>
-              {PARTNER_KIND_LABEL[m.kind]} — {m.registered ? <><b>{m.registered}</b> <span className="muted">(등록한 카드)</span></> : m.auto ? <><b>{m.auto}</b> <span className="muted">(자동 선정 · 매월 1일에 바뀜)</span></> : <span className="muted">승인된 파트너가 없어 카드 없음</span>}
+              {PARTNER_KIND_LABEL[m.kind]} — {m.registered ? <><b>{m.registered}</b> <span className="muted">(등록한 카드)</span></> : m.auto ? <><b>{m.auto}</b> <span className="muted">(자동 · 순번제, 매월 1일에 다음 매장)</span></> : <span className="muted">승인된 파트너가 없어 카드 없음</span>}
             </li>
           ))}
         </ul>
-        <p className="muted" style={{ margin: "6px 0 0" }}>이벤트·협업이 있으면 아래에서 종류 <b>이달의 파트너</b>로 매장을 골라 기간과 함께 등록하세요 — 그 업종은 등록한 매장이 뜨고, 기간이 끝나면 다시 자동 선정으로 돌아갑니다. 자동 선정은 승인된 파트너 전체에서 고르며, 대표 사진이 없는 매장은 색 카드로 보입니다.</p>
+        <p className="muted" style={{ margin: "6px 0 0" }}>이벤트·협업이 있으면 아래에서 종류 <b>이달의 파트너</b>로 매장을 골라 기간과 함께 등록하세요 — 그 업종은 등록한 매장이 뜨고, 기간이 끝나면 다시 자동 선정으로 돌아갑니다. 자동 선정은 승인된 파트너가 한 달씩 차례로 돌아가며, 대표 사진이 없는 매장은 색 카드로 보입니다.</p>
       </div>
       <BannerEditor rows={rows} partners={partners.map((p) => ({ id: p.id, name: p.name, kind: p.kind, photo: p.photo }))} today={today} />
     </>

@@ -51,15 +51,19 @@ describe("이달의 파트너 — 등록한 카드가 없으면 달마다 한 �
     expect(monthlyPartnerPick(list, "liquor", "2026-10")?.id).toBe("g");
     expect(monthlyPartnerPick([], "brewery", "2026-10")).toBeNull();
   });
-  it("달이 바뀌면 바뀐다 — 열두 달 동안 한 곳만 나오지 않는다", () => {
-    const months = Array.from({ length: 12 }, (_, i) => `2026-${String(i + 1).padStart(2, "0")}`);
-    expect(new Set(months.map((m) => monthlyPartnerPick(list, "brewery", m)?.id)).size).toBeGreaterThan(1);
-    expect(new Set(months.map((m) => monthlyPartnerPick(list, "restaurant", m)?.id)).size).toBeGreaterThan(1);
+  it("순번제 — 달마다 다음 매장, 매장 수만큼 지나면 한 바퀴", () => {
+    const months = ["2026-10", "2026-11", "2026-12", "2027-01", "2027-02", "2027-03"];
+    const picks = months.map((m) => monthlyPartnerPick(list, "restaurant", m)?.id);
+    expect(new Set(picks.slice(0, 3)).size).toBe(3);                 // 세 곳이 석 달 동안 한 번씩
+    expect(picks.slice(3)).toEqual(picks.slice(0, 3));               // 넉 달째부터 같은 차례로 다시
+    for (let i = 1; i < picks.length; i++) expect(picks[i]).not.toBe(picks[i - 1]);   // 연달아 같은 곳 없음
+    expect(monthlyPartnerPick(list, "restaurant", "2026-12")?.id).not.toBe(monthlyPartnerPick(list, "restaurant", "2027-01")?.id);   // 해가 바뀌어도 이어진다
   });
-  it("사진이 없는 매장도 뽑힌다", () => {
-    const some = [P("a", "brewery", false), P("b", "brewery", true), P("c", "brewery", false)];
-    const months = Array.from({ length: 24 }, (_, i) => `${2026 + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, "0")}`);
-    expect(months.some((m) => !monthlyPartnerPick(some, "brewery", m)?.photo)).toBe(true);
+  it("두 곳이면 번갈아, 사진이 없어도 차례가 온다", () => {
+    const two = [P("a", "brewery", false), P("b", "brewery", true)];
+    const seq = ["2026-10", "2026-11", "2026-12", "2027-01"].map((m) => monthlyPartnerPick(two, "brewery", m)?.id);
+    expect(seq[0]).not.toBe(seq[1]); expect(seq[2]).toBe(seq[0]); expect(seq[3]).toBe(seq[1]);
+    expect(seq).toContain("a");
   });
   it("카드: 등록이 없으면 양조장·식당 자동 카드, 리쿼샵은 자동 없음", () => {
     const cards = bannerCards([], "2026-10-01", byId);
