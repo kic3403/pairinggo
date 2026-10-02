@@ -91,7 +91,7 @@ export async function verifyEmailLogin(emailRaw: string, password: string): Prom
 }
 
 /* ---------- 프로필(닉네임·성별·생년월일·시도) — 소셜 로그인 회원은 /profile 에서 채운다 ---------- */
-export type ProfileRow = { name: string | null; gender: Gender | null; birthDate: string | null; sido: Sido | null; complete: boolean; consentNeeded: boolean; nicknameNeeded: boolean };
+export type ProfileRow = { name: string | null; gender: Gender | null; birthDate: string | null; sido: Sido | null; complete: boolean; consentNeeded: boolean; /** 한 번도 동의한 적 없는 계정(간편가입 직후) — 재동의(약관 변경)와 구분 */ firstConsent: boolean; nicknameNeeded: boolean };
 export async function getProfile(userId: string): Promise<ProfileRow | null> {
   const sb = db(); if (!sb) return null;
   const { data } = await sb.from("users").select("name,gender,birth_date,sido,consent_version").eq("id", userId).maybeSingle();
@@ -101,6 +101,7 @@ export async function getProfile(userId: string): Promise<ProfileRow | null> {
     name, gender: (data.gender as Gender) ?? null, birthDate: (data.birth_date as string) ?? null, sido: (data.sido as Sido) ?? null,
     complete: !!(data.gender && data.birth_date && data.sido),
     consentNeeded: needsConsent(data.consent_version as string | null),
+    firstConsent: !data.consent_version,
     nicknameNeeded: nicknameProblem(name) != null,
   };
 }

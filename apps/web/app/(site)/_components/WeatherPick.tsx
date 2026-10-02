@@ -63,7 +63,7 @@ export default function WeatherPick({ mode, id, n }: Props) {
               <Link className="wx-pair" href={`/foods/${it.fslug}?d=${it.d}`} onClick={() => click(it, "pair")}>
                 <b className="wx-d">{it.drink}</b><span className="wx-x">×</span><b className="wx-f">{it.food}</b>
               </Link>
-              <span className="wx-meta small muted">{it.grade} · {it.conf}{it.local ? ` · ${it.region} 술` : ""}</span>
+              <span className="wx-meta small muted">{it.category} · {it.grade} · {it.conf}{it.local ? ` · ${it.region} 술` : ""}</span>
             </li>
           ))}
         </ul>
@@ -80,7 +80,7 @@ export default function WeatherPick({ mode, id, n }: Props) {
         <div className="wx-chips">
           {data.self && <span className="small muted">오늘 같은 날의 음식이에요 — </span>}
           {data.items.map((it) => (
-            <Link key={it.d} className="nb-chip" href={`/drinks/${it.dslug}`} onClick={() => click(it, "drink")}>{it.drink}<span className="small muted"> · {it.conf}{it.local ? ` · ${it.region} 술` : ""}</span></Link>
+            <Link key={it.d} className="nb-chip" href={`/drinks/${it.dslug}`} onClick={() => click(it, "drink")}>{it.drink}<span className="small muted"> · {it.category}{it.local ? ` · ${it.region}` : ""}</span></Link>
           ))}
         </div>
       )}

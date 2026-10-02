@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Drink, Food, Pairing } from "../types";
-import { bandOf, drinkFits, foodFits, precipOf, sidoOfRegion, sidoShort, situationForDrink, situationForFood, situationOf, situationPairs, WEATHER_GRID } from "../situation";
+import { bandOf, drinkFits, drinkGroup, foodFits, precipOf, sidoOfRegion, sidoShort, situationForDrink, situationForFood, situationOf, situationPairs, WEATHER_GRID } from "../situation";
 
 const drink = (id: string, category: string, abv: number, region = "충남 당진", kind?: Drink["kind"]): Drink => ({ id, name: id, category, abv, region, kind, alias: id, brewery: "", desc: "", flavor: [], blog_anju: 0, buy: { url: null, store: null } }) as Drink;
 const food = (id: string, category: string): Food => ({ id, name: id, category, tags: [] }) as Food;
@@ -35,7 +35,7 @@ describe("판정", () => {
 
 describe("술·음식 맞춤", () => {
   it("비 = 탁주 × 전, 추움 = 고도수·약주·수입 주종 × 국물·회", () => {
-    expect(drinkFits("rain", drink("a", "탁주", 6))).toBe(true); expect(drinkFits("rain", drink("a", "약주", 14))).toBe(false);
+    expect(drinkFits("rain", drink("a", "탁주", 6))).toBe(true); expect(drinkFits("rain", drink("a", "약주", 14))).toBe(true); expect(drinkGroup("rain", drink("a", "약주", 14))).toBe(1); expect(drinkFits("rain", drink("a", "증류주", 40))).toBe(false);
     expect(foodFits("rain", food("해물파전", "전"))).toBe(true); expect(foodFits("rain", food("빈대떡", "안주"))).toBe(true); expect(foodFits("rain", food("회", "회"))).toBe(false);
     expect(drinkFits("cold", drink("a", "증류주", 40))).toBe(true); expect(drinkFits("cold", drink("a", "약주", 13))).toBe(true); expect(drinkFits("cold", drink("a", "탁주", 6))).toBe(false); expect(drinkFits("cold", drink("a", "싱글몰트", 43, "", "whisky"))).toBe(true);
     expect(foodFits("cold", food("감자탕", "한식"))).toBe(true); expect(foodFits("cold", food("방어회", "회"))).toBe(true); expect(foodFits("cold", food("평양냉면", "면"))).toBe(false);
@@ -58,6 +58,16 @@ describe("조합 고르기", () => {
     expect(r.map((x) => `${x.drink.id}×${x.food.id}`)).toEqual(["mak×해물파전", "mak2×김치전"]);
     expect(r[0]).toMatchObject({ fit: "both", local: true, conf: "weak" });
     expect(r[1]).toMatchObject({ fit: "both", local: false, conf: "confirmed" });
+  });
+  it("도수가 비슷한 묶음을 돌아가며 — 탁주 → 약주 → 과실주, 묶음이 비면 나머지 순서대로", () => {
+    const ds2 = {
+      drinks: [drink("mak", "탁주", 6), drink("mak2", "탁주", 7), drink("yak", "약주", 14), drink("fruit", "과실주", 12), drink("yak2", "약주", 13)],
+      foods: [food("해물파전", "전"), food("김치전", "전"), food("감자전", "전"), food("육전", "전"), food("빈대떡", "안주")],
+      pairings: [pair("mak", "해물파전", 2), pair("mak2", "김치전", 2), pair("yak", "감자전", 1), pair("fruit", "육전", 1), pair("yak2", "빈대떡", 1)],
+    };
+    const r = situationPairs(ds2, rain, { n: 5 });
+    expect(r.map((x) => x.drink.id)).toEqual(["mak", "yak", "fruit", "mak2", "yak2"]);
+    expect(situationForFood({ ...ds2, pairings: ds2.pairings.map((p) => ({ ...p, f: "해물파전" })) }, rain, "해물파전", 3)?.items.map((x) => x.drink.id)).toEqual(["mak", "yak", "fruit"]);
   });
   it("사는 곳이 다르면 근거 확인 조합이 먼저", () => {
     const r = situationPairs(ds, rain, { sido: "경기", n: 3 });

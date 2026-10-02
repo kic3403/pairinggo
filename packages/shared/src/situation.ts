@@ -119,18 +119,24 @@ const STRONG = new Set(["증류주", "브랜디"]);
 const YAKJU = new Set(["약주", "청주"]);
 const inSeason = (s: Season, f: Pick<Food, "name">) => SEASON_FOODS[s].includes(f.name);
 
-/** 이 술이 상황에 맞는 술인지 */
-export function drinkFits(key: RuleKey, d: Pick<Drink, "category" | "abv" | "kind">): boolean {
-  const k = kindOf(d), c = d.category, abv = d.abv ?? 0;
+/**
+ * 상황마다 도수가 비슷한 술 묶음(0부터) — 추천은 묶음을 돌아가며 골고루 낸다(2026-10-02 사용자 요청: 막걸리만이 아니라 막걸리·약주·와인처럼).
+ * 0번 묶음이 실측 근거가 가장 센 것(비 = 탁주, 추움 = 25도↑ 증류주, 선선 = 약주·청주, 봄·가을 = 탁주, 더움 = 저도수 탁주). 묶음이 없으면 상황에 맞지 않는 술.
+ */
+export function drinkGroup(key: RuleKey, d: Pick<Drink, "category" | "abv" | "kind">): number | null {
+  const k = kindOf(d), c = d.category, abv = d.abv ?? 0, trad = k === "trad";
+  const lightFruit = (trad && c === "과실주" && abv <= 14) || k === "wine";   // 가벼운 과실주·와인
   switch (key) {
-    case "rain": return k === "trad" && c === "탁주";
+    case "rain": return trad && c === "탁주" ? 0 : trad && YAKJU.has(c) ? 1 : lightFruit ? 2 : null;
     case "snow":
-    case "cold": return (k === "trad" && (abv >= 25 || STRONG.has(c) || YAKJU.has(c))) || k === "whisky" || k === "sake" || k === "wine";
-    case "cool": return (k === "trad" && (YAKJU.has(c) || (abv >= 12 && abv <= 25 && c !== "탁주"))) || k === "wine" || k === "sake";
-    case "warm": return k === "trad" && (c === "탁주" || (c === "과실주" && abv <= 13));
-    case "hot": return k === "trad" && abv <= 13 && (c === "과실주" || c === "허니와인" || c === "탁주" || c === "리큐르");
+    case "cold": return trad && (abv >= 25 || STRONG.has(c)) ? 0 : trad && YAKJU.has(c) ? 1 : k === "wine" || (trad && c === "과실주" && abv >= 14) ? 2 : k === "whisky" || k === "sake" ? 3 : null;
+    case "cool": return trad && YAKJU.has(c) ? 0 : trad && abv >= 12 && abv <= 25 && c !== "탁주" ? 1 : k === "wine" || k === "sake" ? 2 : null;
+    case "warm": return trad && c === "탁주" ? 0 : trad && YAKJU.has(c) && abv <= 16 ? 1 : lightFruit ? 2 : null;
+    case "hot": return trad && c === "탁주" && abv <= 8 ? 0 : trad && (c === "과실주" || c === "허니와인") && abv <= 13 ? 1 : trad && c === "리큐르" && abv <= 13 ? 2 : null;
   }
 }
+/** 이 술이 상황에 맞는 술인지(어느 묶음에든 들면) */
+export const drinkFits = (key: RuleKey, d: Pick<Drink, "category" | "abv" | "kind">): boolean => drinkGroup(key, d) !== null;
 /** 이 음식이 상황에 맞는 음식인지 */
 export function foodFits(key: RuleKey, f: Pick<Food, "name" | "category">): boolean {
   switch (key) {
@@ -175,12 +181,29 @@ export function situationPairs(ds: DS, s: Situation, opts: { sido?: string | nul
   }
   const FIT: Record<SituationPair["fit"], number> = { both: 2, food: 1, drink: 0 };
   rows.sort((a, b) => (FIT[b.fit] - FIT[a.fit]) || (Number(b.local) - Number(a.local)) || (CONF_RANK[b.conf] - CONF_RANK[a.conf]) || (pairingScore(b.p) - pairingScore(a.p)));
+  return pickAcrossGroups(rows, s.key, n);
+}
+
+/**
+ * 묶음을 돌아가며 고르기 — 둘 다 맞는 조합을 술 묶음 0·1·2… 차례로 하나씩(각 묶음에서 순서상 앞의 것), 묶음이 다 비면 나머지 조합을 순서대로.
+ * 같은 술·같은 음식은 한 번씩.
+ */
+function pickAcrossGroups(rows: readonly SituationPair[], key: RuleKey, n: number): SituationPair[] {
   const out: SituationPair[] = [], seenD = new Set<string>(), seenF = new Set<string>();
-  for (const r of rows) {
-    if (seenD.has(r.drink.id) || seenF.has(r.food.id)) continue;
-    out.push(r); seenD.add(r.drink.id); seenF.add(r.food.id);
-    if (out.length >= n) break;
+  const ok = (r: SituationPair) => !seenD.has(r.drink.id) && !seenF.has(r.food.id);
+  const take = (r: SituationPair) => { out.push(r); seenD.add(r.drink.id); seenF.add(r.food.id); };
+  const both = rows.filter((r) => r.fit === "both");
+  const groups = [...new Set(both.map((r) => drinkGroup(key, r.drink)).filter((g): g is number => g !== null))].sort((a, b) => a - b);
+  let progress = true;
+  while (out.length < n && progress) {
+    progress = false;
+    for (const g of groups) {
+      if (out.length >= n) break;
+      const r = both.find((x) => drinkGroup(key, x.drink) === g && ok(x));
+      if (r) { take(r); progress = true; }
+    }
   }
+  for (const r of rows) { if (out.length >= n) break; if (ok(r)) take(r); }
   return out;
 }
 
@@ -220,5 +243,7 @@ export function situationForFood(ds: DS, s: Situation, foodId: string, n = 2, si
   const fits = rows.filter((x) => drinkFits(s.key, x.d));
   const pick = fits.length ? fits : self ? rows : [];
   if (!pick.length) return null;
-  return { self, items: pick.slice(0, n).map((x) => ({ p: x.p, drink: x.d, food: f, conf: confidenceOf(x.p) as SituationPair["conf"], fit: self && drinkFits(s.key, x.d) ? "both" : drinkFits(s.key, x.d) ? "drink" : "food", local: !!where && regionSido(x.d) === where })) };
+  const pairs: SituationPair[] = pick.map((x) => ({ p: x.p, drink: x.d, food: f, conf: confidenceOf(x.p) as SituationPair["conf"], fit: self && drinkFits(s.key, x.d) ? "both" : drinkFits(s.key, x.d) ? "drink" : "food", local: !!where && regionSido(x.d) === where }));
+  // 술 묶음을 돌아가며(같은 음식이라 음식 중복 검사는 의미 없음 — 술만 한 번씩)
+  return { self, items: pickAcrossGroups(pairs.map((r, i) => ({ ...r, food: { ...f, id: `${f.id}#${i}` } })), s.key, n).map((r) => ({ ...r, food: f })) };
 }

@@ -7,7 +7,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { birthDigitsToDate, consentFromForm, consentProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
+import { birthDigitsToDate, CONSENT_CHANGE_NOTE, consentFromForm, consentProblem, profileProblem, type Gender, type Sido } from "@pairinggo/shared";
 import { auth, signOut } from "@/auth";
 import { consentNeeded, deleteAccount, getProfile, recordConsent, setReferrer, updateProfile } from "@/lib/account";
 import ConsentFields from "../_components/ConsentFields";
@@ -48,21 +48,24 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
     redirect(to === "/profile" ? "/profile?ok=1" : to);
   }
 
-  // 동의하지 않으면 간편가입으로 만들어진 계정 연결 정보를 바로 지운다(개인정보처리방침 3번)
+  // 동의하지 않으면: 한 번도 동의한 적 없는 계정(간편가입 직후)은 연결 정보를 바로 지운다(개인정보처리방침 3번).
+  // 이미 가입한 회원의 재동의(약관 변경)는 계정을 지우지 않고 로그아웃만 — 다음 로그인 때 다시 묻는다(2026-10-02, 저장·리뷰가 날아가지 않게)
   async function decline() {
     "use server";
     const s = await auth();
-    if (s?.user?.id && (await consentNeeded(s.user.id))) await deleteAccount(s.user.id);
+    if (s?.user?.id) { const row = await getProfile(s.user.id); if (row?.consentNeeded && row.firstConsent) await deleteAccount(s.user.id); }
     await signOut({ redirectTo: "/" });
   }
 
   const finishing = !!p?.consentNeeded;
+  const reconsent = finishing && !p?.firstConsent;   // 기존 회원 — 약관·방침이 바뀌어 다시 동의
   const needNick = !!p?.nicknameNeeded;
   return (
     <div className="wrap" style={{ maxWidth: 420 }}>
       {!finishing && <p className="crumb"><Link href="/my">마이페이지</Link></p>}
-      <h1>{finishing ? "가입 마무리" : "프로필"}</h1>
-      <p className="lead">{finishing ? "약관에 동의하고 프로필을 채우면 가입이 끝납니다. " : ""}성별·연령대·지역은 어떤 페어링이 인기인지 보는 통계에만 쓰고, 개인을 식별하는 용도로 쓰지 않습니다. 다른 회원에게는 닉네임만 보입니다.</p>
+      <h1>{reconsent ? "약관·방침 변경 동의" : finishing ? "가입 마무리" : "프로필"}</h1>
+      {reconsent && <p className="box small" style={{ marginTop: 10 }}><b>바뀐 내용</b> — {CONSENT_CHANGE_NOTE} 아래에서 다시 동의하면 보던 화면으로 돌아갑니다.</p>}
+      <p className="lead">{finishing && !reconsent ? "약관에 동의하고 프로필을 채우면 가입이 끝납니다. " : ""}성별·연령대는 어떤 페어링이 인기인지 보는 통계에, 사는 시·도는 통계와 그 지역 날씨에 맞는 추천에 쓰고, 개인을 식별하는 용도로 쓰지 않습니다. 다른 회원에게는 닉네임만 보입니다.</p>
       {!finishing && needNick && !sp.error && <p className="form-error">회원 추천 글에 보일 닉네임을 정해 주세요.</p>}
       {sp.error && <p className="form-error">{sp.error}</p>}
       {sp.ok && <p className="form-ok">저장했습니다.</p>}
@@ -70,14 +73,14 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
         <input type="hidden" name="next" value={next} />
         <NicknameField defaultValue={p?.name} missing={needNick} />
         <ProfileFields gender={p?.gender} birthDate={p?.birthDate} sido={p?.sido} />
-        {finishing && <label className="field"><span>추천인 닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택 · 소개해 준 회원의 닉네임</span></span><input name="referrer" type="text" maxLength={24} placeholder="예: 막걸리러버" autoComplete="off" /></label>}
+        {finishing && !reconsent && <label className="field"><span>추천인 닉네임 <span className="muted" style={{ fontWeight: 400 }}>선택 · 소개해 준 회원의 닉네임</span></span><input name="referrer" type="text" maxLength={24} placeholder="예: 막걸리러버" autoComplete="off" /></label>}
         {finishing && <ConsentFields details={{ terms: <Terms />, privacy: <PrivacyConsentSummary /> }} />}
-        <button type="submit" className="btn p" style={{ width: "100%" }}>{finishing ? "동의하고 가입 마치기" : "저장"}</button>
+        <button type="submit" className="btn p" style={{ width: "100%" }}>{reconsent ? "동의하고 계속" : finishing ? "동의하고 가입 마치기" : "저장"}</button>
       </form>
       {finishing && (
         <form action={decline} style={{ marginTop: 10 }}>
-          <button type="submit" className="btn" style={{ width: "100%" }}>동의하지 않고 나가기</button>
-          <p className="small muted" style={{ marginTop: 6 }}>연결된 계정 정보를 바로 지우고 로그아웃합니다. 가입하지 않아도 검색과 페어링 보기는 그대로 쓸 수 있어요.</p>
+          <button type="submit" className="btn" style={{ width: "100%" }}>{reconsent ? "다음에 하기(로그아웃)" : "동의하지 않고 나가기"}</button>
+          <p className="small muted" style={{ marginTop: 6 }}>{reconsent ? "계정은 그대로 두고 로그아웃합니다. 다음 로그인 때 다시 여쭤요." : "연결된 계정 정보를 바로 지우고 로그아웃합니다. 가입하지 않아도 검색과 페어링 보기는 그대로 쓸 수 있어요."}</p>
         </form>
       )}
       <p className="small muted" style={{ marginTop: 18 }}><Link href="/terms">이용약관</Link> · <Link href="/privacy"><b>개인정보처리방침</b></Link></p>

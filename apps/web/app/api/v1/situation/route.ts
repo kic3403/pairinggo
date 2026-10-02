@@ -4,7 +4,7 @@
  * 날씨를 못 받으면 계절만으로 판정한다(fromWeather=false). d·f가 있으면 그 술·음식 상세용 칸(없으면 null), 없으면 홈용 조합 n개.
  * 근거 점수·등급은 건드리지 않는다 — 규칙은 shared situation.ts.
  */
-import { GRADE_LABEL, gradeOf, kstToday, sidoOfRegion, sidoShort, situationForDrink, situationForFood, situationOf, situationPairs, toSlug, type SituationPair } from "@pairinggo/shared";
+import { GRADE_LABEL, KIND_LABEL, gradeOf, kindOf, kstToday, sidoOfRegion, sidoShort, situationForDrink, situationForFood, situationOf, situationPairs, toSlug, type SituationPair } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { json, preflight } from "@/lib/http";
 import { weatherFor } from "@/lib/weather";
@@ -17,7 +17,7 @@ export async function OPTIONS(req: Request) { return preflight(req); }
 
 const pub = (x: SituationPair) => ({
   d: x.drink.id, f: x.food.id, drink: x.drink.name, food: x.food.name, dslug: toSlug(x.drink.name), fslug: toSlug(x.food.name),
-  category: x.drink.category, region: x.drink.region.split(" ")[0] ?? "", conf: CONF_LABEL[x.conf], grade: GRADE_LABEL[gradeOf(x.p).key], fit: x.fit, local: x.local,
+  category: kindOf(x.drink) === "trad" ? x.drink.category : KIND_LABEL[kindOf(x.drink)], region: x.drink.region.split(" ")[0] ?? "", conf: CONF_LABEL[x.conf], grade: GRADE_LABEL[gradeOf(x.p).key], fit: x.fit, local: x.local,
 });
 
 export async function GET(req: Request) {

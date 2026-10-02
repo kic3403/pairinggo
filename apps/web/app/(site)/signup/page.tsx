@@ -91,7 +91,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
       )}
 
       <p className="small muted" style={{ marginTop: 22 }}>
-        성별·생년월일·사는 시·도는 성별·연령대·지역별 페어링 통계에만 쓰고 개인을 알아보는 데 쓰지 않습니다. 주류 정보 서비스라 만 19세 이상만 가입할 수 있습니다. 페어링GO는 주류를 직접 판매하지 않습니다.
+        성별·생년월일은 성별·연령대별 페어링 통계에, 사는 시·도는 지역별 통계와 그 지역 날씨에 맞는 추천에 쓰고 개인을 알아보는 데 쓰지 않습니다. 주류 정보 서비스라 만 19세 이상만 가입할 수 있습니다. 페어링GO는 주류를 직접 판매하지 않습니다.
         {" "}<Link href="/terms">이용약관</Link> · <Link href="/privacy"><b>개인정보처리방침</b></Link>
       </p>
     </div>
