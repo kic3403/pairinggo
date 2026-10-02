@@ -16,6 +16,7 @@ import TrendRow from "./_components/TrendRow";
 import TriedPill from "./_components/TriedPill";
 import QuickMenu from "./_components/QuickMenu";
 import PickFeed from "./_components/PickFeed";
+import WeatherPick from "./_components/WeatherPick";
 import JsonLd from "./_components/JsonLd";
 import { loadAwards } from "@/lib/awards";
 import { homeCards } from "@/lib/banners";
@@ -58,6 +59,8 @@ export default async function Home() {
       <h1 className="home-h1">맛있는 술엔 맛있는 음식 <span className="muted">— 술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 근거와 함께</span></h1>
       <HomeExamples />
       <HomeTabs />
+      {/* 사는 곳 날씨·계절에 맞는 조합 — 브라우저에서 받아 그린다(docs/29, 카드 순위와 무관) */}
+      <WeatherPick mode="home" />
       <HomeBanners cards={home.cards} />
       <QuickMenu michelinYear={awards.year} />
       <FlowTiles />

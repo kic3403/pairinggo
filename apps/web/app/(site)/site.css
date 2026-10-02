@@ -1445,3 +1445,28 @@ a.pd-score:hover { border-color: var(--navy); }
 .home-ex .muted { margin-right: 2px; }
 .home-ex a { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink2); text-decoration: none; font-weight: 600; }
 .home-ex a:hover { border-color: var(--navy); color: var(--navy); }
+
+/* ---------- 오늘 같은 날엔(2026-10-02, docs/29): 사는 곳 날씨·계절에 맞는 조합 칸 — 카드 순위와 무관하게 따로 얹는다 ---------- */
+.box.wx { margin-bottom: 14px; border-left: 4px solid var(--navy); background: linear-gradient(90deg, color-mix(in srgb, var(--navy-soft) 55%, var(--surface)), var(--surface) 60%); }
+.box.wx.wx-rain, .box.wx.wx-snow { border-left-color: #4A7BB7; }
+.box.wx.wx-cold { border-left-color: #5B6C8F; }
+.box.wx.wx-cool { border-left-color: #B8743A; background: linear-gradient(90deg, #FBF3EA, var(--surface) 60%); }
+.box.wx.wx-warm { border-left-color: #6E9E4B; background: linear-gradient(90deg, #F0F7EA, var(--surface) 60%); }
+.box.wx.wx-hot { border-left-color: #3BA3B5; background: linear-gradient(90deg, #E9F6F8, var(--surface) 60%); }
+.wx-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.wx-icon { font-size: 26px; line-height: 1; flex: none; }
+.wx-text h3 { margin: 0; font-size: 12.5px; letter-spacing: 0.04em; color: var(--muted); }
+.wx-line { margin: 2px 0 0; font-weight: 800; font-size: 16px; color: var(--ink); text-wrap: balance; }
+.wx-list { display: grid; gap: 6px; }
+.box.wx .wx-list li { border-top: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; font-size: 15px; }
+.wx-pair { text-decoration: none; }
+.wx-pair .wx-d { color: var(--food-ink); }
+.wx-pair .wx-f { color: var(--navy-ink); }
+.wx-x { margin: 0 5px; color: var(--muted); font-weight: 400; }
+.wx-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.wx-chips .nb-chip { color: var(--navy-ink); }
+.box.wx.f .wx-chips .nb-chip { color: var(--food-ink); }
+.wx-why { margin: 8px 0 0; }
+.wx-note { color: var(--ink2); }
+.linkish { background: none; border: 0; padding: 0; font: inherit; color: var(--navy-ink); text-decoration: underline; cursor: pointer; }
+@media (max-width: 767px) { .wx-line { font-size: 15px; } .wx-icon { font-size: 22px; } }

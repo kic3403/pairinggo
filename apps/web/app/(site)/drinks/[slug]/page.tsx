@@ -30,6 +30,7 @@ import DetailActionBar from "../../_components/DetailActionBar";
 import JsonLd from "../../_components/JsonLd";
 import ProfileBars from "../../_components/ProfileBars";
 import ShareButton from "../../_components/ShareButton";
+import WeatherPick from "../../_components/WeatherPick";
 import SpecPicker from "../../_components/SpecPicker";
 import KindFacts from "../../_components/KindFacts";
 import DetailMedia, { KIND_TONE } from "../../_components/DetailMedia";
@@ -226,6 +227,8 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               </ul>
             </section>
           )}
+          {/* 오늘 같은 날엔 — 사는 곳 날씨에 맞는 이 술의 음식(docs/29). 아래 카드 순위는 그대로 */}
+          <WeatherPick mode="drink" id={drink.id} />
           <MemberPickButton mode="drink" subjectId={drink.id} subjectName={drink.name} options={c.dataset.foods.map((f) => ({ id: f.id, name: f.name }))} />
           <RatingsProvider subject={{ drink: drink.id }}>
             <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/drinks/${toSlug(drink.name)}/all`}>

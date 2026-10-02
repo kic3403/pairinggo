@@ -1,11 +1,11 @@
 /**
  * GET /api/account/consent → { needed, expert } — 로그인 회원이 가입 마무리(약관 동의 또는 닉네임)를 해야 하는지. SavedProvider가 화면마다 확인해 /profile(가입 마무리)로 보낸다.
- * expert = 전문가 상태(applied·approved·rejected·suspended·null) — 헤더 "검수" 링크용(docs/27).
+ * expert = 전문가 상태(applied·approved·rejected·suspended·null) — 헤더 "검수" 링크용(docs/27). sido = 프로필 시·도 — 날씨 추천 칸용(docs/29).
  * 페이지 로드 때 불리므로 auth() 대신 getToken()(세션 쿠키를 다시 쓰지 않는다 — 첫 화면 로그아웃과 경합 방지).
  */
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { setupNeeded } from "@/lib/account";
+import { getProfile, setupNeeded } from "@/lib/account";
 import { expertStatusOf } from "@/lib/experts";
 
 export const runtime = "nodejs";
@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   } catch { uid = null; }
   if (!uid) return NextResponse.json({ needed: false, loggedIn: false }, { headers: NO_STORE });
   try {
-    const [needed, expert] = await Promise.all([setupNeeded(uid), expertStatusOf(uid).catch(() => null)]);
-    return NextResponse.json({ needed, loggedIn: true, expert }, { headers: NO_STORE });
+    const [needed, expert, profile] = await Promise.all([setupNeeded(uid), expertStatusOf(uid).catch(() => null), getProfile(uid).catch(() => null)]);
+    return NextResponse.json({ needed, loggedIn: true, expert, sido: profile?.sido ?? null }, { headers: NO_STORE });
   } catch { return NextResponse.json({ needed: false, loggedIn: true, expert: null }, { headers: NO_STORE }); }
 }

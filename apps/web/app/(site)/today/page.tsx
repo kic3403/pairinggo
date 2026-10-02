@@ -18,6 +18,7 @@ import GradeBadge from "../_components/GradeBadge";
 import ExpertBadge from "../_components/ExpertBadge";
 import Heart from "../_components/Heart";
 import ShareButton from "../_components/ShareButton";
+import WeatherPick from "../_components/WeatherPick";
 
 // 날짜가 바뀌면 조합이 바뀐다 — 10분마다 다시 그린다(자정 직후 최대 10분은 어제 조합)
 export const revalidate = 600;
@@ -102,6 +103,8 @@ export default async function TodayPage() {
           <ShareButton className="btn" title={`오늘의 페어링 — ${josa(d.name, "과/와")} ${f.name}`} text={`${t.headline}: ${d.name} × ${f.name} — 페어링GO`} path="/today" d={d.id} f={f.id} />
         </div>
       </article>
+      {/* 오늘의 조합은 누구에게나 같고, 사는 곳 날씨에 맞는 조합은 따로(docs/29) */}
+      <WeatherPick mode="home" n={2} />
 
       {/* 인스타·블로그용 — 그림 한 장과 붙여 넣을 글 */}
       <section className="box sns-kit">

@@ -26,6 +26,7 @@ import ProfileBars from "../../_components/ProfileBars";
 import DetailMedia from "../../_components/DetailMedia";
 import RecentTrack from "../../_components/RecentTrack";
 import ShareButton from "../../_components/ShareButton";
+import WeatherPick from "../../_components/WeatherPick";
 
 export const revalidate = 600;
 /**
@@ -134,6 +135,8 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
               </ul>
             </section>
           )}
+          {/* 오늘 같은 날엔 — 사는 곳 날씨에 맞는 이 음식의 술(docs/29). 아래 카드 순위는 그대로 */}
+          <WeatherPick mode="food" id={food.id} />
           <MemberPickButton mode="food" subjectId={food.id} subjectName={food.name} options={c.dataset.drinks.map((d) => ({ id: d.id, name: d.name }))} />
           <RatingsProvider subject={{ food: food.id }}>
             <PickTabs counts={pickCounts(allItems)} loaded={items.length} moreHref={`/foods/${toSlug(food.name)}/all`}>

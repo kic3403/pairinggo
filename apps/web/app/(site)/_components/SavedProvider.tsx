@@ -18,7 +18,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 
 export type SavedKind = "drink" | "food" | "place";
 export type PlaceMeta = { name?: string; address?: string; phone?: string; url?: string; category?: string; food?: string };
-type User = { name?: string | null; email?: string | null } | null;
+type User = { name?: string | null; email?: string | null; /** 프로필 시·도(긴 이름) — 날씨 추천 칸 WeatherPick이 쓴다(docs/29) */ sido?: string | null } | null;
 
 type Ctx = {
   ready: boolean;
@@ -94,6 +94,7 @@ export default function SavedProvider({ children }: { children: ReactNode }) {
       // 간편가입 직후·약관 변경·닉네임 없음 — 가입 마무리 화면으로(consent.ts CONSENT_VERSION, profile.ts nicknameProblem)
       if (c?.needed && !CONSENT_FREE.includes(pathname)) router.replace(`/profile?next=${encodeURIComponent(pathname)}`);
       setExpert((c?.expert as ExpertStatus | null) ?? null);
+      setUser((u) => (u ? { ...u, sido: typeof c?.sido === "string" ? c.sido : null } : u));
       const account = new Set<string>((j?.items || []).map((x: { kind: SavedKind; item_id: string }) => key(x.kind, x.item_id)));
       // 비로그인 때 기기에 담은 것 — 계정에 없는 것만 옮기고 기기 목록을 비운다(목록을 못 받았으면 다음 기회에)
       const guest = j ? readGuest() : [];
