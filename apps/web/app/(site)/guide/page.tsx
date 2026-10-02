@@ -20,6 +20,7 @@ export default async function GuideIndex() {
     { title: "지역별 전통주 안주", items: list.filter((g) => g.by === "region") },
     { title: "음식 종류별 어울리는 술", items: list.filter((g) => g.side === "food" && g.by === "category") },
     { title: "맛으로 고르는 술", items: list.filter((g) => g.by === "tag") },
+    { title: "날씨·계절로 고르는 술과 안주", items: list.filter((g) => g.by === "situation") },
   ].filter((x) => x.items.length > 0);
   return (
     <div className="wrap guide">

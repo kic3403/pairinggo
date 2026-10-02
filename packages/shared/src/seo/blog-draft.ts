@@ -36,15 +36,18 @@ export function guideBlogDraft(c: GuideContent, base: string, n = BLOG_DRAFT_TOP
   const isDrink = def.side === "drink";
   const rows = (isDrink ? c.foods : c.drinks).slice(0, n);
   const count = rows.length;
-  const title = isDrink ? `${def.word} 안주 추천 ${count}가지 — 근거로 골랐어요` : `${def.word}에 어울리는 술 ${count}가지 — 근거로 골랐어요`;
-  const intro = isDrink
+  const situation = def.by === "situation";   // 상황 모음(2026-10-02) — "비 오는 날과 뭘 먹을지"가 안 되게 머리 글은 lead 그대로
+  const title = situation ? `${def.h1} ${count}가지 — 근거로 골랐어요` : isDrink ? `${def.word} 안주 추천 ${count}가지 — 근거로 골랐어요` : `${def.word}에 어울리는 술 ${count}가지 — 근거로 골랐어요`;
+  const intro = situation && def.lead
+    ? `${def.lead} 많이 겹친 음식 순으로 ${count}가지를 골랐습니다. 맛 분석으로 추정만 한 조합은 넣지 않았어요.`
+    : isDrink
     ? `${josa(def.word, "과/와")} 뭘 먹을지 고민될 때 보세요. 양조장·소믈리에·매체·후기가 실제로 짝지은 조합 ${def.n}개를 모아, 많이 겹친 음식 순으로 ${count}가지를 골랐습니다. 맛 분석으로 추정만 한 조합은 넣지 않았어요.`
     : `${def.word}에 어떤 술을 곁들일지 고민될 때 보세요. 양조장·소믈리에·매체·후기가 실제로 짝지은 조합 ${def.n}개를 모아, 많이 겹친 술 순으로 ${count}가지를 골랐습니다. 맛 분석으로 추정만 한 조합은 넣지 않았어요.`;
   const lines = [
     intro,
     "",
     ...(isDrink
-      ? (rows as GuideContent["foods"]).flatMap((r, i) => itemLines(r, i, `어울리는 ${def.word}`))
+      ? (rows as GuideContent["foods"]).flatMap((r, i) => itemLines(r, i, situation ? "어울리는 술" : `어울리는 ${def.word}`))
       : (rows as GuideContent["drinks"]).flatMap((r, i) => itemLines(r, i, `어울리는 ${def.word}`))),
     `전체 순위와 조합마다의 근거·출처는 여기에서 볼 수 있어요.`,
     `${base}/guide/${def.slug}?utm_source=blog`,

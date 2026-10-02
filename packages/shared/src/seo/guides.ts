@@ -8,6 +8,7 @@
  *  · 음식 쪽 — category(음식 종류: 전과 어울리는 술) · tag(맛: 매운 음식에 어울리는 술 — 음식 tags, TASTE_GUIDE_WORD에 있는 것만)
  */
 import type { Drink, Food, Pairing } from "../types";
+import { drinkFits, foodFits, type RuleKey } from "../situation";
 import { josa } from "../hangul";
 import { confidenceOf, strengthOf, type Confidence } from "../pairing/confidence";
 
@@ -40,7 +41,20 @@ export const TASTE_GUIDE_WORD: Record<string, { word: string; slug: string }> = 
   감칠맛: { word: "감칠맛 나는 음식", slug: "감칠맛음식" },
 };
 
-export type GuideBy = "category" | "region" | "tag";
+/**
+ * 상황 모음(2026-10-02, docs/29 §5-1) — 날씨·계절 규칙(situation.ts)으로 술과 음식이 둘 다 맞는 근거 조합만. 검색 유입용("비오는날 안주").
+ * 모두 술 쪽 화면(음식 순위 + 음식마다 어울리는 술). lead는 화면 머리 글(기본 문장이 "비 오는 날과 자주 짝지어진"처럼 어색해서 따로).
+ */
+export const SITUATION_GUIDES: { key: RuleKey; slug: string; word: string; h1: string; title: string; description: string; lead: string }[] = [
+  { key: "rain", slug: "비오는날-막걸리-안주", word: "비 오는 날", h1: "비 오는 날 막걸리 안주 추천", title: "비 오는 날 막걸리 안주 추천 — 전·부침개와 어울리는 막걸리·약주", description: "비 오는 날 찾게 되는 전·부침개와 막걸리·약주의 조합을 양조장·소믈리에·매체가 확인한 근거로 골랐습니다. 비 오는 날엔 전 검색이 1.7배, 막걸리가 1.2배 늘어요.", lead: "비 오는 날엔 전 검색이 1.7배, 막걸리 검색이 1.2배 늘어요(네이버 검색·기상청 2년치 대조). 탁주·약주와 전·부침개의 근거 확인 조합만 모았습니다." },
+  { key: "snow", slug: "눈오는날-어울리는-술-안주", word: "눈 오는 날", h1: "눈 오는 날 어울리는 술과 안주", title: "눈 오는 날 어울리는 술과 안주 — 전·국물 요리와 따끈한 술", description: "눈 오는 날 당기는 전·국물 요리와 증류주·약주·와인의 조합을 근거로 골랐습니다.", lead: "눈 오는 날엔 전과 따끈한 국물이 당기죠. 5℃ 아래로 내려가면 증류주·약주 검색이 1.5배 늘어요. 전·국물 요리와 도수 있는 술의 근거 확인 조합만 모았습니다." },
+  { key: "cold", slug: "추운날-어울리는-술-안주", word: "추운 날", h1: "추운 날 어울리는 술과 안주", title: "추운 날 어울리는 술 추천 — 국물·회·구이와 증류주·약주·와인", description: "기온이 5℃ 아래로 내려가면 전통소주·와인·약주 검색이 1.4~1.7배 늘어요. 국물·회·구이와 도수 있는 술의 조합을 근거로 골랐습니다.", lead: "5℃ 아래로 내려가면 전통소주·와인·약주 검색이 1.4~1.7배, 국물 요리도 1.4배 늘어요(네이버 검색·기상청 2년치 대조). 국물·회·구이와 도수 있는 술의 근거 확인 조합만 모았습니다." },
+  { key: "cool", slug: "선선한-가을날-술-안주", word: "선선한 가을날", h1: "선선한 가을날 약주·청주와 안주", title: "선선한 가을날 어울리는 술 추천 — 약주·청주와 구이·제철 안주", description: "가을엔 약주·청주 검색이 평소보다 30% 넘게 늘고 구이도 많이 찾아요. 가을 제철 안주와 약주·청주·12~25도 술의 조합을 근거로 골랐습니다.", lead: "가을엔 약주·청주 검색이 평소보다 30% 넘게 늘고 구이도 많이 찾아요(10월 지수 약주 134·구이 119). 구이·가을 제철 안주와 약주·청주·12~25도 술의 근거 확인 조합만 모았습니다." },
+  { key: "warm", slug: "봄가을-날씨-막걸리-안주", word: "봄·가을 날씨", h1: "봄·가을 날씨에 어울리는 막걸리와 안주", title: "봄·가을 날씨 막걸리 안주 추천 — 전·무침·봄 제철 안주", description: "15~25℃ 봄·가을 날씨엔 막걸리를 가장 많이 찾아요(5월이 1년 중 최고). 전·무침·봄 제철 안주와 막걸리·가벼운 약주·과실주의 조합을 근거로 골랐습니다.", lead: "15~25℃ 봄·가을 날씨엔 막걸리를 가장 많이 찾아요(5월이 1년 중 최고). 전·무침·봄 제철 안주와 막걸리·가벼운 약주·과실주의 근거 확인 조합만 모았습니다." },
+  { key: "hot", slug: "더운날-시원한-술-안주", word: "더운 날", h1: "더운 날 시원한 술과 안주", title: "더운 날 시원한 술 추천 — 냉면·물회·회와 저도수 막걸리·과실주", description: "25℃를 넘으면 냉면·물회 검색이 3.8배 늘어요. 면·회·여름 제철 안주와 차갑게 마시는 저도수 막걸리·과실주의 조합을 근거로 골랐습니다.", lead: "25℃를 넘으면 냉면·물회 검색이 3.8배 늘고 시원한 술을 찾아요(네이버 검색·기상청 2년치 대조). 면·회·여름 제철 안주와 저도수 막걸리·과실주의 근거 확인 조합만 모았습니다." },
+];
+
+export type GuideBy = "category" | "region" | "tag" | "situation";
 export type GuideDef = {
   slug: string; side: "drink" | "food";
   /** 묶는 기준 — 종류·지역(술)·맛(음식) */
@@ -53,6 +67,8 @@ export type GuideDef = {
   h1: string; title: string; description: string;
   /** 근거 조합 수 */
   n: number;
+  /** 상황 모음(by situation)의 규칙 키·화면 머리 글 */
+  situation?: RuleKey; lead?: string;
 };
 
 const drinkWord = (category: string) => DRINK_GUIDE_WORD[category] ?? { word: category, slug: category.replace(/[^0-9A-Za-z가-힣]/g, "") };
@@ -73,22 +89,29 @@ function evidencePairs(ds: DS): Row[] {
   return rows;
 }
 
-const inGuide = (def: Pick<GuideDef, "side" | "by" | "category">, r: Row) =>
+const inGuide = (def: Pick<GuideDef, "side" | "by" | "category" | "situation">, r: Row) =>
+  def.by === "situation" ? (!!def.situation && drinkFits(def.situation, r.d) && foodFits(def.situation, r.f)) :
   def.side === "drink"
     ? (def.by === "region" ? guideRegionOf(r.d) === def.category : r.d.category === def.category)
     : (def.by === "tag" ? (r.f.tags ?? []).includes(def.category) : r.f.category === def.category);
 
 const add = (m: Map<string, number>, k: string) => { if (k) m.set(k, (m.get(k) ?? 0) + 1); };
-const BY_ORDER: Record<string, number> = { "drink|category": 0, "drink|region": 1, "food|category": 2, "food|tag": 3 };
+const BY_ORDER: Record<string, number> = { "drink|category": 0, "drink|region": 1, "food|category": 2, "food|tag": 3, "drink|situation": 4 };
 
 /** 만들 수 있는 모음 화면 전부 — 술 종류 → 지역 → 음식 종류 → 맛 차례, 그 안에서는 근거 조합이 많은 순 */
 export function guideList(ds: DS): GuideDef[] {
-  const dn = new Map<string, number>(), rn = new Map<string, number>(), fn = new Map<string, number>(), tn = new Map<string, number>();
+  const dn = new Map<string, number>(), rn = new Map<string, number>(), fn = new Map<string, number>(), tn = new Map<string, number>(), sn = new Map<RuleKey, number>();
   for (const r of evidencePairs(ds)) {
     add(dn, r.d.category); add(rn, guideRegionOf(r.d)); add(fn, r.f.category);
     for (const t of new Set(r.f.tags ?? [])) if (TASTE_GUIDE_WORD[t]) add(tn, t);
+    for (const g of SITUATION_GUIDES) if (drinkFits(g.key, r.d) && foodFits(g.key, r.f)) sn.set(g.key, (sn.get(g.key) ?? 0) + 1);
   }
   const out: GuideDef[] = [];
+  for (const g of SITUATION_GUIDES) {
+    const n = sn.get(g.key) ?? 0;
+    if (n < GUIDE_MIN) continue;
+    out.push({ slug: g.slug, side: "drink", by: "situation", category: g.key, word: g.word, n, h1: g.h1, title: g.title, description: `${g.description} 근거 조합 ${n}개.`, situation: g.key, lead: g.lead });
+  }
   for (const [category, n] of dn) {
     if (n < GUIDE_MIN) continue;
     const w = drinkWord(category);

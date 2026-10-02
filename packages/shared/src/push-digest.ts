@@ -4,16 +4,20 @@
  *  · 활동 소식(즉시): 요청한 술 등록·보류, 내 추천에 하트 (예약·주문은 notify·notify-order가 이미 보낸다)
  * 문구 규칙만 — 누구에게 보낼지·보냈는지 기록은 web lib/push-digest.ts.
  */
+import type { RuleKey, Situation } from "./situation";
+
 export type PushMessage = { title: string; body: string; url: string; tag?: string };
-export type PushPref = { weekly: boolean; activity: boolean };
-export const DEFAULT_PUSH_PREF: PushPref = { weekly: true, activity: true };
+export type PushPref = { weekly: boolean; activity: boolean; /** 날씨 소식(2026-10-02, docs/29 §5-2) — 아침에 비·눈·5℃ 미만일 때 사는 곳 기준 한 건 */ weather: boolean };
+export const DEFAULT_PUSH_PREF: PushPref = { weekly: true, activity: true, weather: true };
+/** 날씨 소식은 20시간 안에 두 번 보내지 않는다(크론이 흔들려도 하루 한 번) */
+export const WEATHER_MIN_GAP_HOURS = 20;
 /** 주간 소식은 6일 안에 두 번 보내지 않는다(Vercel 크론이 흔들려도 한 주에 한 번) */
 export const WEEKLY_MIN_GAP_DAYS = 6;
 export const WEEKLY_LOOKBACK_DAYS = 7;
 
 export function cleanPushPref(raw: unknown): PushPref {
   const r = (raw ?? {}) as Partial<Record<keyof PushPref, unknown>>;
-  return { weekly: r.weekly !== false, activity: r.activity !== false };
+  return { weekly: r.weekly !== false, activity: r.activity !== false, weather: r.weather !== false };
 }
 
 export type DigestInput = {
@@ -45,6 +49,21 @@ export function weeklyDigest(i: DigestInput): PushMessage | null {
   if (!parts.length) return null;
   const top = parts.slice(0, 3);
   return { title: "이번 주 페어링GO 소식", body: top.map((p) => p.text).join(" · ").slice(0, 140), url: top[0].url, tag: "weekly" };
+}
+
+/* ---------- 날씨 소식 ---------- */
+/** 보낼 만한 날씨인지 — 비·눈·5℃ 미만만(봄·가을·더운 날은 보내지 않는다, 알림 피로) */
+export const weatherPushWorthy = (key: RuleKey) => key === "rain" || key === "snow" || key === "cold";
+/**
+ * 날씨 소식 한 건 — 사는 곳 날씨 머리 글 + 그 상황의 첫 조합. 눌렀을 때 음식 화면(?d=술)으로. 보낼 만한 날씨가 아니거나 조합이 없으면 null
+ */
+export function weatherPush(s: Pick<Situation, "key" | "icon" | "sido" | "temp" | "precip">, pair: { drink: string; food: string; fslug: string; d: string; conf: string } | null): PushMessage | null {
+  if (!weatherPushWorthy(s.key) || !pair) return null;
+  const where = s.sido ?? "오늘";
+  const t = s.temp === null ? "" : ` ${Math.round(s.temp)}℃`;
+  const title = s.key === "rain" ? `${s.icon} 오늘 ${where}에 비 와요` : s.key === "snow" ? `${s.icon} 오늘 ${where}에 눈 와요` : `${s.icon} 오늘 ${where}${t}, 추워요`;
+  const lead = s.key === "rain" ? "막걸리에 전 어때요?" : s.key === "snow" ? "전에 따끈한 술 어때요?" : "도수 있는 술 한 잔 어때요?";
+  return { title, body: `${lead} ${pair.drink} × ${pair.food} · ${pair.conf}`.slice(0, 140), url: `/foods/${pair.fslug}?d=${pair.d}&utm_source=push`, tag: "weather" };
 }
 
 /* ---------- 활동 소식 ---------- */

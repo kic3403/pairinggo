@@ -22,8 +22,8 @@ describe("주간 소식(2026-09-26)", () => {
     expect(weeklyDigest({ savedNews: [], trendUp: [], unrated: 2, newDrinks: 0 })).toMatchObject({ body: "먹어봤나요? 2개가 기다려요", url: "/my" });
   });
   it("설정 정리·활동 문구", () => {
-    expect(cleanPushPref(null)).toEqual({ weekly: true, activity: true });
-    expect(cleanPushPref({ weekly: false })).toEqual({ weekly: false, activity: true });
+    expect(cleanPushPref(null)).toEqual({ weekly: true, activity: true, weather: true });
+    expect(cleanPushPref({ weekly: false })).toEqual({ weekly: false, activity: true, weather: true });
     expect(requestPush("금과명주", "done", "금과명주", "금과명주")).toMatchObject({ url: "/drinks/금과명주", body: "‘금과명주’ — 어울리는 음식을 확인해 보세요" });
     expect(requestPush("금과", "done", "금과명주", "금과명주").body).toContain("→ 금과명주");
     expect(requestPush("금과명주", "rejected", null, null, "단종")).toMatchObject({ url: "/my#requests", body: "‘금과명주’ · 단종" });
@@ -39,3 +39,17 @@ describe("expertPush", () => {
   });
 });
 
+
+describe("날씨 소식(2026-10-02)", async () => {
+  const { weatherPush, cleanPushPref } = await import("../push-digest");
+  const pair = { drink: "느린마을막걸리", food: "해물파전", fslug: "해물파전", d: "d31", conf: "근거 확인" };
+  it("비·눈·추움만 보내고, 조합이 없으면 보내지 않는다", () => {
+    expect(weatherPush({ key: "rain", icon: "☔", sido: "서울", temp: 18, precip: "rain" }, pair)).toEqual({ title: "☔ 오늘 서울에 비 와요", body: "막걸리에 전 어때요? 느린마을막걸리 × 해물파전 · 근거 확인", url: "/foods/해물파전?d=d31&utm_source=push", tag: "weather" });
+    expect(weatherPush({ key: "cold", icon: "🧣", sido: "강원", temp: -2.6, precip: "none" }, pair)?.title).toBe("🧣 오늘 강원 -3℃, 추워요");
+    expect(weatherPush({ key: "warm", icon: "🌿", sido: "서울", temp: 22, precip: "none" }, pair)).toBeNull();
+    expect(weatherPush({ key: "rain", icon: "☔", sido: "서울", temp: 18, precip: "rain" }, null)).toBeNull();
+  });
+  it("설정 기본값은 켜짐, 끄면 꺼짐", () => {
+    expect(cleanPushPref(null).weather).toBe(true); expect(cleanPushPref({ weather: false }).weather).toBe(false);
+  });
+});

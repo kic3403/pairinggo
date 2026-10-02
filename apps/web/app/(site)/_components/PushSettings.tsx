@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { currentSubscription, pushSupport, subscribePush, unsubscribePush } from "@pairinggo/shared/push-client";
 import { track } from "@/lib/track";
 
-type Pref = { weekly: boolean; activity: boolean };
+type Pref = { weekly: boolean; activity: boolean; weather: boolean };
 
 export default function PushSettings() {
   const [on, setOn] = useState<boolean | null>(null);
@@ -50,7 +50,7 @@ export default function PushSettings() {
   return (
     <section className="box push-settings" aria-label="푸시 알림">
       <h3>푸시 알림 <span className="muted small">{devices > 0 ? `켠 기기 ${devices}대` : "꺼짐"}</span></h3>
-      <p className="small muted" style={{ margin: "0 0 10px" }}>다시 올 이유를 기기로 보내 드려요 — 월요일 아침 주간 소식(저장한 술의 새 페어링·급상승·새 술·먹어봤나요?)과 활동 소식(요청한 술 등록, 내 추천에 하트). 예약·주문 알림은 기기 알림만 켜져 있으면 와요.</p>
+      <p className="small muted" style={{ margin: "0 0 10px" }}>다시 올 이유를 기기로 보내 드려요 — 월요일 아침 주간 소식(저장한 술의 새 페어링·급상승·새 술·먹어봤나요?), 활동 소식(요청한 술 등록, 내 추천에 하트), 날씨 소식(사는 곳에 비·눈이 오거나 추운 날 아침, 어울리는 조합 하나). 예약·주문 알림은 기기 알림만 켜져 있으면 와요.</p>
       {sup === "unsupported" ? <p className="small muted">이 브라우저는 푸시를 지원하지 않아요.</p> : (
         <div className="btns" style={{ margin: 0 }}>
           {on ? <><button type="button" className="btn" disabled={busy} onClick={test}>시험 알림</button><button type="button" className="btn" disabled={busy} onClick={turnOff}>이 기기 끄기</button></>
@@ -62,6 +62,7 @@ export default function PushSettings() {
         <div className="push-prefs">
           <label><input type="checkbox" checked={pref.weekly} onChange={() => toggle("weekly")} /> 주간 소식 <span className="small muted">월요일 아침, 내용이 있을 때만</span></label>
           <label><input type="checkbox" checked={pref.activity} onChange={() => toggle("activity")} /> 활동 소식 <span className="small muted">요청한 술 등록·보류, 내 추천에 하트</span></label>
+          <label><input type="checkbox" checked={pref.weather} onChange={() => toggle("weather")} /> 날씨 소식 <span className="small muted">사는 곳에 비·눈·추운 날 아침에만, 하루 한 번</span></label>
         </div>
       )}
       {msg && <p className="small muted" role="status" style={{ margin: "8px 0 0" }}>{msg}</p>}

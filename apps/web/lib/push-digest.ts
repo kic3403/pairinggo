@@ -2,8 +2,11 @@
  * 재방문 알림(docs/25 §7) — 누구에게 무엇을 보낼지. 문구 규칙은 shared push-digest.ts, 발송은 packages/server/push.
  *  · activityPush: 회원의 활동 소식 설정(push_pref.activity)이 켜져 있을 때만 즉시 발송
  *  · weeklyRun: 알림을 켠 기기가 있는 회원마다 개인화한 주간 소식 한 건(6일 안에 두 번 안 보냄), 내용 없으면 건너뜀
+ *  · weatherRun(2026-10-02, docs/29 §5-2): 아침 크론 — 사는 시·도의 지금 날씨가 비·눈·5℃ 미만일 때만 그 상황의 첫 조합 한 건(20시간 안에 두 번 안 보냄).
+ *    시·도마다 날씨를 한 번만 받고, 날씨를 못 받은 시·도(계절만)는 보내지 않는다(겨울 내내 매일 "추워요"가 되지 않게)
  */
-import { D, F, WEEKLY_LOOKBACK_DAYS, WEEKLY_MIN_GAP_DAYS, byDrink, byFood, cleanPushPref, scorePairings, suggestTried, toSlug, weeklyDigest, type DigestInput, type PushMessage, type PushPref } from "@pairinggo/shared";
+import { D, F, WEATHER_MIN_GAP_HOURS, WEEKLY_LOOKBACK_DAYS, WEEKLY_MIN_GAP_DAYS, byDrink, byFood, cleanPushPref, kstToday, scorePairings, sidoShort, situationOf, situationPairs, suggestTried, toSlug, weatherPush, weatherPushWorthy, weeklyDigest, type DigestInput, type PushMessage, type PushPref, type Situation } from "@pairinggo/shared";
+import { weatherFor } from "./weather";
 import { pushConfigured, pushTo } from "@pairinggo/server/push";
 import { getCatalog } from "./catalog";
 import { db } from "./db";
@@ -90,6 +93,51 @@ export async function weeklyRun(opts: { dry?: boolean; limit?: number; now?: Dat
     if (opts.dry) { res.sent++; continue; }
     const r = await pushTo("user", uid, msg);
     if (r.sent > 0) { res.sent++; await sb.from("users").update({ weekly_push_at: now.toISOString() }).eq("id", uid); }
+    else res.skipped.failed++;
+  }
+  return res;
+}
+
+export type WeatherRunResult = { users: number; sidos: Record<string, string>; sent: number; skipped: { pref: number; recent: number; nosido: number; noweather: number; calm: number; empty: number; failed: number }; samples: { uid: string; sido: string; title: string; body: string }[] };
+
+/** 날씨 소식 발송(아침 크론). dry면 보내지 않고 미리보기만 — 시·도별 판정은 sidos에 */
+export async function weatherRun(opts: { dry?: boolean; limit?: number; now?: Date } = {}): Promise<WeatherRunResult> {
+  const sb = db();
+  const now = opts.now ?? new Date();
+  const res: WeatherRunResult = { users: 0, sidos: {}, sent: 0, skipped: { pref: 0, recent: 0, nosido: 0, noweather: 0, calm: 0, empty: 0, failed: 0 }, samples: [] };
+  if (!sb || (!opts.dry && !pushConfigured())) return res;
+  const { data: subs } = await sb.from("push_subscriptions").select("owner_id").eq("owner_type", "user").limit(5000);
+  const uids = [...new Set((subs ?? []).map((s) => String(s.owner_id)))].slice(0, opts.limit ?? 500);
+  res.users = uids.length;
+  if (!uids.length) return res;
+  const { data: users } = await sb.from("users").select("id,push_pref,weather_push_at,sido").in("id", uids);
+  const c = await getCatalog();
+  const date = kstToday(now);
+  const gap = now.getTime() - WEATHER_MIN_GAP_HOURS * 3600_000;
+  const bySido = new Map<string, { s: Situation; msg: PushMessage | null }>();
+  for (const u of users ?? []) {
+    const uid = String(u.id);
+    if (!cleanPushPref(u.push_pref).weather) { res.skipped.pref++; continue; }
+    const sido = sidoShort(u.sido as string | null);
+    if (!sido) { res.skipped.nosido++; continue; }
+    if (u.weather_push_at && new Date(String(u.weather_push_at)).getTime() > gap) { res.skipped.recent++; continue; }
+    if (!bySido.has(sido)) {
+      const w = await weatherFor(sido).catch(() => null);
+      const s = situationOf(date, w, sido);
+      let msg: PushMessage | null = null;
+      if (s.fromWeather && weatherPushWorthy(s.key)) {
+        const [p] = situationPairs(c.dataset, s, { sido, n: 1 });
+        msg = weatherPush(s, p ? { drink: p.drink.name, food: p.food.name, fslug: toSlug(p.food.name), d: p.drink.id, conf: p.conf === "confirmed" ? "근거 확인" : "근거 약함" } : null);
+      }
+      res.sidos[sido] = `${s.headline}${s.fromWeather ? "" : " (날씨 없음)"}${msg ? " → 보냄" : ""}`;
+      bySido.set(sido, { s, msg });
+    }
+    const { s, msg } = bySido.get(sido)!;
+    if (!msg) { if (!s.fromWeather) res.skipped.noweather++; else if (!weatherPushWorthy(s.key)) res.skipped.calm++; else res.skipped.empty++; continue; }
+    if (res.samples.length < 5) res.samples.push({ uid: uid.slice(0, 8), sido, title: msg.title, body: msg.body });
+    if (opts.dry) { res.sent++; continue; }
+    const r = await pushTo("user", uid, msg);
+    if (r.sent > 0) { res.sent++; await sb.from("users").update({ weather_push_at: now.toISOString() }).eq("id", uid); }
     else res.skipped.failed++;
   }
   return res;

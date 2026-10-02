@@ -54,7 +54,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/guide">페어링 모음</Link></p>
       <h1>{def.h1}</h1>
       <p className="lead">
-        {isDrink
+        {def.lead ? <>{def.lead} 근거 조합 <b>{def.n}개</b>, 추정 조합은 넣지 않았어요.</> : isDrink
           ? <>양조장·소믈리에·매체·후기가 확인한 조합 <b>{def.n}개</b>에서 뽑은, {josa(def.word, "과/와")} 자주 짝지어진 음식 순서입니다. 추정 조합은 넣지 않았어요.</>
           : <>양조장·소믈리에·매체·후기가 확인한 조합 <b>{def.n}개</b>에서 뽑은, {josa(def.word, "과/와")} 자주 짝지어진 전통주 순서입니다. 추정 조합은 넣지 않았어요.</>}
       </p>

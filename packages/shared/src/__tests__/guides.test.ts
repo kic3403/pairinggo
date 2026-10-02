@@ -20,7 +20,7 @@ describe("모음 화면(가이드)", () => {
 
   it("근거 조합이 GUIDE_MIN개 이상인 종류만 — 술 화면 먼저", () => {
     const list = guideList(ds);
-    expect(list.map((g) => g.slug)).toEqual(["막걸리-안주", "전-어울리는-술"]);
+    expect(list.filter((g) => g.by !== "situation").map((g) => g.slug)).toEqual(["막걸리-안주", "전-어울리는-술"]);
     expect(list[0]).toMatchObject({ side: "drink", category: "탁주", n: 11, h1: "막걸리 안주 추천" });
     expect(list[1]).toMatchObject({ side: "food", category: "전", n: 11, h1: "전과 어울리는 술" });
     expect(GUIDE_MIN).toBe(10);
@@ -52,5 +52,20 @@ describe("모음 화면(가이드)", () => {
     for (const g of list) expect(g.slug).toMatch(/^[0-9A-Za-z가-힣-]+$/);
     expect(list.some((g) => g.slug === "막걸리-안주")).toBe(true);
     expect(list.find((g) => g.side === "food" && g.category === "안주")).toMatchObject({ slug: "안주-어울리는-술", h1: "안주류와 어울리는 술" });
+  });
+});
+
+describe("상황 모음(2026-10-02)", async () => {
+  const { guideList, guideContent, SITUATION_GUIDES } = await import("../seo/guides");
+  const data = (await import("../../data/pairings.json")).default as unknown as Parameters<typeof guideList>[0];
+  it("실데이터에서 비·추움 모음이 생기고 술·음식이 둘 다 규칙에 맞는다", () => {
+    const list = guideList(data).filter((g) => g.by === "situation");
+    expect(list.map((g) => g.slug)).toContain("비오는날-막걸리-안주");
+    expect(list.map((g) => g.slug)).toContain("추운날-어울리는-술-안주");
+    const rain = list.find((g) => g.slug === "비오는날-막걸리-안주")!;
+    expect(rain.side).toBe("drink"); expect(rain.lead).toContain("1.7배"); expect(rain.n).toBeGreaterThanOrEqual(10);
+    const c = guideContent(data, rain, 5, 3);
+    for (const row of c.foods) { expect(row.item.category === "전" || row.item.name === "빈대떡").toBe(true); for (const w of row.with) expect(["탁주", "약주", "청주", "과실주"]).toContain(w.item.category); }
+    expect(SITUATION_GUIDES.map((g) => g.slug).every((s) => /^[가-힣0-9-]+$/.test(s))).toBe(true);
   });
 });
