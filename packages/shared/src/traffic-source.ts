@@ -5,10 +5,10 @@
  * 주소 전체를 남기거나 보여 주지 않고 **묶음 이름**만 쓴다.
  */
 
-export type TrafficGroup = "search" | "sns" | "share" | "site" | "direct" | "internal";
+export type TrafficGroup = "search" | "sns" | "share" | "push" | "site" | "direct" | "internal";
 export type TrafficSource = { group: TrafficGroup; label: string };
 
-export const TRAFFIC_GROUP_LABEL: Record<TrafficGroup, string> = { search: "검색", sns: "SNS·메신저", share: "공유 링크", site: "다른 사이트", direct: "직접·알 수 없음", internal: "사이트 안" };
+export const TRAFFIC_GROUP_LABEL: Record<TrafficGroup, string> = { search: "검색", sns: "SNS·메신저", share: "공유 링크", push: "푸시 알림", site: "다른 사이트", direct: "직접·알 수 없음", internal: "사이트 안" };
 
 /** 우리 주소·로그인 왕복 — 유입이 아니다 */
 const OWN_HOST = /(^|\.)pairinggo\.(kr|com)$|^pairinggo(-[a-z0-9-]+)?\.vercel\.app$|^localhost(:\d+)?$|^127\.0\.0\.1(:\d+)?$/;
@@ -32,11 +32,11 @@ const HOSTS: { re: RegExp; group: TrafficGroup; label: string }[] = [
   { re: /(^|\.)(brunch\.co\.kr|velog\.io|medium\.com)$/, group: "sns", label: "블로그" },
 ];
 
-/** utm_source 값 → 묶음. 우리가 붙이는 값: sns(SNS 글 복사)·kakao·share(공유 버튼)·rss */
+/** utm_source 값 → 묶음. 우리가 붙이는 값: sns(SNS 글 복사)·kakao·share(공유 버튼)·rss·push(날씨 소식 푸시, docs/29 §5-2) */
 const UTM: Record<string, TrafficSource> = {
   sns: { group: "sns", label: "SNS 글(우리 글 복사)" }, instagram: { group: "sns", label: "인스타그램" }, insta: { group: "sns", label: "인스타그램" },
   blog: { group: "sns", label: "블로그" }, naverblog: { group: "sns", label: "네이버 블로그" }, facebook: { group: "sns", label: "페이스북" }, youtube: { group: "sns", label: "유튜브" },
-  kakao: { group: "share", label: "카카오톡 공유" }, share: { group: "share", label: "공유 버튼" }, rss: { group: "share", label: "RSS" },
+  kakao: { group: "share", label: "카카오톡 공유" }, share: { group: "share", label: "공유 버튼" }, rss: { group: "share", label: "RSS" }, push: { group: "push", label: "푸시 알림" },
   naver: { group: "search", label: "네이버" }, google: { group: "search", label: "구글" },
 };
 const VIA: Record<string, string> = { kakaotalk: "카카오톡 앱 안", instagram: "인스타그램 앱 안", naver: "네이버 앱 안", facebook: "페이스북 앱 안", line: "라인 앱 안", daum: "다음 앱 안" };

@@ -47,3 +47,8 @@ describe("유입 경로 분류", () => {
     expect(inAppOf("Mozilla/5.0 (Windows NT 10.0) Chrome/126 Safari/537.36")).toBe("");
   });
 });
+
+describe("푸시 유입(2026-10-02)", async () => {
+  const { trafficSource } = await import("../traffic-source");
+  it("utm_source=push → 푸시 알림", () => { expect(trafficSource({ q: "?d=d31&utm_source=push" })).toEqual({ group: "push", label: "푸시 알림" }); });
+});

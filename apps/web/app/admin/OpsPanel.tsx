@@ -78,6 +78,8 @@ export default function OpsPanel({ metrics: m, demo: d, period, funnel: f, serie
           <div><b>{f.shares}</b><span>공유 · 그중 그림 카드 저장 <em>{f.cardSaves}</em></span></div>
           <div><b>{f.guideViews}</b><span>모음 화면(/guide) 조회</span></div>
           <div><b>{f.todayViews}</b><span>오늘의 페어링 조회</span></div>
+          <div><b>{f.situationClicks}</b><span>“오늘 같은 날엔” 클릭 · 푸시로 들어온 세션 <em>{f.pushSessions}</em></span></div>
+          <div><b>{f.weatherPush?.sent ?? 0}</b><span>날씨 소식 보낸 회원 · 보낸 날 <em>{f.weatherPush?.days ?? 0}</em>일 (비·눈·추운 아침만)</span></div>
         </div>
         {f.topDetails.length > 0 && (
           <p className="muted" style={{ margin: "10px 0 0" }}>많이 본 상세 — {f.topDetails.map((t, i) => <span key={t.path}>{i > 0 && " · "}<Link href={t.path}>{t.path.replace(/^\/(drinks|foods)\//, "").replace(/-/g, " ")}</Link> {t.n}</span>)}</p>

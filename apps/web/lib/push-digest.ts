@@ -5,7 +5,7 @@
  *  · weatherRun(2026-10-02, docs/29 §5-2): 아침 크론 — 사는 시·도의 지금 날씨가 비·눈·5℃ 미만일 때만 그 상황의 첫 조합 한 건(20시간 안에 두 번 안 보냄).
  *    시·도마다 날씨를 한 번만 받고, 날씨를 못 받은 시·도(계절만)는 보내지 않는다(겨울 내내 매일 "추워요"가 되지 않게)
  */
-import { D, F, WEATHER_MIN_GAP_HOURS, WEEKLY_LOOKBACK_DAYS, WEEKLY_MIN_GAP_DAYS, byDrink, byFood, cleanPushPref, kstToday, scorePairings, sidoShort, situationOf, situationPairs, suggestTried, toSlug, weatherPush, weatherPushWorthy, weeklyDigest, type DigestInput, type PushMessage, type PushPref, type Situation } from "@pairinggo/shared";
+import { D, F, WEATHER_MIN_GAP_HOURS, WEEKLY_LOOKBACK_DAYS, WEEKLY_MIN_GAP_DAYS, byDrink, byFood, cleanPushPref, kstToday, scorePairings, sidoShort, situationOf, situationPairs, suggestTried, toSlug, weatherPush, weatherPushWorthy, weeklyDigest, type DigestInput, type PushMessage, type PushPref, type Situation, type WeatherRunLog } from "@pairinggo/shared";
 import { weatherFor } from "./weather";
 import { pushConfigured, pushTo } from "@pairinggo/server/push";
 import { getCatalog } from "./catalog";
@@ -140,5 +140,21 @@ export async function weatherRun(opts: { dry?: boolean; limit?: number; now?: Da
     if (r.sent > 0) { res.sent++; await sb.from("users").update({ weather_push_at: now.toISOString() }).eq("id", uid); }
     else res.skipped.failed++;
   }
+  if (!opts.dry) await recordWeatherRun(res, now).catch((e) => console.warn("[push] weather log", (e as Error).message));
   return res;
+}
+
+/** 날씨 소식 크론 결과를 catalog_meta weather_push에 쌓는다(최근 60일) — 대시보드·주간 메일의 "날씨 소식" 줄(shared summarizeWeatherRuns) */
+export async function recordWeatherRun(res: WeatherRunResult, now: Date): Promise<void> {
+  const sb = db(); if (!sb) return;
+  const { data } = await sb.from("catalog_meta").select("value").eq("key", "weather_push").maybeSingle();
+  const prev = ((data?.value as { runs?: WeatherRunLog[] } | null)?.runs ?? []).filter((r) => r.at && Date.now() - Date.parse(r.at) < 60 * 86400_000);
+  const runs: WeatherRunLog[] = [...prev, { at: now.toISOString(), users: res.users, sent: res.sent, sidos: res.sidos }].slice(-120);
+  await sb.from("catalog_meta").upsert({ key: "weather_push", value: { runs }, updated_at: now.toISOString() });
+}
+/** 최근 기록 — 대시보드가 기간으로 거른다 */
+export async function weatherRunLogs(): Promise<WeatherRunLog[]> {
+  const sb = db(); if (!sb) return [];
+  const { data } = await sb.from("catalog_meta").select("value").eq("key", "weather_push").maybeSingle();
+  return (data?.value as { runs?: WeatherRunLog[] } | null)?.runs ?? [];
 }

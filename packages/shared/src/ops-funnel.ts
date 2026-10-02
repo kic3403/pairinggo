@@ -7,7 +7,7 @@
 import { TRAFFIC_GROUP_LABEL, trafficSource, type TrafficGroup } from "./traffic-source";
 
 /** 흐름 계산에 쓰는 이벤트 이름 — 웹이 이 이름들만 받아 온다 */
-export const FUNNEL_EVENTS = ["screen", "save", "buy_link_click", "restaurant_link_click", "share"] as const;
+export const FUNNEL_EVENTS = ["screen", "save", "buy_link_click", "restaurant_link_click", "share", "situation_click"] as const;
 export type FunnelEventRow = { name: string; session_id: string | null; props: Record<string, unknown> | null };
 
 export type OpsFunnel = {
@@ -25,6 +25,10 @@ export type OpsFunnel = {
   topDetails: { path: string; n: number }[];
   /** 유입 경로(2026-10-02) — 세션마다 하나: 그 세션의 화면 기록 가운데 처음 나온 바깥 유입(검색·SNS·공유·다른 사이트), 없으면 직접. 많은 순 */
   sources: { group: TrafficGroup; label: string; n: number }[];
+  /** "오늘 같은 날엔" 칸·모음 링크 클릭 수(situation_click, docs/29) · 날씨 소식 푸시로 들어온 세션(utm_source=push) */
+  situationClicks: number; pushSessions: number;
+  /** 날씨 소식 발송 요약(크론 기록 catalog_meta weather_push에서, 기간 안) — 없으면 키 없음 */
+  weatherPush?: { days: number; sent: number };
 };
 
 const ACTIONS = new Set(["save", "buy_link_click", "restaurant_link_click", "share"]);
@@ -37,7 +41,7 @@ export const isDetailPath = (path: string) => /^\/(drinks|foods)\/[^/]+$/.test(p
 
 export function opsFunnel(rows: FunnelEventRow[]): OpsFunnel {
   const all = new Set<string>(), detail = new Set<string>(), action = new Set<string>();
-  const f: OpsFunnel = { sessions: 0, detailSessions: 0, actionSessions: 0, saves: 0, guestSaves: 0, buyClicks: 0, restaurantClicks: 0, shares: 0, cardSaves: 0, guideViews: 0, todayViews: 0, topDetails: [], sources: [] };
+  const f: OpsFunnel = { sessions: 0, detailSessions: 0, actionSessions: 0, saves: 0, guestSaves: 0, buyClicks: 0, restaurantClicks: 0, shares: 0, cardSaves: 0, guideViews: 0, todayViews: 0, topDetails: [], sources: [], situationClicks: 0, pushSessions: 0 };
   const views = new Map<string, number>();
   const srcOf = new Map<string, { group: TrafficGroup; label: string }>();   // 세션 → 바깥 유입(처음 것)
   for (const r of rows) {
@@ -51,6 +55,7 @@ export function opsFunnel(rows: FunnelEventRow[]): OpsFunnel {
       else if (path === "/today") f.todayViews++;
       continue;
     }
+    if (r.name === "situation_click") { f.situationClicks++; continue; }
     if (!ACTIONS.has(r.name)) continue;
     if (sid) action.add(sid);
     if (r.name === "save") { f.saves++; if (r.props?.guest === true || r.props?.guest === "true") f.guestSaves++; }
@@ -67,6 +72,7 @@ export function opsFunnel(rows: FunnelEventRow[]): OpsFunnel {
     cur.n++; tally.set(k, cur);
   }
   f.sources = [...tally.values()].sort((a, b) => b.n - a.n || a.label.localeCompare(b.label, "ko"));
+  f.pushSessions = f.sources.filter((s) => s.group === "push").reduce((a, s) => a + s.n, 0);
   f.topDetails = [...views].map(([path, n]) => ({ path, n })).sort((a, b) => b.n - a.n || a.path.localeCompare(b.path, "ko")).slice(0, 5);
   return f;
 }
@@ -75,4 +81,19 @@ export function opsFunnel(rows: FunnelEventRow[]): OpsFunnel {
 export function stepRate(n: number, of: number): string {
   if (!of) return "—";
   return `${Math.round((n / of) * 100)}% (${n}/${of})`;
+}
+
+/** 날씨 소식 크론 기록 한 줄(web lib/push-digest recordWeatherRun이 catalog_meta weather_push에 최근 60일 쌓는다) */
+export type WeatherRunLog = { at: string; users: number; sent: number; sidos: Record<string, string> };
+/** 기간 안의 날씨 소식 발송 요약 — 보낸 날 수(sent>0인 날)·보낸 회원 수 합 */
+export function summarizeWeatherRuns(runs: readonly WeatherRunLog[], since: string, until: string): { days: number; sent: number } {
+  let days = 0, sent = 0;
+  const seen = new Set<string>();
+  for (const r of runs) {
+    if (!r.at || r.at < since || r.at >= until) continue;
+    const day = new Date(new Date(r.at).getTime() + 9 * 3600_000).toISOString().slice(0, 10);
+    if (r.sent > 0 && !seen.has(day)) { seen.add(day); days++; }
+    sent += r.sent;
+  }
+  return { days, sent };
 }

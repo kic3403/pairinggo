@@ -247,3 +247,20 @@ export function situationForFood(ds: DS, s: Situation, foodId: string, n = 2, si
   // 술 묶음을 돌아가며(같은 음식이라 음식 중복 검사는 의미 없음 — 술만 한 번씩)
   return { self, items: pickAcrossGroups(pairs.map((r, i) => ({ ...r, food: { ...f, id: `${f.id}#${i}` } })), s.key, n).map((r) => ({ ...r, food: f })) };
 }
+
+/* ---------- 검색어 → 상황(2026-10-02, 검색 입구) ---------- */
+const QUERY_RULES: [RegExp, RuleKey][] = [
+  [/비\s*(오는|올\s*때|오면|온다)|비오는|장마|우천|빗소리/, "rain"],
+  [/눈\s*(오는|올\s*때|오면|온다)|눈오는|폭설|함박눈/, "snow"],
+  [/추운|추울\s*때|추위|한파|겨울\s*(술|안주|밤|에)|한겨울|쌀쌀/, "cold"],
+  [/더운|더울\s*때|더위|폭염|무더위|여름\s*(술|안주|밤|에)|한여름|시원한\s*(술|안주)/, "hot"],
+  [/선선|가을\s*(술|안주|밤|에)|가을밤|가을\s*저녁/, "cool"],
+  [/봄\s*(술|안주|밤|에|나들이)|봄나들이|따뜻한\s*날/, "warm"],
+];
+/** 검색어가 날씨·계절 상황이면 그 규칙 키("비오는날 안주" → rain). 술·음식 이름 검색은 여기서 다루지 않는다 — 검색 화면이 상황 모음 카드를 붙이는 데 쓴다 */
+export function situationQueryKey(q: string): RuleKey | null {
+  const s = (q || "").trim();
+  if (!s || s.length > 40) return null;
+  for (const [re, key] of QUERY_RULES) if (re.test(s)) return key;
+  return null;
+}

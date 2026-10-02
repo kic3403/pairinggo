@@ -15,12 +15,12 @@ export default async function GuideIndex() {
   const c = await getCatalog();
   const list = guideList(c.dataset);
   // 네 묶음 — 술 종류 · 지역 · 음식 종류 · 맛(2026-10-02 지역·맛 추가)
-  const groups: { title: string; items: typeof list }[] = [
+  const groups: { title: string; items: typeof list; id?: string }[] = [
     { title: "술 종류별 안주", items: list.filter((g) => g.side === "drink" && g.by === "category") },
     { title: "지역별 전통주 안주", items: list.filter((g) => g.by === "region") },
     { title: "음식 종류별 어울리는 술", items: list.filter((g) => g.side === "food" && g.by === "category") },
     { title: "맛으로 고르는 술", items: list.filter((g) => g.by === "tag") },
-    { title: "날씨·계절로 고르는 술과 안주", items: list.filter((g) => g.by === "situation") },
+    { title: "날씨·계절로 고르는 술과 안주", items: list.filter((g) => g.by === "situation"), id: "situation" },
   ].filter((x) => x.items.length > 0);
   return (
     <div className="wrap guide">
@@ -28,7 +28,7 @@ export default async function GuideIndex() {
       <h1>페어링 모음</h1>
       <p className="lead">종류별로 근거가 확인된 조합만 모았어요. 술 이름이나 음식 이름을 알면 검색이 더 빠릅니다.</p>
       {groups.map((x, i) => (
-        <section key={x.title}>
+        <section key={x.title} id={x.id}>
           <h2 style={i ? { marginTop: 22 } : undefined}>{x.title}</h2>
           <ul className="guide-links">{x.items.map((g) => <li key={g.slug}><Link href={`/guide/${g.slug}`}>{g.h1}<span className="small muted"> · 근거 조합 {g.n}</span></Link></li>)}</ul>
         </section>

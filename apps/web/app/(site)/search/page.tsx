@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import PartnerRecs from "../_components/PartnerRecs";
 import { recsForQuery } from "@/lib/partner-recs";
 import Link from "next/link";
-import { D, DRINK_KINDS, F, KIND_BY_ID, KIND_LABEL, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, inSubtype, intentSearch, kindOf, onlineSellable, confidenceText, gradeOf, pairingScore, parseRegionQuery, regionById, regionLabel, search, toSlug } from "@pairinggo/shared";
+import { D, DRINK_KINDS, F, KIND_BY_ID, KIND_LABEL, POPULAR, POPULAR_FOODS, awardLabels, buyLink, drinkInRegion, drinksInRegion, guideContent, guideList, inSubtype, intentSearch, kindOf, onlineSellable, confidenceText, gradeOf, pairingScore, parseRegionQuery, regionById, regionLabel, search, situationQueryKey, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import ExtLink from "../_components/ExtLink";
 import GradeBadge from "../_components/GradeBadge";
@@ -59,15 +59,19 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const hitCount = res.drinks.length + res.foods.length + res.browse.length;
   // 양조장·식당 추천 조합(2026-09-29) — 비슷한 음식·술 이름이면 찾는다. 이것만 있어도 '결과 없음'이 아니다
   const recs = q ? await recsForQuery(q).catch(() => []) : [];
-  const empty = !!q && !intent && !rq && hitCount === 0 && recs.length === 0;
+  // 날씨·계절 검색어("비오는날 안주"·"추운날 술", 2026-10-02 docs/29 §5-1) → 그 상황 모음 카드. 이것만 있어도 '결과 없음'이 아니다
+  const sKey = q ? situationQueryKey(q) : null;
+  const sGuide = sKey ? guideList(c.dataset).find((g) => g.by === "situation" && g.situation === sKey) ?? null : null;
+  const sContent = sGuide ? guideContent(c.dataset, sGuide, 4, 2) : null;
+  const empty = !!q && !intent && !rq && hitCount === 0 && recs.length === 0 && !sGuide;
   const regional = !q && region ? drinksInRegion(region.pre, 200, region.fb) : null;
   // 검색 로그(클라이언트 이벤트 → search_logs). pick = "drink:d01" 형식, 지역 검색은 "browse:부산"(events API가 ":"로 나누므로 두 조각만)
   const top = res.drinks[0] ?? res.foods[0] ?? res.browse[0];
-  const logKind = intent ? "search_intent" : rq || hitCount ? "search" : "search_empty";
+  const logKind = intent ? "search_intent" : rq || hitCount || sGuide ? "search" : "search_empty";
   // 식당 칸 — 이름·키워드 검색일 때만(상황 검색·지역 술 검색 제외)
-  const placesQ = q && !intent && !rq && q.length >= 2 && q.length <= 40 ? q : null;
+  const placesQ = q && !intent && !rq && !sGuide && q.length >= 2 && q.length <= 40 ? q : null;
   const placesRegion = region ? { id: region.id, label: regionLabel(region) } : null;
-  const pick = intent ? null : rq ? `browse:${rq.label}` : top ? `${top.doc.type}:${top.doc.id}` : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
+  const pick = intent ? null : rq ? `browse:${rq.label}` : top ? `${top.doc.type}:${top.doc.id}` : sGuide ? `guide:${sGuide.slug}` : null;   // 지역 하나는 많아야 30여 종 — 자르지 않는다
 
   return (
     <div className="wrap">
@@ -78,6 +82,21 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       {!empty && <LabelSearch inline />}
       {q && <SearchLog q={q} kind={logKind} pick={pick} region={rid === "all" ? null : rid} hits={intent ? intent.drinks.length + intent.foods.length : rq ? rq.drinks.length : hitCount} waitPlaces={logKind === "search_empty" && !!placesQ} />}
       <RegionTabs current={rid} base="/search" keep={q ? { q } : {}} collapsible={!!q} />
+      {sGuide && sContent && (
+        <section className="box wx-search" aria-labelledby="wxs-h">
+          <h2 id="wxs-h">{sGuide.h1}</h2>
+          <p className="lead small muted">{sGuide.lead} 근거 조합 {sGuide.n}개.</p>
+          <ul>
+            {sContent.foods.map((r) => (
+              <li key={r.item.id}>
+                <Link href={`/foods/${toSlug(r.item.name)}`}>{r.item.name}</Link>
+                {r.with.map((w) => <Link key={w.item.id} className="nb-chip" href={`/foods/${toSlug(r.item.name)}?d=${w.item.id}`}>{w.item.name}<span className="small muted"> · {w.conf === "confirmed" ? "근거 확인" : "근거 약함"}</span></Link>)}
+              </li>
+            ))}
+          </ul>
+          <p className="small" style={{ margin: "10px 0 0" }}><Link href={`/guide/${sGuide.slug}`}><b>{sGuide.h1} 모음 전체 보기 →</b></Link></p>
+        </section>
+      )}
       {/* 같은 검색어로 식당도 — 찾은 술·음식이 없으면 맨 위, 있으면 결과 아래(상황·지역 검색에는 붙이지 않는다) */}
       {placesQ && empty && <SearchPlaces q={placesQ} region={placesRegion} empty logRegion={rid === "all" ? null : rid} />}
 

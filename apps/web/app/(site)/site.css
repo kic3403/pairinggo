@@ -1470,3 +1470,14 @@ a.pd-score:hover { border-color: var(--navy); }
 .wx-note { color: var(--ink2); }
 .linkish { background: none; border: 0; padding: 0; font: inherit; color: var(--navy-ink); text-decoration: underline; cursor: pointer; }
 @media (max-width: 767px) { .wx-line { font-size: 15px; } .wx-icon { font-size: 22px; } }
+
+/* 상황 모음 입구(2026-10-02): 홈 칩 줄 맨 앞 그날 상황 칩 · "오늘 같은 날엔" 칸 아래 모음 링크 · 검색 화면 상황 카드 */
+.guide-links a.s { background: var(--navy-soft); color: var(--navy-ink); border-color: transparent; }
+.wx-guide { margin: 6px 0 0; }
+.wx-guide a { font-weight: 700; color: var(--navy-ink); }
+.box.wx-search h2 { margin: 0 0 4px; font-size: 17px; }
+.box.wx-search .lead { margin: 0 0 8px; }
+.box.wx-search ul { display: grid; gap: 6px; }
+.box.wx-search li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; border-top: 0; padding: 0; }
+.box.wx-search li > a:first-child { color: var(--navy-ink); font-weight: 700; }
+.box.wx-search .nb-chip { color: var(--food-ink); }

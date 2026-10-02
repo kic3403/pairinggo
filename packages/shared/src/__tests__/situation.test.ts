@@ -96,3 +96,13 @@ describe("조합 고르기", () => {
     expect(situationForFood(ds, cold, "육포")).toBeNull();
   });
 });
+
+describe("검색어 → 상황", async () => {
+  const { situationQueryKey } = await import("../situation");
+  it("날씨·계절 낱말이 든 검색어만", () => {
+    expect(situationQueryKey("비오는날 안주")).toBe("rain"); expect(situationQueryKey("비 오는 날 막걸리")).toBe("rain"); expect(situationQueryKey("장마철 술")).toBe("rain");
+    expect(situationQueryKey("추운날 술")).toBe("cold"); expect(situationQueryKey("겨울 안주")).toBe("cold"); expect(situationQueryKey("더운날 시원한 술")).toBe("hot");
+    expect(situationQueryKey("가을밤 약주")).toBe("cool"); expect(situationQueryKey("봄나들이 막걸리")).toBe("warm"); expect(situationQueryKey("눈오는날")).toBe("snow");
+    expect(situationQueryKey("해물파전")).toBeNull(); expect(situationQueryKey("")).toBeNull(); expect(situationQueryKey("겨울")).toBeNull();
+  });
+});

@@ -93,6 +93,7 @@ export function funnelLines(f: OpsFunnel): string[] {
     `· 저장 ${f.saves}(비로그인 ${f.guestSaves}) · 구매 링크 ${f.buyClicks} · 식당 링크 ${f.restaurantClicks} · 공유 ${f.shares}(그림 카드 ${f.cardSaves})`,
     `· 모음 화면 조회 ${f.guideViews} · 오늘의 페어링 조회 ${f.todayViews}`,
   ];
+  if (f.weatherPush || f.situationClicks || f.pushSessions) out.push(`· 날씨 소식 — 보낸 날 ${f.weatherPush?.days ?? 0} · 보낸 회원 ${f.weatherPush?.sent ?? 0} · 푸시로 들어온 세션 ${f.pushSessions} · "오늘 같은 날엔" 클릭 ${f.situationClicks}`);
   if (f.sources.length) out.push(`· 유입 경로 — ${f.sources.slice(0, 6).map((s) => `${s.label} ${s.n}`).join(" · ")}${f.sources.length > 6 ? " 외" : ""}`);
   if (f.topDetails.length) out.push(`· 많이 본 상세 — ${f.topDetails.map((t) => `${t.path.replace(/^\/(drinks|foods)\//, "").replace(/-/g, " ")} ${t.n}`).join(" · ")}`);
   return out;

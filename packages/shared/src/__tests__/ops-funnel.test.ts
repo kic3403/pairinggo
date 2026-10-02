@@ -48,3 +48,21 @@ describe("방문 흐름", () => {
     expect(stepRate(0, 0)).toBe("—");
   });
 });
+
+describe("날씨 소식·상황 클릭(2026-10-02)", async () => {
+  const { opsFunnel, summarizeWeatherRuns } = await import("../ops-funnel");
+  it("situation_click은 행동이 아니라 따로 세고, utm_source=push 세션은 푸시 유입", () => {
+    const f = opsFunnel([
+      { name: "screen", session_id: "a", props: { path: "/foods/해물파전", q: "?d=d31&utm_source=push" } },
+      { name: "situation_click", session_id: "a", props: { key: "rain" } },
+      { name: "situation_click", session_id: "b", props: { key: "rain" } },
+      { name: "screen", session_id: "b", props: { path: "/" } },
+    ]);
+    expect(f.situationClicks).toBe(2); expect(f.pushSessions).toBe(1); expect(f.actionSessions).toBe(0);
+    expect(f.sources.find((s) => s.group === "push")?.label).toBe("푸시 알림");
+  });
+  it("발송 요약 — 기간 안 보낸 날·보낸 수", () => {
+    const runs = [{ at: "2026-10-01T22:35:00Z", users: 5, sent: 2, sidos: {} }, { at: "2026-10-02T22:35:00Z", users: 5, sent: 0, sidos: {} }, { at: "2026-10-03T22:35:00Z", users: 6, sent: 3, sidos: {} }, { at: "2026-09-20T22:35:00Z", users: 1, sent: 1, sidos: {} }];
+    expect(summarizeWeatherRuns(runs, "2026-10-01T00:00:00Z", "2026-10-05T00:00:00Z")).toEqual({ days: 2, sent: 5 });
+  });
+});

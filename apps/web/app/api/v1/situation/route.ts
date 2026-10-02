@@ -4,7 +4,7 @@
  * 날씨를 못 받으면 계절만으로 판정한다(fromWeather=false). d·f가 있으면 그 술·음식 상세용 칸(없으면 null), 없으면 홈용 조합 n개.
  * 근거 점수·등급은 건드리지 않는다 — 규칙은 shared situation.ts.
  */
-import { GRADE_LABEL, KIND_LABEL, gradeOf, kindOf, kstToday, sidoOfRegion, sidoShort, situationForDrink, situationForFood, situationOf, situationPairs, toSlug, type SituationPair } from "@pairinggo/shared";
+import { GRADE_LABEL, KIND_LABEL, gradeOf, guideList, kindOf, kstToday, sidoOfRegion, sidoShort, situationForDrink, situationForFood, situationOf, situationPairs, toSlug, type SituationPair } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { json, preflight } from "@/lib/http";
 import { weatherFor } from "@/lib/weather";
@@ -29,8 +29,10 @@ export async function GET(req: Request) {
   const ds = c.dataset;
   const n = Math.min(Math.max(Number(sp.get("n") || 3) || 3, 1), 6);
   const d = sp.get("d"), f = sp.get("f");
+  const gd = guideList(ds).find((g) => g.by === "situation" && g.situation === s.key);
+  const guide = gd ? { slug: gd.slug, h1: gd.h1 } : null;
   const situation = { key: s.key, season: s.season, headline: s.headline, why: s.why, icon: s.icon, title: s.title, temp: s.temp, precip: s.precip, fromWeather: s.fromWeather, sido: where, assumed: !sido, at: weather?.at ?? null };
-  if (d) { const r = situationForDrink(ds, s, d, n); return json(req, { situation, self: r?.self ?? false, items: r ? r.items.map(pub) : [] }, { headers: CACHE }); }
-  if (f) { const r = situationForFood(ds, s, f, n, where); return json(req, { situation, self: r?.self ?? false, items: r ? r.items.map(pub) : [] }, { headers: CACHE }); }
-  return json(req, { situation, items: situationPairs(ds, s, { sido: where, n }).map(pub) }, { headers: CACHE });
+  if (d) { const r = situationForDrink(ds, s, d, n); return json(req, { situation, guide, self: r?.self ?? false, items: r ? r.items.map(pub) : [] }, { headers: CACHE }); }
+  if (f) { const r = situationForFood(ds, s, f, n, where); return json(req, { situation, guide, self: r?.self ?? false, items: r ? r.items.map(pub) : [] }, { headers: CACHE }); }
+  return json(req, { situation, guide, items: situationPairs(ds, s, { sido: where, n }).map(pub) }, { headers: CACHE });
 }

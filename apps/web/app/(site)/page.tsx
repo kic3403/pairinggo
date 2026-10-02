@@ -17,6 +17,7 @@ import TriedPill from "./_components/TriedPill";
 import QuickMenu from "./_components/QuickMenu";
 import PickFeed from "./_components/PickFeed";
 import WeatherPick from "./_components/WeatherPick";
+import SituationChip from "./_components/SituationChip";
 import JsonLd from "./_components/JsonLd";
 import { loadAwards } from "@/lib/awards";
 import { homeCards } from "@/lib/banners";
@@ -72,6 +73,8 @@ export default async function Home() {
         <section>
           <div className="section-head"><h2>종류별 페어링 모음</h2><Link href="/guide">전체 보기</Link></div>
           <ul className="guide-links">
+            {/* 그날 상황 모음 한 칸(브라우저에서 끼움, docs/29 §5-1) */}
+            <SituationChip />
             {guides.map((g) => <li key={g.slug}><Link href={`/guide/${g.slug}`} className={g.side === "drink" ? "d" : "f"}>{g.h1}</Link></li>)}
           </ul>
         </section>

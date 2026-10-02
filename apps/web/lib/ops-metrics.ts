@@ -2,7 +2,8 @@
  * 운영 지표 세기(2026-10-01) — 고른 기간과 바로 앞 같은 길이 기간을 같은 기준으로 센다. 어드민 대시보드와 주간 리포트 이메일이 같이 쓴다.
  * 기간 규칙(1·7·30일 탭, 직접 선택)과 표시 규칙은 shared ops-metrics.ts. 기간마다 10분 기억(같은 서버 인스턴스 안).
  */
-import { FUNNEL_EVENTS, countByBucket, demographics, distinctByBucket, emptySeries, opsFunnel, opsPeriod, prevPeriod, seriesAxis, type Demographics, type FunnelEventRow, type OpsFunnel, type OpsPeriod, type OpsSeries, type WeeklyCounts, type WeeklyMetrics } from "@pairinggo/shared";
+import { weatherRunLogs } from "./push-digest";
+import { FUNNEL_EVENTS, countByBucket, demographics, distinctByBucket, emptySeries, opsFunnel, opsPeriod, prevPeriod, seriesAxis, summarizeWeatherRuns, type Demographics, type FunnelEventRow, type OpsFunnel, type OpsPeriod, type OpsSeries, type WeeklyCounts, type WeeklyMetrics } from "@pairinggo/shared";
 import { db } from "./db";
 
 type Sb = NonNullable<ReturnType<typeof db>>;
@@ -61,7 +62,10 @@ async function funnelIn(sb: Sb, from: string, to: string): Promise<{ funnel: Ops
     saves: countByBucket(axis, rows.filter((r) => r.name === "save").map((r) => r.created_at)),
     newUsers: countByBucket(axis, users),
   };
-  return { funnel: opsFunnel(rows), series };
+  const funnel = opsFunnel(rows);
+  // 날씨 소식 발송 요약(docs/29 §5-2) — 크론 기록을 기간으로 걸러 붙인다. 못 읽으면 키 없음
+  try { funnel.weatherPush = summarizeWeatherRuns(await weatherRunLogs(), from, to); } catch { /* 없음 */ }
+  return { funnel, series };
 }
 
 async function countIn(sb: Sb, from: string, to: string): Promise<WeeklyCounts> {
