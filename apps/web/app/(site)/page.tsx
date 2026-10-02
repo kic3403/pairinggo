@@ -59,9 +59,9 @@ export default async function Home() {
       <h1 className="home-h1">맛있는 술엔 맛있는 음식 <span className="muted">— 술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 근거와 함께</span></h1>
       <HomeExamples />
       <HomeTabs />
-      {/* 사는 곳 날씨·계절에 맞는 조합 — 브라우저에서 받아 그린다(docs/29, 카드 순위와 무관) */}
-      <WeatherPick mode="home" />
       <HomeBanners cards={home.cards} />
+      {/* 사는 곳 날씨·계절에 맞는 조합 — 이벤트 배너 아래(2026-10-02 사용자 요청), 브라우저에서 받아 그린다(docs/29, 카드 순위와 무관) */}
+      <WeatherPick mode="home" />
       <QuickMenu michelinYear={awards.year} />
       <FlowTiles />
       <PartnerRow items={home.partners.slice(0, 8)} />

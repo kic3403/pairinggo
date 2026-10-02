@@ -85,7 +85,7 @@ const WHY: Record<RuleKey, string> = {
   snow: "눈 오는 날엔 전과 따끈한 술이 당기죠. 5℃ 아래로 내려가면 증류주·약주 검색이 1.5배 늘어요.",
   cold: "5℃ 아래로 내려가면 전통소주·와인·약주 검색이 1.4~1.7배, 국물 요리도 1.4배 늘어요.",
   cool: "선선해지면 약주·청주 검색이 평소보다 30% 넘게 늘고 구이도 많이 찾아요.",
-  warm: "막걸리는 5월에 가장 많이 찾아요 — 전·나물과 함께 가볍게.",
+  warm: "15~25℃ 봄·가을 날씨엔 막걸리를 가장 많이 찾아요(5월이 1년 중 최고) — 전·나물과 함께 가볍게.",
   hot: "25℃를 넘으면 냉면·물회 검색이 3.8배 늘고 시원한 술을 찾아요. 막걸리는 이때 가장 적어요.",
 };
 const ICON: Record<RuleKey, string> = { rain: "☔", snow: "❄️", cold: "🧣", cool: "🍂", warm: "🌿", hot: "🧊" };
@@ -107,7 +107,7 @@ export function situationOf(date: string, weather?: WeatherNow | null, sido?: st
     key === "snow" ? `${pre}눈 오는 날엔 전에 따끈한 술` :
     key === "cold" ? `${pre}추운 날엔 도수 있는 술 한 잔` :
     key === "cool" ? `${pre}선선한 날엔 약주·청주 한 잔` :
-    key === "warm" ? `${pre}따뜻한 날엔 막걸리 한 사발` :
+    key === "warm" ? `${pre}봄·가을 날씨엔 막걸리 한 사발` :
     `${pre}더운 날엔 시원하게`;
   return { key, season, band, precip, temp, sido: where, fromWeather, icon: ICON[key], headline, why: WHY[key], title: "오늘 같은 날엔" };
 }
