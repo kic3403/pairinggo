@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!food) return { title: "찾을 수 없는 음식 | 페어링GO" };
   const n = (byFood[food.id] || []).length;
   const title = `${food.name}에 어울리는 술 ${n}가지 | 페어링GO`;
-  const description = `${food.name}과 잘 맞는 막걸리·약주·증류주를 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다.`;
+  const description = `${food.name}과 잘 맞는 막걸리·약주·증류주를 추천합니다.`;
   const url = `/foods/${toSlug(food.name)}`;
   return {
     title, description,
@@ -99,7 +99,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
           <h1>{food.name}</h1>
           <div className="meta"><span>{food.category}</span></div>
           {!!food.tags?.length && <ul className="tags">{food.tags.map((t) => <li key={t} className="tag">{t}</li>)}</ul>}
-          <div className="dhead-acts"><ShareButton className="btn xs" title={`${food.name}에 어울리는 술 ${items.length}가지`} text={`${food.name}에 어울리는 술을 근거와 함께 — 페어링GO`} f={food.id} /></div>
+          <div className="dhead-acts"><ShareButton className="btn xs" title={`${food.name}에 어울리는 술 ${items.length}가지`} text={`${food.name}에 어울리는 술을 추천 — 페어링GO`} f={food.id} /></div>
         </div>
         <ProfileBars kind="food" profile={food.profile} />
         <DetailMedia kind="food" image={food.image} name={food.name} label={food.category} />

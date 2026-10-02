@@ -39,7 +39,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   const sp = await searchParams;
   const cat = sp.category?.trim() || sp.group?.trim();
   const title = cat ? `${cat} 음식에 어울리는 전통주 | 페어링GO` : `음식·안주 ${c.counts.foods}종 — 어울리는 전통주 추천 | 페어링GO`;
-  const description = `육회, 파전, 삼겹살, 회까지 음식 ${c.counts.foods}종에 어울리는 막걸리·약주·증류주를 근거와 함께 정리했습니다.`;
+  const description = `육회, 파전, 삼겹살, 회까지 음식 ${c.counts.foods}종에 어울리는 막걸리·약주·증류주를 추천합니다.`;
   return { title, description, alternates: { canonical: "/foods" }, openGraph: { title, description, url: "/foods", siteName: "페어링GO", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "페어링GO" }] }, robots: cat ? { index: false } : undefined };
 }
 

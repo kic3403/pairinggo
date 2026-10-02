@@ -23,7 +23,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     kicker: [food.category, ...(food.tags ?? []).slice(0, 2)].join(" · "),
     title: food.name,
     chips: top,
-    note: `${food.name}에 어울리는 전통주 ${rows.length}가지 — 근거와 함께 · 페어링GO`,
+    note: `${food.name}에 어울리는 전통주 ${rows.length}가지 — 페어링GO 추천`,
     accent: "drink",
   });
 }

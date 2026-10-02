@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!drink) return { title: "찾을 수 없는 전통주 | 페어링GO" };
   const n = (byDrink[drink.id] || []).length;
   const title = `${drink.name}에 어울리는 안주 ${n}가지 | 페어링GO`;
-  const description = `${josa(drink.name, "과/와")} 어울리는 음식을 양조장·소믈리에·전문 매체 근거와 함께 정리했습니다. ${[kindOf(drink) === "trad" ? drink.category : `${KIND_LABEL[kindOf(drink)]} ${subtypeLabel(drink)}`, drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean).join(" · ")}.`;
+  const description = `${josa(drink.name, "과/와")} 어울리는 음식을 추천합니다. ${[kindOf(drink) === "trad" ? drink.category : `${KIND_LABEL[kindOf(drink)]} ${subtypeLabel(drink)}`, drink.abv != null ? `${drink.abv}%` : null, drink.brewery].filter(Boolean).join(" · ")}.`;
   const url = `/drinks/${toSlug(drink.name)}`;
   return {
     title, description,
@@ -146,7 +146,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           )}
           <div className="dhead-acts">
             <span className="bar-dup"><Heart kind="drink" id={drink.id} name={drink.name} variant="button" /></span>
-            <ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 근거와 함께 — 페어링GO`} d={drink.id} />
+            <ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 추천 — 페어링GO`} d={drink.id} />
           </div>
         </div>
         <DetailMedia kind="drink" image={drink.image} name={drink.name} label={kind === "trad" ? drink.category : subtypeLabel(drink)} tone={KIND_TONE[kind]} />

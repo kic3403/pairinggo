@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "페어링GO — 전통주와 어울리는 음식",
     short_name: "페어링GO",
-    description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 근거와 함께.",
+    description: "전통주를 고르면 어울리는 음식을, 음식을 고르면 어울리는 전통주를 추천!",
     start_url: "/?src=pwa",
     display: "standalone",
     background_color: "#FFFFFF",

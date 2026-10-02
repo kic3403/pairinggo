@@ -30,7 +30,7 @@ describe("공유 카드 글", () => {
     expect(t.split("\n")[0]).toBe("복순도가 손막걸리엔 이 음식");
     expect(t).toContain("1. 해물파전 — 찰떡 (근거 확인 · 출처 3곳)");
     expect(t).toContain("2. 두부김치 — 시도해 볼 만 (추정)");
-    expect(t).toContain("어울리는 음식 29가지를 근거와 함께 → https://pairinggo.kr/drinks/복순도가-손막걸리?utm_source=sns");
+    expect(t).toContain("어울리는 음식 29가지 추천 → https://pairinggo.kr/drinks/복순도가-손막걸리?utm_source=sns");
     expect(t).toContain("#복순도가손막걸리 #해물파전 #두부김치 #안주추천");
     const f = detailCaption({ side: "food", name: "해물파전", total: 171, base: "u", path: "/foods/해물파전", items: [] });
     expect(f.split("\n")[0]).toBe("해물파전엔 이 술");

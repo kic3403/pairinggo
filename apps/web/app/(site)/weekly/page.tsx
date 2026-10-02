@@ -15,7 +15,7 @@ import JsonLd from "../_components/JsonLd";
 export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "이번 주 많이 찾는 술 TOP 5 — 전통주 인기 순위 | 페어링GO",
-  description: "인스타·유튜브·블로그 최근 30일 언급량으로 매긴 술 종류별 인기 순위입니다. 순위에 오른 술마다 어울리는 음식을 근거와 함께 봅니다.",
+  description: "인스타·유튜브·블로그 최근 30일 언급량으로 매긴 술 종류별 인기 순위입니다. 순위에 오른 술마다 어울리는 음식도 함께 추천합니다.",
   alternates: { canonical: "/weekly" },
 };
 

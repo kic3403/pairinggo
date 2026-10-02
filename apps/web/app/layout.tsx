@@ -6,7 +6,7 @@ import { siteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: { default: "페어링GO", template: "%s" },
-  description: "페어링고(페어링GO) — 전통주를 검색하면 어울리는 음식을, 음식을 검색하면 어울리는 전통주를 근거와 함께.",
+  description: "페어링고(페어링GO) — 전통주를 검색하면 어울리는 음식을, 음식을 검색하면 어울리는 전통주를 추천!",
   applicationName: "페어링GO",
   formatDetection: { telephone: false },
   // 검색엔진 소유 확인(2026-09-28) — 구글 서치 콘솔·네이버 서치어드바이저·빙 웹마스터에서 받은 "HTML 태그" 값만 환경변수로(공개 값, 비밀 아님)

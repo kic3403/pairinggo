@@ -13,6 +13,6 @@ export default async function Image() {
     kicker: "전통주 × 음식 페어링",
     title: "맛있는 술과 어울리는\n맛있는 음식은?",
     chips: [`전통주 ${c.counts.drinks}`, `음식 ${c.counts.foods}`, `페어링 ${c.counts.pairings.toLocaleString("ko-KR")}`],
-    note: "양조장 · 소믈리에 · 전문 매체 · 대중의 추천 근거와 함께",
+    note: "양조장 · 소믈리에 · 전문 매체 · 대중의 추천",
   });
 }
