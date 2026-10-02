@@ -24,6 +24,7 @@ export * from "./pairing/expert";
 export * from "./pairing/summary";
 export * from "./pairing/tried-suggest";
 export * from "./pairing/neighbors";
+export * from "./pairing/reason-fix";
 export * from "./browse";
 export * from "./schemas";
 export * from "./rows";

@@ -43,7 +43,8 @@
     "official-pairings": "tsx --env-file=../../apps/web/.env.local src/official-pairings.ts",
     "indexnow": "tsx src/indexnow.ts",
     "blog-lift": "tsx src/blog-lift.ts",
-    "estimate-caps": "tsx src/estimate-caps.ts"
+    "estimate-caps": "tsx src/estimate-caps.ts",
+    "reason-fix": "tsx src/reason-fix.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
