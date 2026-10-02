@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { breadcrumb, findGuide, guideContent, guideList, itemList, josa, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
+import CardDownload from "../../_components/CardDownload";
 import JsonLd from "../../_components/JsonLd";
 
 export const revalidate = 3600;
@@ -88,6 +89,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       <div className="btns" style={{ marginTop: 16 }}>
         <Link className="btn p" href={listHref}>{isDrink ? "전통주 전체 보기" : def.by === "category" ? `${def.category} 메뉴 전체 보기` : "음식 전체 보기"}</Link>
         <Link className="btn" href="/today">오늘의 페어링</Link>
+        {/* 이 모음의 앞 다섯 가지를 그림 한 장으로(1080×1350) — 블로그·인스타용 */}
+        <CardDownload href={`${path}/card.png`} filename={`pairinggo-${def.slug}.png`} from={`guide_${def.by}`} label="TOP 5 그림 카드" />
       </div>
 
       {others.length > 0 && (
