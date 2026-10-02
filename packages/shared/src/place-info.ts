@@ -101,6 +101,26 @@ export function cleanPlaceInfo(raw: Record<string, unknown>, known?: { drinks: S
   };
 }
 
+/* ---------- 파트너 화면을 둘로 나눈 저장(2026-10-02) ---------- */
+/**
+ * 파트너 앱은 매장 정보를 두 화면에서 나눠 고친다(2026-10-02 사용자 요청 — 정보 화면과 판매 화면이 겹쳐 보여서):
+ *  · "info" — 정보 탭(양조장 정보·매장 정보): 한 줄 소개·대표 사진·주차·콜키지·룸·네이버 지도 링크
+ *  · "menu" — 판매 탭: 메뉴 표·술 표(손님 메뉴판)
+ * 한 화면에서 저장할 때 **다른 화면의 값은 지금 저장돼 있는 것 그대로** 둔다 — 이 함수가 저장할 입력을 그렇게 맞춘다.
+ * part가 없으면(예전 방식) 받은 값 그대로.
+ */
+export type StorePart = "info" | "menu";
+const MENU_KEYS = ["menuItems", "drinkItems", "drinks", "drinkNames", "foods", "menuNames"] as const;
+const INFO_KEYS = ["parking", "parkingNote", "corkage", "corkageNote", "room", "roomNote", "menuNote", "naverUrl", "photos"] as const;
+export function storePartInput(part: StorePart | undefined, before: PlaceInfo | null, input: Record<string, unknown>): Record<string, unknown> {
+  if (part !== "info" && part !== "menu") return input;
+  const keep = part === "info" ? MENU_KEYS : INFO_KEYS, take = part === "info" ? INFO_KEYS : MENU_KEYS;
+  const out: Record<string, unknown> = {};
+  for (const k of keep) if (before && before[k] !== undefined) out[k] = before[k];
+  for (const k of take) if (input[k] !== undefined) out[k] = input[k];
+  return out;
+}
+
 /* ---------- 메뉴판 사진 읽기 결과 → 술·메뉴 목록 (2026-09-17) ---------- */
 /** AI가 메뉴판에서 읽은 한 줄 — 메뉴판에 적힌 이름과, 카탈로그의 같은 술·음식으로 본 이름(없으면 null) */
 export type MenuReadItem = { kind: "drink" | "food"; name: string; catalogName: string | null };

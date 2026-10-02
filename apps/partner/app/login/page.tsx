@@ -28,7 +28,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <main>
         <div className="auth">
           <h1>파트너 로그인</h1>
-          <p className="lead">페어링GO로 들어온 예약을 확인하고 매장 정보를 관리해요.</p>
+          <p className="lead">페어링GO로 들어온 예약을 확인하고 매장·양조장 정보와 판매 목록을 관리해요.</p>
           {err ? <p className="err" role="alert" style={{ marginBottom: 12 }}>{err}</p> : null}
           <LoginForm />
           <SocialButtons providers={enabledProviders()} />

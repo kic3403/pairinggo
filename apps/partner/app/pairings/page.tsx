@@ -37,7 +37,7 @@ export default async function PairingsPage() {
               매장당 {PARTNER_PAIRING_MAX_TOTAL}개, 술 하나에 {PARTNER_PAIRING_MAX_PER_DRINK}개까지예요.
             </p>
           </div>
-          {!drinks.length && !menu.length && <div className="panel"><p className="muted" style={{ margin: 0 }}><Link href="/store">매장 정보</Link>에서 메뉴판과 술 표를 채우면 여기서 바로 고를 수 있어요. 직접 입력해도 돼요.</p></div>}
+          {!drinks.length && !menu.length && <div className="panel"><p className="muted" style={{ margin: 0 }}><Link href="/sell">판매</Link> 탭에서 메뉴판과 술 표를 채우면 여기서 바로 고를 수 있어요. 직접 입력해도 돼요.</p></div>}
           <RestaurantPairingEditor drinks={drinks} menu={menu} rows={rows} siteUrl={siteUrl} kakaoId={merchant.kakaoPlaceId} storeName={merchant.name} />
         </main>
         <Tabs active="pairings" kind={merchant.kind} />
@@ -62,7 +62,7 @@ export default async function PairingsPage() {
           </p>
         </div>
         {!merchant.brewery ? (
-          <div className="panel"><p className="muted" style={{ margin: 0 }}><Link href="/store">매장 정보</Link>에서 ‘우리 양조장’을 먼저 골라 주세요 — 그래야 우리 술 목록이 떠요.</p></div>
+          <div className="panel"><p className="muted" style={{ margin: 0 }}><Link href="/store">양조장 정보</Link>에서 ‘우리 양조장’을 먼저 골라 주세요 — 그래야 우리 술 목록이 떠요.</p></div>
         ) : drinks.length === 0 ? (
           <div className="panel"><p className="muted" style={{ margin: 0 }}>카탈로그에 {merchant.brewery} 술이 아직 없어요. 운영자에게 술 등록을 요청해 주세요.</p></div>
         ) : (

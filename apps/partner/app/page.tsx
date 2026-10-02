@@ -109,8 +109,8 @@ async function todoItems(m: MyMerchant): Promise<{ text: string; why?: string; h
   if (pairings && pairings.length === 0) out.push({ text: "추천 페어링 넣기", why: m.kind === "brewery" ? "우리 술에 어울리는 음식을 적으면 술 화면에 공식 추천으로" : "우리 가게 술 × 메뉴를 짝지으면 검색·매장 화면에 추천으로", href: "/pairings" });
   if (store) {
     const drinks = store.drinkItems?.length ?? 0, menu = store.menuItems?.length ?? 0, photos = store.photos?.length ?? 0;
-    if (m.kind === "restaurant" && menu === 0) out.push({ text: "메뉴판 채우기", why: "사진 한 장이면 표로 읽어 줘요", href: "/store" });
-    if (drinks === 0) out.push({ text: m.kind === "restaurant" ? "취급하는 술 적기" : "우리 술 목록 채우기", why: "손님이 그 술로 검색하면 우리 매장이 나와요", href: "/store" });
+    if (m.kind === "restaurant" && menu === 0) out.push({ text: "메뉴판 채우기", why: "사진 한 장이면 표로 읽어 줘요", href: "/sell" });   // 메뉴·술 표는 판매 탭(2026-10-02)
+    if (drinks === 0) out.push({ text: m.kind === "restaurant" ? "취급하는 술 적기" : m.kind === "brewery" ? "판매하는 술 적기" : "취급하는 술 적기", why: "손님이 그 술로 검색하면 우리 매장이 나와요", href: "/sell" });
     if (photos === 0) out.push({ text: "대표 사진 올리기", why: "매장 화면 맨 위에 보여요", href: "/store" });
   }
   return out;

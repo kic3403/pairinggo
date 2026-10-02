@@ -6,7 +6,7 @@
  */
 import {
   cleanDrinkItems, cleanHours, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, cleanSettings, isDate, isEmptyPlaceInfo, itemsToLists, kstParts,
-  type BusinessHours, type PlaceInfo, type ReservationSettings,
+  type BusinessHours, type PlaceInfo, type ReservationSettings, storePartInput, type StorePart,
 } from "@pairinggo/shared";
 import { db } from "./db";
 import { hoursFromRows, hoursToRows, settingsFromRow, settingsToRow, type Merchant } from "./reservations";
@@ -67,18 +67,22 @@ export async function saveBrewery(m: Merchant, raw: unknown): Promise<string> {
   return brewery;
 }
 
-export async function saveStoreInfo(m: Merchant, partner: { id: string; name: string }, raw: { phone?: unknown; info?: Record<string, unknown>; brewery?: unknown }): Promise<PlaceInfo | null> {
+/** part = 어느 화면에서 저장했는지(2026-10-02: 정보 탭 "info" · 판매 탭 "menu") — 다른 화면의 값은 저장돼 있는 것 그대로 둔다(shared storePartInput). 없으면 예전처럼 전부 */
+export async function saveStoreInfo(m: Merchant, partner: { id: string; name: string }, raw: { phone?: unknown; info?: Record<string, unknown>; brewery?: unknown; part?: unknown }): Promise<PlaceInfo | null> {
   const c = need();
   const cat = await catalogNames();
-  if (raw.brewery !== undefined) await saveBrewery(m, raw.brewery);
-  const info = cleanPlaceInfo({ ...(raw.info ?? {}), source: "partner", verifiedAt: kstParts(new Date()).date }, { drinks: new Set(cat.drinks.map((d) => d.id)), foods: new Set(cat.foods.map((f) => f.id)) });
+  const part: StorePart | undefined = raw.part === "info" || raw.part === "menu" ? raw.part : undefined;
+  if (raw.brewery !== undefined && part !== "menu") await saveBrewery(m, raw.brewery);
+  const { data: before } = await c.from("place_info").select("*").eq("kakao_id", m.kakaoPlaceId).maybeSingle();
+  const input = storePartInput(part, before ? placeRowToInfo(before) : null, raw.info ?? {});
+  const info = cleanPlaceInfo({ ...input, source: "partner", verifiedAt: kstParts(new Date()).date }, { drinks: new Set(cat.drinks.map((d) => d.id)), foods: new Set(cat.foods.map((f) => f.id)) });
   // 메뉴판 표가 있으면 식당 카드의 술·메뉴 목록(카탈로그 연결)은 표에서 뽑는다 — 표가 원본
   if (info.menuItems.length || info.drinkItems.length) {
     const l = itemsToLists(info.menuItems, info.drinkItems, cat);
     info.drinks = l.drinkIds; info.drinkNames = l.drinkNames; info.foods = l.foodIds; info.menuNames = l.menuNames;
   }
-  const phone = String(raw.phone ?? "").replace(/[^0-9\-]/g, "").slice(0, 20);
-  const { data: before } = await c.from("place_info").select("*").eq("kakao_id", m.kakaoPlaceId).maybeSingle();
+  // 대표 번호는 정보 화면에서만 바꾼다 — 판매 화면 저장은 번호를 보내지 않으므로 지금 번호 그대로
+  const phone = part === "menu" || raw.phone === undefined ? m.phone : String(raw.phone ?? "").replace(/[^0-9\-]/g, "").slice(0, 20);
   const beforeAll = { phone: m.phone, place: before ?? null };
 
   if (phone !== m.phone) {

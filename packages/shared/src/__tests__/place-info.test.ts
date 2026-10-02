@@ -115,3 +115,32 @@ describe("확인된 식당 먼저", () => {
     expect(got.map((p) => p.id)).toEqual(["b", "d", "a", "c"]);
   });
 });
+
+describe("파트너 저장 — 정보 화면과 판매 화면을 따로", async () => {
+  const { cleanPlaceInfo, storePartInput } = await import("../place-info");
+  const before = cleanPlaceInfo({
+    parking: "free", parkingNote: "건물 뒤 5대", corkage: "yes", corkageNote: "병당 1만원", menuNote: "한우 수육과 막걸리", naverUrl: "https://naver.me/abc",
+    photos: ["https://abc.supabase.co/storage/v1/object/public/menu-photos/m/a.jpg"],
+    menuItems: [{ name: "수육", desc: "", price: 30000 }], drinkItems: [{ name: "한산소곡주", volume: "500ml", abv: 18, price: 20000 }], drinks: ["d1"], drinkNames: ["없는술"], source: "partner", verifiedAt: "2026-10-01",
+  });
+  it("정보만 저장 — 메뉴·술 표는 그대로", () => {
+    const out = cleanPlaceInfo(storePartInput("info", before, { parking: "paid", parkingNote: "", menuNote: "새 소개", photos: [], menuItems: [], drinkItems: [] }));
+    expect(out).toMatchObject({ parking: "paid", parkingNote: "", menuNote: "새 소개", photos: [] });
+    expect(out.corkage).toBeNull();                      // 정보 화면이 안 보낸 정보 값은 비운다(양조장은 콜키지를 안 쓴다)
+    expect(out.menuItems).toEqual(before.menuItems);     // 표를 빈 값으로 보내도 지워지지 않는다
+    expect(out.drinkItems).toEqual(before.drinkItems);
+    expect(out.drinks).toEqual(["d1"]); expect(out.drinkNames).toEqual(["없는술"]);
+  });
+  it("판매만 저장 — 소개·사진·편의 정보는 그대로", () => {
+    const out = cleanPlaceInfo(storePartInput("menu", before, { menuItems: [{ name: "파전", desc: "", price: 15000 }], drinkItems: [], menuNote: "", photos: [], parking: "" }));
+    expect(out.menuItems.map((m) => m.name)).toEqual(["파전"]);
+    expect(out.drinkItems).toEqual([]);
+    expect(out).toMatchObject({ parking: "free", parkingNote: "건물 뒤 5대", corkage: "yes", corkageNote: "병당 1만원", menuNote: "한우 수육과 막걸리", naverUrl: "https://naver.me/abc" });
+    expect(out.photos).toEqual(before.photos);
+  });
+  it("처음 저장(저장된 값 없음)·예전 방식", () => {
+    expect(cleanPlaceInfo(storePartInput("menu", null, { drinkItems: [{ name: "막걸리", volume: "", abv: null, price: null }], menuNote: "x" }))).toMatchObject({ menuNote: "", drinkItems: [{ name: "막걸리" }] });
+    const raw = { menuNote: "a", menuItems: [] };
+    expect(storePartInput(undefined, before, raw)).toBe(raw);
+  });
+});
