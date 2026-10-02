@@ -4,7 +4,10 @@
  * 카탈로그에 있는 술만 올릴 수 있다(손님 화면의 그 술 페이지에서 바로 팔리게 하려고).
  */
 import { useState } from "react";
-import { PRODUCT_PHOTOS_MAX, PRODUCT_STATUS_LABEL, discountRate, formatPrice, type Product } from "@pairinggo/shared";
+import { PRODUCT_PHOTOS_MAX, PRODUCT_STATUS_LABEL, discountRate, formatPrice, josa, type DrinkItem, type Product } from "@pairinggo/shared";
+
+/** 온라인 판매에 올린 술이 '판매하는 술' 표에 들어갔을 때 — MenuForm이 듣고 그 줄을 표에 더한다 */
+export const DRINK_ADDED_EVENT = "pg:drink-added";
 import { shrinkToJpeg } from "@pairinggo/shared/image-client";
 
 /** 상품 사진 — 손님 화면 구매 상자·장바구니에 보인다. 매장 사진과 같은 저장소(menu-photos) */
@@ -91,11 +94,13 @@ export function ProductList({ initial, drinks, canSell, siteUrl }: { initial: Pr
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: draft.id, product: { ...draft } }),
     }).catch(() => null);
-    const j = (await r?.json().catch(() => ({}))) as { error?: string; product?: Product } | undefined;
+    const j = (await r?.json().catch(() => ({}))) as { error?: string; product?: Product; menuAdded?: DrinkItem | null } | undefined;
     if (r?.ok && j?.product) {
       setItems((list) => (draft.id ? list.map((x) => (x.id === j.product!.id ? j.product! : x)) : [j.product!, ...list]));
       setDraft(null);
-      setState({ ok: "저장했어요" });
+      // 서버가 '판매하는 술' 표에도 넣었으면 위쪽 표(MenuForm)에 바로 보이게 알린다 — 같은 화면이라 새로 고치지 않아도 된다
+      if (j.menuAdded) window.dispatchEvent(new CustomEvent(DRINK_ADDED_EVENT, { detail: j.menuAdded }));
+      setState({ ok: j.menuAdded ? `저장했어요 — ‘판매하는 술’에도 ${josa(j.menuAdded.name, "을/를")} 넣었어요` : "저장했어요" });
     } else setState({ err: j?.error ?? "저장하지 못했어요" });
   }
 

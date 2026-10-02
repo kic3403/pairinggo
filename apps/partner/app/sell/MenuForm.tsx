@@ -8,6 +8,7 @@
 import { useEffect, useState } from "react";
 import { MENU_SECTIONS, MENU_SECTION_LABEL, PARTNER_PLACE_LABEL, categoryOptions, isKnownCategory, mergeMenuRows, moveItem, type DrinkItem, type MenuItem, type MenuReadRow, type PartnerKind, type PlaceInfo } from "@pairinggo/shared";
 import { MENU_MAX_FILES, shrinkToJpeg } from "@pairinggo/shared/image-client";
+import { DRINK_ADDED_EVENT } from "./ProductList";
 
 type Named = { id: string; name: string };
 
@@ -198,6 +199,17 @@ export function MenuForm({ info, drinks, foods, menuReadEnabled, kind = "restaur
   });
   const [state, setState] = useState<{ busy?: boolean; ok?: string; err?: string }>({});
   const [photoErr, setPhotoErr] = useState("");
+  // 아래 '온라인 판매'에서 상품을 올리면 서버가 이 표에도 그 술을 넣는다 — 화면의 표에도 바로 더한다(적다 만 다른 줄은 그대로)
+  useEffect(() => {
+    const onAdded = (e: Event) => {
+      const d = (e as CustomEvent<DrinkItem>).detail;
+      if (!d?.name) return;
+      const k = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+      setTables((t) => (t.drinks.some((x) => k(x.name) === k(d.name)) ? t : { ...t, drinks: [...t.drinks, d] }));
+    };
+    window.addEventListener(DRINK_ADDED_EVENT, onAdded);
+    return () => window.removeEventListener(DRINK_ADDED_EVENT, onAdded);
+  }, []);
 
   async function save() {
     setState({ busy: true });
@@ -248,6 +260,7 @@ export function MenuForm({ info, drinks, foods, menuReadEnabled, kind = "restaur
           <DrinkTable withDesc={drinkOnly} rows={tables.drinks} onError={setPhotoErr} onImg={(i, url) => setTables((t) => ({ ...t, drinks: t.drinks.map((x, j) => (j === i ? withImg(x, url) : x)) }))} onChange={(d) => setTables((t) => ({ ...t, drinks: d }))} />
         </div>
         <p className="small muted" style={{ margin: 0 }}>
+          {kind === "brewery" ? "아래 ‘온라인 판매’에 올린 술은 이 표에 자동으로 들어와요(이미 있으면 그대로). " : ""}
           {kind === "brewery" && !brewery ? `${infoLabel}에서 ‘우리 양조장’을 고르면 페어링GO에 있는 우리 술을 한 번에 불러올 수 있어요. ` : ""}
           페어링GO에 있는 {drinkOnly ? "전통주와" : "음식·전통주와"} 이름이 같으면 손님 화면에서 그 페이지로 이어져요.
         </p>

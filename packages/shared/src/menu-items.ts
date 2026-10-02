@@ -165,3 +165,16 @@ export function itemsToLists(menu: MenuItem[], drinks: DrinkItem[], catalog: { d
   for (const x of menu) { const r = addListItem(f, x.name, catalog.foods); f = { ids: r.ids, names: r.names }; }
   return { drinkIds: d.ids, drinkNames: d.names, foodIds: f.ids, menuNames: f.names };
 }
+
+/**
+ * 온라인 판매 상품 → '판매하는 술' 표에 자동으로(2026-10-02 사용자 요청 — 양조장이 같은 술을 두 번 적지 않게).
+ * 양조장이 온라인 판매에 상품을 올리면 그 **카탈로그 술 이름**으로 술 표에 한 줄을 더한다(상품 이름은 "○○ 500ml 2병"처럼 구성이 붙어 있어 쓰지 않는다).
+ * 이미 같은 이름의 술이 있으면(띄어쓰기·대소문자 무시, 용량이 달라도) 건드리지 않는다 — 사장님이 적은 값이 우선이고, 지우지도 않는다.
+ * 표가 가득 찼으면 더하지 않는다.
+ */
+export function ensureDrinkItem(items: DrinkItem[], add: { name: string; volume?: string; abv?: number | null; price?: number | null; img?: string; category?: string }): { items: DrinkItem[]; added: boolean } {
+  const name = text(add.name, MENU_NAME_MAX);
+  if (!name || items.some((d) => key(d.name) === key(name)) || items.length >= MENU_ITEMS_MAX) return { items, added: false };
+  const [row] = cleanDrinkItems([{ name, volume: add.volume ?? "", abv: add.abv ?? null, price: add.price ?? null, img: add.img, category: add.category }]);
+  return row ? { items: [...items, row], added: true } : { items, added: false };
+}

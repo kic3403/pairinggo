@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanDrinkItems, cleanMenuImage, cleanMenuItems, cleanVolume, formatAbv, formatPrice, itemsToLists, menuImages, mergeMenuRows, moveItem, parseAbv, parsePrice } from "../menu-items";
+import { cleanDrinkItems, cleanMenuImage, cleanMenuItems, ensureDrinkItem, cleanVolume, formatAbv, formatPrice, itemsToLists, menuImages, mergeMenuRows, moveItem, parseAbv, parsePrice } from "../menu-items";
 
 const catalog = { drinks: [{ id: "d11", name: "한산소곡주" }], foods: [{ id: "f08", name: "해물파전" }] };
 
@@ -111,5 +111,28 @@ describe("표 차례 바꾸기", () => {
     const moved = moveItem([{ name: "수육" }, { name: "파전" }], 1, -1);
     expect(cleanMenuItems(moved).map((m) => m.name)).toEqual(["파전", "수육"]);
     expect(cleanDrinkItems(moveItem([{ name: "한산소곡주" }, { name: "감싸주는 날" }], 0, 1)).map((d) => d.name)).toEqual(["감싸주는 날", "한산소곡주"]);
+  });
+});
+
+describe("온라인 판매 상품 → 판매하는 술 표", () => {
+  const have = cleanDrinkItems([{ name: "한산 소곡주", volume: "500ml", abv: 18, price: 20000 }]);
+  it("없는 술이면 맨 뒤에 한 줄 — 용량·도수·가격·종류를 함께", () => {
+    const r = ensureDrinkItem(have, { name: "불소곡주", volume: "375ml", abv: 43, price: 35000, category: "증류주" });
+    expect(r.added).toBe(true);
+    expect(r.items).toHaveLength(2);
+    expect(r.items[1]).toMatchObject({ name: "불소곡주", volume: "375ml", abv: 43, price: 35000, category: "증류주" });
+    expect(r.items[0]).toEqual(have[0]);
+  });
+  it("이미 있으면 건드리지 않는다 — 띄어쓰기·용량이 달라도", () => {
+    const r = ensureDrinkItem(have, { name: "한산소곡주", volume: "750ml", abv: 18, price: 30000 });
+    expect(r.added).toBe(false);
+    expect(r.items).toBe(have);
+  });
+  it("빈 이름·링크·우리 저장소 밖 사진·가득 찬 표", () => {
+    expect(ensureDrinkItem(have, { name: "  " }).added).toBe(false);
+    expect(ensureDrinkItem(have, { name: "http://x.example 술" }).added).toBe(false);
+    expect(ensureDrinkItem([], { name: "새 술", img: "https://evil.example/a.jpg" }).items[0].img).toBeUndefined();
+    const full = cleanDrinkItems(Array.from({ length: 80 }, (_, i) => ({ name: `술${i}` })));
+    expect(ensureDrinkItem(full, { name: "하나 더" }).added).toBe(false);
   });
 });

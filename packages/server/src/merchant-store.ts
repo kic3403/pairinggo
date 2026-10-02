@@ -6,7 +6,7 @@
  */
 import {
   cleanDrinkItems, cleanHours, cleanMenuItems, cleanStorePhotos, cleanPlaceInfo, cleanSettings, isDate, isEmptyPlaceInfo, itemsToLists, kstParts,
-  type BusinessHours, type PlaceInfo, type ReservationSettings, storePartInput, type StorePart,
+  type BusinessHours, type PlaceInfo, type ReservationSettings, storePartInput, type StorePart, ensureDrinkItem, type DrinkItem,
 } from "@pairinggo/shared";
 import { db } from "./db";
 import { hoursFromRows, hoursToRows, settingsFromRow, settingsToRow, type Merchant } from "./reservations";
@@ -107,6 +107,18 @@ export async function saveStoreInfo(m: Merchant, partner: { id: string; name: st
   }
   await logChange(m.id, partner.id, "info", beforeAll, { phone, place: after });
   return after ? placeRowToInfo(after) : null;
+}
+
+/**
+ * 온라인 판매에 올린 술을 '판매하는 술' 표에도(2026-10-02) — 이미 있으면 아무것도 하지 않는다(shared ensureDrinkItem).
+ * 더했으면 그 줄을 돌려준다(화면이 표에 바로 보이게). 저장은 판매 탭 저장과 같은 길(saveStoreInfo part "menu")이라 변경 이력도 남는다.
+ */
+export async function ensureStoreDrink(m: Merchant, partner: { id: string; name: string }, add: Parameters<typeof ensureDrinkItem>[1]): Promise<DrinkItem | null> {
+  const { info } = await getStoreInfo(m);
+  const r = ensureDrinkItem(info?.drinkItems ?? [], add);
+  if (!r.added) return null;
+  await saveStoreInfo(m, partner, { part: "menu", info: { menuItems: info?.menuItems ?? [], drinkItems: r.items } });
+  return r.items[r.items.length - 1];
 }
 
 /* ---------- 예약 설정 ---------- */
