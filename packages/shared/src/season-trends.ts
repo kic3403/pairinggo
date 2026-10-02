@@ -6,8 +6,9 @@
  * 그래서 묶음마다 자기 평균을 100으로 다시 놓은 **계절 지수**(seasonalIndex)로 바꾼다 — 120이면 평소보다 20% 더 찾는 달.
  */
 
+import type { Season } from "./pairing/today";   // 계절 이름은 오늘의 페어링과 같은 타입(두 곳에서 내보내면 index의 export *가 겹친다)
+
 export type TrendPoint = { period: string; ratio: number };   // period "2026-09-01" (월별이면 그 달 1일)
-export type Season = "spring" | "summer" | "autumn" | "winter";
 export const SEASON_OF_MONTH: Record<number, Season> = { 3: "spring", 4: "spring", 5: "spring", 6: "summer", 7: "summer", 8: "summer", 9: "autumn", 10: "autumn", 11: "autumn", 12: "winter", 1: "winter", 2: "winter" };
 export const SEASON_KO: Record<Season, string> = { spring: "봄(3~5월)", summer: "여름(6~8월)", autumn: "가을(9~11월)", winter: "겨울(12~2월)" };
 

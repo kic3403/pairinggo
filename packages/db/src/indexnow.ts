@@ -33,3 +33,5 @@ for (const ep of ENDPOINTS) {
   }
 }
 if (!ok) process.exit(1);
+
+export {};
