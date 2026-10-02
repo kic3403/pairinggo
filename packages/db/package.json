@@ -44,7 +44,8 @@
     "indexnow": "tsx src/indexnow.ts",
     "blog-lift": "tsx src/blog-lift.ts",
     "estimate-caps": "tsx src/estimate-caps.ts",
-    "reason-fix": "tsx src/reason-fix.ts"
+    "reason-fix": "tsx src/reason-fix.ts",
+    "season-trends": "tsx src/season-trends.ts"
   },
   "dependencies": {
     "@pairinggo/shared": "workspace:*",
