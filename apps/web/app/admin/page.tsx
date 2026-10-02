@@ -23,7 +23,7 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
       {experts > 0 && <div className="card" style={{ borderColor: "#2F6B3A", marginBottom: 12 }}><b style={{ color: "#2F6B3A" }}>전문가 등급 요청 {experts}건 심사 대기</b> — 증빙을 확인하고 승인해 주세요. <Link href="/admin/experts?status=applied">심사하기 →</Link></div>}
       {manual > 0 && <div className="card" style={{ borderColor: "#B8860B", marginBottom: 12 }}><b style={{ color: "#8a6508" }}>카카오맵에 연결 안 된 직접 입력 매장 {manual}곳</b> — 연결 전에는 페어링GO 검색·예약에 나오지 않아요. <Link href="/admin/partners">카카오맵 장소 연결 →</Link></div>}
       <h2 style={{ margin: "0 0 4px" }}>대시보드</h2>
-      {ops && <OpsPanel metrics={ops.metrics} demo={ops.demo} period={ops.period} funnel={ops.funnel} />}
+      {ops && <OpsPanel metrics={ops.metrics} demo={ops.demo} period={ops.period} funnel={ops.funnel} series={ops.series} />}
       <p className="muted">카탈로그 버전 <code>{d.version.slice(0, 19)}</code> · 페어링 {d.totalPairings} · 발행 후 승격 {d.promotedAfter}건 {d.promotedAfter > 0 && <Link href="/admin/publish">→ 발행하기</Link>}</p>
       <div className="kpi">
         <div><b>{d.byStatus.draft || 0}</b><span>검수 대기</span></div>

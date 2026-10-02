@@ -2,11 +2,11 @@
  * 운영 지표 세기(2026-10-01) — 고른 기간과 바로 앞 같은 길이 기간을 같은 기준으로 센다. 어드민 대시보드와 주간 리포트 이메일이 같이 쓴다.
  * 기간 규칙(1·7·30일 탭, 직접 선택)과 표시 규칙은 shared ops-metrics.ts. 기간마다 10분 기억(같은 서버 인스턴스 안).
  */
-import { FUNNEL_EVENTS, demographics, opsFunnel, opsPeriod, prevPeriod, type Demographics, type FunnelEventRow, type OpsFunnel, type OpsPeriod, type WeeklyCounts, type WeeklyMetrics } from "@pairinggo/shared";
+import { FUNNEL_EVENTS, countByBucket, demographics, distinctByBucket, emptySeries, opsFunnel, opsPeriod, prevPeriod, seriesAxis, type Demographics, type FunnelEventRow, type OpsFunnel, type OpsPeriod, type OpsSeries, type WeeklyCounts, type WeeklyMetrics } from "@pairinggo/shared";
 import { db } from "./db";
 
 type Sb = NonNullable<ReturnType<typeof db>>;
-type OpsResult = { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod; funnel: OpsFunnel };
+type OpsResult = { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod; funnel: OpsFunnel; series: OpsSeries };
 const memo = new Map<string, { at: number; val: OpsResult }>();
 
 /** 방문 세션 수 — PostgREST는 한 번에 1,000행까지라 끝까지 나눠 받는다(30일·직접 선택이면 수천 행) */
@@ -21,16 +21,47 @@ async function distinctSessions(sb: Sb, from: string, to: string): Promise<numbe
   return seen.size;
 }
 
-/** 방문 흐름(2026-10-02) — 고른 기간의 화면 조회·저장·링크·공유 이벤트를 끝까지 나눠 받아 shared opsFunnel로 센다 */
-async function funnelIn(sb: Sb, from: string, to: string): Promise<OpsFunnel> {
-  const rows: FunnelEventRow[] = [];
+/** 한 표의 created_at만 끝까지 나눠 받는다 — 그래프의 칸마다 세려고 */
+async function timesOf(sb: Sb, table: string, from: string, to: string, kinds?: string[]): Promise<string[]> {
+  const out: string[] = [];
   for (let off = 0; off < 200_000; off += 1000) {
-    const { data, error } = await sb.from("events").select("name,session_id,props").in("name", [...FUNNEL_EVENTS]).gte("created_at", from).lt("created_at", to).order("id").range(off, off + 999);
+    let q = sb.from(table).select("created_at").gte("created_at", from).lt("created_at", to);
+    if (kinds) q = q.in("kind", kinds);
+    const { data, error } = await q.order("created_at").range(off, off + 999);
     if (error || !data?.length) break;
-    rows.push(...(data as FunnelEventRow[]));
+    for (const r of data as { created_at: string }[]) out.push(r.created_at);
     if (data.length < 1000) break;
   }
-  return opsFunnel(rows);
+  return out;
+}
+
+/**
+ * 방문 흐름(2026-10-02) — 고른 기간의 화면 조회·저장·링크·공유 이벤트를 끝까지 나눠 받아 shared opsFunnel로 센다.
+ * 같은 줄로 그래프(시간 축별 방문 세션·화면 조회·저장)도 만든다 — 이벤트를 한 번만 받으려고 여기서 함께(shared ops-series.ts).
+ */
+async function funnelIn(sb: Sb, from: string, to: string): Promise<{ funnel: OpsFunnel; series: OpsSeries }> {
+  const rows: (FunnelEventRow & { created_at: string })[] = [];
+  for (let off = 0; off < 200_000; off += 1000) {
+    const { data, error } = await sb.from("events").select("name,session_id,props,created_at").in("name", [...FUNNEL_EVENTS]).gte("created_at", from).lt("created_at", to).order("id").range(off, off + 999);
+    if (error || !data?.length) break;
+    rows.push(...(data as (FunnelEventRow & { created_at: string })[]));
+    if (data.length < 1000) break;
+  }
+  const axis = seriesAxis({ since: from, until: to });
+  const screens = rows.filter((r) => r.name === "screen");
+  const [searches, users] = await Promise.all([
+    timesOf(sb, "search_logs", from, to, ["search", "search_intent", "search_empty"]).catch(() => [] as string[]),
+    timesOf(sb, "users", from, to).catch(() => [] as string[]),
+  ]);
+  const series: OpsSeries = {
+    axis,
+    visitors: distinctByBucket(axis, screens.map((r) => ({ at: r.created_at, key: r.session_id }))),
+    views: countByBucket(axis, screens.map((r) => r.created_at)),
+    searches: countByBucket(axis, searches),
+    saves: countByBucket(axis, rows.filter((r) => r.name === "save").map((r) => r.created_at)),
+    newUsers: countByBucket(axis, users),
+  };
+  return { funnel: opsFunnel(rows), series };
 }
 
 async function countIn(sb: Sb, from: string, to: string): Promise<WeeklyCounts> {
@@ -64,12 +95,12 @@ export async function opsMetrics(sp: { p?: unknown; from?: unknown; to?: unknown
   const prev = prevPeriod(period);
   const zero: WeeklyCounts = { visits: 0, visitors: 0, searches: 0, emptySearches: 0, saves: 0, newUsers: 0, picks: 0, reviews: 0, expertReviews: 0, reservations: 0, orders: 0 };
   const sb = db();
-  if (!sb) return { metrics: { cur: zero, prev: zero, since: period.since, until: period.until }, demo: demographics([]), period, funnel: opsFunnel([]) };
-  const [cur, before, funnel, users] = await Promise.all([
-    countIn(sb, period.since, period.until), countIn(sb, prev.since, prev.until), funnelIn(sb, period.since, period.until).catch(() => opsFunnel([])),
+  if (!sb) return { metrics: { cur: zero, prev: zero, since: period.since, until: period.until }, demo: demographics([]), period, funnel: opsFunnel([]), series: emptySeries(period) };
+  const [cur, before, flow, users] = await Promise.all([
+    countIn(sb, period.since, period.until), countIn(sb, prev.since, prev.until), funnelIn(sb, period.since, period.until).catch(() => ({ funnel: opsFunnel([]), series: emptySeries(period) })),
     sb.from("users").select("gender,birth_date,sido").limit(5000).then((r) => (r.data ?? []) as { gender: string | null; birth_date: string | null; sido: string | null }[], () => []),
   ]);
-  const val = { metrics: { cur, prev: before, since: period.since, until: period.until }, demo: demographics(users, now), period, funnel };
+  const val = { metrics: { cur, prev: before, since: period.since, until: period.until }, demo: demographics(users, now), period, funnel: flow.funnel, series: flow.series };
   memo.set(key, { at: Date.now(), val });
   if (memo.size > 50) memo.delete(memo.keys().next().value!);
   return val;

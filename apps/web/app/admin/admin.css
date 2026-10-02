@@ -78,6 +78,21 @@ table.t { width: 100%; border-collapse: collapse; font-size: 13px; } .t th { tex
 /* 대시보드 지표·회원 구성(2026-10-01) */
 .kpi.kpi4 { grid-template-columns: repeat(4, 1fr); } .kpi4 span { display: block; line-height: 1.4; }
 .delta { font-style: normal; font-weight: 700; color: var(--muted); } .delta.up { color: var(--ok); } .delta.down { color: #B8431F; }
+/* 대시보드 꺾은선 그래프(OpsChart) — 넓으면 두 장 나란히, 좁으면 위아래 */
+.ocharts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+@media (max-width: 760px) { .ocharts { grid-template-columns: 1fr; } }
+.ochart { margin: 0; min-width: 0; }
+.ochart figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 13px; margin-bottom: 2px; }
+.ochart svg { display: block; width: 100%; height: auto; }
+.olegend { display: inline-flex; flex-wrap: wrap; gap: 2px 12px; color: var(--ink2); font-size: 12.5px; }
+.olegend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.olegend em { font-style: normal; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.otable summary { cursor: pointer; font-size: 12.5px; color: var(--ink2); margin-top: 2px; }
+.otable .oscroll { max-height: 220px; overflow: auto; margin-top: 6px; border: 1px solid var(--line); border-radius: 8px; }
+.otable table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.otable th, .otable td { padding: 4px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.otable th:first-child, .otable td:first-child { text-align: left; }
+.otable thead th { position: sticky; top: 0; background: var(--surface); color: var(--ink2); font-weight: 700; }
 /* 블로그 글 초안(/admin/posts) — 붙여 넣을 글 그대로 보이게 */
 .draft { margin: 8px 0; padding: 12px 14px; border: 1px solid var(--line, #ddd); border-radius: 8px; background: var(--bg2, #f6f5f1); font: inherit; font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-break: keep-all; max-height: 360px; overflow: auto; }
 .funnel { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; font-size: 13px; }

@@ -3,7 +3,8 @@
  * 2026-10-01 사용자 요청: 1일·7일·30일 탭 + 날짜 직접 선택(?p= 또는 ?from=&to=, 규칙은 shared ops-metrics opsPeriod).
  */
 import Link from "next/link";
-import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, OPS_PRESETS, deltaText, josa, kstToday, pct, stepRate, type Demographics, type OpsFunnel, type OpsPeriod, type WeeklyMetrics } from "@pairinggo/shared";
+import { AGE_BANDS, METRIC_LABEL, METRIC_ORDER, OPS_PRESETS, deltaText, josa, kstToday, pct, stepRate, type Demographics, type OpsFunnel, type OpsPeriod, type OpsSeries, type WeeklyMetrics } from "@pairinggo/shared";
+import OpsChart from "./OpsChart";
 
 const tone = (cur: number, prev: number) => (cur > prev ? "up" : cur < prev ? "down" : "");
 const kstDay = (iso: string) => new Date(Date.parse(iso) + 9 * 3600_000).toISOString().slice(0, 10);
@@ -18,7 +19,7 @@ function Bars({ rows, total }: { rows: { label: string; n: number }[]; total: nu
   );
 }
 
-export default function OpsPanel({ metrics: m, demo: d, period, funnel: f }: { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod; funnel: OpsFunnel }) {
+export default function OpsPanel({ metrics: m, demo: d, period, funnel: f, series: s }: { metrics: WeeklyMetrics; demo: Demographics; period: OpsPeriod; funnel: OpsFunnel; series: OpsSeries }) {
   const prevName = period.prevName;
   const today = kstToday();
   // 직접 선택 칸 기본값 — 지금 보고 있는 기간
@@ -51,6 +52,17 @@ export default function OpsPanel({ metrics: m, demo: d, period, funnel: f }: { m
         </div>
         <p className="muted" style={{ margin: "8px 0 0" }}>방문(세션)은 브라우저 탭마다 하나. 날짜는 한국 시간, 직접 선택은 시작일·종료일을 모두 포함(최대 366일). 10분마다 갱신. 월요일 09:30에 최근 7일 내용이 운영 리포트 이메일로 갑니다.</p>
       </div>
+      {/* 흐름 그래프(2026-10-02 사용자 요청) — 가로축 날짜(하루짜리 기간은 시간), 세로축 건수. 크기가 다른 것끼리 한 그래프에 넣으면 작은 쪽이 바닥에 붙어, 방문과 행동을 따로 그린다 */}
+      {s.axis.buckets.length > 0 && (
+        <div className="card">
+          <b>{s.axis.unit === "hour" ? "시간별" : "날짜별"} 흐름 <span className="muted" style={{ fontWeight: 400 }}>{period.label} · 한국 시간{s.axis.unit === "day" ? " · 양 끝 날은 기간에 걸친 만큼만" : ""}</span></b>
+          <div className="ocharts">
+            <OpsChart title="방문" axis={s.axis} lines={[{ name: "화면 조회", color: "#E4572E", values: s.views }, { name: "방문 세션", color: "#22406B", values: s.visitors }]} />
+            <OpsChart title="행동" axis={s.axis} lines={[{ name: "검색", color: "#22406B", values: s.searches }, { name: "저장", color: "#C2185B", values: s.saves }, { name: "새 회원", color: "#2E7D5B", values: s.newUsers }]} />
+          </div>
+          <p className="muted" style={{ margin: "6px 0 0" }}>범례의 숫자는 기간 합계입니다. 방문 세션은 {s.axis.unit === "hour" ? "시간" : "날"}마다 따로 세어, 여러 {s.axis.unit === "hour" ? "시간" : "날"}에 걸쳐 온 사람은 그래프에서 여러 번 세어집니다(위 지표의 방문 수보다 합계가 클 수 있어요). 점에 마우스를 올리면 값이 보입니다.</p>
+        </div>
+      )}
       {/* 방문 흐름(2026-10-02) — 방문 → 상세 → 행동을 세션 수로. 유입용 기능(비로그인 저장·그림 카드·모음 화면)의 효과를 본다 */}
       <div className="card">
         <b>방문 흐름 <span className="muted" style={{ fontWeight: 400 }}>{period.label} · 세션(브라우저 탭) 기준 — 한 사람이 여러 번 눌러도 한 번</span></b>

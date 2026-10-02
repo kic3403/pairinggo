@@ -37,6 +37,7 @@ export * from "./food-groups";
 export * from "./name-index";
 export * from "./ops-metrics";
 export * from "./ops-funnel";
+export * from "./ops-series";
 export * from "./traffic-source";
 export * from "./profile";
 export * from "./session";
