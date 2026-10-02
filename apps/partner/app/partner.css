@@ -125,6 +125,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
   background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
 .tabs a { text-align: center; padding: 13px 4px 12px; font-size: 14px; font-weight: 700; color: var(--muted); text-decoration: none; }
+/* 탭이 7개(2026-10-02 판매 탭이 모든 업종에) — 좁은 화면에서 "매장 정보"·"예약 설정"이 낱말 중간이 아니라 띄어쓰기에서 두 줄로 나뉘게 */
+.tabs a { word-break: keep-all; line-height: 1.25; display: grid; place-items: center; }
+@media (max-width: 420px) { .tabs a { font-size: 12.5px; padding: 10px 2px 9px; } }
 .tabs a[aria-current="page"] { color: var(--navy); box-shadow: inset 0 3px 0 var(--navy); }
 @media (min-width: 768px) { .tabs { left: 50%; right: auto; transform: translateX(-50%); width: 760px; border: 1px solid var(--line); border-bottom: 0; border-radius: 12px 12px 0 0; } }
 
