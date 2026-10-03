@@ -1656,3 +1656,10 @@ body { font-family: var(--font-sans); }
   .actionbar .ab-main .ab-buy { border: 1.5px solid var(--food); color: var(--food-ink); background: #fff; }
   .actionbar .ab-main .ab-main-cta { background: var(--food); border-color: var(--food); color: #fff; flex: 1.2; }
 }
+/* 음식 상세 머리 — 사진 타일(.ph)이 넓은 화면에서도 300px, 머리 안의 Tasting Note는 아래 전폭으로 */
+@media (min-width: 768px) {
+  .dhead-v2 .dhead-media, .dhead-v2 .dhead-media.ph { width: 300px; flex: none; }
+  .dhead-v2 { flex-wrap: wrap; }
+  .dhead-v2 .dhead-body { flex: 1 1 320px; min-width: 0; }
+  .dhead-v2 .pbars { flex: 1 1 100%; order: 2; margin: 0; }
+}
