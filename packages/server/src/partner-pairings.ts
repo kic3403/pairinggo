@@ -8,8 +8,8 @@
  *  - 저장·삭제 뒤 catalog_meta.version을 올려 웹 카탈로그 캐시(15초)와 상세 화면(ISR 10분)이 새 값을 보게 한다.
  */
 import {
-  PARTNER_PAIRING_MAX_PER_DRINK, applyPartnerPairing, cleanPairingNote, normFoodText, partnerEvidence, partnerPairingProblem, profileFit, resolveDrinkText, resolveFoodText,
-  type DrinkProfile, type FoodLite, type FoodProfile, type PairingSnapshot, type PartnerPairingKind,
+  PARTNER_PAIRING_MAX_PER_DRINK, PARTNER_SUGGEST_PER_DRINK, applyPartnerPairing, cleanPairingNote, normFoodText, partnerEvidence, partnerPairingProblem, profileFit, resolveDrinkText, resolveFoodText, suggestPairings,
+  type DrinkProfile, type FoodLite, type FoodProfile, type PairingSnapshot, type PairingSuggestion, type PartnerPairingKind, type SuggestInput,
 } from "@pairinggo/shared";
 import { db } from "./db";
 import type { Merchant } from "./reservations";
@@ -206,3 +206,53 @@ export async function partnerPairingsByMerchant(): Promise<Map<string, PartnerPa
 }
 
 export const partnerPairingLimit = PARTNER_PAIRING_MAX_PER_DRINK;
+
+/* ---------- 빠른 입력 추천(2026-10-03) ---------- */
+export type PartnerSuggestion = PairingSuggestion & { drinkId: string; drinkText: string; foodText: string };
+/**
+ * 파트너 페어링 화면의 추천 조합 — 양조장: 우리 술마다 카탈로그 조합(근거 + 맛 분석) 상위 n개.
+ * 식당: 술 표의 술을 카탈로그에 연결하고, 메뉴판 음식과 겹치는 조합을 먼저(없으면 카탈로그 조합 그대로). 이미 적은 조합은 뺀다. 규칙은 shared suggestPairings.
+ */
+export async function suggestPartnerPairings(m: Merchant, perDrink = PARTNER_SUGGEST_PER_DRINK): Promise<PartnerSuggestion[]> {
+  const c = db();
+  if (!c) return [];
+  const kind: PartnerPairingKind | null = m.kind === "brewery" ? "brewery" : m.kind === "restaurant" ? "restaurant" : null;
+  if (!kind || (kind === "brewery" && !m.brewery)) return [];
+  const k = await catalog();
+  const { data: mine } = await c.from("partner_pairings").select("drink_id,food_id,drink_key,food_key").eq("merchant_id", m.id);
+  const taken = new Set(((mine ?? []) as Row[]).filter((r) => r.drink_id && r.food_id).map((r) => `${str(r.drink_id)}|${str(r.food_id)}`));
+
+  // 대상 술과 (식당이면) 메뉴 음식
+  const targets: { drinkId: string; drinkText: string }[] = [];
+  let menuFood: Map<string, string> | null = null;   // 카탈로그 food id → 메뉴판 이름
+  if (kind === "brewery") {
+    const { data } = await c.from("drinks").select("id,name").eq("brewery_name", m.brewery).order("name").limit(100);
+    for (const r of (data ?? []) as Row[]) targets.push({ drinkId: str(r.id), drinkText: str(r.name) });
+  } else {
+    const { data: pi } = await c.from("place_info").select("drink_items,menu_items").eq("kakao_id", m.kakaoPlaceId).maybeSingle();
+    const drinkItems = ((pi?.drink_items as { name?: string }[] | null) ?? []), menuItems = ((pi?.menu_items as { name?: string; section?: string }[] | null) ?? []);
+    for (const it of drinkItems) { const name = str(it.name).trim(); const d = name ? resolveDrinkText(name, k.drinks) : null; if (d && !targets.some((t) => t.drinkId === d.id)) targets.push({ drinkId: d.id, drinkText: name }); }
+    menuFood = new Map();
+    for (const it of menuItems) { if (it.section && it.section !== "food") continue; const name = str(it.name).trim(); const f = name ? resolveFoodText(name, k.foods) : null; if (f && !menuFood.has(f.id)) menuFood.set(f.id, name); }
+  }
+  if (!targets.length) return [];
+  const { data: ps } = await c.from("pairings").select("drink_id,food_id,source_tier,profile_score,reason").in("drink_id", targets.map((t) => t.drinkId)).eq("status", "curated").limit(3000);
+  const byDrink = new Map<string, SuggestInput[]>();
+  for (const r of (ps ?? []) as Row[]) {
+    const foodId = str(r.food_id), food = k.byId.get(foodId);
+    if (!food) continue;
+    const s = Number((r.profile_score as { s?: unknown } | null)?.s ?? 0);
+    const list = byDrink.get(str(r.drink_id)) ?? [];
+    list.push({ foodId, food, src: (r.source_tier as string | null) ?? "profile", s: Number.isFinite(s) ? s : 0, reason: (r.reason as string | null) ?? "" });
+    byDrink.set(str(r.drink_id), list);
+  }
+  const out: PartnerSuggestion[] = [];
+  for (const t of targets) {
+    let rows = byDrink.get(t.drinkId) ?? [];
+    if (menuFood?.size) { const onMenu = rows.filter((r) => menuFood!.has(r.foodId)); if (onMenu.length) rows = onMenu; }
+    const exclude = new Set([...taken].filter((x) => x.startsWith(t.drinkId + "|")).map((x) => x.slice(t.drinkId.length + 1)));
+    for (const s of suggestPairings(rows, exclude, perDrink)) out.push({ ...s, drinkId: t.drinkId, drinkText: t.drinkText, foodText: menuFood?.get(s.foodId) ?? s.food });
+    if (out.length >= 40) break;
+  }
+  return out.slice(0, 40);
+}

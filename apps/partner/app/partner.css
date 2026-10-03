@@ -289,3 +289,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--navy); outline: 
 .todo > b { display: block; font-size: 14px; margin-bottom: 6px; color: var(--warn); }
 .todo ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
 .todo a { font-weight: 700; color: var(--ink); }
+
+/* 페어링 빠른 입력(2026-10-03): 추천 조합 체크 목록 */
+.sugg { margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 10px; background: color-mix(in srgb, var(--surface) 70%, var(--bg, #f6f7f9)); }
+.sugg-list li { display: grid; gap: 6px; }
+.chk { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
+.chk input { margin-top: 3px; flex: none; width: 18px; height: 18px; accent-color: var(--navy); }
+.sugg-note { width: 100%; font: inherit; font-size: 13.5px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; }
