@@ -23,7 +23,7 @@ export default function FoodCircles({ foods, title = "안주로 고르기", href
           <li key={f.id}>
             <Link href={`/foods/${toSlug(f.name)}`}>
               <span className="fc-img" style={f.image?.url ? undefined : { background: TONE[f.category] ?? DEFAULT }}>
-                {f.image?.url && <img src={f.image.url} alt="" loading="lazy" decoding="async" />}
+                {f.image?.url && <img src={f.image.url} alt="" decoding="async" />}
               </span>
               <span className="fc-name">{f.name}</span>
             </Link>
