@@ -94,7 +94,7 @@ export default async function FoodPage({ params }: { params: Promise<{ slug: str
       <RecentTrack kind="food" id={food.id} name={food.name} meta={food.category} href={path} />
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/foods">음식·안주</Link></p>
       {/* 핵심 정보 한 카드(2026-09-25 정리) — 이름 · 분류 · 태그 · 공유, 맛 프로필은 옆에, 오른쪽 끝에 사진 칸(2026-09-26, 없으면 분류 타일) */}
-      <header className="dhead">
+      <header className="dhead dhead-v2">
         <div className="dhead-body">
           <h1>{food.name}</h1>
           <div className="meta"><span>{food.category}</span></div>

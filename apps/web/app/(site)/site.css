@@ -1585,3 +1585,74 @@ body { font-family: var(--font-sans); }
 .prow-v2 li { width: auto; flex: initial; }
 .prow-v2 a { display: flex; justify-items: initial; }
 .prow-v2 ul { overflow: visible; }
+
+/* ========== UI 리뉴얼 2단계(2026-10-03): 술·음식 상세 ========== */
+.detail .crumb { display: none; }
+@media (min-width: 768px) { .detail .crumb { display: block; } }
+.dhead-v2 { display: flex; flex-direction: column; gap: 16px; padding: 0; border: 0; margin: 4px 0 12px; }
+.dhead-v2 .dhead-media { order: -1; width: 100%; margin: 0; }
+.dhead-v2 .dhead-media img { aspect-ratio: 1 / 1; border-radius: 24px; max-height: 360px; object-fit: cover; }
+.dhead-v2 .dhead-media.d img { object-fit: contain; padding: 24px; background: radial-gradient(circle at 35% 30%, #FFFFFF 0%, #F4F1EA 45%, #DED6C6 100%); }
+.dhead-v2 .dhead-media.ph { aspect-ratio: 1 / 1; max-height: 360px; border-radius: 24px; width: 100%; }
+.dhead-v2 .dhead-media.ph svg { width: 56px; height: 76px; }
+.dhead-v2 .dhead-media.ph.f svg { width: 76px; height: 56px; }
+.dhead-v2 .dhead-media.ph b { font-size: 16px; } .dhead-v2 .dhead-media.ph span { font-size: 12px; }
+.dhead-v2 .dhead-media figcaption { text-align: left; }
+.dhead-v2 .dh-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.dhead-v2 h1 { font-size: 26px; margin: 0; }
+.dhead-v2 .dh-seal { flex: none; margin-top: 6px; }
+.dhead-v2 .member-stars { font-size: 15px; margin: 6px 0 2px; }
+.dhead-v2 .meta { font-size: 15px; margin: 0 0 6px; }
+.dhead-v2 .lead { font-size: 15px; }
+@media (min-width: 768px) {
+  .dhead-v2 { flex-direction: row; align-items: flex-start; gap: 24px; }
+  .dhead-v2 .dhead-media { width: 300px; flex: none; }
+  .dhead-v2 .dhead-body { flex: 1; }
+}
+/* 상태 칩 · 화면 안 탭 */
+.dstat { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 10px 0 0; padding: 0; }
+.dstat li { height: 34px; padding: 0 12px; border-radius: 10px; background: var(--bg2); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; }
+.dtabs { display: flex; gap: 22px; margin: 16px 0 4px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; overflow-x: auto; scrollbar-width: none; }
+.dtabs a { padding: 10px 0 12px; color: var(--muted); text-decoration: none; white-space: nowrap; border-bottom: 2.5px solid transparent; margin-bottom: -1px; }
+.dtabs a.on, .dtabs a:hover { color: var(--ink); border-color: var(--ink); }
+/* 페어링 카드 — 사진 타일 + 큰 이름, 넓은 화면은 2열 */
+.card-v2 { padding: 0 0 14px; overflow: hidden; border-radius: 20px; }
+.card-v2 .card-img { display: block; position: relative; height: 150px; background: var(--bg2); }
+.card-v2 .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-v2 .card-img.d img { object-fit: contain; padding: 12px; background: radial-gradient(circle at 35% 30%, #FFFFFF 0%, #F4F1EA 45%, #DED6C6 100%); }
+.card-v2 .card-img .card-tile { display: block; width: 100%; height: 100%; background: linear-gradient(160deg, #EAF0F8, #B9C7DD 60%, #22406B); }
+.card-v2 .card-img.d .card-tile { background: linear-gradient(160deg, #FBEAE3, #E8B9A2 60%, #C7471F); }
+.card-v2 .card-grade { position: absolute; left: 10px; top: 10px; height: 24px; padding: 0 8px; border-radius: 6px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; background: #fff; color: var(--navy-ink); }
+.card-v2 .card-grade.best { background: var(--navy); color: #fff; }
+.card-v2 .card-grade.try { color: var(--muted); }
+.card-v2 > *:not(.card-img) { margin-left: 14px; margin-right: 14px; }
+.card-v2 .top { margin-top: 12px; }
+.card-v2 .name { font-size: 18px; }
+.cards:has(.card-v2) { gap: 14px; }
+@media (min-width: 640px) { .cards:has(.card-v2) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Tasting Note — 세로 눈금 막대, 점수 위에 크게 */
+.pbars.v2 { max-width: none; margin: 24px 0 8px; }
+.pbars.v2 .section-head { margin: 0 0 10px; }
+.pbars.v2 .section-head h3 { font-size: 20px; margin: 0; color: var(--ink); font-weight: 700; letter-spacing: -0.01em; }
+.pbars.v2 dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); gap: 12px; padding: 16px 14px 12px; border: 1px solid var(--line); border-radius: 18px; }
+.pbars.v2 dl > div { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.pbars.v2 dd { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; }
+.pbars.v2 .score { font-size: 16px; font-weight: 700; color: var(--food-ink); }
+.pbars.v2.f .score { color: var(--navy-ink); }
+.pbars.v2 .score span { font-size: 11px; color: var(--muted); font-weight: 500; }
+.pbars.v2 .cells { display: flex; flex-direction: column; gap: 3px; width: 100%; }
+.pbars.v2 .cells i { display: block; width: 100%; height: 14px; border-radius: 4px; background: #F0EEE9; }
+.pbars.v2.d .cells i.on { background: linear-gradient(180deg, #FF8A5E, #E4572E); }
+.pbars.v2.f .cells i.on { background: linear-gradient(180deg, #4A6CA0, #22406B); }
+.pbars.v2 dt { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.pbars.v2 dt .en { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.pbars.v2 dt .ko { font-size: 11px; color: var(--muted); }
+.pbars.v2 .unk .score { color: var(--muted); }
+.dinfo { display: grid; gap: 16px; }
+/* 하단 고정 바 — ♡ · 공식몰 구매(테두리) · 파는 곳 찾기(주황) */
+@media (max-width: 767px) {
+  .actionbar .ab-main { gap: 10px; }
+  .actionbar .ab-main .btn { height: 52px; border-radius: 16px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex: 1; }
+  .actionbar .ab-main .ab-buy { border: 1.5px solid var(--food); color: var(--food-ink); background: #fff; }
+  .actionbar .ab-main .ab-main-cta { background: var(--food); border-color: var(--food); color: #fff; flex: 1.2; }
+}

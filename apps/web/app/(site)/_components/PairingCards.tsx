@@ -44,7 +44,12 @@ export function PairingCards({ items, tiers = {} }: { items: CardItem[]; tiers?:
         // 맛 프로필은 글줄 대신 작은 막대 그래프로(2026-09-24)
         const profile = isDrinkCard ? D[p.d]?.profile : F[p.f]?.profile;
         return (
-          <li key={href} className="card" data-pick={pick}>
+          <li key={href} className="card card-v2" data-pick={pick}>
+            {/* 사진 타일(2026-10-03 UI 리뉴얼) — 음식·술 사진이 있으면 사진, 없으면 분류 색. 등급 배지는 타일 왼쪽 위 */}
+            <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className={`card-img ${isDrinkCard ? "d" : "f"}`}>
+              {(isDrinkCard ? D[p.d]?.image?.url : F[p.f]?.image?.url) ? <img src={isDrinkCard ? D[p.d]!.image!.url : F[p.f]!.image!.url} alt="" loading="lazy" decoding="async" /> : <span className="card-tile" />}
+              <span className={`card-grade ${grade.key}`}>{grade.label}</span>
+            </CardLink>
             <div className="top">
               <CardLink href={href} d={p.d} f={p.f} from={href.startsWith("/foods") ? "drink" : "food"} className="name">{name}</CardLink>
               {p.serve && <span className="badge n" title="음용 방식">{SERVE_LABEL[p.serve]}</span>}

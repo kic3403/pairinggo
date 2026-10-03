@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, countryLabel, detailCaption, drinkProduct, evidenceNeighbors, guideList, guideRegionOf, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
+import { KIND_LABEL, LINK_STATUS, byDrink, breadcrumb, buyLink, confidenceOf, countryLabel, detailCaption, drinkProduct, evidenceNeighbors, guideList, guideRegionOf, extRatingOf, extRatingText, findBySlug, josa, kindOf, naverMapUrl, naverShopUrl, onlineSellable, profileUnknown, similarDrinks, subtypeLabel, toSlug } from "@pairinggo/shared";
 import { getCatalog } from "@/lib/catalog";
 import { expertTiersByName } from "@/lib/experts";
 import { buyOptions } from "@/lib/shop";
@@ -119,6 +119,10 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
   const rating = extRatingOf(drink);
   const share = drinkShare(drink);
+  // 상태 칩(2026-10-03 UI 리뉴얼 — 캐치테이블의 주차·콜키지 칩 자리): 찰떡 조합 수 · 근거 확인 수 · 전문가 추천 · 주간 순위
+  const nBest = allItems.filter((i) => i.grade.key === "best").length, nConf = allItems.filter((i) => confidenceOf(i.pairing) === "confirmed").length;
+  const hasExpert = allItems.some((i) => (i.pairing.xp?.yes ?? 0) >= 2);
+  const weekRank = drink.trend?.rank ?? null;
   // 이 술 종류의 모음 화면(막걸리 안주 추천 등, shared seo/guides.ts) — 있으면 옆 칸에서 잇는다
   const guides = guideList(c.dataset).filter((g) => g.side === "drink" && ((g.by === "category" && g.category === drink.category) || (g.by === "region" && g.category === guideRegionOf(drink))));
   // 본문 '가까운 술'에 나온 술은 옆 칸에서 뺀다(한 화면에 두 번 두지 않기)
@@ -132,9 +136,14 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       <p className="crumb"><Link href="/">홈</Link> · <Link href="/drinks">주류</Link> · <Link href={`/drinks?kind=${kind}`}>{KIND_LABEL[kind]}</Link></p>
 
       {/* ① 핵심 정보 한 카드(2026-09-25 정리) — 이름 · 분류 · 외부 평점 · 태그 · 저장/공유, 오른쪽에 사진 칸(2026-09-26, 없으면 주종 색 타일) */}
-      <header className="dhead">
+      {/* UI 리뉴얼(2026-10-03, 시안): 사진이 먼저 크게, 이름·별점·분류, 상태 칩, 탭 */}
+      <header className="dhead dhead-v2">
+        <DetailMedia kind="drink" image={drink.image} name={drink.name} label={kind === "trad" ? drink.category : subtypeLabel(drink)} tone={KIND_TONE[kind]} />
         <div className="dhead-body">
-          <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
+          <div className="dh-top">
+            <h1>{drink.name}{drink.demo && <span className="badge n" style={{ marginLeft: 8, verticalAlign: "middle" }}>데모</span>}</h1>
+            {bp && <span className="seal food dh-seal" title="페어링GO가 확인한 파트너 양조장"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.4 11.3 3.6 8.5l1-1 1.8 1.8 4.9-4.9 1 1z" /></svg>파트너 양조장</span>}
+          </div>
           {drink.nameOrig && <p className="name-orig">{drink.nameOrig}</p>}
           <div className="meta">{meta.map((m, i) => <span key={i}>{i > 0 && <span className="muted"> · </span>}{m}</span>)}</div>
           {/* 외부 평점 — 허용된 출처(라이선스·수입사 제공)만, 출처·확인일과 함께. 페어링GO 회원 평가와 섞지 않는다 */}
@@ -149,9 +158,18 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
             <ShareButton className="btn xs" title={`${drink.name}에 어울리는 음식 ${items.length}가지`} text={`${josa(drink.name, "과/와")} 어울리는 음식을 추천 — 페어링GO`} d={drink.id} />
           </div>
         </div>
-        <DetailMedia kind="drink" image={drink.image} name={drink.name} label={kind === "trad" ? drink.category : subtypeLabel(drink)} tone={KIND_TONE[kind]} />
       </header>
       {drink.desc && <p className="lead">{drink.desc}</p>}
+      <ul className="dstat" aria-label="한눈에">
+        {nBest > 0 && <li>찰떡 조합 {nBest}</li>}
+        {nConf > 0 && <li>근거 확인 {nConf}</li>}
+        {hasExpert && <li>전문가 추천</li>}
+        {weekRank && weekRank <= 50 && <li>주간 {weekRank}위</li>}
+        {sellable ? <li>온라인 구매 가능</li> : <li>온라인 판매 불가</li>}
+      </ul>
+      <nav className="dtabs" aria-label="화면 안 이동">
+        <a href="#pairings" className="on">페어링</a><a href="#taste">Tasting Note</a><a href="#buy">구매</a><a href="#reviews">평가{rv.n ? ` ${rv.n}` : ""}</a>{bp && <a href="#brewery">양조장</a>}
+      </nav>
 
       {/* ② 용량 선택과 그 규격의 참고가격(2026-09-24) — 규격이 등록된 술만. useSearchParams라 Suspense 경계 */}
       {!!drink.specs?.length && <Suspense fallback={null}><SpecPicker specs={drink.specs} drinkId={drink.id} /></Suspense>}
@@ -159,7 +177,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
       <BuyBox drinkId={drink.id} drinkName={drink.name} />
 
       {/* ③ 구매 — 페어링GO는 판매자가 아니라 판매처로 안내한다. 판매점 찾기는 접어 두고 누르면 펼친다(온라인 불가 주류는 펼쳐 둠) */}
-      <section className="buy">
+      <section className="buy" id="buy">
         <h3>{sellable ? "온라인 구매" : "구매 안내"}</h3>
         <div className="btns" style={{ marginTop: 6 }}>
           {sellable && !bl.fallback && (
@@ -193,12 +211,6 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
           <NearbyPlaces mode="bottleshops" drinkName={drink.name} drinkId={drink.id} trad={sellable} />
         </details>
       </section>
-
-      {/* ④ 맛과 향 · 주종별 정보 — 나란히 */}
-      <div className="dinfo">
-        <ProfileBars kind="drink" profile={drink.profile} unknown={profileUnknown(drink.attrs)} />
-        <KindFacts drink={drink} />
-      </div>
 
       <div className="cols" style={{ marginTop: 8 }}>
         <div>
@@ -235,6 +247,11 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
               <PairingCards items={items} tiers={tiers} />
             </PickTabs>
           </RatingsProvider>
+          {/* ④ Tasting Note · 주종별 정보 — 페어링 아래(2026-10-03 시안 순서) */}
+          <div className="dinfo" id="taste">
+            <ProfileBars kind="drink" profile={drink.profile} unknown={profileUnknown(drink.attrs)} />
+            <KindFacts drink={drink} />
+          </div>
           <PartnerRecs recs={recs} title="양조장·식당이 추천한 안주" hideDrink note="파트너가 직접 추천했지만 위 목록에는 아직 없는 음식이에요." />
           {/* SNS에 올리기(2026-10-02) — 이 술의 그림 카드(1080×1350)와 붙여 넣을 글. lib/detail-share.ts */}
           <section className="box sns-kit">
@@ -251,7 +268,7 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
 
         <aside>
           {bp && (
-            <div className="box">
+            <div className="box" id="brewery">
               <h3 className="with-seal">
                 {drink.brewery} 방문하기
                 {/* 인증 도장처럼 — 페어링GO가 확인한 파트너 양조장(0031) */}
@@ -280,10 +297,10 @@ export default async function DrinkPage({ params }: { params: Promise<{ slug: st
         </aside>
       </div>
       <DetailActionBar save={<Heart kind="drink" id={drink.id} name={drink.name} variant="button" />}>
-        <a className="btn" href="#pairings">어울리는 음식 {items.length}</a>
-        {sellable && !bl.fallback && <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_bar" }}>공식몰 구매 ↗</ExtLink>}
-        {sellable && bl.fallback && <ExtLink className="btn p" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_bar_fallback" }}>네이버쇼핑 ↗</ExtLink>}
-        {!sellable && <a className="btn p" href="#places">파는 곳 찾기</a>}
+        {sellable && !bl.fallback && <ExtLink className="btn ab-buy" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_bar" }}>공식몰 구매</ExtLink>}
+        {sellable && bl.fallback && <ExtLink className="btn ab-buy" href={bl.url} event="buy_link_click" props={{ d: drink.id, store: bl.store, from: "drink_bar_fallback" }}>네이버쇼핑</ExtLink>}
+        {!sellable && <a className="btn ab-buy" href="#buy">구매 안내</a>}
+        <a className="btn p ab-main-cta" href="#places">파는 곳 찾기</a>
       </DetailActionBar>
     </div>
   );
