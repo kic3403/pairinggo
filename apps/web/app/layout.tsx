@@ -26,7 +26,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning>{/* 시작 화면 스크립트가 첫 그리기 전에 html에 no-splash를 붙인다(개발 모드 수화 경고 억제) */}
       {/* 색은 각 구역 CSS(site.css · admin.css)가 정한다. 여기서 고정하면 다크 모드 토큰과 충돌한다 */}
-      <body style={{ margin: 0, fontFamily: '"Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif' }}>{children}</body>
+      <head>
+        {/* UI 리뉴얼 글꼴(2026-10-03, 시안 캔버스) — 구글 폰트 IBM Plex Sans KR. 못 받으면 Noto Sans KR·기기 글꼴로 */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" />
+      </head>
+      <body style={{ margin: 0, fontFamily: '"IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif' }}>{children}</body>
     </html>
   );
 }

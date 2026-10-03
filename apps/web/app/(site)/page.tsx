@@ -6,18 +6,15 @@
  */
 import type { Metadata } from "next";
 import Link from "next/link";
-import Heart from "./_components/Heart";
 import HomeTabs from "./_components/HomeTabs";
-import HomeExamples from "./_components/HomeExamples";
 import HomeBanners from "./_components/HomeBanners";
-import FlowTiles from "./_components/FlowTiles";
 import PartnerRow from "./_components/PartnerRow";
 import TrendRow from "./_components/TrendRow";
 import TriedPill from "./_components/TriedPill";
 import QuickMenu from "./_components/QuickMenu";
 import PickFeed from "./_components/PickFeed";
-import WeatherPick from "./_components/WeatherPick";
-import SituationChip from "./_components/SituationChip";
+import FoodCircles from "./_components/FoodCircles";
+import BestPairings from "./_components/BestPairings";
 import JsonLd from "./_components/JsonLd";
 import { loadAwards } from "@/lib/awards";
 import { homeCards } from "@/lib/banners";
@@ -25,7 +22,7 @@ import { listPosts } from "@/lib/member-picks";
 import { topDrinks } from "@/lib/popular";
 import { getCatalog } from "@/lib/catalog";
 import { siteUrl } from "@/lib/site";
-import { BRAND_ALT_NAMES, BRAND_NAME, FOOD_GROUPS, POPULAR_FOODS, byFood, homePicksMode, organization, toSlug, website, guideList } from "@pairinggo/shared";
+import { BRAND_ALT_NAMES, BRAND_NAME, POPULAR_FOODS, homePicksMode, organization, website } from "@pairinggo/shared";
 
 export const revalidate = 600;
 
@@ -45,9 +42,6 @@ export default async function Home() {
   ]);
   const picksMode = homePicksMode(picks.length);   // 글이 3건 미만이면 큰 칸 대신 작은 초대 카드(docs/20 P0-5)
   const foods = (POPULAR_FOODS.length ? POPULAR_FOODS : c.dataset.foods).slice(0, 10);
-  // 모음 화면 입구 — 근거 조합이 많은 순으로 술 종류 4 + 음식 종류 3 + 맛 1(shared seo/guides.ts)
-  const allGuides = guideList(c.dataset);
-  const guides = [...allGuides.filter((g) => g.side === "drink" && g.by === "category").slice(0, 4), ...allGuides.filter((g) => g.side === "food" && g.by === "category").slice(0, 3), ...allGuides.filter((g) => g.by === "tag").slice(0, 1)];
 
   return (
     <div className="wrap home">
@@ -57,39 +51,16 @@ export default async function Home() {
         website({ base: siteUrl(), name: BRAND_NAME, alternateName: BRAND_ALT_NAMES }),
         organization({ base: siteUrl(), name: BRAND_NAME, alternateName: BRAND_ALT_NAMES, logoPath: "/icon-512.png", description: "술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 추천하는 서비스" }),
       ]} />
-      <h1 className="home-h1">맛있는 술엔 맛있는 음식 <span className="muted">— 술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 추천!</span></h1>
-      <HomeExamples />
+      {/* UI 리뉴얼(2026-10-03, 시안 캔버스): 글은 제목·이름만, 그림·버튼으로. 한 줄 소개는 검색봇용으로만 남긴다 */}
+      <h1 className="home-h1 sr-only">맛있는 술엔 맛있는 음식 — 술을 고르면 어울리는 음식을, 음식을 고르면 어울리는 술을 추천!</h1>
       <HomeTabs />
-      <HomeBanners cards={home.cards} />
-      {/* 사는 곳 날씨·계절에 맞는 조합 — 이벤트 배너 아래(2026-10-02 사용자 요청), 브라우저에서 받아 그린다(docs/29, 카드 순위와 무관) */}
-      <WeatherPick mode="home" />
+      {/* 큰 배너 — 첫 장은 사는 곳 날씨·계절 카드(docs/29), 그 뒤 이벤트·이달의 파트너·리포트 */}
+      <HomeBanners cards={home.cards} weather />
       <QuickMenu michelinYear={awards.year} />
-      <FlowTiles />
-      <PartnerRow items={home.partners.slice(0, 8)} />
+      <FoodCircles foods={foods} />
       <TrendRow drinks={top.list} note={top.note} compared={top.compared} />
-
-      {/* 종류별 모음(2026-10-02) — "막걸리 안주 추천"·"전과 어울리는 술" 같은 모음 화면(/guide)으로 가는 입구. 술 종류 4 + 음식 종류 3 + 맛 1(지역별은 '전체 보기'에서) */}
-      {guides.length > 0 && (
-        <section>
-          <div className="section-head"><h2>종류별 페어링 모음</h2><Link href="/guide">전체 보기</Link></div>
-          <ul className="guide-links">
-            {/* 그날 상황 모음 한 칸(브라우저에서 끼움, docs/29 §5-1) */}
-            <SituationChip />
-            {guides.map((g) => <li key={g.slug}><Link href={`/guide/${g.slug}`} className={g.side === "drink" ? "d" : "f"}>{g.h1}</Link></li>)}
-          </ul>
-        </section>
-      )}
-
-      {/* 음식 종류별로 찾기 — 캐치테이블 홈의 "음식종류별 BEST" 칩 줄(docs/19 §5). 대분류는 shared food-groups.ts */}
-      <section>
-        <div className="section-head"><h2>음식 종류별로 찾기</h2><Link href="/foods">전체 보기</Link></div>
-        <ul className="tabs group-chips" style={{ marginTop: 0 }}>
-          {FOOD_GROUPS.map((g) => {
-            const n = c.dataset.foods.filter((f) => g.categories.includes(f.category)).length;
-            return n ? <li key={g.key}><Link href={`/foods?group=${encodeURIComponent(g.key)}`}>{g.key}<span className="cnt">{n}</span></Link></li> : null;
-          })}
-        </ul>
-      </section>
+      <PartnerRow items={home.partners.slice(0, 4)} />
+      <BestPairings ds={c.dataset} />
 
       {picksMode === "feed" && (
         <section className="home-picks">
@@ -105,20 +76,6 @@ export default async function Home() {
         </Link>
       )}
 
-      <section>
-        <div className="section-head"><h2>안주로 찾기</h2><Link href="/foods">전체 보기</Link></div>
-        <ul className="grid">
-          {foods.map((f) => (
-            <li key={f.id}>
-              <Link href={`/foods/${toSlug(f.name)}`}>
-                <span className="n">{f.name}</span>
-                <span className="s">{[f.category, `어울리는 술 ${(byFood[f.id] || []).length}`].filter(Boolean).join(" · ")}</span>
-              </Link>
-              <Heart kind="food" id={f.id} name={f.name} />
-            </li>
-          ))}
-        </ul>
-      </section>
       <TriedPill />
     </div>
   );

@@ -11,11 +11,22 @@
 import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { BannerCard } from "@pairinggo/shared/home";
+import { useSituation } from "./useSituation";
 
 const GAP = 10, EVERY_MS = 5000;
 
-export default function HomeBanners({ cards }: { cards: BannerCard[] }) {
+/** 첫 장 = 사는 곳 날씨·계절 카드(2026-10-03 UI 리뉴얼 — 시안의 큰 배너). 날씨 응답이 오기 전엔 나머지 카드만 */
+function useWeatherCard(on: boolean): BannerCard | null {
+  const sit = useSituation("home", undefined, 1);
+  if (!on || !sit?.items.length) return null;
+  const s = sit.situation, it = sit.items[0];
+  return { id: "weather", kind: "custom", title: s.headline.replace(/^[^·]*·\s*/, ""), subtitle: `${it.drink} × ${it.food}`, badge: `#오늘 같은 날엔${s.fromWeather ? ` · ${s.sido} ${s.temp === null ? "" : `${Math.round(s.temp)}℃`}` : ""}`.trim(), cta: sit.guide ? "모음 보기" : "오늘의 페어링", href: sit.guide ? `/guide/${sit.guide.slug}` : "/today", tone: "navy", imageUrl: null, period: null };
+}
+
+export default function HomeBanners({ cards: given, weather = false }: { cards: BannerCard[]; weather?: boolean }) {
   const ref = useRef<HTMLUListElement>(null);
+  const wx = useWeatherCard(weather);
+  const cards = wx ? [wx, ...given] : given;
   const n = cards.length;
   const [cur, setCur] = useState(1);
   const [playing, setPlaying] = useState(true);
